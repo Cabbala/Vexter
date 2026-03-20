@@ -11,6 +11,9 @@
       "default_branch": "main",
       "local_checkout": "sources/Dexter",
       "analysis_seed": "plans/SOURCE_ASSESSMENT_DEXTER.md",
+      "assessment_doc": "docs/dexter_source_assessment.md",
+      "instrumentation_plan": "plans/dexter_instrumentation_plan.md",
+      "normalized_output_root": "data/raw/dexter",
       "role": "Python source repo for creator scoring and adaptive exit assessment"
     },
     {
@@ -20,6 +23,9 @@
       "default_branch": "main",
       "local_checkout": "sources/Mew-X",
       "analysis_seed": "plans/SOURCE_ASSESSMENT_MEWX.md",
+      "assessment_doc": "docs/mewx_source_assessment.md",
+      "instrumentation_plan": "plans/mewx_instrumentation_plan.md",
+      "normalized_output_root": "data/raw/mewx",
       "role": "Rust source repo for execution substrate and portfolio control assessment"
     }
   ]

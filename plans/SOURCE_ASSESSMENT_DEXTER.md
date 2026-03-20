@@ -1,15 +1,23 @@
-# Dexter Source Assessment Seed
+# Dexter Source Assessment
 
-## Current reading highlights
-- Python bot with PostgreSQL-backed history and live session logic.
-- README expects Python 3.8+, PostgreSQL, and `req.txt` install flow.
-- `DexAI/trust_factor.py` computes creator-level metrics including trust factor and performance score.
-- `Dexter.py` runs subscribe / market handling / leaderboard update loops.
-- Session logic appears to combine price trend and tx momentum and uses reserved balance helpers.
+## Detailed Assessment
 
-## Assessment tasks
-- map exact DB bootstrap and schema usage
-- isolate event ingestion path from Helius/websocket to tradable mint/session state
-- enumerate exit triggers and their precedence
-- define what telemetry to add without changing strategy behavior
-- define replayable artifacts required for profitability analysis
+See `docs/dexter_source_assessment.md` for the file and function level review.
+
+## Current Conclusions
+
+- Dexter is strongest at creator scoring and adaptive exit management.
+- Historical replay seeds already exist in PostgreSQL, especially through `stagnant_mints`.
+- The main missing piece is a normalized event trail for live session decisions.
+
+## Instrumentation Priority
+
+- leaderboard snapshots and creator score attribution
+- session admit or reject reasons
+- entry quote, submission, and fill timing
+- session checkpoints for MFE, MAE, and ladder state
+- exit signal, exit fill, and realized-versus-peak gap
+
+## Next Implementation Link
+
+See `plans/dexter_instrumentation_plan.md`.

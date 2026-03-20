@@ -1,7 +1,8 @@
 {
-  "task_id": "TASK-000-bootstrap",
-  "bundle_source": "/Users/cabbala/Downloads/Vexter_bootstrap_bundle.tar.gz",
-  "bundle_path": "artifacts/bundles/task-000-bootstrap.tar.gz",
+  "task_id": "TASK-001-source-assessment",
+  "status": "complete_on_main",
+  "bundle_source": "/Users/cabbala/Downloads/Vexter_task001_bundle.tar.gz",
+  "bundle_path": "artifacts/bundles/task-001-source-assessment.tar.gz",
   "context_pack": "artifacts/context_pack.json",
   "summary": "artifacts/summary.md",
   "task_ledger": "artifacts/task_ledger.jsonl",
@@ -9,11 +10,69 @@
     "manifests/reference_repos.json",
     "manifests/windows_runtime.json"
   ],
+  "docs": [
+    "docs/evaluation_contract.md",
+    "docs/normalized_event_schema.md",
+    "docs/metrics_catalog.md",
+    "docs/comparison_matrix_template.md",
+    "docs/dexter_source_assessment.md",
+    "docs/mewx_source_assessment.md"
+  ],
+  "plans": [
+    "plans/SOURCE_ASSESSMENT_DEXTER.md",
+    "plans/SOURCE_ASSESSMENT_MEWX.md",
+    "plans/dexter_instrumentation_plan.md",
+    "plans/mewx_instrumentation_plan.md",
+    "plans/integration_readiness_plan.md"
+  ],
   "scripts": [
     "scripts/bootstrap_windows_workspace.sh",
     "scripts/sync_reference_repos.sh",
     "scripts/build_proof_bundle.sh"
   ],
+  "next_task": {
+    "id": "TASK-002",
+    "state": "not_started",
+    "start_conditions": [
+      "Start from the latest main after TASK-001 closeout is merged.",
+      "Limit scope to observational event writers and Vexter-side validation already defined in plans.",
+      "Keep the normalized event contract and verified Windows runtime layout unchanged.",
+      "Do not start Dexter or Mew-X integration work."
+    ]
+  },
+  "proofs": {
+    "verified_start_commit": "6d22d22e37a77e2e15c6211d32c125c8c4a2c151",
+    "windows_runtime_verified": true,
+    "windows_verified_paths": [
+      "C:\\Users\\bot\\quant\\Vexter\\runtime",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified",
+      "C:\\Users\\bot\\quant\\Vexter\\data",
+      "C:\\Users\\bot\\quant\\Vexter\\artifacts"
+    ],
+    "windows_prepared_subdirs": [
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\config",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified\\contracts",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified\\reports",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\mewx",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\unified",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\mewx",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\unified",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\mewx",
+      "C:\\Users\\bot\\quant\\Vexter\\artifacts\\dexter",
+      "C:\\Users\\bot\\quant\\Vexter\\artifacts\\mewx",
+      "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified"
+    ]
+  },
   "included_paths": [
     "README.md",
     "docs/",

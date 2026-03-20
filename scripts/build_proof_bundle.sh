@@ -2,7 +2,9 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-BUNDLE_PATH="$ROOT_DIR/artifacts/bundles/task-000-bootstrap.tar.gz"
+BUNDLE_PATH="$ROOT_DIR/artifacts/bundles/task-001-source-assessment.tar.gz"
+
+mkdir -p "$ROOT_DIR/artifacts/bundles"
 
 rm -f "$BUNDLE_PATH"
 

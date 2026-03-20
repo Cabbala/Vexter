@@ -1,20 +1,20 @@
-# TASK-000 Bootstrap Summary
+# TASK-001 Closeout Summary
 
-## Outcome
+## Status
 
-- Bootstrapped `/Users/cabbala/Projects/Vexter` as the Mac control-plane repo for Dexter and Mew-X analysis.
-- Added the fixed docs, specs, plans, manifests, scripts, and validation checks required by the bootstrap bundle.
-- Confirmed Windows host `win-lan` and selected `C:\Users\bot\quant\Vexter` as the runtime/data root.
+- `TASK-001-source-assessment` is complete on `main`.
+- PR #1 carries the source assessments, shared evaluation contract, normalized schema, metrics catalog, instrumentation plans, and Windows runtime verification into the GitHub source of truth.
+- No Dexter or Mew-X integration work has started.
 
-## Key Artifacts
+## TASK-002 Start Conditions
+
+- start from the latest `main`, not from a stale TASK-001 branch
+- keep scope limited to observational event writers and Vexter-side validation already defined in the committed plans
+- preserve the normalized event contract and the verified Windows runtime layout as fixed interfaces
+- do not change strategy logic or begin Dexter/Mew-X integration work
+
+## Reference Artifacts
 
 - `artifacts/context_pack.json`
 - `artifacts/proof_bundle_manifest.json`
-- `artifacts/bundles/task-000-bootstrap.tar.gz`
-- `manifests/reference_repos.json`
-- `manifests/windows_runtime.json`
-
-## Git Visibility
-
-- GitHub repo: `https://github.com/Cabbala/Vexter`
-- Working branch: `codex/task-000-bootstrap`
+- `artifacts/task_ledger.jsonl`

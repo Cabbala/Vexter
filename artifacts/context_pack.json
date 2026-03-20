@@ -21,6 +21,112 @@
     "deliverable_format": "minimal prompt + tar.gz bundle",
     "push_changes_for_github_visibility": true
   },
-  "phase": "TASK-000-bootstrap",
-  "bundle_source": "/Users/cabbala/Downloads/Vexter_bootstrap_bundle.tar.gz"
+  "phase": "TASK-001-source-assessment",
+  "status": "complete_on_main",
+  "bundle_source": "/Users/cabbala/Downloads/Vexter_task001_bundle.tar.gz",
+  "starting_point": {
+    "verified_at": "2026-03-20T14:49:45Z",
+    "main": "6d22d22e37a77e2e15c6211d32c125c8c4a2c151",
+    "codex/task-000-bootstrap": "6d22d22e37a77e2e15c6211d32c125c8c4a2c151",
+    "work_branch": "codex/task-001-source-assessment"
+  },
+  "deliverables": {
+    "docs": [
+      "docs/evaluation_contract.md",
+      "docs/normalized_event_schema.md",
+      "docs/metrics_catalog.md",
+      "docs/comparison_matrix_template.md",
+      "docs/dexter_source_assessment.md",
+      "docs/mewx_source_assessment.md"
+    ],
+    "plans": [
+      "plans/dexter_instrumentation_plan.md",
+      "plans/mewx_instrumentation_plan.md",
+      "plans/integration_readiness_plan.md"
+    ],
+    "artifacts": [
+      "artifacts/context_pack.json",
+      "artifacts/summary.md",
+      "artifacts/proof_bundle_manifest.json"
+    ]
+  },
+  "next_task": {
+    "id": "TASK-002",
+    "state": "not_started",
+    "start_conditions": [
+      "Create a new branch from the latest main after TASK-001 closeout is merged.",
+      "Limit scope to observational event writers and Vexter-side validation already described in the committed plans.",
+      "Keep the normalized event contract and verified Windows runtime layout fixed.",
+      "Do not begin Dexter or Mew-X integration work or change strategy behavior."
+    ]
+  },
+  "source_assessment": {
+    "dexter": {
+      "key_paths": [
+        "sources/Dexter/DexAI/trust_factor.py",
+        "sources/Dexter/Dexter.py",
+        "sources/Dexter/DexLab/wsLogs.py",
+        "sources/Dexter/DexLab/market.py",
+        "sources/Dexter/DexLab/swaps.py",
+        "sources/Dexter/database.py"
+      ],
+      "key_findings": [
+        "Creator scoring is backed by PostgreSQL and fed from stagnant_mints rather than live memory.",
+        "Live trading uses a separate in-memory swap_folder and therefore needs explicit event instrumentation to bridge to replay.",
+        "Adaptive exit quality depends on composite score, ladder-step changes, and reserved-balance handling that are not persisted today."
+      ]
+    },
+    "mewx": {
+      "key_paths": [
+        "sources/Mew-X/src/main.rs",
+        "sources/Mew-X/src/mew/config.rs",
+        "sources/Mew-X/src/mew/deagle/deagle.rs",
+        "sources/Mew-X/src/mew/snipe/handler.rs",
+        "sources/Mew-X/src/mew/sol_hook/goldmine.rs",
+        "sources/Mew-X/src/mew/sol_hook/vacation.rs",
+        "sources/Mew-X/src/mew/sol_hook/sol.rs"
+      ],
+      "key_findings": [
+        "Candidate selection is source-labeled and refreshed independently from execution.",
+        "Execution routing is materially stronger than Dexter and requires route-level telemetry for fair comparison.",
+        "Goldmine and Vacation separate state well, but normalized event coverage is still incomplete."
+      ]
+    }
+  },
+  "windows_runtime_verification": {
+    "verified_at": "2026-03-20T14:49:45Z",
+    "root_exists": true,
+    "observed_paths": [
+      "C:\\Users\\bot\\quant\\Vexter\\runtime",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\logs",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\postgres",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\raw",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\replays",
+      "C:\\Users\\bot\\quant\\Vexter\\artifacts"
+    ],
+    "prepared_subdirs": [
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\config",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified\\contracts",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified\\reports",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\mewx",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\unified",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\mewx",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\unified",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+      "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\mewx",
+      "C:\\Users\\bot\\quant\\Vexter\\artifacts\\dexter",
+      "C:\\Users\\bot\\quant\\Vexter\\artifacts\\mewx",
+      "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified"
+    ]
+  }
 }

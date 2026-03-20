@@ -2,11 +2,13 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-BUNDLE_PATH="$ROOT_DIR/artifacts/bundles/task-004-comparison-analysis.tar.gz"
+BUNDLE_PATH="$ROOT_DIR/artifacts/bundles/task-005-live-comparison-evidence.tar.gz"
 SAMPLE_PACK_DIR="$ROOT_DIR/artifacts/examples/task-004-sample-comparison"
 
 mkdir -p "$ROOT_DIR/artifacts/bundles"
 mkdir -p "$ROOT_DIR/artifacts/examples"
+mkdir -p "$ROOT_DIR/artifacts/reports"
+mkdir -p "$ROOT_DIR/artifacts/proofs"
 
 rm -f "$BUNDLE_PATH"
 rm -rf "$SAMPLE_PACK_DIR"
@@ -37,6 +39,8 @@ tar -czf "$BUNDLE_PATH" \
   artifacts/summary.md \
   artifacts/proof_bundle_manifest.json \
   artifacts/task_ledger.jsonl \
+  artifacts/reports \
+  artifacts/proofs \
   artifacts/examples
 
 printf '%s\n' "$BUNDLE_PATH"

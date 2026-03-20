@@ -48,6 +48,8 @@ def test_required_paths_exist() -> None:
         "artifacts/summary.md",
         "artifacts/proof_bundle_manifest.json",
         "artifacts/task_ledger.jsonl",
+        "artifacts/reports/task-005-live-collection-blocker.md",
+        "artifacts/proofs/task-005-live-collection-check.json",
         "artifacts/examples/task-004-sample-comparison/pack_manifest.json",
         ".github/workflows/validate.yml",
     ]
@@ -95,18 +97,18 @@ def test_task_ledger_is_valid_jsonl() -> None:
 
     assert len(lines) >= 3
     payload = json.loads(lines[-1])
-    assert payload["task_id"] == "TASK-004-comparison-analysis"
-    assert payload["status"] == "complete_on_branch"
-    assert payload["branch"] == "codex/task-004-comparison-analysis"
-    assert payload["next_task_id"] == "TASK-005"
+    assert payload["task_id"] == "TASK-005-live-comparison-evidence"
+    assert payload["status"] == "blocked_on_collection"
+    assert payload["branch"] == "codex/task-005-live-comparison-evidence"
+    assert payload["next_task_id"] == "BLOCKED"
 
 
 def test_proof_bundle_exists_and_contains_required_files() -> None:
     with (REPO_ROOT / "artifacts/proof_bundle_manifest.json").open() as handle:
         manifest = json.load(handle)
 
-    assert manifest["status"] == "complete_on_branch"
-    assert manifest["next_task"]["id"] == "TASK-005"
+    assert manifest["status"] == "blocked_on_collection"
+    assert manifest["next_task"]["id"] == "BLOCKED"
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]
     assert bundle_path.exists()
@@ -124,6 +126,8 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "scripts/collect_comparison_package.ps1" in names
     assert "vexter/comparison/validator.py" in names
     assert "artifacts/examples/task-004-sample-comparison/summary.md" in names
+    assert "artifacts/reports/task-005-live-collection-blocker.md" in names
+    assert "artifacts/proofs/task-005-live-collection-check.json" in names
     assert "artifacts/context_pack.json" in names
     assert "artifacts/proof_bundle_manifest.json" in names
     assert "tests/__pycache__/" not in names

@@ -1,36 +1,34 @@
-# TASK-004 Closeout Summary
+# TASK-005 Live Comparison Evidence Summary
 
 ## Status
 
-- `TASK-004-comparison-analysis` is complete on branch `codex/task-004-comparison-analysis` as of 2026-03-21.
-- Start conditions were satisfied from `Cabbala/Vexter` `main` at commit `d4fec420fd2ff336d5076a018f3ab5b256bca00e`.
-- Dexter and Mew-X instrumentation remain unchanged; all work is Vexter-side only.
-- The first side-by-side comparison pack scaffold is delivered with fixture-based sample inputs, while live Windows comparison remains pending.
+- `TASK-005-live-comparison-evidence` is blocked on branch `codex/task-005-live-comparison-evidence` as of 2026-03-21.
+- Start conditions were re-verified from `Cabbala/Vexter` `main` at commit `939642e6d185629f23a04e8e04f9fc7eac62ebc9`.
+- Dexter and Mew-X instrumentation remain unchanged; no strategy or execution logic was modified.
+- No matched live Dexter / Mew-X packages were available from the fixed Windows runtime, so no live comparison pack or evidence-backed winners / ties were recorded.
+- `TASK-006` replay validation cannot begin from this state.
 
-## Delivered Surface
+## Collection Evidence
 
-- Vexter comparison-analysis package under `vexter/comparison/`
-- CLI entrypoint for `validate`, `derive-metrics`, and `build-pack` in `scripts/comparison_analysis.py`
-- Windows collection helper in `scripts/collect_comparison_package.ps1`
-- collection and execution guide in `docs/comparison_collection_runbook.md`
-- fixture-based sample comparison outputs in `artifacts/examples/task-004-sample-comparison`
-- proof bundle, context pack, summary, and ledger updates for TASK-004 closeout
+- fixed Windows root `C:\Users\bot\quant\Vexter` exists on `DESKTOP-NNC6MPS`
+- `C:\Users\bot\quant\Vexter\data\raw\dexter` and `C:\Users\bot\quant\Vexter\data\raw\mewx` did not contain any NDJSON event files
+- `C:\Users\bot\quant\Vexter\runtime\dexter\config`, `C:\Users\bot\quant\Vexter\runtime\dexter\export`, `C:\Users\bot\quant\Vexter\runtime\mewx\config`, and `C:\Users\bot\quant\Vexter\runtime\mewx\export` were empty
+- `C:\Users\bot\quant\Vexter\artifacts\unified\comparison_inputs` did not contain any packaged runs
+- `git` and `python` were available on `win-lan`, but `cargo`, `rustc`, and `psql` were not detected
+- no PostgreSQL process or `127.0.0.1:5432` listener was detected on `win-lan`
 
-## Fixed Windows Inputs
+## TASK-005 Output State
 
-- `C:\Users\bot\quant\Vexter\runtime\dexter\config`
-- `C:\Users\bot\quant\Vexter\runtime\dexter\export`
-- `C:\Users\bot\quant\Vexter\runtime\mewx\config`
-- `C:\Users\bot\quant\Vexter\runtime\mewx\export`
-- `C:\Users\bot\quant\Vexter\data\raw\dexter`
-- `C:\Users\bot\quant\Vexter\data\raw\mewx`
-- `C:\Users\bot\quant\Vexter\data\logs\dexter`
-- `C:\Users\bot\quant\Vexter\data\logs\mewx`
-- `C:\Users\bot\quant\Vexter\data\replays\dexter`
-- `C:\Users\bot\quant\Vexter\data\replays\mewx`
+- live Dexter package path: `NONE`
+- live Mew-X package path: `NONE`
+- live comparison output directory: `NONE`
+- winner / tie decisions: deferred for candidate sourcing, execution, exit quality, and replayability
+- blocker evidence: `artifacts/reports/task-005-live-collection-blocker.md`
+- structured proof: `artifacts/proofs/task-005-live-collection-check.json`
 
-## TASK-005 Start Conditions
+## Unblock Requirements
 
-- collect matched Dexter and Mew-X live packages from the same measurement window
-- record evidence-backed winners or ties only after the live comparison pack validates both sources
-- keep strategy and execution logic frozen until replay validation clears the comparison evidence
+- deploy the frozen Dexter and Mew-X source branches onto `win-lan` so they write config, export, raw event, log, and replay artifacts into the fixed Vexter root
+- restore the Mew-X runtime prerequisites on `win-lan` (`cargo`, `rustc`, and PostgreSQL reachable from `DB_URL`)
+- collect one Dexter run and one Mew-X run from the same live measurement window
+- rerun `scripts/collect_comparison_package.ps1` and `scripts/comparison_analysis.py build-pack` once both live packages exist

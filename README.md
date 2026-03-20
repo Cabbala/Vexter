@@ -35,4 +35,4 @@ Vexter is the Mac-side control plane for comparative analysis of `Cabbala/Dexter
 
 `TASK-004-comparison-analysis` adds the first Vexter-side validator, shared metrics derivation layer, side-by-side comparison pack builder, and Windows collection runbook while keeping Dexter and Mew-X instrumentation frozen.
 
-Live matched-window comparison evidence is still pending. `TASK-005` has not started, and integration work remains blocked on live comparison plus replay validation.
+`TASK-005-live-comparison-evidence` started from `main` on 2026-03-21, but the first live matched-window collection attempt is blocked. The fixed Windows root exists on `DESKTOP-NNC6MPS`, yet `data/raw/{dexter,mewx}`, runtime `config` / `export`, and `artifacts/unified/comparison_inputs` were empty, and the host does not currently expose the Mew-X runtime prerequisites (`cargo`, `rustc`, `psql`, or a PostgreSQL listener on `127.0.0.1:5432`). No live comparison pack was produced, no winners or ties were recorded, and `TASK-006` cannot begin.

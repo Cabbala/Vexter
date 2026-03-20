@@ -1,11 +1,15 @@
 {
-  "task_id": "TASK-004-comparison-analysis",
-  "status": "complete_on_branch",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task004_comparison_analysis_bundle.tar.gz",
-  "bundle_path": "artifacts/bundles/task-004-comparison-analysis.tar.gz",
+  "task_id": "TASK-005-live-comparison-evidence",
+  "status": "blocked_on_collection",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_live_comparison_bundle.tar.gz",
+  "bundle_path": "artifacts/bundles/task-005-live-comparison-evidence.tar.gz",
   "context_pack": "artifacts/context_pack.json",
   "summary": "artifacts/summary.md",
   "task_ledger": "artifacts/task_ledger.jsonl",
+  "reports": [
+    "artifacts/reports/task-005-live-collection-blocker.md",
+    "artifacts/proofs/task-005-live-collection-check.json"
+  ],
   "manifests": [
     "manifests/reference_repos.json",
     "manifests/windows_runtime.json"
@@ -38,49 +42,41 @@
   "code": [
     "vexter/comparison/"
   ],
-  "next_task": {
-    "id": "TASK-005",
-    "state": "not_started",
-    "start_conditions": [
-      "Collect matched Dexter and Mew-X live packages from the same measurement window.",
-      "Run the Vexter comparison pack on live packages before naming any winners.",
-      "Do not begin bot integration before replay validation clears the comparison evidence."
-    ]
+  "task_result": {
+    "matched_measurement_window_found": false,
+    "live_dexter_package": null,
+    "live_mewx_package": null,
+    "comparison_output_dir": null,
+    "winner_recording": "deferred",
+    "task_006_ready": false
   },
   "proofs": {
-    "verified_start_commit": "d4fec420fd2ff336d5076a018f3ab5b256bca00e",
-    "windows_runtime_verified": true,
-    "windows_verified_paths": [
-      "C:\\Users\\bot\\quant\\Vexter\\runtime",
-      "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter",
-      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx",
-      "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified",
-      "C:\\Users\\bot\\quant\\Vexter\\data",
-      "C:\\Users\\bot\\quant\\Vexter\\artifacts"
-    ],
-    "windows_prepared_subdirs": [
-      "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
-      "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
-      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\config",
-      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export",
-      "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified\\contracts",
-      "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified\\reports",
-      "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
-      "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\mewx",
-      "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\unified",
-      "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
-      "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\mewx",
-      "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\unified",
-      "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
-      "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx",
-      "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
-      "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\mewx",
-      "C:\\Users\\bot\\quant\\Vexter\\artifacts\\dexter",
-      "C:\\Users\\bot\\quant\\Vexter\\artifacts\\mewx",
-      "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified"
-    ],
-    "fixture_pack_generated": true,
-    "live_comparison_pending": true
+    "verified_start_commit": "939642e6d185629f23a04e8e04f9fc7eac62ebc9",
+    "windows_runtime_host": "win-lan",
+    "resolved_windows_hostname": "DESKTOP-NNC6MPS",
+    "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
+    "fixed_root_present": true,
+    "raw_live_inputs_present": false,
+    "comparison_inputs_present": false,
+    "windows_tools": {
+      "git": true,
+      "python": true,
+      "cargo": false,
+      "rustc": false,
+      "psql": false
+    },
+    "postgres_process_detected": false,
+    "postgres_listener_5432": false,
+    "task_006_ready": false
+  },
+  "next_task": {
+    "id": "BLOCKED",
+    "state": "awaiting_windows_live_runtime",
+    "resume_requirements": [
+      "Provision the frozen Dexter and Mew-X runtime environments on win-lan.",
+      "Collect matched live packages from the same measurement window.",
+      "Do not begin replay validation or integration work before TASK-005 produces live comparison evidence."
+    ]
   },
   "included_paths": [
     "README.md",
@@ -97,6 +93,8 @@
     "artifacts/summary.md",
     "artifacts/proof_bundle_manifest.json",
     "artifacts/task_ledger.jsonl",
+    "artifacts/reports/",
+    "artifacts/proofs/",
     "artifacts/examples/"
   ]
 }

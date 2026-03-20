@@ -1,0 +1,66 @@
+{
+  "task_id": "TASK-005-live-comparison-evidence",
+  "checked_at_utc": "2026-03-20T17:01:21Z",
+  "windows_runtime_host": "win-lan",
+  "resolved_windows_hostname": "DESKTOP-NNC6MPS",
+  "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
+  "frozen_source_commits": {
+    "dexter": "69de8b615a0a366545cffcde7eb3cab0f43730dd",
+    "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "measurement_window_status": "not_found",
+  "live_package_paths": {
+    "dexter": null,
+    "mewx": null
+  },
+  "comparison_output_dir": null,
+  "windows_layout_checks": {
+    "fixed_root_present": true,
+    "raw_event_dirs": {
+      "dexter": {
+        "path": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+        "ndjson_files_found": 0
+      },
+      "mewx": {
+        "path": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx",
+        "ndjson_files_found": 0
+      }
+    },
+    "runtime_dirs": {
+      "dexter_config_files": 0,
+      "dexter_export_files": 0,
+      "mewx_config_files": 0,
+      "mewx_export_files": 0
+    },
+    "comparison_inputs": {
+      "path": "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified\\comparison_inputs",
+      "present": false,
+      "dexter_packages_found": 0,
+      "mewx_packages_found": 0
+    }
+  },
+  "runtime_prerequisites": {
+    "git": true,
+    "python": true,
+    "cargo": false,
+    "rustc": false,
+    "psql": false,
+    "postgres_process_detected": false,
+    "postgres_listener_5432": false
+  },
+  "blockers": [
+    {
+      "code": "no_live_raw_events",
+      "detail": "No NDJSON event files were present under the fixed Dexter or Mew-X raw-data roots."
+    },
+    {
+      "code": "no_packaged_runs",
+      "detail": "No normalized run packages were present under artifacts\\unified\\comparison_inputs."
+    },
+    {
+      "code": "missing_mewx_runtime_prerequisites",
+      "detail": "win-lan did not expose cargo, rustc, psql, or a PostgreSQL listener on 127.0.0.1:5432."
+    }
+  ],
+  "task_006_ready": false
+}

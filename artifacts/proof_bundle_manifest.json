@@ -1,14 +1,18 @@
 {
   "task_id": "TASK-005-live-comparison-evidence",
-  "status": "blocked_on_collection",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_live_comparison_bundle.tar.gz",
+  "status": "narrowed_blocker",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_windows_runtime_recovery_bundle.tar.gz",
   "bundle_path": "artifacts/bundles/task-005-live-comparison-evidence.tar.gz",
   "context_pack": "artifacts/context_pack.json",
   "summary": "artifacts/summary.md",
   "task_ledger": "artifacts/task_ledger.jsonl",
   "reports": [
     "artifacts/reports/task-005-live-collection-blocker.md",
-    "artifacts/proofs/task-005-live-collection-check.json"
+    "artifacts/reports/task-005-windows-runtime-recovery.md"
+  ],
+  "proof_files": [
+    "artifacts/proofs/task-005-live-collection-check.json",
+    "artifacts/proofs/task-005-windows-runtime-recovery.json"
   ],
   "manifests": [
     "manifests/reference_repos.json",
@@ -20,6 +24,7 @@
     "docs/metrics_catalog.md",
     "docs/comparison_matrix_template.md",
     "docs/comparison_collection_runbook.md",
+    "docs/windows_runtime_recovery.md",
     "docs/dexter_source_assessment.md",
     "docs/dexter_event_mapping.md",
     "docs/mewx_source_assessment.md",
@@ -34,10 +39,15 @@
   ],
   "scripts": [
     "scripts/bootstrap_windows_workspace.sh",
+    "scripts/recover_windows_runtime.sh",
     "scripts/sync_reference_repos.sh",
     "scripts/build_proof_bundle.sh",
     "scripts/comparison_analysis.py",
     "scripts/collect_comparison_package.ps1"
+  ],
+  "templates": [
+    "templates/windows_runtime/dexter.env.example",
+    "templates/windows_runtime/mewx.env.example"
   ],
   "code": [
     "vexter/comparison/"
@@ -52,6 +62,7 @@
   },
   "proofs": {
     "verified_start_commit": "939642e6d185629f23a04e8e04f9fc7eac62ebc9",
+    "verified_pr": 5,
     "windows_runtime_host": "win-lan",
     "resolved_windows_hostname": "DESKTOP-NNC6MPS",
     "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
@@ -61,21 +72,20 @@
     "windows_tools": {
       "git": true,
       "python": true,
-      "cargo": false,
-      "rustc": false,
-      "psql": false
+      "cargo": true,
+      "rustc": true,
+      "psql": true
     },
-    "postgres_process_detected": false,
-    "postgres_listener_5432": false,
+    "postgres_process_detected": true,
+    "postgres_listener_5432": true,
     "task_006_ready": false
   },
   "next_task": {
     "id": "BLOCKED",
-    "state": "awaiting_windows_live_runtime",
+    "state": "awaiting_live_env_and_collection",
     "resume_requirements": [
-      "Provision the frozen Dexter and Mew-X runtime environments on win-lan.",
-      "Collect matched live packages from the same measurement window.",
-      "Do not begin replay validation or integration work before TASK-005 produces live comparison evidence."
+      "Populate the documented repo-root .env files for Dexter and Mew-X.",
+      "Collect matched live packages from the same measurement window before replay validation."
     ]
   },
   "included_paths": [
@@ -87,6 +97,7 @@
     "vexter/",
     "manifests/",
     "scripts/",
+    "templates/",
     ".github/workflows/",
     "tests/",
     "artifacts/context_pack.json",

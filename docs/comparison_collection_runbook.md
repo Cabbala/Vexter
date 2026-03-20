@@ -4,6 +4,8 @@
 
 Collect one Dexter run package and one Mew-X run package from the fixed Windows layout, then build the first Vexter-side comparison pack without modifying either source instrumentation.
 
+Before launching either source on `win-lan`, populate the repo-root `.env` files described in [docs/windows_runtime_recovery.md](/Users/cabbala/Documents/vexter/task005-live-comparison-evidence/docs/windows_runtime_recovery.md). The fixed-root overrides below keep both frozen sources writing into `C:\Users\bot\quant\Vexter`.
+
 ## Fixed Windows Roots
 
 - `C:\Users\bot\quant\Vexter\data\raw\dexter`
@@ -25,7 +27,7 @@ Run the collector once per source. Provide the concrete event file and the run i
 powershell -ExecutionPolicy Bypass -File scripts\collect_comparison_package.ps1 `
   -Source dexter `
   -RunId dexter-20260321-window-a `
-  -SourceCommit 69de8b615a0a366545cffcde7eb3cab0f43730dd `
+  -SourceCommit 69de8b6ca57ca3d03025d85329c88aa4a167da34 `
   -Mode observe_live `
   -TransportMode ws `
   -StartedAtUtc 2026-03-21T01:00:00Z `
@@ -56,6 +58,15 @@ Each package contains:
 - `events.ndjson`
 - `proof_manifest.json`
 - copied `config/`, `exports/`, `replays/`, and `logs/` artifacts
+
+## Fixed-Root Launch Overrides
+
+Use these environment overrides when launching the frozen source checkouts so their observational artifacts land in the fixed Vexter root:
+
+```powershell
+$env:VEXTER_RUNTIME_ROOT = 'C:\Users\bot\quant\Vexter'
+$env:VEXTER_OUTPUT_ROOT = 'C:\Users\bot\quant\Vexter'
+```
 
 ## Mac-Side Validation And Pack Build
 

@@ -30,6 +30,7 @@ tar -czf "$BUNDLE_PATH" \
   specs \
   ops \
   plans \
+  templates \
   vexter \
   manifests \
   scripts \

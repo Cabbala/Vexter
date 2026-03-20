@@ -4,18 +4,19 @@ Vexter is the Mac-side control plane for comparative analysis of `Cabbala/Dexter
 
 ## Fixed Environment Split
 
-- Mac control plane: `/Users/cabbala/Projects/Vexter`
+- Mac control plane: `/Users/cabbala/Documents/vexter/task005-live-comparison-evidence`
 - Windows runtime host: `win-lan`
 - Windows preferred root: `D:\Quant\Vexter`, with fallback to user space
 - VPS: later-stage validation only
 
 ## Bootstrap Workflow
 
-1. Run `./scripts/sync_reference_repos.sh` to clone or refresh the source repos into the local ignored `sources/` workspace.
+1. Run `./scripts/sync_reference_repos.sh` to clone or refresh the frozen Dexter and Mew-X branches into the local ignored `sources/` workspace.
 2. Run `./scripts/bootstrap_windows_workspace.sh` from the Mac control plane to discover and prepare the Windows runtime/data layout.
-3. Run `./scripts/build_proof_bundle.sh` to refresh the task proof artifact bundle.
-4. Run `pytest -q` before Git operations.
-5. Complete Git operations from the Mac control plane so GitHub remains the source of truth.
+3. Run `./scripts/recover_windows_runtime.sh` to restore PostgreSQL, detached frozen source checkouts, and the Dexter Python runtime on `win-lan`.
+4. Run `./scripts/build_proof_bundle.sh` to refresh the task proof artifact bundle.
+5. Run `pytest -q` before Git operations.
+6. Complete Git operations from the Mac control plane so GitHub remains the source of truth.
 
 ## Repository Layout
 
@@ -35,4 +36,4 @@ Vexter is the Mac-side control plane for comparative analysis of `Cabbala/Dexter
 
 `TASK-004-comparison-analysis` adds the first Vexter-side validator, shared metrics derivation layer, side-by-side comparison pack builder, and Windows collection runbook while keeping Dexter and Mew-X instrumentation frozen.
 
-`TASK-005-live-comparison-evidence` started from `main` on 2026-03-21, but the first live matched-window collection attempt is blocked. The fixed Windows root exists on `DESKTOP-NNC6MPS`, yet `data/raw/{dexter,mewx}`, runtime `config` / `export`, and `artifacts/unified/comparison_inputs` were empty, and the host does not currently expose the Mew-X runtime prerequisites (`cargo`, `rustc`, `psql`, or a PostgreSQL listener on `127.0.0.1:5432`). No live comparison pack was produced, no winners or ties were recorded, and `TASK-006` cannot begin.
+`TASK-005-live-comparison-evidence` started from `main` on 2026-03-21. `win-lan` has now been recovered to a narrowed blocker state: the fixed Windows root, PostgreSQL listener, detached frozen source checkouts, Dexter Python runtime, and Mew-X protobuf build prerequisites are restored. A fresh Mew-X launch now reaches repo-root `.env` validation and fails on missing secrets, so matched live collection is waiting only on user-populated Windows `.env` files and the first shared live observation window. No live comparison pack has been produced yet, no winners or ties are recorded, and `TASK-006` cannot begin.

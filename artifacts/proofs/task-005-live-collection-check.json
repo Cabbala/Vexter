@@ -1,14 +1,15 @@
 {
   "task_id": "TASK-005-live-comparison-evidence",
-  "checked_at_utc": "2026-03-20T17:01:21Z",
+  "checked_at_utc": "2026-03-20T18:00:16Z",
+  "status": "narrowed_blocker",
   "windows_runtime_host": "win-lan",
   "resolved_windows_hostname": "DESKTOP-NNC6MPS",
   "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
   "frozen_source_commits": {
-    "dexter": "69de8b615a0a366545cffcde7eb3cab0f43730dd",
+    "dexter": "69de8b6ca57ca3d03025d85329c88aa4a167da34",
     "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
   },
-  "measurement_window_status": "not_found",
+  "measurement_window_status": "not_collected",
   "live_package_paths": {
     "dexter": null,
     "mewx": null
@@ -42,24 +43,39 @@
   "runtime_prerequisites": {
     "git": true,
     "python": true,
-    "cargo": false,
-    "rustc": false,
-    "psql": false,
-    "postgres_process_detected": false,
-    "postgres_listener_5432": false
+    "cargo": true,
+    "rustc": true,
+    "psql": true,
+    "postgres_process_detected": true,
+    "postgres_listener_5432": true
+  },
+  "source_checkouts": {
+    "dexter": {
+      "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter",
+      "commit": "69de8b6ca57ca3d03025d85329c88aa4a167da34"
+    },
+    "mewx": {
+      "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X",
+      "commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+      "startup_probe": "PRIVATE_KEY is invalid / not set"
+    }
+  },
+  "env_injection_points": {
+    "dexter": "C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter\\.env",
+    "mewx": "C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env"
   },
   "blockers": [
     {
+      "code": "missing_live_env_files",
+      "detail": "Repo-root .env files are still required at the documented Dexter and Mew-X Windows injection points before live collection can start."
+    },
+    {
       "code": "no_live_raw_events",
-      "detail": "No NDJSON event files were present under the fixed Dexter or Mew-X raw-data roots."
+      "detail": "No NDJSON event files have been collected under the fixed Dexter or Mew-X raw-data roots yet."
     },
     {
       "code": "no_packaged_runs",
-      "detail": "No normalized run packages were present under artifacts\\unified\\comparison_inputs."
-    },
-    {
-      "code": "missing_mewx_runtime_prerequisites",
-      "detail": "win-lan did not expose cargo, rustc, psql, or a PostgreSQL listener on 127.0.0.1:5432."
+      "detail": "No normalized run packages are present under artifacts\\unified\\comparison_inputs yet."
     }
   ],
   "task_006_ready": false

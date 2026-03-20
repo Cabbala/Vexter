@@ -4,7 +4,7 @@
 
 | Field | Dexter | Mew-X | Notes |
 | --- | --- | --- | --- |
-| Source commit | 69de8b615a0a366545cffcde7eb3cab0f43730dd | dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a |  |
+| Source commit | 69de8b6ca57ca3d03025d85329c88aa4a167da34 | dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a |  |
 | Runtime mode | observe_live | observe_live |  |
 | Transport mode | ws | grpc |  |
 | Measurement window | 2026-03-21T01:00:00Z -> 2026-03-21T01:20:00Z | 2026-03-21T01:00:00Z -> 2026-03-21T01:20:00Z |  |

@@ -5,7 +5,7 @@ WIN_HOST="${1:-win-lan}"
 
 cat <<'MSG'
 [info] Discovering and preparing Windows-side Vexter workspace via SSH.
-[info] Git remains on Mac; Windows is reserved for runtime, DB, logs, and replay data.
+[info] Git remains on Mac; Windows hosts detached source checkouts plus runtime, DB, logs, and replay data.
 MSG
 
 POWERSHELL_SCRIPT="$(cat <<'PS'
@@ -30,11 +30,19 @@ $dirs = @(
   'runtime\dexter',
   'runtime\mewx',
   'runtime\unified',
+  'runtime\unified\contracts',
+  'runtime\unified\reports',
   'data\postgres',
   'data\logs',
   'data\replays',
   'data\raw',
-  'artifacts'
+  'artifacts',
+  'artifacts\unified',
+  'artifacts\unified\comparison_inputs',
+  'downloads',
+  'sources',
+  'tools',
+  'venvs'
 )
 foreach ($d in $dirs) {
   New-Item -ItemType Directory -Force -Path (Join-Path $target $d) | Out-Null

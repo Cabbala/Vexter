@@ -1,7 +1,7 @@
 {
   "project": "Vexter",
   "goal": "Build the analysis/integration mothership for Dexter and Mew-X while keeping Git on Mac and runtime/data on Windows via ssh win-lan.",
-  "mac_control_plane": "/Users/cabbala/Projects/Vexter",
+  "mac_control_plane": "/Users/cabbala/Documents/vexter/task005-live-comparison-evidence",
   "windows_runtime_host": "win-lan",
   "resolved_windows_hostname": "DESKTOP-NNC6MPS",
   "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
@@ -22,11 +22,12 @@
     "push_changes_for_github_visibility": true
   },
   "phase": "TASK-005-live-comparison-evidence",
-  "status": "blocked_on_collection",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_live_comparison_bundle.tar.gz",
+  "status": "narrowed_blocker",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_windows_runtime_recovery_bundle.tar.gz",
   "starting_point": {
-    "verified_at": "2026-03-20T17:01:21Z",
+    "verified_at": "2026-03-20T18:00:16Z",
     "main": "939642e6d185629f23a04e8e04f9fc7eac62ebc9",
+    "verified_pr": 5,
     "work_branch": "codex/task-005-live-comparison-evidence"
   },
   "deliverables": {
@@ -36,6 +37,7 @@
       "docs/metrics_catalog.md",
       "docs/comparison_matrix_template.md",
       "docs/comparison_collection_runbook.md",
+      "docs/windows_runtime_recovery.md",
       "docs/dexter_source_assessment.md",
       "docs/dexter_event_mapping.md",
       "docs/mewx_source_assessment.md",
@@ -52,13 +54,17 @@
       "artifacts/proof_bundle_manifest.json",
       "artifacts/task_ledger.jsonl",
       "artifacts/reports/task-005-live-collection-blocker.md",
+      "artifacts/reports/task-005-windows-runtime-recovery.md",
       "artifacts/proofs/task-005-live-collection-check.json",
+      "artifacts/proofs/task-005-windows-runtime-recovery.json",
       "artifacts/examples/task-004-sample-comparison"
     ],
     "comparison_tooling": [
       "vexter/comparison/",
       "scripts/comparison_analysis.py",
-      "scripts/collect_comparison_package.ps1"
+      "scripts/collect_comparison_package.ps1",
+      "scripts/recover_windows_runtime.sh",
+      "templates/windows_runtime/"
     ]
   },
   "previous_task": {
@@ -75,14 +81,21 @@
   "current_task": {
     "id": "TASK-005-live-comparison-evidence",
     "scope": [
-      "Collect matched Dexter and Mew-X live packages from the same measurement window",
-      "Validate both packages and derive shared metrics",
-      "Build the first live comparison pack and record evidence-backed winners or ties only where supported",
-      "Keep strategy, execution logic, and source instrumentation frozen"
+      "Recover Windows runtime prerequisites only",
+      "Clarify repo-root env injection points for Dexter and Mew-X",
+      "Preserve frozen Dexter and Mew-X strategy, execution, and instrumentation logic",
+      "Reach the point where matched live package collection is the only remaining step"
     ],
     "frozen_source_commits": {
-      "dexter": "69de8b615a0a366545cffcde7eb3cab0f43730dd",
+      "dexter": "69de8b6ca57ca3d03025d85329c88aa4a167da34",
       "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+    },
+    "recovery_result": {
+      "windows_runtime_prerequisites_restored": true,
+      "postgres_listener": "127.0.0.1:5432",
+      "dexter_database_bootstrap": "success",
+      "env_injection_points_documented": true,
+      "mewx_startup_probe": "PRIVATE_KEY is invalid / not set"
     },
     "attempt_result": {
       "matched_measurement_window_found": false,
@@ -92,13 +105,12 @@
       "winner_recording": "deferred"
     },
     "blockers": [
-      "No live NDJSON events were present under the fixed Dexter or Mew-X raw-data roots.",
-      "No run packages were present under artifacts\\unified\\comparison_inputs.",
-      "win-lan does not currently expose cargo, rustc, psql, or a PostgreSQL listener on 127.0.0.1:5432."
+      "Repo-root .env files are still required at the documented Dexter and Mew-X Windows injection points.",
+      "No live NDJSON events or packaged runs have been collected yet."
     ]
   },
   "live_collection_attempt": {
-    "checked_at": "2026-03-20T17:01:21Z",
+    "checked_at": "2026-03-20T18:00:16Z",
     "raw_event_dirs": {
       "dexter": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
       "mewx": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx"
@@ -113,63 +125,34 @@
     "windows_tools": {
       "git": true,
       "python": true,
-      "cargo": false,
-      "rustc": false,
-      "psql": false
+      "cargo": true,
+      "rustc": true,
+      "psql": true
     },
-    "postgres_process_detected": false,
-    "postgres_listener_5432": false
+    "postgres_process_detected": true,
+    "postgres_listener_5432": true
   },
   "next_task": {
     "id": "BLOCKED",
-    "state": "awaiting_windows_live_runtime",
+    "state": "awaiting_live_env_and_collection",
     "task_006_ready": false,
     "resume_requirements": [
-      "Provision the frozen Dexter and Mew-X runtime environments on win-lan.",
-      "Restore raw event, config, export, replay, and log outputs under the fixed Vexter Windows root.",
+      "Populate the documented repo-root .env files for Dexter and Mew-X.",
       "Collect one Dexter run and one Mew-X run from the same live measurement window before rerunning the comparison pack."
     ]
   },
-  "source_assessment": {
-    "dexter": {
-      "key_paths": [
-        "sources/Dexter/DexAI/trust_factor.py",
-        "sources/Dexter/Dexter.py",
-        "sources/Dexter/DexLab/instrumentation.py",
-        "sources/Dexter/DexLab/market.py",
-        "sources/Dexter/DexLab/swaps.py",
-        "sources/Dexter/tests/test_vexter_instrumentation.py"
-      ],
-      "key_findings": [
-        "Creator scoring remains backed by PostgreSQL and fed from stagnant mints rather than live memory.",
-        "Live trading now emits normalized observational events without changing the adaptive entry or exit logic.",
-        "Replay exports are generated when stagnant mints are persisted and can be backfilled from the database."
-      ]
-    },
-    "mewx": {
-      "key_paths": [
-        "sources/Mew-X/src/main.rs",
-        "sources/Mew-X/src/mew/config.rs",
-        "sources/Mew-X/src/mew/deagle/deagle.rs",
-        "sources/Mew-X/src/mew/instrumentation.rs",
-        "sources/Mew-X/src/mew/snipe/handler.rs",
-        "sources/Mew-X/src/mew/sol_hook/sol.rs"
-      ],
-      "key_findings": [
-        "Candidate selection now exports source-labeled creator admissions and refresh diffs without changing ranking behavior.",
-        "Execution telemetry is captured at transport-ack granularity so route, fee, and retry choices are attributable without inserting new confirmation gates.",
-        "Migration, dip-watch, and session checkpoint surfaces now emit normalized observational events for later side-by-side analysis."
-      ]
-    }
-  },
   "windows_runtime_verification": {
-    "verified_at": "2026-03-20T14:49:45Z",
+    "verified_at": "2026-03-20T18:00:16Z",
     "root_exists": true,
     "observed_paths": [
       "C:\\Users\\bot\\quant\\Vexter\\runtime",
       "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter",
       "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx",
       "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified",
+      "C:\\Users\\bot\\quant\\Vexter\\sources",
+      "C:\\Users\\bot\\quant\\Vexter\\downloads",
+      "C:\\Users\\bot\\quant\\Vexter\\tools",
+      "C:\\Users\\bot\\quant\\Vexter\\venvs",
       "C:\\Users\\bot\\quant\\Vexter\\data\\logs",
       "C:\\Users\\bot\\quant\\Vexter\\data\\postgres",
       "C:\\Users\\bot\\quant\\Vexter\\data\\raw",
@@ -183,6 +166,7 @@
       "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export",
       "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified\\contracts",
       "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified\\reports",
+      "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified\\comparison_inputs",
       "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
       "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\mewx",
       "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\unified",

@@ -2,17 +2,21 @@
   "host_alias": "win-lan",
   "resolved_hostname": "DESKTOP-NNC6MPS",
   "discovered_on": "2026-03-20",
-  "verified_on": "2026-03-20T14:49:45Z",
+  "verified_on": "2026-03-20T18:00:16Z",
   "preferred_roots": [
     "D:\\Quant\\Vexter",
     "C:\\Users\\<USER>\\quant\\Vexter"
   ],
   "selected_root": "C:\\Users\\bot\\quant\\Vexter",
-  "status": "analysis_layout_verified_from_mac",
+  "status": "runtime_recovered_waiting_on_live_env",
   "directories": [
     "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter",
     "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx",
     "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified",
+    "C:\\Users\\bot\\quant\\Vexter\\sources",
+    "C:\\Users\\bot\\quant\\Vexter\\downloads",
+    "C:\\Users\\bot\\quant\\Vexter\\tools",
+    "C:\\Users\\bot\\quant\\Vexter\\venvs",
     "C:\\Users\\bot\\quant\\Vexter\\data\\postgres",
     "C:\\Users\\bot\\quant\\Vexter\\data\\logs",
     "C:\\Users\\bot\\quant\\Vexter\\data\\replays",
@@ -24,6 +28,10 @@
     "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter",
     "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx",
     "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified",
+    "C:\\Users\\bot\\quant\\Vexter\\sources",
+    "C:\\Users\\bot\\quant\\Vexter\\downloads",
+    "C:\\Users\\bot\\quant\\Vexter\\tools",
+    "C:\\Users\\bot\\quant\\Vexter\\venvs",
     "C:\\Users\\bot\\quant\\Vexter\\data",
     "C:\\Users\\bot\\quant\\Vexter\\data\\logs",
     "C:\\Users\\bot\\quant\\Vexter\\data\\postgres",
@@ -71,6 +79,7 @@
     "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export",
     "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified\\contracts",
     "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified\\reports",
+    "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified\\comparison_inputs",
     "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
     "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\mewx",
     "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\unified",
@@ -84,5 +93,99 @@
     "C:\\Users\\bot\\quant\\Vexter\\artifacts\\dexter",
     "C:\\Users\\bot\\quant\\Vexter\\artifacts\\mewx",
     "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified"
-  ]
+  ],
+  "runtime_prerequisites": {
+    "git": {
+      "present": true
+    },
+    "python": {
+      "present": true
+    },
+    "cargo": {
+      "present": true,
+      "version": "cargo 1.94.0 (85eff7c80 2026-01-15)"
+    },
+    "rustc": {
+      "present": true,
+      "version": "rustc 1.94.0 (4a4ef493e 2026-03-02)"
+    },
+    "sh": {
+      "present": true,
+      "path": "C:\\Program Files\\Git\\bin\\sh.exe"
+    },
+    "protobuf": {
+      "present": true,
+      "provider": "Google.Protobuf winget package",
+      "protoc": "C:\\Users\\bot\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Google.Protobuf_Microsoft.Winget.Source_8wekyb3d8bbwe\\bin\\protoc.exe",
+      "include": "C:\\Users\\bot\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Google.Protobuf_Microsoft.Winget.Source_8wekyb3d8bbwe\\include",
+      "install_dir": "C:\\Users\\bot\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Google.Protobuf_Microsoft.Winget.Source_8wekyb3d8bbwe"
+    },
+    "psql": {
+      "present": true,
+      "version": "psql (PostgreSQL) 17.9"
+    },
+    "postgres": {
+      "present": true,
+      "provider": "official_edb_binaries_zip",
+      "version": "17.9",
+      "zip_url": "https://get.enterprisedb.com/postgresql/postgresql-17.9-2-windows-x64-binaries.zip",
+      "listener": "127.0.0.1:5432",
+      "process_name": "postgres.exe",
+      "data_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\portable17",
+      "log_path": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\postgresql-17.log"
+    }
+  },
+  "source_checkouts": {
+    "dexter": {
+      "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter",
+      "branch": "codex/task-002-dexter-instrumentation",
+      "commit": "69de8b6ca57ca3d03025d85329c88aa4a167da34",
+      "python_venv": "C:\\Users\\bot\\quant\\Vexter\\venvs\\dexter"
+    },
+    "mewx": {
+      "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X",
+      "branch": "codex/task-003-mewx-instrumentation",
+      "commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+      "startup_probe": {
+        "status": "blocked_on_env",
+        "message": "PRIVATE_KEY is invalid / not set"
+      }
+    }
+  },
+  "env_injection_points": {
+    "dexter": {
+      "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter\\.env",
+      "template": "templates/windows_runtime/dexter.env.example",
+      "required_keys": [
+        "PRIVATE_KEY",
+        "HTTP_URL",
+        "WS_URL"
+      ]
+    },
+    "mewx": {
+      "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env",
+      "template": "templates/windows_runtime/mewx.env.example",
+      "required_keys": [
+        "RPC_URL",
+        "WS_URL",
+        "PRIVATE_KEY",
+        "DB_URL"
+      ],
+      "optional_keys": [
+        "GRPC_URL",
+        "GRPC_TOKEN",
+        "USE_GRPC",
+        "MODE",
+        "MAX_TOKENS_AT_ONCE",
+        "TX_STRAT",
+        "NONCE_ACCOUNT",
+        "NEXTBLOCK_KEY",
+        "ZERO_SLOT_KEY",
+        "TEMPORAL_KEY",
+        "BLOX_KEY",
+        "TIP_SOL",
+        "PRIORITY_FEE_LVL"
+      ]
+    }
+  }
 }

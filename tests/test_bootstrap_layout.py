@@ -150,6 +150,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
         "awaiting_nontrivial_matched_live_window_and_fuller_coverage",
+        "awaiting_pass_grade_matched_live_pair",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]

@@ -67,6 +67,36 @@ def test_validate_run_package_accepts_windows_relative_paths(tmp_path: Path) -> 
     assert result["checks"]["proof_attribution_ok"] is True
 
 
+def test_validate_run_package_summarizes_repeated_payload_issues(tmp_path: Path) -> None:
+    target = tmp_path / "mewx_fixture"
+    shutil.copytree(MEWX_FIXTURE, target)
+
+    events_path = target / "events.ndjson"
+    events = [json.loads(line) for line in events_path.read_text().splitlines() if line.strip()]
+    updated = 0
+    duplicate_event = None
+    for event in events:
+        if event["event_type"] == "entry_rejected":
+            event["payload"].pop("tx_signature", None)
+            updated += 1
+            duplicate_event = dict(event)
+            duplicate_event["event_id"] = "mew-duplicate"
+            break
+    assert updated == 1
+    assert duplicate_event is not None
+    events.append(duplicate_event)
+    events_path.write_text("".join(json.dumps(event) + "\n" for event in events))
+
+    result = validate_run_package(target)
+
+    payload_issues = [
+        issue for issue in result["issues"] if issue["code"] == "missing_event_payload_fields"
+    ]
+    assert len(payload_issues) == 1
+    assert payload_issues[0]["count"] == 2
+    assert len(payload_issues[0]["sample_event_ids"]) == 2
+
+
 def test_derive_metrics_returns_expected_subset() -> None:
     dexter_metrics = derive_metrics(DEXTER_FIXTURE)["metrics"]
     mewx_metrics = derive_metrics(MEWX_FIXTURE)["metrics"]
@@ -164,3 +194,45 @@ def test_build_comparison_pack_auto_defers_unmatched_live_windows(
     first_row = comparison_pack["comparison_matrix"]["candidate_generation"][0]
     assert first_row["winner"] == "pending_live_evidence"
     assert "Resume TASK-005 with a matched comparable live window" in summary
+
+
+def test_build_comparison_pack_matched_partial_live_windows_updates_summary(
+    tmp_path: Path,
+) -> None:
+    dexter_live = tmp_path / "dexter-live"
+    mewx_live = tmp_path / "mewx-live"
+    shutil.copytree(DEXTER_FIXTURE, dexter_live)
+    shutil.copytree(MEWX_FIXTURE, mewx_live)
+
+    for package_dir, run_id in (
+        (dexter_live, "dexter-live-001"),
+        (mewx_live, "mewx-live-001"),
+    ):
+        metadata = _load_json(package_dir / "run_metadata.json")
+        metadata["evidence_kind"] = "live"
+        metadata["run_id"] = run_id
+        metadata["started_at_utc"] = "2026-03-21T01:00:00Z"
+        metadata["ended_at_utc"] = "2026-03-21T01:20:00Z"
+        _write_json(package_dir / "run_metadata.json", metadata)
+
+        events_path = package_dir / "events.ndjson"
+        events = [json.loads(line) for line in events_path.read_text().splitlines() if line.strip()]
+        for event in events:
+            event["run_id"] = run_id
+        if package_dir == dexter_live:
+            for event in events:
+                if event["event_type"] == "entry_rejected":
+                    event["payload"].pop("tx_signature", None)
+        events_path.write_text("".join(json.dumps(event) + "\n" for event in events))
+
+    output_dir = tmp_path / "comparison-pack-live-matched-partial"
+    build_comparison_pack(
+        dexter_package_dir=dexter_live,
+        mewx_package_dir=mewx_live,
+        output_dir=output_dir,
+    )
+
+    summary = (output_dir / "summary.md").read_text()
+
+    assert "matched-window packages validate beyond `partial`" in summary
+    assert "TASK-006 remains blocked" in summary

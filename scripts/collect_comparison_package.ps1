@@ -32,7 +32,8 @@ param(
     [string]$ExportDir,
     [string]$ReplayDir,
     [string]$LogDir,
-    [int]$HoursWindow = 6
+    [int]$HoursWindow = 6,
+    [int]$MinutesPadding = 10
 )
 
 Set-StrictMode -Version Latest
@@ -49,46 +50,163 @@ function Get-DefaultSourcePaths {
     }
 }
 
-function Copy-WindowedFiles {
+function Get-TimeBounds {
     param(
-        [string]$SourcePath,
-        [string]$DestinationPath,
+        [string]$StartedAt,
+        [string]$EndedAt,
         [datetime]$AnchorTime,
-        [int]$Hours
+        [int]$Hours,
+        [int]$PaddingMinutes
+    )
+
+    $started = $null
+    $ended = $null
+    try {
+        $started = [datetime]::Parse($StartedAt).ToUniversalTime()
+    } catch {
+    }
+    try {
+        $ended = [datetime]::Parse($EndedAt).ToUniversalTime()
+    } catch {
+    }
+
+    if ($started -and $ended -and $ended -lt $started) {
+        throw "EndedAtUtc must be greater than or equal to StartedAtUtc"
+    }
+
+    if ($started -and $ended) {
+        return @{
+            LowerBound = $started.AddMinutes(-1 * $PaddingMinutes)
+            UpperBound = $ended.AddMinutes($PaddingMinutes)
+        }
+    }
+
+    return @{
+        LowerBound = $AnchorTime.AddHours(-1 * $Hours)
+        UpperBound = $AnchorTime.AddHours($Hours)
+    }
+}
+
+function Get-ScopedFiles {
+    param(
+        [string]$SearchRoot,
+        [datetime]$LowerBound,
+        [datetime]$UpperBound,
+        [string]$RunId,
+        [switch]$PreferRunId
+    )
+
+    if (-not (Test-Path $SearchRoot)) {
+        return @()
+    }
+
+    $files = @(
+        Get-ChildItem -Path $SearchRoot -File -Recurse |
+            Where-Object { $_.LastWriteTimeUtc -ge $LowerBound -and $_.LastWriteTimeUtc -le $UpperBound } |
+            Sort-Object LastWriteTimeUtc, FullName
+    )
+
+    if ($PreferRunId -and $RunId) {
+        $runScoped = @($files | Where-Object { $_.Name -like "*$RunId*" })
+        if ($runScoped.Count -gt 0) {
+            return $runScoped
+        }
+    }
+
+    return $files
+}
+
+function Copy-Files {
+    param(
+        [object[]]$Files,
+        [string]$DestinationPath
     )
 
     $copied = @()
-    if (-not (Test-Path $SourcePath)) {
-        return $copied
+    foreach ($file in @($Files)) {
+        $target = Join-Path $DestinationPath $file.Name
+        Copy-Item $file.FullName $target -Force
+        $copied += $target
     }
 
-    $lowerBound = $AnchorTime.AddHours(-1 * $Hours)
-    $upperBound = $AnchorTime.AddHours($Hours)
-    Get-ChildItem -Path $SourcePath -File -Recurse |
-        Where-Object { $_.LastWriteTimeUtc -ge $lowerBound -and $_.LastWriteTimeUtc -le $upperBound } |
-        ForEach-Object {
-            $target = Join-Path $DestinationPath $_.Name
-            Copy-Item $_.FullName $target -Force
-            $copied += $target
+    return $copied
+}
+
+function Copy-EventStream {
+    param(
+        [string]$SourcePath,
+        [string]$DestinationPath,
+        [string]$StartedAt,
+        [string]$EndedAt
+    )
+
+    $started = $null
+    $ended = $null
+    try {
+        $started = [datetime]::Parse($StartedAt).ToUniversalTime()
+    } catch {
+    }
+    try {
+        $ended = [datetime]::Parse($EndedAt).ToUniversalTime()
+    } catch {
+    }
+
+    if (-not $started -or -not $ended) {
+        Copy-Item $SourcePath $DestinationPath -Force
+        return
+    }
+
+    $selected = New-Object System.Collections.Generic.List[string]
+    Get-Content -LiteralPath $SourcePath | ForEach-Object {
+        $line = $_
+        if (-not $line) {
+            return
         }
 
-    return $copied
+        try {
+            $event = $line | ConvertFrom-Json -Depth 8
+            $timestamp = [datetime]::Parse([string]$event.ts_utc).ToUniversalTime()
+        } catch {
+            return
+        }
+
+        if ($timestamp -ge $started -and $timestamp -le $ended) {
+            [void]$selected.Add($line)
+        }
+    }
+
+    if ($selected.Count -eq 0) {
+        throw "No events fell within the selected measurement window: $StartedAt -> $EndedAt"
+    }
+
+    [System.IO.File]::WriteAllLines($DestinationPath, $selected)
 }
 
 function Select-LatestMatchingFile {
     param(
         [string]$SearchRoot,
-        [string[]]$Patterns
+        [string[]]$Patterns,
+        [string]$RunId
     )
 
     if (-not (Test-Path $SearchRoot)) {
         return $null
     }
 
-    $matches = foreach ($pattern in $Patterns) {
-        Get-ChildItem -Path $SearchRoot -File -Recurse |
-            Where-Object { $_.Name -match $pattern }
+    $files = @(
+        Get-ChildItem -Path $SearchRoot -File -Recurse
+    )
+    if ($RunId) {
+        $runScoped = @($files | Where-Object { $_.Name -like "*$RunId*" })
+        if ($runScoped.Count -gt 0) {
+            $files = $runScoped
+        }
     }
+
+    $matches = foreach ($pattern in $Patterns) {
+        $files | Where-Object { $_.Name -match $pattern }
+    }
+
     return $matches |
         Sort-Object LastWriteTimeUtc -Descending |
         Select-Object -First 1
@@ -114,11 +232,17 @@ if (-not $LogDir) { $LogDir = $defaultPaths.LogDir }
 
 $eventItem = Get-Item $EventFile
 $anchorTime = $eventItem.LastWriteTimeUtc
+$timeBounds = Get-TimeBounds -StartedAt $StartedAtUtc -EndedAt $EndedAtUtc -AnchorTime $anchorTime -Hours $HoursWindow -PaddingMinutes $MinutesPadding
 
 if (-not $ConfigSnapshot) {
-    $configCandidate = Get-ChildItem -Path $defaultPaths.ConfigDir -File -Recurse -ErrorAction SilentlyContinue |
-        Sort-Object LastWriteTimeUtc -Descending |
-        Select-Object -First 1
+    $configCandidates = @(Get-ScopedFiles -SearchRoot $defaultPaths.ConfigDir -LowerBound $timeBounds.LowerBound -UpperBound $timeBounds.UpperBound -RunId $RunId -PreferRunId)
+    if ($configCandidates.Count -eq 0 -and (Test-Path $defaultPaths.ConfigDir)) {
+        $configCandidates = @(
+            Get-ChildItem -Path $defaultPaths.ConfigDir -File -Recurse -ErrorAction SilentlyContinue |
+                Sort-Object LastWriteTimeUtc -Descending
+        )
+    }
+    $configCandidate = $configCandidates | Select-Object -First 1
     if ($configCandidate) {
         $ConfigSnapshot = $configCandidate.FullName
     }
@@ -132,7 +256,7 @@ $logsOut = Join-Path $packageDir "logs"
 New-Item -ItemType Directory -Force -Path $configOut, $exportsOut, $replaysOut, $logsOut | Out-Null
 
 $eventTarget = Join-Path $packageDir "events.ndjson"
-Copy-Item $eventItem.FullName $eventTarget -Force
+Copy-EventStream -SourcePath $eventItem.FullName -DestinationPath $eventTarget -StartedAt $StartedAtUtc -EndedAt $EndedAtUtc
 
 $configTarget = $null
 if ($ConfigSnapshot -and (Test-Path $ConfigSnapshot)) {
@@ -140,14 +264,14 @@ if ($ConfigSnapshot -and (Test-Path $ConfigSnapshot)) {
     Copy-Item $ConfigSnapshot $configTarget -Force
 }
 
-$exportFiles = Copy-WindowedFiles -SourcePath $ExportDir -DestinationPath $exportsOut -AnchorTime $anchorTime -Hours $HoursWindow
-$replayFiles = Copy-WindowedFiles -SourcePath $ReplayDir -DestinationPath $replaysOut -AnchorTime $anchorTime -Hours $HoursWindow
-$logFiles = Copy-WindowedFiles -SourcePath $LogDir -DestinationPath $logsOut -AnchorTime $anchorTime -Hours $HoursWindow
+$exportFiles = Copy-Files -Files (Get-ScopedFiles -SearchRoot $ExportDir -LowerBound $timeBounds.LowerBound -UpperBound $timeBounds.UpperBound -RunId $RunId -PreferRunId) -DestinationPath $exportsOut
+$replayFiles = Copy-Files -Files (Get-ScopedFiles -SearchRoot $ReplayDir -LowerBound $timeBounds.LowerBound -UpperBound $timeBounds.UpperBound -RunId $RunId) -DestinationPath $replaysOut
+$logFiles = Copy-Files -Files (Get-ScopedFiles -SearchRoot $LogDir -LowerBound $timeBounds.LowerBound -UpperBound $timeBounds.UpperBound -RunId $RunId -PreferRunId) -DestinationPath $logsOut
 
 $sourceExports = @{}
 if ($Source -eq "dexter") {
-    $leaderboard = Select-LatestMatchingFile -SearchRoot $exportsOut -Patterns @("leaderboard")
-    $replay = Select-LatestMatchingFile -SearchRoot $replaysOut -Patterns @("stagnant", "replay")
+    $leaderboard = Select-LatestMatchingFile -SearchRoot $exportsOut -Patterns @("leaderboard") -RunId $RunId
+    $replay = Select-LatestMatchingFile -SearchRoot $replaysOut -Patterns @("stagnant", "replay") -RunId $RunId
     if (-not $replay) {
         $replay = Get-ChildItem -Path $replaysOut -File -Recurse -ErrorAction SilentlyContinue |
             Sort-Object LastWriteTimeUtc -Descending |
@@ -157,8 +281,8 @@ if ($Source -eq "dexter") {
     if ($replay) { $sourceExports["stagnant_mint_replay"] = To-PackageRef -Bucket "replays" -LeafName $replay.Name }
 }
 if ($Source -eq "mewx") {
-    $refresh = Select-LatestMatchingFile -SearchRoot $exportsOut -Patterns @("candidate", "refresh")
-    $session = Select-LatestMatchingFile -SearchRoot $exportsOut -Patterns @("session", "summary")
+    $refresh = Select-LatestMatchingFile -SearchRoot $exportsOut -Patterns @("candidate", "refresh") -RunId $RunId
+    $session = Select-LatestMatchingFile -SearchRoot $exportsOut -Patterns @("session", "summary") -RunId $RunId
     if (-not $session) {
         $session = Get-ChildItem -Path $exportsOut -File -Recurse -ErrorAction SilentlyContinue |
             Where-Object { $_.Name -notmatch "candidate|state" } |
@@ -185,14 +309,13 @@ $metadata = [ordered]@{
     source_exports = $sourceExports
 }
 
-$proofManifest = [ordered]@{
-    raw_events = @("events.ndjson")
-    logs = @($logFiles | ForEach-Object { To-PackageRef -Bucket "logs" -LeafName (Split-Path $_ -Leaf) })
-    replays = @($replayFiles | ForEach-Object { To-PackageRef -Bucket "replays" -LeafName (Split-Path $_ -Leaf) })
-    db_exports = @($replayFiles | ForEach-Object { To-PackageRef -Bucket "replays" -LeafName (Split-Path $_ -Leaf) })
-    exports = @($exportFiles | ForEach-Object { To-PackageRef -Bucket "exports" -LeafName (Split-Path $_ -Leaf) })
-    config = if ($configTarget) { @(To-PackageRef -Bucket "config" -LeafName (Split-Path $configTarget -Leaf)) } else { @() }
-}
+$proofManifest = [ordered]@{}
+$proofManifest["raw_events"] = @("events.ndjson")
+$proofManifest["logs"] = @($logFiles | ForEach-Object { To-PackageRef -Bucket "logs" -LeafName (Split-Path $_ -Leaf) })
+$proofManifest["replays"] = @($replayFiles | ForEach-Object { To-PackageRef -Bucket "replays" -LeafName (Split-Path $_ -Leaf) })
+$proofManifest["db_exports"] = @($replayFiles | ForEach-Object { To-PackageRef -Bucket "replays" -LeafName (Split-Path $_ -Leaf) })
+$proofManifest["exports"] = @($exportFiles | ForEach-Object { To-PackageRef -Bucket "exports" -LeafName (Split-Path $_ -Leaf) })
+$proofManifest["config"] = if ($configTarget) { ,(To-PackageRef -Bucket "config" -LeafName (Split-Path $configTarget -Leaf)) } else { @() }
 
 $metadata | ConvertTo-Json -Depth 8 | Set-Content -Path (Join-Path $packageDir "run_metadata.json")
 $proofManifest | ConvertTo-Json -Depth 8 | Set-Content -Path (Join-Path $packageDir "proof_manifest.json")

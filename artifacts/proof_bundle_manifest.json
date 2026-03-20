@@ -1,6 +1,6 @@
 {
   "task_id": "TASK-005-live-comparison-evidence",
-  "status": "exact_signer_env_blocker",
+  "status": "partial_live_comparison_blocker",
   "bundle_source": "/Users/cabbala/Downloads/vexter_task005_resume_live_collection_v2_bundle.tar.gz",
   "bundle_path": "artifacts/bundles/task-005-live-comparison-evidence.tar.gz",
   "context_pack": "artifacts/context_pack.json",
@@ -8,11 +8,13 @@
   "task_ledger": "artifacts/task_ledger.jsonl",
   "reports": [
     "artifacts/reports/task-005-live-collection-blocker.md",
-    "artifacts/reports/task-005-windows-runtime-recovery.md"
+    "artifacts/reports/task-005-windows-runtime-recovery.md",
+    "artifacts/reports/task-005-live-smoke-comparison"
   ],
   "proof_files": [
     "artifacts/proofs/task-005-live-collection-check.json",
-    "artifacts/proofs/task-005-windows-runtime-recovery.json"
+    "artifacts/proofs/task-005-windows-runtime-recovery.json",
+    "artifacts/proofs/task-005-live-smoke-results"
   ],
   "manifests": [
     "manifests/reference_repos.json",
@@ -54,9 +56,9 @@
   ],
   "task_result": {
     "matched_measurement_window_found": false,
-    "live_dexter_package": null,
-    "live_mewx_package": null,
-    "comparison_output_dir": null,
+    "live_dexter_package": "artifacts/proofs/task-005-live-smoke-results/dexter.validate.json",
+    "live_mewx_package": "artifacts/proofs/task-005-live-smoke-results/mewx.validate.json",
+    "comparison_output_dir": "artifacts/reports/task-005-live-smoke-comparison",
     "winner_recording": "deferred",
     "task_006_ready": false
   },
@@ -67,8 +69,8 @@
     "resolved_windows_hostname": "DESKTOP-NNC6MPS",
     "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
     "fixed_root_present": true,
-    "raw_live_inputs_present": false,
-    "comparison_inputs_present": false,
+    "raw_live_inputs_present": true,
+    "comparison_inputs_present": true,
     "windows_tools": {
       "git": true,
       "python": true,
@@ -81,18 +83,19 @@
     "dexter_helius_http_rpc_ok": true,
     "dexter_helius_ws_ok": true,
     "mewx_rpc_url_env_gap_fixed": true,
-    "dexter_private_key_matches_helius_api_key": true,
-    "mewx_private_key_prefixes_rpc_api_key": true,
+    "dexter_env_formatting_fixed": true,
+    "mewx_env_formatting_fixed": true,
+    "windows_package_paths_normalized_cross_platform": true,
     "task_006_ready": false
   },
   "next_task": {
     "id": "BLOCKED",
-    "state": "awaiting_exact_signing_key_correction",
+    "state": "awaiting_matched_live_window_with_full_event_coverage",
     "resume_requirements": [
-      "Replace PRIVATE_KEY in C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter\\.env with a valid base58 Solana signing key; the current value is the Helius api-key from HTTP_URL/WS_URL.",
-      "Replace PRIVATE_KEY in C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env with a valid base58 Solana signing key; the current value is a truncated prefix of the Helius api-key from RPC_URL/WS_URL.",
-      "Keep RPC_URL populated explicitly in C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env if the file is regenerated.",
-      "Collect matched live packages from the same measurement window before replay validation."
+      "Collect matched live packages from the same measurement window.",
+      "Keep frozen Dexter and Mew-X strategy, execution, and instrumentation logic unchanged.",
+      "Capture fuller Dexter execution coverage than the current observe-only smoke package.",
+      "Rerun validate, derive-metrics, and build-pack on that matched package pair before replay validation."
     ]
   },
   "included_paths": [

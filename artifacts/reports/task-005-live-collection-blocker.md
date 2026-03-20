@@ -2,43 +2,50 @@
 
 ## Checked Scope
 
-- checked at `2026-03-20T19:11:55Z`
+- checked at `2026-03-20T19:46:59Z`
 - target host: `win-lan` (`DESKTOP-NNC6MPS`)
 - fixed runtime root: `C:\Users\bot\quant\Vexter`
 - verified start point: `origin/main` commit `939642e6d185629f23a04e8e04f9fc7eac62ebc9` and open PR `#5`
 - required result: one Dexter package and one Mew-X package from the same live measurement window, followed by `validate`, `derive-metrics`, and `build-pack`
 
-## Resume Probe
+## What Advanced
 
-- Dexter probe launch: `C:\Users\bot\quant\Vexter\venvs\dexter\Scripts\python.exe Dexter.py`
-- Mew-X probe launch: `cargo run --quiet` from `C:\Users\bot\quant\Vexter\sources\Mew-X`
-- fixed-root overrides were injected at launch time for `VEXTER_RUNTIME_ROOT` and `VEXTER_OUTPUT_ROOT`; run IDs were pinned for the attempted shared window
-- `git`, `python`, `cargo`, `rustc`, `psql`, and PostgreSQL remained available during the probe
-- Dexter `HTTP_URL` JSON-RPC `getVersion` probe succeeded and Dexter `WS_URL` accepted a direct WebSocket connection from `win-lan`, so no Dexter-side Helius implementation change is required
-- Mew-X repo-root `.env` was missing `RPC_URL` even though the frozen runtime reads that key first; the existing `HTTP_URL` value was copied into `RPC_URL` on `win-lan` without changing source logic, and the rerun reached signer parsing
-- checked known env files and default Solana key locations on `win-lan` did not reveal an alternate signing key to substitute automatically
-- both source processes still exited before any live NDJSON files or packaged runs appeared under `C:\Users\bot\quant\Vexter\data\raw\{dexter,mewx}` or `C:\Users\bot\quant\Vexter\artifacts\unified\comparison_inputs`
+- Dexter `.env` is now parser-safe on `win-lan`: `PRIVATE_KEY`, `HTTP_URL`, and `WS_URL` are unquoted and load cleanly.
+- Mew-X `.env` is now parser-safe on `win-lan`: `RPC_URL` / `WS_URL` are clean ASCII endpoints, `DB_URL` resolves to `postgres://postgres:admin123@127.0.0.1:5432`, the explicit signer is valid base58, and `REGIONS` was rewritten to a space-free form so dotenv stops truncating the later `ALGO_*` values.
+- A safe Dexter smoke path was recovered without touching frozen source logic:
+  - `DexLab\wsLogs.py` repopulated `stagnant_mints`
+  - `Dexter.py` emitted raw NDJSON, config, leaderboard export, and replay artifacts under the fixed Vexter root
+- A safe Mew-X smoke path was recovered without touching frozen source logic:
+  - `cargo run --quiet` with `MODE=sim` emitted raw NDJSON, config, candidate snapshots, state export, and a session summary under the fixed Vexter root
+- Windows collector output and Mac validator input are now cross-platform compatible from this repo: relative package paths are normalized and required replay / session-summary pointers resolve correctly.
+- Smoke packages were collected, transferred to the Mac control plane, validated, metricized, and assembled into a comparison pack.
 
-## Exact Blockers
+## Current Blocker
 
-- Dexter: `C:\Users\bot\quant\Vexter\sources\Dexter\.env` key `PRIVATE_KEY` is unusable for startup because it exactly matches the Helius `api-key` already embedded in Dexter `HTTP_URL` / `WS_URL`. The frozen Dexter runtime fails during `base58.b58decode(PRIV_KEY)` with `ValueError: Invalid character '0'`.
-- Mew-X: `C:\Users\bot\quant\Vexter\sources\Mew-X\.env` key `PRIVATE_KEY` is unusable for startup because it is a truncated prefix of the Helius `api-key` already embedded in Mew-X `RPC_URL` / `WS_URL`. After `RPC_URL` was restored, the frozen Mew-X runtime panics during Solana keypair parsing with `called Result::unwrap() on an Err value: InvalidChar(48)`.
-- Because both sources still fail before event emission, there are still no live NDJSON event files and no packaged runs to feed into Vexter validation or comparison tooling.
+- The blocker is no longer exact signer startup failure.
+- The remaining blocker is evidence quality: the available smoke packages are `partial` and not a matched comparable pair from the same live measurement window.
+- Dexter package `dexter-smoke-20260320T193452Z` validates as `partial` with required-event coverage `4 / 12`.
+  - Observed required types: `creator_candidate`, `mint_observed`, `entry_signal`, `entry_rejected`
+  - Missing required types: `candidate_rejected`, `entry_attempt`, `entry_fill`, `exit_signal`, `exit_fill`, `position_closed`, `run_summary`, `session_update`
+  - The frozen Dexter runtime emitted `43741` `entry_rejected` events without `tx_signature`, and the zero-balance safety signer never advanced to fill / exit coverage.
+- Mew-X package `mewx-smoke-20260320T193850Z` validates as `partial` with required-event coverage `8 / 12`.
+  - Observed required types: `mint_observed`, `entry_signal`, `entry_attempt`, `entry_fill`, `session_update`, `exit_signal`, `exit_fill`, `position_closed`
+  - Missing required types: `creator_candidate`, `candidate_rejected`, `entry_rejected`, `run_summary`
+  - This smoke run reached a complete `sim_live` session closeout, but it was collected from a later non-matched window.
 
 ## Result
 
-- live Dexter package: `NONE`
-- live Mew-X package: `NONE`
-- live comparison output directory: `NONE`
+- live Dexter package: `artifacts/proofs/task-005-live-smoke-results/dexter.validate.json`
+- live Mew-X package: `artifacts/proofs/task-005-live-smoke-results/mewx.validate.json`
+- live comparison output directory: `artifacts/reports/task-005-live-smoke-comparison`
 - evidence-backed winners / ties recorded: `none`
-- blocker state: `exact_signer_env_blocker`
+- blocker state: `partial_live_comparison_blocker`
 - `TASK-006` readiness: `blocked`
 
-## Unblock Steps
+## Next Unblock Steps
 
-- replace `PRIVATE_KEY` in `C:\Users\bot\quant\Vexter\sources\Dexter\.env` with a valid base58 Solana signing key; the current value is only the Helius URL `api-key`
-- replace `PRIVATE_KEY` in `C:\Users\bot\quant\Vexter\sources\Mew-X\.env` with a valid base58 Solana signing key; the current value is only a truncated Helius URL `api-key`
-- keep `RPC_URL` populated explicitly in `C:\Users\bot\quant\Vexter\sources\Mew-X\.env` if the file is regenerated
-- rerun the frozen Dexter and Mew-X checkouts so they emit matched live raw events under the fixed Vexter root
-- collect matched live packages with `scripts/collect_comparison_package.ps1`
-- run `scripts/comparison_analysis.py validate`, `derive-metrics`, and `build-pack` only after both live packages exist
+- collect one Dexter run and one Mew-X run from the same measurement window
+- keep the frozen strategy / execution / instrumentation code unchanged
+- gather a Dexter run that reaches comparable execution coverage rather than observe-only rejection coverage
+- gather a Mew-X run from that same shared window so `validate` can move both packages beyond `partial`
+- rerun `scripts/comparison_analysis.py validate`, `derive-metrics`, and `build-pack` on the matched package pair after those fuller runs exist

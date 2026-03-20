@@ -37,6 +37,12 @@ Reference templates live in:
 - [templates/windows_runtime/dexter.env.example](/Users/cabbala/Documents/vexter/task005-live-comparison-evidence/templates/windows_runtime/dexter.env.example)
 - [templates/windows_runtime/mewx.env.example](/Users/cabbala/Documents/vexter/task005-live-comparison-evidence/templates/windows_runtime/mewx.env.example)
 
+Formatting rules for both files:
+
+- do not wrap values in `"` quotes
+- do not append inline `# comments` after assignments
+- keep one `KEY=value` assignment per line
+
 ### Dexter
 
 Dexter reads only the repo-root `.env` through `DexLab/common_.py`.
@@ -70,7 +76,13 @@ Populate at minimum:
 - `PRIVATE_KEY`
 - `DB_URL`
 
+`DB_URL` is the local PostgreSQL listener recovered on `win-lan`, not a Helius endpoint. For this workspace the expected DSN is `postgres://postgres:admin123@127.0.0.1:5432`.
+
 If an older local note or copied `.env` only contains `HTTP_URL`, duplicate that same HTTP endpoint into `RPC_URL` before launching. Mew-X reads `RPC_URL` and does not consume `HTTP_URL` from `src/mew/config.rs`.
+
+Keep repo-root `.env` values unquoted on Windows for this recovery path, and avoid inline `#` comments after values. The recovered Mew-X dotenv parsing proved sensitive to formatting, and `REGIONS` should stay space-free if enabled, for example:
+
+- `REGIONS=Germany,Netherlands,UnitedKingdom`
 
 Documented optional / conditional keys for live collection:
 
@@ -114,12 +126,17 @@ Once the user-owned `.env` files are populated and the frozen repos are launched
 - `C:\Users\bot\quant\Vexter\runtime\mewx\export`
 - `C:\Users\bot\quant\Vexter\artifacts\unified\comparison_inputs`
 
-## Remaining Narrowed Blocker
+## Current Narrowed Blocker
 
-Runtime prerequisites, DB reachability, frozen checkouts, and Mew-X protobuf build prerequisites can now be restored without touching source logic. The remaining blocker for matched live package collection is exact user-owned signing-key input in the Windows repo-root `.env` files:
+Runtime prerequisites, DB reachability, frozen checkouts, Mew-X protobuf build prerequisites, and exact signer/env formatting are now recovered without touching source logic. The current narrowed blocker is no longer startup:
 
-- a valid base58 Solana signing key for `C:\Users\bot\quant\Vexter\sources\Dexter\.env` `PRIVATE_KEY`
-- a valid base58 Solana signing key for `C:\Users\bot\quant\Vexter\sources\Mew-X\.env` `PRIVATE_KEY`
-- keep `RPC_URL` populated explicitly in the Mew-X `.env`, even if it mirrors the same endpoint as an `HTTP_URL` note elsewhere
+- Dexter and Mew-X both emit smoke-run artifacts under the fixed Vexter root.
+- `validate`, `derive-metrics`, and `build-pack` now complete on those smoke packages.
+- Both packages still validate as `partial`, and they were not collected from the same live measurement window.
 
-Until those values are populated in the Windows repo-root `.env` files, no matched live observation window can be collected and the package roots above will remain empty.
+The next unblock requirement is a matched live window with fuller comparable coverage, especially on Dexter:
+
+- collect one Dexter run and one Mew-X run from the same live measurement window
+- preserve frozen Dexter and Mew-X strategy, execution, and instrumentation logic
+- gather a Dexter run with more than observe-only rejection coverage
+- rerun `validate`, `derive-metrics`, and `build-pack` on that matched package pair

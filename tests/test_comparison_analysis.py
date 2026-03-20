@@ -43,6 +43,26 @@ def test_validate_run_package_marks_partial_when_export_missing(tmp_path: Path) 
     )
 
 
+def test_validate_run_package_accepts_windows_relative_paths(tmp_path: Path) -> None:
+    target = tmp_path / "mewx_fixture"
+    shutil.copytree(MEWX_FIXTURE, target)
+
+    metadata_path = target / "run_metadata.json"
+    metadata = _load_json(metadata_path)
+    metadata["config_snapshot"] = "config\\config_snapshot.json"
+    metadata["source_exports"]["candidate_refresh_snapshot"] = (
+        "exports\\candidate_refresh_snapshot.json"
+    )
+    metadata["source_exports"]["session_summary"] = "exports\\session_summary.json"
+    metadata_path.write_text(json.dumps(metadata, indent=2) + "\n")
+
+    result = validate_run_package(target)
+
+    assert result["classification"] == "pass"
+    assert result["checks"]["source_exports_ok"] is True
+    assert result["checks"]["proof_attribution_ok"] is True
+
+
 def test_derive_metrics_returns_expected_subset() -> None:
     dexter_metrics = derive_metrics(DEXTER_FIXTURE)["metrics"]
     mewx_metrics = derive_metrics(MEWX_FIXTURE)["metrics"]

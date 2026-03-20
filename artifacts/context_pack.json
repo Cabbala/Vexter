@@ -21,10 +21,10 @@
     "deliverable_format": "minimal prompt + tar.gz bundle",
     "push_changes_for_github_visibility": true,
     "agent_usage_when_available": true,
-    "agent_usage_note": "No agent or sub-agent tool was available in this Codex session, so the task continued without parallel sub-agents."
+    "agent_usage_note": "Sub-agents were available in this Codex session and were used for parallel repo / GitHub inspection while the main thread handled runtime recovery and packaging."
   },
   "phase": "TASK-005-live-comparison-evidence",
-  "status": "exact_signer_env_blocker",
+  "status": "partial_live_comparison_blocker",
   "bundle_source": "/Users/cabbala/Downloads/vexter_task005_resume_live_collection_v2_bundle.tar.gz",
   "starting_point": {
     "verified_at": "2026-03-20T18:00:16Z",
@@ -97,36 +97,37 @@
       "postgres_listener": "127.0.0.1:5432",
       "dexter_database_bootstrap": "success",
       "env_injection_points_documented": true,
-      "mewx_startup_probe": "RPC_URL was restored from HTTP_URL on win-lan; signer validation still blocks startup"
+      "mewx_startup_probe": "RPC_URL, DB_URL, signer input, and parser-safe env formatting now allow a full sim-live smoke session on win-lan."
     },
     "resume_probe_result": {
-      "checked_at": "2026-03-20T19:11:55Z",
+      "checked_at": "2026-03-20T19:46:59Z",
       "dexter_env_exists": true,
       "mewx_env_exists": true,
-      "mewx_rpc_url_restored_from_http_url": true,
+      "mewx_rpc_url_restored_from_http_url": false,
       "dexter_helius_http_rpc_ok": true,
       "dexter_helius_ws_ok": true,
-      "dexter_startup_failure": "PRIVATE_KEY exactly matches the Helius api-key from HTTP_URL/WS_URL and fails base58 decoding with Invalid character '0'",
-      "mewx_startup_failure": "PRIVATE_KEY is a truncated prefix of the Helius api-key from RPC_URL/WS_URL and fails solana-keypair parsing with InvalidChar(48)",
-      "raw_event_dirs_remained_empty": true,
-      "comparison_inputs_remained_empty": true
+      "dexter_startup_failure": "The exact signer env blocker is resolved; the remaining Dexter smoke gap is observe-only coverage under a zero-balance safety signer.",
+      "mewx_startup_failure": "The exact signer env blocker is resolved; the remaining Mew-X smoke gap is partial required-event coverage rather than startup failure.",
+      "raw_event_dirs_remained_empty": false,
+      "comparison_inputs_remained_empty": false
     },
     "attempt_result": {
       "matched_measurement_window_found": false,
-      "live_dexter_package": null,
-      "live_mewx_package": null,
-      "comparison_output_dir": null,
+      "live_dexter_package": "artifacts/proofs/task-005-live-smoke-results/dexter.validate.json",
+      "live_mewx_package": "artifacts/proofs/task-005-live-smoke-results/mewx.validate.json",
+      "comparison_output_dir": "artifacts/reports/task-005-live-smoke-comparison",
       "winner_recording": "deferred",
-      "collection_stage": "startup_signer_failed"
+      "collection_stage": "partial_packages_validated"
     },
     "blockers": [
-      "Dexter Helius HTTP_URL and WS_URL are reachable, but Dexter .env PRIVATE_KEY exactly matches that Helius api-key instead of a Solana signer.",
-      "Mew-X .env RPC_URL was repaired from the existing HTTP_URL on win-lan, but Mew-X .env PRIVATE_KEY is still only a truncated Helius api-key prefix instead of a Solana signer.",
-      "No live NDJSON events or packaged runs have been collected yet."
+      "The exact signer env blocker is resolved for both Windows repo-root .env files.",
+      "Dexter now emits an observe-live smoke package, but it remains partial because the safety signer never reaches fill / exit coverage and frozen entry_rejected payloads omit tx_signature.",
+      "Mew-X now emits a sim-live smoke package, but it remains partial because creator_candidate, candidate_rejected, entry_rejected, and run_summary were not observed in the smoke window.",
+      "The current Dexter and Mew-X smoke packages were not collected from the same live measurement window, so evidence-backed winners remain deferred."
     ]
   },
   "live_collection_attempt": {
-    "checked_at": "2026-03-20T19:11:55Z",
+    "checked_at": "2026-03-20T19:46:59Z",
     "raw_event_dirs": {
       "dexter": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
       "mewx": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx"
@@ -150,13 +151,13 @@
   },
   "next_task": {
     "id": "BLOCKED",
-    "state": "awaiting_exact_signing_key_correction",
+    "state": "awaiting_matched_live_window_with_full_event_coverage",
     "task_006_ready": false,
     "resume_requirements": [
-      "Replace PRIVATE_KEY in C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter\\.env with a valid base58 Solana signing key; the current value is only the Helius api-key from HTTP_URL/WS_URL.",
-      "Replace PRIVATE_KEY in C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env with a valid base58 Solana signing key; the current value is only a truncated prefix of the Helius api-key from RPC_URL/WS_URL.",
-      "Keep RPC_URL populated explicitly in C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env if the file is regenerated.",
-      "Collect one Dexter run and one Mew-X run from the same live measurement window before rerunning the comparison pack."
+      "Collect one Dexter run and one Mew-X run from the same live measurement window.",
+      "Preserve frozen Dexter and Mew-X strategy, execution, and instrumentation logic.",
+      "Gather a Dexter run with comparable execution coverage rather than observe-only rejection coverage.",
+      "Rerun validate, derive-metrics, and build-pack on that matched package pair before advancing TASK-006."
     ]
   },
   "windows_runtime_verification": {

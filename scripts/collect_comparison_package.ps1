@@ -94,6 +94,15 @@ function Select-LatestMatchingFile {
         Select-Object -First 1
 }
 
+function To-PackageRef {
+    param(
+        [string]$Bucket,
+        [string]$LeafName
+    )
+
+    return $Bucket + "/" + $LeafName
+}
+
 if (-not (Test-Path $EventFile)) {
     throw "Event file not found: $EventFile"
 }
@@ -139,14 +148,25 @@ $sourceExports = @{}
 if ($Source -eq "dexter") {
     $leaderboard = Select-LatestMatchingFile -SearchRoot $exportsOut -Patterns @("leaderboard")
     $replay = Select-LatestMatchingFile -SearchRoot $replaysOut -Patterns @("stagnant", "replay")
-    if ($leaderboard) { $sourceExports["leaderboard_snapshot"] = "exports\" + $leaderboard.Name }
-    if ($replay) { $sourceExports["stagnant_mint_replay"] = "replays\" + $replay.Name }
+    if (-not $replay) {
+        $replay = Get-ChildItem -Path $replaysOut -File -Recurse -ErrorAction SilentlyContinue |
+            Sort-Object LastWriteTimeUtc -Descending |
+            Select-Object -First 1
+    }
+    if ($leaderboard) { $sourceExports["leaderboard_snapshot"] = To-PackageRef -Bucket "exports" -LeafName $leaderboard.Name }
+    if ($replay) { $sourceExports["stagnant_mint_replay"] = To-PackageRef -Bucket "replays" -LeafName $replay.Name }
 }
 if ($Source -eq "mewx") {
     $refresh = Select-LatestMatchingFile -SearchRoot $exportsOut -Patterns @("candidate", "refresh")
     $session = Select-LatestMatchingFile -SearchRoot $exportsOut -Patterns @("session", "summary")
-    if ($refresh) { $sourceExports["candidate_refresh_snapshot"] = "exports\" + $refresh.Name }
-    if ($session) { $sourceExports["session_summary"] = "exports\" + $session.Name }
+    if (-not $session) {
+        $session = Get-ChildItem -Path $exportsOut -File -Recurse -ErrorAction SilentlyContinue |
+            Where-Object { $_.Name -notmatch "candidate|state" } |
+            Sort-Object LastWriteTimeUtc -Descending |
+            Select-Object -First 1
+    }
+    if ($refresh) { $sourceExports["candidate_refresh_snapshot"] = To-PackageRef -Bucket "exports" -LeafName $refresh.Name }
+    if ($session) { $sourceExports["session_summary"] = To-PackageRef -Bucket "exports" -LeafName $session.Name }
 }
 
 $metadata = [ordered]@{
@@ -160,18 +180,18 @@ $metadata = [ordered]@{
     started_at_utc = $StartedAtUtc
     ended_at_utc = $EndedAtUtc
     event_stream = "events.ndjson"
-    config_snapshot = if ($configTarget) { "config\" + (Split-Path $configTarget -Leaf) } else { $null }
+    config_snapshot = if ($configTarget) { To-PackageRef -Bucket "config" -LeafName (Split-Path $configTarget -Leaf) } else { $null }
     proof_manifest = "proof_manifest.json"
     source_exports = $sourceExports
 }
 
 $proofManifest = [ordered]@{
     raw_events = @("events.ndjson")
-    logs = @($logFiles | ForEach-Object { "logs\" + (Split-Path $_ -Leaf) })
-    replays = @($replayFiles | ForEach-Object { "replays\" + (Split-Path $_ -Leaf) })
-    db_exports = @($replayFiles | ForEach-Object { "replays\" + (Split-Path $_ -Leaf) })
-    exports = @($exportFiles | ForEach-Object { "exports\" + (Split-Path $_ -Leaf) })
-    config = if ($configTarget) { @("config\" + (Split-Path $configTarget -Leaf)) } else { @() }
+    logs = @($logFiles | ForEach-Object { To-PackageRef -Bucket "logs" -LeafName (Split-Path $_ -Leaf) })
+    replays = @($replayFiles | ForEach-Object { To-PackageRef -Bucket "replays" -LeafName (Split-Path $_ -Leaf) })
+    db_exports = @($replayFiles | ForEach-Object { To-PackageRef -Bucket "replays" -LeafName (Split-Path $_ -Leaf) })
+    exports = @($exportFiles | ForEach-Object { To-PackageRef -Bucket "exports" -LeafName (Split-Path $_ -Leaf) })
+    config = if ($configTarget) { @(To-PackageRef -Bucket "config" -LeafName (Split-Path $configTarget -Leaf)) } else { @() }
 }
 
 $metadata | ConvertTo-Json -Depth 8 | Set-Content -Path (Join-Path $packageDir "run_metadata.json")

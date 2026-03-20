@@ -100,6 +100,22 @@ def test_windows_runtime_manifest_has_expected_shape() -> None:
     assert manifest["env_injection_points"]["mewx"]["path"].endswith("sources\\Mew-X\\.env")
 
 
+def test_windows_env_examples_use_parser_safe_assignments() -> None:
+    mewx_example = (REPO_ROOT / "templates/windows_runtime/mewx.env.example").read_text()
+    dexter_example = (REPO_ROOT / "templates/windows_runtime/dexter.env.example").read_text()
+
+    assert 'PRIVATE_KEY="' not in mewx_example
+    assert 'RPC_URL="' not in mewx_example
+    assert 'WS_URL="' not in mewx_example
+    assert 'DB_URL="' not in mewx_example
+    assert "REGIONS=Germany,Netherlands,UnitedKingdom" in mewx_example
+    assert "DB_URL=postgres://postgres:admin123@127.0.0.1:5432" in mewx_example
+
+    assert 'PRIVATE_KEY="' not in dexter_example
+    assert 'HTTP_URL="' not in dexter_example
+    assert 'WS_URL="' not in dexter_example
+
+
 def test_task_ledger_is_valid_jsonl() -> None:
     ledger_path = REPO_ROOT / "artifacts/task_ledger.jsonl"
     lines = ledger_path.read_text().strip().splitlines()
@@ -107,19 +123,19 @@ def test_task_ledger_is_valid_jsonl() -> None:
     assert len(lines) >= 3
     payload = json.loads(lines[-1])
     assert payload["task_id"] == "TASK-005-live-comparison-evidence"
-    assert payload["status"] == "exact_signer_env_blocker"
+    assert payload["status"] == "partial_live_comparison_blocker"
     assert payload["branch"] == "codex/task-005-live-comparison-evidence"
     assert payload["next_task_id"] == "BLOCKED"
-    assert payload["next_task_state"] == "awaiting_exact_signing_key_correction"
+    assert payload["next_task_state"] == "awaiting_matched_live_window_with_full_event_coverage"
 
 
 def test_proof_bundle_exists_and_contains_required_files() -> None:
     with (REPO_ROOT / "artifacts/proof_bundle_manifest.json").open() as handle:
         manifest = json.load(handle)
 
-    assert manifest["status"] == "exact_signer_env_blocker"
+    assert manifest["status"] == "partial_live_comparison_blocker"
     assert manifest["next_task"]["id"] == "BLOCKED"
-    assert manifest["next_task"]["state"] == "awaiting_exact_signing_key_correction"
+    assert manifest["next_task"]["state"] == "awaiting_matched_live_window_with_full_event_coverage"
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]
     assert bundle_path.exists()

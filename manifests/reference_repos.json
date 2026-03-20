@@ -1,0 +1,26 @@
+{
+  "generated_on": "2026-03-20",
+  "control_plane": "/Users/cabbala/Projects/Vexter",
+  "source_of_truth": "GitHub",
+  "sync_script": "scripts/sync_reference_repos.sh",
+  "repos": [
+    {
+      "name": "Dexter",
+      "github": "https://github.com/Cabbala/Dexter",
+      "ssh": "git@github.com:Cabbala/Dexter.git",
+      "default_branch": "main",
+      "local_checkout": "sources/Dexter",
+      "analysis_seed": "plans/SOURCE_ASSESSMENT_DEXTER.md",
+      "role": "Python source repo for creator scoring and adaptive exit assessment"
+    },
+    {
+      "name": "Mew-X",
+      "github": "https://github.com/Cabbala/Mew-X",
+      "ssh": "git@github.com:Cabbala/Mew-X.git",
+      "default_branch": "main",
+      "local_checkout": "sources/Mew-X",
+      "analysis_seed": "plans/SOURCE_ASSESSMENT_MEWX.md",
+      "role": "Rust source repo for execution substrate and portfolio control assessment"
+    }
+  ]
+}

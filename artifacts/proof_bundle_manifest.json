@@ -1,0 +1,32 @@
+{
+  "task_id": "TASK-000-bootstrap",
+  "bundle_source": "/Users/cabbala/Downloads/Vexter_bootstrap_bundle.tar.gz",
+  "bundle_path": "artifacts/bundles/task-000-bootstrap.tar.gz",
+  "context_pack": "artifacts/context_pack.json",
+  "summary": "artifacts/summary.md",
+  "task_ledger": "artifacts/task_ledger.jsonl",
+  "manifests": [
+    "manifests/reference_repos.json",
+    "manifests/windows_runtime.json"
+  ],
+  "scripts": [
+    "scripts/bootstrap_windows_workspace.sh",
+    "scripts/sync_reference_repos.sh",
+    "scripts/build_proof_bundle.sh"
+  ],
+  "included_paths": [
+    "README.md",
+    "docs/",
+    "specs/",
+    "ops/",
+    "plans/",
+    "manifests/",
+    "scripts/",
+    ".github/workflows/",
+    "tests/",
+    "artifacts/context_pack.json",
+    "artifacts/summary.md",
+    "artifacts/proof_bundle_manifest.json",
+    "artifacts/task_ledger.jsonl"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "project": "Vexter",
+  "goal": "Build the analysis/integration mothership for Dexter and Mew-X while keeping Git on Mac and runtime/data on Windows via ssh win-lan.",
+  "mac_control_plane": "/Users/cabbala/Projects/Vexter",
+  "windows_runtime_host": "win-lan",
+  "resolved_windows_hostname": "DESKTOP-NNC6MPS",
+  "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
+  "preferred_windows_roots": [
+    "D:\\Quant\\Vexter",
+    "C:\\Users\\<USER>\\quant\\Vexter"
+  ],
+  "repos": {
+    "target_new_repo": "Cabbala/Vexter",
+    "source_repo_a": "Cabbala/Dexter",
+    "source_repo_b": "Cabbala/Mew-X"
+  },
+  "workflow": {
+    "git_on_mac": true,
+    "runtime_on_windows": true,
+    "vps_primary_dev": false,
+    "deliverable_format": "minimal prompt + tar.gz bundle",
+    "push_changes_for_github_visibility": true
+  },
+  "phase": "TASK-000-bootstrap",
+  "bundle_source": "/Users/cabbala/Downloads/Vexter_bootstrap_bundle.tar.gz"
+}

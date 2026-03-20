@@ -1,0 +1,21 @@
+{
+  "host_alias": "win-lan",
+  "resolved_hostname": "DESKTOP-NNC6MPS",
+  "discovered_on": "2026-03-20",
+  "preferred_roots": [
+    "D:\\Quant\\Vexter",
+    "C:\\Users\\<USER>\\quant\\Vexter"
+  ],
+  "selected_root": "C:\\Users\\bot\\quant\\Vexter",
+  "status": "bootstrapped_from_mac",
+  "directories": [
+    "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter",
+    "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx",
+    "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified",
+    "C:\\Users\\bot\\quant\\Vexter\\data\\postgres",
+    "C:\\Users\\bot\\quant\\Vexter\\data\\logs",
+    "C:\\Users\\bot\\quant\\Vexter\\data\\replays",
+    "C:\\Users\\bot\\quant\\Vexter\\data\\raw",
+    "C:\\Users\\bot\\quant\\Vexter\\artifacts"
+  ]
+}

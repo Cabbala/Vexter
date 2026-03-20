@@ -53,6 +53,13 @@ METRIC_DIRECTIONS = {
     "replayability_grade": "higher_grade",
 }
 
+NON_LIVE_EVIDENCE_KINDS = {
+    "fixture",
+    "fixture_sample",
+    "sample",
+    "sample_fixture",
+}
+
 
 def _write_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -65,6 +72,13 @@ def _metric_value(metric: dict[str, Any] | None) -> Any:
     if not metric or metric.get("status") != "ok":
         return None
     return metric.get("value")
+
+
+def _requires_winner_deferral(metadata: dict[str, Any]) -> bool:
+    evidence_kind = metadata.get("evidence_kind")
+    if not isinstance(evidence_kind, str):
+        return False
+    return evidence_kind.strip().lower() in NON_LIVE_EVIDENCE_KINDS
 
 
 def _format_metric(metric: dict[str, Any] | None) -> str:
@@ -368,6 +382,9 @@ def build_comparison_pack(
 
     dexter_package = load_run_package(dexter_package_dir)
     mewx_package = load_run_package(mewx_package_dir)
+    defer_winners = defer_winners or _requires_winner_deferral(
+        dexter_package.metadata
+    ) or _requires_winner_deferral(mewx_package.metadata)
     dexter_validation = validate_run_package(dexter_package_dir)
     mewx_validation = validate_run_package(mewx_package_dir)
     dexter_metrics = derive_metrics(dexter_package_dir)

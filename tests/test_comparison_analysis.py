@@ -87,3 +87,20 @@ def test_build_comparison_pack_writes_expected_outputs(tmp_path: Path) -> None:
     first_row = comparison_pack["comparison_matrix"]["candidate_generation"][0]
     assert first_row["winner"] == "pending_live_evidence"
     assert "Live Windows comparison remains pending" in summary
+
+
+def test_build_comparison_pack_auto_defers_fixture_winners(tmp_path: Path) -> None:
+    output_dir = tmp_path / "comparison-pack-auto-deferred"
+    build_comparison_pack(
+        dexter_package_dir=DEXTER_FIXTURE,
+        mewx_package_dir=MEWX_FIXTURE,
+        output_dir=output_dir,
+    )
+
+    pack_manifest = _load_json(output_dir / "pack_manifest.json")
+    comparison_pack = _load_json(output_dir / "comparison_pack.json")
+
+    assert pack_manifest["winner_mode"] == "deferred"
+    assert comparison_pack["winner_mode"] == "deferred"
+    first_row = comparison_pack["comparison_matrix"]["candidate_generation"][0]
+    assert first_row["winner"] == "pending_live_evidence"

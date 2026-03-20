@@ -4,6 +4,7 @@
   "source_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
   "mode": "observe_live",
   "transport_mode": "grpc",
+  "evidence_kind": "fixture",
   "host_role": "windows_runtime",
   "runtime_root": "C:\\Users\\bot\\quant\\Vexter",
   "started_at_utc": "2026-03-21T01:00:00Z",

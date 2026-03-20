@@ -14,7 +14,7 @@ Freeze the first measurement-ready Mew-X instrumentation surface without changin
 | `entry_signal` | `sources/Mew-X/src/mew/snipe/handler.rs` | Captures admitted session starts for creator matches, ABS, DBF, and dip re-entry paths |
 | `entry_attempt` | `sources/Mew-X/src/mew/snipe/handler.rs` | Captures route family, tx strategy, transport path, fee/tip settings, and expected output for simulated and live attempts |
 | `entry_fill` | `sources/Mew-X/src/mew/snipe/handler.rs` | Captures simulated fills and live transport acknowledgements with signature, latency, and wallet snapshot |
-| `entry_rejected` | `sources/Mew-X/src/mew/snipe/handler.rs` | Keeps failed entry attempts attributable when the outbound transport send fails |
+| `entry_rejected` | `sources/Mew-X/src/mew/snipe/handler.rs` | Keeps failed entry attempts attributable when the outbound transport send fails; `tx_signature` remains optional when the transport never returned one |
 | `session_update` | `sources/Mew-X/src/mew/snipe/handler.rs` | Captures price, peak, creator state, txns-in-zero / txns-in-n, MFE/MAE, migration, and dip-trigger checkpoints |
 | `exit_signal` | `sources/Mew-X/src/mew/snipe/handler.rs` | Captures loss, take-profit, inactivity, recent-profit collapse, creator-sold, and guard exits |
 | `exit_fill` | `sources/Mew-X/src/mew/snipe/handler.rs` | Captures simulated exits and live sell transport acknowledgements with signature and latency |

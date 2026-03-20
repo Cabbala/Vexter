@@ -76,7 +76,7 @@ def test_validate_run_package_summarizes_repeated_payload_issues(tmp_path: Path)
     updated = 0
     duplicate_event = None
     for event in events:
-        if event["event_type"] == "entry_rejected":
+        if event["event_type"] == "entry_fill":
             event["payload"].pop("tx_signature", None)
             updated += 1
             duplicate_event = dict(event)
@@ -95,6 +95,26 @@ def test_validate_run_package_summarizes_repeated_payload_issues(tmp_path: Path)
     assert len(payload_issues) == 1
     assert payload_issues[0]["count"] == 2
     assert len(payload_issues[0]["sample_event_ids"]) == 2
+
+
+def test_validate_run_package_allows_entry_rejected_without_tx_signature(tmp_path: Path) -> None:
+    target = tmp_path / "mewx_fixture"
+    shutil.copytree(MEWX_FIXTURE, target)
+
+    events_path = target / "events.ndjson"
+    events = [json.loads(line) for line in events_path.read_text().splitlines() if line.strip()]
+    updated = 0
+    for event in events:
+        if event["event_type"] == "entry_rejected":
+            event["payload"].pop("tx_signature", None)
+            updated += 1
+    assert updated == 1
+    events_path.write_text("".join(json.dumps(event) + "\n" for event in events))
+
+    result = validate_run_package(target)
+
+    assert result["classification"] == "pass"
+    assert result["checks"]["payload_fields_ok"] is True
 
 
 def test_derive_metrics_returns_expected_subset() -> None:
@@ -220,9 +240,7 @@ def test_build_comparison_pack_matched_partial_live_windows_updates_summary(
         for event in events:
             event["run_id"] = run_id
         if package_dir == dexter_live:
-            for event in events:
-                if event["event_type"] == "entry_rejected":
-                    event["payload"].pop("tx_signature", None)
+            events = [event for event in events if event["event_type"] != "run_summary"]
         events_path.write_text("".join(json.dumps(event) + "\n" for event in events))
 
     output_dir = tmp_path / "comparison-pack-live-matched-partial"

@@ -104,7 +104,10 @@ Required payload fields:
 
 - `attempt_index`
 - `reject_reason`
-- `tx_signature`
+
+Optional when unavailable:
+
+- `tx_signature` for transport paths that returned a signature before rejection
 
 ### `session_update`
 

@@ -89,7 +89,7 @@
     "task_006_ready": false
   },
   "next_task": {
-    "id": "BLOCKED",
+    "id": "TASK-005-RESUME",
     "state": "awaiting_matched_live_window_with_full_event_coverage",
     "resume_requirements": [
       "Collect matched live packages from the same measurement window.",

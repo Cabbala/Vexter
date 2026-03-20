@@ -81,6 +81,42 @@ def _requires_winner_deferral(metadata: dict[str, Any]) -> bool:
     return evidence_kind.strip().lower() in NON_LIVE_EVIDENCE_KINDS
 
 
+def _has_matched_measurement_window(
+    dexter_metadata: dict[str, Any],
+    mewx_metadata: dict[str, Any],
+) -> bool:
+    dexter_window = (
+        dexter_metadata.get("started_at_utc"),
+        dexter_metadata.get("ended_at_utc"),
+    )
+    mewx_window = (
+        mewx_metadata.get("started_at_utc"),
+        mewx_metadata.get("ended_at_utc"),
+    )
+    all_values = dexter_window + mewx_window
+    if not all(isinstance(value, str) and value for value in all_values):
+        return False
+    return dexter_window == mewx_window
+
+
+def _should_defer_winners(
+    *,
+    dexter_metadata: dict[str, Any],
+    mewx_metadata: dict[str, Any],
+    dexter_validation: dict[str, Any],
+    mewx_validation: dict[str, Any],
+) -> bool:
+    if _requires_winner_deferral(dexter_metadata) or _requires_winner_deferral(
+        mewx_metadata
+    ):
+        return True
+    if dexter_validation.get("classification") != "pass":
+        return True
+    if mewx_validation.get("classification") != "pass":
+        return True
+    return not _has_matched_measurement_window(dexter_metadata, mewx_metadata)
+
+
 def _format_metric(metric: dict[str, Any] | None) -> str:
     if not metric:
         return "unavailable"
@@ -294,7 +330,7 @@ def _render_matrix_markdown(matrix: dict[str, Any]) -> str:
             "Replay feasibility",
             _format_metric(matrix["portfolio_operations"][-1]["dexter"]),
             _format_metric(matrix["portfolio_operations"][-1]["mewx"]),
-            "Replay validation is the gate before TASK-005 begins.",
+            "Replay validation stays downstream of matched live comparison closeout.",
         ],
     ]
     parts.append(
@@ -361,11 +397,24 @@ def _render_summary_markdown(
             "",
             "## Decision",
             "",
-            "- Winning component candidates: pending live matched-window evidence.",
-            "- Evidence still missing: live Dexter and Mew-X run packages gathered from the same measurement window.",
-            "- Next task: TASK-005 remains not started.",
         ]
     )
+    if defer_winners:
+        lines.extend(
+            [
+                "- Winning component candidates: pending live matched-window evidence.",
+                "- Evidence still missing: live Dexter and Mew-X run packages gathered from the same measurement window with pass-grade validation.",
+                "- Next task: Resume TASK-005 with a matched comparable live window; TASK-006 remains blocked.",
+            ]
+        )
+    else:
+        lines.extend(
+            [
+                "- Winning component candidates: recorded in the current comparison matrix.",
+                "- Evidence still missing: none in this pack beyond the downstream replay-validation gate.",
+                "- Next task: Use this comparison pack as input to the next replay-validation gate.",
+            ]
+        )
     return "\n".join(lines) + "\n"
 
 
@@ -382,11 +431,14 @@ def build_comparison_pack(
 
     dexter_package = load_run_package(dexter_package_dir)
     mewx_package = load_run_package(mewx_package_dir)
-    defer_winners = defer_winners or _requires_winner_deferral(
-        dexter_package.metadata
-    ) or _requires_winner_deferral(mewx_package.metadata)
     dexter_validation = validate_run_package(dexter_package_dir)
     mewx_validation = validate_run_package(mewx_package_dir)
+    defer_winners = defer_winners or _should_defer_winners(
+        dexter_metadata=dexter_package.metadata,
+        mewx_metadata=mewx_package.metadata,
+        dexter_validation=dexter_validation,
+        mewx_validation=mewx_validation,
+    )
     dexter_metrics = derive_metrics(dexter_package_dir)
     mewx_metrics = derive_metrics(mewx_package_dir)
 

@@ -125,7 +125,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
     assert payload["task_id"] == "TASK-005-live-comparison-evidence"
     assert payload["status"] == "partial_live_comparison_blocker"
     assert payload["branch"] == "codex/task-005-live-comparison-evidence"
-    assert payload["next_task_id"] == "BLOCKED"
+    assert payload["next_task_id"] == "TASK-005-RESUME"
     assert payload["next_task_state"] == "awaiting_matched_live_window_with_full_event_coverage"
 
 
@@ -134,7 +134,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         manifest = json.load(handle)
 
     assert manifest["status"] == "partial_live_comparison_blocker"
-    assert manifest["next_task"]["id"] == "BLOCKED"
+    assert manifest["next_task"]["id"] == "TASK-005-RESUME"
     assert manifest["next_task"]["state"] == "awaiting_matched_live_window_with_full_event_coverage"
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]

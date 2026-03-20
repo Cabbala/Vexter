@@ -1,7 +1,7 @@
 {
   "project": "Vexter",
   "goal": "Build the analysis/integration mothership for Dexter and Mew-X while keeping Git on Mac and runtime/data on Windows via ssh win-lan.",
-  "mac_control_plane": "/Users/cabbala/Documents/vexter/task005-live-comparison-evidence",
+  "mac_control_plane": "/Users/cabbala/Projects/Vexter",
   "windows_runtime_host": "win-lan",
   "resolved_windows_hostname": "DESKTOP-NNC6MPS",
   "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
@@ -150,7 +150,7 @@
     "postgres_listener_5432": true
   },
   "next_task": {
-    "id": "BLOCKED",
+    "id": "TASK-005-RESUME",
     "state": "awaiting_matched_live_window_with_full_event_coverage",
     "task_006_ready": false,
     "resume_requirements": [

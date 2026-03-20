@@ -4,7 +4,7 @@ Vexter is the Mac-side control plane for comparative analysis of `Cabbala/Dexter
 
 ## Fixed Environment Split
 
-- Mac control plane: `/Users/cabbala/Documents/vexter/task005-live-comparison-evidence`
+- Mac control plane: `/Users/cabbala/Projects/Vexter`
 - Windows runtime host: `win-lan`
 - Windows preferred root: `D:\Quant\Vexter`, with fallback to user space
 - VPS: later-stage validation only
@@ -41,4 +41,4 @@ Vexter is the Mac-side control plane for comparative analysis of `Cabbala/Dexter
 
 `TASK-004-comparison-analysis` adds the first Vexter-side validator, shared metrics derivation layer, side-by-side comparison pack builder, and Windows collection runbook while keeping Dexter and Mew-X instrumentation frozen.
 
-`TASK-005-live-comparison-evidence` started from `main` on 2026-03-21. `win-lan` remains recovered to the fixed Windows root, PostgreSQL listener, detached frozen source checkouts, Dexter Python runtime, and Mew-X protobuf build prerequisites. The 2026-03-20T19:11:55Z resumed live probe confirmed Dexter's `HTTP_URL` and `WS_URL` still connect to Helius from `win-lan`, and it repaired a Mew-X env-parity gap by restoring missing `RPC_URL` from the existing `HTTP_URL` without changing source code. The remaining blocker is now exact signer misuse in the Windows repo-root `.env` files: Dexter still exits before collection because `C:\Users\bot\quant\Vexter\sources\Dexter\.env` `PRIVATE_KEY` exactly matches the Helius `api-key` already embedded in `HTTP_URL` / `WS_URL`, and Mew-X exits because `C:\Users\bot\quant\Vexter\sources\Mew-X\.env` `PRIVATE_KEY` is a truncated prefix of the Helius `api-key` embedded in `RPC_URL` / `WS_URL`. Until those exact `PRIVATE_KEY` values are replaced with valid base58 Solana signing keys, the fixed raw/config/export roots stay empty, no live comparison pack can be produced, and `TASK-006` cannot begin.
+`TASK-005-live-comparison-evidence` is now in `partial_live_comparison_blocker` state on `main` after PR #5. `win-lan` remains recovered to the fixed Windows root, PostgreSQL listener, detached frozen source checkouts, Dexter Python runtime, and Mew-X protobuf build prerequisites. The exact signer / RPC env blocker is resolved, live smoke packages now exist for both Dexter and Mew-X, and `validate`, `derive-metrics`, and `build-pack` complete end-to-end on the Mac control plane. The remaining blocker is evidence quality rather than startup failure: the current smoke packages were not collected from the same live measurement window and both still validate as `partial`, so winner / tie decisions stay deferred and `TASK-006` remains blocked until a matched comparable live window is collected.

@@ -18,6 +18,10 @@ def _load_json(path: Path) -> dict:
         return json.load(handle)
 
 
+def _write_json(path: Path, payload: dict) -> None:
+    path.write_text(json.dumps(payload, indent=2) + "\n")
+
+
 def test_validate_run_package_passes_for_fixtures() -> None:
     dexter_result = validate_run_package(DEXTER_FIXTURE)
     mewx_result = validate_run_package(MEWX_FIXTURE)
@@ -107,6 +111,7 @@ def test_build_comparison_pack_writes_expected_outputs(tmp_path: Path) -> None:
     first_row = comparison_pack["comparison_matrix"]["candidate_generation"][0]
     assert first_row["winner"] == "pending_live_evidence"
     assert "Live Windows comparison remains pending" in summary
+    assert "Resume TASK-005 with a matched comparable live window" in summary
 
 
 def test_build_comparison_pack_auto_defers_fixture_winners(tmp_path: Path) -> None:
@@ -124,3 +129,38 @@ def test_build_comparison_pack_auto_defers_fixture_winners(tmp_path: Path) -> No
     assert comparison_pack["winner_mode"] == "deferred"
     first_row = comparison_pack["comparison_matrix"]["candidate_generation"][0]
     assert first_row["winner"] == "pending_live_evidence"
+
+
+def test_build_comparison_pack_auto_defers_unmatched_live_windows(
+    tmp_path: Path,
+) -> None:
+    dexter_live = tmp_path / "dexter-live"
+    mewx_live = tmp_path / "mewx-live"
+    shutil.copytree(DEXTER_FIXTURE, dexter_live)
+    shutil.copytree(MEWX_FIXTURE, mewx_live)
+
+    dexter_metadata = _load_json(dexter_live / "run_metadata.json")
+    mewx_metadata = _load_json(mewx_live / "run_metadata.json")
+    dexter_metadata["evidence_kind"] = "live"
+    mewx_metadata["evidence_kind"] = "live"
+    mewx_metadata["started_at_utc"] = "2026-03-21T01:05:00Z"
+    mewx_metadata["ended_at_utc"] = "2026-03-21T01:25:00Z"
+    _write_json(dexter_live / "run_metadata.json", dexter_metadata)
+    _write_json(mewx_live / "run_metadata.json", mewx_metadata)
+
+    output_dir = tmp_path / "comparison-pack-live-unmatched"
+    build_comparison_pack(
+        dexter_package_dir=dexter_live,
+        mewx_package_dir=mewx_live,
+        output_dir=output_dir,
+    )
+
+    pack_manifest = _load_json(output_dir / "pack_manifest.json")
+    comparison_pack = _load_json(output_dir / "comparison_pack.json")
+    summary = (output_dir / "summary.md").read_text()
+
+    assert pack_manifest["winner_mode"] == "deferred"
+    assert comparison_pack["winner_mode"] == "deferred"
+    first_row = comparison_pack["comparison_matrix"]["candidate_generation"][0]
+    assert first_row["winner"] == "pending_live_evidence"
+    assert "Resume TASK-005 with a matched comparable live window" in summary

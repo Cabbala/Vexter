@@ -4,7 +4,7 @@
 
 - Dexter readiness: `partial`
 - Mew-X readiness: `partial`
-- Winner mode: `derived`
+- Winner mode: `deferred`
 
 ## Critical Metrics
 
@@ -27,5 +27,5 @@
 ## Decision
 
 - Winning component candidates: pending live matched-window evidence.
-- Evidence still missing: live Dexter and Mew-X run packages gathered from the same measurement window.
-- Next task: TASK-005 remains not started.
+- Evidence still missing: live Dexter and Mew-X run packages gathered from the same measurement window with pass-grade validation.
+- Next task: Resume TASK-005 with a matched comparable live window; TASK-006 remains blocked.

@@ -1,33 +1,20 @@
-# TASK-001 Source Assessment Summary
+# TASK-001 Closeout Summary
 
-## Outcome
+## Status
 
-- Verified that `main` and `codex/task-000-bootstrap` both point to commit `6d22d22e37a77e2e15c6211d32c125c8c4a2c151`.
-- Assessed Dexter and Mew-X at the file and function level before any integration-bot implementation.
-- Added the shared evaluation contract, normalized event schema, metrics catalog, comparison template, and per-source instrumentation plans.
-- Verified the Windows runtime root through `ssh win-lan` and fixed a concrete separation plan for runtime, logs, raw events, replay material, and DB volumes.
+- `TASK-001-source-assessment` is complete on `main`.
+- PR #1 carries the source assessments, shared evaluation contract, normalized schema, metrics catalog, instrumentation plans, and Windows runtime verification into the GitHub source of truth.
+- No Dexter or Mew-X integration work has started.
 
-## Key Findings
+## TASK-002 Start Conditions
 
-- Dexter already has useful replay seed data in PostgreSQL, but its live decision path is under-instrumented.
-- Mew-X has the stronger candidate and execution substrate, but it still lacks analysis-grade event attribution.
-- Profitability confirmation requires normalized evidence for candidate precision, entry latency, slippage, session excursions, realized-vs-theoretical exit gap, stale-position risk, and capital efficiency.
+- start from the latest `main`, not from a stale TASK-001 branch
+- keep scope limited to observational event writers and Vexter-side validation already defined in the committed plans
+- preserve the normalized event contract and the verified Windows runtime layout as fixed interfaces
+- do not change strategy logic or begin Dexter/Mew-X integration work
 
-## Key Artifacts
+## Reference Artifacts
 
-- `docs/evaluation_contract.md`
-- `docs/normalized_event_schema.md`
-- `docs/metrics_catalog.md`
-- `docs/comparison_matrix_template.md`
-- `docs/dexter_source_assessment.md`
-- `docs/mewx_source_assessment.md`
-- `plans/dexter_instrumentation_plan.md`
-- `plans/mewx_instrumentation_plan.md`
-- `plans/integration_readiness_plan.md`
 - `artifacts/context_pack.json`
 - `artifacts/proof_bundle_manifest.json`
-
-## Git Visibility
-
-- GitHub repo: `https://github.com/Cabbala/Vexter`
-- Working branch: `codex/task-001-source-assessment`
+- `artifacts/task_ledger.jsonl`

@@ -22,6 +22,7 @@
     "push_changes_for_github_visibility": true
   },
   "phase": "TASK-001-source-assessment",
+  "status": "complete_on_main",
   "bundle_source": "/Users/cabbala/Downloads/Vexter_task001_bundle.tar.gz",
   "starting_point": {
     "verified_at": "2026-03-20T14:49:45Z",
@@ -47,6 +48,16 @@
       "artifacts/context_pack.json",
       "artifacts/summary.md",
       "artifacts/proof_bundle_manifest.json"
+    ]
+  },
+  "next_task": {
+    "id": "TASK-002",
+    "state": "not_started",
+    "start_conditions": [
+      "Create a new branch from the latest main after TASK-001 closeout is merged.",
+      "Limit scope to observational event writers and Vexter-side validation already described in the committed plans.",
+      "Keep the normalized event contract and verified Windows runtime layout fixed.",
+      "Do not begin Dexter or Mew-X integration work or change strategy behavior."
     ]
   },
   "source_assessment": {

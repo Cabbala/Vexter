@@ -21,13 +21,13 @@
     "deliverable_format": "minimal prompt + tar.gz bundle",
     "push_changes_for_github_visibility": true
   },
-  "phase": "TASK-003-mewx-instrumentation",
-  "status": "complete_on_main",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task003_mewx_instrumentation_bundle.tar.gz",
+  "phase": "TASK-004-comparison-analysis",
+  "status": "complete_on_branch",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task004_comparison_analysis_bundle.tar.gz",
   "starting_point": {
-    "verified_at": "2026-03-21T00:49:00Z",
-    "main": "a6370a2f17a3fcfae2fa1c4d8ee2658da9cbf71c",
-    "work_branch": "codex/task-003-mewx-instrumentation"
+    "verified_at": "2026-03-21T01:25:00Z",
+    "main": "d4fec420fd2ff336d5076a018f3ab5b256bca00e",
+    "work_branch": "codex/task-004-comparison-analysis"
   },
   "deliverables": {
     "docs": [
@@ -35,6 +35,7 @@
       "docs/normalized_event_schema.md",
       "docs/metrics_catalog.md",
       "docs/comparison_matrix_template.md",
+      "docs/comparison_collection_runbook.md",
       "docs/dexter_source_assessment.md",
       "docs/dexter_event_mapping.md",
       "docs/mewx_source_assessment.md",
@@ -48,60 +49,72 @@
     "artifacts": [
       "artifacts/context_pack.json",
       "artifacts/summary.md",
-      "artifacts/proof_bundle_manifest.json"
+      "artifacts/proof_bundle_manifest.json",
+      "artifacts/examples/task-004-sample-comparison"
+    ],
+    "comparison_tooling": [
+      "vexter/comparison/",
+      "scripts/comparison_analysis.py",
+      "scripts/collect_comparison_package.ps1"
     ]
   },
   "completed_task": {
-    "id": "TASK-003-mewx-instrumentation",
+    "id": "TASK-004-comparison-analysis",
     "scope": [
-      "Mew-X observational instrumentation only",
-      "Vexter-side validation and proof artifacts only",
+      "Vexter-side comparison-analysis layer only",
+      "No Dexter or Mew-X instrumentation changes",
       "No strategy logic changes",
-      "No Dexter or comparison work"
+      "No integration implementation"
     ],
-    "merged_pr": 3,
-    "source_change": {
-      "repo": "https://github.com/Cabbala/Mew-X",
-      "branch": "codex/task-003-mewx-instrumentation",
-      "commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
-      "pull_request": 1,
-      "implemented_paths": [
-        "sources/Mew-X/src/main.rs",
-        "sources/Mew-X/src/mew/instrumentation.rs",
-        "sources/Mew-X/src/mew/deagle/deagle.rs",
-        "sources/Mew-X/src/mew/snipe/handler.rs"
+    "surface": {
+      "validator_checks": [
+        "required run identity fields",
+        "required event types",
+        "event envelope and payload coverage",
+        "source-specific exports",
+        "config and proof attribution"
+      ],
+      "metrics": [
+        "candidate_count",
+        "candidate_precision_proxy",
+        "fill_success_rate",
+        "signal_to_attempt_latency_ms",
+        "attempt_to_fill_latency_ms",
+        "quote_vs_fill_slippage_bps",
+        "max_favorable_excursion_pct",
+        "max_adverse_excursion_pct",
+        "time_to_peak_ms",
+        "realized_exit_pct",
+        "realized_vs_peak_gap_pct",
+        "stale_position_ratio",
+        "replayability_grade"
+      ],
+      "outputs": [
+        "normalized validation result",
+        "per-source metrics summary",
+        "comparison matrix JSON and Markdown",
+        "comparison pack summary Markdown",
+        "machine-readable comparison pack JSON"
+      ],
+      "windows_collection_support": [
+        "scripts/collect_comparison_package.ps1",
+        "docs/comparison_collection_runbook.md"
+      ],
+      "fixture_packages": [
+        "tests/fixtures/comparison_packages/dexter_fixture",
+        "tests/fixtures/comparison_packages/mewx_fixture",
+        "artifacts/examples/task-004-sample-comparison"
       ]
     },
-    "surface": {
-      "events": [
-        "creator_candidate",
-        "mint_observed",
-        "candidate_rejected",
-        "entry_signal",
-        "entry_attempt",
-        "entry_fill",
-        "entry_rejected",
-        "session_update",
-        "exit_signal",
-        "exit_fill",
-        "position_closed",
-        "run_summary"
-      ],
-      "exports": [
-        "masked config snapshot",
-        "candidate refresh snapshots",
-        "session summaries"
-      ],
-      "test_command": "cargo test instrumentation_writes_expected_artifacts -- --nocapture"
-    }
+    "test_command": "pytest -q"
   },
   "next_task": {
-    "id": "TASK-004",
+    "id": "TASK-005",
     "state": "not_started",
     "start_conditions": [
-      "Keep Dexter and Mew-X observational instrumentation frozen while gathering the first comparison evidence.",
-      "Do not modify strategy or execution logic during the comparison-analysis phase.",
-      "Use the fixed normalized event contract and Windows runtime layout as immutable interfaces."
+      "Collect matched Dexter and Mew-X live packages from the same measurement window.",
+      "Run the Vexter comparison pack on live packages and record evidence-backed winners or ties.",
+      "Keep strategy and execution logic frozen until replay validation clears the comparison evidence."
     ]
   },
   "source_assessment": {

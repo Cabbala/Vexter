@@ -2,11 +2,21 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-BUNDLE_PATH="$ROOT_DIR/artifacts/bundles/task-003-mewx-instrumentation.tar.gz"
+BUNDLE_PATH="$ROOT_DIR/artifacts/bundles/task-004-comparison-analysis.tar.gz"
+SAMPLE_PACK_DIR="$ROOT_DIR/artifacts/examples/task-004-sample-comparison"
 
 mkdir -p "$ROOT_DIR/artifacts/bundles"
+mkdir -p "$ROOT_DIR/artifacts/examples"
 
 rm -f "$BUNDLE_PATH"
+rm -rf "$SAMPLE_PACK_DIR"
+
+python "$ROOT_DIR/scripts/comparison_analysis.py" build-pack \
+  --dexter-package "$ROOT_DIR/tests/fixtures/comparison_packages/dexter_fixture" \
+  --mewx-package "$ROOT_DIR/tests/fixtures/comparison_packages/mewx_fixture" \
+  --output-dir "$SAMPLE_PACK_DIR" \
+  --summary-note "Fixture-based sample pack for TASK-004 scaffolding. Live Windows comparison remains pending." \
+  --defer-winners
 
 tar -czf "$BUNDLE_PATH" \
   --exclude='__pycache__' \
@@ -18,6 +28,7 @@ tar -czf "$BUNDLE_PATH" \
   specs \
   ops \
   plans \
+  vexter \
   manifests \
   scripts \
   .github/workflows \
@@ -25,6 +36,7 @@ tar -czf "$BUNDLE_PATH" \
   artifacts/context_pack.json \
   artifacts/summary.md \
   artifacts/proof_bundle_manifest.json \
-  artifacts/task_ledger.jsonl
+  artifacts/task_ledger.jsonl \
+  artifacts/examples
 
 printf '%s\n' "$BUNDLE_PATH"

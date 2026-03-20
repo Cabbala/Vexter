@@ -1,0 +1,13 @@
+{
+  "captured_at_utc": "2026-03-21T01:00:00Z",
+  "creators": [
+    {
+      "creator": "creator-a",
+      "trust_factor": 0.82
+    },
+    {
+      "creator": "creator-b",
+      "trust_factor": 0.75
+    }
+  ]
+}

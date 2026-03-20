@@ -1,0 +1,21 @@
+{
+  "raw_events": [
+    "events.ndjson"
+  ],
+  "logs": [
+    "logs/mewx.log"
+  ],
+  "replays": [
+    "exports/session_summary.json"
+  ],
+  "db_exports": [
+    "exports/session_summary.json"
+  ],
+  "exports": [
+    "exports/candidate_refresh_snapshot.json",
+    "exports/session_summary.json"
+  ],
+  "config": [
+    "config/config_snapshot.json"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "source_system": "mewx",
+  "masked": true,
+  "mode": "observe_live",
+  "use_grpc": true
+}

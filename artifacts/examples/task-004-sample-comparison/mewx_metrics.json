@@ -1,0 +1,127 @@
+{
+  "derived_metrics": [
+    "candidate_count",
+    "candidate_precision_proxy",
+    "fill_success_rate",
+    "signal_to_attempt_latency_ms",
+    "attempt_to_fill_latency_ms",
+    "quote_vs_fill_slippage_bps",
+    "max_favorable_excursion_pct",
+    "max_adverse_excursion_pct",
+    "time_to_peak_ms",
+    "realized_exit_pct",
+    "realized_vs_peak_gap_pct",
+    "stale_position_ratio",
+    "replayability_grade"
+  ],
+  "metrics": {
+    "attempt_to_fill_latency_ms": {
+      "aggregation": "median",
+      "samples": 2,
+      "status": "ok",
+      "unit": "ms",
+      "value": 1000.0
+    },
+    "candidate_count": {
+      "aggregation": "count",
+      "status": "ok",
+      "unit": "count",
+      "value": 3
+    },
+    "candidate_precision_proxy": {
+      "aggregation": "run_ratio",
+      "details": {
+        "candidate_count": 3,
+        "successful_positions": 2
+      },
+      "status": "ok",
+      "unit": "ratio",
+      "value": 0.6666666666666666
+    },
+    "fill_success_rate": {
+      "aggregation": "run_ratio",
+      "details": {
+        "attempts": 3,
+        "fills": 2
+      },
+      "status": "ok",
+      "unit": "ratio",
+      "value": 0.6666666666666666
+    },
+    "max_adverse_excursion_pct": {
+      "aggregation": "median",
+      "samples": 2,
+      "status": "ok",
+      "unit": "pct",
+      "value": -9.0
+    },
+    "max_favorable_excursion_pct": {
+      "aggregation": "median",
+      "samples": 2,
+      "status": "ok",
+      "unit": "pct",
+      "value": 14.5
+    },
+    "quote_vs_fill_slippage_bps": {
+      "aggregation": "median",
+      "samples": 2,
+      "status": "ok",
+      "unit": "bps",
+      "value": 127.63157894736798
+    },
+    "realized_exit_pct": {
+      "aggregation": "median",
+      "samples": 2,
+      "status": "ok",
+      "unit": "pct",
+      "value": 3.5816912971999995
+    },
+    "realized_vs_peak_gap_pct": {
+      "aggregation": "median",
+      "samples": 2,
+      "status": "ok",
+      "unit": "pct",
+      "value": 14.0
+    },
+    "replayability_grade": {
+      "aggregation": "classification",
+      "details": {
+        "db_exports": 1,
+        "logs": 1,
+        "raw_events": 1,
+        "replayable_flag": true,
+        "replays": 1
+      },
+      "status": "ok",
+      "unit": "grade",
+      "value": "full"
+    },
+    "signal_to_attempt_latency_ms": {
+      "aggregation": "median",
+      "samples": 3,
+      "status": "ok",
+      "unit": "ms",
+      "value": 1000.0
+    },
+    "stale_position_ratio": {
+      "aggregation": "run_ratio",
+      "details": {
+        "closed_positions": 2,
+        "stale_positions": 1
+      },
+      "status": "ok",
+      "unit": "ratio",
+      "value": 0.5
+    },
+    "time_to_peak_ms": {
+      "aggregation": "median",
+      "samples": 2,
+      "status": "ok",
+      "unit": "ms",
+      "value": 67500.0
+    }
+  },
+  "package_dir": "/Users/cabbala/Documents/vexter/task004-comparison-analysis/tests/fixtures/comparison_packages/mewx_fixture",
+  "run_id": "mewx-fixture-001",
+  "source_system": "mewx"
+}

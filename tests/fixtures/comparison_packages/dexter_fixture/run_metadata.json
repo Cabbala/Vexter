@@ -1,0 +1,19 @@
+{
+  "run_id": "dexter-fixture-001",
+  "source_system": "dexter",
+  "source_commit": "69de8b615a0a366545cffcde7eb3cab0f43730dd",
+  "mode": "observe_live",
+  "transport_mode": "ws",
+  "evidence_kind": "fixture",
+  "host_role": "windows_runtime",
+  "runtime_root": "C:\\Users\\bot\\quant\\Vexter",
+  "started_at_utc": "2026-03-21T01:00:00Z",
+  "ended_at_utc": "2026-03-21T01:20:00Z",
+  "event_stream": "events.ndjson",
+  "config_snapshot": "config/config_snapshot.json",
+  "proof_manifest": "proof_manifest.json",
+  "source_exports": {
+    "leaderboard_snapshot": "exports/leaderboard_snapshot.json",
+    "stagnant_mint_replay": "exports/stagnant_mint_replay.json"
+  }
+}

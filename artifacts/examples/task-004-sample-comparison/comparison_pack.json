@@ -1,0 +1,851 @@
+{
+  "built_at_utc": "2026-03-20T16:45:58Z",
+  "comparison_matrix": {
+    "candidate_generation": [
+      {
+        "dexter": {
+          "aggregation": "count",
+          "status": "ok",
+          "unit": "count",
+          "value": 2
+        },
+        "metric": "candidate_count",
+        "mewx": {
+          "aggregation": "count",
+          "status": "ok",
+          "unit": "count",
+          "value": 3
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "aggregation": "run_ratio",
+          "details": {
+            "candidate_count": 2,
+            "successful_positions": 1
+          },
+          "status": "ok",
+          "unit": "ratio",
+          "value": 0.5
+        },
+        "metric": "candidate_precision_proxy",
+        "mewx": {
+          "aggregation": "run_ratio",
+          "details": {
+            "candidate_count": 3,
+            "successful_positions": 2
+          },
+          "status": "ok",
+          "unit": "ratio",
+          "value": 0.6666666666666666
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "metric": "candidate_coverage",
+        "mewx": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "metric": "source_mix",
+        "mewx": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "metric": "creator_score_distribution",
+        "mewx": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      }
+    ],
+    "entry_execution": [
+      {
+        "dexter": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "ms",
+          "value": 2000.0
+        },
+        "metric": "signal_to_attempt_latency_ms",
+        "mewx": {
+          "aggregation": "median",
+          "samples": 3,
+          "status": "ok",
+          "unit": "ms",
+          "value": 1000.0
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "aggregation": "median",
+          "samples": 1,
+          "status": "ok",
+          "unit": "ms",
+          "value": 2000.0
+        },
+        "metric": "attempt_to_fill_latency_ms",
+        "mewx": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "ms",
+          "value": 1000.0
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "aggregation": "run_ratio",
+          "details": {
+            "attempts": 2,
+            "fills": 1
+          },
+          "status": "ok",
+          "unit": "ratio",
+          "value": 0.5
+        },
+        "metric": "fill_success_rate",
+        "mewx": {
+          "aggregation": "run_ratio",
+          "details": {
+            "attempts": 3,
+            "fills": 2
+          },
+          "status": "ok",
+          "unit": "ratio",
+          "value": 0.6666666666666666
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "aggregation": "median",
+          "samples": 1,
+          "status": "ok",
+          "unit": "bps",
+          "value": 294.11764705882376
+        },
+        "metric": "quote_vs_fill_slippage_bps",
+        "mewx": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "bps",
+          "value": 127.63157894736798
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "metric": "entry_reject_reason_rate",
+        "mewx": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      }
+    ],
+    "portfolio_operations": [
+      {
+        "dexter": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "metric": "concurrent_positions_max",
+        "mewx": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "metric": "capital_lock_efficiency",
+        "mewx": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "metric": "token_concurrency_rejects",
+        "mewx": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "metric": "failure_to_exit_incidence",
+        "mewx": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "aggregation": "classification",
+          "details": {
+            "db_exports": 1,
+            "logs": 1,
+            "raw_events": 1,
+            "replayable_flag": true,
+            "replays": 1
+          },
+          "status": "ok",
+          "unit": "grade",
+          "value": "full"
+        },
+        "metric": "replayability_grade",
+        "mewx": {
+          "aggregation": "classification",
+          "details": {
+            "db_exports": 1,
+            "logs": 1,
+            "raw_events": 1,
+            "replayable_flag": true,
+            "replays": 1
+          },
+          "status": "ok",
+          "unit": "grade",
+          "value": "full"
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      }
+    ],
+    "run_metadata": {
+      "dexter": {
+        "config_snapshot": "config/config_snapshot.json",
+        "measurement_window": "2026-03-21T01:00:00Z -> 2026-03-21T01:20:00Z",
+        "mode": "observe_live",
+        "source_commit": "69de8b615a0a366545cffcde7eb3cab0f43730dd",
+        "transport_mode": "ws"
+      },
+      "mewx": {
+        "config_snapshot": "config/config_snapshot.json",
+        "measurement_window": "2026-03-21T01:00:00Z -> 2026-03-21T01:20:00Z",
+        "mode": "observe_live",
+        "source_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+        "transport_mode": "grpc"
+      }
+    },
+    "session_exit": [
+      {
+        "dexter": {
+          "aggregation": "median",
+          "samples": 1,
+          "status": "ok",
+          "unit": "pct",
+          "value": 20.0
+        },
+        "metric": "max_favorable_excursion_pct",
+        "mewx": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "pct",
+          "value": 14.5
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "aggregation": "median",
+          "samples": 1,
+          "status": "ok",
+          "unit": "pct",
+          "value": -4.0
+        },
+        "metric": "max_adverse_excursion_pct",
+        "mewx": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "pct",
+          "value": -9.0
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "aggregation": "median",
+          "samples": 1,
+          "status": "ok",
+          "unit": "ms",
+          "value": 60000.0
+        },
+        "metric": "time_to_peak_ms",
+        "mewx": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "ms",
+          "value": 67500.0
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "aggregation": "median",
+          "samples": 1,
+          "status": "ok",
+          "unit": "pct",
+          "value": 13.3333333333
+        },
+        "metric": "realized_exit_pct",
+        "mewx": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "pct",
+          "value": 3.5816912971999995
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "aggregation": "median",
+          "samples": 1,
+          "status": "ok",
+          "unit": "pct",
+          "value": 6.0
+        },
+        "metric": "realized_vs_peak_gap_pct",
+        "mewx": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "pct",
+          "value": 14.0
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "aggregation": "run_ratio",
+          "details": {
+            "closed_positions": 1,
+            "stale_positions": 0
+          },
+          "status": "ok",
+          "unit": "ratio",
+          "value": 0.0
+        },
+        "metric": "stale_position_ratio",
+        "mewx": {
+          "aggregation": "run_ratio",
+          "details": {
+            "closed_positions": 2,
+            "stale_positions": 1
+          },
+          "status": "ok",
+          "unit": "ratio",
+          "value": 0.5
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      }
+    ],
+    "validation": {
+      "dexter": {
+        "checks": {
+          "event_envelope_ok": true,
+          "payload_fields_ok": true,
+          "proof_attribution_ok": true,
+          "required_event_types_ok": true,
+          "run_identity_ok": true,
+          "source_exports_ok": true
+        },
+        "classification": "pass",
+        "comparison_readiness": "comparable",
+        "coverage": {
+          "event_completeness_ratio": 1.0,
+          "missing_event_types": [],
+          "observed_event_types": [
+            "candidate_rejected",
+            "creator_candidate",
+            "entry_attempt",
+            "entry_fill",
+            "entry_rejected",
+            "entry_signal",
+            "exit_fill",
+            "exit_signal",
+            "mint_observed",
+            "position_closed",
+            "run_summary",
+            "session_update"
+          ],
+          "required_event_types_present": 12,
+          "required_event_types_total": 12,
+          "total_events": 16
+        },
+        "issues": [],
+        "package_dir": "/Users/cabbala/Documents/vexter/task004-comparison-analysis/tests/fixtures/comparison_packages/dexter_fixture",
+        "run_id": "dexter-fixture-001",
+        "source_system": "dexter"
+      },
+      "mewx": {
+        "checks": {
+          "event_envelope_ok": true,
+          "payload_fields_ok": true,
+          "proof_attribution_ok": true,
+          "required_event_types_ok": true,
+          "run_identity_ok": true,
+          "source_exports_ok": true
+        },
+        "classification": "pass",
+        "comparison_readiness": "comparable",
+        "coverage": {
+          "event_completeness_ratio": 1.0,
+          "missing_event_types": [],
+          "observed_event_types": [
+            "candidate_rejected",
+            "creator_candidate",
+            "entry_attempt",
+            "entry_fill",
+            "entry_rejected",
+            "entry_signal",
+            "exit_fill",
+            "exit_signal",
+            "mint_observed",
+            "position_closed",
+            "run_summary",
+            "session_update"
+          ],
+          "required_event_types_present": 12,
+          "required_event_types_total": 12,
+          "total_events": 25
+        },
+        "issues": [],
+        "package_dir": "/Users/cabbala/Documents/vexter/task004-comparison-analysis/tests/fixtures/comparison_packages/mewx_fixture",
+        "run_id": "mewx-fixture-001",
+        "source_system": "mewx"
+      }
+    }
+  },
+  "metrics": {
+    "dexter": {
+      "derived_metrics": [
+        "candidate_count",
+        "candidate_precision_proxy",
+        "fill_success_rate",
+        "signal_to_attempt_latency_ms",
+        "attempt_to_fill_latency_ms",
+        "quote_vs_fill_slippage_bps",
+        "max_favorable_excursion_pct",
+        "max_adverse_excursion_pct",
+        "time_to_peak_ms",
+        "realized_exit_pct",
+        "realized_vs_peak_gap_pct",
+        "stale_position_ratio",
+        "replayability_grade"
+      ],
+      "metrics": {
+        "attempt_to_fill_latency_ms": {
+          "aggregation": "median",
+          "samples": 1,
+          "status": "ok",
+          "unit": "ms",
+          "value": 2000.0
+        },
+        "candidate_count": {
+          "aggregation": "count",
+          "status": "ok",
+          "unit": "count",
+          "value": 2
+        },
+        "candidate_precision_proxy": {
+          "aggregation": "run_ratio",
+          "details": {
+            "candidate_count": 2,
+            "successful_positions": 1
+          },
+          "status": "ok",
+          "unit": "ratio",
+          "value": 0.5
+        },
+        "fill_success_rate": {
+          "aggregation": "run_ratio",
+          "details": {
+            "attempts": 2,
+            "fills": 1
+          },
+          "status": "ok",
+          "unit": "ratio",
+          "value": 0.5
+        },
+        "max_adverse_excursion_pct": {
+          "aggregation": "median",
+          "samples": 1,
+          "status": "ok",
+          "unit": "pct",
+          "value": -4.0
+        },
+        "max_favorable_excursion_pct": {
+          "aggregation": "median",
+          "samples": 1,
+          "status": "ok",
+          "unit": "pct",
+          "value": 20.0
+        },
+        "quote_vs_fill_slippage_bps": {
+          "aggregation": "median",
+          "samples": 1,
+          "status": "ok",
+          "unit": "bps",
+          "value": 294.11764705882376
+        },
+        "realized_exit_pct": {
+          "aggregation": "median",
+          "samples": 1,
+          "status": "ok",
+          "unit": "pct",
+          "value": 13.3333333333
+        },
+        "realized_vs_peak_gap_pct": {
+          "aggregation": "median",
+          "samples": 1,
+          "status": "ok",
+          "unit": "pct",
+          "value": 6.0
+        },
+        "replayability_grade": {
+          "aggregation": "classification",
+          "details": {
+            "db_exports": 1,
+            "logs": 1,
+            "raw_events": 1,
+            "replayable_flag": true,
+            "replays": 1
+          },
+          "status": "ok",
+          "unit": "grade",
+          "value": "full"
+        },
+        "signal_to_attempt_latency_ms": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "ms",
+          "value": 2000.0
+        },
+        "stale_position_ratio": {
+          "aggregation": "run_ratio",
+          "details": {
+            "closed_positions": 1,
+            "stale_positions": 0
+          },
+          "status": "ok",
+          "unit": "ratio",
+          "value": 0.0
+        },
+        "time_to_peak_ms": {
+          "aggregation": "median",
+          "samples": 1,
+          "status": "ok",
+          "unit": "ms",
+          "value": 60000.0
+        }
+      },
+      "package_dir": "/Users/cabbala/Documents/vexter/task004-comparison-analysis/tests/fixtures/comparison_packages/dexter_fixture",
+      "run_id": "dexter-fixture-001",
+      "source_system": "dexter"
+    },
+    "mewx": {
+      "derived_metrics": [
+        "candidate_count",
+        "candidate_precision_proxy",
+        "fill_success_rate",
+        "signal_to_attempt_latency_ms",
+        "attempt_to_fill_latency_ms",
+        "quote_vs_fill_slippage_bps",
+        "max_favorable_excursion_pct",
+        "max_adverse_excursion_pct",
+        "time_to_peak_ms",
+        "realized_exit_pct",
+        "realized_vs_peak_gap_pct",
+        "stale_position_ratio",
+        "replayability_grade"
+      ],
+      "metrics": {
+        "attempt_to_fill_latency_ms": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "ms",
+          "value": 1000.0
+        },
+        "candidate_count": {
+          "aggregation": "count",
+          "status": "ok",
+          "unit": "count",
+          "value": 3
+        },
+        "candidate_precision_proxy": {
+          "aggregation": "run_ratio",
+          "details": {
+            "candidate_count": 3,
+            "successful_positions": 2
+          },
+          "status": "ok",
+          "unit": "ratio",
+          "value": 0.6666666666666666
+        },
+        "fill_success_rate": {
+          "aggregation": "run_ratio",
+          "details": {
+            "attempts": 3,
+            "fills": 2
+          },
+          "status": "ok",
+          "unit": "ratio",
+          "value": 0.6666666666666666
+        },
+        "max_adverse_excursion_pct": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "pct",
+          "value": -9.0
+        },
+        "max_favorable_excursion_pct": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "pct",
+          "value": 14.5
+        },
+        "quote_vs_fill_slippage_bps": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "bps",
+          "value": 127.63157894736798
+        },
+        "realized_exit_pct": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "pct",
+          "value": 3.5816912971999995
+        },
+        "realized_vs_peak_gap_pct": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "pct",
+          "value": 14.0
+        },
+        "replayability_grade": {
+          "aggregation": "classification",
+          "details": {
+            "db_exports": 1,
+            "logs": 1,
+            "raw_events": 1,
+            "replayable_flag": true,
+            "replays": 1
+          },
+          "status": "ok",
+          "unit": "grade",
+          "value": "full"
+        },
+        "signal_to_attempt_latency_ms": {
+          "aggregation": "median",
+          "samples": 3,
+          "status": "ok",
+          "unit": "ms",
+          "value": 1000.0
+        },
+        "stale_position_ratio": {
+          "aggregation": "run_ratio",
+          "details": {
+            "closed_positions": 2,
+            "stale_positions": 1
+          },
+          "status": "ok",
+          "unit": "ratio",
+          "value": 0.5
+        },
+        "time_to_peak_ms": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "ms",
+          "value": 67500.0
+        }
+      },
+      "package_dir": "/Users/cabbala/Documents/vexter/task004-comparison-analysis/tests/fixtures/comparison_packages/mewx_fixture",
+      "run_id": "mewx-fixture-001",
+      "source_system": "mewx"
+    }
+  },
+  "pack_id": "comparison-dexter-fixture-001-vs-mewx-fixture-001",
+  "summary_note": "Fixture-based sample pack for TASK-004 scaffolding. Live Windows comparison remains pending.",
+  "validation": {
+    "dexter": {
+      "checks": {
+        "event_envelope_ok": true,
+        "payload_fields_ok": true,
+        "proof_attribution_ok": true,
+        "required_event_types_ok": true,
+        "run_identity_ok": true,
+        "source_exports_ok": true
+      },
+      "classification": "pass",
+      "comparison_readiness": "comparable",
+      "coverage": {
+        "event_completeness_ratio": 1.0,
+        "missing_event_types": [],
+        "observed_event_types": [
+          "candidate_rejected",
+          "creator_candidate",
+          "entry_attempt",
+          "entry_fill",
+          "entry_rejected",
+          "entry_signal",
+          "exit_fill",
+          "exit_signal",
+          "mint_observed",
+          "position_closed",
+          "run_summary",
+          "session_update"
+        ],
+        "required_event_types_present": 12,
+        "required_event_types_total": 12,
+        "total_events": 16
+      },
+      "issues": [],
+      "package_dir": "/Users/cabbala/Documents/vexter/task004-comparison-analysis/tests/fixtures/comparison_packages/dexter_fixture",
+      "run_id": "dexter-fixture-001",
+      "source_system": "dexter"
+    },
+    "mewx": {
+      "checks": {
+        "event_envelope_ok": true,
+        "payload_fields_ok": true,
+        "proof_attribution_ok": true,
+        "required_event_types_ok": true,
+        "run_identity_ok": true,
+        "source_exports_ok": true
+      },
+      "classification": "pass",
+      "comparison_readiness": "comparable",
+      "coverage": {
+        "event_completeness_ratio": 1.0,
+        "missing_event_types": [],
+        "observed_event_types": [
+          "candidate_rejected",
+          "creator_candidate",
+          "entry_attempt",
+          "entry_fill",
+          "entry_rejected",
+          "entry_signal",
+          "exit_fill",
+          "exit_signal",
+          "mint_observed",
+          "position_closed",
+          "run_summary",
+          "session_update"
+        ],
+        "required_event_types_present": 12,
+        "required_event_types_total": 12,
+        "total_events": 25
+      },
+      "issues": [],
+      "package_dir": "/Users/cabbala/Documents/vexter/task004-comparison-analysis/tests/fixtures/comparison_packages/mewx_fixture",
+      "run_id": "mewx-fixture-001",
+      "source_system": "mewx"
+    }
+  },
+  "winner_mode": "deferred"
+}

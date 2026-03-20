@@ -1,15 +1,23 @@
-# Mew-X Source Assessment Seed
+# Mew-X Source Assessment
 
-## Current reading highlights
-- Rust bot with multiple creator-source strategies and a stronger execution substrate.
-- README references Linux usage, Rust toolchain, PostgreSQL, and advanced runtime controls.
-- Candidate selection path includes `algo_choose_creators()` and multiple source labels.
-- Config/risk controls include concurrent-token caps and sim/trade mode.
-- Transport and execution abstraction are stronger than in Dexter.
+## Detailed Assessment
 
-## Assessment tasks
-- map exact runtime/build requirements on Windows/WSL2
-- isolate candidate-source pipeline and entry gating filters
-- enumerate execution, risk, and exit paths
-- define observational instrumentation required for profitability comparison
-- define normalized adapters into Vexter analysis contract
+See `docs/mewx_source_assessment.md` for the file and function level review.
+
+## Current Conclusions
+
+- Mew-X is strongest at source-labeled candidate generation and execution routing.
+- State separation is cleaner than Dexter, but event-level attribution is still missing.
+- Transport and route quality must be measured explicitly or comparisons will be misleading.
+
+## Instrumentation Priority
+
+- candidate refresh snapshots with source labels
+- session gate reject reasons and gate values
+- route and tx-strategy telemetry for buys and sells
+- session checkpoints for creator behavior and inactivity
+- migration and dip-trigger events
+
+## Next Implementation Link
+
+See `plans/mewx_instrumentation_plan.md`.

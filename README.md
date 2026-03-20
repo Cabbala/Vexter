@@ -27,4 +27,4 @@ Vexter is the Mac-side control plane for comparative analysis of `Cabbala/Dexter
 
 ## Current Task
 
-This repo is seeded for `TASK-000-bootstrap`, which establishes the Vexter control plane and the fixed cross-repo workflow for future Dexter and Mew-X analysis.
+This repo is now in `TASK-001-source-assessment`, which freezes the shared evaluation contract, source assessments, instrumentation plans, and Windows runtime layout needed before any bot integration work.

@@ -10,6 +10,12 @@ def test_required_paths_exist() -> None:
     required_paths = [
         "README.md",
         "docs/ROLE_DEFINITION.md",
+        "docs/evaluation_contract.md",
+        "docs/normalized_event_schema.md",
+        "docs/metrics_catalog.md",
+        "docs/comparison_matrix_template.md",
+        "docs/dexter_source_assessment.md",
+        "docs/mewx_source_assessment.md",
         "specs/FIXED_WORKFLOW.md",
         "specs/ANALYSIS_CONTRACT.md",
         "ops/CODEX_MEMORY.md",
@@ -17,6 +23,9 @@ def test_required_paths_exist() -> None:
         "plans/TASK_000_BOOTSTRAP.md",
         "plans/SOURCE_ASSESSMENT_DEXTER.md",
         "plans/SOURCE_ASSESSMENT_MEWX.md",
+        "plans/dexter_instrumentation_plan.md",
+        "plans/mewx_instrumentation_plan.md",
+        "plans/integration_readiness_plan.md",
         "manifests/reference_repos.json",
         "manifests/windows_runtime.json",
         "scripts/bootstrap_windows_workspace.sh",
@@ -62,24 +71,33 @@ def test_windows_runtime_manifest_has_expected_shape() -> None:
     assert manifest["host_alias"] == "win-lan"
     assert manifest["selected_root"].endswith("Vexter")
     assert len(manifest["directories"]) == 8
+    assert manifest["analysis_layout"]["dexter"]["raw_events"].endswith("data\\raw\\dexter")
+    assert manifest["analysis_layout"]["mewx"]["raw_events"].endswith("data\\raw\\mewx")
 
 
 def test_task_ledger_is_valid_jsonl() -> None:
     ledger_path = REPO_ROOT / "artifacts/task_ledger.jsonl"
     lines = ledger_path.read_text().strip().splitlines()
 
-    assert len(lines) == 1
-    payload = json.loads(lines[0])
-    assert payload["task_id"] == "TASK-000-bootstrap"
+    assert len(lines) >= 2
+    payload = json.loads(lines[-1])
+    assert payload["task_id"] == "TASK-001-source-assessment"
 
 
 def test_proof_bundle_exists_and_contains_required_files() -> None:
-    bundle_path = REPO_ROOT / "artifacts/bundles/task-000-bootstrap.tar.gz"
+    with (REPO_ROOT / "artifacts/proof_bundle_manifest.json").open() as handle:
+        manifest = json.load(handle)
+
+    bundle_path = REPO_ROOT / manifest["bundle_path"]
     assert bundle_path.exists()
 
     with tarfile.open(bundle_path, "r:gz") as bundle:
         names = set(bundle.getnames())
 
     assert "README.md" in names
+    assert "docs/evaluation_contract.md" in names
+    assert "docs/normalized_event_schema.md" in names
+    assert "plans/dexter_instrumentation_plan.md" in names
+    assert "plans/mewx_instrumentation_plan.md" in names
     assert "artifacts/context_pack.json" in names
     assert "artifacts/proof_bundle_manifest.json" in names

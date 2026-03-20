@@ -2,12 +2,13 @@
   "host_alias": "win-lan",
   "resolved_hostname": "DESKTOP-NNC6MPS",
   "discovered_on": "2026-03-20",
+  "verified_on": "2026-03-20T14:49:45Z",
   "preferred_roots": [
     "D:\\Quant\\Vexter",
     "C:\\Users\\<USER>\\quant\\Vexter"
   ],
   "selected_root": "C:\\Users\\bot\\quant\\Vexter",
-  "status": "bootstrapped_from_mac",
+  "status": "analysis_layout_verified_from_mac",
   "directories": [
     "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter",
     "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx",
@@ -17,5 +18,71 @@
     "C:\\Users\\bot\\quant\\Vexter\\data\\replays",
     "C:\\Users\\bot\\quant\\Vexter\\data\\raw",
     "C:\\Users\\bot\\quant\\Vexter\\artifacts"
+  ],
+  "observed_paths": [
+    "C:\\Users\\bot\\quant\\Vexter\\runtime",
+    "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter",
+    "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx",
+    "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified",
+    "C:\\Users\\bot\\quant\\Vexter\\data",
+    "C:\\Users\\bot\\quant\\Vexter\\data\\logs",
+    "C:\\Users\\bot\\quant\\Vexter\\data\\postgres",
+    "C:\\Users\\bot\\quant\\Vexter\\data\\raw",
+    "C:\\Users\\bot\\quant\\Vexter\\data\\replays",
+    "C:\\Users\\bot\\quant\\Vexter\\artifacts"
+  ],
+  "analysis_layout": {
+    "dexter": {
+      "runtime_dirs": [
+        "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+        "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export"
+      ],
+      "db_volume": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+      "raw_events": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+      "logs": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+      "replays": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+      "artifacts": "C:\\Users\\bot\\quant\\Vexter\\artifacts\\dexter"
+    },
+    "mewx": {
+      "runtime_dirs": [
+        "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\config",
+        "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export"
+      ],
+      "db_volume": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\mewx",
+      "raw_events": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx",
+      "logs": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\mewx",
+      "replays": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\mewx",
+      "artifacts": "C:\\Users\\bot\\quant\\Vexter\\artifacts\\mewx"
+    },
+    "unified": {
+      "runtime_dirs": [
+        "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified\\contracts",
+        "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified\\reports"
+      ],
+      "db_volume": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\unified",
+      "logs": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\unified",
+      "artifacts": "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified"
+    }
+  },
+  "prepared_subdirs": [
+    "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+    "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+    "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\config",
+    "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export",
+    "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified\\contracts",
+    "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified\\reports",
+    "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+    "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\mewx",
+    "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\unified",
+    "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+    "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\mewx",
+    "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\unified",
+    "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+    "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx",
+    "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+    "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\mewx",
+    "C:\\Users\\bot\\quant\\Vexter\\artifacts\\dexter",
+    "C:\\Users\\bot\\quant\\Vexter\\artifacts\\mewx",
+    "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified"
   ]
 }

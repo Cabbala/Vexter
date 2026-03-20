@@ -5,7 +5,7 @@
 - `TASK-005-live-comparison-evidence` remains blocked in `dexter_startup_rate_limit_blocker` state on branch `codex/task-005-resume-after-pr7` as of `2026-03-20T22:17:49Z`.
 - Start conditions were re-verified from `Cabbala/Vexter` latest `main` commit `4752182af91c2353491741bf36cf9a82d9655575`; PR `#7` was confirmed merged on `2026-03-21T06:44:14+09:00`.
 - Dexter and Mew-X strategy, execution, and instrumentation logic remain unchanged.
-- Sub-agent tooling was not exposed in this session, so repo and runtime inspection were completed locally.
+- Sub-agents `James` and `Bacon` were used for sidecar inspection while the main thread handled repository edits and Windows runtime retries.
 
 ## Collection Results
 

@@ -21,7 +21,7 @@
     "deliverable_format": "minimal prompt + tar.gz bundle",
     "push_changes_for_github_visibility": true,
     "agent_usage_when_available": true,
-    "agent_usage_note": "Sub-agent tooling was not exposed in this session, so repository and runtime inspection were performed locally."
+    "agent_usage_note": "Sub-agents James and Bacon were used for sidecar inspection while the main thread handled repository edits and Windows runtime retries."
   },
   "phase": "TASK-005-live-comparison-evidence",
   "status": "dexter_startup_rate_limit_blocker",
@@ -143,9 +143,8 @@
       "winner_recording": "deferred",
       "collection_stage": "fresh_retry_blocked_before_dexter_raw",
       "retry_labels": [
-        "resume-after-pr7-20260321T0709Z",
-        "resume-after-pr7-faststart-20260321T0720Z",
-        "resume-after-pr7-failfast-20260321T0728Z",
+        "resume-pr7-20260320T220156Z",
+        "resume-after-pr7-20260321T0709",
         "resume-final-20260321T0714"
       ]
     },
@@ -203,9 +202,8 @@
       }
     },
     "retry_labels": [
-      "resume-after-pr7-20260321T0709Z",
-      "resume-after-pr7-faststart-20260321T0720Z",
-      "resume-after-pr7-failfast-20260321T0728Z",
+      "resume-pr7-20260320T220156Z",
+      "resume-after-pr7-20260321T0709",
       "resume-final-20260321T0714"
     ],
     "historical_evidence": {

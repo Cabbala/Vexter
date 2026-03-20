@@ -22,8 +22,8 @@
     "push_changes_for_github_visibility": true
   },
   "phase": "TASK-005-live-comparison-evidence",
-  "status": "narrowed_blocker",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_windows_runtime_recovery_bundle.tar.gz",
+  "status": "exact_env_key_blocker",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_resume_live_collection_bundle.tar.gz",
   "starting_point": {
     "verified_at": "2026-03-20T18:00:16Z",
     "main": "939642e6d185629f23a04e8e04f9fc7eac62ebc9",
@@ -81,10 +81,10 @@
   "current_task": {
     "id": "TASK-005-live-comparison-evidence",
     "scope": [
-      "Recover Windows runtime prerequisites only",
-      "Clarify repo-root env injection points for Dexter and Mew-X",
+      "Resume live collection from the recovered Windows runtime",
       "Preserve frozen Dexter and Mew-X strategy, execution, and instrumentation logic",
-      "Reach the point where matched live package collection is the only remaining step"
+      "Attempt matched live package collection on win-lan",
+      "If blocked, replace the generic blocker with an exact evidence-backed blocker"
     ],
     "frozen_source_commits": {
       "dexter": "69de8b6ca57ca3d03025d85329c88aa4a167da34",
@@ -97,20 +97,33 @@
       "env_injection_points_documented": true,
       "mewx_startup_probe": "PRIVATE_KEY is invalid / not set"
     },
+    "resume_probe_result": {
+      "checked_at": "2026-03-20T18:48:13Z",
+      "dexter_env_exists": true,
+      "mewx_env_exists": true,
+      "dexter_helius_http_rpc_ok": true,
+      "dexter_helius_ws_ok": true,
+      "dexter_startup_failure": "PRIVATE_KEY contains the invalid base58 character '0'",
+      "mewx_startup_failure": "PRIVATE_KEY contains an invalid base58 character for solana-keypair parsing",
+      "raw_event_dirs_remained_empty": true,
+      "comparison_inputs_remained_empty": true
+    },
     "attempt_result": {
       "matched_measurement_window_found": false,
       "live_dexter_package": null,
       "live_mewx_package": null,
       "comparison_output_dir": null,
-      "winner_recording": "deferred"
+      "winner_recording": "deferred",
+      "collection_stage": "startup_validation_failed"
     },
     "blockers": [
-      "Repo-root .env files are still required at the documented Dexter and Mew-X Windows injection points.",
+      "Dexter Helius HTTP_URL and WS_URL are now reachable, but Dexter .env PRIVATE_KEY is still unusable because it contains the invalid base58 character '0'.",
+      "Mew-X .env PRIVATE_KEY is present but unusable because it contains an invalid base58 character.",
       "No live NDJSON events or packaged runs have been collected yet."
     ]
   },
   "live_collection_attempt": {
-    "checked_at": "2026-03-20T18:00:16Z",
+    "checked_at": "2026-03-20T18:48:13Z",
     "raw_event_dirs": {
       "dexter": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
       "mewx": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx"
@@ -134,10 +147,11 @@
   },
   "next_task": {
     "id": "BLOCKED",
-    "state": "awaiting_live_env_and_collection",
+    "state": "awaiting_exact_private_key_correction",
     "task_006_ready": false,
     "resume_requirements": [
-      "Populate the documented repo-root .env files for Dexter and Mew-X.",
+      "Correct PRIVATE_KEY in C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter\\.env so Dexter can parse valid base58 key material for a 64-byte Solana keypair.",
+      "Correct PRIVATE_KEY in C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env so Mew-X can parse valid base58 key material.",
       "Collect one Dexter run and one Mew-X run from the same live measurement window before rerunning the comparison pack."
     ]
   },

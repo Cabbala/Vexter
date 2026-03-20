@@ -2,28 +2,26 @@
 
 ## Checked Scope
 
-- checked at `2026-03-20T18:00:16Z`
+- checked at `2026-03-20T18:48:13Z`
 - target host: `win-lan` (`DESKTOP-NNC6MPS`)
 - fixed runtime root: `C:\Users\bot\quant\Vexter`
-- required result: one Dexter package and one Mew-X package from the same live measurement window
+- verified start point: `origin/main` commit `939642e6d185629f23a04e8e04f9fc7eac62ebc9` and open PR `#5`
+- required result: one Dexter package and one Mew-X package from the same live measurement window, followed by `validate`, `derive-metrics`, and `build-pack`
 
-## What Was Recovered
+## Resume Probe
 
-- `cargo`, `rustc`, and `psql` are now available on `win-lan`
-- PostgreSQL 17.9 is restored and listening on `127.0.0.1:5432`
-- frozen Dexter and Mew-X source checkouts now exist under `C:\Users\bot\quant\Vexter\sources`
-- Dexter dependencies were restored in `C:\Users\bot\quant\Vexter\venvs\dexter`
-- Dexter database bootstrap completed successfully against the restored PostgreSQL instance
-- repo-root env injection points are now documented and templated for both Dexter and Mew-X
+- Dexter probe launch: `C:\Users\bot\quant\Vexter\venvs\dexter\Scripts\python.exe Dexter.py`
+- Mew-X probe launch: `cargo run --quiet` from `C:\Users\bot\quant\Vexter\sources\Mew-X`
+- fixed-root overrides were injected at launch time for `VEXTER_RUNTIME_ROOT` and `VEXTER_OUTPUT_ROOT`; run IDs were pinned for the attempted shared window
+- `git`, `python`, `cargo`, `rustc`, `psql`, and PostgreSQL remained available during the probe
+- Dexter `HTTP_URL` JSON-RPC `getVersion` probe succeeded and Dexter `WS_URL` accepted a direct WebSocket connection from `win-lan`, so no Dexter-side Helius implementation change is required
+- both source processes exited before any live NDJSON files or packaged runs appeared under `C:\Users\bot\quant\Vexter\data\raw\{dexter,mewx}` or `C:\Users\bot\quant\Vexter\artifacts\unified\comparison_inputs`; temporary Dexter probe export/log artifacts were cleaned after evidence capture
 
-## Remaining Blockers
+## Exact Blockers
 
-- `C:\Users\bot\quant\Vexter\data\raw\dexter`: no NDJSON event files yet
-- `C:\Users\bot\quant\Vexter\data\raw\mewx`: no NDJSON event files yet
-- `C:\Users\bot\quant\Vexter\artifacts\unified\comparison_inputs`: no packaged runs present yet
-- Dexter still requires user-populated secrets at `C:\Users\bot\quant\Vexter\sources\Dexter\.env`
-- Mew-X still requires user-populated secrets at `C:\Users\bot\quant\Vexter\sources\Mew-X\.env`
-- a fresh Mew-X launch now reaches config validation and fails at `PRIVATE_KEY is invalid / not set`
+- Dexter: `C:\Users\bot\quant\Vexter\sources\Dexter\.env` key `PRIVATE_KEY` is unusable for startup. The frozen Dexter runtime now fails during `base58.b58decode(PRIV_KEY)` with `ValueError: Invalid character '0'`.
+- Mew-X: `C:\Users\bot\quant\Vexter\sources\Mew-X\.env` key `PRIVATE_KEY` is unusable for startup. The frozen Mew-X runtime panics during Solana keypair parsing with `called Result::unwrap() on an Err value: InvalidChar(48)`.
+- Because both sources fail before event emission, there are still no live NDJSON event files and no packaged runs to feed into Vexter validation or comparison tooling.
 
 ## Result
 
@@ -31,12 +29,13 @@
 - live Mew-X package: `NONE`
 - live comparison output directory: `NONE`
 - evidence-backed winners / ties recorded: `none`
-- blocker state: `narrowed_blocker`
+- blocker state: `exact_env_key_blocker`
 - `TASK-006` readiness: `blocked`
 
 ## Unblock Steps
 
-- populate the repo-root `.env` files using `templates/windows_runtime/dexter.env.example` and `templates/windows_runtime/mewx.env.example`
-- run the frozen Dexter and Mew-X checkouts so they emit matched live raw events under the fixed Vexter root
+- correct `PRIVATE_KEY` in `C:\Users\bot\quant\Vexter\sources\Dexter\.env` so it is valid base58 and decodes to the 64-byte Solana keypair Dexter expects
+- correct `PRIVATE_KEY` in `C:\Users\bot\quant\Vexter\sources\Mew-X\.env` so it is valid base58 and parseable by `solana-keypair`
+- rerun the frozen Dexter and Mew-X checkouts so they emit matched live raw events under the fixed Vexter root
 - collect matched live packages with `scripts/collect_comparison_package.ps1`
-- rerun `scripts/comparison_analysis.py build-pack` only after both live packages exist
+- run `scripts/comparison_analysis.py validate`, `derive-metrics`, and `build-pack` only after both live packages exist

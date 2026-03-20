@@ -1,7 +1,7 @@
 {
   "task_id": "TASK-005-live-comparison-evidence",
-  "status": "narrowed_blocker",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_windows_runtime_recovery_bundle.tar.gz",
+  "status": "exact_env_key_blocker",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_resume_live_collection_bundle.tar.gz",
   "bundle_path": "artifacts/bundles/task-005-live-comparison-evidence.tar.gz",
   "context_pack": "artifacts/context_pack.json",
   "summary": "artifacts/summary.md",
@@ -78,13 +78,18 @@
     },
     "postgres_process_detected": true,
     "postgres_listener_5432": true,
+    "dexter_helius_http_rpc_ok": true,
+    "dexter_helius_ws_ok": true,
+    "dexter_private_key_blocker": true,
+    "mewx_private_key_blocker": true,
     "task_006_ready": false
   },
   "next_task": {
     "id": "BLOCKED",
-    "state": "awaiting_live_env_and_collection",
+    "state": "awaiting_exact_private_key_correction",
     "resume_requirements": [
-      "Populate the documented repo-root .env files for Dexter and Mew-X.",
+      "Correct PRIVATE_KEY in C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter\\.env so Dexter can parse valid base58 key material for a 64-byte Solana keypair.",
+      "Correct PRIVATE_KEY in C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env so Mew-X can parse valid base58 key material.",
       "Collect matched live packages from the same measurement window before replay validation."
     ]
   },

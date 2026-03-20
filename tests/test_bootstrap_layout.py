@@ -107,7 +107,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
     assert len(lines) >= 3
     payload = json.loads(lines[-1])
     assert payload["task_id"] == "TASK-005-live-comparison-evidence"
-    assert payload["status"] == "narrowed_blocker"
+    assert payload["status"] == "exact_env_key_blocker"
     assert payload["branch"] == "codex/task-005-live-comparison-evidence"
     assert payload["next_task_id"] == "BLOCKED"
 
@@ -116,7 +116,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     with (REPO_ROOT / "artifacts/proof_bundle_manifest.json").open() as handle:
         manifest = json.load(handle)
 
-    assert manifest["status"] == "narrowed_blocker"
+    assert manifest["status"] == "exact_env_key_blocker"
     assert manifest["next_task"]["id"] == "BLOCKED"
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]

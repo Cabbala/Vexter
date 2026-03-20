@@ -1,15 +1,20 @@
 {
   "task_id": "TASK-005-live-comparison-evidence",
-  "checked_at_utc": "2026-03-20T18:00:16Z",
-  "status": "narrowed_blocker",
+  "checked_at_utc": "2026-03-20T18:48:13Z",
+  "status": "exact_env_key_blocker",
   "windows_runtime_host": "win-lan",
   "resolved_windows_hostname": "DESKTOP-NNC6MPS",
   "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
+  "verified_start": {
+    "main_commit": "939642e6d185629f23a04e8e04f9fc7eac62ebc9",
+    "pull_request": 5,
+    "branch": "codex/task-005-live-comparison-evidence"
+  },
   "frozen_source_commits": {
     "dexter": "69de8b6ca57ca3d03025d85329c88aa4a167da34",
     "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
   },
-  "measurement_window_status": "not_collected",
+  "measurement_window_status": "startup_blocked",
   "live_package_paths": {
     "dexter": null,
     "mewx": null
@@ -56,26 +61,79 @@
     },
     "mewx": {
       "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X",
-      "commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
-      "startup_probe": "PRIVATE_KEY is invalid / not set"
+      "commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
     }
   },
   "env_injection_points": {
-    "dexter": "C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter\\.env",
-    "mewx": "C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env"
+    "dexter": {
+      "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter\\.env",
+      "exists": true,
+      "required_keys_present": [
+        "PRIVATE_KEY",
+        "HTTP_URL",
+        "WS_URL"
+      ],
+      "http_url_placeholder_like": false,
+      "ws_url_placeholder_like": false
+    },
+    "mewx": {
+      "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env",
+      "exists": true,
+      "required_keys_present": [
+        "PRIVATE_KEY",
+        "RPC_URL",
+        "WS_URL",
+        "DB_URL"
+      ]
+    }
+  },
+  "dexter_helius_connectivity": {
+    "http_rpc_ok": true,
+    "http_rpc_probe": "getVersion",
+    "ws_connect_ok": true
+  },
+  "startup_probes": {
+    "dexter": {
+      "command": "C:\\Users\\bot\\quant\\Vexter\\venvs\\dexter\\Scripts\\python.exe Dexter.py",
+      "runtime_overrides": {
+        "VEXTER_RUNTIME_ROOT": "C:\\Users\\bot\\quant\\Vexter",
+        "VEXTER_OUTPUT_ROOT": "C:\\Users\\bot\\quant\\Vexter",
+        "VEXTER_MODE": "observe_live",
+        "VEXTER_TRANSPORT_MODE": "ws",
+        "VEXTER_RUN_ID": "dexter-20260321-window-a"
+      },
+      "exited_before_collection": true,
+      "error_class": "ValueError",
+      "error_detail": "Dexter PRIVATE_KEY parsing fails during base58 decoding because the configured value contains the invalid character '0'."
+    },
+    "mewx": {
+      "command": "cargo run --quiet",
+      "runtime_overrides": {
+        "VEXTER_RUNTIME_ROOT": "C:\\Users\\bot\\quant\\Vexter",
+        "VEXTER_OUTPUT_ROOT": "C:\\Users\\bot\\quant\\Vexter",
+        "VEXTER_RUN_ID": "mewx-20260321-window-a"
+      },
+      "exited_before_collection": true,
+      "error_class": "panic",
+      "error_detail": "Mew-X PRIVATE_KEY parsing fails inside solana-keypair because the configured value contains an invalid base58 character."
+    }
   },
   "blockers": [
     {
-      "code": "missing_live_env_files",
-      "detail": "Repo-root .env files are still required at the documented Dexter and Mew-X Windows injection points before live collection can start."
+      "code": "dexter_private_key_invalid_base58",
+      "file": "C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter\\.env",
+      "key": "PRIVATE_KEY",
+      "detail": "Dexter exits during keypair parsing before any live artifacts are emitted because the configured key is not valid base58."
+    },
+    {
+      "code": "mewx_private_key_invalid_base58",
+      "file": "C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env",
+      "key": "PRIVATE_KEY",
+      "detail": "Mew-X exits during keypair parsing before any live artifacts are emitted because the configured key is not valid base58."
     },
     {
       "code": "no_live_raw_events",
-      "detail": "No NDJSON event files have been collected under the fixed Dexter or Mew-X raw-data roots yet."
-    },
-    {
-      "code": "no_packaged_runs",
-      "detail": "No normalized run packages are present under artifacts\\unified\\comparison_inputs yet."
+      "detail": "No NDJSON event files or packaged runs were emitted because both frozen source launches failed during PRIVATE_KEY validation."
     }
   ],
   "task_006_ready": false

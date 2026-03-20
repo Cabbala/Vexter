@@ -20,6 +20,10 @@ DEFAULT_MEWX_MODE = "sim"
 DEFAULT_DURATION_SECONDS = 120
 DEFAULT_GRACE_SECONDS = 20
 DEFAULT_STARTUP_DELAY_SECONDS = 2
+DEFAULT_MEWX_READY_TIMEOUT_SECONDS = 90
+DEFAULT_DEXTER_READY_TIMEOUT_SECONDS = 30
+DEFAULT_DEXTER_STARTUP_ATTEMPTS = 3
+DEFAULT_DEXTER_RETRY_BACKOFF_SECONDS = 20
 
 
 def iso_utc(value: datetime) -> str:
@@ -157,12 +161,18 @@ def build_remote_runner(config: dict[str, Any]) -> str:
         mewx_root = windows_root / "sources" / "Mew-X"
         logs_root = windows_root / "data" / "logs" / "unified" / "matched_pair_runner"
         logs_root.mkdir(parents=True, exist_ok=True)
+        dexter_event_path = windows_root / "data" / "raw" / "dexter" / f"{{config['dexter_run_id']}}.ndjson"
+        mewx_event_path = windows_root / "data" / "raw" / "mewx" / f"{{config['mewx_run_id']}}.ndjson"
 
         dexter_run_id = config["dexter_run_id"]
         mewx_run_id = config["mewx_run_id"]
         duration_seconds = int(config["duration_seconds"])
         grace_seconds = int(config["grace_seconds"])
         startup_delay_seconds = int(config["startup_delay_seconds"])
+        mewx_ready_timeout_seconds = int(config["mewx_ready_timeout_seconds"])
+        dexter_ready_timeout_seconds = int(config["dexter_ready_timeout_seconds"])
+        dexter_startup_attempts = int(config["dexter_startup_attempts"])
+        dexter_retry_backoff_seconds = int(config["dexter_retry_backoff_seconds"])
 
         common_env = {{
             "VEXTER_RUNTIME_ROOT": config["windows_root"],
@@ -190,10 +200,11 @@ def build_remote_runner(config: dict[str, Any]) -> str:
 
         creationflags = getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)
         processes = []
+        process_map = {{}}
         log_handles = []
         launch_events = []
 
-        def start_process(name, cmd, cwd, env):
+        def start_process(name, cmd, cwd, env, *, alias=None):
             stdout_handle = open_log(str(logs_root / f"{{name}}-{{config['label']}}.stdout.log"))
             stderr_handle = open_log(str(logs_root / f"{{name}}-{{config['label']}}.stderr.log"))
             proc = subprocess.Popen(
@@ -205,6 +216,7 @@ def build_remote_runner(config: dict[str, Any]) -> str:
                 creationflags=creationflags,
             )
             processes.append((name, proc))
+            process_map[alias or name] = proc
             log_handles.extend([stdout_handle, stderr_handle])
             launch_events.append(
                 {{
@@ -217,52 +229,123 @@ def build_remote_runner(config: dict[str, Any]) -> str:
             )
             return proc
 
+        def wait_for_event_or_exit(path_str, timeout_seconds, process_name):
+            deadline = time.time() + max(0, timeout_seconds)
+            while time.time() <= deadline:
+                summary = event_summary(path_str)
+                if summary["event_count"] > 0:
+                    return summary, iso_utc(dt.datetime.now(dt.timezone.utc)), False
+                proc = process_map.get(process_name)
+                if proc is not None and proc.poll() is not None:
+                    return summary, None, True
+                time.sleep(1)
+            return event_summary(path_str), None, False
+
+        def request_shutdown(name):
+            proc = process_map.get(name)
+            if proc is None or proc.poll() is not None:
+                return
+            try:
+                proc.send_signal(signal.CTRL_BREAK_EVENT)
+            except Exception:
+                pass
+
+        def start_dexter_with_retries():
+            attempt_records = []
+            for attempt in range(1, max(1, dexter_startup_attempts) + 1):
+                process_name = "dexter" if attempt == 1 else f"dexter_retry_{{attempt}}"
+                start_process(
+                    process_name,
+                    [config["dexter_python"], "Dexter.py"],
+                    dexter_root,
+                    dexter_env,
+                    alias="dexter",
+                )
+                summary, observed_at, exited_before_ready = wait_for_event_or_exit(
+                    str(dexter_event_path),
+                    dexter_ready_timeout_seconds,
+                    "dexter",
+                )
+                record = {{
+                    "attempt": attempt,
+                    "event_observed": bool(observed_at),
+                    "observed_at_utc": observed_at,
+                    "process_exited_before_event": exited_before_ready,
+                    "event_count": summary["event_count"],
+                }}
+                attempt_records.append(record)
+                if summary["event_count"] > 0 or not exited_before_ready or attempt >= dexter_startup_attempts:
+                    return summary, observed_at, exited_before_ready, attempt_records
+                time.sleep(max(0, dexter_retry_backoff_seconds))
+            return event_summary(str(dexter_event_path)), None, True, attempt_records
+
         measurement_started_at = None
         measurement_ended_at = None
+        mewx_ready_summary = None
+        mewx_ready_at = None
+        mewx_exited_before_ready = False
+        dexter_ready_summary = None
+        dexter_ready_at = None
+        dexter_exited_before_ready = False
+        dexter_startup_attempt_summary = []
 
         try:
-            start_process(
-                "dexter_wslogs",
-                [config["dexter_python"], "DexLab/wsLogs.py"],
-                dexter_root,
-                dexter_env,
-            )
-            if startup_delay_seconds > 0:
-                time.sleep(startup_delay_seconds)
-
-            start_process(
-                "dexter",
-                [config["dexter_python"], "Dexter.py"],
-                dexter_root,
-                dexter_env,
-            )
+            mewx_binary = mewx_root / "target" / "debug" / "mew.exe"
+            mewx_cmd = [str(mewx_binary)] if mewx_binary.exists() else ["cargo", "run", "--quiet"]
             start_process(
                 "mewx",
-                ["cargo", "run", "--quiet"],
+                mewx_cmd,
                 mewx_root,
                 mewx_env,
             )
+            mewx_ready_summary, mewx_ready_at, mewx_exited_before_ready = wait_for_event_or_exit(
+                str(mewx_event_path),
+                mewx_ready_timeout_seconds,
+                "mewx",
+            )
 
-            measurement_started_at = iso_utc(dt.datetime.now(dt.timezone.utc))
-            time.sleep(duration_seconds)
-            measurement_ended_at = iso_utc(dt.datetime.now(dt.timezone.utc))
+            if mewx_exited_before_ready:
+                measurement_ended_at = iso_utc(dt.datetime.now(dt.timezone.utc))
+            else:
+                start_process(
+                    "dexter_wslogs",
+                    [config["dexter_python"], "DexLab/wsLogs.py"],
+                    dexter_root,
+                    dexter_env,
+                )
+                if startup_delay_seconds > 0:
+                    time.sleep(startup_delay_seconds)
 
-            for name, proc in reversed(processes):
-                if proc.poll() is not None:
-                    continue
-                try:
-                    proc.send_signal(signal.CTRL_BREAK_EVENT)
-                except Exception:
-                    pass
+                (
+                    dexter_ready_summary,
+                    dexter_ready_at,
+                    dexter_exited_before_ready,
+                    dexter_startup_attempt_summary,
+                ) = start_dexter_with_retries()
+
+                measurement_started_at = iso_utc(dt.datetime.now(dt.timezone.utc))
+                if not dexter_exited_before_ready:
+                    time.sleep(duration_seconds)
+
+                measurement_ended_at = iso_utc(dt.datetime.now(dt.timezone.utc))
+
+            for name in ["mewx", "dexter", "dexter_wslogs"]:
+                request_shutdown(name)
 
             deadline = time.time() + grace_seconds
-            for _, proc in processes:
+            for name in ["mewx", "dexter", "dexter_wslogs"]:
+                proc = process_map.get(name)
+                if proc is None:
+                    continue
                 remaining = max(0.0, deadline - time.time())
                 try:
                     proc.wait(timeout=remaining)
                 except subprocess.TimeoutExpired:
                     proc.kill()
+            measurement_ended_at = iso_utc(dt.datetime.now(dt.timezone.utc))
         finally:
+            if measurement_started_at and measurement_ended_at is None:
+                measurement_ended_at = iso_utc(dt.datetime.now(dt.timezone.utc))
             results = []
             for name, proc in processes:
                 exit_code = proc.poll()
@@ -281,16 +364,35 @@ def build_remote_runner(config: dict[str, Any]) -> str:
                     "started_at_utc": measurement_started_at,
                     "ended_at_utc": measurement_ended_at,
                 }},
+                "mewx_readiness": {{
+                    "timeout_seconds": mewx_ready_timeout_seconds,
+                    "event_observed_before_dexter_start": bool(mewx_ready_at),
+                    "observed_at_utc": mewx_ready_at,
+                    "process_exited_before_event": mewx_exited_before_ready,
+                    "event_summary": mewx_ready_summary,
+                }},
+                "dexter_readiness": {{
+                    "timeout_seconds": dexter_ready_timeout_seconds,
+                    "event_observed_after_start": bool(dexter_ready_at),
+                    "observed_at_utc": dexter_ready_at,
+                    "process_exited_before_event": dexter_exited_before_ready,
+                    "event_summary": dexter_ready_summary,
+                }},
+                "dexter_startup": {{
+                    "attempts_allowed": dexter_startup_attempts,
+                    "retry_backoff_seconds": dexter_retry_backoff_seconds,
+                    "attempts": dexter_startup_attempt_summary,
+                }},
                 "launch_events": launch_events,
                 "process_results": results,
                 "runs": {{
                     "dexter": {{
                         "run_id": dexter_run_id,
-                        "event_summary": event_summary(str(windows_root / "data" / "raw" / "dexter" / f"{{dexter_run_id}}.ndjson")),
+                        "event_summary": event_summary(str(dexter_event_path)),
                     }},
                     "mewx": {{
                         "run_id": mewx_run_id,
-                        "event_summary": event_summary(str(windows_root / "data" / "raw" / "mewx" / f"{{mewx_run_id}}.ndjson")),
+                        "event_summary": event_summary(str(mewx_event_path)),
                     }},
                 }},
                 "log_root": str(logs_root),
@@ -311,6 +413,10 @@ def collect_remote_runs(
     duration_seconds: int,
     grace_seconds: int,
     startup_delay_seconds: int,
+    mewx_ready_timeout_seconds: int,
+    dexter_ready_timeout_seconds: int,
+    dexter_startup_attempts: int,
+    dexter_retry_backoff_seconds: int,
     dexter_python: str,
 ) -> dict[str, Any]:
     script = build_remote_runner(
@@ -323,6 +429,10 @@ def collect_remote_runs(
             "duration_seconds": duration_seconds,
             "grace_seconds": grace_seconds,
             "startup_delay_seconds": startup_delay_seconds,
+            "mewx_ready_timeout_seconds": mewx_ready_timeout_seconds,
+            "dexter_ready_timeout_seconds": dexter_ready_timeout_seconds,
+            "dexter_startup_attempts": dexter_startup_attempts,
+            "dexter_retry_backoff_seconds": dexter_retry_backoff_seconds,
             "dexter_python": dexter_python,
         }
     )
@@ -409,6 +519,10 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--duration-seconds", type=int, default=DEFAULT_DURATION_SECONDS)
     parser.add_argument("--grace-seconds", type=int, default=DEFAULT_GRACE_SECONDS)
     parser.add_argument("--startup-delay-seconds", type=int, default=DEFAULT_STARTUP_DELAY_SECONDS)
+    parser.add_argument("--mewx-ready-timeout-seconds", type=int, default=DEFAULT_MEWX_READY_TIMEOUT_SECONDS)
+    parser.add_argument("--dexter-ready-timeout-seconds", type=int, default=DEFAULT_DEXTER_READY_TIMEOUT_SECONDS)
+    parser.add_argument("--dexter-startup-attempts", type=int, default=DEFAULT_DEXTER_STARTUP_ATTEMPTS)
+    parser.add_argument("--dexter-retry-backoff-seconds", type=int, default=DEFAULT_DEXTER_RETRY_BACKOFF_SECONDS)
     parser.add_argument("--mewx-mode", choices=["sim", "trade"], default=DEFAULT_MEWX_MODE)
     parser.add_argument("--label")
     parser.add_argument("--output-json")
@@ -432,6 +546,10 @@ def main() -> int:
         duration_seconds=args.duration_seconds,
         grace_seconds=args.grace_seconds,
         startup_delay_seconds=args.startup_delay_seconds,
+        mewx_ready_timeout_seconds=args.mewx_ready_timeout_seconds,
+        dexter_ready_timeout_seconds=args.dexter_ready_timeout_seconds,
+        dexter_startup_attempts=args.dexter_startup_attempts,
+        dexter_retry_backoff_seconds=args.dexter_retry_backoff_seconds,
         dexter_python=rf"{args.windows_root}\venvs\dexter\Scripts\python.exe",
     )
 
@@ -443,9 +561,18 @@ def main() -> int:
 
     dexter_summary = collection["runs"]["dexter"]["event_summary"]
     mewx_summary = collection["runs"]["mewx"]["event_summary"]
-    if dexter_summary["event_count"] == 0 or mewx_summary["event_count"] == 0:
+    empty_sources = [
+        source_name
+        for source_name, summary in {
+            "dexter": dexter_summary,
+            "mewx": mewx_summary,
+        }.items()
+        if summary["event_count"] == 0
+    ]
+    if empty_sources:
         raise RuntimeError(
-            "matched pair collection produced an empty raw stream for at least one source"
+            "matched pair collection produced an empty raw stream for: "
+            + ", ".join(empty_sources)
         )
 
     collector_path = ensure_remote_collector(args.windows_host, args.windows_root)

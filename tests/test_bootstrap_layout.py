@@ -126,17 +126,22 @@ def test_task_ledger_is_valid_jsonl() -> None:
     assert payload["status"] in {
         "partial_live_comparison_blocker",
         "subsecond_overlap_partial_blocker",
+        "retry_collection_blocker",
+        "dexter_startup_rate_limit_blocker",
     }
     assert payload["branch"] in {
         "codex/task-005-live-comparison-evidence",
         "codex/task-005-resume-matched-window",
         "codex/task-005-pass-grade-pair",
+        "codex/task-005-resume-after-pr7",
     }
     assert payload["next_task_id"] in {"TASK-005-RESUME", "BLOCKED"}
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
         "awaiting_nontrivial_matched_live_window_and_fuller_coverage",
         "awaiting_pass_grade_matched_live_pair",
+        "awaiting_helius_recovery_and_eventful_sim_window",
+        "awaiting_dexter_startup_without_helius_429",
     }
 
 
@@ -147,12 +152,16 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert manifest["status"] in {
         "partial_live_comparison_blocker",
         "subsecond_overlap_partial_blocker",
+        "retry_collection_blocker",
+        "dexter_startup_rate_limit_blocker",
     }
     assert manifest["next_task"]["id"] in {"TASK-005-RESUME", "BLOCKED"}
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
         "awaiting_nontrivial_matched_live_window_and_fuller_coverage",
         "awaiting_pass_grade_matched_live_pair",
+        "awaiting_helius_recovery_and_eventful_sim_window",
+        "awaiting_dexter_startup_without_helius_429",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]

@@ -45,7 +45,7 @@ powershell -ExecutionPolicy Bypass -File scripts\collect_comparison_package.ps1 
   -Source mewx `
   -RunId mewx-20260321-window-a `
   -SourceCommit dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a `
-  -Mode observe_live `
+  -Mode sim_live `
   -TransportMode grpc `
   -StartedAtUtc 2026-03-21T01:00:00Z `
   -EndedAtUtc 2026-03-21T01:20:00Z `
@@ -83,7 +83,7 @@ python scripts/collect_matched_live_pair.py \
   --mewx-mode sim
 ```
 
-This helper keeps Dexter on the zero-balance `observe_live` path, prefers `MODE=sim` for Mew-X, pushes the current collector script to `win-lan`, slices both packages to the same scheduled measurement window, and copies the packaged directories into local `artifacts/tmp/`.
+This helper keeps Dexter on the zero-balance `observe_live` path, prefers `MODE=sim` for Mew-X, gives Mew-X a configurable prewarm window before Dexter starts, records the measurement end after graceful stop so run-level finalizers have a chance to land, and fails fast when either source exits before its first raw event. It then pushes the current collector script to `win-lan` and copies the packaged directories into local `artifacts/tmp/`.
 
 After copying the two package directories into the Mac control plane, run:
 

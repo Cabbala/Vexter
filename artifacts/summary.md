@@ -1,20 +1,31 @@
-# TASK-001 Closeout Summary
+# TASK-002 Closeout Summary
 
 ## Status
 
-- `TASK-001-source-assessment` is complete on `main`.
-- PR #1 carries the source assessments, shared evaluation contract, normalized schema, metrics catalog, instrumentation plans, and Windows runtime verification into the GitHub source of truth.
-- No Dexter or Mew-X integration work has started.
+- Start conditions were satisfied from `Cabbala/Vexter` `main` at commit `cb7a2cdef786cd9bcf7c8611c4687a02330ec44a` on 2026-03-21.
+- Dexter observational instrumentation is implemented on source branch `codex/task-002-dexter-instrumentation`.
+- Dexter PR #1 carries the source changes for NDJSON events, masked config export, leaderboard snapshots, and stagnant-mint replay export.
+- No Mew-X instrumentation or Vexter integration work has started.
 
-## TASK-002 Start Conditions
+## Delivered Surface
 
-- start from the latest `main`, not from a stale TASK-001 branch
-- keep scope limited to observational event writers and Vexter-side validation already defined in the committed plans
-- preserve the normalized event contract and the verified Windows runtime layout as fixed interfaces
-- do not change strategy logic or begin Dexter/Mew-X integration work
+- normalized Dexter event writer under `sources/Dexter/DexLab/instrumentation.py`
+- live capture for `creator_candidate` through `position_closed` in `sources/Dexter/Dexter.py`
+- stagnant-mint replay export on persistence plus a manual export path in `sources/Dexter/DexLab/market.py`
+- Vexter-side event mapping note in `docs/dexter_event_mapping.md`
+- proof bundle and ledger updates for TASK-002 closeout
 
-## Reference Artifacts
+## Fixed Windows Outputs
 
-- `artifacts/context_pack.json`
-- `artifacts/proof_bundle_manifest.json`
-- `artifacts/task_ledger.jsonl`
+- `C:\Users\bot\quant\Vexter\runtime\dexter\config`
+- `C:\Users\bot\quant\Vexter\runtime\dexter\export`
+- `C:\Users\bot\quant\Vexter\data\raw\dexter`
+- `C:\Users\bot\quant\Vexter\data\logs\dexter`
+- `C:\Users\bot\quant\Vexter\data\replays\dexter`
+- `C:\Users\bot\quant\Vexter\data\postgres\dexter`
+
+## Remaining Guardrails
+
+- keep strategy logic unchanged until comparison data exists
+- keep Mew-X and integration work out of scope for this task
+- begin only `TASK-003` next

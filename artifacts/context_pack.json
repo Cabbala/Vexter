@@ -21,14 +21,13 @@
     "deliverable_format": "minimal prompt + tar.gz bundle",
     "push_changes_for_github_visibility": true
   },
-  "phase": "TASK-001-source-assessment",
-  "status": "complete_on_main",
-  "bundle_source": "/Users/cabbala/Downloads/Vexter_task001_bundle.tar.gz",
+  "phase": "TASK-002-dexter-instrumentation",
+  "status": "complete_on_branch",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task002_dexter_instrumentation_bundle.tar.gz",
   "starting_point": {
-    "verified_at": "2026-03-20T14:49:45Z",
-    "main": "6d22d22e37a77e2e15c6211d32c125c8c4a2c151",
-    "codex/task-000-bootstrap": "6d22d22e37a77e2e15c6211d32c125c8c4a2c151",
-    "work_branch": "codex/task-001-source-assessment"
+    "verified_at": "2026-03-21T00:12:00Z",
+    "main": "cb7a2cdef786cd9bcf7c8611c4687a02330ec44a",
+    "work_branch": "codex/task-002-dexter-instrumentation"
   },
   "deliverables": {
     "docs": [
@@ -37,6 +36,7 @@
       "docs/metrics_catalog.md",
       "docs/comparison_matrix_template.md",
       "docs/dexter_source_assessment.md",
+      "docs/dexter_event_mapping.md",
       "docs/mewx_source_assessment.md"
     ],
     "plans": [
@@ -50,14 +50,56 @@
       "artifacts/proof_bundle_manifest.json"
     ]
   },
-  "next_task": {
+  "completed_task": {
     "id": "TASK-002",
+    "scope": [
+      "Dexter observational instrumentation only",
+      "Vexter-side validation and proof artifacts only",
+      "No strategy logic changes",
+      "No Mew-X or integration work"
+    ],
+    "dexter_source_change": {
+      "repo": "https://github.com/Cabbala/Dexter",
+      "branch": "codex/task-002-dexter-instrumentation",
+      "commit": "69de8b615a0a366545cffcde7eb3cab0f43730dd",
+      "pull_request": 1,
+      "implemented_paths": [
+        "sources/Dexter/Dexter.py",
+        "sources/Dexter/DexLab/instrumentation.py",
+        "sources/Dexter/DexLab/market.py",
+        "sources/Dexter/tests/test_vexter_instrumentation.py"
+      ]
+    },
+    "surface": {
+      "events": [
+        "creator_candidate",
+        "mint_observed",
+        "candidate_rejected",
+        "entry_signal",
+        "entry_attempt",
+        "entry_fill",
+        "entry_rejected",
+        "session_update",
+        "exit_signal",
+        "exit_fill",
+        "position_closed",
+        "run_summary"
+      ],
+      "exports": [
+        "masked config snapshot",
+        "leaderboard snapshot",
+        "stagnant-mint replay export"
+      ],
+      "replay_export_command": "python DexLab/instrumentation.py --db-dsn postgres://dexter_user:admin123@127.0.0.1/dexter_db"
+    }
+  },
+  "next_task": {
+    "id": "TASK-003",
     "state": "not_started",
     "start_conditions": [
-      "Create a new branch from the latest main after TASK-001 closeout is merged.",
-      "Limit scope to observational event writers and Vexter-side validation already described in the committed plans.",
-      "Keep the normalized event contract and verified Windows runtime layout fixed.",
-      "Do not begin Dexter or Mew-X integration work or change strategy behavior."
+      "Keep Dexter observational instrumentation unchanged while validating collected runs.",
+      "Do not begin Mew-X instrumentation or integration work from TASK-002 artifacts.",
+      "Use the fixed normalized event contract and Windows runtime layout as immutable interfaces."
     ]
   },
   "source_assessment": {
@@ -65,15 +107,15 @@
       "key_paths": [
         "sources/Dexter/DexAI/trust_factor.py",
         "sources/Dexter/Dexter.py",
-        "sources/Dexter/DexLab/wsLogs.py",
+        "sources/Dexter/DexLab/instrumentation.py",
         "sources/Dexter/DexLab/market.py",
         "sources/Dexter/DexLab/swaps.py",
-        "sources/Dexter/database.py"
+        "sources/Dexter/tests/test_vexter_instrumentation.py"
       ],
       "key_findings": [
-        "Creator scoring is backed by PostgreSQL and fed from stagnant_mints rather than live memory.",
-        "Live trading uses a separate in-memory swap_folder and therefore needs explicit event instrumentation to bridge to replay.",
-        "Adaptive exit quality depends on composite score, ladder-step changes, and reserved-balance handling that are not persisted today."
+        "Creator scoring remains backed by PostgreSQL and fed from stagnant_mints rather than live memory.",
+        "Live trading now emits normalized observational events without changing the adaptive entry or exit logic.",
+        "Replay exports are generated when stagnant mints are persisted and can be backfilled from the database."
       ]
     },
     "mewx": {

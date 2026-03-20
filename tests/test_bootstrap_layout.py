@@ -15,6 +15,7 @@ def test_required_paths_exist() -> None:
         "docs/metrics_catalog.md",
         "docs/comparison_matrix_template.md",
         "docs/dexter_source_assessment.md",
+        "docs/dexter_event_mapping.md",
         "docs/mewx_source_assessment.md",
         "specs/FIXED_WORKFLOW.md",
         "specs/ANALYSIS_CONTRACT.md",
@@ -81,7 +82,8 @@ def test_task_ledger_is_valid_jsonl() -> None:
 
     assert len(lines) >= 2
     payload = json.loads(lines[-1])
-    assert payload["task_id"] == "TASK-001-source-assessment"
+    assert payload["task_id"] == "TASK-002-dexter-instrumentation"
+    assert payload["next_task_id"] == "TASK-003"
 
 
 def test_proof_bundle_exists_and_contains_required_files() -> None:
@@ -97,6 +99,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "README.md" in names
     assert "docs/evaluation_contract.md" in names
     assert "docs/normalized_event_schema.md" in names
+    assert "docs/dexter_event_mapping.md" in names
     assert "plans/dexter_instrumentation_plan.md" in names
     assert "plans/mewx_instrumentation_plan.md" in names
     assert "artifacts/context_pack.json" in names

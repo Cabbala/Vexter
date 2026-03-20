@@ -121,7 +121,7 @@
       "value": 60000.0
     }
   },
-  "package_dir": "/Users/cabbala/Documents/vexter/task004-comparison-analysis/tests/fixtures/comparison_packages/dexter_fixture",
+  "package_dir": "/Users/cabbala/Documents/vexter/task005-live-comparison-evidence/tests/fixtures/comparison_packages/dexter_fixture",
   "run_id": "dexter-fixture-001",
   "source_system": "dexter"
 }

@@ -1,0 +1,19 @@
+{
+  "built_at_utc": "2026-03-20T20:07:18Z",
+  "inputs": {
+    "dexter_package": "/Users/cabbala/Documents/vexter/task005-live-comparison-evidence/artifacts/tmp/winlan-packages-v2/dexter-smoke-20260320T193452Z",
+    "mewx_package": "/Users/cabbala/Documents/vexter/task005-live-comparison-evidence/artifacts/tmp/winlan-packages-v2/mewx-smoke-20260320T193850Z"
+  },
+  "outputs": [
+    "dexter_validation.json",
+    "mewx_validation.json",
+    "dexter_metrics.json",
+    "mewx_metrics.json",
+    "comparison_matrix.json",
+    "comparison_matrix.md",
+    "comparison_pack.json",
+    "summary.md"
+  ],
+  "pack_id": "comparison-dexter-smoke-20260320T193452Z-vs-mewx-smoke-20260320T193850Z",
+  "winner_mode": "deferred"
+}

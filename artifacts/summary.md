@@ -1,36 +1,33 @@
-# TASK-004 Closeout Summary
+# TASK-005 Live Comparison Evidence Summary
 
 ## Status
 
-- `TASK-004-comparison-analysis` is complete on branch `codex/task-004-comparison-analysis` as of 2026-03-21.
-- Start conditions were satisfied from `Cabbala/Vexter` `main` at commit `d4fec420fd2ff336d5076a018f3ab5b256bca00e`.
-- Dexter and Mew-X instrumentation remain unchanged; all work is Vexter-side only.
-- The first side-by-side comparison pack scaffold is delivered with fixture-based sample inputs, while live Windows comparison remains pending.
+- `TASK-005-live-comparison-evidence` is now in `partial_live_comparison_blocker` state on branch `codex/task-005-live-comparison-evidence` as of `2026-03-20T19:46:59Z`.
+- Start conditions were re-verified from `Cabbala/Vexter` `main` at commit `939642e6d185629f23a04e8e04f9fc7eac62ebc9` and open PR `#5`.
+- Dexter and Mew-X strategy, execution, and instrumentation logic remain unchanged.
+- The Windows repo-root `.env` blocker was cleared on `win-lan`: Dexter values were unquoted, Mew-X now uses explicit `RPC_URL`, a valid base58 signer, a working `DB_URL`, and parser-safe env formatting.
+- Live smoke packages were collected from `C:\Users\bot\quant\Vexter\artifacts\unified\comparison_inputs` and revalidated on the Mac control plane with the Vexter comparison tooling.
+- `validate`, `derive-metrics`, and `build-pack` now run end-to-end, but both packages still validate as `partial`, so winner / tie calls remain deferred and `TASK-006` stays blocked.
 
-## Delivered Surface
+## Collection Results
 
-- Vexter comparison-analysis package under `vexter/comparison/`
-- CLI entrypoint for `validate`, `derive-metrics`, and `build-pack` in `scripts/comparison_analysis.py`
-- Windows collection helper in `scripts/collect_comparison_package.ps1`
-- collection and execution guide in `docs/comparison_collection_runbook.md`
-- fixture-based sample comparison outputs in `artifacts/examples/task-004-sample-comparison`
-- proof bundle, context pack, summary, and ledger updates for TASK-004 closeout
+- Dexter smoke run `dexter-smoke-20260320T193452Z` emitted raw NDJSON, config, leaderboard export, and replay evidence after seeding `stagnant_mints` via `DexLab\wsLogs.py`.
+- Dexter package validation remains `partial`: observed required event coverage is `4 / 12`, and the frozen runtime emitted `43741` `entry_rejected` payloads without `tx_signature`, while no live fill / exit / run-summary events were captured under the zero-balance safety signer.
+- Mew-X smoke run `mewx-smoke-20260320T193850Z` emitted raw NDJSON, config, candidate snapshots, state export, and session summary after the parser-safe `REGIONS` fix.
+- Mew-X package validation remains `partial`: observed required event coverage is `8 / 12`; missing required event types are `creator_candidate`, `candidate_rejected`, `entry_rejected`, and `run_summary`.
+- Cross-platform package handling was tightened in this repo so Windows-authored package paths now validate cleanly on Mac, and the collector now points Dexter replay and Mew-X session-summary exports at concrete files.
 
-## Fixed Windows Inputs
+## Output State
 
-- `C:\Users\bot\quant\Vexter\runtime\dexter\config`
-- `C:\Users\bot\quant\Vexter\runtime\dexter\export`
-- `C:\Users\bot\quant\Vexter\runtime\mewx\config`
-- `C:\Users\bot\quant\Vexter\runtime\mewx\export`
-- `C:\Users\bot\quant\Vexter\data\raw\dexter`
-- `C:\Users\bot\quant\Vexter\data\raw\mewx`
-- `C:\Users\bot\quant\Vexter\data\logs\dexter`
-- `C:\Users\bot\quant\Vexter\data\logs\mewx`
-- `C:\Users\bot\quant\Vexter\data\replays\dexter`
-- `C:\Users\bot\quant\Vexter\data\replays\mewx`
+- live Dexter package path: `artifacts/proofs/task-005-live-smoke-results/dexter.validate.json`
+- live Mew-X package path: `artifacts/proofs/task-005-live-smoke-results/mewx.validate.json`
+- live comparison output directory: `artifacts/reports/task-005-live-smoke-comparison`
+- comparison pack JSON: `artifacts/proofs/task-005-live-smoke-results/comparison-pack.json`
+- winner / tie decisions: deferred for candidate sourcing, execution quality, exit quality, and replayability pending a matched comparable live window
 
-## TASK-005 Start Conditions
+## Current Narrowed Blocker
 
-- collect matched Dexter and Mew-X live packages from the same measurement window
-- record evidence-backed winners or ties only after the live comparison pack validates both sources
-- keep strategy and execution logic frozen until replay validation clears the comparison evidence
+- The exact signer / RPC env blocker is resolved.
+- The remaining blocker is evidence quality, not startup: current smoke packages are not a matched comparable pair from the same live window and both remain `partial`.
+- Dexter's safe observe-only run proved env/network recovery, but it did not produce `entry_attempt`, `entry_fill`, `exit_signal`, `exit_fill`, `position_closed`, `run_summary`, or `session_update` coverage needed for a comparable pass package.
+- Mew-X now reaches full `sim_live` session closure, but this smoke run was collected from a later non-matched window and still lacks `creator_candidate`, `candidate_rejected`, `entry_rejected`, and `run_summary`.

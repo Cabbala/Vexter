@@ -1,0 +1,146 @@
+{
+  "task_id": "TASK-005-live-comparison-evidence",
+  "checked_at_utc": "2026-03-20T19:46:59Z",
+  "status": "partial_live_comparison_blocker",
+  "windows_runtime_host": "win-lan",
+  "resolved_windows_hostname": "DESKTOP-NNC6MPS",
+  "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
+  "verified_start": {
+    "main_commit": "939642e6d185629f23a04e8e04f9fc7eac62ebc9",
+    "pull_request": 5,
+    "branch": "codex/task-005-live-comparison-evidence"
+  },
+  "frozen_source_commits": {
+    "dexter": "69de8b6ca57ca3d03025d85329c88aa4a167da34",
+    "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "measurement_window_status": "partial_packages_collected",
+  "live_package_paths": {
+    "dexter": "artifacts/proofs/task-005-live-smoke-results/dexter.validate.json",
+    "mewx": "artifacts/proofs/task-005-live-smoke-results/mewx.validate.json"
+  },
+  "comparison_output_dir": "artifacts/reports/task-005-live-smoke-comparison",
+  "comparison_pack": "artifacts/proofs/task-005-live-smoke-results/comparison-pack.json",
+  "windows_layout_checks": {
+    "fixed_root_present": true,
+    "raw_event_dirs": {
+      "dexter": {
+        "path": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+        "latest_ndjson": "dexter-smoke-20260320T193452Z.ndjson"
+      },
+      "mewx": {
+        "path": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx",
+        "latest_ndjson": "mewx-smoke-20260320T193850Z.ndjson"
+      }
+    },
+    "comparison_inputs": {
+      "path": "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified\\comparison_inputs",
+      "dexter_package": "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified\\comparison_inputs\\dexter\\dexter-smoke-20260320T193452Z",
+      "mewx_package": "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified\\comparison_inputs\\mewx\\mewx-smoke-20260320T193850Z"
+    }
+  },
+  "env_injection_points": {
+    "dexter": {
+      "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter\\.env",
+      "exists": true,
+      "required_keys_present": [
+        "PRIVATE_KEY",
+        "HTTP_URL",
+        "WS_URL"
+      ],
+      "private_key_base58_ok": true,
+      "http_url_scheme": "https",
+      "ws_url_scheme": "wss",
+      "quoted_values_removed": true
+    },
+    "mewx": {
+      "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env",
+      "exists": true,
+      "required_keys_present": [
+        "PRIVATE_KEY",
+        "RPC_URL",
+        "WS_URL",
+        "DB_URL"
+      ],
+      "private_key_base58_ok": true,
+      "rpc_url_scheme": "https",
+      "ws_url_scheme": "wss",
+      "db_url": "postgres://postgres:admin123@127.0.0.1:5432",
+      "http_url_removed": true,
+      "regions_parser_safe": true
+    }
+  },
+  "safe_smoke_runs": {
+    "dexter": {
+      "run_id": "dexter-smoke-20260320T193452Z",
+      "mode": "observe_live",
+      "transport_mode": "ws",
+      "safety_note": "Executed with a temporary zero-balance signer after wsLogs bootstrap to avoid unapproved live fills while confirming recovered startup and export paths.",
+      "artifacts": {
+        "raw_events": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter\\dexter-smoke-20260320T193452Z.ndjson",
+        "config_snapshot": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config\\dexter-smoke-20260320T193452Z.config.json",
+        "leaderboard_snapshot": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export\\dexter-smoke-20260320T193452Z.leaderboard.json"
+      },
+      "validation": {
+        "classification": "partial",
+        "required_event_types_present": 4,
+        "required_event_types_total": 12,
+        "missing_event_types": [
+          "candidate_rejected",
+          "entry_attempt",
+          "entry_fill",
+          "exit_fill",
+          "exit_signal",
+          "position_closed",
+          "run_summary",
+          "session_update"
+        ],
+        "top_issue_codes": {
+          "missing_event_payload_fields": 43741,
+          "missing_required_event_types": 1
+        }
+      }
+    },
+    "mewx": {
+      "run_id": "mewx-smoke-20260320T193850Z",
+      "mode": "sim_live",
+      "transport_mode": "mixed",
+      "artifacts": {
+        "raw_events": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx\\mewx-smoke-20260320T193850Z.ndjson",
+        "config_snapshot": "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\config\\mewx-smoke-20260320T193850Z.config.json",
+        "state_snapshot": "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export\\mewx-smoke-20260320T193850Z.state.json",
+        "candidate_refresh_snapshot": "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export\\mewx-smoke-20260320T193850Z.candidates.refresh.json"
+      },
+      "validation": {
+        "classification": "partial",
+        "required_event_types_present": 8,
+        "required_event_types_total": 12,
+        "missing_event_types": [
+          "candidate_rejected",
+          "creator_candidate",
+          "entry_rejected",
+          "run_summary"
+        ]
+      }
+    }
+  },
+  "repo_side_fixes": {
+    "collector_windows_relative_paths_are_posix_like": true,
+    "validator_normalizes_windows_relative_paths": true
+  },
+  "blockers": [
+    {
+      "code": "dexter_partial_observe_only_package",
+      "detail": "Dexter env/network recovery is confirmed, but the safe observe-live smoke package still lacks comparable execution, fill, exit, and run-summary coverage."
+    },
+    {
+      "code": "mewx_partial_sim_live_package",
+      "detail": "Mew-X now reaches sim-live session closure, but the smoke package still lacks creator_candidate, candidate_rejected, entry_rejected, and run_summary coverage."
+    },
+    {
+      "code": "no_matched_comparable_live_window",
+      "detail": "The collected Dexter and Mew-X smoke packages were not gathered from the same live measurement window and cannot support evidence-backed winners yet."
+    }
+  ],
+  "task_006_ready": false
+}

@@ -19,15 +19,18 @@
     "runtime_on_windows": true,
     "vps_primary_dev": false,
     "deliverable_format": "minimal prompt + tar.gz bundle",
-    "push_changes_for_github_visibility": true
+    "push_changes_for_github_visibility": true,
+    "agent_usage_when_available": true,
+    "agent_usage_note": "Sub-agents were available in this Codex session and were used for parallel repo / GitHub inspection while the main thread handled runtime recovery and packaging."
   },
-  "phase": "TASK-004-comparison-analysis",
-  "status": "complete_on_branch",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task004_comparison_analysis_bundle.tar.gz",
+  "phase": "TASK-005-live-comparison-evidence",
+  "status": "partial_live_comparison_blocker",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_resume_live_collection_v2_bundle.tar.gz",
   "starting_point": {
-    "verified_at": "2026-03-21T01:25:00Z",
-    "main": "d4fec420fd2ff336d5076a018f3ab5b256bca00e",
-    "work_branch": "codex/task-004-comparison-analysis"
+    "verified_at": "2026-03-20T18:00:16Z",
+    "main": "939642e6d185629f23a04e8e04f9fc7eac62ebc9",
+    "verified_pr": 5,
+    "work_branch": "codex/task-005-live-comparison-evidence"
   },
   "deliverables": {
     "docs": [
@@ -36,6 +39,7 @@
       "docs/metrics_catalog.md",
       "docs/comparison_matrix_template.md",
       "docs/comparison_collection_runbook.md",
+      "docs/windows_runtime_recovery.md",
       "docs/dexter_source_assessment.md",
       "docs/dexter_event_mapping.md",
       "docs/mewx_source_assessment.md",
@@ -50,113 +54,124 @@
       "artifacts/context_pack.json",
       "artifacts/summary.md",
       "artifacts/proof_bundle_manifest.json",
+      "artifacts/task_ledger.jsonl",
+      "artifacts/reports/task-005-live-collection-blocker.md",
+      "artifacts/reports/task-005-windows-runtime-recovery.md",
+      "artifacts/proofs/task-005-live-collection-check.json",
+      "artifacts/proofs/task-005-windows-runtime-recovery.json",
       "artifacts/examples/task-004-sample-comparison"
     ],
     "comparison_tooling": [
       "vexter/comparison/",
       "scripts/comparison_analysis.py",
-      "scripts/collect_comparison_package.ps1"
+      "scripts/collect_comparison_package.ps1",
+      "scripts/recover_windows_runtime.sh",
+      "templates/windows_runtime/"
     ]
   },
-  "completed_task": {
+  "previous_task": {
     "id": "TASK-004-comparison-analysis",
+    "state": "complete_on_main",
+    "merged_pr": 4,
     "scope": [
       "Vexter-side comparison-analysis layer only",
       "No Dexter or Mew-X instrumentation changes",
       "No strategy logic changes",
       "No integration implementation"
-    ],
-    "surface": {
-      "validator_checks": [
-        "required run identity fields",
-        "required event types",
-        "event envelope and payload coverage",
-        "source-specific exports",
-        "config and proof attribution"
-      ],
-      "metrics": [
-        "candidate_count",
-        "candidate_precision_proxy",
-        "fill_success_rate",
-        "signal_to_attempt_latency_ms",
-        "attempt_to_fill_latency_ms",
-        "quote_vs_fill_slippage_bps",
-        "max_favorable_excursion_pct",
-        "max_adverse_excursion_pct",
-        "time_to_peak_ms",
-        "realized_exit_pct",
-        "realized_vs_peak_gap_pct",
-        "stale_position_ratio",
-        "replayability_grade"
-      ],
-      "outputs": [
-        "normalized validation result",
-        "per-source metrics summary",
-        "comparison matrix JSON and Markdown",
-        "comparison pack summary Markdown",
-        "machine-readable comparison pack JSON"
-      ],
-      "windows_collection_support": [
-        "scripts/collect_comparison_package.ps1",
-        "docs/comparison_collection_runbook.md"
-      ],
-      "fixture_packages": [
-        "tests/fixtures/comparison_packages/dexter_fixture",
-        "tests/fixtures/comparison_packages/mewx_fixture",
-        "artifacts/examples/task-004-sample-comparison"
-      ]
-    },
-    "test_command": "pytest -q"
-  },
-  "next_task": {
-    "id": "TASK-005",
-    "state": "not_started",
-    "start_conditions": [
-      "Collect matched Dexter and Mew-X live packages from the same measurement window.",
-      "Run the Vexter comparison pack on live packages and record evidence-backed winners or ties.",
-      "Keep strategy and execution logic frozen until replay validation clears the comparison evidence."
     ]
   },
-  "source_assessment": {
-    "dexter": {
-      "key_paths": [
-        "sources/Dexter/DexAI/trust_factor.py",
-        "sources/Dexter/Dexter.py",
-        "sources/Dexter/DexLab/instrumentation.py",
-        "sources/Dexter/DexLab/market.py",
-        "sources/Dexter/DexLab/swaps.py",
-        "sources/Dexter/tests/test_vexter_instrumentation.py"
-      ],
-      "key_findings": [
-        "Creator scoring remains backed by PostgreSQL and fed from stagnant mints rather than live memory.",
-        "Live trading now emits normalized observational events without changing the adaptive entry or exit logic.",
-        "Replay exports are generated when stagnant mints are persisted and can be backfilled from the database."
-      ]
+  "current_task": {
+    "id": "TASK-005-live-comparison-evidence",
+    "scope": [
+      "Resume live collection from the recovered Windows runtime",
+      "Preserve frozen Dexter and Mew-X strategy, execution, and instrumentation logic",
+      "Attempt matched live package collection on win-lan",
+      "If blocked, replace the generic blocker with an exact evidence-backed blocker"
+    ],
+    "frozen_source_commits": {
+      "dexter": "69de8b6ca57ca3d03025d85329c88aa4a167da34",
+      "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
     },
-    "mewx": {
-      "key_paths": [
-        "sources/Mew-X/src/main.rs",
-        "sources/Mew-X/src/mew/config.rs",
-        "sources/Mew-X/src/mew/deagle/deagle.rs",
-        "sources/Mew-X/src/mew/instrumentation.rs",
-        "sources/Mew-X/src/mew/snipe/handler.rs",
-        "sources/Mew-X/src/mew/sol_hook/sol.rs"
-      ],
-      "key_findings": [
-        "Candidate selection now exports source-labeled creator admissions and refresh diffs without changing ranking behavior.",
-        "Execution telemetry is captured at transport-ack granularity so route, fee, and retry choices are attributable without inserting new confirmation gates.",
-        "Migration, dip-watch, and session checkpoint surfaces now emit normalized observational events for later side-by-side analysis."
-      ]
-    }
+    "recovery_result": {
+      "windows_runtime_prerequisites_restored": true,
+      "postgres_listener": "127.0.0.1:5432",
+      "dexter_database_bootstrap": "success",
+      "env_injection_points_documented": true,
+      "mewx_startup_probe": "RPC_URL, DB_URL, signer input, and parser-safe env formatting now allow a full sim-live smoke session on win-lan."
+    },
+    "resume_probe_result": {
+      "checked_at": "2026-03-20T19:46:59Z",
+      "dexter_env_exists": true,
+      "mewx_env_exists": true,
+      "mewx_rpc_url_restored_from_http_url": false,
+      "dexter_helius_http_rpc_ok": true,
+      "dexter_helius_ws_ok": true,
+      "dexter_startup_failure": "The exact signer env blocker is resolved; the remaining Dexter smoke gap is observe-only coverage under a zero-balance safety signer.",
+      "mewx_startup_failure": "The exact signer env blocker is resolved; the remaining Mew-X smoke gap is partial required-event coverage rather than startup failure.",
+      "raw_event_dirs_remained_empty": false,
+      "comparison_inputs_remained_empty": false
+    },
+    "attempt_result": {
+      "matched_measurement_window_found": false,
+      "live_dexter_package": "artifacts/proofs/task-005-live-smoke-results/dexter.validate.json",
+      "live_mewx_package": "artifacts/proofs/task-005-live-smoke-results/mewx.validate.json",
+      "comparison_output_dir": "artifacts/reports/task-005-live-smoke-comparison",
+      "winner_recording": "deferred",
+      "collection_stage": "partial_packages_validated"
+    },
+    "blockers": [
+      "The exact signer env blocker is resolved for both Windows repo-root .env files.",
+      "Dexter now emits an observe-live smoke package, but it remains partial because the safety signer never reaches fill / exit coverage and frozen entry_rejected payloads omit tx_signature.",
+      "Mew-X now emits a sim-live smoke package, but it remains partial because creator_candidate, candidate_rejected, entry_rejected, and run_summary were not observed in the smoke window.",
+      "The current Dexter and Mew-X smoke packages were not collected from the same live measurement window, so evidence-backed winners remain deferred."
+    ]
+  },
+  "live_collection_attempt": {
+    "checked_at": "2026-03-20T19:46:59Z",
+    "raw_event_dirs": {
+      "dexter": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+      "mewx": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx"
+    },
+    "runtime_dirs": {
+      "dexter_config": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+      "dexter_export": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+      "mewx_config": "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\config",
+      "mewx_export": "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export"
+    },
+    "comparison_input_root": "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified\\comparison_inputs",
+    "windows_tools": {
+      "git": true,
+      "python": true,
+      "cargo": true,
+      "rustc": true,
+      "psql": true
+    },
+    "postgres_process_detected": true,
+    "postgres_listener_5432": true
+  },
+  "next_task": {
+    "id": "TASK-005-RESUME",
+    "state": "awaiting_matched_live_window_with_full_event_coverage",
+    "task_006_ready": false,
+    "resume_requirements": [
+      "Collect one Dexter run and one Mew-X run from the same live measurement window.",
+      "Preserve frozen Dexter and Mew-X strategy, execution, and instrumentation logic.",
+      "Gather a Dexter run with comparable execution coverage rather than observe-only rejection coverage.",
+      "Rerun validate, derive-metrics, and build-pack on that matched package pair before advancing TASK-006."
+    ]
   },
   "windows_runtime_verification": {
-    "verified_at": "2026-03-20T14:49:45Z",
+    "verified_at": "2026-03-20T18:00:16Z",
     "root_exists": true,
     "observed_paths": [
       "C:\\Users\\bot\\quant\\Vexter\\runtime",
       "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter",
       "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx",
       "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified",
+      "C:\\Users\\bot\\quant\\Vexter\\sources",
+      "C:\\Users\\bot\\quant\\Vexter\\downloads",
+      "C:\\Users\\bot\\quant\\Vexter\\tools",
+      "C:\\Users\\bot\\quant\\Vexter\\venvs",
       "C:\\Users\\bot\\quant\\Vexter\\data\\logs",
       "C:\\Users\\bot\\quant\\Vexter\\data\\postgres",
       "C:\\Users\\bot\\quant\\Vexter\\data\\raw",
@@ -170,6 +185,7 @@
       "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export",
       "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified\\contracts",
       "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified\\reports",
+      "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified\\comparison_inputs",
       "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
       "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\mewx",
       "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\unified",

@@ -1,5 +1,5 @@
 {
-  "built_at_utc": "2026-03-20T16:45:58Z",
+  "built_at_utc": "2026-03-20T20:07:21Z",
   "comparison_matrix": {
     "candidate_generation": [
       {
@@ -303,7 +303,7 @@
         "config_snapshot": "config/config_snapshot.json",
         "measurement_window": "2026-03-21T01:00:00Z -> 2026-03-21T01:20:00Z",
         "mode": "observe_live",
-        "source_commit": "69de8b615a0a366545cffcde7eb3cab0f43730dd",
+        "source_commit": "69de8b6ca57ca3d03025d85329c88aa4a167da34",
         "transport_mode": "ws"
       },
       "mewx": {
@@ -470,7 +470,7 @@
           "total_events": 16
         },
         "issues": [],
-        "package_dir": "/Users/cabbala/Documents/vexter/task004-comparison-analysis/tests/fixtures/comparison_packages/dexter_fixture",
+        "package_dir": "/Users/cabbala/Documents/vexter/task005-live-comparison-evidence/tests/fixtures/comparison_packages/dexter_fixture",
         "run_id": "dexter-fixture-001",
         "source_system": "dexter"
       },
@@ -507,7 +507,7 @@
           "total_events": 25
         },
         "issues": [],
-        "package_dir": "/Users/cabbala/Documents/vexter/task004-comparison-analysis/tests/fixtures/comparison_packages/mewx_fixture",
+        "package_dir": "/Users/cabbala/Documents/vexter/task005-live-comparison-evidence/tests/fixtures/comparison_packages/mewx_fixture",
         "run_id": "mewx-fixture-001",
         "source_system": "mewx"
       }
@@ -637,7 +637,7 @@
           "value": 60000.0
         }
       },
-      "package_dir": "/Users/cabbala/Documents/vexter/task004-comparison-analysis/tests/fixtures/comparison_packages/dexter_fixture",
+      "package_dir": "/Users/cabbala/Documents/vexter/task005-live-comparison-evidence/tests/fixtures/comparison_packages/dexter_fixture",
       "run_id": "dexter-fixture-001",
       "source_system": "dexter"
     },
@@ -764,7 +764,7 @@
           "value": 67500.0
         }
       },
-      "package_dir": "/Users/cabbala/Documents/vexter/task004-comparison-analysis/tests/fixtures/comparison_packages/mewx_fixture",
+      "package_dir": "/Users/cabbala/Documents/vexter/task005-live-comparison-evidence/tests/fixtures/comparison_packages/mewx_fixture",
       "run_id": "mewx-fixture-001",
       "source_system": "mewx"
     }
@@ -805,7 +805,7 @@
         "total_events": 16
       },
       "issues": [],
-      "package_dir": "/Users/cabbala/Documents/vexter/task004-comparison-analysis/tests/fixtures/comparison_packages/dexter_fixture",
+      "package_dir": "/Users/cabbala/Documents/vexter/task005-live-comparison-evidence/tests/fixtures/comparison_packages/dexter_fixture",
       "run_id": "dexter-fixture-001",
       "source_system": "dexter"
     },
@@ -842,7 +842,7 @@
         "total_events": 25
       },
       "issues": [],
-      "package_dir": "/Users/cabbala/Documents/vexter/task004-comparison-analysis/tests/fixtures/comparison_packages/mewx_fixture",
+      "package_dir": "/Users/cabbala/Documents/vexter/task005-live-comparison-evidence/tests/fixtures/comparison_packages/mewx_fixture",
       "run_id": "mewx-fixture-001",
       "source_system": "mewx"
     }

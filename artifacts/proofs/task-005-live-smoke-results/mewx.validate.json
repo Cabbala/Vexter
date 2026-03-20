@@ -1,0 +1,45 @@
+{
+  "checks": {
+    "event_envelope_ok": true,
+    "payload_fields_ok": true,
+    "proof_attribution_ok": true,
+    "required_event_types_ok": false,
+    "run_identity_ok": true,
+    "source_exports_ok": true
+  },
+  "classification": "partial",
+  "comparison_readiness": "observe_only",
+  "coverage": {
+    "event_completeness_ratio": 0.6666666666666666,
+    "missing_event_types": [
+      "candidate_rejected",
+      "creator_candidate",
+      "entry_rejected",
+      "run_summary"
+    ],
+    "observed_event_types": [
+      "entry_attempt",
+      "entry_fill",
+      "entry_signal",
+      "exit_fill",
+      "exit_signal",
+      "mint_observed",
+      "position_closed",
+      "session_update"
+    ],
+    "required_event_types_present": 8,
+    "required_event_types_total": 12,
+    "total_events": 18
+  },
+  "issues": [
+    {
+      "code": "missing_required_event_types",
+      "message": "required event types were not observed in the run package: candidate_rejected, creator_candidate, entry_rejected, run_summary",
+      "path": "/Users/cabbala/Documents/vexter/task005-live-comparison-evidence/artifacts/tmp/winlan-packages-v2/mewx-smoke-20260320T193850Z/events.ndjson",
+      "severity": "error"
+    }
+  ],
+  "package_dir": "/Users/cabbala/Documents/vexter/task005-live-comparison-evidence/artifacts/tmp/winlan-packages-v2/mewx-smoke-20260320T193850Z",
+  "run_id": "mewx-smoke-20260320T193850Z",
+  "source_system": "mewx"
+}

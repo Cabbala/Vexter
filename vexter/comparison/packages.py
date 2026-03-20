@@ -31,9 +31,13 @@ def _load_ndjson(path: Path) -> list[dict[str, Any]]:
     return payload
 
 
+def _normalize_package_relative_path(raw_path: str) -> str:
+    return raw_path.replace("\\", "/").strip()
+
+
 def _resolve_package_path(package_dir: Path, raw_path: str | None, default_name: str) -> Path:
     if raw_path:
-        candidate = Path(raw_path)
+        candidate = Path(_normalize_package_relative_path(raw_path))
         if candidate.is_absolute():
             return candidate
         return package_dir / candidate

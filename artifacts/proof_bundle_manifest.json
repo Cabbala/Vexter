@@ -1,11 +1,21 @@
 {
-  "task_id": "TASK-004-comparison-analysis",
-  "status": "complete_on_branch",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task004_comparison_analysis_bundle.tar.gz",
-  "bundle_path": "artifacts/bundles/task-004-comparison-analysis.tar.gz",
+  "task_id": "TASK-005-live-comparison-evidence",
+  "status": "partial_live_comparison_blocker",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_resume_live_collection_v2_bundle.tar.gz",
+  "bundle_path": "artifacts/bundles/task-005-live-comparison-evidence.tar.gz",
   "context_pack": "artifacts/context_pack.json",
   "summary": "artifacts/summary.md",
   "task_ledger": "artifacts/task_ledger.jsonl",
+  "reports": [
+    "artifacts/reports/task-005-live-collection-blocker.md",
+    "artifacts/reports/task-005-windows-runtime-recovery.md",
+    "artifacts/reports/task-005-live-smoke-comparison"
+  ],
+  "proof_files": [
+    "artifacts/proofs/task-005-live-collection-check.json",
+    "artifacts/proofs/task-005-windows-runtime-recovery.json",
+    "artifacts/proofs/task-005-live-smoke-results"
+  ],
   "manifests": [
     "manifests/reference_repos.json",
     "manifests/windows_runtime.json"
@@ -16,6 +26,7 @@
     "docs/metrics_catalog.md",
     "docs/comparison_matrix_template.md",
     "docs/comparison_collection_runbook.md",
+    "docs/windows_runtime_recovery.md",
     "docs/dexter_source_assessment.md",
     "docs/dexter_event_mapping.md",
     "docs/mewx_source_assessment.md",
@@ -30,57 +41,62 @@
   ],
   "scripts": [
     "scripts/bootstrap_windows_workspace.sh",
+    "scripts/recover_windows_runtime.sh",
     "scripts/sync_reference_repos.sh",
     "scripts/build_proof_bundle.sh",
     "scripts/comparison_analysis.py",
     "scripts/collect_comparison_package.ps1"
   ],
+  "templates": [
+    "templates/windows_runtime/dexter.env.example",
+    "templates/windows_runtime/mewx.env.example"
+  ],
   "code": [
     "vexter/comparison/"
   ],
-  "next_task": {
-    "id": "TASK-005",
-    "state": "not_started",
-    "start_conditions": [
-      "Collect matched Dexter and Mew-X live packages from the same measurement window.",
-      "Run the Vexter comparison pack on live packages before naming any winners.",
-      "Do not begin bot integration before replay validation clears the comparison evidence."
-    ]
+  "task_result": {
+    "matched_measurement_window_found": false,
+    "live_dexter_package": "artifacts/proofs/task-005-live-smoke-results/dexter.validate.json",
+    "live_mewx_package": "artifacts/proofs/task-005-live-smoke-results/mewx.validate.json",
+    "comparison_output_dir": "artifacts/reports/task-005-live-smoke-comparison",
+    "winner_recording": "deferred",
+    "task_006_ready": false
   },
   "proofs": {
-    "verified_start_commit": "d4fec420fd2ff336d5076a018f3ab5b256bca00e",
-    "windows_runtime_verified": true,
-    "windows_verified_paths": [
-      "C:\\Users\\bot\\quant\\Vexter\\runtime",
-      "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter",
-      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx",
-      "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified",
-      "C:\\Users\\bot\\quant\\Vexter\\data",
-      "C:\\Users\\bot\\quant\\Vexter\\artifacts"
-    ],
-    "windows_prepared_subdirs": [
-      "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
-      "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
-      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\config",
-      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export",
-      "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified\\contracts",
-      "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified\\reports",
-      "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
-      "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\mewx",
-      "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\unified",
-      "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
-      "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\mewx",
-      "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\unified",
-      "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
-      "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx",
-      "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
-      "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\mewx",
-      "C:\\Users\\bot\\quant\\Vexter\\artifacts\\dexter",
-      "C:\\Users\\bot\\quant\\Vexter\\artifacts\\mewx",
-      "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified"
-    ],
-    "fixture_pack_generated": true,
-    "live_comparison_pending": true
+    "verified_start_commit": "939642e6d185629f23a04e8e04f9fc7eac62ebc9",
+    "verified_pr": 5,
+    "windows_runtime_host": "win-lan",
+    "resolved_windows_hostname": "DESKTOP-NNC6MPS",
+    "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
+    "fixed_root_present": true,
+    "raw_live_inputs_present": true,
+    "comparison_inputs_present": true,
+    "windows_tools": {
+      "git": true,
+      "python": true,
+      "cargo": true,
+      "rustc": true,
+      "psql": true
+    },
+    "postgres_process_detected": true,
+    "postgres_listener_5432": true,
+    "dexter_helius_http_rpc_ok": true,
+    "dexter_helius_ws_ok": true,
+    "mewx_rpc_url_env_gap_fixed": true,
+    "dexter_env_formatting_fixed": true,
+    "mewx_env_formatting_fixed": true,
+    "windows_package_paths_normalized_cross_platform": true,
+    "task_006_ready": false
+  },
+  "next_task": {
+    "id": "TASK-005-RESUME",
+    "state": "awaiting_matched_live_window_with_full_event_coverage",
+    "resume_requirements": [
+      "Collect matched live packages from the same measurement window.",
+      "Keep frozen Dexter and Mew-X strategy, execution, and instrumentation logic unchanged.",
+      "Capture fuller Dexter execution coverage than the current observe-only smoke package.",
+      "Rerun validate, derive-metrics, and build-pack on that matched package pair before replay validation."
+    ]
   },
   "included_paths": [
     "README.md",
@@ -91,12 +107,15 @@
     "vexter/",
     "manifests/",
     "scripts/",
+    "templates/",
     ".github/workflows/",
     "tests/",
     "artifacts/context_pack.json",
     "artifacts/summary.md",
     "artifacts/proof_bundle_manifest.json",
     "artifacts/task_ledger.jsonl",
+    "artifacts/reports/",
+    "artifacts/proofs/",
     "artifacts/examples/"
   ]
 }

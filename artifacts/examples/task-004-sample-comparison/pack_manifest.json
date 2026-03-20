@@ -1,8 +1,8 @@
 {
-  "built_at_utc": "2026-03-20T16:45:58Z",
+  "built_at_utc": "2026-03-20T20:07:21Z",
   "inputs": {
-    "dexter_package": "/Users/cabbala/Documents/vexter/task004-comparison-analysis/tests/fixtures/comparison_packages/dexter_fixture",
-    "mewx_package": "/Users/cabbala/Documents/vexter/task004-comparison-analysis/tests/fixtures/comparison_packages/mewx_fixture"
+    "dexter_package": "/Users/cabbala/Documents/vexter/task005-live-comparison-evidence/tests/fixtures/comparison_packages/dexter_fixture",
+    "mewx_package": "/Users/cabbala/Documents/vexter/task005-live-comparison-evidence/tests/fixtures/comparison_packages/mewx_fixture"
   },
   "outputs": [
     "dexter_validation.json",

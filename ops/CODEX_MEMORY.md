@@ -10,3 +10,4 @@
 - Future deliverables must stay in the format: minimal prompt + detailed tar.gz bundle.
 - After every meaningful task, Codex should push Git changes and make status inspectable from GitHub.
 - ChatGPT will use GitHub-visible state to guide next tasks.
+- Agent or sub-agent support should be used proactively for audit or validation work when available; if unavailable, the task should continue and note that limitation.

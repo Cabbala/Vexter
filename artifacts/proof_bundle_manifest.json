@@ -1,8 +1,8 @@
 {
-  "task_id": "TASK-001-source-assessment",
+  "task_id": "TASK-002-dexter-instrumentation",
   "status": "complete_on_main",
-  "bundle_source": "/Users/cabbala/Downloads/Vexter_task001_bundle.tar.gz",
-  "bundle_path": "artifacts/bundles/task-001-source-assessment.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task002_dexter_instrumentation_bundle.tar.gz",
+  "bundle_path": "artifacts/bundles/task-002-dexter-instrumentation.tar.gz",
   "context_pack": "artifacts/context_pack.json",
   "summary": "artifacts/summary.md",
   "task_ledger": "artifacts/task_ledger.jsonl",
@@ -16,6 +16,7 @@
     "docs/metrics_catalog.md",
     "docs/comparison_matrix_template.md",
     "docs/dexter_source_assessment.md",
+    "docs/dexter_event_mapping.md",
     "docs/mewx_source_assessment.md"
   ],
   "plans": [
@@ -31,17 +32,16 @@
     "scripts/build_proof_bundle.sh"
   ],
   "next_task": {
-    "id": "TASK-002",
+    "id": "TASK-003",
     "state": "not_started",
     "start_conditions": [
-      "Start from the latest main after TASK-001 closeout is merged.",
-      "Limit scope to observational event writers and Vexter-side validation already defined in plans.",
-      "Keep the normalized event contract and verified Windows runtime layout unchanged.",
-      "Do not start Dexter or Mew-X integration work."
+      "Validate Dexter observation packages before touching Mew-X.",
+      "Keep the normalized event contract and Windows runtime layout unchanged.",
+      "Do not begin integration work from the merged TASK-002 artifacts."
     ]
   },
   "proofs": {
-    "verified_start_commit": "6d22d22e37a77e2e15c6211d32c125c8c4a2c151",
+    "verified_start_commit": "cb7a2cdef786cd9bcf7c8611c4687a02330ec44a",
     "windows_runtime_verified": true,
     "windows_verified_paths": [
       "C:\\Users\\bot\\quant\\Vexter\\runtime",
@@ -71,7 +71,12 @@
       "C:\\Users\\bot\\quant\\Vexter\\artifacts\\dexter",
       "C:\\Users\\bot\\quant\\Vexter\\artifacts\\mewx",
       "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified"
-    ]
+    ],
+    "dexter_source_repo": "https://github.com/Cabbala/Dexter",
+    "dexter_source_branch": "codex/task-002-dexter-instrumentation",
+    "dexter_source_commit": "69de8b615a0a366545cffcde7eb3cab0f43730dd",
+    "dexter_source_pr": 1,
+    "merged_pr": 2
   },
   "included_paths": [
     "README.md",

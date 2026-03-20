@@ -2,13 +2,16 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-BUNDLE_PATH="$ROOT_DIR/artifacts/bundles/task-001-source-assessment.tar.gz"
+BUNDLE_PATH="$ROOT_DIR/artifacts/bundles/task-002-dexter-instrumentation.tar.gz"
 
 mkdir -p "$ROOT_DIR/artifacts/bundles"
 
 rm -f "$BUNDLE_PATH"
 
 tar -czf "$BUNDLE_PATH" \
+  --exclude='__pycache__' \
+  --exclude='.pytest_cache' \
+  --exclude='*.pyc' \
   -C "$ROOT_DIR" \
   README.md \
   docs \

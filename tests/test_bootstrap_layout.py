@@ -84,7 +84,8 @@ def test_task_ledger_is_valid_jsonl() -> None:
     assert len(lines) >= 2
     payload = json.loads(lines[-1])
     assert payload["task_id"] == "TASK-003-mewx-instrumentation"
-    assert payload["status"] == "complete_on_branch"
+    assert payload["status"] == "complete_on_main"
+    assert payload["merged_pr"] == 3
     assert payload["source_pr"] == 1
     assert payload["next_task_id"] == "TASK-004"
 
@@ -93,7 +94,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     with (REPO_ROOT / "artifacts/proof_bundle_manifest.json").open() as handle:
         manifest = json.load(handle)
 
-    assert manifest["status"] == "complete_on_branch"
+    assert manifest["status"] == "complete_on_main"
     assert manifest["next_task"]["id"] == "TASK-004"
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]

@@ -1,6 +1,6 @@
 {
   "task_id": "TASK-003-mewx-instrumentation",
-  "status": "complete_on_branch",
+  "status": "complete_on_main",
   "bundle_source": "/Users/cabbala/Downloads/vexter_task003_mewx_instrumentation_bundle.tar.gz",
   "bundle_path": "artifacts/bundles/task-003-mewx-instrumentation.tar.gz",
   "context_pack": "artifacts/context_pack.json",
@@ -76,7 +76,8 @@
     "mewx_source_repo": "https://github.com/Cabbala/Mew-X",
     "mewx_source_branch": "codex/task-003-mewx-instrumentation",
     "mewx_source_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
-    "mewx_source_pr": 1
+    "mewx_source_pr": 1,
+    "merged_pr": 3
   },
   "included_paths": [
     "README.md",

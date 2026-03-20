@@ -33,4 +33,6 @@ Vexter is the Mac-side control plane for comparative analysis of `Cabbala/Dexter
 
 `TASK-003-mewx-instrumentation` is complete on `main` after merging PR #3 on 2026-03-21. The paired Mew-X source branch adds observational NDJSON events, masked config export, candidate refresh snapshots, and session summaries without changing strategy or execution decisions.
 
-`TASK-004` has not started. It remains the comparison-analysis phase after Mew-X and Dexter instrumentation are both frozen.
+`TASK-004-comparison-analysis` adds the first Vexter-side validator, shared metrics derivation layer, side-by-side comparison pack builder, and Windows collection runbook while keeping Dexter and Mew-X instrumentation frozen.
+
+Live matched-window comparison evidence is still pending. `TASK-005` has not started, and integration work remains blocked on live comparison plus replay validation.

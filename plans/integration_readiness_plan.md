@@ -53,6 +53,6 @@ Before any combined bot implementation:
 
 ## Immediate Next Tasks
 
-1. Add observational event writers to Dexter.
-2. Add observational event writers to Mew-X.
-3. Build a Vexter-side validator that checks contract completeness and metrics derivation.
+1. Collect matched Dexter and Mew-X run packages from the same measurement window.
+2. Run the Vexter validator and comparison pack builder on those live packages.
+3. Keep TASK-005 blocked until replay validation confirms the live comparison evidence is trustworthy.

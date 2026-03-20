@@ -1,0 +1,37 @@
+{
+  "checks": {
+    "event_envelope_ok": true,
+    "payload_fields_ok": true,
+    "proof_attribution_ok": true,
+    "required_event_types_ok": true,
+    "run_identity_ok": true,
+    "source_exports_ok": true
+  },
+  "classification": "pass",
+  "comparison_readiness": "comparable",
+  "coverage": {
+    "event_completeness_ratio": 1.0,
+    "missing_event_types": [],
+    "observed_event_types": [
+      "candidate_rejected",
+      "creator_candidate",
+      "entry_attempt",
+      "entry_fill",
+      "entry_rejected",
+      "entry_signal",
+      "exit_fill",
+      "exit_signal",
+      "mint_observed",
+      "position_closed",
+      "run_summary",
+      "session_update"
+    ],
+    "required_event_types_present": 12,
+    "required_event_types_total": 12,
+    "total_events": 25
+  },
+  "issues": [],
+  "package_dir": "/Users/cabbala/Documents/vexter/task004-comparison-analysis/tests/fixtures/comparison_packages/mewx_fixture",
+  "run_id": "mewx-fixture-001",
+  "source_system": "mewx"
+}

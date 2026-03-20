@@ -1,0 +1,21 @@
+{
+  "raw_events": [
+    "events.ndjson"
+  ],
+  "logs": [
+    "logs/dexter.log"
+  ],
+  "replays": [
+    "exports/stagnant_mint_replay.json"
+  ],
+  "db_exports": [
+    "exports/stagnant_mint_replay.json"
+  ],
+  "exports": [
+    "exports/leaderboard_snapshot.json",
+    "exports/stagnant_mint_replay.json"
+  ],
+  "config": [
+    "config/config_snapshot.json"
+  ]
+}

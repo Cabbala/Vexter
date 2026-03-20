@@ -14,6 +14,7 @@ def test_required_paths_exist() -> None:
         "docs/normalized_event_schema.md",
         "docs/metrics_catalog.md",
         "docs/comparison_matrix_template.md",
+        "docs/comparison_collection_runbook.md",
         "docs/dexter_source_assessment.md",
         "docs/dexter_event_mapping.md",
         "docs/mewx_source_assessment.md",
@@ -33,10 +34,21 @@ def test_required_paths_exist() -> None:
         "scripts/bootstrap_windows_workspace.sh",
         "scripts/sync_reference_repos.sh",
         "scripts/build_proof_bundle.sh",
+        "scripts/comparison_analysis.py",
+        "scripts/collect_comparison_package.ps1",
+        "vexter/__init__.py",
+        "vexter/comparison/__init__.py",
+        "vexter/comparison/constants.py",
+        "vexter/comparison/packages.py",
+        "vexter/comparison/validator.py",
+        "vexter/comparison/metrics.py",
+        "vexter/comparison/pack.py",
+        "tests/conftest.py",
         "artifacts/context_pack.json",
         "artifacts/summary.md",
         "artifacts/proof_bundle_manifest.json",
         "artifacts/task_ledger.jsonl",
+        "artifacts/examples/task-004-sample-comparison/pack_manifest.json",
         ".github/workflows/validate.yml",
     ]
 
@@ -81,21 +93,20 @@ def test_task_ledger_is_valid_jsonl() -> None:
     ledger_path = REPO_ROOT / "artifacts/task_ledger.jsonl"
     lines = ledger_path.read_text().strip().splitlines()
 
-    assert len(lines) >= 2
+    assert len(lines) >= 3
     payload = json.loads(lines[-1])
-    assert payload["task_id"] == "TASK-003-mewx-instrumentation"
-    assert payload["status"] == "complete_on_main"
-    assert payload["merged_pr"] == 3
-    assert payload["source_pr"] == 1
-    assert payload["next_task_id"] == "TASK-004"
+    assert payload["task_id"] == "TASK-004-comparison-analysis"
+    assert payload["status"] == "complete_on_branch"
+    assert payload["branch"] == "codex/task-004-comparison-analysis"
+    assert payload["next_task_id"] == "TASK-005"
 
 
 def test_proof_bundle_exists_and_contains_required_files() -> None:
     with (REPO_ROOT / "artifacts/proof_bundle_manifest.json").open() as handle:
         manifest = json.load(handle)
 
-    assert manifest["status"] == "complete_on_main"
-    assert manifest["next_task"]["id"] == "TASK-004"
+    assert manifest["status"] == "complete_on_branch"
+    assert manifest["next_task"]["id"] == "TASK-005"
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]
     assert bundle_path.exists()
@@ -106,9 +117,13 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "README.md" in names
     assert "docs/evaluation_contract.md" in names
     assert "docs/normalized_event_schema.md" in names
+    assert "docs/comparison_collection_runbook.md" in names
     assert "docs/dexter_event_mapping.md" in names
     assert "docs/mewx_event_mapping.md" in names
-    assert "plans/mewx_instrumentation_plan.md" in names
+    assert "scripts/comparison_analysis.py" in names
+    assert "scripts/collect_comparison_package.ps1" in names
+    assert "vexter/comparison/validator.py" in names
+    assert "artifacts/examples/task-004-sample-comparison/summary.md" in names
     assert "artifacts/context_pack.json" in names
     assert "artifacts/proof_bundle_manifest.json" in names
     assert "tests/__pycache__/" not in names

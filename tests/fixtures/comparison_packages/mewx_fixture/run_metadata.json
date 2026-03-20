@@ -1,0 +1,18 @@
+{
+  "run_id": "mewx-fixture-001",
+  "source_system": "mewx",
+  "source_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+  "mode": "observe_live",
+  "transport_mode": "grpc",
+  "host_role": "windows_runtime",
+  "runtime_root": "C:\\Users\\bot\\quant\\Vexter",
+  "started_at_utc": "2026-03-21T01:00:00Z",
+  "ended_at_utc": "2026-03-21T01:20:00Z",
+  "event_stream": "events.ndjson",
+  "config_snapshot": "config/config_snapshot.json",
+  "proof_manifest": "proof_manifest.json",
+  "source_exports": {
+    "candidate_refresh_snapshot": "exports/candidate_refresh_snapshot.json",
+    "session_summary": "exports/session_summary.json"
+  }
+}

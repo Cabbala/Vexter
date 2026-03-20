@@ -1,8 +1,8 @@
 {
-  "task_id": "TASK-003-mewx-instrumentation",
-  "status": "complete_on_main",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task003_mewx_instrumentation_bundle.tar.gz",
-  "bundle_path": "artifacts/bundles/task-003-mewx-instrumentation.tar.gz",
+  "task_id": "TASK-004-comparison-analysis",
+  "status": "complete_on_branch",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task004_comparison_analysis_bundle.tar.gz",
+  "bundle_path": "artifacts/bundles/task-004-comparison-analysis.tar.gz",
   "context_pack": "artifacts/context_pack.json",
   "summary": "artifacts/summary.md",
   "task_ledger": "artifacts/task_ledger.jsonl",
@@ -15,6 +15,7 @@
     "docs/normalized_event_schema.md",
     "docs/metrics_catalog.md",
     "docs/comparison_matrix_template.md",
+    "docs/comparison_collection_runbook.md",
     "docs/dexter_source_assessment.md",
     "docs/dexter_event_mapping.md",
     "docs/mewx_source_assessment.md",
@@ -30,19 +31,24 @@
   "scripts": [
     "scripts/bootstrap_windows_workspace.sh",
     "scripts/sync_reference_repos.sh",
-    "scripts/build_proof_bundle.sh"
+    "scripts/build_proof_bundle.sh",
+    "scripts/comparison_analysis.py",
+    "scripts/collect_comparison_package.ps1"
+  ],
+  "code": [
+    "vexter/comparison/"
   ],
   "next_task": {
-    "id": "TASK-004",
+    "id": "TASK-005",
     "state": "not_started",
     "start_conditions": [
-      "Freeze Dexter and Mew-X instrumentation while running the first fair comparison window.",
-      "Keep the normalized event contract and Windows runtime layout unchanged.",
-      "Do not begin bot integration from the TASK-003 artifacts."
+      "Collect matched Dexter and Mew-X live packages from the same measurement window.",
+      "Run the Vexter comparison pack on live packages before naming any winners.",
+      "Do not begin bot integration before replay validation clears the comparison evidence."
     ]
   },
   "proofs": {
-    "verified_start_commit": "a6370a2f17a3fcfae2fa1c4d8ee2658da9cbf71c",
+    "verified_start_commit": "d4fec420fd2ff336d5076a018f3ab5b256bca00e",
     "windows_runtime_verified": true,
     "windows_verified_paths": [
       "C:\\Users\\bot\\quant\\Vexter\\runtime",
@@ -73,11 +79,8 @@
       "C:\\Users\\bot\\quant\\Vexter\\artifacts\\mewx",
       "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified"
     ],
-    "mewx_source_repo": "https://github.com/Cabbala/Mew-X",
-    "mewx_source_branch": "codex/task-003-mewx-instrumentation",
-    "mewx_source_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
-    "mewx_source_pr": 1,
-    "merged_pr": 3
+    "fixture_pack_generated": true,
+    "live_comparison_pending": true
   },
   "included_paths": [
     "README.md",
@@ -85,6 +88,7 @@
     "specs/",
     "ops/",
     "plans/",
+    "vexter/",
     "manifests/",
     "scripts/",
     ".github/workflows/",
@@ -92,6 +96,7 @@
     "artifacts/context_pack.json",
     "artifacts/summary.md",
     "artifacts/proof_bundle_manifest.json",
-    "artifacts/task_ledger.jsonl"
+    "artifacts/task_ledger.jsonl",
+    "artifacts/examples/"
   ]
 }

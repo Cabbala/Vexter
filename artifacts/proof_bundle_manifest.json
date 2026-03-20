@@ -1,7 +1,7 @@
 {
   "task_id": "TASK-005-live-comparison-evidence",
   "status": "partial_live_comparison_blocker",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_matched_window_bundle.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_pass_grade_pair_bundle.tar.gz",
   "bundle_path": "artifacts/bundles/task-005-live-comparison-evidence.tar.gz",
   "context_pack": "artifacts/context_pack.json",
   "summary": "artifacts/summary.md",
@@ -9,16 +9,12 @@
   "reports": [
     "artifacts/reports/task-005-live-collection-blocker.md",
     "artifacts/reports/task-005-windows-runtime-recovery.md",
-    "artifacts/reports/task-005-live-smoke-comparison",
-    "artifacts/reports/task-005-live-overlap-comparison",
-    "artifacts/reports/task-005-live-matched-window-comparison"
+    "artifacts/reports/task-005-live-pass-grade-runtime-window-comparison"
   ],
   "proof_files": [
     "artifacts/proofs/task-005-live-collection-check.json",
     "artifacts/proofs/task-005-windows-runtime-recovery.json",
-    "artifacts/proofs/task-005-live-smoke-results",
-    "artifacts/proofs/task-005-live-overlap-results",
-    "artifacts/proofs/task-005-live-matched-window-results"
+    "artifacts/proofs/task-005-live-pass-grade-runtime-window-results"
   ],
   "manifests": [
     "manifests/reference_repos.json",
@@ -49,7 +45,8 @@
     "scripts/sync_reference_repos.sh",
     "scripts/build_proof_bundle.sh",
     "scripts/comparison_analysis.py",
-    "scripts/collect_comparison_package.ps1"
+    "scripts/collect_comparison_package.ps1",
+    "scripts/collect_matched_live_pair.py"
   ],
   "templates": [
     "templates/windows_runtime/dexter.env.example",
@@ -60,23 +57,29 @@
   ],
   "task_result": {
     "matched_measurement_window_found": true,
-    "matched_window_start_utc": "2026-03-20T20:20:09.062Z",
-    "matched_window_end_utc": "2026-03-20T20:20:49.884Z",
-    "live_dexter_package": "artifacts/tmp/winlan-packages-matched-20260320T201915Z/dexter-desktop-nnc6mps-20260320T201854Z",
-    "live_mewx_package": "artifacts/tmp/winlan-packages-matched-20260320T201915Z/mewx-desktop-nnc6mps-20260320T201918Z",
-    "comparison_output_dir": "artifacts/reports/task-005-live-matched-window-comparison",
+    "matched_window_start_utc": "2026-03-20T20:58:40.760Z",
+    "matched_window_end_utc": "2026-03-20T21:01:52.838Z",
+    "exact_event_overlap_start_utc": "2026-03-20T20:59:55.254Z",
+    "exact_event_overlap_end_utc": "2026-03-20T21:01:52.838Z",
+    "shared_window_duration_ms": 192078,
+    "exact_event_overlap_duration_ms": 117584,
+    "live_dexter_package": "artifacts/proofs/task-005-live-pass-grade-runtime-window-results/dexter.validate.json",
+    "live_mewx_package": "artifacts/proofs/task-005-live-pass-grade-runtime-window-results/mewx.validate.json",
+    "comparison_output_dir": "artifacts/reports/task-005-live-pass-grade-runtime-window-comparison",
     "winner_recording": "deferred",
     "task_006_ready": false
   },
   "proofs": {
-    "verified_start_commit": "9d7190ef3590ee80592115c73ff1bcec10cb1475",
-    "verified_pr": 5,
+    "verified_start_commit": "1b9ace272d63bcc5be8f30aa1e2a2ab03b63304f",
+    "verified_pr": 6,
     "windows_runtime_host": "win-lan",
     "resolved_windows_hostname": "DESKTOP-NNC6MPS",
     "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
     "fixed_root_present": true,
     "raw_live_inputs_present": true,
     "comparison_inputs_present": true,
+    "entry_rejected_tx_signature_optional": true,
+    "exact_event_overlap_blocker_resolved": true,
     "windows_tools": {
       "git": true,
       "python": true,
@@ -100,6 +103,7 @@
     "resume_requirements": [
       "Collect a fuller matched live pair.",
       "Keep frozen Dexter and Mew-X strategy, execution, and instrumentation logic unchanged.",
+      "Keep Mew-X in sim mode and Dexter on observe-only unless a safer paper path is explicitly confirmed.",
       "Capture pass-grade matched-window validation before replay validation.",
       "Advance to TASK-006 only after the matched pair is comparable."
     ]

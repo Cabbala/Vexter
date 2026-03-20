@@ -87,7 +87,6 @@ REQUIRED_EVENT_PAYLOAD_FIELDS = {
     "entry_rejected": [
         "attempt_index",
         "reject_reason",
-        "tx_signature",
     ],
     "session_update": [
         "price",

@@ -14,7 +14,7 @@ Freeze the first measurement-ready Dexter instrumentation surface without changi
 | `entry_signal` | `sources/Dexter/Dexter.py` session start | Captures matched creator, trust level projection, and signal latency |
 | `entry_attempt` | `sources/Dexter/Dexter.py` buy submission | Captures quote price, reserved balance state, and tx strategy |
 | `entry_fill` | `sources/Dexter/Dexter.py` holder-balance or RPC fallback confirmation | Captures fill price, qty, latency, tx signature, and confirmation path |
-| `entry_rejected` | `sources/Dexter/Dexter.py` buy skips and confirmation failures | Keeps failed entry reasons attributable after signal time |
+| `entry_rejected` | `sources/Dexter/Dexter.py` buy skips and confirmation failures | Keeps failed entry reasons attributable after signal time; `tx_signature` is only present when a send path actually produced one |
 | `session_update` | `sources/Dexter/Dexter.py` live session loop | Captures price, peak, liquidity, MFE/MAE, composite score, and target step |
 | `exit_signal` | `sources/Dexter/Dexter.py` sell trigger path | Captures exit reason plus theoretical peak context |
 | `exit_fill` | `sources/Dexter/Dexter.py` sell confirmation | Captures realized price, qty, latency, tx signature, and wallet delta |

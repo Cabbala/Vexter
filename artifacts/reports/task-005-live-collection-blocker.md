@@ -2,56 +2,61 @@
 
 ## Checked Scope
 
-- checked at `2026-03-20T20:30:28Z`
+- checked at `2026-03-20T21:19:29Z`
 - target host: `win-lan` (`DESKTOP-NNC6MPS`)
 - fixed runtime root: `C:\Users\bot\quant\Vexter`
-- verified latest start point: `origin/main` commit `9d7190ef3590ee80592115c73ff1bcec10cb1475`
-- verified PR state: PR `#5` merged at `2026-03-20T20:08:22Z`
+- verified latest start point: `origin/main` commit `1b9ace272d63bcc5be8f30aa1e2a2ab03b63304f`
+- verified PR state: PR `#6` merged at `2026-03-21T05:46:44+09:00`
 - required result: one Dexter package and one Mew-X package from the same live measurement window, followed by `validate`, `derive-metrics`, and `build-pack`
 
 ## What Advanced
 
-- The old `not the same live measurement window` blocker was narrowed further with a real overlap retry.
-- Dexter resume retry `dexter-window-20260320T202100Z` advanced beyond startup after one transient Helius `HTTP 429` failure and produced a new live run under the fixed Vexter root.
-- Mew-X live run `mewx-desktop-nnc6mps-20260320T201918Z` provided the nearest overlapping pair available from the frozen runtime.
-- A shared live slice was extracted and packaged on the Mac control plane:
-  - overlap start: `2026-03-20T20:21:09.930245Z`
-  - overlap end: `2026-03-20T20:21:10.211Z`
-  - overlap duration: `281 ms`
-- The overlap packages were rerun through:
+- The false `entry_rejected.tx_signature` blocker was removed in Vexter's validator and event schema without changing Dexter or Mew-X logic.
+- A safe-mode retry kept both frozen sources concurrently active long enough to resolve the old overlap-only blocker.
+- The current best matched runtime window is:
+  - concurrent runtime start: `2026-03-20T20:58:40.760Z`
+  - concurrent runtime end: `2026-03-20T21:01:52.838Z`
+  - concurrent runtime duration: `192.078 s`
+  - exact event overlap start: `2026-03-20T20:59:55.254Z`
+  - exact event overlap end: `2026-03-20T21:01:52.838Z`
+  - exact event overlap duration: `117.584 s`
+- The concurrent runtime-window packages were rerun through:
   - `scripts/comparison_analysis.py validate`
   - `scripts/comparison_analysis.py derive-metrics`
   - `scripts/comparison_analysis.py build-pack`
 
 ## Current Blocker
 
-- The blocker is no longer missing-window alignment at the coarse level.
-- The remaining blocker is exact evidence sufficiency on the shared slice:
-  - the shared live slice is only `281 ms`, so it is not a fair comparable window
-  - Dexter overlap package `dexter-window-20260320T202100Z` validates as `partial` with required-event coverage `1 / 12`
-    - observed required types: `creator_candidate`
-    - missing required types: `candidate_rejected`, `mint_observed`, `entry_signal`, `entry_attempt`, `entry_fill`, `entry_rejected`, `session_update`, `exit_signal`, `exit_fill`, `position_closed`, `run_summary`
-    - the frozen Dexter runtime still ran with `0 SOL`, so the shared slice never advanced past observe-only candidate coverage
-  - Mew-X overlap package `mewx-desktop-nnc6mps-20260320T201918Z` validates as `partial` with required-event coverage `1 / 12`
+- The blocker is no longer missing-window alignment.
+- The remaining blocker is exact shared-window evidence sufficiency:
+  - Dexter runtime-window package `dexter-pass-20260320T205803Z` validates as `partial` with required-event coverage `1 / 12`
     - observed required types: `entry_rejected`
-    - missing required types: `creator_candidate`, `candidate_rejected`, `mint_observed`, `entry_signal`, `entry_attempt`, `entry_fill`, `session_update`, `exit_signal`, `exit_fill`, `position_closed`, `run_summary`
-    - the only overlapping Mew-X event still omitted `tx_signature`
-- A detached follow-up retry intended to stretch the overlap did not emit a newer usable pair, so the blocker stays on fuller collection quality rather than startup wiring.
+    - missing required types: `candidate_rejected`, `creator_candidate`, `entry_attempt`, `entry_fill`, `entry_signal`, `exit_fill`, `exit_signal`, `mint_observed`, `position_closed`, `run_summary`, `session_update`
+    - total events in the matched runtime window: `204818`
+    - the frozen Dexter runtime still ran with `0 SOL`, so the shared window never advanced beyond the observe-only safety path
+  - Mew-X runtime-window package `mewx-pass-20260320T205803Z` validates as `partial` with required-event coverage `9 / 12`
+    - observed required types: `candidate_rejected`, `entry_attempt`, `entry_fill`, `entry_signal`, `exit_fill`, `exit_signal`, `mint_observed`, `position_closed`, `session_update`
+    - missing required types: `creator_candidate`, `entry_rejected`, `run_summary`
+    - total events in the matched runtime window: `27`
+    - Mew-X sim is now close to pass-grade coverage, but the remaining missing types still block comparable winner decisions
+- Runtime safety remains unchanged for the next retry:
+  - Dexter should stay on `observe_live` or another zero-balance safety path unless a formal paper mode is explicitly confirmed
+  - Mew-X should stay on `sim_live` unless a safer paper-equivalent path is approved
 
 ## Result
 
-- live Dexter package: `artifacts/proofs/task-005-live-overlap-results/dexter.validate.json`
-- live Mew-X package: `artifacts/proofs/task-005-live-overlap-results/mewx.validate.json`
-- live comparison output directory: `artifacts/reports/task-005-live-overlap-comparison`
-- comparison pack JSON: `artifacts/proofs/task-005-live-overlap-results/comparison-pack.json`
+- live Dexter package: `artifacts/proofs/task-005-live-pass-grade-runtime-window-results/dexter.validate.json`
+- live Mew-X package: `artifacts/proofs/task-005-live-pass-grade-runtime-window-results/mewx.validate.json`
+- live comparison output directory: `artifacts/reports/task-005-live-pass-grade-runtime-window-comparison`
+- comparison pack JSON: `artifacts/proofs/task-005-live-pass-grade-runtime-window-results/comparison-pack.json`
 - evidence-backed winners / ties recorded: `none`
-- blocker state: `subsecond_overlap_partial_blocker`
+- blocker state: `partial_live_comparison_blocker`
 - `TASK-006` readiness: `blocked`
 
 ## Next Unblock Steps
 
-- collect a matched live window longer than the current `281 ms` overlap
+- collect another matched live pair while preserving the current safety constraints
 - keep the frozen strategy / execution / instrumentation code unchanged
-- provide Dexter with an approved non-zero-balance path or equivalent safe collection path so shared-window entry / fill / exit coverage can occur
-- gather a Mew-X run whose overlapping slice includes `creator_candidate` or `run_summary` evidence tied to the same shared window
+- provide Dexter with a confirmed formal paper mode or another approved safe path that can emit attempt / fill / exit / run-summary coverage
+- gather a Mew-X run whose shared window includes `creator_candidate`, `entry_rejected`, and `run_summary` evidence
 - rerun `scripts/comparison_analysis.py validate`, `derive-metrics`, and `build-pack` on that fuller matched pair after those runs exist

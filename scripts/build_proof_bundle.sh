@@ -24,6 +24,10 @@ tar -czf "$BUNDLE_PATH" \
   --exclude='__pycache__' \
   --exclude='.pytest_cache' \
   --exclude='*.pyc' \
+  --exclude='artifacts/proofs/task-005-live-pass-grade-attempt-results' \
+  --exclude='artifacts/proofs/task-005-live-pass-grade-window-results' \
+  --exclude='artifacts/reports/task-005-live-pass-grade-attempt-comparison' \
+  --exclude='artifacts/reports/task-005-live-pass-grade-window-comparison' \
   -C "$ROOT_DIR" \
   README.md \
   docs \

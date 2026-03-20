@@ -130,11 +130,13 @@ def test_task_ledger_is_valid_jsonl() -> None:
     assert payload["branch"] in {
         "codex/task-005-live-comparison-evidence",
         "codex/task-005-resume-matched-window",
+        "codex/task-005-pass-grade-pair",
     }
     assert payload["next_task_id"] in {"TASK-005-RESUME", "BLOCKED"}
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
         "awaiting_nontrivial_matched_live_window_and_fuller_coverage",
+        "awaiting_pass_grade_matched_live_pair",
     }
 
 

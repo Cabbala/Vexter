@@ -75,6 +75,16 @@ $env:VEXTER_OUTPUT_ROOT = 'C:\Users\bot\quant\Vexter'
 
 ## Mac-Side Validation And Pack Build
 
+For a same-window retry from the Mac control plane, you can orchestrate the Windows launch and package copy in one step:
+
+```bash
+python scripts/collect_matched_live_pair.py \
+  --duration-seconds 120 \
+  --mewx-mode sim
+```
+
+This helper keeps Dexter on the zero-balance `observe_live` path, prefers `MODE=sim` for Mew-X, pushes the current collector script to `win-lan`, slices both packages to the same scheduled measurement window, and copies the packaged directories into local `artifacts/tmp/`.
+
 After copying the two package directories into the Mac control plane, run:
 
 ```bash

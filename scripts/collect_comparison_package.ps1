@@ -157,17 +157,16 @@ function Copy-EventStream {
     }
 
     $selected = New-Object System.Collections.Generic.List[string]
-    Get-Content -LiteralPath $SourcePath | ForEach-Object {
-        $line = $_
-        if (-not $line) {
-            return
+    foreach ($line in [System.IO.File]::ReadLines($SourcePath)) {
+        if ([string]::IsNullOrWhiteSpace($line)) {
+            continue
         }
 
         try {
             $event = $line | ConvertFrom-Json -Depth 8
             $timestamp = [datetime]::Parse([string]$event.ts_utc).ToUniversalTime()
         } catch {
-            return
+            continue
         }
 
         if ($timestamp -ge $started -and $timestamp -le $ended) {
@@ -253,6 +252,9 @@ $configOut = Join-Path $packageDir "config"
 $exportsOut = Join-Path $packageDir "exports"
 $replaysOut = Join-Path $packageDir "replays"
 $logsOut = Join-Path $packageDir "logs"
+if (Test-Path $packageDir) {
+    Remove-Item -LiteralPath $packageDir -Recurse -Force
+}
 New-Item -ItemType Directory -Force -Path $configOut, $exportsOut, $replaysOut, $logsOut | Out-Null
 
 $eventTarget = Join-Path $packageDir "events.ndjson"
@@ -283,6 +285,19 @@ if ($Source -eq "dexter") {
 if ($Source -eq "mewx") {
     $refresh = Select-LatestMatchingFile -SearchRoot $exportsOut -Patterns @("candidate", "refresh") -RunId $RunId
     $session = Select-LatestMatchingFile -SearchRoot $exportsOut -Patterns @("session", "summary") -RunId $RunId
+    if (-not $session) {
+        $sessionCandidate = Get-ScopedFiles -SearchRoot $ExportDir -LowerBound $timeBounds.LowerBound -UpperBound $timeBounds.UpperBound -RunId $RunId
+        $session = @($sessionCandidate | Where-Object { $_.Name -match "session|summary" } |
+            Sort-Object LastWriteTimeUtc -Descending |
+            Select-Object -First 1)
+        if ($session) {
+            $session = $session[0]
+            $copiedSession = Join-Path $exportsOut $session.Name
+            Copy-Item $session.FullName $copiedSession -Force
+            $exportFiles += $copiedSession
+            $session = Get-Item $copiedSession
+        }
+    }
     if (-not $session) {
         $session = Get-ChildItem -Path $exportsOut -File -Recurse -ErrorAction SilentlyContinue |
             Where-Object { $_.Name -notmatch "candidate|state" } |

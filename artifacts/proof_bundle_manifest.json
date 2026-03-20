@@ -1,7 +1,7 @@
 {
   "task_id": "TASK-005-live-comparison-evidence",
-  "status": "exact_env_key_blocker",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_resume_live_collection_bundle.tar.gz",
+  "status": "exact_signer_env_blocker",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_resume_live_collection_v2_bundle.tar.gz",
   "bundle_path": "artifacts/bundles/task-005-live-comparison-evidence.tar.gz",
   "context_pack": "artifacts/context_pack.json",
   "summary": "artifacts/summary.md",
@@ -80,16 +80,18 @@
     "postgres_listener_5432": true,
     "dexter_helius_http_rpc_ok": true,
     "dexter_helius_ws_ok": true,
-    "dexter_private_key_blocker": true,
-    "mewx_private_key_blocker": true,
+    "mewx_rpc_url_env_gap_fixed": true,
+    "dexter_private_key_matches_helius_api_key": true,
+    "mewx_private_key_prefixes_rpc_api_key": true,
     "task_006_ready": false
   },
   "next_task": {
     "id": "BLOCKED",
-    "state": "awaiting_exact_private_key_correction",
+    "state": "awaiting_exact_signing_key_correction",
     "resume_requirements": [
-      "Correct PRIVATE_KEY in C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter\\.env so Dexter can parse valid base58 key material for a 64-byte Solana keypair.",
-      "Correct PRIVATE_KEY in C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env so Mew-X can parse valid base58 key material.",
+      "Replace PRIVATE_KEY in C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter\\.env with a valid base58 Solana signing key; the current value is the Helius api-key from HTTP_URL/WS_URL.",
+      "Replace PRIVATE_KEY in C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env with a valid base58 Solana signing key; the current value is a truncated prefix of the Helius api-key from RPC_URL/WS_URL.",
+      "Keep RPC_URL populated explicitly in C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env if the file is regenerated.",
       "Collect matched live packages from the same measurement window before replay validation."
     ]
   },

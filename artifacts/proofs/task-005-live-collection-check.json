@@ -1,7 +1,7 @@
 {
   "task_id": "TASK-005-live-comparison-evidence",
-  "checked_at_utc": "2026-03-20T18:48:13Z",
-  "status": "exact_env_key_blocker",
+  "checked_at_utc": "2026-03-20T19:11:55Z",
+  "status": "exact_signer_env_blocker",
   "windows_runtime_host": "win-lan",
   "resolved_windows_hostname": "DESKTOP-NNC6MPS",
   "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
@@ -33,16 +33,20 @@
       }
     },
     "runtime_dirs": {
-      "dexter_config_files": 0,
-      "dexter_export_files": 0,
+      "dexter_config_files": 1,
+      "dexter_export_files": 2,
       "mewx_config_files": 0,
       "mewx_export_files": 0
     },
     "comparison_inputs": {
       "path": "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified\\comparison_inputs",
-      "present": false,
+      "present": true,
       "dexter_packages_found": 0,
       "mewx_packages_found": 0
+    },
+    "logs": {
+      "dexter_log_files": 2,
+      "mewx_log_files": 2
     }
   },
   "runtime_prerequisites": {
@@ -64,6 +68,15 @@
       "commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
     }
   },
+  "checked_known_key_locations": {
+    "searched_paths": [
+      "C:\\Users\\bot\\.config\\solana",
+      "C:\\Users\\bot\\AppData\\Roaming",
+      "C:\\Users\\bot\\Documents\\Moondev\\current\\.worktrees\\llm-mode-local-only-lazy-init\\.env",
+      "C:\\Users\\bot\\Documents\\Moondev\\current\\moon-dev-ai-agents\\.env"
+    ],
+    "alternate_signing_key_found": false
+  },
   "env_injection_points": {
     "dexter": {
       "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter\\.env",
@@ -74,7 +87,10 @@
         "WS_URL"
       ],
       "http_url_placeholder_like": false,
-      "ws_url_placeholder_like": false
+      "ws_url_placeholder_like": false,
+      "private_key_length": 36,
+      "private_key_matches_http_api_key": true,
+      "private_key_matches_ws_api_key": true
     },
     "mewx": {
       "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env",
@@ -84,7 +100,11 @@
         "RPC_URL",
         "WS_URL",
         "DB_URL"
-      ]
+      ],
+      "rpc_url_restored_from_http_url": true,
+      "private_key_length": 36,
+      "private_key_is_prefix_of_rpc_api_key": true,
+      "private_key_is_prefix_of_ws_api_key": true
     }
   },
   "dexter_helius_connectivity": {
@@ -100,40 +120,41 @@
         "VEXTER_OUTPUT_ROOT": "C:\\Users\\bot\\quant\\Vexter",
         "VEXTER_MODE": "observe_live",
         "VEXTER_TRANSPORT_MODE": "ws",
-        "VEXTER_RUN_ID": "dexter-20260321-window-a"
+        "VEXTER_RUN_ID": "dexter-20260321-window-b"
       },
       "exited_before_collection": true,
       "error_class": "ValueError",
-      "error_detail": "Dexter PRIVATE_KEY parsing fails during base58 decoding because the configured value contains the invalid character '0'."
+      "error_detail": "Dexter PRIVATE_KEY matches the Helius api-key already embedded in HTTP_URL/WS_URL, so base58 decoding fails with Invalid character '0'."
     },
     "mewx": {
       "command": "cargo run --quiet",
       "runtime_overrides": {
         "VEXTER_RUNTIME_ROOT": "C:\\Users\\bot\\quant\\Vexter",
         "VEXTER_OUTPUT_ROOT": "C:\\Users\\bot\\quant\\Vexter",
-        "VEXTER_RUN_ID": "mewx-20260321-window-a"
+        "VEXTER_RUN_ID": "mewx-20260321-window-c"
       },
+      "preflight_fix_applied": "RPC_URL restored from the existing HTTP_URL in the repo-root .env on win-lan",
       "exited_before_collection": true,
       "error_class": "panic",
-      "error_detail": "Mew-X PRIVATE_KEY parsing fails inside solana-keypair because the configured value contains an invalid base58 character."
+      "error_detail": "After RPC_URL was restored, Mew-X reached signer parsing and PRIVATE_KEY proved to be a truncated prefix of the Helius api-key embedded in RPC_URL/WS_URL; solana-keypair panics with InvalidChar(48)."
     }
   },
   "blockers": [
     {
-      "code": "dexter_private_key_invalid_base58",
+      "code": "dexter_private_key_equals_helius_api_key",
       "file": "C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter\\.env",
       "key": "PRIVATE_KEY",
-      "detail": "Dexter exits during keypair parsing before any live artifacts are emitted because the configured key is not valid base58."
+      "detail": "Dexter PRIVATE_KEY exactly matches the Helius api-key in HTTP_URL/WS_URL instead of a base58 Solana signer, so startup aborts before collection."
     },
     {
-      "code": "mewx_private_key_invalid_base58",
+      "code": "mewx_private_key_prefixes_helius_api_key",
       "file": "C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env",
       "key": "PRIVATE_KEY",
-      "detail": "Mew-X exits during keypair parsing before any live artifacts are emitted because the configured key is not valid base58."
+      "detail": "Mew-X PRIVATE_KEY is a truncated prefix of the Helius api-key in RPC_URL/WS_URL instead of a base58 Solana signer, so startup aborts before collection."
     },
     {
       "code": "no_live_raw_events",
-      "detail": "No NDJSON event files or packaged runs were emitted because both frozen source launches failed during PRIVATE_KEY validation."
+      "detail": "No NDJSON event files or packaged runs were emitted because both frozen source launches still fail during PRIVATE_KEY signer validation."
     }
   ],
   "task_006_ready": false

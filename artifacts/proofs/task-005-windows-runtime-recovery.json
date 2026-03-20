@@ -4,7 +4,7 @@
   "windows_runtime_host": "win-lan",
   "resolved_windows_hostname": "DESKTOP-NNC6MPS",
   "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
-  "status": "narrowed_blocker",
+  "status": "exact_signer_env_blocker",
   "verified_start_commit": "939642e6d185629f23a04e8e04f9fc7eac62ebc9",
   "verified_pr": 5,
   "runtime_prerequisites": {
@@ -61,8 +61,8 @@
       "branch": "codex/task-003-mewx-instrumentation",
       "commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
       "startup_probe": {
-        "status": "blocked_on_env",
-        "message": "PRIVATE_KEY is invalid / not set"
+        "status": "blocked_on_signer_env",
+        "message": "RPC_URL was restored from HTTP_URL on win-lan, but PRIVATE_KEY is still not a valid Solana signing key"
       }
     }
   },
@@ -93,8 +93,8 @@
   },
   "remaining_blockers": [
     {
-      "code": "missing_live_env_files",
-      "detail": "Live collection still requires repo-root .env files at the documented Dexter and Mew-X injection points."
+      "code": "invalid_signing_key_env",
+      "detail": "Live collection still requires valid base58 Solana signing keys in the repo-root .env files for both Dexter and Mew-X."
     },
     {
       "code": "no_live_measurement_window",

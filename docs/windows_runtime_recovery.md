@@ -57,6 +57,8 @@ Optional but recommended for package naming and fixed-root output:
 
 Dexter does not need a second secret-bearing config file for this recovery path. Its DB DSN remains hardcoded to `postgres://dexter_user:admin123@127.0.0.1/dexter_db`.
 
+Do not paste the Helius URL `api-key` UUID into `PRIVATE_KEY`. Dexter expects a valid base58 Solana signing key there, not the RPC credential already embedded in `HTTP_URL` / `WS_URL`.
+
 ### Mew-X
 
 Mew-X reads the repo-root `.env` via `dotenv()` in `src/mew/config.rs`.
@@ -67,6 +69,8 @@ Populate at minimum:
 - `WS_URL`
 - `PRIVATE_KEY`
 - `DB_URL`
+
+If an older local note or copied `.env` only contains `HTTP_URL`, duplicate that same HTTP endpoint into `RPC_URL` before launching. Mew-X reads `RPC_URL` and does not consume `HTTP_URL` from `src/mew/config.rs`.
 
 Documented optional / conditional keys for live collection:
 
@@ -96,7 +100,7 @@ Recovery also persists these user-scope environment variables from the installed
 - `PROTOC_INCLUDE`
 - `INSTALL_DIR`
 
-With those values present, a fresh `cargo run --quiet` on `C:\Users\bot\quant\Vexter\sources\Mew-X` now reaches config validation and fails at `PRIVATE_KEY is invalid / not set` until the repo-root `.env` is populated.
+With those values present, a fresh `cargo run --quiet` on `C:\Users\bot\quant\Vexter\sources\Mew-X` reaches signer parsing. Do not paste the Helius URL `api-key` value into `PRIVATE_KEY`; Mew-X expects a valid base58 Solana signing key there and will panic during `solana-keypair` parsing if the RPC credential is reused.
 
 ## Expected Output Roots
 
@@ -112,10 +116,10 @@ Once the user-owned `.env` files are populated and the frozen repos are launched
 
 ## Remaining Narrowed Blocker
 
-Runtime prerequisites, DB reachability, frozen checkouts, and Mew-X protobuf build prerequisites can now be restored without touching source logic. The remaining blocker for matched live package collection is user-owned live runtime input:
+Runtime prerequisites, DB reachability, frozen checkouts, and Mew-X protobuf build prerequisites can now be restored without touching source logic. The remaining blocker for matched live package collection is exact user-owned signing-key input in the Windows repo-root `.env` files:
 
-- real Solana/private RPC credentials for Dexter
-- real Solana/private RPC credentials for Mew-X
-- a real signing key for both sources
+- a valid base58 Solana signing key for `C:\Users\bot\quant\Vexter\sources\Dexter\.env` `PRIVATE_KEY`
+- a valid base58 Solana signing key for `C:\Users\bot\quant\Vexter\sources\Mew-X\.env` `PRIVATE_KEY`
+- keep `RPC_URL` populated explicitly in the Mew-X `.env`, even if it mirrors the same endpoint as an `HTTP_URL` note elsewhere
 
 Until those values are populated in the Windows repo-root `.env` files, no matched live observation window can be collected and the package roots above will remain empty.

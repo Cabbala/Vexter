@@ -6,6 +6,11 @@ Collect one Dexter run package and one Mew-X run package from the fixed Windows 
 
 Before launching either source on `win-lan`, populate the repo-root `.env` files described in [docs/windows_runtime_recovery.md](/Users/cabbala/Documents/vexter/task005-live-comparison-evidence/docs/windows_runtime_recovery.md). The fixed-root overrides below keep both frozen sources writing into `C:\Users\bot\quant\Vexter`.
 
+Preflight the user-owned `.env` files before launch:
+
+- `PRIVATE_KEY` must be a valid base58 Solana signing key, not the Helius URL `api-key` value.
+- Mew-X must have `RPC_URL` populated explicitly; `HTTP_URL` alone is not consumed by the frozen runtime.
+
 ## Fixed Windows Roots
 
 - `C:\Users\bot\quant\Vexter\data\raw\dexter`

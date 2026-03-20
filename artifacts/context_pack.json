@@ -19,11 +19,13 @@
     "runtime_on_windows": true,
     "vps_primary_dev": false,
     "deliverable_format": "minimal prompt + tar.gz bundle",
-    "push_changes_for_github_visibility": true
+    "push_changes_for_github_visibility": true,
+    "agent_usage_when_available": true,
+    "agent_usage_note": "No agent or sub-agent tool was available in this Codex session, so the task continued without parallel sub-agents."
   },
   "phase": "TASK-005-live-comparison-evidence",
-  "status": "exact_env_key_blocker",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_resume_live_collection_bundle.tar.gz",
+  "status": "exact_signer_env_blocker",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_resume_live_collection_v2_bundle.tar.gz",
   "starting_point": {
     "verified_at": "2026-03-20T18:00:16Z",
     "main": "939642e6d185629f23a04e8e04f9fc7eac62ebc9",
@@ -95,16 +97,17 @@
       "postgres_listener": "127.0.0.1:5432",
       "dexter_database_bootstrap": "success",
       "env_injection_points_documented": true,
-      "mewx_startup_probe": "PRIVATE_KEY is invalid / not set"
+      "mewx_startup_probe": "RPC_URL was restored from HTTP_URL on win-lan; signer validation still blocks startup"
     },
     "resume_probe_result": {
-      "checked_at": "2026-03-20T18:48:13Z",
+      "checked_at": "2026-03-20T19:11:55Z",
       "dexter_env_exists": true,
       "mewx_env_exists": true,
+      "mewx_rpc_url_restored_from_http_url": true,
       "dexter_helius_http_rpc_ok": true,
       "dexter_helius_ws_ok": true,
-      "dexter_startup_failure": "PRIVATE_KEY contains the invalid base58 character '0'",
-      "mewx_startup_failure": "PRIVATE_KEY contains an invalid base58 character for solana-keypair parsing",
+      "dexter_startup_failure": "PRIVATE_KEY exactly matches the Helius api-key from HTTP_URL/WS_URL and fails base58 decoding with Invalid character '0'",
+      "mewx_startup_failure": "PRIVATE_KEY is a truncated prefix of the Helius api-key from RPC_URL/WS_URL and fails solana-keypair parsing with InvalidChar(48)",
       "raw_event_dirs_remained_empty": true,
       "comparison_inputs_remained_empty": true
     },
@@ -114,16 +117,16 @@
       "live_mewx_package": null,
       "comparison_output_dir": null,
       "winner_recording": "deferred",
-      "collection_stage": "startup_validation_failed"
+      "collection_stage": "startup_signer_failed"
     },
     "blockers": [
-      "Dexter Helius HTTP_URL and WS_URL are now reachable, but Dexter .env PRIVATE_KEY is still unusable because it contains the invalid base58 character '0'.",
-      "Mew-X .env PRIVATE_KEY is present but unusable because it contains an invalid base58 character.",
+      "Dexter Helius HTTP_URL and WS_URL are reachable, but Dexter .env PRIVATE_KEY exactly matches that Helius api-key instead of a Solana signer.",
+      "Mew-X .env RPC_URL was repaired from the existing HTTP_URL on win-lan, but Mew-X .env PRIVATE_KEY is still only a truncated Helius api-key prefix instead of a Solana signer.",
       "No live NDJSON events or packaged runs have been collected yet."
     ]
   },
   "live_collection_attempt": {
-    "checked_at": "2026-03-20T18:48:13Z",
+    "checked_at": "2026-03-20T19:11:55Z",
     "raw_event_dirs": {
       "dexter": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
       "mewx": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx"
@@ -147,11 +150,12 @@
   },
   "next_task": {
     "id": "BLOCKED",
-    "state": "awaiting_exact_private_key_correction",
+    "state": "awaiting_exact_signing_key_correction",
     "task_006_ready": false,
     "resume_requirements": [
-      "Correct PRIVATE_KEY in C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter\\.env so Dexter can parse valid base58 key material for a 64-byte Solana keypair.",
-      "Correct PRIVATE_KEY in C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env so Mew-X can parse valid base58 key material.",
+      "Replace PRIVATE_KEY in C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter\\.env with a valid base58 Solana signing key; the current value is only the Helius api-key from HTTP_URL/WS_URL.",
+      "Replace PRIVATE_KEY in C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env with a valid base58 Solana signing key; the current value is only a truncated prefix of the Helius api-key from RPC_URL/WS_URL.",
+      "Keep RPC_URL populated explicitly in C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env if the file is regenerated.",
       "Collect one Dexter run and one Mew-X run from the same live measurement window before rerunning the comparison pack."
     ]
   },

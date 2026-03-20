@@ -12,13 +12,14 @@ This workflow is fixed for future tasks unless explicitly changed.
 3. Runtime/data/db placement happens on Windows reachable by `ssh win-lan`.
 4. Windows path selection must be discovered and created by Codex; target root should prefer `D:\\Quant\\Vexter\\` and fall back to a suitable user-space path.
 5. Dexter/Mew-X analysis must remain reproducible and attributable.
-6. Every task must end with Git operations completed where possible:
+6. Every task must end with Git operations completed where possible so GitHub reflects the latest inspectable state:
    - branch created or reused appropriately
    - commits made in logical units
    - push completed
-   - PR created if repo/phase is ready
-7. Codex completion output should stay minimal; detailed evidence goes into artifacts/bundles.
-8. Future ChatGPT responses should continue using **minimal prompt + detailed tar.gz bundle**.
+   - PR created or updated if repo/phase is ready
+7. If agent or sub-agent capabilities are available and help with repo audit, environment verification, multi-source validation, or implementation, Codex should use them proactively. If they are unavailable, Codex should continue and record that limitation in artifacts.
+8. Codex completion output should stay minimal; detailed evidence goes into artifacts/bundles.
+9. Future ChatGPT responses should continue using **minimal prompt + detailed tar.gz bundle**.
 
 ## Branching guidance
 - Vexter research/bootstrap work should use feature branches in `Cabbala/Vexter`.

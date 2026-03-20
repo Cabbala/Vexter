@@ -46,12 +46,13 @@
 ## Narrowed Blocker
 
 - Dexter runtime recovery is complete enough to collect a live package once its repo-root `.env` is populated
-- a fresh `cargo run --quiet` from `C:\Users\bot\quant\Vexter\sources\Mew-X` now reaches config validation and fails at `PRIVATE_KEY is invalid / not set`
-- matched live package collection is now blocked only on user-populated repo-root `.env` files and the first shared live observation window
+- Mew-X repo-root `.env` on `win-lan` needed one parity repair on 2026-03-20T19:11:55Z: `RPC_URL` was restored from the already-present `HTTP_URL` so the frozen runtime could read its expected key without any source change
+- a fresh `cargo run --quiet` from `C:\Users\bot\quant\Vexter\sources\Mew-X` now reaches signer parsing and proves `PRIVATE_KEY` is still wrong rather than merely missing
+- matched live package collection is now blocked only on exact user-owned `PRIVATE_KEY` correction in the two Windows repo-root `.env` files and the first shared live observation window
 - no Dexter or Mew-X strategy, execution, or instrumentation logic was changed during this recovery work
 
 ## Result
 
-- runtime recovery status: `narrowed_blocker`
+- runtime recovery status: `exact_signer_env_blocker`
 - matched live packages collected: `0`
 - `TASK-006` readiness: `blocked`

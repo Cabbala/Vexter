@@ -16,7 +16,12 @@ Vexter is the Mac-side control plane for comparative analysis of `Cabbala/Dexter
 3. Run `./scripts/recover_windows_runtime.sh` to restore PostgreSQL, detached frozen source checkouts, and the Dexter Python runtime on `win-lan`.
 4. Run `./scripts/build_proof_bundle.sh` to refresh the task proof artifact bundle.
 5. Run `pytest -q` before Git operations.
-6. Complete Git operations from the Mac control plane so GitHub remains the source of truth.
+6. Complete Git operations from the Mac control plane so GitHub remains the source of truth, including branch, commit, push, and PR create/update.
+
+## Operating Rules
+
+- Every Codex task must leave GitHub in a state where ChatGPT can inspect the latest result directly. The minimum closeout path is branch, commit, push, and PR create/update.
+- If agent or sub-agent capabilities are available and improve repo audit, environment verification, or implementation accuracy, Codex should use them proactively. If they are unavailable in the current session, proceed normally and record that limitation in artifacts.
 
 ## Repository Layout
 
@@ -36,4 +41,4 @@ Vexter is the Mac-side control plane for comparative analysis of `Cabbala/Dexter
 
 `TASK-004-comparison-analysis` adds the first Vexter-side validator, shared metrics derivation layer, side-by-side comparison pack builder, and Windows collection runbook while keeping Dexter and Mew-X instrumentation frozen.
 
-`TASK-005-live-comparison-evidence` started from `main` on 2026-03-21. `win-lan` remains recovered to the fixed Windows root, PostgreSQL listener, detached frozen source checkouts, Dexter Python runtime, and Mew-X protobuf build prerequisites. The 2026-03-20T18:48:13Z live resume probe confirmed Dexter's `HTTP_URL` and `WS_URL` now connect to Helius from `win-lan` without any code changes, so the blocker narrowed further to exact key parsing: Dexter still exits before collection because `C:\Users\bot\quant\Vexter\sources\Dexter\.env` `PRIVATE_KEY` contains the invalid base58 character `0`, and Mew-X exits because `C:\Users\bot\quant\Vexter\sources\Mew-X\.env` `PRIVATE_KEY` contains an invalid base58 character. Until those exact keys are corrected, the fixed raw/config/export roots stay empty, no live comparison pack can be produced, and `TASK-006` cannot begin.
+`TASK-005-live-comparison-evidence` started from `main` on 2026-03-21. `win-lan` remains recovered to the fixed Windows root, PostgreSQL listener, detached frozen source checkouts, Dexter Python runtime, and Mew-X protobuf build prerequisites. The 2026-03-20T19:11:55Z resumed live probe confirmed Dexter's `HTTP_URL` and `WS_URL` still connect to Helius from `win-lan`, and it repaired a Mew-X env-parity gap by restoring missing `RPC_URL` from the existing `HTTP_URL` without changing source code. The remaining blocker is now exact signer misuse in the Windows repo-root `.env` files: Dexter still exits before collection because `C:\Users\bot\quant\Vexter\sources\Dexter\.env` `PRIVATE_KEY` exactly matches the Helius `api-key` already embedded in `HTTP_URL` / `WS_URL`, and Mew-X exits because `C:\Users\bot\quant\Vexter\sources\Mew-X\.env` `PRIVATE_KEY` is a truncated prefix of the Helius `api-key` embedded in `RPC_URL` / `WS_URL`. Until those exact `PRIVATE_KEY` values are replaced with valid base58 Solana signing keys, the fixed raw/config/export roots stay empty, no live comparison pack can be produced, and `TASK-006` cannot begin.

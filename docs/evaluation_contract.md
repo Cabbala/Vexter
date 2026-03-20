@@ -21,6 +21,7 @@ Vexter compares Dexter and Mew-X before any integration work begins. This contra
 3. Every comparison run must be attributable to a source repo commit, config snapshot, runtime host, and transport mode.
 4. Live measurements and replay measurements must be stored separately, then compared through the same metric catalog.
 5. A source is not integration-ready unless its event stream is rich enough to reconstruct candidate selection, entry, session, and exit behavior.
+6. Preferred validation mode is paper or sim-safe collection before funded live trading: Mew-X should default to `sim_live`, and Dexter should remain `observe_live` on the zero-balance safety path unless a formal paper mode is confirmed.
 
 ## Required Run Package
 

@@ -20,6 +20,7 @@ This workflow is fixed for future tasks unless explicitly changed.
 7. If agent or sub-agent capabilities are available and help with repo audit, environment verification, multi-source validation, or implementation, Codex should use them proactively. If they are unavailable, Codex should continue and record that limitation in artifacts.
 8. Codex completion output should stay minimal; detailed evidence goes into artifacts/bundles.
 9. Future ChatGPT responses should continue using **minimal prompt + detailed tar.gz bundle**.
+10. Future analysis and validation should prefer paper or sim-safe collection modes over funded live trading when those modes are available. Mew-X should default to `sim_live`; Dexter should stay on `observe_live` with a zero-balance safety path unless a formal paper mode is explicitly confirmed.
 
 ## Branching guidance
 - Vexter research/bootstrap work should use feature branches in `Cabbala/Vexter`.

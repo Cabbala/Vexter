@@ -23,6 +23,8 @@ CRITICAL_ISSUE_CODES = {
     "empty_event_stream",
 }
 
+ISSUE_SAMPLE_EVENT_LIMIT = 10
+
 
 def _has_value(value: Any) -> bool:
     if value is None:
@@ -33,7 +35,7 @@ def _has_value(value: Any) -> bool:
 
 
 def _issue(
-    issues: list[dict[str, Any]],
+    issues: dict[tuple[str, str, str, str | None], dict[str, Any]],
     *,
     code: str,
     message: str,
@@ -41,20 +43,50 @@ def _issue(
     path: str | None = None,
     event_id: str | None = None,
 ) -> None:
-    payload: dict[str, Any] = {
-        "code": code,
-        "severity": severity,
-        "message": message,
-    }
-    if path:
-        payload["path"] = path
+    key = (code, severity, message, path)
+    payload = issues.get(key)
+    if payload is None:
+        payload = {
+            "code": code,
+            "severity": severity,
+            "message": message,
+            "count": 0,
+        }
+        if path:
+            payload["path"] = path
+        issues[key] = payload
+
+    payload["count"] += 1
     if event_id:
-        payload["event_id"] = event_id
-    issues.append(payload)
+        sample_event_ids = payload.setdefault("sample_event_ids", [])
+        if len(sample_event_ids) < ISSUE_SAMPLE_EVENT_LIMIT:
+            sample_event_ids.append(event_id)
+
+
+def _materialize_issues(issues: dict[tuple[str, str, str, str | None], dict[str, Any]]) -> list[dict[str, Any]]:
+    materialized = []
+    for payload in issues.values():
+        issue = dict(payload)
+        if issue.get("count") == 1:
+            issue.pop("count", None)
+            sample_event_ids = issue.pop("sample_event_ids", None)
+            if sample_event_ids:
+                issue["event_id"] = sample_event_ids[0]
+        materialized.append(issue)
+
+    materialized.sort(
+        key=lambda issue: (
+            issue["severity"] != "error",
+            issue["code"],
+            issue.get("path", ""),
+            issue["message"],
+        )
+    )
+    return materialized
 
 
 def validate_run_package(package_dir: str | Path) -> dict[str, Any]:
-    issues: list[dict[str, Any]] = []
+    issues: dict[tuple[str, str, str, str | None], dict[str, Any]] = {}
 
     try:
         package = load_run_package(package_dir)
@@ -85,7 +117,7 @@ def validate_run_package(package_dir: str | Path) -> dict[str, Any]:
                 "missing_event_types": REQUIRED_EVENT_TYPES,
                 "total_events": 0,
             },
-            "issues": issues,
+            "issues": _materialize_issues(issues),
         }
 
     metadata = package.metadata
@@ -327,7 +359,10 @@ def validate_run_package(package_dir: str | Path) -> dict[str, Any]:
             path=str(package.event_stream_path),
         )
 
-    error_codes = {issue["code"] for issue in issues if issue["severity"] == "error"}
+    materialized_issues = _materialize_issues(issues)
+    error_codes = {
+        issue["code"] for issue in materialized_issues if issue["severity"] == "error"
+    }
     if error_codes & CRITICAL_ISSUE_CODES:
         classification = "fail"
     elif error_codes:
@@ -361,5 +396,5 @@ def validate_run_package(package_dir: str | Path) -> dict[str, Any]:
             "missing_event_types": missing_event_types,
             "total_events": len(package.events),
         },
-        "issues": issues,
+        "issues": materialized_issues,
     }

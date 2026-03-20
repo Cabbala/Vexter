@@ -21,16 +21,16 @@
     "deliverable_format": "minimal prompt + tar.gz bundle",
     "push_changes_for_github_visibility": true,
     "agent_usage_when_available": true,
-    "agent_usage_note": "Sub-agents were available in this Codex session and were used for parallel repo / GitHub inspection while the main thread handled runtime recovery and packaging."
+    "agent_usage_note": "Sub-agent tooling was unavailable in this Codex session, so repo audit, Windows collection, and validation were completed directly from the Mac control plane."
   },
   "phase": "TASK-005-live-comparison-evidence",
   "status": "partial_live_comparison_blocker",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_resume_live_collection_v2_bundle.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_matched_window_bundle.tar.gz",
   "starting_point": {
-    "verified_at": "2026-03-20T18:00:16Z",
-    "main": "939642e6d185629f23a04e8e04f9fc7eac62ebc9",
+    "verified_at": "2026-03-20T20:29:03Z",
+    "main": "9d7190ef3590ee80592115c73ff1bcec10cb1475",
     "verified_pr": 5,
-    "work_branch": "codex/task-005-live-comparison-evidence"
+    "work_branch": "codex/task-005-resume-matched-window"
   },
   "deliverables": {
     "docs": [
@@ -59,7 +59,9 @@
       "artifacts/reports/task-005-windows-runtime-recovery.md",
       "artifacts/proofs/task-005-live-collection-check.json",
       "artifacts/proofs/task-005-windows-runtime-recovery.json",
-      "artifacts/examples/task-004-sample-comparison"
+      "artifacts/examples/task-004-sample-comparison",
+      "artifacts/reports/task-005-live-overlap-comparison",
+      "artifacts/proofs/task-005-live-overlap-results"
     ],
     "comparison_tooling": [
       "vexter/comparison/",
@@ -100,45 +102,78 @@
       "mewx_startup_probe": "RPC_URL, DB_URL, signer input, and parser-safe env formatting now allow a full sim-live smoke session on win-lan."
     },
     "resume_probe_result": {
-      "checked_at": "2026-03-20T19:46:59Z",
+      "checked_at": "2026-03-20T20:30:28Z",
       "dexter_env_exists": true,
       "mewx_env_exists": true,
       "mewx_rpc_url_restored_from_http_url": false,
       "dexter_helius_http_rpc_ok": true,
       "dexter_helius_ws_ok": true,
-      "dexter_startup_failure": "The exact signer env blocker is resolved; the remaining Dexter smoke gap is observe-only coverage under a zero-balance safety signer.",
-      "mewx_startup_failure": "The exact signer env blocker is resolved; the remaining Mew-X smoke gap is partial required-event coverage rather than startup failure.",
+      "dexter_startup_failure": "A first matched-window retry hit transient Helius HTTP 429 during wallet-balance fetch, but the second retry reached live events and confirmed the blocker is still zero-balance coverage rather than missing env wiring.",
+      "mewx_startup_failure": "The frozen runtime starts, but the usable overlap window remained too short: the latest shared retry ended after one overlapping entry_rejected event.",
       "raw_event_dirs_remained_empty": false,
       "comparison_inputs_remained_empty": false
     },
     "attempt_result": {
-      "matched_measurement_window_found": false,
-      "live_dexter_package": "artifacts/proofs/task-005-live-smoke-results/dexter.validate.json",
-      "live_mewx_package": "artifacts/proofs/task-005-live-smoke-results/mewx.validate.json",
-      "comparison_output_dir": "artifacts/reports/task-005-live-smoke-comparison",
+      "matched_measurement_window_found": true,
+      "matched_window_start_utc": "2026-03-20T20:20:09.062Z",
+      "matched_window_end_utc": "2026-03-20T20:20:49.884Z",
+      "live_dexter_package": "artifacts/tmp/winlan-packages-matched-20260320T201915Z/dexter-desktop-nnc6mps-20260320T201854Z",
+      "live_mewx_package": "artifacts/tmp/winlan-packages-matched-20260320T201915Z/mewx-desktop-nnc6mps-20260320T201918Z",
+      "comparison_output_dir": "artifacts/reports/task-005-live-matched-window-comparison",
       "winner_recording": "deferred",
-      "collection_stage": "partial_packages_validated"
+      "collection_stage": "matched_partial_packages_validated"
     },
     "blockers": [
-      "The exact signer env blocker is resolved for both Windows repo-root .env files.",
-      "Dexter now emits an observe-live smoke package, but it remains partial because the safety signer never reaches fill / exit coverage and frozen entry_rejected payloads omit tx_signature.",
-      "Mew-X now emits a sim-live smoke package, but it remains partial because creator_candidate, candidate_rejected, entry_rejected, and run_summary were not observed in the smoke window.",
-      "The current Dexter and Mew-X smoke packages were not collected from the same live measurement window, so evidence-backed winners remain deferred."
+      "The measurement-window mismatch is resolved on the matched pair collected on 2026-03-20T20:20:09.062Z -> 2026-03-20T20:20:49.884Z.",
+      "Dexter remains partial because the matched package still reached only 4/12 required event types and 287512 entry_rejected payloads omit tx_signature.",
+      "Mew-X remains partial because the matched package reached 5/12 required event types but still lacks creator_candidate, fill, exit, closeout, and run_summary coverage, plus 2 entry_rejected payloads omit tx_signature.",
+      "TASK-006 stays blocked until a pass-grade matched live pair exists; the blocker is now exact evidence quality rather than startup or window alignment."
     ]
   },
   "live_collection_attempt": {
-    "checked_at": "2026-03-20T19:46:59Z",
+    "checked_at": "2026-03-20T20:29:03Z",
+    "matched_window": {
+      "start_utc": "2026-03-20T20:20:09.062Z",
+      "end_utc": "2026-03-20T20:20:49.884Z",
+      "dexter_run_id": "dexter-desktop-nnc6mps-20260320T201854Z",
+      "mewx_run_id": "mewx-desktop-nnc6mps-20260320T201918Z",
+      "dexter_event_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter\\dexter-desktop-nnc6mps-20260320T201854Z.ndjson",
+      "mewx_event_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx\\mewx-desktop-nnc6mps-20260320T201918Z.ndjson"
+    },
     "raw_event_dirs": {
       "dexter": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
       "mewx": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx"
     },
-    "runtime_dirs": {
-      "dexter_config": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
-      "dexter_export": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
-      "mewx_config": "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\config",
-      "mewx_export": "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export"
+    "selected_runs": {
+      "dexter": {
+        "run_id": "dexter-window-20260320T202100Z",
+        "full_run_span_utc": [
+          "2026-03-20T20:21:09.930245Z",
+          "2026-03-20T20:23:51.718358Z"
+        ],
+        "full_run_event_counts": {
+          "creator_candidate": 57,
+          "mint_observed": 1,
+          "entry_signal": 1,
+          "entry_rejected": 156964
+        }
+      },
+      "mewx": {
+        "run_id": "mewx-desktop-nnc6mps-20260320T201918Z",
+        "full_run_span_utc": [
+          "2026-03-20T20:20:09.062Z",
+          "2026-03-20T20:21:10.211Z"
+        ],
+        "full_run_event_counts": {
+          "mint_observed": 4,
+          "entry_signal": 2,
+          "entry_attempt": 2,
+          "entry_rejected": 2,
+          "candidate_rejected": 1
+        }
+      }
     },
-    "comparison_input_root": "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified\\comparison_inputs",
+    "local_overlap_packages": "artifacts/tmp/task-005-resume-overlap-packages",
     "windows_tools": {
       "git": true,
       "python": true,
@@ -150,14 +185,14 @@
     "postgres_listener_5432": true
   },
   "next_task": {
-    "id": "TASK-005-RESUME",
-    "state": "awaiting_matched_live_window_with_full_event_coverage",
+    "id": "BLOCKED",
+    "state": "awaiting_pass_grade_matched_live_pair",
     "task_006_ready": false,
     "resume_requirements": [
-      "Collect one Dexter run and one Mew-X run from the same live measurement window.",
-      "Preserve frozen Dexter and Mew-X strategy, execution, and instrumentation logic.",
-      "Gather a Dexter run with comparable execution coverage rather than observe-only rejection coverage.",
-      "Rerun validate, derive-metrics, and build-pack on that matched package pair before advancing TASK-006."
+      "Keep Dexter and Mew-X strategy, execution, and instrumentation logic frozen.",
+      "Collect another matched live pair with fuller Dexter attempt / fill / exit / run-summary coverage.",
+      "Collect another matched live pair with fuller Mew-X creator-candidate plus fill / exit / run-summary coverage.",
+      "Rerun validate, derive-metrics, and build-pack on the next matched pair before advancing TASK-006."
     ]
   },
   "windows_runtime_verification": {

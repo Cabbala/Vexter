@@ -351,6 +351,7 @@ def _render_summary_markdown(
     mewx_metrics: dict[str, Any],
     summary_note: str | None,
     defer_winners: bool,
+    matched_live_window: bool,
 ) -> str:
     lines = [
         f"# {pack_id}",
@@ -400,13 +401,22 @@ def _render_summary_markdown(
         ]
     )
     if defer_winners:
-        lines.extend(
-            [
-                "- Winning component candidates: pending live matched-window evidence.",
-                "- Evidence still missing: live Dexter and Mew-X run packages gathered from the same measurement window with pass-grade validation.",
-                "- Next task: Resume TASK-005 with a matched comparable live window; TASK-006 remains blocked.",
-            ]
-        )
+        if matched_live_window:
+            lines.extend(
+                [
+                    "- Winning component candidates: deferred until both matched-window packages validate beyond `partial`.",
+                    "- Evidence still missing: pass-grade live validation, especially fill / exit / run-summary coverage on the matched pair.",
+                    "- Next task: keep TASK-005 open, collect a fuller comparable matched window, and rerun replay readiness only after that; TASK-006 remains blocked.",
+                ]
+            )
+        else:
+            lines.extend(
+                [
+                    "- Winning component candidates: pending live matched-window evidence.",
+                    "- Evidence still missing: live Dexter and Mew-X run packages gathered from the same measurement window with pass-grade validation.",
+                    "- Next task: Resume TASK-005 with a matched comparable live window; TASK-006 remains blocked.",
+                ]
+            )
     else:
         lines.extend(
             [
@@ -499,6 +509,12 @@ def build_comparison_pack(
         mewx_metrics=mewx_metrics,
         summary_note=summary_note,
         defer_winners=defer_winners,
+        matched_live_window=_has_matched_measurement_window(
+            dexter_package.metadata,
+            mewx_package.metadata,
+        )
+        and not _requires_winner_deferral(dexter_package.metadata)
+        and not _requires_winner_deferral(mewx_package.metadata),
     )
     matrix_markdown = _render_matrix_markdown(matrix)
 

@@ -17,10 +17,8 @@ param(
     [ValidateSet("ws", "grpc", "rpc", "swqos", "mixed")]
     [string]$TransportMode,
 
-    [Parameter(Mandatory = $true)]
     [string]$StartedAtUtc,
 
-    [Parameter(Mandatory = $true)]
     [string]$EndedAtUtc,
 
     [Parameter(Mandatory = $true)]

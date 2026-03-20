@@ -83,12 +83,17 @@ def test_task_ledger_is_valid_jsonl() -> None:
     assert len(lines) >= 2
     payload = json.loads(lines[-1])
     assert payload["task_id"] == "TASK-002-dexter-instrumentation"
+    assert payload["status"] == "complete_on_main"
+    assert payload["merged_pr"] == 2
     assert payload["next_task_id"] == "TASK-003"
 
 
 def test_proof_bundle_exists_and_contains_required_files() -> None:
     with (REPO_ROOT / "artifacts/proof_bundle_manifest.json").open() as handle:
         manifest = json.load(handle)
+
+    assert manifest["status"] == "complete_on_main"
+    assert manifest["next_task"]["id"] == "TASK-003"
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]
     assert bundle_path.exists()
@@ -104,3 +109,4 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "plans/mewx_instrumentation_plan.md" in names
     assert "artifacts/context_pack.json" in names
     assert "artifacts/proof_bundle_manifest.json" in names
+    assert "tests/__pycache__/" not in names

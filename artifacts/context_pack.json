@@ -22,7 +22,7 @@
     "push_changes_for_github_visibility": true
   },
   "phase": "TASK-002-dexter-instrumentation",
-  "status": "complete_on_branch",
+  "status": "complete_on_main",
   "bundle_source": "/Users/cabbala/Downloads/vexter_task002_dexter_instrumentation_bundle.tar.gz",
   "starting_point": {
     "verified_at": "2026-03-21T00:12:00Z",
@@ -51,13 +51,14 @@
     ]
   },
   "completed_task": {
-    "id": "TASK-002",
+    "id": "TASK-002-dexter-instrumentation",
     "scope": [
       "Dexter observational instrumentation only",
       "Vexter-side validation and proof artifacts only",
       "No strategy logic changes",
       "No Mew-X or integration work"
     ],
+    "merged_pr": 2,
     "dexter_source_change": {
       "repo": "https://github.com/Cabbala/Dexter",
       "branch": "codex/task-002-dexter-instrumentation",
@@ -98,7 +99,7 @@
     "state": "not_started",
     "start_conditions": [
       "Keep Dexter observational instrumentation unchanged while validating collected runs.",
-      "Do not begin Mew-X instrumentation or integration work from TASK-002 artifacts.",
+      "Do not begin Mew-X instrumentation or integration work from the merged TASK-002 artifacts.",
       "Use the fixed normalized event contract and Windows runtime layout as immutable interfaces."
     ]
   },

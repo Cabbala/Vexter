@@ -9,6 +9,9 @@ mkdir -p "$ROOT_DIR/artifacts/bundles"
 rm -f "$BUNDLE_PATH"
 
 tar -czf "$BUNDLE_PATH" \
+  --exclude='__pycache__' \
+  --exclude='.pytest_cache' \
+  --exclude='*.pyc' \
   -C "$ROOT_DIR" \
   README.md \
   docs \

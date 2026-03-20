@@ -29,6 +29,6 @@ Vexter is the Mac-side control plane for comparative analysis of `Cabbala/Dexter
 
 `TASK-001-source-assessment` is complete on `main`. The shared evaluation contract, source assessments, instrumentation plans, and Windows runtime layout are now the source of truth for Vexter.
 
-`TASK-002-dexter-instrumentation` is complete on the current work branch as of 2026-03-21. The paired Dexter source branch adds observational NDJSON events, masked config export, leaderboard snapshots, and stagnant-mint replay exports without changing strategy logic.
+`TASK-002-dexter-instrumentation` is complete on `main` as of 2026-03-21. The paired Dexter source branch adds observational NDJSON events, masked config export, leaderboard snapshots, and stagnant-mint replay exports without changing strategy logic.
 
-`TASK-003` has not started. Do not begin Mew-X instrumentation, cross-repo integration, or strategy rewrites from this branch.
+`TASK-003` has not started. Its start conditions remain recorded in `artifacts/` only.

@@ -1,6 +1,6 @@
 {
   "task_id": "TASK-002-dexter-instrumentation",
-  "status": "complete_on_branch",
+  "status": "complete_on_main",
   "bundle_source": "/Users/cabbala/Downloads/vexter_task002_dexter_instrumentation_bundle.tar.gz",
   "bundle_path": "artifacts/bundles/task-002-dexter-instrumentation.tar.gz",
   "context_pack": "artifacts/context_pack.json",
@@ -37,7 +37,7 @@
     "start_conditions": [
       "Validate Dexter observation packages before touching Mew-X.",
       "Keep the normalized event contract and Windows runtime layout unchanged.",
-      "Do not begin integration work from the TASK-002 branch."
+      "Do not begin integration work from the merged TASK-002 artifacts."
     ]
   },
   "proofs": {
@@ -75,7 +75,8 @@
     "dexter_source_repo": "https://github.com/Cabbala/Dexter",
     "dexter_source_branch": "codex/task-002-dexter-instrumentation",
     "dexter_source_commit": "69de8b615a0a366545cffcde7eb3cab0f43730dd",
-    "dexter_source_pr": 1
+    "dexter_source_pr": 1,
+    "merged_pr": 2
   },
   "included_paths": [
     "README.md",

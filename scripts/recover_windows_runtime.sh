@@ -23,7 +23,7 @@ $pgZip = "$downloadDir\postgresql-17.9-2-windows-x64-binaries.zip"
 $pgZipUrl = 'https://get.enterprisedb.com/postgresql/postgresql-17.9-2-windows-x64-binaries.zip'
 $dexterPath = "$root\sources\Dexter"
 $mewxPath = "$root\sources\Mew-X"
-$dexterCommit = '5dc1036c499af5f14f06d08ad0fa96aa36228c96'
+$dexterCommit = 'ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938'
 $mewxCommit = 'dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a'
 
 $dirs = @(

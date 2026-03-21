@@ -10,7 +10,7 @@
       "sync_url": "https://github.com/Cabbala/Dexter.git",
       "default_branch": "main",
       "pinned_branch": "main",
-      "pinned_commit": "5dc1036c499af5f14f06d08ad0fa96aa36228c96",
+      "pinned_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
       "local_checkout": "sources/Dexter",
       "windows_checkout": "C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter",
       "windows_env_file": "C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter\\.env",

@@ -2,7 +2,7 @@
   "project": "Vexter",
   "goal": "Build the Mac-side control plane and evidence base for comparing Dexter and Mew-X without silently changing frozen strategy behavior.",
   "mac_control_plane": "/Users/cabbala/Projects/Vexter",
-  "working_tree": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-validation",
+  "working_tree": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-revalidate",
   "windows_runtime_host": "win-lan",
   "resolved_windows_hostname": "DESKTOP-NNC6MPS",
   "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
@@ -20,52 +20,48 @@
     "analysis_priority": "paper_sim_first",
     "mewx_mode_preference": "sim_or_sim_live",
     "dexter_mode_preference": "explicit_paper_live",
-    "agent_usage_note": "Exploration agents Leibniz and Avicenna were launched for sidecar workflow and source inspection while the main thread verified GitHub merges, updated Vexter helpers, and recollected the paper/sim evidence."
+    "agent_usage_note": "No sub-agents were required for this revalidation; the main thread verified GitHub merges, refreshed the source pin, recovered the runtime, recollected fresh pairs, and rebuilt the artifacts directly."
   },
-  "phase": "TASK-005-PAPER-VALIDATION",
-  "status": "paper_live_coverage_ceiling_blocker",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_paper_validation_bundle.tar.gz",
+  "phase": "TASK-005-PAPER-REVALIDATE",
+  "status": "paper_live_improved_but_partial_validation",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_paper_revalidate_bundle.tar.gz",
   "starting_point": {
-    "verified_main": "379f55a50dbfd91968ba643e2fbfe5e73fad8392",
+    "verified_main": "3a720a64a5dbbda482513446b3bc47c341dde2ae",
     "verified_prs": [
-      12,
-      13
+      14
     ],
-    "verified_pr_12_merge": "4b32053697fc4efddd76e542b3d2a1411b450240",
-    "verified_pr_13_merge": "379f55a50dbfd91968ba643e2fbfe5e73fad8392",
-    "verified_dexter_main": "5dc1036c499af5f14f06d08ad0fa96aa36228c96",
-    "verified_dexter_pr": 2,
-    "work_branch": "codex/task-005-paper-validation"
+    "verified_pr_14_merge": "3a720a64a5dbbda482513446b3bc47c341dde2ae",
+    "verified_dexter_main": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "verified_dexter_pr": 3,
+    "work_branch": "codex/task-005-paper-revalidate"
   },
   "background": {
     "prior_authoritative_label": "resume-after-pr9-20260321T1737",
-    "matched_window_start_utc": "2026-03-21T08:39:25.571218Z",
-    "matched_window_end_utc": "2026-03-21T08:42:25.644005Z",
-    "exact_event_overlap_start_utc": "2026-03-21T08:39:09.961841Z",
-    "exact_event_overlap_end_utc": "2026-03-21T08:41:57.136Z",
-    "exact_event_overlap_duration_ms": 167174,
-    "dexter_required_event_types_present": 4,
-    "dexter_required_event_types_total": 12,
-    "mewx_required_event_types_present": 8,
-    "mewx_required_event_types_total": 12,
+    "prior_authoritative_dexter_required_event_types_present": 4,
+    "prior_authoritative_mewx_required_event_types_present": 8,
+    "prior_paper_validation_label": "task005-paper-validation-20260321T1950",
+    "prior_paper_validation_confirmatory_label": "task005-paper-validation-20260321T2005",
+    "prior_paper_validation_dexter_required_event_types_present": 1,
+    "prior_paper_validation_mewx_required_event_types_present": 9,
     "task_006_started": false
   },
   "source_analysis": {
     "pinned_source_commits": {
-      "dexter": "5dc1036c499af5f14f06d08ad0fa96aa36228c96",
+      "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
       "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
     },
     "inspection_worktrees": {
-      "dexter": "/Users/cabbala/Documents/worktrees/Dexter-paper-live-implement",
+      "dexter": "/Users/cabbala/Documents/Dexter",
       "mewx": "/Users/cabbala/Documents/worktrees/MewX-frozen-dba3dc8"
     },
     "local_checkout_heads": {
-      "dexter": "5dc1036c499af5f14f06d08ad0fa96aa36228c96",
+      "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
       "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
     },
     "dexter": {
       "formal_paper_mode_confirmed": true,
       "paper_live_merged_on_main": true,
+      "creation_classification_fix_reverified": true,
       "strategy_semantics_changed": false,
       "trust_logic_changed": false,
       "thresholds_changed": false
@@ -77,102 +73,108 @@
       "source_changed": false
     }
   },
-  "paper_validation": {
+  "paper_revalidate": {
     "prior_authoritative_label": "resume-after-pr9-20260321T1737",
     "prior_dexter_required_event_types_present": 4,
     "prior_mewx_required_event_types_present": 8,
+    "prior_paper_validation_promoted_label": "task005-paper-validation-20260321T1950",
+    "prior_paper_validation_dexter_required_event_types_present": 1,
     "attempts": [
       {
-        "label": "task005-paper-validation-20260321T1950",
+        "label": "task005-paper-revalidate-20260321T123011Z",
         "requested_modes": {
           "dexter": "paper_live",
           "mewx": "sim"
         },
         "measurement_window": {
-          "started_at_utc": "2026-03-21T10:50:12.610202Z",
-          "ended_at_utc": "2026-03-21T10:52:12.655514Z"
+          "started_at_utc": "2026-03-21T12:32:30.070774Z",
+          "ended_at_utc": "2026-03-21T12:34:30.127310Z"
         },
         "event_spans": {
           "dexter": {
-            "started_at_utc": "2026-03-21T10:49:47.935388Z",
-            "ended_at_utc": "2026-03-21T10:49:48.077260Z"
+            "started_at_utc": "2026-03-21T12:32:06.040014Z",
+            "ended_at_utc": "2026-03-21T12:34:03.835767Z",
+            "event_count": 245
           },
           "mewx": {
-            "started_at_utc": "2026-03-21T10:48:44.774Z",
-            "ended_at_utc": "2026-03-21T10:50:01.417Z"
+            "started_at_utc": "2026-03-21T12:31:02.119Z",
+            "ended_at_utc": "2026-03-21T12:34:22.908Z",
+            "event_count": 115
           }
         },
-        "exact_event_overlap_duration_ms": 141,
-        "dexter_required_event_types_present": 1,
-        "mewx_required_event_types_present": 9,
-        "full_stream_fallback": true,
-        "local_packages": {
-          "dexter": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-validation/artifacts/tmp/winlan-packages-task005-paper-validation-20260321T1950/dexter-task005-paper-validation-20260321T1950",
-          "mewx": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-validation/artifacts/tmp/winlan-packages-task005-paper-validation-20260321T1950/mewx-task005-paper-validation-20260321T1950"
-        },
-        "comparison_output_dir": "artifacts/reports/task-005-paper-validation-20260321T1950-comparison",
-        "comparison_pack": "artifacts/proofs/task-005-paper-validation-20260321T1950-results/comparison-pack.json",
-        "notable_issue": "Dexter emitted only creator_candidate events and still recorded a startup websocket HTTP 429 in stderr."
-      },
-      {
-        "label": "task005-paper-validation-20260321T2005",
-        "requested_modes": {
-          "dexter": "paper_live",
-          "mewx": "sim"
-        },
-        "measurement_window": {
-          "started_at_utc": "2026-03-21T10:55:38.138582Z",
-          "ended_at_utc": "2026-03-21T10:58:38.206439Z"
-        },
-        "event_spans": {
-          "dexter": {
-            "started_at_utc": "2026-03-21T10:55:10.199318Z",
-            "ended_at_utc": "2026-03-21T10:55:10.336857Z"
-          },
-          "mewx": {
-            "started_at_utc": "2026-03-21T10:53:37.195Z",
-            "ended_at_utc": "2026-03-21T10:57:41.333Z"
-          }
-        },
-        "exact_event_overlap_duration_ms": 137,
-        "dexter_required_event_types_present": 1,
+        "exact_event_overlap_duration_ms": 117795,
+        "dexter_required_event_types_present": 9,
         "mewx_required_event_types_present": 8,
         "full_stream_fallback": true,
         "local_packages": {
-          "dexter": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-validation/artifacts/tmp/winlan-packages-task005-paper-validation-20260321T2005/dexter-task005-paper-validation-20260321T2005",
-          "mewx": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-validation/artifacts/tmp/winlan-packages-task005-paper-validation-20260321T2005/mewx-task005-paper-validation-20260321T2005"
+          "dexter": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-revalidate/artifacts/tmp/winlan-packages-task005-paper-revalidate-20260321T123011Z/dexter-task005-paper-revalidate-20260321T123011Z",
+          "mewx": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-revalidate/artifacts/tmp/winlan-packages-task005-paper-revalidate-20260321T123011Z/mewx-task005-paper-revalidate-20260321T123011Z"
         },
-        "comparison_output_dir": "artifacts/reports/task-005-paper-validation-20260321T2005-comparison",
-        "comparison_pack": "artifacts/proofs/task-005-paper-validation-20260321T2005-results/comparison-pack.json",
-        "notable_issue": "Extra startup serialization removed Dexter main-runtime HTTP 429, but Dexter still emitted only creator_candidate events while wsLogs continued to log HTTP 429s."
+        "comparison_output_dir": "artifacts/reports/task005-paper-revalidate-20260321T123011Z-comparison",
+        "comparison_pack": "artifacts/reports/task005-paper-revalidate-20260321T123011Z-comparison/comparison_pack.json",
+        "notable_issue": "Dexter improved beyond creator-only, but both sources still validated only as partial because required event types remained missing."
+      },
+      {
+        "label": "task005-paper-revalidate-20260321T123426Z",
+        "requested_modes": {
+          "dexter": "paper_live",
+          "mewx": "sim"
+        },
+        "measurement_window": {
+          "started_at_utc": "2026-03-21T12:37:19.926587Z",
+          "ended_at_utc": "2026-03-21T12:39:19.991771Z"
+        },
+        "event_spans": {
+          "dexter": {
+            "started_at_utc": "2026-03-21T12:36:50.117435Z",
+            "ended_at_utc": "2026-03-21T12:38:39.047049Z",
+            "event_count": 234
+          },
+          "mewx": {
+            "started_at_utc": "2026-03-21T12:35:47.151Z",
+            "ended_at_utc": "2026-03-21T12:38:56.276Z",
+            "event_count": 75
+          }
+        },
+        "exact_event_overlap_duration_ms": 108930,
+        "dexter_required_event_types_present": 9,
+        "mewx_required_event_types_present": 8,
+        "full_stream_fallback": true,
+        "local_packages": {
+          "dexter": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-revalidate/artifacts/tmp/winlan-packages-task005-paper-revalidate-20260321T123426Z/dexter-task005-paper-revalidate-20260321T123426Z",
+          "mewx": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-revalidate/artifacts/tmp/winlan-packages-task005-paper-revalidate-20260321T123426Z/mewx-task005-paper-revalidate-20260321T123426Z"
+        },
+        "comparison_output_dir": "artifacts/reports/task005-paper-revalidate-20260321T123426Z-comparison",
+        "comparison_pack": "artifacts/reports/task005-paper-revalidate-20260321T123426Z-comparison/comparison_pack.json",
+        "notable_issue": "Dexter improved beyond creator-only, but both sources still validated only as partial because required event types remained missing."
       }
     ],
-    "promoted_label": "task005-paper-validation-20260321T1950",
-    "confirmatory_label": "task005-paper-validation-20260321T2005",
+    "promoted_label": "task005-paper-revalidate-20260321T123011Z",
+    "confirmatory_label": "task005-paper-revalidate-20260321T123426Z",
+    "creator_only_ceiling_resolved": true,
     "task_006_started": false
   },
   "recommendation": {
     "decision": "BLOCKED",
-    "next_task_id": "BLOCKED",
+    "next_task_id": "TASK-005-PASS-GRADE-PAIR",
     "keep_task_006_blocked": true,
     "sharpest_blockers": [
-      "Dexter paper_live never progressed past creator_candidate on two fresh same-attempt paper/sim recollections.",
-      "run_summary remained absent on both fresh paper/sim pairs, so closeout reliability did not improve into comparison-ready territory.",
-      "Both fresh pairs required full-stream fallback because the first raw events landed before the post-readiness measurement window, leaving only subsecond exact event overlap."
+      "Both fresh matched packages still validate only as partial under the current contract.",
+      "run_summary remained absent on both sources in both fresh retries.",
+      "Winner mode stayed deferred on both fresh comparison packs."
     ]
   },
   "current_task": {
-    "id": "TASK-005-PAPER-VALIDATION",
+    "id": "TASK-005-PAPER-REVALIDATE",
     "scope": [
-      "Use merged Dexter main paper_live and frozen Mew-X sim only",
-      "Recollect one or more fresh matched paper/sim comparison pairs",
-      "Rerun validate, derive-metrics, and build-pack on the fresh pairs",
-      "Do not change Dexter strategy semantics, trust logic, or thresholds",
-      "Do not change Mew-X source logic",
-      "Do not start TASK-006 unless the evidence becomes clearly decisive"
+      "Verify the latest Vexter and Dexter merged-main state on GitHub.",
+      "Reflect Dexter PR #3 merged main in Vexter pinning and runtime recovery.",
+      "Collect fresh same-attempt Dexter paper_live and Mew-X sim_live evidence.",
+      "Rerun validate, derive-metrics, and build-pack for the fresh pairs.",
+      "Judge TASK-006 readiness from the refreshed evidence without changing source logic or comparison rules."
     ],
     "frozen_source_commits": {
-      "dexter": "5dc1036c499af5f14f06d08ad0fa96aa36228c96",
+      "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
       "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
     },
     "deliverables": [
@@ -180,15 +182,16 @@
       "artifacts/context_pack.json",
       "artifacts/proof_bundle_manifest.json",
       "artifacts/task_ledger.jsonl",
-      "artifacts/reports/task-005-live-collection-blocker.md",
-      "artifacts/reports/task-005-paper-validation-20260321T1950-comparison",
-      "artifacts/reports/task-005-paper-validation-20260321T2005-comparison",
-      "artifacts/reports/task-005-paper-validation-handoff/DETAILS.md",
-      "artifacts/reports/task-005-paper-validation-handoff/MIN_PROMPT.txt",
-      "artifacts/proofs/task-005-live-collection-check.json",
-      "artifacts/proofs/task-005-paper-validation-20260321T1950-results",
-      "artifacts/proofs/task-005-paper-validation-20260321T2005-results",
-      "artifacts/bundles/task-005-paper-validation.tar.gz"
+      "artifacts/reports/task-005-paper-revalidate-readiness.md",
+      "artifacts/reports/task005-paper-revalidate-20260321T123011Z-comparison",
+      "artifacts/reports/task005-paper-revalidate-20260321T123426Z-comparison",
+      "artifacts/reports/task-005-paper-revalidate-handoff/DETAILS.md",
+      "artifacts/reports/task-005-paper-revalidate-handoff/MIN_PROMPT.txt",
+      "artifacts/proofs/task-005-paper-revalidate-check.json",
+      "artifacts/proofs/task-005-windows-runtime-recovery.json",
+      "artifacts/proofs/task005-paper-revalidate-20260321T123011Z-results",
+      "artifacts/proofs/task005-paper-revalidate-20260321T123426Z-results",
+      "artifacts/bundles/task-005-paper-revalidate.tar.gz"
     ]
   }
 }

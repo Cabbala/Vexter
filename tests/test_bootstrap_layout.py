@@ -131,6 +131,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-005-live-comparison-evidence",
         "DEXTER-PAPER-DESIGN",
         "TASK-005-PAPER-VALIDATION",
+        "TASK-005-PAPER-REVALIDATE",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -140,6 +141,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "design_complete_recommend_implement",
         "design_complete_keep_retrying",
         "paper_live_coverage_ceiling_blocker",
+        "paper_live_improved_but_partial_validation",
     }
     assert payload["branch"] in {
         "codex/task-005-live-comparison-evidence",
@@ -150,8 +152,14 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-005-resume-after-pr9",
         "codex/dexter-paper-design",
         "codex/task-005-paper-validation",
+        "codex/task-005-paper-revalidate",
     }
-    assert payload["next_task_id"] in {"TASK-005-RESUME", "BLOCKED", "DEXTER-PAPER-IMPLEMENT"}
+    assert payload["next_task_id"] in {
+        "TASK-005-RESUME",
+        "BLOCKED",
+        "DEXTER-PAPER-IMPLEMENT",
+        "TASK-005-PASS-GRADE-PAIR",
+    }
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
         "awaiting_nontrivial_matched_live_window_and_fuller_coverage",
@@ -160,6 +168,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "awaiting_dexter_startup_without_helius_429",
         "ready_for_paper_implementation",
         "awaiting_dexter_paper_live_session_coverage",
+        "collect_fresh_pass_grade_matched_pair",
     }
 
 
@@ -175,8 +184,14 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "design_complete_recommend_implement",
         "design_complete_keep_retrying",
         "paper_live_coverage_ceiling_blocker",
+        "paper_live_improved_but_partial_validation",
     }
-    assert manifest["next_task"]["id"] in {"TASK-005-RESUME", "BLOCKED", "DEXTER-PAPER-IMPLEMENT"}
+    assert manifest["next_task"]["id"] in {
+        "TASK-005-RESUME",
+        "BLOCKED",
+        "DEXTER-PAPER-IMPLEMENT",
+        "TASK-005-PASS-GRADE-PAIR",
+    }
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
         "awaiting_nontrivial_matched_live_window_and_fuller_coverage",
@@ -185,6 +200,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "awaiting_dexter_startup_without_helius_429",
         "ready_for_paper_implementation",
         "awaiting_dexter_paper_live_session_coverage",
+        "collect_fresh_pass_grade_matched_pair",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]

@@ -1,24 +1,23 @@
 {
-  "task_id": "TASK-005-PAPER-VALIDATION",
-  "status": "paper_live_coverage_ceiling_blocker",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_paper_validation_bundle.tar.gz",
-  "bundle_path": "artifacts/bundles/task-005-paper-validation.tar.gz",
+  "task_id": "TASK-005-PAPER-REVALIDATE",
+  "status": "paper_live_improved_but_partial_validation",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_paper_revalidate_bundle.tar.gz",
+  "bundle_path": "artifacts/bundles/task-005-paper-revalidate.tar.gz",
   "context_pack": "artifacts/context_pack.json",
   "summary": "artifacts/summary.md",
   "task_ledger": "artifacts/task_ledger.jsonl",
   "reports": [
-    "artifacts/reports/task-005-live-collection-blocker.md",
+    "artifacts/reports/task-005-paper-revalidate-readiness.md",
     "artifacts/reports/task-005-windows-runtime-recovery.md",
-    "artifacts/reports/task-005-paper-validation-20260321T1950-comparison",
-    "artifacts/reports/task-005-paper-validation-20260321T2005-comparison",
-    "artifacts/reports/dexter-paper-design-handoff",
-    "artifacts/reports/task-005-paper-validation-handoff"
+    "artifacts/reports/task005-paper-revalidate-20260321T123011Z-comparison",
+    "artifacts/reports/task005-paper-revalidate-20260321T123426Z-comparison",
+    "artifacts/reports/task-005-paper-revalidate-handoff"
   ],
   "proof_files": [
-    "artifacts/proofs/task-005-live-collection-check.json",
+    "artifacts/proofs/task-005-paper-revalidate-check.json",
     "artifacts/proofs/task-005-windows-runtime-recovery.json",
-    "artifacts/proofs/task-005-paper-validation-20260321T1950-results",
-    "artifacts/proofs/task-005-paper-validation-20260321T2005-results"
+    "artifacts/proofs/task005-paper-revalidate-20260321T123011Z-results",
+    "artifacts/proofs/task005-paper-revalidate-20260321T123426Z-results"
   ],
   "manifests": [
     "manifests/reference_repos.json",
@@ -61,45 +60,48 @@
     "vexter/comparison/"
   ],
   "task_result": {
-    "verified_main_commit": "379f55a50dbfd91968ba643e2fbfe5e73fad8392",
+    "verified_main_commit": "3a720a64a5dbbda482513446b3bc47c341dde2ae",
     "verified_prs": [
-      12,
-      13
+      14
     ],
-    "verified_dexter_main_commit": "5dc1036c499af5f14f06d08ad0fa96aa36228c96",
-    "verified_dexter_pr": 2,
-    "promoted_same_attempt_label": "task005-paper-validation-20260321T1950",
-    "confirmatory_same_attempt_label": "task005-paper-validation-20260321T2005",
+    "verified_dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "verified_dexter_pr": 3,
+    "promoted_same_attempt_label": "task005-paper-revalidate-20260321T123011Z",
+    "confirmatory_same_attempt_label": "task005-paper-revalidate-20260321T123426Z",
     "baseline_previous_label": "resume-after-pr9-20260321T1737",
-    "dexter_required_event_types_present": 1,
+    "previous_paper_validation_promoted_label": "task005-paper-validation-20260321T1950",
+    "dexter_required_event_types_present": 9,
     "dexter_required_event_types_total": 12,
-    "mewx_required_event_types_present": 9,
+    "mewx_required_event_types_present": 8,
     "mewx_required_event_types_total": 12,
     "run_summary_present": false,
     "paper_live_mode_confirmed": true,
+    "creator_only_ceiling_resolved": true,
+    "comparison_ready": false,
     "recommendation": "BLOCKED",
-    "next_task_id": "BLOCKED"
+    "next_task_id": "TASK-005-PASS-GRADE-PAIR"
   },
   "proofs": {
     "paper_sim_first_preserved": true,
     "dexter_strategy_changed": false,
     "mewx_strategy_changed": false,
     "instrumentation_contract_changed": false,
-    "pinned_dexter_commit_inspected": "5dc1036c499af5f14f06d08ad0fa96aa36228c96",
+    "pinned_dexter_commit_inspected": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "pinned_mewx_commit_inspected": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
     "github_visible_closeout_required": true,
-    "best_fresh_pair_exact_overlap_ms": 141,
-    "confirmatory_retry_exact_overlap_ms": 137
+    "best_fresh_pair_exact_overlap_ms": 117795,
+    "confirmatory_retry_exact_overlap_ms": 108930,
+    "previous_paper_validation_ceiling_resolved": true
   },
   "next_task": {
-    "id": "BLOCKED",
-    "state": "awaiting_dexter_paper_live_session_coverage",
+    "id": "TASK-005-PASS-GRADE-PAIR",
+    "state": "collect_fresh_pass_grade_matched_pair",
     "resume_requirements": [
-      "Keep Dexter on merged main paper_live and keep Mew-X unchanged on sim or sim_live.",
-      "Do not change Dexter strategy semantics, trust logic, or thresholds.",
-      "Collect a fresh matched pair where Dexter progresses beyond creator_candidate into mint, entry, session, exit, and run_summary coverage.",
-      "Avoid relying on post-readiness full-stream fallback if a tighter exact event overlap can be captured.",
-      "Do not start TASK-006 until the refreshed paper/sim evidence is materially stronger."
+      "Keep Dexter on merged main paper_live and keep Mew-X unchanged on sim_live.",
+      "Do not change Dexter strategy semantics, trust logic, thresholds, or comparison rules.",
+      "Collect another fresh matched pair that captures the remaining required event types, especially run_summary.",
+      "Use the GitHub-visible artifacts from this task as the new baseline for TASK-005 follow-up work.",
+      "Do not start TASK-006 until a matched pair validates beyond partial and winner_mode is no longer deferred."
     ]
   },
   "included_paths": [

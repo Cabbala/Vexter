@@ -23,7 +23,7 @@ $pgZip = "$downloadDir\postgresql-17.9-2-windows-x64-binaries.zip"
 $pgZipUrl = 'https://get.enterprisedb.com/postgresql/postgresql-17.9-2-windows-x64-binaries.zip'
 $dexterPath = "$root\sources\Dexter"
 $mewxPath = "$root\sources\Mew-X"
-$dexterCommit = '69de8b6ca57ca3d03025d85329c88aa4a167da34'
+$dexterCommit = '5dc1036c499af5f14f06d08ad0fa96aa36228c96'
 $mewxCommit = 'dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a'
 
 $dirs = @(
@@ -114,10 +114,10 @@ foreach ($db in 'dexter_db', 'goldmine', 'vacation') {
 & $psql -h 127.0.0.1 -p 5432 -U postgres -d postgres -c "ALTER DATABASE dexter_db OWNER TO dexter_user;" | Out-Null
 
 if (Test-Path "$dexterPath\.git") {
-  git -C $dexterPath fetch origin codex/task-002-dexter-instrumentation --prune
+  git -C $dexterPath fetch origin main --prune
 } else {
   git clone https://github.com/Cabbala/Dexter.git $dexterPath | Out-Null
-  git -C $dexterPath fetch origin codex/task-002-dexter-instrumentation --prune
+  git -C $dexterPath fetch origin main --prune
 }
 if (Test-Path "$mewxPath\.git") {
   git -C $mewxPath fetch origin codex/task-003-mewx-instrumentation --prune

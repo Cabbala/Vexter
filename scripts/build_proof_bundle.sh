@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-BUNDLE_PATH="$ROOT_DIR/artifacts/bundles/dexter-paper-design.tar.gz"
+BUNDLE_PATH="$ROOT_DIR/artifacts/bundles/task-005-paper-validation.tar.gz"
 SAMPLE_PACK_DIR="$ROOT_DIR/artifacts/examples/task-004-sample-comparison"
 
 mkdir -p "$ROOT_DIR/artifacts/bundles"

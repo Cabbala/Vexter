@@ -16,6 +16,7 @@ from typing import Any
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_WINDOWS_ROOT = r"C:\Users\bot\quant\Vexter"
 DEFAULT_WINDOWS_HOST = "win-lan"
+DEFAULT_DEXTER_MODE = "paper_live"
 DEFAULT_MEWX_MODE = "sim"
 DEFAULT_DURATION_SECONDS = 120
 DEFAULT_GRACE_SECONDS = 20
@@ -84,6 +85,20 @@ def windows_to_scp_path(path: str) -> str:
 
 
 def load_frozen_source_commits() -> dict[str, str]:
+    manifest_path = REPO_ROOT / "manifests" / "reference_repos.json"
+    if manifest_path.exists():
+        manifest = json.loads(manifest_path.read_text())
+        commits = {
+            str(repo["name"]).strip().lower(): str(repo["pinned_commit"]).strip()
+            for repo in manifest.get("repos", [])
+            if repo.get("name") and repo.get("pinned_commit")
+        }
+        if {"dexter", "mew-x"} <= set(commits):
+            return {
+                "dexter": commits["dexter"],
+                "mewx": commits["mew-x"],
+            }
+
     context_pack = json.loads((REPO_ROOT / "artifacts" / "context_pack.json").read_text())
     return context_pack["current_task"]["frozen_source_commits"]
 
@@ -192,7 +207,7 @@ def build_remote_runner(config: dict[str, Any]) -> str:
         dexter_env.update(
             {{
                 "VEXTER_RUN_ID": dexter_run_id,
-                "VEXTER_MODE": "observe_live",
+                "VEXTER_MODE": config["dexter_mode"],
                 "VEXTER_TRANSPORT_MODE": "ws",
             }}
         )
@@ -603,6 +618,7 @@ def collect_remote_runs(
     label: str,
     dexter_run_id: str,
     mewx_run_id: str,
+    dexter_mode: str,
     mewx_mode: str,
     duration_seconds: int,
     grace_seconds: int,
@@ -622,6 +638,7 @@ def collect_remote_runs(
             "label": label,
             "dexter_run_id": dexter_run_id,
             "mewx_run_id": mewx_run_id,
+            "dexter_mode": dexter_mode,
             "mewx_mode": mewx_mode,
             "duration_seconds": duration_seconds,
             "grace_seconds": grace_seconds,
@@ -765,6 +782,11 @@ def build_parser() -> argparse.ArgumentParser:
         type=int,
         default=DEFAULT_DEXTER_WSLOGS_SETTLE_SECONDS,
     )
+    parser.add_argument(
+        "--dexter-mode",
+        choices=["observe_live", "paper_live"],
+        default=DEFAULT_DEXTER_MODE,
+    )
     parser.add_argument("--mewx-mode", choices=["sim", "trade"], default=DEFAULT_MEWX_MODE)
     parser.add_argument("--label")
     parser.add_argument("--output-json")
@@ -784,6 +806,7 @@ def main() -> int:
         label=label,
         dexter_run_id=dexter_run_id,
         mewx_run_id=mewx_run_id,
+        dexter_mode=args.dexter_mode,
         mewx_mode=args.mewx_mode,
         duration_seconds=args.duration_seconds,
         grace_seconds=args.grace_seconds,
@@ -821,7 +844,7 @@ def main() -> int:
         )
 
     collector_path = ensure_remote_collector(args.windows_host, args.windows_root)
-    dexter_mode = dexter_summary["modes"][0] if dexter_summary["modes"] else "observe_live"
+    dexter_mode = dexter_summary["modes"][0] if dexter_summary["modes"] else args.dexter_mode
     dexter_transport = (
         dexter_summary["transport_modes"][0] if dexter_summary["transport_modes"] else "ws"
     )
@@ -871,6 +894,10 @@ def main() -> int:
         "label": label,
         "windows_host": args.windows_host,
         "windows_root": args.windows_root,
+        "requested_modes": {
+            "dexter": args.dexter_mode,
+            "mewx": args.mewx_mode,
+        },
         "measurement_window": measurement_window,
         "remote_collection": collection,
         "remote_packages": {

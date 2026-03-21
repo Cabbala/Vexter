@@ -2,7 +2,7 @@
   "project": "Vexter",
   "goal": "Build the Mac-side control plane and evidence base for comparing Dexter and Mew-X without silently changing frozen strategy behavior.",
   "mac_control_plane": "/Users/cabbala/Projects/Vexter",
-  "working_tree": "/Users/cabbala/Documents/worktrees/Vexter-dexter-paper-design",
+  "working_tree": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-validation",
   "windows_runtime_host": "win-lan",
   "resolved_windows_hostname": "DESKTOP-NNC6MPS",
   "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
@@ -19,20 +19,26 @@
     "agent_usage_when_available": true,
     "analysis_priority": "paper_sim_first",
     "mewx_mode_preference": "sim_or_sim_live",
-    "dexter_mode_preference": "observe_only_zero_balance_until_formal_paper_mode_confirmed",
-    "agent_usage_note": "Exploration agents Banach and Godel were launched for sidecar source inspection while the main thread verified pinned source worktrees and produced the design memo."
+    "dexter_mode_preference": "explicit_paper_live",
+    "agent_usage_note": "Exploration agents Leibniz and Avicenna were launched for sidecar workflow and source inspection while the main thread verified GitHub merges, updated Vexter helpers, and recollected the paper/sim evidence."
   },
-  "phase": "DEXTER-PAPER-DESIGN",
-  "status": "design_complete_recommend_implement",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_dexter_paper_design_bundle.tar.gz",
+  "phase": "TASK-005-PAPER-VALIDATION",
+  "status": "paper_live_coverage_ceiling_blocker",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_paper_validation_bundle.tar.gz",
   "starting_point": {
-    "verified_main": "0d4ff2e160feecd4313f0d8ff95d2ff084c5a7ee",
-    "verified_pr": 11,
-    "work_branch": "codex/dexter-paper-design",
-    "task_005_blocker_assumption": "dexter_coverage_stall_not_repeated_retry"
+    "verified_main": "379f55a50dbfd91968ba643e2fbfe5e73fad8392",
+    "verified_prs": [
+      12,
+      13
+    ],
+    "verified_pr_12_merge": "4b32053697fc4efddd76e542b3d2a1411b450240",
+    "verified_pr_13_merge": "379f55a50dbfd91968ba643e2fbfe5e73fad8392",
+    "verified_dexter_main": "5dc1036c499af5f14f06d08ad0fa96aa36228c96",
+    "verified_dexter_pr": 2,
+    "work_branch": "codex/task-005-paper-validation"
   },
   "background": {
-    "promoted_same_attempt_label": "resume-after-pr9-20260321T1737",
+    "prior_authoritative_label": "resume-after-pr9-20260321T1737",
     "matched_window_start_utc": "2026-03-21T08:39:25.571218Z",
     "matched_window_end_utc": "2026-03-21T08:42:25.644005Z",
     "exact_event_overlap_start_utc": "2026-03-21T08:39:09.961841Z",
@@ -46,86 +52,143 @@
   },
   "source_analysis": {
     "pinned_source_commits": {
-      "dexter": "69de8b6ca57ca3d03025d85329c88aa4a167da34",
+      "dexter": "5dc1036c499af5f14f06d08ad0fa96aa36228c96",
       "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
     },
     "inspection_worktrees": {
-      "dexter": "/Users/cabbala/Documents/worktrees/Dexter-frozen-69de8b6",
+      "dexter": "/Users/cabbala/Documents/worktrees/Dexter-paper-live-implement",
       "mewx": "/Users/cabbala/Documents/worktrees/MewX-frozen-dba3dc8"
     },
     "local_checkout_heads": {
-      "dexter": "966ccdf510c8bbc8103c5b06ab1e16155a5c38cc",
-      "mewx": "9c429fe199ea89d17ad9355cdbe58bf613db8ad4"
+      "dexter": "5dc1036c499af5f14f06d08ad0fa96aa36228c96",
+      "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
     },
     "dexter": {
-      "formal_paper_mode_confirmed": false,
-      "historical_observation_surface_present": true,
-      "zero_balance_safety_path_present": true,
-      "instrumentation_mode_metadata_only": true,
-      "simulated_send_seam_present": true,
-      "runtime_hard_codes_live_send": true,
-      "run_summary_depends_on_closeout": true
+      "formal_paper_mode_confirmed": true,
+      "paper_live_merged_on_main": true,
+      "strategy_semantics_changed": false,
+      "trust_logic_changed": false,
+      "thresholds_changed": false
     },
     "mewx": {
       "formal_sim_mode_confirmed": true,
       "mode_env_key": "MODE",
-      "sim_session_present": true,
       "sim_baseline_supports_eventful_attempt_fill_exit": true,
-      "session_summary_export_present": true
+      "source_changed": false
     }
   },
+  "paper_validation": {
+    "prior_authoritative_label": "resume-after-pr9-20260321T1737",
+    "prior_dexter_required_event_types_present": 4,
+    "prior_mewx_required_event_types_present": 8,
+    "attempts": [
+      {
+        "label": "task005-paper-validation-20260321T1950",
+        "requested_modes": {
+          "dexter": "paper_live",
+          "mewx": "sim"
+        },
+        "measurement_window": {
+          "started_at_utc": "2026-03-21T10:50:12.610202Z",
+          "ended_at_utc": "2026-03-21T10:52:12.655514Z"
+        },
+        "event_spans": {
+          "dexter": {
+            "started_at_utc": "2026-03-21T10:49:47.935388Z",
+            "ended_at_utc": "2026-03-21T10:49:48.077260Z"
+          },
+          "mewx": {
+            "started_at_utc": "2026-03-21T10:48:44.774Z",
+            "ended_at_utc": "2026-03-21T10:50:01.417Z"
+          }
+        },
+        "exact_event_overlap_duration_ms": 141,
+        "dexter_required_event_types_present": 1,
+        "mewx_required_event_types_present": 9,
+        "full_stream_fallback": true,
+        "local_packages": {
+          "dexter": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-validation/artifacts/tmp/winlan-packages-task005-paper-validation-20260321T1950/dexter-task005-paper-validation-20260321T1950",
+          "mewx": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-validation/artifacts/tmp/winlan-packages-task005-paper-validation-20260321T1950/mewx-task005-paper-validation-20260321T1950"
+        },
+        "comparison_output_dir": "artifacts/reports/task-005-paper-validation-20260321T1950-comparison",
+        "comparison_pack": "artifacts/proofs/task-005-paper-validation-20260321T1950-results/comparison-pack.json",
+        "notable_issue": "Dexter emitted only creator_candidate events and still recorded a startup websocket HTTP 429 in stderr."
+      },
+      {
+        "label": "task005-paper-validation-20260321T2005",
+        "requested_modes": {
+          "dexter": "paper_live",
+          "mewx": "sim"
+        },
+        "measurement_window": {
+          "started_at_utc": "2026-03-21T10:55:38.138582Z",
+          "ended_at_utc": "2026-03-21T10:58:38.206439Z"
+        },
+        "event_spans": {
+          "dexter": {
+            "started_at_utc": "2026-03-21T10:55:10.199318Z",
+            "ended_at_utc": "2026-03-21T10:55:10.336857Z"
+          },
+          "mewx": {
+            "started_at_utc": "2026-03-21T10:53:37.195Z",
+            "ended_at_utc": "2026-03-21T10:57:41.333Z"
+          }
+        },
+        "exact_event_overlap_duration_ms": 137,
+        "dexter_required_event_types_present": 1,
+        "mewx_required_event_types_present": 8,
+        "full_stream_fallback": true,
+        "local_packages": {
+          "dexter": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-validation/artifacts/tmp/winlan-packages-task005-paper-validation-20260321T2005/dexter-task005-paper-validation-20260321T2005",
+          "mewx": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-validation/artifacts/tmp/winlan-packages-task005-paper-validation-20260321T2005/mewx-task005-paper-validation-20260321T2005"
+        },
+        "comparison_output_dir": "artifacts/reports/task-005-paper-validation-20260321T2005-comparison",
+        "comparison_pack": "artifacts/proofs/task-005-paper-validation-20260321T2005-results/comparison-pack.json",
+        "notable_issue": "Extra startup serialization removed Dexter main-runtime HTTP 429, but Dexter still emitted only creator_candidate events while wsLogs continued to log HTTP 429s."
+      }
+    ],
+    "promoted_label": "task005-paper-validation-20260321T1950",
+    "confirmatory_label": "task005-paper-validation-20260321T2005",
+    "task_006_started": false
+  },
   "recommendation": {
-    "decision": "IMPLEMENT",
-    "next_task_id": "DEXTER-PAPER-IMPLEMENT",
+    "decision": "BLOCKED",
+    "next_task_id": "BLOCKED",
     "keep_task_006_blocked": true,
-    "minimal_file_touch_set": [
-      "sources/Dexter/Dexter.py",
-      "sources/Dexter/DexLab/pump_fun/pump_swap.py",
-      "sources/Dexter/DexLab/instrumentation.py",
-      "sources/Dexter/tests/"
-    ],
-    "likely_event_coverage_gains": [
-      "entry_attempt",
-      "entry_fill",
-      "session_update",
-      "exit_signal",
-      "exit_fill",
-      "position_closed"
-    ],
-    "conditional_or_separate_gains": [
-      "candidate_rejected",
-      "run_summary"
-    ],
-    "non_comparable_limits": [
-      "true_execution_quality",
-      "route_behavior",
-      "true_slippage",
-      "real_transaction_failure_semantics"
+    "sharpest_blockers": [
+      "Dexter paper_live never progressed past creator_candidate on two fresh same-attempt paper/sim recollections.",
+      "run_summary remained absent on both fresh paper/sim pairs, so closeout reliability did not improve into comparison-ready territory.",
+      "Both fresh pairs required full-stream fallback because the first raw events landed before the post-readiness measurement window, leaving only subsecond exact event overlap."
     ]
   },
   "current_task": {
-    "id": "DEXTER-PAPER-DESIGN",
+    "id": "TASK-005-PAPER-VALIDATION",
     "scope": [
-      "Analyze Dexter source and Vexter evidence only",
-      "Identify the smallest safe insertion points for a minimal paper-mode or paper-equivalent path",
-      "Evaluate event-coverage impact versus Mew-X sim mode",
-      "Do not implement the path yet",
-      "Do not change Dexter or Mew-X source logic in this task",
-      "Do not start TASK-006"
+      "Use merged Dexter main paper_live and frozen Mew-X sim only",
+      "Recollect one or more fresh matched paper/sim comparison pairs",
+      "Rerun validate, derive-metrics, and build-pack on the fresh pairs",
+      "Do not change Dexter strategy semantics, trust logic, or thresholds",
+      "Do not change Mew-X source logic",
+      "Do not start TASK-006 unless the evidence becomes clearly decisive"
     ],
     "frozen_source_commits": {
-      "dexter": "69de8b6ca57ca3d03025d85329c88aa4a167da34",
+      "dexter": "5dc1036c499af5f14f06d08ad0fa96aa36228c96",
       "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
     },
     "deliverables": [
-      "docs/dexter_paper_mode_design.md",
       "artifacts/summary.md",
       "artifacts/context_pack.json",
       "artifacts/proof_bundle_manifest.json",
       "artifacts/task_ledger.jsonl",
-      "artifacts/reports/dexter-paper-design-handoff/DETAILS.md",
-      "artifacts/reports/dexter-paper-design-handoff/MIN_PROMPT.txt",
-      "artifacts/bundles/dexter-paper-design.tar.gz"
+      "artifacts/reports/task-005-live-collection-blocker.md",
+      "artifacts/reports/task-005-paper-validation-20260321T1950-comparison",
+      "artifacts/reports/task-005-paper-validation-20260321T2005-comparison",
+      "artifacts/reports/task-005-paper-validation-handoff/DETAILS.md",
+      "artifacts/reports/task-005-paper-validation-handoff/MIN_PROMPT.txt",
+      "artifacts/proofs/task-005-live-collection-check.json",
+      "artifacts/proofs/task-005-paper-validation-20260321T1950-results",
+      "artifacts/proofs/task-005-paper-validation-20260321T2005-results",
+      "artifacts/bundles/task-005-paper-validation.tar.gz"
     ]
   }
 }

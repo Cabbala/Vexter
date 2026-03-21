@@ -20,6 +20,7 @@ def test_parser_defaults_include_rate_limit_mitigation_knobs() -> None:
 
     args = module.build_parser().parse_args([])
 
+    assert args.dexter_mode == module.DEFAULT_DEXTER_MODE
     assert args.dexter_retry_backoff_seconds == module.DEFAULT_DEXTER_RETRY_BACKOFF_SECONDS
     assert args.dexter_prestart_quiet_seconds == module.DEFAULT_DEXTER_PRESTART_QUIET_SECONDS
     assert (
@@ -55,6 +56,7 @@ def test_remote_runner_records_wslogs_and_retry_timing() -> None:
             "label": "fixture-label",
             "dexter_run_id": "dexter-fixture",
             "mewx_run_id": "mewx-fixture",
+            "dexter_mode": "paper_live",
             "mewx_mode": "sim",
             "duration_seconds": 120,
             "grace_seconds": 20,
@@ -78,3 +80,4 @@ def test_remote_runner_records_wslogs_and_retry_timing() -> None:
     assert "start_after_dexter_head_start" in script
     assert "wslogs_started_during_attempt" in script
     assert "wallet_balance_http_429_count" in script
+    assert '"VEXTER_MODE": config["dexter_mode"]' in script

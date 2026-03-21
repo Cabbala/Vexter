@@ -1,12 +1,15 @@
 {
-  "task_id": "TASK-005-live-comparison-evidence",
-  "verified_at_utc": "2026-03-20T18:00:16Z",
+  "task_id": "TASK-005-PAPER-VALIDATION",
+  "verified_at_utc": "2026-03-21T11:01:05Z",
   "windows_runtime_host": "win-lan",
   "resolved_windows_hostname": "DESKTOP-NNC6MPS",
   "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
-  "status": "exact_signer_env_blocker",
-  "verified_start_commit": "939642e6d185629f23a04e8e04f9fc7eac62ebc9",
-  "verified_pr": 5,
+  "status": "runtime_recovered_for_task_005_paper_validation",
+  "verified_start_commit": "379f55a50dbfd91968ba643e2fbfe5e73fad8392",
+  "verified_prs": [
+    12,
+    13
+  ],
   "runtime_prerequisites": {
     "cargo": {
       "present": true,
@@ -33,7 +36,7 @@
     "sh": {
       "present": true,
       "path": "C:\\Program Files\\Git\\bin\\sh.exe",
-      "note": "Use Git\\\\bin only; Git\\\\usr\\\\bin shadows MSVC link.exe on Windows."
+      "note": "Use Git\\bin only; Git\\usr\\bin shadows MSVC link.exe on Windows."
     },
     "protobuf": {
       "present": true,
@@ -51,8 +54,8 @@
   "source_checkouts": {
     "dexter": {
       "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter",
-      "branch": "codex/task-002-dexter-instrumentation",
-      "commit": "69de8b6ca57ca3d03025d85329c88aa4a167da34",
+      "branch": "main",
+      "commit": "5dc1036c499af5f14f06d08ad0fa96aa36228c96",
       "python_venv": "C:\\Users\\bot\\quant\\Vexter\\venvs\\dexter",
       "database_bootstrap": "success"
     },
@@ -61,8 +64,8 @@
       "branch": "codex/task-003-mewx-instrumentation",
       "commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
       "startup_probe": {
-        "status": "blocked_on_signer_env",
-        "message": "RPC_URL was restored from HTTP_URL on win-lan, but PRIVATE_KEY is still not a valid Solana signing key"
+        "status": "sim_launch_verified",
+        "message": "Mew-X sim launched and emitted TASK-005 paper-validation artifacts on win-lan."
       }
     }
   },
@@ -73,7 +76,8 @@
         "PRIVATE_KEY",
         "HTTP_URL",
         "WS_URL"
-      ]
+      ],
+      "task_005_mode": "paper_live"
     },
     "mewx": {
       "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env",
@@ -82,7 +86,8 @@
         "WS_URL",
         "PRIVATE_KEY",
         "DB_URL"
-      ]
+      ],
+      "task_005_mode": "sim"
     }
   },
   "output_roots": {
@@ -93,12 +98,12 @@
   },
   "remaining_blockers": [
     {
-      "code": "invalid_signing_key_env",
-      "detail": "Live collection still requires valid base58 Solana signing keys in the repo-root .env files for both Dexter and Mew-X."
+      "code": "dexter_paper_live_creator_only",
+      "detail": "Environment recovery succeeded, but fresh paper-validation retries still showed Dexter paper_live emitting only creator_candidate."
     },
     {
-      "code": "no_live_measurement_window",
-      "detail": "No shared live observation window has been collected yet, so there are still no matched packages under artifacts\\unified\\comparison_inputs."
+      "code": "subsecond_exact_overlap_after_full_stream_fallback",
+      "detail": "Fresh same-attempt retries needed full-stream fallback because raw events started before the post-readiness measurement window, leaving only subsecond exact overlap."
     }
   ],
   "task_006_ready": false

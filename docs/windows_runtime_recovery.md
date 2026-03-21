@@ -2,7 +2,7 @@
 
 ## Goal
 
-Recover only the TASK-005 Windows runtime surface on `win-lan` so Dexter and Mew-X can be launched from their frozen branches and write into the fixed Vexter root without changing strategy, execution, or instrumentation logic.
+Recover only the TASK-005 Windows runtime surface on `win-lan` so Dexter `main` at merged `paper_live` and frozen Mew-X instrumentation can write into the fixed Vexter root without changing strategy, execution, or instrumentation logic.
 
 ## Fixed Paths
 
@@ -16,12 +16,12 @@ Recover only the TASK-005 Windows runtime surface on `win-lan` so Dexter and Mew
 
 ## Recovery Entry Point
 
-Run [scripts/recover_windows_runtime.sh](/Users/cabbala/Documents/vexter/task005-live-comparison-evidence/scripts/recover_windows_runtime.sh) from the Mac control plane. It restores:
+Run [scripts/recover_windows_runtime.sh](/Users/cabbala/Documents/worktrees/Vexter-task005-paper-validation/scripts/recover_windows_runtime.sh) from the Mac control plane. It restores:
 
 - PostgreSQL 17.9 from the official EDB Windows binaries zip
 - `Google.Protobuf` so `protoc.exe` and the bundled protobuf includes are present on `win-lan`
 - `dexter_db`, `goldmine`, and `vacation` on `127.0.0.1:5432`
-- detached frozen source checkouts for Dexter and Mew-X
+- Dexter `main` pinned to merged `paper_live` plus the frozen Mew-X instrumentation checkout
 - Dexter's Python venv and database bootstrap
 - user-scope `PROTOC`, `PROTOC_INCLUDE`, and `INSTALL_DIR` so a new PowerShell session can build and launch the frozen Mew-X checkout until it hits repo-root `.env` validation
 
@@ -62,6 +62,8 @@ Optional but recommended for package naming and fixed-root output:
 - `VEXTER_RUN_ID`
 
 Dexter does not need a second secret-bearing config file for this recovery path. Its DB DSN remains hardcoded to `postgres://dexter_user:admin123@127.0.0.1/dexter_db`.
+
+For `TASK-005-PAPER-VALIDATION`, set `VEXTER_MODE=paper_live` explicitly.
 
 Do not paste the Helius URL `api-key` UUID into `PRIVATE_KEY`. Dexter expects a valid base58 Solana signing key there, not the RPC credential already embedded in `HTTP_URL` / `WS_URL`.
 
@@ -128,7 +130,7 @@ Once the user-owned `.env` files are populated and the frozen repos are launched
 
 ## Current Narrowed Blocker
 
-Runtime prerequisites, DB reachability, frozen checkouts, Mew-X protobuf build prerequisites, and exact signer/env formatting are now recovered without touching source logic. The current narrowed blocker is no longer startup:
+Runtime prerequisites, DB reachability, updated source checkouts, Mew-X protobuf build prerequisites, and exact signer/env formatting are now recovered without touching source logic. The current narrowed blocker is no longer basic runtime recovery:
 
 - Dexter and Mew-X both emit smoke-run artifacts under the fixed Vexter root.
 - `validate`, `derive-metrics`, and `build-pack` now complete on those smoke packages.
@@ -136,9 +138,9 @@ Runtime prerequisites, DB reachability, frozen checkouts, Mew-X protobuf build p
 
 The next unblock requirement is fuller comparable coverage on that matched live window, especially on Dexter:
 
-- keep using one Dexter run and one Mew-X run from the same live measurement window
+- keep using one Dexter `paper_live` run and one Mew-X `sim` / `sim_live` run from the same attempt or tightly matched live measurement window
 - preserve frozen Dexter and Mew-X strategy, execution, and instrumentation logic
-- gather a Dexter run with more than observe-only rejection coverage
-- keep Mew-X on `sim` / `sim_live`, and keep Dexter on the observe-only / zero-balance safety path unless a formal paper mode is confirmed
-- if repeated matched-window retries keep stalling on Dexter coverage, limit follow-up to a design-only review of a minimal paper-mode or paper-equivalent path before any TASK-006 work
+- determine whether Dexter `paper_live` can progress past creator-only coverage into session and exit coverage on a fresh matched pair
+- keep Mew-X on `sim` / `sim_live`, and keep Dexter on explicit `paper_live`
+- if repeated matched-window retries keep stalling on Dexter coverage even after `paper_live`, report the sharpest paper-path blocker before any TASK-006 work
 - rerun `validate`, `derive-metrics`, and `build-pack` on that matched package pair

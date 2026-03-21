@@ -1,83 +1,63 @@
-# TASK-005 Live Collection Blocker
+# TASK-005 Paper Validation Blocker
 
-## Checked Scope
+## Verified Start
 
-- checked at `2026-03-21T08:46:35Z`
-- target host: `win-lan` (`DESKTOP-NNC6MPS`)
-- fixed runtime root: `C:\Users\bot\quant\Vexter`
-- verified latest start point: `origin/main` commit `20d0eb3d7f6bda11c2526711145c0cd3298e4adf`
-- verified PR state: PR `#9` merged on `2026-03-21`
-- post-PR10 closeout recheck: `2026-03-21T09:10:02Z` against `origin/main` `5a352c5fa8773ca336eb593385f53f8ef2ffcb3c`, with no change to the promoted pair or blocker state
-- required result: one fresh Dexter package and one fresh Mew-X package from the same attempt, followed by `validate`, `derive-metrics`, and `build-pack`
+- `Cabbala/Vexter` `origin/main` was re-verified at `379f55a50dbfd91968ba643e2fbfe5e73fad8392` on 2026-03-21.
+- Merged Vexter PR `#12` (`4b32053697fc4efddd76e542b3d2a1411b450240`) and PR `#13` (`379f55a50dbfd91968ba643e2fbfe5e73fad8392`) were explicitly confirmed.
+- `Cabbala/Dexter` `main` was re-verified at `5dc1036c499af5f14f06d08ad0fa96aa36228c96` (merged PR `#2`) so the fresh recollection used the real merged `paper_live` path.
+- Prior authoritative TASK-005 baseline remained `resume-after-pr9-20260321T1737` at Dexter `4 / 12` and Mew-X `8 / 12`.
 
-## What Advanced
+## Fresh Paper / Sim Attempts
 
-- A fresh PR9 recollection was completed end-to-end without touching frozen Dexter or Mew-X logic.
-- The Mew-X package export-pointer gap stays resolved on fresh PR9 runs:
-  - `scripts/collect_comparison_package.ps1` preserves time-bounded `runtime\mewx\export\sessions\` files inside the package `exports/` bucket
-  - the packaged `run_metadata.json` now restores the `session_summary` pointer for Mew-X on the promoted PR9 pair
-- Two fresh PR9 same-attempt retries were collected:
-  - `resume-after-pr9-20260321T1729` cleared Dexter startup 429 but over-serialized startup enough to lose exact event overlap
-  - `resume-after-pr9-20260321T1737` restored exact overlap and was promoted through `validate`, `derive-metrics`, and `build-pack`
+| Label | Dexter Mode | Mew-X Mode | Exact Overlap | Dexter Coverage | Mew-X Coverage | Note |
+| --- | --- | --- | ---: | ---: | ---: | --- |
+| `task005-paper-validation-20260321T1950` | `paper_live` | `sim_live` | `141 ms` | `1 / 12` | `9 / 12` | strongest Mew-X fresh pair; Dexter still logged startup websocket `HTTP 429` |
+| `task005-paper-validation-20260321T2005` | `paper_live` | `sim_live` | `137 ms` | `1 / 12` | `8 / 12` | confirmatory retry; Dexter main-runtime `HTTP 429` cleared, result unchanged |
 
-## Promoted Same-Attempt Outputs
+## What Improved
 
-- Promoted matched measurement window:
-  - concurrent runtime start: `2026-03-21T08:39:25.571218Z`
-  - concurrent runtime end: `2026-03-21T08:42:25.644005Z`
-  - concurrent runtime duration: `180.073 s`
-  - exact event overlap start: `2026-03-21T08:39:09.961841Z`
-  - exact event overlap end: `2026-03-21T08:41:57.136Z`
-  - exact event overlap duration: `167.174 s`
-- Promoted package paths:
-  - Dexter package dir: `artifacts/tmp/winlan-packages-resume-after-pr9-20260321T1737/dexter-resume-after-pr9-20260321T1737`
-  - Mew-X package dir: `artifacts/tmp/winlan-packages-resume-after-pr9-20260321T1737/mewx-resume-after-pr9-20260321T1737`
-  - Dexter validation JSON: `artifacts/proofs/task-005-live-resume-after-pr9-20260321T1737-results/dexter.validate.json`
-  - Mew-X validation JSON: `artifacts/proofs/task-005-live-resume-after-pr9-20260321T1737-results/mewx.validate.json`
-  - promoted comparison output dir: `artifacts/reports/task-005-live-resume-after-pr9-20260321T1737-comparison`
-  - promoted comparison pack JSON: `artifacts/proofs/task-005-live-resume-after-pr9-20260321T1737-results/comparison-pack.json`
-- Promoted validation results:
-  - Dexter: `partial`, `4 / 12` required event types, `113868` total events
-    - observed: `creator_candidate`, `entry_rejected`, `entry_signal`, `mint_observed`
-  - Mew-X: `partial`, `8 / 12` required event types, `54` total events
-    - observed: `entry_attempt`, `entry_fill`, `entry_signal`, `exit_fill`, `exit_signal`, `mint_observed`, `position_closed`, `session_update`
-    - fixed: `session_summary` export pointer is now present in `run_metadata.json`
+- Vexter now launches Dexter with explicit `paper_live` for TASK-005 recollection.
+- Windows recovery now pins Dexter to merged `main` `5dc1036c499af5f14f06d08ad0fa96aa36228c96`.
+- Mew-X still behaves as the stronger paper/sim surface and reached `9 / 12` required event types on the strongest fresh pair.
+- The second retry showed Dexter's failure to progress was not just a main-runtime startup-429 artifact.
 
-## Comparison To Prior Fresh Pair
+## What Did Not Improve
 
-- Prior same-attempt promotion remained:
-  - label: `resume-after-pr8-20260321T0801`
-  - Dexter validation: `partial`, `4 / 12`
-  - Mew-X validation: `partial`, `9 / 12`
-  - comparison output dir: `artifacts/reports/task-005-live-resume-after-pr8-20260321T0801-comparison`
-- Discarded fresh PR9 retry:
-  - label: `resume-after-pr9-20260321T1729`
-  - exact event overlap: none; Dexter first raw event landed `24.242 s` after the Mew-X stream had already ended
-  - note: startup serialization avoided wallet-balance HTTP 429, but the resulting pair was not comparable enough to promote
-- Promoted `1737` pair versus `0801`:
-  - Dexter coverage stayed flat at `4 / 12`
-  - Mew-X regressed from `9 / 12` to `8 / 12`
-  - exact event overlap improved from `115.985 s` to `167.174 s`
-  - the `session_summary` export pointer remains present on the promoted PR9 pair
-  - comparison winners / ties still remain deferred
+- Dexter did **not** improve from the prior `4 / 12` baseline. It regressed to `1 / 12` on both fresh `paper_live` retries.
+- On both fresh retries Dexter emitted only:
+  - `creator_candidate`
+- Dexter still missed all of:
+  - `candidate_rejected`
+  - `mint_observed`
+  - `entry_signal`
+  - `entry_attempt`
+  - `entry_fill`
+  - `entry_rejected`
+  - `session_update`
+  - `exit_signal`
+  - `exit_fill`
+  - `position_closed`
+  - `run_summary`
+- `run_summary` did not appear on either fresh pair.
+- No comparison area became non-deferred, so winner/tie decisions stayed blocked.
 
-## Current Blocker
+## Sharpest Remaining Blocker
 
-- The task is no longer blocked by the Mew-X `session_summary` package pointer gap.
-- The current blocker remains partial matched-pair coverage on the promoted same-attempt package:
-  - Dexter still lacks `candidate_rejected`, `entry_attempt`, `entry_fill`, `exit_fill`, `exit_signal`, `position_closed`, `run_summary`, and `session_update`
-  - Mew-X still lacks `candidate_rejected`, `creator_candidate`, `entry_rejected`, and `run_summary`
-- The sharper blocker on fresh PR9 evidence is the safe-mode coverage ceiling:
-  - Dexter `observe_live` on the zero-balance safety path still emitted no attempt/fill/exit/run-summary classes on the promoted retry
-  - Mew-X `sim_live` still did not emit `creator_candidate`, `entry_rejected`, or `run_summary`, and `candidate_rejected` did not recur on the promoted retry
-- Because the promoted pair remains partial, no comparison area becomes decisive enough to advance replay validation or TASK-006.
+The blocker is no longer "Dexter has no paper mode." The merged `paper_live` path was used directly.
 
-## Result
+The blocker is now sharper:
 
-- latest promoted Dexter package: `artifacts/proofs/task-005-live-resume-after-pr9-20260321T1737-results/dexter.validate.json`
-- latest promoted Mew-X package: `artifacts/proofs/task-005-live-resume-after-pr9-20260321T1737-results/mewx.validate.json`
-- latest promoted comparison output: `artifacts/reports/task-005-live-resume-after-pr9-20260321T1737-comparison`
-- winner / tie decisions: deferred
-- blocker state: `partial_live_comparison_blocker`
-- post-PR10 closeout: confirmed unchanged on `origin/main`
-- `TASK-006` readiness: `blocked`
+- Dexter `paper_live` still did not progress from creator admission into mint/session/exit coverage on two fresh same-attempt recollections.
+- Both fresh retries also needed full-stream fallback because the first raw events landed before the post-readiness measurement window, leaving only subsecond exact overlap.
+
+That means the observed paper-validation ceiling on these fresh pairs is still insufficient for TASK-006.
+
+## Current State
+
+- Strongest fresh pair:
+  - report: `artifacts/reports/task-005-paper-validation-20260321T1950-comparison`
+  - proof pack: `artifacts/proofs/task-005-paper-validation-20260321T1950-results/comparison-pack.json`
+- Confirmatory retry:
+  - report: `artifacts/reports/task-005-paper-validation-20260321T2005-comparison`
+  - proof pack: `artifacts/proofs/task-005-paper-validation-20260321T2005-results/comparison-pack.json`
+- `TASK-006` remains blocked.

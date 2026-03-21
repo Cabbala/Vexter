@@ -1,73 +1,80 @@
 {
-  "task_id": "TASK-005-live-comparison-evidence",
-  "checked_at_utc": "2026-03-21T08:46:35Z",
-  "status": "partial_live_comparison_blocker",
+  "task_id": "TASK-005-PAPER-VALIDATION",
+  "checked_at_utc": "2026-03-21T11:01:05Z",
+  "status": "paper_live_coverage_ceiling_blocker",
   "windows_runtime_host": "win-lan",
   "resolved_windows_hostname": "DESKTOP-NNC6MPS",
   "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
   "verified_start": {
-    "main_commit": "20d0eb3d7f6bda11c2526711145c0cd3298e4adf",
-    "pull_request": 9,
-    "branch": "codex/task-005-resume-after-pr9"
+    "main_commit": "379f55a50dbfd91968ba643e2fbfe5e73fad8392",
+    "pull_requests": [
+      12,
+      13
+    ],
+    "branch": "codex/task-005-paper-validation",
+    "dexter_main_commit": "5dc1036c499af5f14f06d08ad0fa96aa36228c96",
+    "dexter_pull_request": 2
   },
   "frozen_source_commits": {
-    "dexter": "69de8b6ca57ca3d03025d85329c88aa4a167da34",
+    "dexter": "5dc1036c499af5f14f06d08ad0fa96aa36228c96",
     "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
   },
   "collection_strategy": {
     "mewx_mode": "sim_live",
-    "dexter_mode": "observe_live",
-    "collector_fix": "Mew-X session exports under runtime\\\\mewx\\\\export\\\\sessions are preserved in the package exports bucket so run_metadata.json retains the session_summary pointer.",
-    "selection_rule": "Promote the latest fresh same-attempt PR9 pair that preserves exact event overlap and can be rebuilt end-to-end on the Mac control plane."
+    "dexter_mode": "paper_live",
+    "collector_fix": "The matched-pair helper now accepts explicit Dexter paper_live, the Windows collector now accepts paper_live packaging, and commit labels now resolve from manifests/reference_repos.json.",
+    "selection_rule": "Promote the strongest fresh same-attempt paper/sim pair while preserving a confirmatory clean-start retry."
   },
   "measurement_window_status": "matched_window_collected_partial",
   "promoted_same_attempt_pair": {
-    "label": "resume-after-pr9-20260321T1737",
+    "label": "task005-paper-validation-20260321T1950",
     "measurement_window": {
-      "started_at_utc": "2026-03-21T08:39:25.571218Z",
-      "ended_at_utc": "2026-03-21T08:42:25.644005Z",
-      "exact_overlap_start_utc": "2026-03-21T08:39:09.961841Z",
-      "exact_overlap_end_utc": "2026-03-21T08:41:57.136Z"
+      "started_at_utc": "2026-03-21T10:50:12.610202Z",
+      "ended_at_utc": "2026-03-21T10:52:12.655514Z",
+      "exact_overlap_start_utc": "2026-03-21T10:49:47.935388Z",
+      "exact_overlap_end_utc": "2026-03-21T10:49:48.077260Z",
+      "exact_overlap_duration_ms": 141
     },
     "dexter": {
-      "run_id": "dexter-resume-after-pr9-20260321T1737",
-      "raw_event_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter\\dexter-resume-after-pr9-20260321T1737.ndjson",
+      "run_id": "dexter-task005-paper-validation-20260321T1950",
+      "raw_event_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter\\dexter-task005-paper-validation-20260321T1950.ndjson",
       "event_span_utc": [
-        "2026-03-21T08:39:09.961841Z",
-        "2026-03-21T08:42:25.574316Z"
+        "2026-03-21T10:49:47.935388Z",
+        "2026-03-21T10:49:48.077260Z"
       ],
-      "required_event_types_present": 4,
+      "required_event_types_present": 1,
       "required_event_types_total": 12,
       "observed_event_types": [
-        "creator_candidate",
-        "entry_rejected",
-        "entry_signal",
-        "mint_observed"
+        "creator_candidate"
       ],
       "missing_event_types": [
         "candidate_rejected",
         "entry_attempt",
         "entry_fill",
+        "entry_rejected",
+        "entry_signal",
         "exit_fill",
         "exit_signal",
+        "mint_observed",
         "position_closed",
         "run_summary",
         "session_update"
       ],
-      "total_events": 113868,
-      "startup_attempts": 2,
-      "wallet_balance_http_429_attempts": 1
+      "total_events": 175,
+      "startup_http_429_present": true,
+      "full_stream_fallback": true
     },
     "mewx": {
-      "run_id": "mewx-resume-after-pr9-20260321T1737",
-      "event_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx\\mewx-resume-after-pr9-20260321T1737.ndjson",
+      "run_id": "mewx-task005-paper-validation-20260321T1950",
+      "event_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx\\mewx-task005-paper-validation-20260321T1950.ndjson",
       "event_span_utc": [
-        "2026-03-21T08:37:12.215Z",
-        "2026-03-21T08:41:57.136Z"
+        "2026-03-21T10:48:44.774Z",
+        "2026-03-21T10:50:01.417Z"
       ],
-      "required_event_types_present": 8,
+      "required_event_types_present": 9,
       "required_event_types_total": 12,
       "observed_event_types": [
+        "candidate_rejected",
         "entry_attempt",
         "entry_fill",
         "entry_signal",
@@ -78,61 +85,80 @@
         "session_update"
       ],
       "missing_event_types": [
-        "candidate_rejected",
         "creator_candidate",
         "entry_rejected",
         "run_summary"
       ],
-      "total_events": 54,
-      "session_summary_pointer_restored": true
+      "total_events": 48,
+      "full_stream_fallback": true
     },
     "local_packages": {
-      "dexter": "/Users/cabbala/Documents/vexter/task005-pass-grade-pair/artifacts/tmp/winlan-packages-resume-after-pr9-20260321T1737/dexter-resume-after-pr9-20260321T1737",
-      "mewx": "/Users/cabbala/Documents/vexter/task005-pass-grade-pair/artifacts/tmp/winlan-packages-resume-after-pr9-20260321T1737/mewx-resume-after-pr9-20260321T1737"
+      "dexter": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-validation/artifacts/tmp/winlan-packages-task005-paper-validation-20260321T1950/dexter-task005-paper-validation-20260321T1950",
+      "mewx": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-validation/artifacts/tmp/winlan-packages-task005-paper-validation-20260321T1950/mewx-task005-paper-validation-20260321T1950"
     },
-    "comparison_output_dir": "artifacts/reports/task-005-live-resume-after-pr9-20260321T1737-comparison",
-    "comparison_pack": "artifacts/proofs/task-005-live-resume-after-pr9-20260321T1737-results/comparison-pack.json"
+    "comparison_output_dir": "artifacts/reports/task-005-paper-validation-20260321T1950-comparison",
+    "comparison_pack": "artifacts/proofs/task-005-paper-validation-20260321T1950-results/comparison-pack.json"
   },
-  "discarded_same_attempt_pair": {
-    "label": "resume-after-pr9-20260321T1729",
-    "detail": "Dexter startup serialization eliminated startup HTTP 429 on the successful attempt, but exact event overlap was negative: Dexter first raw event arrived 24.242 s after the Mew-X stream had already ended."
+  "confirmatory_same_attempt_pair": {
+    "label": "task005-paper-validation-20260321T2005",
+    "measurement_window": {
+      "started_at_utc": "2026-03-21T10:55:38.138582Z",
+      "ended_at_utc": "2026-03-21T10:58:38.206439Z",
+      "exact_overlap_start_utc": "2026-03-21T10:55:10.199318Z",
+      "exact_overlap_end_utc": "2026-03-21T10:55:10.336857Z",
+      "exact_overlap_duration_ms": 137
+    },
+    "dexter": {
+      "run_id": "dexter-task005-paper-validation-20260321T2005",
+      "required_event_types_present": 1,
+      "required_event_types_total": 12,
+      "observed_event_types": [
+        "creator_candidate"
+      ],
+      "startup_http_429_present": false,
+      "wslogs_http_429_count": 6,
+      "full_stream_fallback": true
+    },
+    "mewx": {
+      "run_id": "mewx-task005-paper-validation-20260321T2005",
+      "required_event_types_present": 8,
+      "required_event_types_total": 12,
+      "full_stream_fallback": true
+    },
+    "comparison_output_dir": "artifacts/reports/task-005-paper-validation-20260321T2005-comparison",
+    "comparison_pack": "artifacts/proofs/task-005-paper-validation-20260321T2005-results/comparison-pack.json"
   },
   "baseline_comparison": {
-    "prior_promoted_label": "resume-after-pr8-20260321T0801",
+    "prior_authoritative_label": "resume-after-pr9-20260321T1737",
     "prior_dexter_required_event_types_present": 4,
-    "prior_mewx_required_event_types_present": 9,
-    "promoted_dexter_required_event_types_present": 4,
-    "promoted_mewx_required_event_types_present": 8,
-    "promoted_session_summary_pointer_restored": true,
+    "prior_mewx_required_event_types_present": 8,
+    "promoted_dexter_required_event_types_present": 1,
+    "promoted_mewx_required_event_types_present": 9,
     "comparison_notes": [
-      "Dexter stayed at 4/12 required event types on the promoted fresh PR9 pair.",
-      "Mew-X kept the restored session_summary export pointer but regressed from 9/12 to 8/12 required event types versus the earlier 0801 baseline.",
-      "The promoted PR9 pair recovered a longer exact event overlap at 167.174 s.",
-      "validate, derive-metrics, and build-pack were rerun successfully on the promoted PR9 pair.",
-      "No comparison area is yet decisively attributable enough to unlock TASK-006."
+      "Dexter regressed from 4/12 on the pre-paper promoted pair to 1/12 on both fresh paper_live retries.",
+      "Mew-X improved from 8/12 to 9/12 on the strongest fresh paper/sim pair.",
+      "run_summary remained absent on both fresh pairs, so comparison closeout stayed partial.",
+      "The confirmatory retry removed Dexter main-runtime startup HTTP 429 without improving Dexter coverage.",
+      "validate, derive-metrics, and build-pack were rerun successfully on both fresh paper/sim pairs."
     ]
   },
   "task_006_ready": false,
   "blockers": [
     {
-      "code": "fresh_same_attempt_pair_partial",
-      "detail": "A fresh PR9 same-attempt Dexter/Mew-X pair was collected and rebuilt end-to-end, but Dexter still validated only 4/12 required event types and Mew-X validated 8/12."
+      "code": "dexter_paper_live_creator_only",
+      "detail": "Dexter paper_live emitted only creator_candidate on two fresh same-attempt paper/sim recollections and never reached mint, entry, session, exit, or run-summary coverage."
     },
     {
-      "code": "discarded_overserialized_retry",
-      "detail": "The preceding PR9 retry label resume-after-pr9-20260321T1729 cleared startup 429 but lost exact event overlap, so it could not serve as the promoted comparable pair."
+      "code": "subsecond_exact_overlap",
+      "detail": "Both fresh same-attempt retries required full-stream fallback because the first raw events landed before the post-readiness measurement window, leaving only 141 ms and 137 ms of exact event overlap."
     },
     {
-      "code": "dexter_observe_live_missing_execution_and_exit_classes",
-      "detail": "The promoted Dexter pair still lacks candidate_rejected, entry_attempt, entry_fill, exit_fill, exit_signal, position_closed, run_summary, and session_update while running on the observe_live zero-balance safety path."
-    },
-    {
-      "code": "mewx_sim_live_required_types_still_missing",
-      "detail": "The promoted Mew-X pair still lacks candidate_rejected, creator_candidate, entry_rejected, and run_summary even though the session_summary export pointer is now present."
+      "code": "mewx_sim_live_still_partial",
+      "detail": "Mew-X sim_live remained partial at 9/12 on the strongest fresh pair because creator_candidate, entry_rejected, and run_summary still did not recur."
     },
     {
       "code": "task_006_still_not_decidable",
-      "detail": "The promoted comparison pack exists, but winner/tie decisions remain deferred because the matched pair is still partial."
+      "detail": "Winner and tie decisions remain deferred because the strongest fresh comparison pack is still partial and Dexter paper_live did not improve into comparison-ready session coverage."
     }
   ]
 }

@@ -10,7 +10,7 @@ param(
     [string]$SourceCommit,
 
     [Parameter(Mandatory = $true)]
-    [ValidateSet("observe_live", "trade_live", "sim_live", "replay")]
+    [ValidateSet("observe_live", "paper_live", "trade_live", "sim_live", "replay")]
     [string]$Mode,
 
     [Parameter(Mandatory = $true)]

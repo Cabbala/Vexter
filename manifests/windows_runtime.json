@@ -8,7 +8,7 @@
     "C:\\Users\\<USER>\\quant\\Vexter"
   ],
   "selected_root": "C:\\Users\\bot\\quant\\Vexter",
-  "status": "runtime_recovered_waiting_on_valid_signing_key",
+  "status": "runtime_recovered_for_task_005_paper_validation",
   "directories": [
     "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter",
     "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx",
@@ -138,8 +138,8 @@
   "source_checkouts": {
     "dexter": {
       "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter",
-      "branch": "codex/task-002-dexter-instrumentation",
-      "commit": "69de8b6ca57ca3d03025d85329c88aa4a167da34",
+      "branch": "main",
+      "commit": "5dc1036c499af5f14f06d08ad0fa96aa36228c96",
       "python_venv": "C:\\Users\\bot\\quant\\Vexter\\venvs\\dexter"
     },
     "mewx": {
@@ -147,8 +147,8 @@
       "branch": "codex/task-003-mewx-instrumentation",
       "commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
       "startup_probe": {
-        "status": "blocked_on_signer_env",
-        "message": "RPC_URL was restored from HTTP_URL on win-lan, but PRIVATE_KEY is still not a valid Solana signing key"
+        "status": "sim_launch_verified",
+        "message": "Mew-X sim launches and emits TASK-005 paper-validation artifacts on win-lan"
       }
     }
   },

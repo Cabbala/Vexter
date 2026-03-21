@@ -1,0 +1,19 @@
+{
+  "built_at_utc": "2026-03-21T10:59:47Z",
+  "inputs": {
+    "dexter_package": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-validation/artifacts/tmp/winlan-packages-task005-paper-validation-20260321T2005/dexter-task005-paper-validation-20260321T2005",
+    "mewx_package": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-validation/artifacts/tmp/winlan-packages-task005-paper-validation-20260321T2005/mewx-task005-paper-validation-20260321T2005"
+  },
+  "outputs": [
+    "dexter_validation.json",
+    "mewx_validation.json",
+    "dexter_metrics.json",
+    "mewx_metrics.json",
+    "comparison_matrix.json",
+    "comparison_matrix.md",
+    "comparison_pack.json",
+    "summary.md"
+  ],
+  "pack_id": "comparison-dexter-task005-paper-validation-20260321T2005-vs-mewx-task005-paper-validation-20260321T2005",
+  "winner_mode": "deferred"
+}

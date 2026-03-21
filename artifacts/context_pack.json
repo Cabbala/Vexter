@@ -32,6 +32,18 @@
     "verified_pr": 9,
     "work_branch": "codex/task-005-resume-after-pr9"
   },
+  "post_pr10_closeout": {
+    "checked_at": "2026-03-21T09:10:02Z",
+    "main": "5a352c5fa8773ca336eb593385f53f8ef2ffcb3c",
+    "verified_pr": 10,
+    "promoted_same_attempt_label": "resume-after-pr9-20260321T1737",
+    "mewx_session_summary_pointer_restored": true,
+    "blocker_state": "partial_live_comparison_blocker",
+    "task_006_started": false,
+    "analysis_priority": "paper_sim_first",
+    "mewx_mode_preference": "sim_or_sim_live",
+    "dexter_mode_preference": "observe_only_zero_balance_until_formal_paper_mode_confirmed"
+  },
   "deliverables": {
     "docs": [
       "docs/evaluation_contract.md",
@@ -62,6 +74,7 @@
       "artifacts/reports/task-005-live-pass-grade-runtime-window-comparison",
       "artifacts/proofs/task-005-live-collection-check.json",
       "artifacts/proofs/task-005-windows-runtime-recovery.json",
+      "artifacts/proofs/task-005-live-resume-after-pr9-20260321T1729-results",
       "artifacts/proofs/task-005-live-resume-after-pr9-20260321T1737-results",
       "artifacts/proofs/task-005-live-resume-after-pr8-20260321T0801-results",
       "artifacts/proofs/task-005-live-pass-grade-runtime-window-results",

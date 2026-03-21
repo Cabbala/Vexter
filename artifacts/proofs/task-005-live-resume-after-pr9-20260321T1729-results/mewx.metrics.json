@@ -20,108 +20,104 @@
       "samples": 1,
       "status": "ok",
       "unit": "ms",
-      "value": 2000.0
+      "value": 1.0
     },
     "candidate_count": {
       "aggregation": "count",
       "status": "ok",
       "unit": "count",
-      "value": 2
+      "value": 0
     },
     "candidate_precision_proxy": {
-      "aggregation": "run_ratio",
-      "details": {
-        "candidate_count": 2,
-        "successful_positions": 1
-      },
-      "status": "ok",
+      "reason": "no creator_candidate events were observed",
+      "status": "unavailable",
       "unit": "ratio",
-      "value": 0.5
+      "value": null
     },
     "fill_success_rate": {
       "aggregation": "run_ratio",
       "details": {
-        "attempts": 2,
+        "attempts": 1,
         "fills": 1
       },
       "status": "ok",
       "unit": "ratio",
-      "value": 0.5
+      "value": 1.0
     },
     "max_adverse_excursion_pct": {
       "aggregation": "median",
       "samples": 1,
       "status": "ok",
       "unit": "pct",
-      "value": -4.0
+      "value": 0.0
     },
     "max_favorable_excursion_pct": {
       "aggregation": "median",
       "samples": 1,
       "status": "ok",
       "unit": "pct",
-      "value": 20.0
+      "value": 30.19292793492405
     },
     "quote_vs_fill_slippage_bps": {
       "aggregation": "median",
       "samples": 1,
       "status": "ok",
       "unit": "bps",
-      "value": 294.11764705882376
+      "value": -2319.0912451109293
     },
     "realized_exit_pct": {
       "aggregation": "median",
       "samples": 1,
       "status": "ok",
       "unit": "pct",
-      "value": 13.3333333333
+      "value": 0.0
     },
     "realized_vs_peak_gap_pct": {
       "aggregation": "median",
       "samples": 1,
       "status": "ok",
       "unit": "pct",
-      "value": 6.0
+      "value": 30.19292793492405
     },
     "replayability_grade": {
       "aggregation": "classification",
       "details": {
-        "db_exports": 1,
-        "logs": 1,
+        "db_exports": 0,
+        "logs": 0,
         "raw_events": 1,
-        "replayable_flag": true,
-        "replays": 1
+        "replayable_flag": false,
+        "replays": 0
       },
       "status": "ok",
       "unit": "grade",
-      "value": "full"
+      "value": "partial"
     },
     "signal_to_attempt_latency_ms": {
       "aggregation": "median",
-      "samples": 2,
+      "samples": 1,
       "status": "ok",
       "unit": "ms",
-      "value": 2000.0
+      "value": 388.0
     },
     "stale_position_ratio": {
       "aggregation": "run_ratio",
       "details": {
         "closed_positions": 1,
-        "stale_positions": 0
+        "stale_positions": 1
       },
       "status": "ok",
       "unit": "ratio",
-      "value": 0.0
+      "value": 1.0
     },
     "time_to_peak_ms": {
       "aggregation": "median",
       "samples": 1,
       "status": "ok",
       "unit": "ms",
-      "value": 60000.0
+      "value": 12.0
     }
   },
-  "package_dir": "/Users/cabbala/Documents/worktrees/Vexter-pr10-closeout-clean/tests/fixtures/comparison_packages/dexter_fixture",
-  "run_id": "dexter-fixture-001",
-  "source_system": "dexter"
+  "package_dir": "/Users/cabbala/Documents/vexter/task005-pass-grade-pair/artifacts/tmp/winlan-packages-resume-after-pr9-20260321T1729/mewx-resume-after-pr9-20260321T1729",
+  "run_id": "mewx-resume-after-pr9-20260321T1729",
+  "source_system": "mewx"
 }

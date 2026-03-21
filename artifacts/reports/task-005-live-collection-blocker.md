@@ -7,6 +7,7 @@
 - fixed runtime root: `C:\Users\bot\quant\Vexter`
 - verified latest start point: `origin/main` commit `20d0eb3d7f6bda11c2526711145c0cd3298e4adf`
 - verified PR state: PR `#9` merged on `2026-03-21`
+- post-PR10 closeout recheck: `2026-03-21T09:10:02Z` against `origin/main` `5a352c5fa8773ca336eb593385f53f8ef2ffcb3c`, with no change to the promoted pair or blocker state
 - required result: one fresh Dexter package and one fresh Mew-X package from the same attempt, followed by `validate`, `derive-metrics`, and `build-pack`
 
 ## What Advanced
@@ -78,4 +79,5 @@
 - latest promoted comparison output: `artifacts/reports/task-005-live-resume-after-pr9-20260321T1737-comparison`
 - winner / tie decisions: deferred
 - blocker state: `partial_live_comparison_blocker`
+- post-PR10 closeout: confirmed unchanged on `origin/main`
 - `TASK-006` readiness: `blocked`

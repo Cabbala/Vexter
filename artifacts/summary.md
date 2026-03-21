@@ -1,16 +1,15 @@
-# DEXTER-PAPER-DESIGN Summary
+# DEXTER-PAPER-IMPLEMENT Summary
 
-## Status
+## Implementation Status
 
-- `DEXTER-PAPER-DESIGN` completed as a design-only follow-up from `Cabbala/Vexter` latest `origin/main` commit `0d4ff2e160feecd4313f0d8ff95d2ff084c5a7ee` (PR `#11`, merged on `2026-03-21`).
-- The `TASK-005` blocker assumption was re-confirmed as Dexter coverage stall under safe modes, not another repeated retry workflow problem.
-- Dexter and Mew-X strategy, execution, and instrumentation logic were not changed during this task.
-- Detached source worktrees were inspected at the Vexter-pinned commits:
-  - Dexter: `69de8b6ca57ca3d03025d85329c88aa4a167da34`
-  - Mew-X: `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`
-- Sub-agents `Banach` and `Godel` were launched for sidecar source inspection while the main thread verified the pinned commits, current Vexter evidence, and the design decision locally.
+- `DEXTER-PAPER-IMPLEMENT` completed after confirming `Cabbala/Vexter` latest `origin/main` commit `4b32053697fc4efddd76e542b3d2a1411b450240` (PR `#12`, merged on `2026-03-21`) and following its design memo.
+- `Cabbala/Dexter` `main` now includes the explicit opt-in `paper_live` path at `5dc1036c499af5f14f06d08ad0fa96aa36228c96` (PR `#2`, merged on `2026-03-21`).
+- Dexter keeps `observe_live` as the default, avoids live send and `get_swap_tx()` when `VEXTER_MODE=paper_live`, and reuses the existing instrumentation contract for paper entry/session/exit/closeout events.
+- Dexter strategy semantics, trust logic, and entry/exit thresholds were kept unchanged. Mew-X was not modified.
+- Dexter source verification: `pytest -q` -> `4 passed`.
+- Vexter now pins Dexter `main` at `5dc1036c499af5f14f06d08ad0fa96aa36228c96` for future source sync/bootstrap work.
 
-## Current Evidence Baseline
+## Evidence Baseline Before Recollection
 
 - Promoted same-attempt pair remains `resume-after-pr9-20260321T1737`.
 - Promoted exact event overlap remains `167.174 s`, from `2026-03-21T08:39:09.961841Z` to `2026-03-21T08:41:57.136Z`.
@@ -70,17 +69,17 @@
 - It would still not make true execution quality, route behavior, real slippage, or transaction failure semantics comparable.
 - `TASK-006` remains blocked until that safer paper-equivalent path is implemented and re-measured or until some other explicitly approved evidence path replaces it.
 
-## Recommendation
+## Implementation Result
 
-- Recommendation: `IMPLEMENT`
-- Next task ID: `DEXTER-PAPER-IMPLEMENT`
-- Keep `TASK-006` blocked.
-- Keep retry-only `TASK-005` work deferred unless the paper-equivalent path is explicitly rejected.
+- Dexter now has an explicit `paper_live` execution path in `Dexter.py` that keeps the live decision loop intact while synthesizing entry and exit fills from paper quotes.
+- `DexLab/pump_fun/pump_swap.py` now exposes quote-only helpers for paper buys and sells so paper runs do not depend on live transaction submission.
+- `DexLab/instrumentation.py` now records paper exit confirmation metadata without introducing new normalized event names.
+- `TASK-005` still needs a fresh paper/sim-safe recollection to measure the new coverage ceiling. `TASK-006` remains blocked until that recollection is evaluated.
 
 ## Deliverables
 
-- Design memo: `docs/dexter_paper_mode_design.md`
-- Handoff prompt files:
-  - `artifacts/reports/dexter-paper-design-handoff/DETAILS.md`
-  - `artifacts/reports/dexter-paper-design-handoff/MIN_PROMPT.txt`
-- Bundle target: `artifacts/bundles/dexter-paper-design.tar.gz`
+- Design baseline memo: `docs/dexter_paper_mode_design.md`
+- Dexter source merge:
+  - PR `#2`: `feat(core): add Dexter paper_live execution path`
+  - Dexter `main`: `5dc1036c499af5f14f06d08ad0fa96aa36228c96`
+- Next recommended follow-up: recollect a matched paper/sim comparison package before any `TASK-006` work.

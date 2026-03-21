@@ -2,7 +2,7 @@
 
 ## Status
 
-- `DEXTER-PAPER-DESIGN` completed as a design-only follow-up from `Cabbala/Vexter` latest `origin/main` commit `0d4ff2eca834765f538db2dc1d798e664f786d2d` (PR `#11`, merged on `2026-03-21`).
+- `DEXTER-PAPER-DESIGN` completed as a design-only follow-up from `Cabbala/Vexter` latest `origin/main` commit `0d4ff2e160feecd4313f0d8ff95d2ff084c5a7ee` (PR `#11`, merged on `2026-03-21`).
 - The `TASK-005` blocker assumption was re-confirmed as Dexter coverage stall under safe modes, not another repeated retry workflow problem.
 - Dexter and Mew-X strategy, execution, and instrumentation logic were not changed during this task.
 - Detached source worktrees were inspected at the Vexter-pinned commits:

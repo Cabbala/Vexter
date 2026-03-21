@@ -8,7 +8,7 @@
 
 ## Why this is the next task
 
-`DEXTER-PAPER-DESIGN` on `Cabbala/Vexter` latest `main` (`0d4ff2eca834765f538db2dc1d798e664f786d2d`, PR `#11`) confirmed that:
+`DEXTER-PAPER-DESIGN` on `Cabbala/Vexter` latest `main` (`0d4ff2e160feecd4313f0d8ff95d2ff084c5a7ee`, PR `#11`) confirmed that:
 
 - repeated `TASK-005` retries are no longer the primary issue
 - the promoted same-attempt pair `resume-after-pr9-20260321T1737` still leaves Dexter stalled at `4 / 12`

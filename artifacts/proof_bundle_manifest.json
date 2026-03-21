@@ -60,7 +60,7 @@
     "vexter/comparison/"
   ],
   "task_result": {
-    "verified_main_commit": "0d4ff2eca834765f538db2dc1d798e664f786d2d",
+    "verified_main_commit": "0d4ff2e160feecd4313f0d8ff95d2ff084c5a7ee",
     "verified_pr": 11,
     "promoted_same_attempt_label": "resume-after-pr9-20260321T1737",
     "dexter_required_event_types_present": 4,

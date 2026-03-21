@@ -6,7 +6,7 @@ This memo answers `DEXTER-PAPER-DESIGN` only. It does not implement the mode yet
 
 The design baseline is:
 
-- `Cabbala/Vexter` latest `origin/main` at `0d4ff2eca834765f538db2dc1d798e664f786d2d` (PR `#11`, merged on `2026-03-21`)
+- `Cabbala/Vexter` latest `origin/main` at `0d4ff2e160feecd4313f0d8ff95d2ff084c5a7ee` (PR `#11`, merged on `2026-03-21`)
 - promoted `TASK-005` same-attempt pair `resume-after-pr9-20260321T1737`
 - Dexter validation on that pair: `4 / 12`
 - Mew-X validation on that pair: `8 / 12`
@@ -269,6 +269,7 @@ No new normalized event types are required.
 Reuse:
 
 - `entry_attempt`
+- `entry_rejected`
 - `entry_fill`
 - `session_update`
 - `exit_signal`
@@ -303,7 +304,7 @@ The paper path should fail closed if:
 - a required live snapshot is missing
 - closeout cannot reliably emit state and summary artifacts
 
-In those cases, the mode should emit `entry_rejected` or abort the session cleanly rather than silently fabricating more evidence.
+In those cases, the mode should reuse the existing `entry_rejected` event or abort the session cleanly rather than silently fabricating more evidence.
 
 ### Proof expectations
 

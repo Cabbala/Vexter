@@ -26,7 +26,7 @@
   "status": "design_complete_recommend_implement",
   "bundle_source": "/Users/cabbala/Downloads/vexter_dexter_paper_design_bundle.tar.gz",
   "starting_point": {
-    "verified_main": "0d4ff2eca834765f538db2dc1d798e664f786d2d",
+    "verified_main": "0d4ff2e160feecd4313f0d8ff95d2ff084c5a7ee",
     "verified_pr": 11,
     "work_branch": "codex/dexter-paper-design",
     "task_005_blocker_assumption": "dexter_coverage_stall_not_repeated_retry"

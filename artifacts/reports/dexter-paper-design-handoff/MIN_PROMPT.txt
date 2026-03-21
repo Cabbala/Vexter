@@ -1,0 +1,7 @@
+Vexter / 新規Codexスレッド / Worktree
+
+DEXTER-PAPER-IMPLEMENT を実行。
+必ず Cabbala/Vexter の最新 main を確認し、DEXTER-PAPER-DESIGN の結論に従って、Dexter の minimal paper-mode / paper-equivalent path だけを実装する。
+Dexter の strategy / creator scoring / exit ladder semantics は変えない。Mew-X と Vexter validator もまだ変えない。
+paper/sim 優先で、安全な non-funded path のみを使い、Dexter で entry_attempt / entry_fill / session_update / exit_signal / exit_fill / position_closed の比較可能イベントを増やす。
+Codex 作業完了後、必ず GitHub 上で ChatGPT が直近成果を確認できる状態にする。branch→commit→push→PR 作成まで実施。

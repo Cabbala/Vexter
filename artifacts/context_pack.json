@@ -62,6 +62,7 @@
       "artifacts/reports/task-005-live-pass-grade-runtime-window-comparison",
       "artifacts/proofs/task-005-live-collection-check.json",
       "artifacts/proofs/task-005-windows-runtime-recovery.json",
+      "artifacts/proofs/task-005-live-resume-after-pr9-20260321T1729-results",
       "artifacts/proofs/task-005-live-resume-after-pr9-20260321T1737-results",
       "artifacts/proofs/task-005-live-resume-after-pr8-20260321T0801-results",
       "artifacts/proofs/task-005-live-pass-grade-runtime-window-results",

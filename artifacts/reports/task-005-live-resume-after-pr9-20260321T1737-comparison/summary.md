@@ -32,4 +32,4 @@
 
 - Winning component candidates: deferred until both matched-window packages validate beyond `partial`.
 - Evidence still missing: pass-grade live validation, especially fill / exit / run-summary coverage on the matched pair.
-- Next task: keep TASK-005 open, collect a fuller comparable matched window, and rerun replay readiness only after that; TASK-006 remains blocked.
+- Next task: keep TASK-005 open, collect a fuller comparable matched window, and rerun replay readiness only after that; if retries keep stalling on Dexter coverage, limit follow-up to a design-only review of a minimal paper-mode or paper-equivalent path. Keep Mew-X on `sim` / `sim_live` and Dexter on the observe-only / zero-balance safety path unless a formal paper mode is confirmed; TASK-006 remains blocked.

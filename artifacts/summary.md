@@ -4,6 +4,7 @@
 
 - `TASK-005-live-comparison-evidence` remains blocked in `partial_live_comparison_blocker` state on branch `codex/task-005-resume-after-pr9` as of `2026-03-21T08:46:35Z`.
 - Start conditions were re-verified from `Cabbala/Vexter` latest `main` commit `20d0eb3d7f6bda11c2526711145c0cd3298e4adf`; PR `#9` was confirmed merged on `2026-03-21`.
+- Post-PR10 closeout was rechecked on `2026-03-21T09:10:02Z` against `origin/main` `5a352c5fa8773ca336eb593385f53f8ef2ffcb3c`; the promoted same-attempt pair `resume-after-pr9-20260321T1737`, the restored Mew-X `session_summary` pointer, the current partial blocker, and the paper/sim-first deferred follow-up note all stayed unchanged.
 - Dexter and Mew-X strategy, execution, and instrumentation logic remain unchanged.
 - Sub-agents `Wegener` and `Schrodinger` were launched for sidecar inspection while the main thread handled the fresh PR9 recollection, validation rebuild, and artifact closeout.
 - Two fresh PR9 same-attempt retries were collected:
@@ -47,7 +48,7 @@
 - Promoted `1737` pair versus `0801`:
   - Dexter stayed flat at `4 / 12`, even after a fresh PR9 recollection with a longer `167.174 s` exact overlap
   - Mew-X kept the restored `session_summary` export pointer, but event coverage regressed from `9 / 12` to `8 / 12`
-  - the promoted PR9 pair now provides a GitHub-visible fresh same-attempt baseline on merged PR9 `main`
+  - the promoted PR9 pair still provides the GitHub-visible fresh same-attempt baseline after PR `#10` merged into `main`
   - winner / tie decisions still remain deferred because both packages still validate as `partial`
 
 ## Current Blocker

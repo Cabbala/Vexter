@@ -132,11 +132,13 @@ Runtime prerequisites, DB reachability, frozen checkouts, Mew-X protobuf build p
 
 - Dexter and Mew-X both emit smoke-run artifacts under the fixed Vexter root.
 - `validate`, `derive-metrics`, and `build-pack` now complete on those smoke packages.
-- Both packages still validate as `partial`, and they were not collected from the same live measurement window.
+- Both packages still validate as `partial`, and the latest promoted evidence now comes from a matched same-attempt live measurement window rather than mismatched smoke-only collection.
 
-The next unblock requirement is a matched live window with fuller comparable coverage, especially on Dexter:
+The next unblock requirement is fuller comparable coverage on that matched live window, especially on Dexter:
 
-- collect one Dexter run and one Mew-X run from the same live measurement window
+- keep using one Dexter run and one Mew-X run from the same live measurement window
 - preserve frozen Dexter and Mew-X strategy, execution, and instrumentation logic
 - gather a Dexter run with more than observe-only rejection coverage
+- keep Mew-X on `sim` / `sim_live`, and keep Dexter on the observe-only / zero-balance safety path unless a formal paper mode is confirmed
+- if repeated matched-window retries keep stalling on Dexter coverage, limit follow-up to a design-only review of a minimal paper-mode or paper-equivalent path before any TASK-006 work
 - rerun `validate`, `derive-metrics`, and `build-pack` on that matched package pair

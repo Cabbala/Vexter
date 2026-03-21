@@ -61,6 +61,12 @@
   - Mew-X still lacks `creator_candidate`, `entry_rejected`, and `run_summary`
 - Because the promoted pair remains partial, no comparison area becomes decisive enough to advance replay validation or TASK-006.
 
+## Likely Next Step
+
+- Keep any further `TASK-005` retry on the same safe path: Mew-X `sim_live`, Dexter zero-balance `observe_live`, unless a formal Dexter paper mode is explicitly confirmed.
+- If repeated retries still stall on Dexter coverage, the next likely task is a source-faithful design review for a minimal Dexter paper-mode or paper-equivalent path aimed at improving comparison-ready coverage without changing strategy semantics.
+- This remains note-only closeout guidance and is separate from later `TASK-006` execution-quality comparison work.
+
 ## Result
 
 - latest promoted Dexter package: `artifacts/proofs/task-005-live-resume-after-pr8-20260321T0801-results/dexter.validate.json`

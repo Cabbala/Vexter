@@ -53,3 +53,9 @@
   - Mew-X still lacks `creator_candidate`, `entry_rejected`, and `run_summary`
 - Winner / tie decisions remain deferred for candidate sourcing, execution quality, exit quality, and replayability.
 - `TASK-006` remains blocked until a matched pair supports non-partial validation or otherwise yields evidence strong enough to move comparison areas out of the current deferred state.
+
+## Likely Next Step
+
+- The immediate path stays inside `TASK-005`: prefer another same-attempt retry with Mew-X in `sim_live` and Dexter on the zero-balance `observe_live` path unless a formal Dexter paper mode is confirmed.
+- If repeated safe-mode retries keep stalling on Dexter coverage, the next likely task is a source-faithful design review for a minimal Dexter paper-mode or paper-equivalent path that could improve comparison-ready coverage without changing strategy semantics.
+- This is a note-only follow-up candidate and remains separate from any later `TASK-006` execution-quality comparison work.

@@ -24,7 +24,7 @@ sync_repo() {
   printf '[ok] %s synced to %s (%s)\n' "$name" "$branch" "$commit"
 }
 
-sync_repo "Dexter" "https://github.com/Cabbala/Dexter.git" "main" "5dc1036c499af5f14f06d08ad0fa96aa36228c96"
+sync_repo "Dexter" "https://github.com/Cabbala/Dexter.git" "main" "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938"
 sync_repo "Mew-X" "https://github.com/Cabbala/Mew-X.git" "codex/task-003-mewx-instrumentation" "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
 
 printf '[ok] Reference repos are ready under %s\n' "$SOURCES_DIR"

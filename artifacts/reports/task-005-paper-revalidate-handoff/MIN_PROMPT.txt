@@ -1,0 +1,7 @@
+Vexter / 継続Codexスレッド / Worktree
+
+TASK-005-PAPER-REVALIDATE は完了。
+Vexter 最新 main は PR #14 merge commit `3a720a64a5dbbda482513446b3bc47c341dde2ae`、Dexter 最新 main は PR #3 merge commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938` まで確認済み。
+fresh matched Dexter `paper_live` x Mew-X `sim_live` を 2 本再収集して validate→derive-metrics→build-pack を再実行した結果、Dexter は両方とも `9/12` まで改善し、creator-only ceiling は解消した。
+ただし両 pair とも validator では `partial` のままで、Dexter は `candidate_rejected` / `entry_rejected` / `run_summary`、Mew-X は `candidate_rejected` / `creator_candidate` / `entry_rejected` / `run_summary` が欠落している。
+comparison winner mode も deferred のままなので TASK-006 は開始しない。次に進めるなら `TASK-005-PASS-GRADE-PAIR` として、source logic や comparison rules を変えずに pass-grade matched pair を狙う。

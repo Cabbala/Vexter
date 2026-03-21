@@ -32,7 +32,7 @@ Run the collector once per source. Provide the concrete event file and the run i
 powershell -ExecutionPolicy Bypass -File scripts\collect_comparison_package.ps1 `
   -Source dexter `
   -RunId dexter-20260321-window-a `
-  -SourceCommit 5dc1036c499af5f14f06d08ad0fa96aa36228c96 `
+  -SourceCommit ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938 `
   -Mode paper_live `
   -TransportMode ws `
   -StartedAtUtc 2026-03-21T01:00:00Z `

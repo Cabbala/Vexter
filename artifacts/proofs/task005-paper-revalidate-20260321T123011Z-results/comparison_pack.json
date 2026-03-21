@@ -1,0 +1,875 @@
+{
+  "built_at_utc": "2026-03-21T12:40:29Z",
+  "comparison_matrix": {
+    "candidate_generation": [
+      {
+        "dexter": {
+          "aggregation": "count",
+          "status": "ok",
+          "unit": "count",
+          "value": 208
+        },
+        "metric": "candidate_count",
+        "mewx": {
+          "aggregation": "count",
+          "status": "ok",
+          "unit": "count",
+          "value": 0
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "aggregation": "run_ratio",
+          "details": {
+            "candidate_count": 208,
+            "successful_positions": 2
+          },
+          "status": "ok",
+          "unit": "ratio",
+          "value": 0.009615384615384616
+        },
+        "metric": "candidate_precision_proxy",
+        "mewx": {
+          "reason": "no creator_candidate events were observed",
+          "status": "unavailable",
+          "unit": "ratio",
+          "value": null
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "metric": "candidate_coverage",
+        "mewx": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "metric": "source_mix",
+        "mewx": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "metric": "creator_score_distribution",
+        "mewx": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      }
+    ],
+    "entry_execution": [
+      {
+        "dexter": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "ms",
+          "value": 0.0
+        },
+        "metric": "signal_to_attempt_latency_ms",
+        "mewx": {
+          "aggregation": "median",
+          "samples": 4,
+          "status": "ok",
+          "unit": "ms",
+          "value": 963.5
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "ms",
+          "value": 553.5
+        },
+        "metric": "attempt_to_fill_latency_ms",
+        "mewx": {
+          "aggregation": "median",
+          "samples": 4,
+          "status": "ok",
+          "unit": "ms",
+          "value": 2.0
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "aggregation": "run_ratio",
+          "details": {
+            "attempts": 2,
+            "fills": 2
+          },
+          "status": "ok",
+          "unit": "ratio",
+          "value": 1.0
+        },
+        "metric": "fill_success_rate",
+        "mewx": {
+          "aggregation": "run_ratio",
+          "details": {
+            "attempts": 4,
+            "fills": 4
+          },
+          "status": "ok",
+          "unit": "ratio",
+          "value": 1.0
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "bps",
+          "value": 0.0
+        },
+        "metric": "quote_vs_fill_slippage_bps",
+        "mewx": {
+          "aggregation": "median",
+          "samples": 4,
+          "status": "ok",
+          "unit": "bps",
+          "value": -755.3364172472443
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "metric": "entry_reject_reason_rate",
+        "mewx": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      }
+    ],
+    "portfolio_operations": [
+      {
+        "dexter": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "metric": "concurrent_positions_max",
+        "mewx": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "metric": "capital_lock_efficiency",
+        "mewx": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "metric": "token_concurrency_rejects",
+        "mewx": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "metric": "failure_to_exit_incidence",
+        "mewx": {
+          "reason": "not derived in TASK-004 critical subset",
+          "status": "unavailable",
+          "unit": "n/a",
+          "value": null
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "aggregation": "classification",
+          "details": {
+            "db_exports": 136,
+            "logs": 0,
+            "raw_events": 1,
+            "replayable_flag": false,
+            "replays": 136
+          },
+          "status": "ok",
+          "unit": "grade",
+          "value": "partial"
+        },
+        "metric": "replayability_grade",
+        "mewx": {
+          "aggregation": "classification",
+          "details": {
+            "db_exports": 0,
+            "logs": 0,
+            "raw_events": 1,
+            "replayable_flag": false,
+            "replays": 0
+          },
+          "status": "ok",
+          "unit": "grade",
+          "value": "partial"
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      }
+    ],
+    "run_metadata": {
+      "dexter": {
+        "config_snapshot": "config/dexter-task005-paper-revalidate-20260321T123011Z.config.json",
+        "measurement_window": "2026-03-21T12:32:30.070774Z -> 2026-03-21T12:34:30.127310Z",
+        "mode": "paper_live",
+        "source_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+        "transport_mode": "ws"
+      },
+      "mewx": {
+        "config_snapshot": "config/mewx-task005-paper-revalidate-20260321T123011Z.config.json",
+        "measurement_window": "2026-03-21T12:32:30.070774Z -> 2026-03-21T12:34:30.127310Z",
+        "mode": "sim_live",
+        "source_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+        "transport_mode": "mixed"
+      }
+    },
+    "session_exit": [
+      {
+        "dexter": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "pct",
+          "value": 15.266343481038788
+        },
+        "metric": "max_favorable_excursion_pct",
+        "mewx": {
+          "aggregation": "median",
+          "samples": 3,
+          "status": "ok",
+          "unit": "pct",
+          "value": 25.342897137597188
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "pct",
+          "value": -17.853494537077854
+        },
+        "metric": "max_adverse_excursion_pct",
+        "mewx": {
+          "aggregation": "median",
+          "samples": 3,
+          "status": "ok",
+          "unit": "pct",
+          "value": 0.0
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "ms",
+          "value": 17197.0
+        },
+        "metric": "time_to_peak_ms",
+        "mewx": {
+          "aggregation": "median",
+          "samples": 3,
+          "status": "ok",
+          "unit": "ms",
+          "value": 1504.0
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "pct",
+          "value": -5.528193978680399
+        },
+        "metric": "realized_exit_pct",
+        "mewx": {
+          "aggregation": "median",
+          "samples": 3,
+          "status": "ok",
+          "unit": "pct",
+          "value": 25.342897137597188
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "pct",
+          "value": 32.34338718978904
+        },
+        "metric": "realized_vs_peak_gap_pct",
+        "mewx": {
+          "aggregation": "median",
+          "samples": 3,
+          "status": "ok",
+          "unit": "pct",
+          "value": 0.0
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      },
+      {
+        "dexter": {
+          "aggregation": "run_ratio",
+          "details": {
+            "closed_positions": 2,
+            "stale_positions": 1
+          },
+          "status": "ok",
+          "unit": "ratio",
+          "value": 0.5
+        },
+        "metric": "stale_position_ratio",
+        "mewx": {
+          "aggregation": "run_ratio",
+          "details": {
+            "closed_positions": 3,
+            "stale_positions": 3
+          },
+          "status": "ok",
+          "unit": "ratio",
+          "value": 1.0
+        },
+        "notes": "Winner deferred until matched live packages are collected.",
+        "winner": "pending_live_evidence"
+      }
+    ],
+    "validation": {
+      "dexter": {
+        "checks": {
+          "event_envelope_ok": true,
+          "payload_fields_ok": true,
+          "proof_attribution_ok": true,
+          "required_event_types_ok": false,
+          "run_identity_ok": true,
+          "source_exports_ok": true
+        },
+        "classification": "partial",
+        "comparison_readiness": "observe_only",
+        "coverage": {
+          "event_completeness_ratio": 0.75,
+          "missing_event_types": [
+            "candidate_rejected",
+            "entry_rejected",
+            "run_summary"
+          ],
+          "observed_event_types": [
+            "creator_candidate",
+            "entry_attempt",
+            "entry_fill",
+            "entry_signal",
+            "exit_fill",
+            "exit_signal",
+            "mint_observed",
+            "position_closed",
+            "session_update"
+          ],
+          "required_event_types_present": 9,
+          "required_event_types_total": 12,
+          "total_events": 245
+        },
+        "issues": [
+          {
+            "code": "missing_required_event_types",
+            "message": "required event types were not observed in the run package: candidate_rejected, entry_rejected, run_summary",
+            "path": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-revalidate/artifacts/tmp/winlan-packages-task005-paper-revalidate-20260321T123011Z/dexter-task005-paper-revalidate-20260321T123011Z/events.ndjson",
+            "severity": "error"
+          }
+        ],
+        "package_dir": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-revalidate/artifacts/tmp/winlan-packages-task005-paper-revalidate-20260321T123011Z/dexter-task005-paper-revalidate-20260321T123011Z",
+        "run_id": "dexter-task005-paper-revalidate-20260321T123011Z",
+        "source_system": "dexter"
+      },
+      "mewx": {
+        "checks": {
+          "event_envelope_ok": true,
+          "payload_fields_ok": true,
+          "proof_attribution_ok": true,
+          "required_event_types_ok": false,
+          "run_identity_ok": true,
+          "source_exports_ok": true
+        },
+        "classification": "partial",
+        "comparison_readiness": "observe_only",
+        "coverage": {
+          "event_completeness_ratio": 0.6666666666666666,
+          "missing_event_types": [
+            "candidate_rejected",
+            "creator_candidate",
+            "entry_rejected",
+            "run_summary"
+          ],
+          "observed_event_types": [
+            "entry_attempt",
+            "entry_fill",
+            "entry_signal",
+            "exit_fill",
+            "exit_signal",
+            "mint_observed",
+            "position_closed",
+            "session_update"
+          ],
+          "required_event_types_present": 8,
+          "required_event_types_total": 12,
+          "total_events": 115
+        },
+        "issues": [
+          {
+            "code": "missing_required_event_types",
+            "message": "required event types were not observed in the run package: candidate_rejected, creator_candidate, entry_rejected, run_summary",
+            "path": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-revalidate/artifacts/tmp/winlan-packages-task005-paper-revalidate-20260321T123011Z/mewx-task005-paper-revalidate-20260321T123011Z/events.ndjson",
+            "severity": "error"
+          }
+        ],
+        "package_dir": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-revalidate/artifacts/tmp/winlan-packages-task005-paper-revalidate-20260321T123011Z/mewx-task005-paper-revalidate-20260321T123011Z",
+        "run_id": "mewx-task005-paper-revalidate-20260321T123011Z",
+        "source_system": "mewx"
+      }
+    }
+  },
+  "metrics": {
+    "dexter": {
+      "derived_metrics": [
+        "candidate_count",
+        "candidate_precision_proxy",
+        "fill_success_rate",
+        "signal_to_attempt_latency_ms",
+        "attempt_to_fill_latency_ms",
+        "quote_vs_fill_slippage_bps",
+        "max_favorable_excursion_pct",
+        "max_adverse_excursion_pct",
+        "time_to_peak_ms",
+        "realized_exit_pct",
+        "realized_vs_peak_gap_pct",
+        "stale_position_ratio",
+        "replayability_grade"
+      ],
+      "metrics": {
+        "attempt_to_fill_latency_ms": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "ms",
+          "value": 553.5
+        },
+        "candidate_count": {
+          "aggregation": "count",
+          "status": "ok",
+          "unit": "count",
+          "value": 208
+        },
+        "candidate_precision_proxy": {
+          "aggregation": "run_ratio",
+          "details": {
+            "candidate_count": 208,
+            "successful_positions": 2
+          },
+          "status": "ok",
+          "unit": "ratio",
+          "value": 0.009615384615384616
+        },
+        "fill_success_rate": {
+          "aggregation": "run_ratio",
+          "details": {
+            "attempts": 2,
+            "fills": 2
+          },
+          "status": "ok",
+          "unit": "ratio",
+          "value": 1.0
+        },
+        "max_adverse_excursion_pct": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "pct",
+          "value": -17.853494537077854
+        },
+        "max_favorable_excursion_pct": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "pct",
+          "value": 15.266343481038788
+        },
+        "quote_vs_fill_slippage_bps": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "bps",
+          "value": 0.0
+        },
+        "realized_exit_pct": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "pct",
+          "value": -5.528193978680399
+        },
+        "realized_vs_peak_gap_pct": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "pct",
+          "value": 32.34338718978904
+        },
+        "replayability_grade": {
+          "aggregation": "classification",
+          "details": {
+            "db_exports": 136,
+            "logs": 0,
+            "raw_events": 1,
+            "replayable_flag": false,
+            "replays": 136
+          },
+          "status": "ok",
+          "unit": "grade",
+          "value": "partial"
+        },
+        "signal_to_attempt_latency_ms": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "ms",
+          "value": 0.0
+        },
+        "stale_position_ratio": {
+          "aggregation": "run_ratio",
+          "details": {
+            "closed_positions": 2,
+            "stale_positions": 1
+          },
+          "status": "ok",
+          "unit": "ratio",
+          "value": 0.5
+        },
+        "time_to_peak_ms": {
+          "aggregation": "median",
+          "samples": 2,
+          "status": "ok",
+          "unit": "ms",
+          "value": 17197.0
+        }
+      },
+      "package_dir": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-revalidate/artifacts/tmp/winlan-packages-task005-paper-revalidate-20260321T123011Z/dexter-task005-paper-revalidate-20260321T123011Z",
+      "run_id": "dexter-task005-paper-revalidate-20260321T123011Z",
+      "source_system": "dexter"
+    },
+    "mewx": {
+      "derived_metrics": [
+        "candidate_count",
+        "candidate_precision_proxy",
+        "fill_success_rate",
+        "signal_to_attempt_latency_ms",
+        "attempt_to_fill_latency_ms",
+        "quote_vs_fill_slippage_bps",
+        "max_favorable_excursion_pct",
+        "max_adverse_excursion_pct",
+        "time_to_peak_ms",
+        "realized_exit_pct",
+        "realized_vs_peak_gap_pct",
+        "stale_position_ratio",
+        "replayability_grade"
+      ],
+      "metrics": {
+        "attempt_to_fill_latency_ms": {
+          "aggregation": "median",
+          "samples": 4,
+          "status": "ok",
+          "unit": "ms",
+          "value": 2.0
+        },
+        "candidate_count": {
+          "aggregation": "count",
+          "status": "ok",
+          "unit": "count",
+          "value": 0
+        },
+        "candidate_precision_proxy": {
+          "reason": "no creator_candidate events were observed",
+          "status": "unavailable",
+          "unit": "ratio",
+          "value": null
+        },
+        "fill_success_rate": {
+          "aggregation": "run_ratio",
+          "details": {
+            "attempts": 4,
+            "fills": 4
+          },
+          "status": "ok",
+          "unit": "ratio",
+          "value": 1.0
+        },
+        "max_adverse_excursion_pct": {
+          "aggregation": "median",
+          "samples": 3,
+          "status": "ok",
+          "unit": "pct",
+          "value": 0.0
+        },
+        "max_favorable_excursion_pct": {
+          "aggregation": "median",
+          "samples": 3,
+          "status": "ok",
+          "unit": "pct",
+          "value": 25.342897137597188
+        },
+        "quote_vs_fill_slippage_bps": {
+          "aggregation": "median",
+          "samples": 4,
+          "status": "ok",
+          "unit": "bps",
+          "value": -755.3364172472443
+        },
+        "realized_exit_pct": {
+          "aggregation": "median",
+          "samples": 3,
+          "status": "ok",
+          "unit": "pct",
+          "value": 25.342897137597188
+        },
+        "realized_vs_peak_gap_pct": {
+          "aggregation": "median",
+          "samples": 3,
+          "status": "ok",
+          "unit": "pct",
+          "value": 0.0
+        },
+        "replayability_grade": {
+          "aggregation": "classification",
+          "details": {
+            "db_exports": 0,
+            "logs": 0,
+            "raw_events": 1,
+            "replayable_flag": false,
+            "replays": 0
+          },
+          "status": "ok",
+          "unit": "grade",
+          "value": "partial"
+        },
+        "signal_to_attempt_latency_ms": {
+          "aggregation": "median",
+          "samples": 4,
+          "status": "ok",
+          "unit": "ms",
+          "value": 963.5
+        },
+        "stale_position_ratio": {
+          "aggregation": "run_ratio",
+          "details": {
+            "closed_positions": 3,
+            "stale_positions": 3
+          },
+          "status": "ok",
+          "unit": "ratio",
+          "value": 1.0
+        },
+        "time_to_peak_ms": {
+          "aggregation": "median",
+          "samples": 3,
+          "status": "ok",
+          "unit": "ms",
+          "value": 1504.0
+        }
+      },
+      "package_dir": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-revalidate/artifacts/tmp/winlan-packages-task005-paper-revalidate-20260321T123011Z/mewx-task005-paper-revalidate-20260321T123011Z",
+      "run_id": "mewx-task005-paper-revalidate-20260321T123011Z",
+      "source_system": "mewx"
+    }
+  },
+  "pack_id": "comparison-dexter-task005-paper-revalidate-20260321T123011Z-vs-mewx-task005-paper-revalidate-20260321T123011Z",
+  "summary_note": "Fresh same-attempt Dexter paper_live x Mew-X sim_live recollection after Dexter PR #3 merged to main (ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938).",
+  "validation": {
+    "dexter": {
+      "checks": {
+        "event_envelope_ok": true,
+        "payload_fields_ok": true,
+        "proof_attribution_ok": true,
+        "required_event_types_ok": false,
+        "run_identity_ok": true,
+        "source_exports_ok": true
+      },
+      "classification": "partial",
+      "comparison_readiness": "observe_only",
+      "coverage": {
+        "event_completeness_ratio": 0.75,
+        "missing_event_types": [
+          "candidate_rejected",
+          "entry_rejected",
+          "run_summary"
+        ],
+        "observed_event_types": [
+          "creator_candidate",
+          "entry_attempt",
+          "entry_fill",
+          "entry_signal",
+          "exit_fill",
+          "exit_signal",
+          "mint_observed",
+          "position_closed",
+          "session_update"
+        ],
+        "required_event_types_present": 9,
+        "required_event_types_total": 12,
+        "total_events": 245
+      },
+      "issues": [
+        {
+          "code": "missing_required_event_types",
+          "message": "required event types were not observed in the run package: candidate_rejected, entry_rejected, run_summary",
+          "path": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-revalidate/artifacts/tmp/winlan-packages-task005-paper-revalidate-20260321T123011Z/dexter-task005-paper-revalidate-20260321T123011Z/events.ndjson",
+          "severity": "error"
+        }
+      ],
+      "package_dir": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-revalidate/artifacts/tmp/winlan-packages-task005-paper-revalidate-20260321T123011Z/dexter-task005-paper-revalidate-20260321T123011Z",
+      "run_id": "dexter-task005-paper-revalidate-20260321T123011Z",
+      "source_system": "dexter"
+    },
+    "mewx": {
+      "checks": {
+        "event_envelope_ok": true,
+        "payload_fields_ok": true,
+        "proof_attribution_ok": true,
+        "required_event_types_ok": false,
+        "run_identity_ok": true,
+        "source_exports_ok": true
+      },
+      "classification": "partial",
+      "comparison_readiness": "observe_only",
+      "coverage": {
+        "event_completeness_ratio": 0.6666666666666666,
+        "missing_event_types": [
+          "candidate_rejected",
+          "creator_candidate",
+          "entry_rejected",
+          "run_summary"
+        ],
+        "observed_event_types": [
+          "entry_attempt",
+          "entry_fill",
+          "entry_signal",
+          "exit_fill",
+          "exit_signal",
+          "mint_observed",
+          "position_closed",
+          "session_update"
+        ],
+        "required_event_types_present": 8,
+        "required_event_types_total": 12,
+        "total_events": 115
+      },
+      "issues": [
+        {
+          "code": "missing_required_event_types",
+          "message": "required event types were not observed in the run package: candidate_rejected, creator_candidate, entry_rejected, run_summary",
+          "path": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-revalidate/artifacts/tmp/winlan-packages-task005-paper-revalidate-20260321T123011Z/mewx-task005-paper-revalidate-20260321T123011Z/events.ndjson",
+          "severity": "error"
+        }
+      ],
+      "package_dir": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-revalidate/artifacts/tmp/winlan-packages-task005-paper-revalidate-20260321T123011Z/mewx-task005-paper-revalidate-20260321T123011Z",
+      "run_id": "mewx-task005-paper-revalidate-20260321T123011Z",
+      "source_system": "mewx"
+    }
+  },
+  "winner_mode": "deferred"
+}

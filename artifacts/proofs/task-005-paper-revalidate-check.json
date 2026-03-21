@@ -1,0 +1,192 @@
+{
+  "task_id": "TASK-005-PAPER-REVALIDATE",
+  "checked_at_utc": "2026-03-21T12:41:51Z",
+  "status": "paper_live_improved_but_partial_validation",
+  "windows_runtime_host": "win-lan",
+  "resolved_windows_hostname": "DESKTOP-NNC6MPS",
+  "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
+  "verified_start": {
+    "main_commit": "3a720a64a5dbbda482513446b3bc47c341dde2ae",
+    "pull_requests": [
+      14
+    ],
+    "main_merged_at_utc": "2026-03-21T11:10:30Z",
+    "branch": "codex/task-005-paper-revalidate",
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pull_request": 3,
+    "dexter_merged_at_utc": "2026-03-21T11:31:07Z"
+  },
+  "frozen_source_commits": {
+    "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "collection_strategy": {
+    "mewx_mode": "sim_live",
+    "dexter_mode": "paper_live",
+    "startup_serialization": {
+      "startup_delay_seconds": 5,
+      "dexter_prestart_quiet_seconds": 60,
+      "dexter_wslogs_settle_seconds": 20,
+      "dexter_retry_backoff_seconds": 90
+    },
+    "selection_rule": "Promote the stronger same-attempt pair by overlap and eventful Dexter coverage, then keep a confirmatory retry."
+  },
+  "measurement_window_status": "matched_window_collected_partial",
+  "promoted_same_attempt_pair": {
+    "label": "task005-paper-revalidate-20260321T123011Z",
+    "measurement_window": {
+      "started_at_utc": "2026-03-21T12:32:30.070774Z",
+      "ended_at_utc": "2026-03-21T12:34:30.127310Z",
+      "exact_overlap_start_utc": "2026-03-21T12:32:06.040014Z",
+      "exact_overlap_end_utc": "2026-03-21T12:34:03.835767Z",
+      "exact_overlap_duration_ms": 117795
+    },
+    "dexter": {
+      "run_id": "dexter-task005-paper-revalidate-20260321T123011Z",
+      "raw_event_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter\\dexter-task005-paper-revalidate-20260321T123011Z.ndjson",
+      "event_span_utc": [
+        "2026-03-21T12:32:06.040014Z",
+        "2026-03-21T12:34:03.835767Z"
+      ],
+      "required_event_types_present": 9,
+      "required_event_types_total": 12,
+      "observed_event_types": [
+        "creator_candidate",
+        "entry_attempt",
+        "entry_fill",
+        "entry_signal",
+        "exit_fill",
+        "exit_signal",
+        "mint_observed",
+        "position_closed",
+        "session_update"
+      ],
+      "missing_event_types": [
+        "candidate_rejected",
+        "entry_rejected",
+        "run_summary"
+      ],
+      "total_events": 245,
+      "startup_http_429_count": 1,
+      "wslogs_http_429_count": 0,
+      "full_stream_fallback": true
+    },
+    "mewx": {
+      "run_id": "mewx-task005-paper-revalidate-20260321T123011Z",
+      "event_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx\\mewx-task005-paper-revalidate-20260321T123011Z.ndjson",
+      "event_span_utc": [
+        "2026-03-21T12:31:02.119Z",
+        "2026-03-21T12:34:22.908Z"
+      ],
+      "required_event_types_present": 8,
+      "required_event_types_total": 12,
+      "observed_event_types": [
+        "entry_attempt",
+        "entry_fill",
+        "entry_signal",
+        "exit_fill",
+        "exit_signal",
+        "mint_observed",
+        "position_closed",
+        "session_update"
+      ],
+      "missing_event_types": [
+        "candidate_rejected",
+        "creator_candidate",
+        "entry_rejected",
+        "run_summary"
+      ],
+      "total_events": 115,
+      "full_stream_fallback": true
+    },
+    "local_packages": {
+      "dexter": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-revalidate/artifacts/tmp/winlan-packages-task005-paper-revalidate-20260321T123011Z/dexter-task005-paper-revalidate-20260321T123011Z",
+      "mewx": "/Users/cabbala/Documents/worktrees/Vexter-task005-paper-revalidate/artifacts/tmp/winlan-packages-task005-paper-revalidate-20260321T123011Z/mewx-task005-paper-revalidate-20260321T123011Z"
+    },
+    "comparison_output_dir": "artifacts/reports/task005-paper-revalidate-20260321T123011Z-comparison",
+    "comparison_pack": "artifacts/reports/task005-paper-revalidate-20260321T123011Z-comparison/comparison_pack.json"
+  },
+  "confirmatory_same_attempt_pair": {
+    "label": "task005-paper-revalidate-20260321T123426Z",
+    "measurement_window": {
+      "started_at_utc": "2026-03-21T12:37:19.926587Z",
+      "ended_at_utc": "2026-03-21T12:39:19.991771Z",
+      "exact_overlap_start_utc": "2026-03-21T12:36:50.117435Z",
+      "exact_overlap_end_utc": "2026-03-21T12:38:39.047049Z",
+      "exact_overlap_duration_ms": 108930
+    },
+    "dexter": {
+      "run_id": "dexter-task005-paper-revalidate-20260321T123426Z",
+      "required_event_types_present": 9,
+      "required_event_types_total": 12,
+      "observed_event_types": [
+        "creator_candidate",
+        "entry_attempt",
+        "entry_fill",
+        "entry_signal",
+        "exit_fill",
+        "exit_signal",
+        "mint_observed",
+        "position_closed",
+        "session_update"
+      ],
+      "startup_http_429_count": 2,
+      "wslogs_http_429_count": 8,
+      "full_stream_fallback": true
+    },
+    "mewx": {
+      "run_id": "mewx-task005-paper-revalidate-20260321T123426Z",
+      "required_event_types_present": 8,
+      "required_event_types_total": 12,
+      "full_stream_fallback": true
+    },
+    "comparison_output_dir": "artifacts/reports/task005-paper-revalidate-20260321T123426Z-comparison",
+    "comparison_pack": "artifacts/reports/task005-paper-revalidate-20260321T123426Z-comparison/comparison_pack.json"
+  },
+  "baseline_comparison": {
+    "prior_authoritative_label": "resume-after-pr9-20260321T1737",
+    "prior_dexter_required_event_types_present": 4,
+    "prior_mewx_required_event_types_present": 8,
+    "prior_paper_validation_promoted_label": "task005-paper-validation-20260321T1950",
+    "prior_paper_validation_dexter_required_event_types_present": 1,
+    "promoted_dexter_required_event_types_present": 9,
+    "promoted_mewx_required_event_types_present": 8,
+    "comparison_notes": [
+      "Dexter improved from the previous paper-validation ceiling of 1/12 to 9/12 on both fresh recollections.",
+      "Dexter also advanced beyond the pre-paper authoritative baseline of 4/12 to 9/12 on the promoted pair.",
+      "Mew-X remained at 8/12 on both fresh recollections, so the pair is still only partial under the current validation contract.",
+      "run_summary was absent on both sources for both retries, keeping winner_mode deferred and TASK-006 blocked.",
+      "validate, derive-metrics, and build-pack were rerun successfully on both fresh same-attempt pairs."
+    ]
+  },
+  "positive_findings": [
+    {
+      "code": "creator_only_ceiling_resolved",
+      "detail": "Dexter paper_live progressed beyond creator_candidate on two fresh same-attempt recollections and emitted mint, entry, session, exit, and position-close events."
+    },
+    {
+      "code": "dexter_revalidated_after_pr3",
+      "detail": "Both fresh pairs were collected against Dexter main at merged PR #3 commit ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938."
+    }
+  ],
+  "task_006_ready": false,
+  "blockers": [
+    {
+      "code": "partial_validation_contract",
+      "detail": "Both comparison packages still validate only as partial because required event types remain missing under the current contract."
+    },
+    {
+      "code": "run_summary_missing",
+      "detail": "run_summary did not appear on either source in either fresh retry, so comparison closeout and replay-readiness evidence remain incomplete."
+    },
+    {
+      "code": "winner_mode_deferred",
+      "detail": "comparison_pack winner_mode stayed deferred on both pairs, so TASK-006 is not evidence-ready even though Dexter paper coverage improved materially."
+    }
+  ],
+  "next_task": {
+    "id": "TASK-005-PASS-GRADE-PAIR",
+    "state": "collect_fresh_pass_grade_matched_pair",
+    "note": "Continue TASK-005 with another matched paper/sim recollection aimed at capturing the remaining required event types without changing source logic or comparison rules."
+  }
+}

@@ -1,110 +1,23 @@
 {
-  "task_id": "TASK-005-PAPER-VALIDATION",
-  "verified_at_utc": "2026-03-21T11:01:05Z",
+  "task_id": "TASK-005-PAPER-REVALIDATE",
+  "checked_at_utc": "2026-03-21T12:41:51Z",
+  "status": "runtime_ready",
   "windows_runtime_host": "win-lan",
   "resolved_windows_hostname": "DESKTOP-NNC6MPS",
   "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
-  "status": "runtime_recovered_for_task_005_paper_validation",
-  "verified_start_commit": "379f55a50dbfd91968ba643e2fbfe5e73fad8392",
-  "verified_prs": [
-    12,
-    13
-  ],
-  "runtime_prerequisites": {
-    "cargo": {
-      "present": true,
-      "version": "cargo 1.94.0 (85eff7c80 2026-01-15)"
-    },
-    "rustc": {
-      "present": true,
-      "version": "rustc 1.94.0 (4a4ef493e 2026-03-02)"
-    },
-    "psql": {
-      "present": true,
-      "version": "psql (PostgreSQL) 17.9"
-    },
-    "postgres": {
-      "present": true,
-      "provider": "official_edb_binaries_zip",
-      "version": "17.9",
-      "zip_url": "https://get.enterprisedb.com/postgresql/postgresql-17.9-2-windows-x64-binaries.zip",
-      "listener": "127.0.0.1:5432",
-      "process_name": "postgres.exe",
-      "data_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\portable17",
-      "log_path": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\postgresql-17.log"
-    },
-    "sh": {
-      "present": true,
-      "path": "C:\\Program Files\\Git\\bin\\sh.exe",
-      "note": "Use Git\\bin only; Git\\usr\\bin shadows MSVC link.exe on Windows."
-    },
-    "protobuf": {
-      "present": true,
-      "provider": "Google.Protobuf winget package",
-      "protoc": "C:\\Users\\bot\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Google.Protobuf_Microsoft.Winget.Source_8wekyb3d8bbwe\\bin\\protoc.exe",
-      "include": "C:\\Users\\bot\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Google.Protobuf_Microsoft.Winget.Source_8wekyb3d8bbwe\\include",
-      "install_dir": "C:\\Users\\bot\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Google.Protobuf_Microsoft.Winget.Source_8wekyb3d8bbwe"
-    }
+  "dexter": {
+    "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter",
+    "commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "env_file": "C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter\\.env",
+    "python": "Python 3.11.9"
   },
-  "restored_databases": [
-    "dexter_db",
-    "goldmine",
-    "vacation"
-  ],
-  "source_checkouts": {
-    "dexter": {
-      "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter",
-      "branch": "main",
-      "commit": "5dc1036c499af5f14f06d08ad0fa96aa36228c96",
-      "python_venv": "C:\\Users\\bot\\quant\\Vexter\\venvs\\dexter",
-      "database_bootstrap": "success"
-    },
-    "mewx": {
-      "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X",
-      "branch": "codex/task-003-mewx-instrumentation",
-      "commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
-      "startup_probe": {
-        "status": "sim_launch_verified",
-        "message": "Mew-X sim launched and emitted TASK-005 paper-validation artifacts on win-lan."
-      }
-    }
+  "mewx": {
+    "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X",
+    "commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "env_file": "C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env"
   },
-  "env_injection_points": {
-    "dexter": {
-      "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter\\.env",
-      "required_keys": [
-        "PRIVATE_KEY",
-        "HTTP_URL",
-        "WS_URL"
-      ],
-      "task_005_mode": "paper_live"
-    },
-    "mewx": {
-      "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env",
-      "required_keys": [
-        "RPC_URL",
-        "WS_URL",
-        "PRIVATE_KEY",
-        "DB_URL"
-      ],
-      "task_005_mode": "sim"
-    }
-  },
-  "output_roots": {
-    "dexter_raw_events": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
-    "mewx_raw_events": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx",
-    "comparison_inputs": "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified\\comparison_inputs",
-    "unified_reports": "C:\\Users\\bot\\quant\\Vexter\\runtime\\unified\\reports"
-  },
-  "remaining_blockers": [
-    {
-      "code": "dexter_paper_live_creator_only",
-      "detail": "Environment recovery succeeded, but fresh paper-validation retries still showed Dexter paper_live emitting only creator_candidate."
-    },
-    {
-      "code": "subsecond_exact_overlap_after_full_stream_fallback",
-      "detail": "Fresh same-attempt retries needed full-stream fallback because raw events started before the post-readiness measurement window, leaving only subsecond exact overlap."
-    }
-  ],
-  "task_006_ready": false
+  "postgres": {
+    "version": "psql (PostgreSQL) 17.9",
+    "listener": "127.0.0.1:5432 - accepting connections"
+  }
 }

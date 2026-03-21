@@ -1,6 +1,6 @@
 {
   "task_id": "TASK-005-live-comparison-evidence",
-  "checked_at_utc": "2026-03-21T08:32:37Z",
+  "checked_at_utc": "2026-03-21T08:46:35Z",
   "status": "partial_live_comparison_blocker",
   "windows_runtime_host": "win-lan",
   "resolved_windows_hostname": "DESKTOP-NNC6MPS",
@@ -17,24 +17,24 @@
   "collection_strategy": {
     "mewx_mode": "sim_live",
     "dexter_mode": "observe_live",
-    "collector_fix": "Mew-X session exports under runtime\\\\mewx\\\\export\\\\sessions are now copied into the package exports bucket so run_metadata.json can restore the session_summary pointer.",
-    "selection_rule": "Promote the latest completed same-attempt pair that can be packaged and rebuilt end-to-end without interrupting active Windows processes."
+    "collector_fix": "Mew-X session exports under runtime\\\\mewx\\\\export\\\\sessions are preserved in the package exports bucket so run_metadata.json retains the session_summary pointer.",
+    "selection_rule": "Promote the latest fresh same-attempt PR9 pair that preserves exact event overlap and can be rebuilt end-to-end on the Mac control plane."
   },
   "measurement_window_status": "matched_window_collected_partial",
   "promoted_same_attempt_pair": {
-    "label": "resume-after-pr8-20260321T0801",
+    "label": "resume-after-pr9-20260321T1737",
     "measurement_window": {
-      "started_at_utc": "2026-03-20T22:47:12.105Z",
-      "ended_at_utc": "2026-03-20T22:50:39.892066Z",
-      "exact_overlap_start_utc": "2026-03-20T22:48:39.092958Z",
-      "exact_overlap_end_utc": "2026-03-20T22:50:35.078Z"
+      "started_at_utc": "2026-03-21T08:39:25.571218Z",
+      "ended_at_utc": "2026-03-21T08:42:25.644005Z",
+      "exact_overlap_start_utc": "2026-03-21T08:39:09.961841Z",
+      "exact_overlap_end_utc": "2026-03-21T08:41:57.136Z"
     },
     "dexter": {
-      "run_id": "dexter-resume-after-pr8-20260321T0801",
-      "raw_event_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter\\dexter-resume-after-pr8-20260321T0801.ndjson",
+      "run_id": "dexter-resume-after-pr9-20260321T1737",
+      "raw_event_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter\\dexter-resume-after-pr9-20260321T1737.ndjson",
       "event_span_utc": [
-        "2026-03-20T22:48:39.092958Z",
-        "2026-03-20T22:50:39.892066Z"
+        "2026-03-21T08:39:09.961841Z",
+        "2026-03-21T08:42:25.574316Z"
       ],
       "required_event_types_present": 4,
       "required_event_types_total": 12,
@@ -54,19 +54,20 @@
         "run_summary",
         "session_update"
       ],
-      "total_events": 2384
+      "total_events": 113868,
+      "startup_attempts": 2,
+      "wallet_balance_http_429_attempts": 1
     },
     "mewx": {
-      "run_id": "mewx-resume-after-pr8-20260321T0801",
-      "event_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx\\mewx-resume-after-pr8-20260321T0801.ndjson",
+      "run_id": "mewx-resume-after-pr9-20260321T1737",
+      "event_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx\\mewx-resume-after-pr9-20260321T1737.ndjson",
       "event_span_utc": [
-        "2026-03-20T22:47:12.105Z",
-        "2026-03-20T22:50:35.078Z"
+        "2026-03-21T08:37:12.215Z",
+        "2026-03-21T08:41:57.136Z"
       ],
-      "required_event_types_present": 9,
+      "required_event_types_present": 8,
       "required_event_types_total": 12,
       "observed_event_types": [
-        "candidate_rejected",
         "entry_attempt",
         "entry_fill",
         "entry_signal",
@@ -77,38 +78,37 @@
         "session_update"
       ],
       "missing_event_types": [
+        "candidate_rejected",
         "creator_candidate",
         "entry_rejected",
         "run_summary"
       ],
-      "total_events": 44,
+      "total_events": 54,
       "session_summary_pointer_restored": true
     },
     "local_packages": {
-      "dexter": "/Users/cabbala/Documents/vexter/task005-pass-grade-pair/artifacts/tmp/winlan-packages-resume-after-pr8-20260321T0801/dexter-resume-after-pr8-20260321T0801",
-      "mewx": "/Users/cabbala/Documents/vexter/task005-pass-grade-pair/artifacts/tmp/winlan-packages-resume-after-pr8-20260321T0801/mewx-resume-after-pr8-20260321T0801"
+      "dexter": "/Users/cabbala/Documents/vexter/task005-pass-grade-pair/artifacts/tmp/winlan-packages-resume-after-pr9-20260321T1737/dexter-resume-after-pr9-20260321T1737",
+      "mewx": "/Users/cabbala/Documents/vexter/task005-pass-grade-pair/artifacts/tmp/winlan-packages-resume-after-pr9-20260321T1737/mewx-resume-after-pr9-20260321T1737"
     },
-    "comparison_output_dir": "artifacts/reports/task-005-live-resume-after-pr8-20260321T0801-comparison",
-    "comparison_pack": "artifacts/proofs/task-005-live-resume-after-pr8-20260321T0801-results/comparison-pack.json"
+    "comparison_output_dir": "artifacts/reports/task-005-live-resume-after-pr9-20260321T1737-comparison",
+    "comparison_pack": "artifacts/proofs/task-005-live-resume-after-pr9-20260321T1737-results/comparison-pack.json"
   },
-  "observed_active_attempt": {
-    "label": "resume-after-pr9-20260321T1726",
-    "note": "A newer raw pair was observed on win-lan during closeout, but Mew-X remained active and the on-disk event coverage was weaker than the promoted 0801 pair.",
-    "dexter_raw_event_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter\\dexter-resume-after-pr9-20260321T1726.ndjson",
-    "mewx_raw_event_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx\\mewx-resume-after-pr9-20260321T1726.ndjson"
+  "discarded_same_attempt_pair": {
+    "label": "resume-after-pr9-20260321T1729",
+    "detail": "Dexter startup serialization eliminated startup HTTP 429 on the successful attempt, but exact event overlap was negative: Dexter first raw event arrived 24.242 s after the Mew-X stream had already ended."
   },
   "baseline_comparison": {
-    "prior_promoted_label": "resume-after-pr8-20260321T0743",
+    "prior_promoted_label": "resume-after-pr8-20260321T0801",
     "prior_dexter_required_event_types_present": 4,
-    "prior_mewx_required_event_types_present": 8,
+    "prior_mewx_required_event_types_present": 9,
     "promoted_dexter_required_event_types_present": 4,
-    "promoted_mewx_required_event_types_present": 9,
+    "promoted_mewx_required_event_types_present": 8,
     "promoted_session_summary_pointer_restored": true,
     "comparison_notes": [
-      "Dexter stayed at 4/12 required event types on the promoted same-attempt pair.",
-      "Mew-X improved from 8/12 to 9/12 required event types on the promoted same-attempt pair.",
-      "The prior Mew-X session_summary export-pointer blocker is now fixed by Vexter-side packaging.",
-      "validate, derive-metrics, and build-pack were rerun successfully on the promoted pair.",
+      "Dexter stayed at 4/12 required event types on the promoted fresh PR9 pair.",
+      "Mew-X kept the restored session_summary export pointer but regressed from 9/12 to 8/12 required event types versus the earlier 0801 baseline.",
+      "The promoted PR9 pair recovered a longer exact event overlap at 167.174 s.",
+      "validate, derive-metrics, and build-pack were rerun successfully on the promoted PR9 pair.",
       "No comparison area is yet decisively attributable enough to unlock TASK-006."
     ]
   },
@@ -116,15 +116,19 @@
   "blockers": [
     {
       "code": "fresh_same_attempt_pair_partial",
-      "detail": "A completed same-attempt Dexter/Mew-X pair was repackaged and rebuilt on latest main, but Dexter still validated only 4/12 required event types and Mew-X validated 9/12."
+      "detail": "A fresh PR9 same-attempt Dexter/Mew-X pair was collected and rebuilt end-to-end, but Dexter still validated only 4/12 required event types and Mew-X validated 8/12."
     },
     {
-      "code": "dexter_exit_and_fill_coverage_missing",
-      "detail": "The promoted Dexter pair still lacks candidate_rejected, entry_attempt, entry_fill, exit_fill, exit_signal, position_closed, run_summary, and session_update."
+      "code": "discarded_overserialized_retry",
+      "detail": "The preceding PR9 retry label resume-after-pr9-20260321T1729 cleared startup 429 but lost exact event overlap, so it could not serve as the promoted comparable pair."
     },
     {
-      "code": "mewx_required_types_still_missing",
-      "detail": "The promoted Mew-X pair still lacks creator_candidate, entry_rejected, and run_summary."
+      "code": "dexter_observe_live_missing_execution_and_exit_classes",
+      "detail": "The promoted Dexter pair still lacks candidate_rejected, entry_attempt, entry_fill, exit_fill, exit_signal, position_closed, run_summary, and session_update while running on the observe_live zero-balance safety path."
+    },
+    {
+      "code": "mewx_sim_live_required_types_still_missing",
+      "detail": "The promoted Mew-X pair still lacks candidate_rejected, creator_candidate, entry_rejected, and run_summary even though the session_summary export pointer is now present."
     },
     {
       "code": "task_006_still_not_decidable",

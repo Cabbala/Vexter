@@ -1,0 +1,7 @@
+Vexter / 継続Codexスレッド / Worktree
+
+TASK-005-PAPER-VALIDATION の結果を確認。
+Vexter 最新 main は PR #12 / #13 を含み、Dexter main の merged `paper_live` も確認済み。
+fresh matched paper/sim pair を 2 本再収集して validate→derive-metrics→build-pack を再実行したが、Dexter `paper_live` は両方とも `creator_candidate` のみで `1/12`、Mew-X は `9/12` と `8/12` だった。
+2 本目は Dexter main-runtime startup HTTP 429 を解消しても結果が同じだったため、実装有無ではなく paper_live の session coverage 停滞が現在の sharp blocker。
+TASK-006 は開始しない。GitHub 上の最新 blocker artifacts を確認して、必要ならこの blocker をさらに切り分ける。

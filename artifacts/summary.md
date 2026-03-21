@@ -1,85 +1,85 @@
-# DEXTER-PAPER-IMPLEMENT Summary
+# TASK-005-PAPER-VALIDATION Summary
 
-## Implementation Status
+## Verified Start
 
-- `DEXTER-PAPER-IMPLEMENT` completed after confirming `Cabbala/Vexter` latest `origin/main` commit `4b32053697fc4efddd76e542b3d2a1411b450240` (PR `#12`, merged on `2026-03-21`) and following its design memo.
-- `Cabbala/Dexter` `main` now includes the explicit opt-in `paper_live` path at `5dc1036c499af5f14f06d08ad0fa96aa36228c96` (PR `#2`, merged on `2026-03-21`).
-- Dexter keeps `observe_live` as the default, avoids live send and `get_swap_tx()` when `VEXTER_MODE=paper_live`, and reuses the existing instrumentation contract for paper entry/session/exit/closeout events.
-- Dexter strategy semantics, trust logic, and entry/exit thresholds were kept unchanged. Mew-X was not modified.
-- Dexter source verification: `pytest -q` -> `4 passed`.
-- Vexter now pins Dexter `main` at `5dc1036c499af5f14f06d08ad0fa96aa36228c96` for future source sync/bootstrap work.
+- `Cabbala/Vexter` `origin/main` was re-verified at `379f55a50dbfd91968ba643e2fbfe5e73fad8392` on 2026-03-21 after merged PR `#12` (`4b32053697fc4efddd76e542b3d2a1411b450240`) and PR `#13` (`379f55a50dbfd91968ba643e2fbfe5e73fad8392`).
+- `Cabbala/Dexter` `main` was re-verified at `5dc1036c499af5f14f06d08ad0fa96aa36228c96` on 2026-03-21 after merged PR `#2`, confirming the explicit opt-in `paper_live` path.
+- Prior authoritative TASK-005 baseline remained `resume-after-pr9-20260321T1737` with Dexter `4 / 12` required event types and Mew-X `8 / 12`.
 
-## Evidence Baseline Before Recollection
+## Execution
 
-- Promoted same-attempt pair remains `resume-after-pr9-20260321T1737`.
-- Promoted exact event overlap remains `167.174 s`, from `2026-03-21T08:39:09.961841Z` to `2026-03-21T08:41:57.136Z`.
-- Dexter remains `partial` at `4 / 12` required event types.
-- Mew-X remains `partial` at `8 / 12` required event types.
-- Dexter still misses:
+- Updated Vexter's TASK-005 helper flow so the matched-pair collector can request Dexter `paper_live`, package `paper_live` runs, and load pinned source SHAs from `manifests/reference_repos.json`.
+- Recovered `win-lan` with Dexter pinned to merged `main` `5dc1036c499af5f14f06d08ad0fa96aa36228c96` and Mew-X pinned to `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`.
+- Recollected two fresh same-attempt paper/sim pairs:
+  - `task005-paper-validation-20260321T1950`
+  - `task005-paper-validation-20260321T2005`
+- Rebuilt `validate`, `derive-metrics`, and `build-pack` outputs for both fresh pairs.
+
+## Fresh Results
+
+### Strongest fresh pair: `task005-paper-validation-20260321T1950`
+
+- Dexter mode: `paper_live`
+- Mew-X mode: `sim_live`
+- Exact event overlap: `141 ms`
+- Dexter coverage: `1 / 12`
+- Mew-X coverage: `9 / 12`
+- Dexter observed only: `creator_candidate`
+- Dexter still missed:
   - `candidate_rejected`
+  - `mint_observed`
+  - `entry_signal`
   - `entry_attempt`
   - `entry_fill`
-  - `exit_fill`
+  - `entry_rejected`
+  - `session_update`
   - `exit_signal`
+  - `exit_fill`
   - `position_closed`
   - `run_summary`
-  - `session_update`
-
-## Source Findings
-
-- Dexter does not already expose a formal paper or sim runtime mode.
-- `VEXTER_MODE` in `sources/Dexter/DexLab/instrumentation.py` is metadata only; it does not change runtime execution behavior.
-- Dexter does contain a lower send-layer simulation seam in `sources/Dexter/DexLab/pump_fun/pump_swap.py` via `pump_buy(..., sim=True)` and `pump_sell(..., sim=True)`.
-- Dexter's live controller never uses that seam. `sources/Dexter/Dexter.py` hard-codes live send behavior and then waits for holder-balance or RPC transaction confirmation.
-- Mew-X `MODE=sim` remains the correct paper/sim baseline because its frozen sim path already emits simulated `entry_attempt`, `entry_fill`, `session_update`, `exit_signal`, `exit_fill`, and `position_closed`.
-
-## Minimum Slice Worth Doing
-
-- The smallest safe Dexter paper-equivalent path is concentrated in:
-  - `sources/Dexter/Dexter.py`
-  - `sources/Dexter/DexLab/pump_fun/pump_swap.py`
-  - `sources/Dexter/DexLab/instrumentation.py`
-  - Dexter source tests
-- The mode should keep candidate selection, trust-level projection, live market intake, and exit ladder semantics unchanged.
-- The mode should replace only:
-  - submission path
-  - fill confirmation path
-  - wallet and reserve accounting path
-  - closeout reliability for `run_summary`
-- No new normalized event classes are needed for the first implementation slice.
-
-## Coverage Impact
-
-- A minimal paper-equivalent path should realistically add:
+- Mew-X improved versus the prior `8 / 12` baseline and now emitted:
+  - `candidate_rejected`
+  - `mint_observed`
+  - `entry_signal`
   - `entry_attempt`
   - `entry_fill`
   - `session_update`
   - `exit_signal`
   - `exit_fill`
   - `position_closed`
-- `run_summary` should also be recoverable if Dexter closeout is hardened.
-- `candidate_rejected` remains conditional and should not be promised on every run.
-- Expected Dexter improvement on eventful paper runs:
-  - floor: `4 / 12` -> `10 / 12`
-  - with reliable finalization: `4 / 12` -> `11 / 12`
+- Sharp note: Dexter still logged a startup websocket `HTTP 429` in stderr on this retry.
 
-## Comparability Limits
+### Confirmatory retry: `task005-paper-validation-20260321T2005`
 
-- A Dexter paper-equivalent path would make candidate conversion, signal timing, session evolution, exit logic, and replayability more comparable to Mew-X `sim`.
-- It would still not make true execution quality, route behavior, real slippage, or transaction failure semantics comparable.
-- `TASK-006` remains blocked until that safer paper-equivalent path is implemented and re-measured or until some other explicitly approved evidence path replaces it.
+- Exact event overlap: `137 ms`
+- Dexter coverage: `1 / 12`
+- Mew-X coverage: `8 / 12`
+- Extra startup serialization removed Dexter main-runtime `HTTP 429`, but Dexter still emitted only `creator_candidate`.
+- This confirms the poor Dexter paper result was not just a main-runtime startup-429 artifact.
 
-## Implementation Result
+## Before / After
 
-- Dexter now has an explicit `paper_live` execution path in `Dexter.py` that keeps the live decision loop intact while synthesizing entry and exit fills from paper quotes.
-- `DexLab/pump_fun/pump_swap.py` now exposes quote-only helpers for paper buys and sells so paper runs do not depend on live transaction submission.
-- `DexLab/instrumentation.py` now records paper exit confirmation metadata without introducing new normalized event names.
-- `TASK-005` still needs a fresh paper/sim-safe recollection to measure the new coverage ceiling. `TASK-006` remains blocked until that recollection is evaluated.
+- Prior authoritative baseline: Dexter `4 / 12`, Mew-X `8 / 12`
+- Fresh strongest paper/sim pair: Dexter `1 / 12`, Mew-X `9 / 12`
+- Net change:
+  - Dexter regressed by `3` required event types
+  - Mew-X improved by `1` required event type
+- `run_summary` did not appear on either fresh pair.
+- No comparison area became non-deferred; winner/tie decisions remain blocked.
 
-## Deliverables
+## Sharpest Remaining Blocker
 
-- Design baseline memo: `docs/dexter_paper_mode_design.md`
-- Dexter source merge:
-  - PR `#2`: `feat(core): add Dexter paper_live execution path`
-  - Dexter `main`: `5dc1036c499af5f14f06d08ad0fa96aa36228c96`
-- Next recommended follow-up: recollect a matched paper/sim comparison package before any `TASK-006` work.
+- Dexter `paper_live` did not progress into mint/session/exit coverage on either fresh same-attempt recollection. The new ceiling observed in these retries was still creator-only coverage, not the expected paper-path entry/session/exit trail.
+- Both fresh pairs required full-stream fallback because the first raw events landed before the post-readiness measurement window, which left only subsecond exact overlap.
+- `TASK-006` is still blocked.
+
+## Key Paths
+
+- Strongest fresh Dexter package:
+  - `/Users/cabbala/Documents/worktrees/Vexter-task005-paper-validation/artifacts/tmp/winlan-packages-task005-paper-validation-20260321T1950/dexter-task005-paper-validation-20260321T1950`
+- Strongest fresh Mew-X package:
+  - `/Users/cabbala/Documents/worktrees/Vexter-task005-paper-validation/artifacts/tmp/winlan-packages-task005-paper-validation-20260321T1950/mewx-task005-paper-validation-20260321T1950`
+- Strongest fresh comparison output:
+  - `/Users/cabbala/Documents/worktrees/Vexter-task005-paper-validation/artifacts/reports/task-005-paper-validation-20260321T1950-comparison`
+- Confirmatory comparison output:
+  - `/Users/cabbala/Documents/worktrees/Vexter-task005-paper-validation/artifacts/reports/task-005-paper-validation-20260321T2005-comparison`

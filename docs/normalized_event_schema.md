@@ -12,7 +12,7 @@ Every normalized event is one NDJSON object with this shared envelope:
 | `ts_utc` | string | yes | ISO-8601 UTC timestamp |
 | `source_system` | string | yes | `dexter` or `mewx` |
 | `source_commit` | string | yes | Git SHA of the measured source repo |
-| `mode` | string | yes | `observe_live`, `trade_live`, `sim_live`, or `replay` |
+| `mode` | string | yes | `observe_live`, `paper_live`, `trade_live`, `sim_live`, or `replay` |
 | `transport_mode` | string | no | `ws`, `grpc`, `rpc`, `swqos`, or `mixed` |
 | `session_id` | string | no | Required once a position/session exists |
 | `mint` | string | no | Required for mint-specific events |

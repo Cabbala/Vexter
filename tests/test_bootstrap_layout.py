@@ -57,6 +57,8 @@ def test_required_paths_exist() -> None:
         "artifacts/reports/task-005-windows-runtime-recovery.md",
         "artifacts/reports/dexter-paper-design-handoff/DETAILS.md",
         "artifacts/reports/dexter-paper-design-handoff/MIN_PROMPT.txt",
+        "artifacts/reports/task-005-paper-validation-handoff/DETAILS.md",
+        "artifacts/reports/task-005-paper-validation-handoff/MIN_PROMPT.txt",
         "artifacts/proofs/task-005-live-collection-check.json",
         "artifacts/proofs/task-005-windows-runtime-recovery.json",
         "artifacts/examples/task-004-sample-comparison/pack_manifest.json",
@@ -128,6 +130,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
     assert payload["task_id"] in {
         "TASK-005-live-comparison-evidence",
         "DEXTER-PAPER-DESIGN",
+        "TASK-005-PAPER-VALIDATION",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -136,6 +139,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "dexter_startup_rate_limit_blocker",
         "design_complete_recommend_implement",
         "design_complete_keep_retrying",
+        "paper_live_coverage_ceiling_blocker",
     }
     assert payload["branch"] in {
         "codex/task-005-live-comparison-evidence",
@@ -145,6 +149,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-005-resume-after-pr8",
         "codex/task-005-resume-after-pr9",
         "codex/dexter-paper-design",
+        "codex/task-005-paper-validation",
     }
     assert payload["next_task_id"] in {"TASK-005-RESUME", "BLOCKED", "DEXTER-PAPER-IMPLEMENT"}
     assert payload["next_task_state"] in {
@@ -154,6 +159,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "awaiting_helius_recovery_and_eventful_sim_window",
         "awaiting_dexter_startup_without_helius_429",
         "ready_for_paper_implementation",
+        "awaiting_dexter_paper_live_session_coverage",
     }
 
 
@@ -168,6 +174,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "dexter_startup_rate_limit_blocker",
         "design_complete_recommend_implement",
         "design_complete_keep_retrying",
+        "paper_live_coverage_ceiling_blocker",
     }
     assert manifest["next_task"]["id"] in {"TASK-005-RESUME", "BLOCKED", "DEXTER-PAPER-IMPLEMENT"}
     assert manifest["next_task"]["state"] in {
@@ -177,6 +184,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "awaiting_helius_recovery_and_eventful_sim_window",
         "awaiting_dexter_startup_without_helius_429",
         "ready_for_paper_implementation",
+        "awaiting_dexter_paper_live_session_coverage",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]
@@ -204,6 +212,8 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/reports/task-005-windows-runtime-recovery.md" in names
     assert "artifacts/reports/dexter-paper-design-handoff/DETAILS.md" in names
     assert "artifacts/reports/dexter-paper-design-handoff/MIN_PROMPT.txt" in names
+    assert "artifacts/reports/task-005-paper-validation-handoff/DETAILS.md" in names
+    assert "artifacts/reports/task-005-paper-validation-handoff/MIN_PROMPT.txt" in names
     assert "artifacts/proofs/task-005-live-collection-check.json" in names
     assert "artifacts/proofs/task-005-windows-runtime-recovery.json" in names
     assert "artifacts/context_pack.json" in names

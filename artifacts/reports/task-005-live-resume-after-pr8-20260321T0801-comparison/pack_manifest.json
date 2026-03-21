@@ -1,0 +1,19 @@
+{
+  "built_at_utc": "2026-03-21T08:32:09Z",
+  "inputs": {
+    "dexter_package": "/Users/cabbala/Documents/vexter/task005-pass-grade-pair/artifacts/tmp/winlan-packages-resume-after-pr8-20260321T0801/dexter-resume-after-pr8-20260321T0801",
+    "mewx_package": "/Users/cabbala/Documents/vexter/task005-pass-grade-pair/artifacts/tmp/winlan-packages-resume-after-pr8-20260321T0801/mewx-resume-after-pr8-20260321T0801"
+  },
+  "outputs": [
+    "dexter_validation.json",
+    "mewx_validation.json",
+    "dexter_metrics.json",
+    "mewx_metrics.json",
+    "comparison_matrix.json",
+    "comparison_matrix.md",
+    "comparison_pack.json",
+    "summary.md"
+  ],
+  "pack_id": "comparison-dexter-resume-after-pr8-20260321T0801-vs-mewx-resume-after-pr8-20260321T0801",
+  "winner_mode": "deferred"
+}

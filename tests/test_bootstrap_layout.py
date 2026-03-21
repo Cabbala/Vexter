@@ -135,6 +135,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-005-pass-grade-pair",
         "codex/task-005-resume-after-pr7",
         "codex/task-005-resume-after-pr8",
+        "codex/task-005-resume-after-pr9",
     }
     assert payload["next_task_id"] in {"TASK-005-RESUME", "BLOCKED"}
     assert payload["next_task_state"] in {

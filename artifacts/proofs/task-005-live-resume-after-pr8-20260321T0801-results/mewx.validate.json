@@ -1,0 +1,45 @@
+{
+  "checks": {
+    "event_envelope_ok": true,
+    "payload_fields_ok": true,
+    "proof_attribution_ok": true,
+    "required_event_types_ok": false,
+    "run_identity_ok": true,
+    "source_exports_ok": true
+  },
+  "classification": "partial",
+  "comparison_readiness": "observe_only",
+  "coverage": {
+    "event_completeness_ratio": 0.75,
+    "missing_event_types": [
+      "creator_candidate",
+      "entry_rejected",
+      "run_summary"
+    ],
+    "observed_event_types": [
+      "candidate_rejected",
+      "entry_attempt",
+      "entry_fill",
+      "entry_signal",
+      "exit_fill",
+      "exit_signal",
+      "mint_observed",
+      "position_closed",
+      "session_update"
+    ],
+    "required_event_types_present": 9,
+    "required_event_types_total": 12,
+    "total_events": 44
+  },
+  "issues": [
+    {
+      "code": "missing_required_event_types",
+      "message": "required event types were not observed in the run package: creator_candidate, entry_rejected, run_summary",
+      "path": "/Users/cabbala/Documents/vexter/task005-pass-grade-pair/artifacts/tmp/winlan-packages-resume-after-pr8-20260321T0801/mewx-resume-after-pr8-20260321T0801/events.ndjson",
+      "severity": "error"
+    }
+  ],
+  "package_dir": "/Users/cabbala/Documents/vexter/task005-pass-grade-pair/artifacts/tmp/winlan-packages-resume-after-pr8-20260321T0801/mewx-resume-after-pr8-20260321T0801",
+  "run_id": "mewx-resume-after-pr8-20260321T0801",
+  "source_system": "mewx"
+}

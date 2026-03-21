@@ -18,6 +18,7 @@ def test_required_paths_exist() -> None:
         "docs/windows_runtime_recovery.md",
         "docs/dexter_source_assessment.md",
         "docs/dexter_event_mapping.md",
+        "docs/dexter_paper_mode_design.md",
         "docs/mewx_source_assessment.md",
         "docs/mewx_event_mapping.md",
         "specs/FIXED_WORKFLOW.md",
@@ -54,6 +55,8 @@ def test_required_paths_exist() -> None:
         "artifacts/task_ledger.jsonl",
         "artifacts/reports/task-005-live-collection-blocker.md",
         "artifacts/reports/task-005-windows-runtime-recovery.md",
+        "artifacts/reports/dexter-paper-design-handoff/DETAILS.md",
+        "artifacts/reports/dexter-paper-design-handoff/MIN_PROMPT.txt",
         "artifacts/proofs/task-005-live-collection-check.json",
         "artifacts/proofs/task-005-windows-runtime-recovery.json",
         "artifacts/examples/task-004-sample-comparison/pack_manifest.json",
@@ -122,12 +125,17 @@ def test_task_ledger_is_valid_jsonl() -> None:
 
     assert len(lines) >= 3
     payload = json.loads(lines[-1])
-    assert payload["task_id"] == "TASK-005-live-comparison-evidence"
+    assert payload["task_id"] in {
+        "TASK-005-live-comparison-evidence",
+        "DEXTER-PAPER-DESIGN",
+    }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
         "subsecond_overlap_partial_blocker",
         "retry_collection_blocker",
         "dexter_startup_rate_limit_blocker",
+        "design_complete_recommend_implement",
+        "design_complete_keep_retrying",
     }
     assert payload["branch"] in {
         "codex/task-005-live-comparison-evidence",
@@ -136,14 +144,16 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-005-resume-after-pr7",
         "codex/task-005-resume-after-pr8",
         "codex/task-005-resume-after-pr9",
+        "codex/dexter-paper-design",
     }
-    assert payload["next_task_id"] in {"TASK-005-RESUME", "BLOCKED"}
+    assert payload["next_task_id"] in {"TASK-005-RESUME", "BLOCKED", "DEXTER-PAPER-IMPLEMENT"}
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
         "awaiting_nontrivial_matched_live_window_and_fuller_coverage",
         "awaiting_pass_grade_matched_live_pair",
         "awaiting_helius_recovery_and_eventful_sim_window",
         "awaiting_dexter_startup_without_helius_429",
+        "ready_for_paper_implementation",
     }
 
 
@@ -156,14 +166,17 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "subsecond_overlap_partial_blocker",
         "retry_collection_blocker",
         "dexter_startup_rate_limit_blocker",
+        "design_complete_recommend_implement",
+        "design_complete_keep_retrying",
     }
-    assert manifest["next_task"]["id"] in {"TASK-005-RESUME", "BLOCKED"}
+    assert manifest["next_task"]["id"] in {"TASK-005-RESUME", "BLOCKED", "DEXTER-PAPER-IMPLEMENT"}
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
         "awaiting_nontrivial_matched_live_window_and_fuller_coverage",
         "awaiting_pass_grade_matched_live_pair",
         "awaiting_helius_recovery_and_eventful_sim_window",
         "awaiting_dexter_startup_without_helius_429",
+        "ready_for_paper_implementation",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]
@@ -178,6 +191,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "docs/comparison_collection_runbook.md" in names
     assert "docs/windows_runtime_recovery.md" in names
     assert "docs/dexter_event_mapping.md" in names
+    assert "docs/dexter_paper_mode_design.md" in names
     assert "docs/mewx_event_mapping.md" in names
     assert "scripts/comparison_analysis.py" in names
     assert "scripts/collect_comparison_package.ps1" in names
@@ -188,6 +202,8 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/examples/task-004-sample-comparison/summary.md" in names
     assert "artifacts/reports/task-005-live-collection-blocker.md" in names
     assert "artifacts/reports/task-005-windows-runtime-recovery.md" in names
+    assert "artifacts/reports/dexter-paper-design-handoff/DETAILS.md" in names
+    assert "artifacts/reports/dexter-paper-design-handoff/MIN_PROMPT.txt" in names
     assert "artifacts/proofs/task-005-live-collection-check.json" in names
     assert "artifacts/proofs/task-005-windows-runtime-recovery.json" in names
     assert "artifacts/context_pack.json" in names

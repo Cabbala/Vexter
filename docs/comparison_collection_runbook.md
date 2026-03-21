@@ -80,10 +80,15 @@ For a same-window retry from the Mac control plane, you can orchestrate the Wind
 ```bash
 python scripts/collect_matched_live_pair.py \
   --duration-seconds 120 \
-  --mewx-mode sim
+  --mewx-mode sim \
+  --startup-delay-seconds 5 \
+  --dexter-prestart-quiet-seconds 60 \
+  --dexter-wslogs-ready-timeout-seconds 90 \
+  --dexter-wslogs-settle-seconds 20 \
+  --dexter-retry-backoff-seconds 90
 ```
 
-This helper keeps Dexter on the zero-balance `observe_live` path, prefers `MODE=sim` for Mew-X, gives Mew-X a configurable prewarm window before Dexter starts, records the measurement end after graceful stop so run-level finalizers have a chance to land, and fails fast when either source exits before its first raw event. It then pushes the current collector script to `win-lan` and copies the packaged directories into local `artifacts/tmp/`.
+This helper keeps Dexter on the zero-balance `observe_live` path, prefers `MODE=sim` for Mew-X, gives Mew-X a configurable prewarm window before Dexter starts, clears stale Dexter / `wsLogs` / Mew-X processes from prior attempts, and can insert a Dexter-side quiet period plus a Dexter head-start before `wsLogs` comes up so Helius startup pressure stays serialized. It records the measurement end after graceful stop so run-level finalizers have a chance to land, captures exact Dexter retry timing and `HTTP 429` evidence in the remote collection payload, and fails fast when either source exits before its first raw event. It then pushes the current collector script to `win-lan` and copies the packaged directories into local `artifacts/tmp/`.
 
 After copying the two package directories into the Mac control plane, run:
 

@@ -21,16 +21,16 @@
     "deliverable_format": "minimal prompt + tar.gz bundle",
     "push_changes_for_github_visibility": true,
     "agent_usage_when_available": true,
-    "agent_usage_note": "Sub-agents James and Bacon were used for sidecar inspection while the main thread handled repository edits and Windows runtime retries."
+    "agent_usage_note": "Sub-agents Chandrasekhar and Tesla were launched for sidecar inspection while the main thread implemented the helper changes, recollected the fresh pair, and rebuilt the comparison pack."
   },
   "phase": "TASK-005-live-comparison-evidence",
-  "status": "dexter_startup_rate_limit_blocker",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_pass_grade_pair_bundle.tar.gz",
+  "status": "partial_live_comparison_blocker",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_resume_after_pr8_bundle.tar.gz",
   "starting_point": {
-    "verified_at": "2026-03-20T22:17:49Z",
-    "main": "4752182af91c2353491741bf36cf9a82d9655575",
-    "verified_pr": 7,
-    "work_branch": "codex/task-005-resume-after-pr7"
+    "verified_at": "2026-03-20T22:52:22Z",
+    "main": "d005528a236360b3cb67c78b3a61a6710be410a2",
+    "verified_pr": 8,
+    "work_branch": "codex/task-005-resume-after-pr8"
   },
   "deliverables": {
     "docs": [
@@ -104,7 +104,7 @@
       "mewx_startup_probe": "RPC_URL, DB_URL, signer input, and parser-safe env formatting now allow a full sim-live smoke session on win-lan."
     },
     "resume_probe_result": {
-      "checked_at": "2026-03-20T22:17:49Z",
+      "checked_at": "2026-03-20T22:52:22Z",
       "dexter_env_exists": true,
       "mewx_env_exists": true,
       "dexter_helius_http_rpc_ok": true,
@@ -112,51 +112,67 @@
       "dexter_formal_paper_mode_confirmed": false,
       "dexter_mode_used": "observe_live",
       "mewx_mode_used": "sim_live",
-      "shared_runtime_window_collected": false,
+      "shared_runtime_window_collected": true,
       "exact_event_overlap_blocker_resolved": true,
-      "latest_retry_collection_succeeded": false
+      "latest_retry_collection_succeeded": true
     },
     "attempt_result": {
-      "new_matched_measurement_window_found": false,
-      "latest_retry_label": "resume-final-20260321T0714",
-      "latest_mewx_run_id": "mewx-resume-final-20260321T0714",
-      "latest_mewx_event_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx\\mewx-resume-final-20260321T0714.ndjson",
-      "latest_mewx_event_span_utc": [
-        "2026-03-20T22:14:55.210Z",
-        "2026-03-20T22:16:18.740Z"
-      ],
-      "latest_mewx_required_event_types_present": 9,
+      "new_matched_measurement_window_found": true,
+      "latest_retry_label": "resume-after-pr8-20260321T0743",
+      "latest_dexter_run_id": "dexter-resume-after-pr8-20260321T0743",
+      "latest_dexter_raw_event_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter\\dexter-resume-after-pr8-20260321T0743.ndjson",
+      "latest_dexter_required_event_types_present": 4,
+      "latest_dexter_required_event_types_total": 12,
+      "latest_dexter_total_events": 107078,
+      "latest_dexter_startup_attempts": 1,
+      "latest_dexter_wallet_balance_http_429_attempts": 0,
+      "latest_mewx_run_id": "mewx-resume-after-pr8-20260321T0743",
+      "latest_mewx_event_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx\\mewx-resume-after-pr8-20260321T0743.ndjson",
+      "latest_mewx_required_event_types_present": 8,
       "latest_mewx_required_event_types_total": 12,
-      "latest_dexter_run_id": "dexter-resume-final-20260321T0714",
-      "latest_dexter_raw_event_file": null,
-      "latest_dexter_startup_attempts": 4,
-      "latest_dexter_wallet_balance_http_429_attempts": 4,
+      "latest_mewx_total_events": 26,
+      "latest_matched_window_start_utc": "2026-03-20T22:42:23.102Z",
+      "latest_matched_window_end_utc": "2026-03-20T22:44:53.527477Z",
+      "latest_exact_event_overlap_start_utc": "2026-03-20T22:42:56.215162Z",
+      "latest_exact_event_overlap_end_utc": "2026-03-20T22:44:27.240Z",
+      "latest_concurrent_runtime_duration_ms": 150425,
+      "latest_exact_event_overlap_duration_ms": 91024,
+      "latest_live_dexter_package": "artifacts/proofs/task-005-live-resume-after-pr8-20260321T0743-results/dexter.validate.json",
+      "latest_live_mewx_package": "artifacts/proofs/task-005-live-resume-after-pr8-20260321T0743-results/mewx.validate.json",
+      "latest_comparison_output_dir": "artifacts/reports/task-005-live-resume-after-pr8-20260321T0743-comparison",
       "best_known_matched_window_start_utc": "2026-03-20T20:58:40.760Z",
       "best_known_matched_window_end_utc": "2026-03-20T21:01:52.838Z",
       "best_known_exact_event_overlap_start_utc": "2026-03-20T20:59:55.254Z",
       "best_known_exact_event_overlap_end_utc": "2026-03-20T21:01:52.838Z",
-      "best_known_concurrent_runtime_duration_ms": 192078,
-      "best_known_exact_event_overlap_duration_ms": 117584,
       "best_known_live_dexter_package": "artifacts/proofs/task-005-live-pass-grade-runtime-window-results/dexter.validate.json",
       "best_known_live_mewx_package": "artifacts/proofs/task-005-live-pass-grade-runtime-window-results/mewx.validate.json",
       "best_known_comparison_output_dir": "artifacts/reports/task-005-live-pass-grade-runtime-window-comparison",
       "winner_recording": "deferred",
-      "collection_stage": "fresh_retry_blocked_before_dexter_raw",
+      "collection_stage": "fresh_same_attempt_pair_collected_partial",
       "retry_labels": [
         "resume-pr7-20260320T220156Z",
         "resume-after-pr7-20260321T0709",
-        "resume-final-20260321T0714"
-      ]
+        "resume-final-20260321T0714",
+        "resume-after-pr8-20260321T0743"
+      ],
+      "baseline_comparison": {
+        "prior_dexter_required_event_types_present": 1,
+        "prior_mewx_required_event_types_present": 9,
+        "fresh_dexter_required_event_types_present": 4,
+        "fresh_mewx_required_event_types_present": 8,
+        "same_attempt_packaging_exists": true,
+        "comparison_output_dir": "artifacts/reports/task-005-live-resume-after-pr8-20260321T0743-comparison"
+      }
     },
     "blockers": [
-      "The old 281 ms overlap blocker remains resolved; the best known concurrent runtime window is still 2026-03-20T20:58:40.760Z to 2026-03-20T21:01:52.838Z, with exact event overlap from 2026-03-20T20:59:55.254Z to 2026-03-20T21:01:52.838Z.",
-      "Fresh retries after PR #7 improved the matched-pair helper, but Dexter observe-live startup is now the immediate blocker because Helius returns HTTP 429 during wallet balance fetch before the first raw event.",
-      "The latest Mew-X sim retry produced 41 raw events across 9/12 required event types, but it remains unusable for comparison without a same-attempt Dexter package.",
-      "TASK-006 stays blocked until Dexter can start cleanly enough to create a fresh raw package and the new matched pair can be rerun through validate, derive-metrics, and build-pack."
+      "The Dexter startup wallet-balance HTTP 429 blocker was mitigated on the fresh same-attempt run, so TASK-005 is no longer blocked on that exact startup failure mode.",
+      "The fresh same-attempt pair still validates as partial: Dexter improved to 4/12 required event types, while Mew-X validated 8/12 and still lacks a session_summary export pointer.",
+      "The prior baseline remains useful for comparison because it reached Mew-X 9/12 required event types, but the fresh pair is the latest end-to-end same-attempt validate/derive/build-pack proof on PR #8 main.",
+      "TASK-006 stays blocked until a matched pair supports fuller event coverage and non-deferred comparison decisions."
     ]
   },
   "live_collection_attempt": {
-    "checked_at": "2026-03-20T22:17:49Z",
+    "checked_at": "2026-03-20T22:52:22Z",
     "best_known_matched_window": {
       "start_utc": "2026-03-20T20:58:40.760Z",
       "end_utc": "2026-03-20T21:01:52.838Z",
@@ -169,42 +185,90 @@
       "comparison_output_dir": "artifacts/reports/task-005-live-pass-grade-runtime-window-comparison"
     },
     "latest_retry": {
-      "label": "resume-final-20260321T0714",
+      "label": "resume-after-pr8-20260321T0743",
       "mewx": {
-        "run_id": "mewx-resume-final-20260321T0714",
-        "event_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx\\mewx-resume-final-20260321T0714.ndjson",
+        "run_id": "mewx-resume-after-pr8-20260321T0743",
+        "event_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx\\mewx-resume-after-pr8-20260321T0743.ndjson",
         "event_span_utc": [
-          "2026-03-20T22:14:55.210Z",
-          "2026-03-20T22:16:18.740Z"
+          "2026-03-20T22:42:23.102Z",
+          "2026-03-20T22:44:27.240Z"
         ],
-        "required_event_types_present": 9,
+        "required_event_types_present": 8,
         "required_event_types_total": 12,
+        "observed_event_types": [
+          "entry_attempt",
+          "entry_fill",
+          "entry_signal",
+          "exit_fill",
+          "exit_signal",
+          "mint_observed",
+          "position_closed",
+          "session_update"
+        ],
+        "missing_event_types": [
+          "candidate_rejected",
+          "creator_candidate",
+          "entry_rejected",
+          "run_summary"
+        ],
+        "total_events": 26,
         "event_counts": {
-          "candidate_rejected": 1,
-          "entry_attempt": 4,
-          "entry_fill": 4,
-          "entry_signal": 4,
-          "exit_fill": 4,
-          "exit_signal": 4,
-          "mint_observed": 6,
-          "position_closed": 4,
-          "session_update": 10
+          "entry_attempt": 3,
+          "entry_fill": 3,
+          "entry_signal": 3,
+          "exit_fill": 3,
+          "exit_signal": 3,
+          "mint_observed": 4,
+          "position_closed": 3,
+          "session_update": 4
         },
-        "total_events": 41
+        "launch_created_at_utc": "2026-03-20T22:42:10Z",
+        "first_raw_event_at_utc": "2026-03-20T22:42:23.102Z"
       },
       "dexter": {
-        "run_id": "dexter-resume-final-20260321T0714",
-        "raw_event_file": null,
-        "startup_attempts": 4,
-        "wallet_balance_http_429_attempts": 4,
-        "wallet_balance_error": "HTTP 429: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32429,\"message\":\"rate limited\"}}",
-        "wslogs_initial_http_429_then_recovered": true
+        "run_id": "dexter-resume-after-pr8-20260321T0743",
+        "raw_event_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter\\dexter-resume-after-pr8-20260321T0743.ndjson",
+        "event_span_utc": [
+          "2026-03-20T22:42:56.215162Z",
+          "2026-03-20T22:44:53.527477Z"
+        ],
+        "required_event_types_present": 4,
+        "required_event_types_total": 12,
+        "observed_event_types": [
+          "creator_candidate",
+          "entry_rejected",
+          "entry_signal",
+          "mint_observed"
+        ],
+        "missing_event_types": [
+          "candidate_rejected",
+          "entry_attempt",
+          "entry_fill",
+          "exit_fill",
+          "exit_signal",
+          "position_closed",
+          "run_summary",
+          "session_update"
+        ],
+        "total_events": 107078,
+        "event_counts": {
+          "creator_candidate": 114,
+          "entry_rejected": 106962,
+          "entry_signal": 1,
+          "mint_observed": 1
+        },
+        "startup_attempts": 1,
+        "wallet_balance_http_429_attempts": 0,
+        "dexter_ws_http_429_lines": 1,
+        "launch_created_at_utc": "2026-03-20T22:42:53Z",
+        "first_raw_event_at_utc": "2026-03-20T22:42:56.215162Z"
       }
     },
     "retry_labels": [
       "resume-pr7-20260320T220156Z",
       "resume-after-pr7-20260321T0709",
-      "resume-final-20260321T0714"
+      "resume-final-20260321T0714",
+      "resume-after-pr8-20260321T0743"
     ],
     "historical_evidence": {
       "dexter_startup_events_present_in_raw_history": {
@@ -245,14 +309,14 @@
   },
   "next_task": {
     "id": "BLOCKED",
-    "state": "awaiting_dexter_startup_without_helius_429",
+    "state": "awaiting_matched_live_window_with_full_event_coverage",
     "task_006_ready": false,
     "resume_requirements": [
       "Keep Dexter and Mew-X strategy, execution, and instrumentation logic frozen.",
       "Keep Mew-X in sim mode for the next retry unless a safer paper-equivalent path is approved.",
       "Keep Dexter on observe-only or zero-balance safety paths unless a formal paper mode is explicitly confirmed.",
-      "Wait for the Helius rate-limit window to clear, then recollect a matched live pair with the improved helper.",
-      "Rerun validate, derive-metrics, and build-pack only after a same-attempt Dexter raw package and Mew-X raw package both exist."
+      "Reuse the Vexter-side startup serialization that cleared the wallet-balance HTTP 429 on the fresh same-attempt pair.",
+      "Improve matched-pair required event coverage before advancing to TASK-006."
     ]
   },
   "windows_runtime_verification": {

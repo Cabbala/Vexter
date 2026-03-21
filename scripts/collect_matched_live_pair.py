@@ -23,7 +23,10 @@ DEFAULT_STARTUP_DELAY_SECONDS = 2
 DEFAULT_MEWX_READY_TIMEOUT_SECONDS = 90
 DEFAULT_DEXTER_READY_TIMEOUT_SECONDS = 30
 DEFAULT_DEXTER_STARTUP_ATTEMPTS = 3
-DEFAULT_DEXTER_RETRY_BACKOFF_SECONDS = 20
+DEFAULT_DEXTER_RETRY_BACKOFF_SECONDS = 45
+DEFAULT_DEXTER_PRESTART_QUIET_SECONDS = 30
+DEFAULT_DEXTER_WSLOGS_READY_TIMEOUT_SECONDS = 75
+DEFAULT_DEXTER_WSLOGS_SETTLE_SECONDS = 15
 
 
 def iso_utc(value: datetime) -> str:
@@ -47,6 +50,8 @@ def _run(
             cwd=str(cwd) if cwd else None,
             input=input_text,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             capture_output=capture_output,
             check=True,
         )
@@ -173,6 +178,9 @@ def build_remote_runner(config: dict[str, Any]) -> str:
         dexter_ready_timeout_seconds = int(config["dexter_ready_timeout_seconds"])
         dexter_startup_attempts = int(config["dexter_startup_attempts"])
         dexter_retry_backoff_seconds = int(config["dexter_retry_backoff_seconds"])
+        dexter_prestart_quiet_seconds = int(config["dexter_prestart_quiet_seconds"])
+        dexter_wslogs_ready_timeout_seconds = int(config["dexter_wslogs_ready_timeout_seconds"])
+        dexter_wslogs_settle_seconds = int(config["dexter_wslogs_settle_seconds"])
 
         common_env = {{
             "VEXTER_RUNTIME_ROOT": config["windows_root"],
@@ -204,9 +212,101 @@ def build_remote_runner(config: dict[str, Any]) -> str:
         log_handles = []
         launch_events = []
 
+        def log_path(name, stream):
+            return logs_root / f"{{name}}-{{config['label']}}.{{stream}}.log"
+
+        def read_log(path_str):
+            path = pathlib.Path(path_str)
+            if not path.exists():
+                return ""
+            return path.read_text(encoding="utf-8", errors="ignore")
+
+        def count_log_occurrences(path_str, needle):
+            return read_log(path_str).count(needle)
+
+        def tail_text_lines(text, max_lines=12):
+            if not text:
+                return []
+            lines = [line for line in text.splitlines() if line.strip()]
+            if len(lines) <= max_lines:
+                return lines
+            return lines[-max_lines:]
+
+        def tail_log_lines(path_str, max_lines=12):
+            return tail_text_lines(read_log(path_str), max_lines=max_lines)
+
+        def normalize_process_records(payload_text):
+            if not payload_text.strip():
+                return []
+            parsed = json.loads(payload_text)
+            if isinstance(parsed, dict):
+                parsed = [parsed]
+            return [
+                {{
+                    "name": record.get("Name"),
+                    "process_id": record.get("ProcessId"),
+                    "creation_date": record.get("CreationDate"),
+                    "command_line": record.get("CommandLine"),
+                }}
+                for record in parsed
+            ]
+
+        def cleanup_stale_processes():
+            powershell_script = r'''
+            $targets = Get-CimInstance Win32_Process | Where-Object {{
+                $_.CommandLine -and (
+                    $_.CommandLine -match 'Dexter\\.py' -or
+                    $_.CommandLine -match 'DexLab\\\\wsLogs\\.py' -or
+                    $_.CommandLine -match 'Mew-X\\\\target\\\\debug\\\\mew\\.exe' -or
+                    ($_.Name -eq 'cargo.exe' -and $_.CommandLine -match 'Mew-X')
+                )
+            }}
+            $targets | Select-Object Name,ProcessId,CreationDate,CommandLine | ConvertTo-Json -Compress
+            '''
+            listed_at = iso_utc(dt.datetime.now(dt.timezone.utc))
+            result = subprocess.run(
+                ["powershell", "-NoProfile", "-Command", powershell_script],
+                text=True,
+                capture_output=True,
+            )
+            cleanup = {{
+                "listed_at_utc": listed_at,
+                "list_exit_code": result.returncode,
+                "list_stderr_tail": tail_text_lines(result.stderr),
+                "found": [],
+                "stopped": [],
+            }}
+            if result.returncode != 0:
+                return cleanup
+
+            cleanup["found"] = normalize_process_records(result.stdout)
+            for record in cleanup["found"]:
+                process_id = record.get("process_id")
+                if process_id is None:
+                    continue
+                stop_started_at = iso_utc(dt.datetime.now(dt.timezone.utc))
+                stop = subprocess.run(
+                    ["taskkill", "/PID", str(process_id), "/T", "/F"],
+                    text=True,
+                    capture_output=True,
+                )
+                cleanup["stopped"].append(
+                    {{
+                        **record,
+                        "stop_started_at_utc": stop_started_at,
+                        "stop_finished_at_utc": iso_utc(dt.datetime.now(dt.timezone.utc)),
+                        "stop_exit_code": stop.returncode,
+                        "stop_stdout_tail": tail_text_lines(stop.stdout),
+                        "stop_stderr_tail": tail_text_lines(stop.stderr),
+                    }}
+                )
+            return cleanup
+
         def start_process(name, cmd, cwd, env, *, alias=None):
-            stdout_handle = open_log(str(logs_root / f"{{name}}-{{config['label']}}.stdout.log"))
-            stderr_handle = open_log(str(logs_root / f"{{name}}-{{config['label']}}.stderr.log"))
+            stdout_path = log_path(name, "stdout")
+            stderr_path = log_path(name, "stderr")
+            stdout_handle = open_log(str(stdout_path))
+            stderr_handle = open_log(str(stderr_path))
             proc = subprocess.Popen(
                 cmd,
                 cwd=str(cwd),
@@ -225,9 +325,11 @@ def build_remote_runner(config: dict[str, Any]) -> str:
                     "launched_at_utc": iso_utc(dt.datetime.now(dt.timezone.utc)),
                     "cwd": str(cwd),
                     "cmd": cmd,
+                    "stdout_path": str(stdout_path),
+                    "stderr_path": str(stderr_path),
                 }}
             )
-            return proc
+            return proc, str(stdout_path), str(stderr_path)
 
         def wait_for_event_or_exit(path_str, timeout_seconds, process_name):
             deadline = time.time() + max(0, timeout_seconds)
@@ -240,6 +342,17 @@ def build_remote_runner(config: dict[str, Any]) -> str:
                     return summary, None, True
                 time.sleep(1)
             return event_summary(path_str), None, False
+
+        def wait_for_log_pattern(path_str, pattern, timeout_seconds, process_name):
+            deadline = time.time() + max(0, timeout_seconds)
+            while time.time() <= deadline:
+                if pattern in read_log(path_str):
+                    return iso_utc(dt.datetime.now(dt.timezone.utc)), False
+                proc = process_map.get(process_name)
+                if proc is not None and proc.poll() is not None:
+                    return None, True
+                time.sleep(1)
+            return None, False
 
         def request_shutdown(name):
             proc = process_map.get(name)
@@ -254,29 +367,72 @@ def build_remote_runner(config: dict[str, Any]) -> str:
             attempt_records = []
             for attempt in range(1, max(1, dexter_startup_attempts) + 1):
                 process_name = "dexter" if attempt == 1 else f"dexter_retry_{{attempt}}"
-                start_process(
+                attempt_started_at = iso_utc(dt.datetime.now(dt.timezone.utc))
+                wslogs_started_before_attempt = bool(wslogs_state["started"])
+                proc, _stdout_path, stderr_path = start_process(
                     process_name,
                     [config["dexter_python"], "Dexter.py"],
                     dexter_root,
                     dexter_env,
                     alias="dexter",
                 )
+                wslogs_started_during_attempt = False
+                if not wslogs_state["started"] and startup_delay_seconds > 0 and proc.poll() is None:
+                    time.sleep(startup_delay_seconds)
+                if not wslogs_state["started"] and proc.poll() is None:
+                    start_process(
+                        "dexter_wslogs",
+                        [config["dexter_python"], "DexLab/wsLogs.py"],
+                        dexter_root,
+                        dexter_env,
+                    )
+                    wslogs_state["started"] = True
+                    wslogs_state["started_after_attempt"] = attempt
+                    wslogs_started_during_attempt = True
+                    (
+                        wslogs_state["observed_at_utc"],
+                        wslogs_state["process_exited_before_subscription"],
+                    ) = wait_for_log_pattern(
+                        wslogs_state["stderr_path"],
+                        "Subscribed to logs successfully!",
+                        dexter_wslogs_ready_timeout_seconds,
+                        "dexter_wslogs",
+                    )
+                    if wslogs_state["observed_at_utc"] and dexter_wslogs_settle_seconds > 0:
+                        wslogs_state["settle_started_at_utc"] = iso_utc(dt.datetime.now(dt.timezone.utc))
+                        time.sleep(dexter_wslogs_settle_seconds)
+                        wslogs_state["settle_ended_at_utc"] = iso_utc(dt.datetime.now(dt.timezone.utc))
                 summary, observed_at, exited_before_ready = wait_for_event_or_exit(
                     str(dexter_event_path),
                     dexter_ready_timeout_seconds,
                     "dexter",
                 )
+                attempt_finished_at = iso_utc(dt.datetime.now(dt.timezone.utc))
                 record = {{
                     "attempt": attempt,
+                    "started_at_utc": attempt_started_at,
+                    "finished_at_utc": attempt_finished_at,
                     "event_observed": bool(observed_at),
                     "observed_at_utc": observed_at,
                     "process_exited_before_event": exited_before_ready,
                     "event_count": summary["event_count"],
+                    "exit_code": proc.poll(),
+                    "stderr_path": stderr_path,
+                    "wslogs_started_before_attempt": wslogs_started_before_attempt,
+                    "wslogs_started_during_attempt": wslogs_started_during_attempt,
+                    "head_start_seconds_before_wslogs": startup_delay_seconds if wslogs_started_during_attempt else 0,
+                    "wallet_balance_http_429_count": count_log_occurrences(stderr_path, 'HTTP 429'),
+                    "wallet_balance_rate_limited": 'rate limited' in read_log(stderr_path),
+                    "stderr_tail": tail_log_lines(stderr_path),
                 }}
-                attempt_records.append(record)
                 if summary["event_count"] > 0 or not exited_before_ready or attempt >= dexter_startup_attempts:
+                    attempt_records.append(record)
                     return summary, observed_at, exited_before_ready, attempt_records
-                time.sleep(max(0, dexter_retry_backoff_seconds))
+                if dexter_retry_backoff_seconds > 0:
+                    record["retry_backoff_started_at_utc"] = iso_utc(dt.datetime.now(dt.timezone.utc))
+                    time.sleep(max(0, dexter_retry_backoff_seconds))
+                    record["retry_backoff_ended_at_utc"] = iso_utc(dt.datetime.now(dt.timezone.utc))
+                attempt_records.append(record)
             return event_summary(str(dexter_event_path)), None, True, attempt_records
 
         measurement_started_at = None
@@ -288,8 +444,27 @@ def build_remote_runner(config: dict[str, Any]) -> str:
         dexter_ready_at = None
         dexter_exited_before_ready = False
         dexter_startup_attempt_summary = []
+        dexter_prestart_quiet_started_at = None
+        dexter_prestart_quiet_ended_at = None
+        stale_process_cleanup = {{
+            "listed_at_utc": None,
+            "list_exit_code": None,
+            "list_stderr_tail": [],
+            "found": [],
+            "stopped": [],
+        }}
+        wslogs_state = {{
+            "started": False,
+            "started_after_attempt": None,
+            "observed_at_utc": None,
+            "process_exited_before_subscription": False,
+            "settle_started_at_utc": None,
+            "settle_ended_at_utc": None,
+            "stderr_path": str(log_path("dexter_wslogs", "stderr")),
+        }}
 
         try:
+            stale_process_cleanup = cleanup_stale_processes()
             mewx_binary = mewx_root / "target" / "debug" / "mew.exe"
             mewx_cmd = [str(mewx_binary)] if mewx_binary.exists() else ["cargo", "run", "--quiet"]
             start_process(
@@ -307,14 +482,13 @@ def build_remote_runner(config: dict[str, Any]) -> str:
             if mewx_exited_before_ready:
                 measurement_ended_at = iso_utc(dt.datetime.now(dt.timezone.utc))
             else:
-                start_process(
-                    "dexter_wslogs",
-                    [config["dexter_python"], "DexLab/wsLogs.py"],
-                    dexter_root,
-                    dexter_env,
-                )
-                if startup_delay_seconds > 0:
-                    time.sleep(startup_delay_seconds)
+                if dexter_prestart_quiet_seconds > 0:
+                    dexter_prestart_quiet_started_at = iso_utc(dt.datetime.now(dt.timezone.utc))
+                    time.sleep(dexter_prestart_quiet_seconds)
+                    dexter_prestart_quiet_ended_at = iso_utc(dt.datetime.now(dt.timezone.utc))
+                else:
+                    dexter_prestart_quiet_started_at = iso_utc(dt.datetime.now(dt.timezone.utc))
+                    dexter_prestart_quiet_ended_at = dexter_prestart_quiet_started_at
 
                 (
                     dexter_ready_summary,
@@ -381,7 +555,27 @@ def build_remote_runner(config: dict[str, Any]) -> str:
                 "dexter_startup": {{
                     "attempts_allowed": dexter_startup_attempts,
                     "retry_backoff_seconds": dexter_retry_backoff_seconds,
+                    "prestart_quiet_seconds": dexter_prestart_quiet_seconds,
+                    "prestart_quiet_started_at_utc": dexter_prestart_quiet_started_at,
+                    "prestart_quiet_ended_at_utc": dexter_prestart_quiet_ended_at,
+                    "startup_delay_seconds": startup_delay_seconds,
                     "attempts": dexter_startup_attempt_summary,
+                }},
+                "stale_process_cleanup": stale_process_cleanup,
+                "dexter_wslogs_readiness": {{
+                    "started": wslogs_state["started"],
+                    "launch_strategy": "start_after_dexter_head_start",
+                    "started_after_attempt": wslogs_state["started_after_attempt"],
+                    "timeout_seconds": dexter_wslogs_ready_timeout_seconds,
+                    "subscription_observed_before_dexter_start": bool(wslogs_state["observed_at_utc"]),
+                    "observed_at_utc": wslogs_state["observed_at_utc"],
+                    "process_exited_before_subscription": wslogs_state["process_exited_before_subscription"],
+                    "settle_seconds": dexter_wslogs_settle_seconds,
+                    "settle_started_at_utc": wslogs_state["settle_started_at_utc"],
+                    "settle_ended_at_utc": wslogs_state["settle_ended_at_utc"],
+                    "stderr_path": wslogs_state["stderr_path"],
+                    "http_429_count": count_log_occurrences(wslogs_state["stderr_path"], 'HTTP 429'),
+                    "stderr_tail": tail_log_lines(wslogs_state["stderr_path"]),
                 }},
                 "launch_events": launch_events,
                 "process_results": results,
@@ -417,6 +611,9 @@ def collect_remote_runs(
     dexter_ready_timeout_seconds: int,
     dexter_startup_attempts: int,
     dexter_retry_backoff_seconds: int,
+    dexter_prestart_quiet_seconds: int,
+    dexter_wslogs_ready_timeout_seconds: int,
+    dexter_wslogs_settle_seconds: int,
     dexter_python: str,
 ) -> dict[str, Any]:
     script = build_remote_runner(
@@ -433,6 +630,9 @@ def collect_remote_runs(
             "dexter_ready_timeout_seconds": dexter_ready_timeout_seconds,
             "dexter_startup_attempts": dexter_startup_attempts,
             "dexter_retry_backoff_seconds": dexter_retry_backoff_seconds,
+            "dexter_prestart_quiet_seconds": dexter_prestart_quiet_seconds,
+            "dexter_wslogs_ready_timeout_seconds": dexter_wslogs_ready_timeout_seconds,
+            "dexter_wslogs_settle_seconds": dexter_wslogs_settle_seconds,
             "dexter_python": dexter_python,
         }
     )
@@ -448,10 +648,9 @@ def ensure_remote_collector(host: str, windows_root: str) -> str:
     ssh(
         host,
         [
-            "powershell",
-            "-NoProfile",
-            "-Command",
-            f"New-Item -ItemType Directory -Force '{remote_tools_dir}' | Out-Null",
+            "cmd",
+            "/c",
+            f'if not exist "{remote_tools_dir}" mkdir "{remote_tools_dir}"',
         ],
     )
     remote_collector = f"{remote_tools_dir}\\collect_comparison_package.ps1"
@@ -472,10 +671,9 @@ def package_remote_run(
     ended_at_utc: str,
     event_file: str,
     windows_root: str,
-) -> str:
-    result = ssh(
-        host,
-        [
+) -> dict[str, Any]:
+    def run_packager(*, include_window: bool) -> str:
+        command = [
             "powershell",
             "-NoProfile",
             "-ExecutionPolicy",
@@ -492,20 +690,53 @@ def package_remote_run(
             mode,
             "-TransportMode",
             transport_mode,
-            "-StartedAtUtc",
-            started_at_utc,
-            "-EndedAtUtc",
-            ended_at_utc,
-            "-EventFile",
-            event_file,
-            "-RuntimeRoot",
-            windows_root,
-        ],
-    )
-    output = result.stdout.strip().splitlines()
-    if not output:
-        raise RuntimeError(f"collector did not return a package path for {source}")
-    return output[-1].strip()
+        ]
+        if include_window and started_at_utc:
+            command.extend(["-StartedAtUtc", started_at_utc])
+        if include_window and ended_at_utc:
+            command.extend(["-EndedAtUtc", ended_at_utc])
+        command.extend(
+            [
+                "-EventFile",
+                event_file,
+                "-RuntimeRoot",
+                windows_root,
+            ]
+        )
+        result = ssh(host, command)
+        output = result.stdout.strip().splitlines()
+        if not output:
+            raise RuntimeError(f"collector did not return a package path for {source}")
+        return output[-1].strip()
+
+    try:
+        return {
+            "package_path": run_packager(include_window=True),
+            "event_window_mode": "filtered_window",
+        }
+    except RuntimeError as exc:
+        if (
+            started_at_utc
+            and ended_at_utc
+            and "No events fell within the selected measurement window" in str(exc)
+        ):
+            return {
+                "package_path": run_packager(include_window=False),
+                "event_window_mode": "full_stream_fallback",
+                "event_window_note": (
+                    "Remote PowerShell window filtering returned zero events; "
+                    "the helper copied the full run-scoped stream instead."
+                ),
+            }
+        raise
+
+
+def rewrite_local_package_window(package_dir: Path, started_at_utc: str, ended_at_utc: str) -> None:
+    metadata_path = package_dir / "run_metadata.json"
+    metadata = json.loads(metadata_path.read_text())
+    metadata["started_at_utc"] = started_at_utc
+    metadata["ended_at_utc"] = ended_at_utc
+    metadata_path.write_text(json.dumps(metadata, indent=2) + "\n")
 
 
 def local_stage_dir(label: str) -> Path:
@@ -523,6 +754,17 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--dexter-ready-timeout-seconds", type=int, default=DEFAULT_DEXTER_READY_TIMEOUT_SECONDS)
     parser.add_argument("--dexter-startup-attempts", type=int, default=DEFAULT_DEXTER_STARTUP_ATTEMPTS)
     parser.add_argument("--dexter-retry-backoff-seconds", type=int, default=DEFAULT_DEXTER_RETRY_BACKOFF_SECONDS)
+    parser.add_argument("--dexter-prestart-quiet-seconds", type=int, default=DEFAULT_DEXTER_PRESTART_QUIET_SECONDS)
+    parser.add_argument(
+        "--dexter-wslogs-ready-timeout-seconds",
+        type=int,
+        default=DEFAULT_DEXTER_WSLOGS_READY_TIMEOUT_SECONDS,
+    )
+    parser.add_argument(
+        "--dexter-wslogs-settle-seconds",
+        type=int,
+        default=DEFAULT_DEXTER_WSLOGS_SETTLE_SECONDS,
+    )
     parser.add_argument("--mewx-mode", choices=["sim", "trade"], default=DEFAULT_MEWX_MODE)
     parser.add_argument("--label")
     parser.add_argument("--output-json")
@@ -550,6 +792,9 @@ def main() -> int:
         dexter_ready_timeout_seconds=args.dexter_ready_timeout_seconds,
         dexter_startup_attempts=args.dexter_startup_attempts,
         dexter_retry_backoff_seconds=args.dexter_retry_backoff_seconds,
+        dexter_prestart_quiet_seconds=args.dexter_prestart_quiet_seconds,
+        dexter_wslogs_ready_timeout_seconds=args.dexter_wslogs_ready_timeout_seconds,
+        dexter_wslogs_settle_seconds=args.dexter_wslogs_settle_seconds,
         dexter_python=rf"{args.windows_root}\venvs\dexter\Scripts\python.exe",
     )
 
@@ -585,7 +830,7 @@ def main() -> int:
     )
     mewx_transport = mewx_summary["transport_modes"][0] if mewx_summary["transport_modes"] else "mixed"
 
-    dexter_package_remote = package_remote_run(
+    dexter_packaging = package_remote_run(
         host=args.windows_host,
         collector_path=collector_path,
         source="dexter",
@@ -598,7 +843,7 @@ def main() -> int:
         event_file=dexter_summary["path"],
         windows_root=args.windows_root,
     )
-    mewx_package_remote = package_remote_run(
+    mewx_packaging = package_remote_run(
         host=args.windows_host,
         collector_path=collector_path,
         source="mewx",
@@ -613,8 +858,14 @@ def main() -> int:
     )
 
     stage_dir = local_stage_dir(label)
+    dexter_package_remote = str(dexter_packaging["package_path"])
+    mewx_package_remote = str(mewx_packaging["package_path"])
     scp_from(args.windows_host, windows_to_scp_path(dexter_package_remote), stage_dir)
     scp_from(args.windows_host, windows_to_scp_path(mewx_package_remote), stage_dir)
+    if dexter_packaging["event_window_mode"] == "full_stream_fallback":
+        rewrite_local_package_window(stage_dir / dexter_run_id, started_at_utc, ended_at_utc)
+    if mewx_packaging["event_window_mode"] == "full_stream_fallback":
+        rewrite_local_package_window(stage_dir / mewx_run_id, started_at_utc, ended_at_utc)
 
     payload = {
         "label": label,
@@ -625,6 +876,10 @@ def main() -> int:
         "remote_packages": {
             "dexter": dexter_package_remote,
             "mewx": mewx_package_remote,
+        },
+        "packaging": {
+            "dexter": dexter_packaging,
+            "mewx": mewx_packaging,
         },
         "local_packages": {
             "dexter": str((stage_dir / dexter_run_id).resolve()),

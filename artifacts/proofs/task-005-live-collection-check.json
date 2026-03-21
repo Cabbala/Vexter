@@ -1,51 +1,93 @@
 {
   "task_id": "TASK-005-live-comparison-evidence",
-  "checked_at_utc": "2026-03-20T22:17:49Z",
-  "status": "dexter_startup_rate_limit_blocker",
+  "checked_at_utc": "2026-03-20T22:52:22Z",
+  "status": "partial_live_comparison_blocker",
   "windows_runtime_host": "win-lan",
   "resolved_windows_hostname": "DESKTOP-NNC6MPS",
   "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
   "verified_start": {
-    "main_commit": "4752182af91c2353491741bf36cf9a82d9655575",
-    "pull_request": 7,
-    "branch": "codex/task-005-resume-after-pr7"
+    "main_commit": "d005528a236360b3cb67c78b3a61a6710be410a2",
+    "pull_request": 8,
+    "branch": "codex/task-005-resume-after-pr8"
   },
   "frozen_source_commits": {
     "dexter": "69de8b6ca57ca3d03025d85329c88aa4a167da34",
     "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
   },
-  "measurement_window_status": "fresh_retry_blocked_before_dexter_raw",
-  "last_valid_matched_window": {
-    "start_utc": "2026-03-20T20:58:40.760Z",
-    "end_utc": "2026-03-20T21:01:52.838Z",
-    "exact_event_overlap_start_utc": "2026-03-20T20:59:55.254Z",
-    "exact_event_overlap_end_utc": "2026-03-20T21:01:52.838Z",
-    "concurrent_runtime_duration_ms": 192078,
-    "exact_event_overlap_duration_ms": 117584,
-    "dexter_run_id": "dexter-pass-20260320T205803Z",
-    "mewx_run_id": "mewx-pass-20260320T205803Z"
+  "collection_strategy": {
+    "mewx_mode": "sim_live",
+    "dexter_mode": "observe_live",
+    "dexter_startup_attempts_configured": 4,
+    "dexter_startup_attempts_used": 1,
+    "dexter_retry_backoff_seconds": 90,
+    "dexter_prestart_quiet_seconds": 60,
+    "dexter_wslogs_ready_timeout_seconds": 90,
+    "dexter_wslogs_settle_seconds": 20,
+    "startup_delay_seconds": 5,
+    "mewx_launch_created_at_utc": "2026-03-20T22:42:10Z",
+    "dexter_wslogs_launch_created_at_utc": "2026-03-20T22:42:23Z",
+    "dexter_launch_created_at_utc": "2026-03-20T22:42:53Z",
+    "dexter_first_raw_event_at_utc": "2026-03-20T22:42:56.215162Z",
+    "wslogs_http_429_lines": 6,
+    "dexter_ws_http_429_lines": 1
   },
-  "previous_live_package_paths": {
-    "dexter_validation": "artifacts/proofs/task-005-live-pass-grade-runtime-window-results/dexter.validate.json",
-    "mewx_validation": "artifacts/proofs/task-005-live-pass-grade-runtime-window-results/mewx.validate.json",
-    "dexter_metrics": "artifacts/proofs/task-005-live-pass-grade-runtime-window-results/dexter.metrics.json",
-    "mewx_metrics": "artifacts/proofs/task-005-live-pass-grade-runtime-window-results/mewx.metrics.json"
-  },
-  "previous_comparison_output_dir": "artifacts/reports/task-005-live-pass-grade-runtime-window-comparison",
-  "previous_comparison_pack": "artifacts/proofs/task-005-live-pass-grade-runtime-window-results/comparison-pack.json",
-  "latest_retry": {
-    "final_label": "resume-final-20260321T0714",
-    "mewx": {
-      "run_id": "mewx-resume-final-20260321T0714",
-      "event_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx\\mewx-resume-final-20260321T0714.ndjson",
+  "measurement_window_status": "matched_window_collected_partial",
+  "fresh_same_attempt_pair": {
+    "label": "resume-after-pr8-20260321T0743",
+    "measurement_window": {
+      "started_at_utc": "2026-03-20T22:42:23.102Z",
+      "ended_at_utc": "2026-03-20T22:44:53.527477Z",
+      "exact_overlap_start_utc": "2026-03-20T22:42:56.215162Z",
+      "exact_overlap_end_utc": "2026-03-20T22:44:27.240Z"
+    },
+    "dexter": {
+      "run_id": "dexter-resume-after-pr8-20260321T0743",
+      "raw_event_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter\\dexter-resume-after-pr8-20260321T0743.ndjson",
       "event_span_utc": [
-        "2026-03-20T22:14:55.210Z",
-        "2026-03-20T22:16:18.740Z"
+        "2026-03-20T22:42:56.215162Z",
+        "2026-03-20T22:44:53.527477Z"
       ],
-      "required_event_types_present": 9,
+      "required_event_types_present": 4,
       "required_event_types_total": 12,
       "observed_event_types": [
+        "creator_candidate",
+        "entry_rejected",
+        "entry_signal",
+        "mint_observed"
+      ],
+      "missing_event_types": [
         "candidate_rejected",
+        "entry_attempt",
+        "entry_fill",
+        "exit_fill",
+        "exit_signal",
+        "position_closed",
+        "run_summary",
+        "session_update"
+      ],
+      "total_events": 107078,
+      "event_counts": {
+        "creator_candidate": 114,
+        "entry_rejected": 106962,
+        "entry_signal": 1,
+        "mint_observed": 1
+      },
+      "startup_attempts": 1,
+      "wallet_balance_http_429_attempts": 0,
+      "dexter_ws_http_429_lines": 1,
+      "launch_created_at_utc": "2026-03-20T22:42:53Z",
+      "first_raw_event_at_utc": "2026-03-20T22:42:56.215162Z"
+    },
+    "mewx": {
+      "run_id": "mewx-resume-after-pr8-20260321T0743",
+      "event_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx\\mewx-resume-after-pr8-20260321T0743.ndjson",
+      "event_span_utc": [
+        "2026-03-20T22:42:23.102Z",
+        "2026-03-20T22:44:27.240Z"
+      ],
+      "required_event_types_present": 8,
+      "required_event_types_total": 12,
+      "observed_event_types": [
         "entry_attempt",
         "entry_fill",
         "entry_signal",
@@ -56,171 +98,73 @@
         "session_update"
       ],
       "missing_event_types": [
+        "candidate_rejected",
         "creator_candidate",
         "entry_rejected",
         "run_summary"
       ],
+      "total_events": 26,
       "event_counts": {
-        "candidate_rejected": 1,
-        "entry_attempt": 4,
-        "entry_fill": 4,
-        "entry_signal": 4,
-        "exit_fill": 4,
-        "exit_signal": 4,
-        "mint_observed": 6,
-        "position_closed": 4,
-        "session_update": 10
+        "entry_attempt": 3,
+        "entry_fill": 3,
+        "entry_signal": 3,
+        "exit_fill": 3,
+        "exit_signal": 3,
+        "mint_observed": 4,
+        "position_closed": 3,
+        "session_update": 4
       },
-      "total_events": 41
+      "launch_created_at_utc": "2026-03-20T22:42:10Z",
+      "first_raw_event_at_utc": "2026-03-20T22:42:23.102Z"
     },
-    "dexter": {
-      "run_id": "dexter-resume-final-20260321T0714",
-      "raw_event_file": null,
-      "startup_attempts": 4,
-      "wallet_balance_http_429_attempts": 4,
-      "wallet_balance_error": "HTTP 429: {\"jsonrpc\":\"2.0\",\"error\":{\"code\":-32429,\"message\":\"rate limited\"}}",
-      "wslogs_initial_http_429_then_recovered": true
-    }
-  },
-  "windows_layout_checks": {
-    "fixed_root_present": true,
-    "raw_event_dirs": {
-      "dexter": {
-        "path": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
-        "latest_ndjson": "dexter-pass-20260320T205803Z.ndjson"
-      },
-      "mewx": {
-        "path": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx",
-        "latest_ndjson": "mewx-resume-final-20260321T0714.ndjson"
-      }
+    "local_packages": {
+      "dexter": "/Users/cabbala/Documents/vexter/task005-pass-grade-pair/artifacts/tmp/winlan-packages-resume-after-pr8-20260321T0743/dexter-resume-after-pr8-20260321T0743",
+      "mewx": "/Users/cabbala/Documents/vexter/task005-pass-grade-pair/artifacts/tmp/winlan-packages-resume-after-pr8-20260321T0743/mewx-resume-after-pr8-20260321T0743"
     },
-    "comparison_inputs": {
-      "path": "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified\\comparison_inputs_runtime_window",
-      "dexter_package": "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified\\comparison_inputs_runtime_window\\dexter\\dexter-pass-20260320T205803Z",
-      "mewx_package": "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified\\comparison_inputs_runtime_window\\mewx\\mewx-pass-20260320T205803Z"
-    }
+    "comparison_output_dir": "artifacts/reports/task-005-live-resume-after-pr8-20260321T0743-comparison",
+    "comparison_pack": "artifacts/proofs/task-005-live-resume-after-pr8-20260321T0743-results/comparison-pack.json"
   },
-  "env_injection_points": {
-    "dexter": {
-      "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter\\.env",
-      "exists": true,
-      "required_keys_present": [
-        "PRIVATE_KEY",
-        "HTTP_URL",
-        "WS_URL"
-      ],
-      "private_key_base58_ok": true,
-      "http_url_scheme": "https",
-      "ws_url_scheme": "wss",
-      "quoted_values_removed": true,
-      "formal_paper_mode_confirmed": false
-    },
-    "mewx": {
-      "path": "C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\.env",
-      "exists": true,
-      "required_keys_present": [
-        "PRIVATE_KEY",
-        "RPC_URL",
-        "WS_URL",
-        "DB_URL"
-      ],
-      "private_key_base58_ok": true,
-      "rpc_url_scheme": "https",
-      "ws_url_scheme": "wss",
-      "db_url": "postgres://postgres:admin123@127.0.0.1:5432",
-      "http_url_removed": true,
-      "regions_parser_safe": true,
-      "mode_override_used": "sim"
-    }
+  "baseline_comparison": {
+    "label": "pass-20260320T205803Z",
+    "matched_window_start_utc": "2026-03-20T20:58:40.760Z",
+    "matched_window_end_utc": "2026-03-20T21:01:52.838Z",
+    "exact_overlap_start_utc": "2026-03-20T20:59:55.254Z",
+    "exact_overlap_end_utc": "2026-03-20T21:01:52.838Z",
+    "dexter_required_event_types_present": 1,
+    "mewx_required_event_types_present": 9,
+    "comparison_output_dir": "artifacts/reports/task-005-live-pass-grade-runtime-window-comparison",
+    "same_attempt_packaging_now_exists": true,
+    "fresh_matched_window_start_utc": "2026-03-20T22:42:23.102Z",
+    "fresh_matched_window_end_utc": "2026-03-20T22:44:53.527477Z",
+    "fresh_exact_overlap_start_utc": "2026-03-20T22:42:56.215162Z",
+    "fresh_exact_overlap_end_utc": "2026-03-20T22:44:27.240Z",
+    "fresh_dexter_required_event_types_present": 4,
+    "fresh_mewx_required_event_types_present": 8,
+    "fresh_comparison_output_dir": "artifacts/reports/task-005-live-resume-after-pr8-20260321T0743-comparison",
+    "comparison_notes": [
+      "Dexter improved from 1/12 to 4/12 required event types on a fresh same-attempt pair.",
+      "Mew-X coverage moved from 9/12 on the prior baseline to 8/12 on the fresh pair.",
+      "validate, derive-metrics, and build-pack were rerun successfully on the fresh pair.",
+      "No comparison area is yet decisively attributable enough to unlock TASK-006."
+    ]
   },
-  "last_valid_matched_live_runs": {
-    "dexter": {
-      "run_id": "dexter-pass-20260320T205803Z",
-      "mode": "observe_live",
-      "transport_mode": "ws",
-      "validation": {
-        "classification": "partial",
-        "comparison_readiness": "observe_only",
-        "required_event_types_present": 1,
-        "required_event_types_total": 12,
-        "observed_event_types": [
-          "entry_rejected"
-        ],
-        "missing_event_types": [
-          "candidate_rejected",
-          "creator_candidate",
-          "entry_attempt",
-          "entry_fill",
-          "entry_signal",
-          "exit_fill",
-          "exit_signal",
-          "mint_observed",
-          "position_closed",
-          "run_summary",
-          "session_update"
-        ],
-        "total_events": 204818
-      }
-    },
-    "mewx": {
-      "run_id": "mewx-pass-20260320T205803Z",
-      "mode": "sim_live",
-      "transport_mode": "mixed",
-      "validation": {
-        "classification": "partial",
-        "comparison_readiness": "observe_only",
-        "required_event_types_present": 9,
-        "required_event_types_total": 12,
-        "observed_event_types": [
-          "candidate_rejected",
-          "entry_attempt",
-          "entry_fill",
-          "entry_signal",
-          "exit_fill",
-          "exit_signal",
-          "mint_observed",
-          "position_closed",
-          "session_update"
-        ],
-        "missing_event_types": [
-          "creator_candidate",
-          "entry_rejected",
-          "run_summary"
-        ],
-        "total_events": 27
-      }
-    }
-  },
-  "repo_side_fixes": {
-    "collector_windows_relative_paths_are_posix_like": true,
-    "collector_event_stream_copy_hardened": true,
-    "collector_package_dir_cleanup": true,
-    "validator_normalizes_windows_relative_paths": true,
-    "validator_issue_rollup_enabled": true,
-    "entry_rejected_tx_signature_optional": true,
-    "matched_live_pair_helper_added": true,
-    "matched_live_pair_helper_prewarms_mewx": true,
-    "matched_live_pair_helper_prefers_direct_mewx_binary": true,
-    "matched_live_pair_helper_extends_window_through_graceful_stop": true,
-    "matched_live_pair_helper_retries_dexter_startup": true
-  },
+  "task_006_ready": false,
   "blockers": [
     {
-      "code": "dexter_startup_rate_limit_blocker",
-      "detail": "Fresh retries after PR #7 could not package a new matched pair because Dexter never created a raw NDJSON stream; Dexter.py exited with Helius HTTP 429 during wallet balance fetch on all four startup attempts."
+      "code": "fresh_same_attempt_pair_partial",
+      "detail": "A fresh same-attempt Dexter/Mew-X pair was collected and packaged, but Dexter still validated only 4/12 required event types and Mew-X validated 8/12."
     },
     {
-      "code": "dexter_wslogs_partial_recovery",
-      "detail": "DexLab/wsLogs.py also saw initial websocket HTTP 429, but it later re-subscribed and observed new mints, so the fresh blocker is narrower than a full Windows runtime outage."
+      "code": "dexter_exit_and_fill_coverage_missing",
+      "detail": "The fresh Dexter pair still lacks candidate_rejected, entry_attempt, entry_fill, exit_fill, exit_signal, position_closed, run_summary, and session_update."
     },
     {
-      "code": "mewx_fresh_sim_unpaired_partial",
-      "detail": "Fresh Mew-X sim evidence improved to 41 events across nine required event types, but creator_candidate, entry_rejected, and run_summary are still missing and the run is unusable for comparison without a same-attempt Dexter package."
+      "code": "mewx_required_types_and_export_missing",
+      "detail": "The fresh Mew-X pair still lacks candidate_rejected, creator_candidate, entry_rejected, and run_summary, and the package still lacks a session_summary export pointer."
     },
     {
-      "code": "last_valid_pair_still_partial",
-      "detail": "The last validated matched pair remains the 2026-03-20T20:58:40.760Z -> 2026-03-20T21:01:52.838Z window, which is still partial at Dexter 1/12 and Mew-X 9/12 and therefore cannot advance TASK-006."
+      "code": "task_006_still_not_decidable",
+      "detail": "The fresh comparison pack exists, but winner/tie decisions remain deferred because the matched pair is still partial."
     }
-  ],
-  "task_006_ready": false
+  ]
 }

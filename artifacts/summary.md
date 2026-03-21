@@ -2,47 +2,60 @@
 
 ## Status
 
-- `TASK-005-live-comparison-evidence` remains blocked in `dexter_startup_rate_limit_blocker` state on branch `codex/task-005-resume-after-pr7` as of `2026-03-20T22:17:49Z`.
-- Start conditions were re-verified from `Cabbala/Vexter` latest `main` commit `4752182af91c2353491741bf36cf9a82d9655575`; PR `#7` was confirmed merged on `2026-03-21T06:44:14+09:00`.
+- `TASK-005-live-comparison-evidence` remains blocked in `partial_live_comparison_blocker` state on branch `codex/task-005-resume-after-pr8` as of `2026-03-20T22:52:22Z`.
+- Start conditions were re-verified from `Cabbala/Vexter` latest `main` commit `d005528a236360b3cb67c78b3a61a6710be410a2`; PR `#8` was confirmed merged at `2026-03-21T07:33:45+09:00`.
 - Dexter and Mew-X strategy, execution, and instrumentation logic remain unchanged.
-- Sub-agents `James` and `Bacon` were used for sidecar inspection while the main thread handled repository edits and Windows runtime retries.
+- Sub-agents `Chandrasekhar` and `Tesla` were launched for sidecar inspection while the main thread handled the helper changes, recollection run, and artifact rebuild.
 
-## Collection Results
+## Fresh Same-Attempt Result
 
-- `scripts/collect_matched_live_pair.py` was hardened without touching frozen source logic:
-  - `Mew-X` now prewarms before Dexter startup
-  - direct `mew.exe` launch is preferred over `cargo run`
-  - the collection window closes after graceful shutdown instead of before it
-  - Dexter startup can retry with backoff when the raw stream stays empty
-- Historical raw inspection on `win-lan` still proves the last successful Dexter run (`dexter-pass-20260320T205803Z`) contains startup `creator_candidate`, `mint_observed`, and `entry_signal` before the old exact-overlap cutoff, so the prior `1 / 12` window remained partly a collection-timing loss and not just missing Dexter instrumentation.
-- Three fresh safe-mode recollection attempts were run after PR `#7`. No new matched pair could be packaged because Dexter never created a fresh raw NDJSON stream.
-- The latest fresh `Mew-X` sim retry, `mewx-resume-final-20260321T0714`, produced `41` raw events from `2026-03-20T22:14:55.210Z` to `2026-03-20T22:16:18.740Z` across `9 / 12` required event types:
-  - `candidate_rejected`
-  - `entry_attempt`
-  - `entry_fill`
-  - `entry_signal`
-  - `exit_fill`
-  - `exit_signal`
-  - `mint_observed`
-  - `position_closed`
-  - `session_update`
-- Dexter startup failed before its first raw event on every final retry attempt. `Dexter.py` exited with Helius `HTTP 429` during wallet balance fetch across four backoff attempts, while `DexLab/wsLogs.py` recovered from initial websocket `HTTP 429` rejects and resumed observing new mints.
-- Because no fresh Dexter raw stream existed, `validate`, `derive-metrics`, and `build-pack` could not be rerun on a new matched pair. The best known matched-window outputs therefore remain the prior `dexter-pass-20260320T205803Z` / `mewx-pass-20260320T205803Z` artifacts.
+- Vexter-side startup mitigation succeeded without touching frozen source logic:
+  - configured Dexter-side quiet/cooldown knobs: `60 s` prestart quiet, `90 s` wsLogs readiness wait, `20 s` wsLogs settle, `5 s` startup delay, `4` max startup attempts, `90 s` retry backoff
+  - helper packaging was hardened so the Windows collector can fall back to full-stream copy when exact timestamp filtering is unavailable
+  - Windows `ssh` collector setup was hardened to avoid shell-quoting failures during remote package creation
+- Fresh same-attempt label: `resume-after-pr8-20260321T0743`
+- Observed launch and readiness evidence:
+  - `Mew-X` logs created at `2026-03-20T22:42:10Z`; first raw event at `2026-03-20T22:42:23.102Z`
+  - `Dexter wsLogs` logs created at `2026-03-20T22:42:23Z`; stderr still captured `6` `HTTP 429` lines before recovery
+  - `Dexter` logs created at `2026-03-20T22:42:53Z`; first raw event arrived at `2026-03-20T22:42:56.215162Z`
+  - Dexter startup wallet-balance `HTTP 429` attempts on the successful run: `0`
+  - Dexter main stderr still captured `1` websocket `HTTP 429` line after startup, but the raw stream stayed live
+- Fresh matched measurement window:
+  - concurrent runtime start: `2026-03-20T22:42:23.102Z`
+  - concurrent runtime end: `2026-03-20T22:44:53.527477Z`
+  - concurrent runtime duration: `150.425 s`
+  - exact event overlap start: `2026-03-20T22:42:56.215162Z`
+  - exact event overlap end: `2026-03-20T22:44:27.240Z`
+  - exact event overlap duration: `91.024 s`
+- Fresh package outputs:
+  - Dexter package dir: `artifacts/tmp/winlan-packages-resume-after-pr8-20260321T0743/dexter-resume-after-pr8-20260321T0743`
+  - Mew-X package dir: `artifacts/tmp/winlan-packages-resume-after-pr8-20260321T0743/mewx-resume-after-pr8-20260321T0743`
+  - comparison output dir: `artifacts/reports/task-005-live-resume-after-pr8-20260321T0743-comparison`
+  - comparison pack JSON: `artifacts/proofs/task-005-live-resume-after-pr8-20260321T0743-results/comparison-pack.json`
+- Fresh validation coverage:
+  - Dexter: `partial`, `4 / 12` required event types, `107078` total events
+  - Mew-X: `partial`, `8 / 12` required event types, `26` total events
+- `validate`, `derive-metrics`, and `build-pack` were rerun successfully on the fresh same-attempt pair.
 
-## Output State
+## Baseline Comparison
 
-- best known live Dexter package path: `artifacts/proofs/task-005-live-pass-grade-runtime-window-results/dexter.validate.json`
-- best known live Mew-X package path: `artifacts/proofs/task-005-live-pass-grade-runtime-window-results/mewx.validate.json`
-- best known live comparison output directory: `artifacts/reports/task-005-live-pass-grade-runtime-window-comparison`
-- best known comparison pack JSON: `artifacts/proofs/task-005-live-pass-grade-runtime-window-results/comparison-pack.json`
-- new matched live package pair collected in this session: `none`
-- winner / tie decisions: deferred for candidate sourcing, execution quality, exit quality, and replayability
+- Prior best runtime-window baseline remained:
+  - label: `pass-20260320T205803Z`
+  - Dexter: `1 / 12` required event types
+  - Mew-X: `9 / 12` required event types
+  - exact overlap duration: `117.584 s`
+- Fresh same-attempt comparison versus baseline:
+  - Dexter improved from `1 / 12` to `4 / 12`
+  - Mew-X moved from `9 / 12` to `8 / 12`
+  - same-attempt packaging now exists on latest `main` and is GitHub-visible
+  - no comparison area becomes decisively attributable enough yet to unlock TASK-006
 
-## Current Narrowed Blocker
+## Current Blocker
 
-- The old `entry_rejected.tx_signature` payload blocker remains resolved in Vexter, and the old overlap-alignment blocker remains resolved in the last valid matched window.
-- The immediate blocker is now `dexter_startup_rate_limit_blocker`, not generic shared-window packaging logic:
-  - Dexter must still stay on the zero-balance `observe_live` path, but it now fails before first event because Helius returns `HTTP 429` during wallet balance fetch on startup.
-  - `DexLab/wsLogs.py` can recover after initial websocket `HTTP 429`, so the fresh blocker is narrower than a full Windows runtime outage.
-  - Fresh `Mew-X` sim evidence improved to `41` events, but it remains unpaired and still lacks `creator_candidate`, `entry_rejected`, and `run_summary`.
-- `TASK-006` remains blocked until Dexter can complete a safe startup without `HTTP 429`, a fresh matched pair exists, and `validate`, `derive-metrics`, and `build-pack` can be rerun on that pair.
+- `TASK-005` is no longer blocked on `dexter_startup_rate_limit_blocker`; the fresh run cleared Dexter startup far enough to produce a raw NDJSON stream and a packaged same-attempt pair.
+- `TASK-005` is now blocked on partial matched-pair coverage:
+  - Dexter still lacks `candidate_rejected`, `entry_attempt`, `entry_fill`, `exit_fill`, `exit_signal`, `position_closed`, `run_summary`, and `session_update`
+  - Mew-X still lacks `candidate_rejected`, `creator_candidate`, `entry_rejected`, and `run_summary`
+  - the fresh Mew-X package still lacks a `session_summary` export pointer
+- Winner / tie decisions remain deferred for candidate sourcing, execution quality, exit quality, and replayability.
+- `TASK-006` remains blocked until a matched pair supports fuller event coverage and non-deferred comparison decisions.

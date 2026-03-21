@@ -1,0 +1,515 @@
+{
+  "candidate_generation": [
+    {
+      "dexter": {
+        "aggregation": "count",
+        "status": "ok",
+        "unit": "count",
+        "value": 114
+      },
+      "metric": "candidate_count",
+      "mewx": {
+        "aggregation": "count",
+        "status": "ok",
+        "unit": "count",
+        "value": 0
+      },
+      "notes": "Winner deferred until matched live packages are collected.",
+      "winner": "pending_live_evidence"
+    },
+    {
+      "dexter": {
+        "aggregation": "run_ratio",
+        "details": {
+          "candidate_count": 114,
+          "successful_positions": 0
+        },
+        "status": "ok",
+        "unit": "ratio",
+        "value": 0.0
+      },
+      "metric": "candidate_precision_proxy",
+      "mewx": {
+        "reason": "no creator_candidate events were observed",
+        "status": "unavailable",
+        "unit": "ratio",
+        "value": null
+      },
+      "notes": "Winner deferred until matched live packages are collected.",
+      "winner": "pending_live_evidence"
+    },
+    {
+      "dexter": {
+        "reason": "not derived in TASK-004 critical subset",
+        "status": "unavailable",
+        "unit": "n/a",
+        "value": null
+      },
+      "metric": "candidate_coverage",
+      "mewx": {
+        "reason": "not derived in TASK-004 critical subset",
+        "status": "unavailable",
+        "unit": "n/a",
+        "value": null
+      },
+      "notes": "Winner deferred until matched live packages are collected.",
+      "winner": "pending_live_evidence"
+    },
+    {
+      "dexter": {
+        "reason": "not derived in TASK-004 critical subset",
+        "status": "unavailable",
+        "unit": "n/a",
+        "value": null
+      },
+      "metric": "source_mix",
+      "mewx": {
+        "reason": "not derived in TASK-004 critical subset",
+        "status": "unavailable",
+        "unit": "n/a",
+        "value": null
+      },
+      "notes": "Winner deferred until matched live packages are collected.",
+      "winner": "pending_live_evidence"
+    },
+    {
+      "dexter": {
+        "reason": "not derived in TASK-004 critical subset",
+        "status": "unavailable",
+        "unit": "n/a",
+        "value": null
+      },
+      "metric": "creator_score_distribution",
+      "mewx": {
+        "reason": "not derived in TASK-004 critical subset",
+        "status": "unavailable",
+        "unit": "n/a",
+        "value": null
+      },
+      "notes": "Winner deferred until matched live packages are collected.",
+      "winner": "pending_live_evidence"
+    }
+  ],
+  "entry_execution": [
+    {
+      "dexter": {
+        "reason": "no samples available",
+        "status": "unavailable",
+        "unit": "ms",
+        "value": null
+      },
+      "metric": "signal_to_attempt_latency_ms",
+      "mewx": {
+        "aggregation": "median",
+        "samples": 3,
+        "status": "ok",
+        "unit": "ms",
+        "value": 888.0
+      },
+      "notes": "Winner deferred until matched live packages are collected.",
+      "winner": "pending_live_evidence"
+    },
+    {
+      "dexter": {
+        "reason": "no samples available",
+        "status": "unavailable",
+        "unit": "ms",
+        "value": null
+      },
+      "metric": "attempt_to_fill_latency_ms",
+      "mewx": {
+        "aggregation": "median",
+        "samples": 3,
+        "status": "ok",
+        "unit": "ms",
+        "value": 1.0
+      },
+      "notes": "Winner deferred until matched live packages are collected.",
+      "winner": "pending_live_evidence"
+    },
+    {
+      "dexter": {
+        "reason": "no entry_attempt events were observed",
+        "status": "unavailable",
+        "unit": "ratio",
+        "value": null
+      },
+      "metric": "fill_success_rate",
+      "mewx": {
+        "aggregation": "run_ratio",
+        "details": {
+          "attempts": 3,
+          "fills": 3
+        },
+        "status": "ok",
+        "unit": "ratio",
+        "value": 1.0
+      },
+      "notes": "Winner deferred until matched live packages are collected.",
+      "winner": "pending_live_evidence"
+    },
+    {
+      "dexter": {
+        "reason": "no samples available",
+        "status": "unavailable",
+        "unit": "bps",
+        "value": null
+      },
+      "metric": "quote_vs_fill_slippage_bps",
+      "mewx": {
+        "aggregation": "median",
+        "samples": 3,
+        "status": "ok",
+        "unit": "bps",
+        "value": 4.50308407738312
+      },
+      "notes": "Winner deferred until matched live packages are collected.",
+      "winner": "pending_live_evidence"
+    },
+    {
+      "dexter": {
+        "reason": "not derived in TASK-004 critical subset",
+        "status": "unavailable",
+        "unit": "n/a",
+        "value": null
+      },
+      "metric": "entry_reject_reason_rate",
+      "mewx": {
+        "reason": "not derived in TASK-004 critical subset",
+        "status": "unavailable",
+        "unit": "n/a",
+        "value": null
+      },
+      "notes": "Winner deferred until matched live packages are collected.",
+      "winner": "pending_live_evidence"
+    }
+  ],
+  "portfolio_operations": [
+    {
+      "dexter": {
+        "reason": "not derived in TASK-004 critical subset",
+        "status": "unavailable",
+        "unit": "n/a",
+        "value": null
+      },
+      "metric": "concurrent_positions_max",
+      "mewx": {
+        "reason": "not derived in TASK-004 critical subset",
+        "status": "unavailable",
+        "unit": "n/a",
+        "value": null
+      },
+      "notes": "Winner deferred until matched live packages are collected.",
+      "winner": "pending_live_evidence"
+    },
+    {
+      "dexter": {
+        "reason": "not derived in TASK-004 critical subset",
+        "status": "unavailable",
+        "unit": "n/a",
+        "value": null
+      },
+      "metric": "capital_lock_efficiency",
+      "mewx": {
+        "reason": "not derived in TASK-004 critical subset",
+        "status": "unavailable",
+        "unit": "n/a",
+        "value": null
+      },
+      "notes": "Winner deferred until matched live packages are collected.",
+      "winner": "pending_live_evidence"
+    },
+    {
+      "dexter": {
+        "reason": "not derived in TASK-004 critical subset",
+        "status": "unavailable",
+        "unit": "n/a",
+        "value": null
+      },
+      "metric": "token_concurrency_rejects",
+      "mewx": {
+        "reason": "not derived in TASK-004 critical subset",
+        "status": "unavailable",
+        "unit": "n/a",
+        "value": null
+      },
+      "notes": "Winner deferred until matched live packages are collected.",
+      "winner": "pending_live_evidence"
+    },
+    {
+      "dexter": {
+        "reason": "not derived in TASK-004 critical subset",
+        "status": "unavailable",
+        "unit": "n/a",
+        "value": null
+      },
+      "metric": "failure_to_exit_incidence",
+      "mewx": {
+        "reason": "not derived in TASK-004 critical subset",
+        "status": "unavailable",
+        "unit": "n/a",
+        "value": null
+      },
+      "notes": "Winner deferred until matched live packages are collected.",
+      "winner": "pending_live_evidence"
+    },
+    {
+      "dexter": {
+        "aggregation": "classification",
+        "details": {
+          "db_exports": 283,
+          "logs": 28,
+          "raw_events": 1,
+          "replayable_flag": false,
+          "replays": 283
+        },
+        "status": "ok",
+        "unit": "grade",
+        "value": "partial"
+      },
+      "metric": "replayability_grade",
+      "mewx": {
+        "aggregation": "classification",
+        "details": {
+          "db_exports": 0,
+          "logs": 22,
+          "raw_events": 1,
+          "replayable_flag": false,
+          "replays": 0
+        },
+        "status": "ok",
+        "unit": "grade",
+        "value": "partial"
+      },
+      "notes": "Winner deferred until matched live packages are collected.",
+      "winner": "pending_live_evidence"
+    }
+  ],
+  "run_metadata": {
+    "dexter": {
+      "config_snapshot": "config/dexter-resume-after-pr8-20260321T0743.config.json",
+      "measurement_window": "2026-03-20T22:42:23.102Z -> 2026-03-20T22:44:53.527477Z",
+      "mode": "observe_live",
+      "source_commit": "69de8b6ca57ca3d03025d85329c88aa4a167da34",
+      "transport_mode": "ws"
+    },
+    "mewx": {
+      "config_snapshot": "config/mewx-resume-after-pr8-20260321T0743.config.json",
+      "measurement_window": "2026-03-20T22:42:23.102Z -> 2026-03-20T22:44:53.527477Z",
+      "mode": "sim_live",
+      "source_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+      "transport_mode": "mixed"
+    }
+  },
+  "session_exit": [
+    {
+      "dexter": {
+        "reason": "no samples available",
+        "status": "unavailable",
+        "unit": "pct",
+        "value": null
+      },
+      "metric": "max_favorable_excursion_pct",
+      "mewx": {
+        "aggregation": "median",
+        "samples": 3,
+        "status": "ok",
+        "unit": "pct",
+        "value": 0.0
+      },
+      "notes": "Winner deferred until matched live packages are collected.",
+      "winner": "pending_live_evidence"
+    },
+    {
+      "dexter": {
+        "reason": "no samples available",
+        "status": "unavailable",
+        "unit": "pct",
+        "value": null
+      },
+      "metric": "max_adverse_excursion_pct",
+      "mewx": {
+        "aggregation": "median",
+        "samples": 3,
+        "status": "ok",
+        "unit": "pct",
+        "value": 0.0
+      },
+      "notes": "Winner deferred until matched live packages are collected.",
+      "winner": "pending_live_evidence"
+    },
+    {
+      "dexter": {
+        "reason": "no samples available",
+        "status": "unavailable",
+        "unit": "ms",
+        "value": null
+      },
+      "metric": "time_to_peak_ms",
+      "mewx": {
+        "aggregation": "median",
+        "samples": 3,
+        "status": "ok",
+        "unit": "ms",
+        "value": 10.0
+      },
+      "notes": "Winner deferred until matched live packages are collected.",
+      "winner": "pending_live_evidence"
+    },
+    {
+      "dexter": {
+        "reason": "no samples available",
+        "status": "unavailable",
+        "unit": "pct",
+        "value": null
+      },
+      "metric": "realized_exit_pct",
+      "mewx": {
+        "aggregation": "median",
+        "samples": 3,
+        "status": "ok",
+        "unit": "pct",
+        "value": 0.0
+      },
+      "notes": "Winner deferred until matched live packages are collected.",
+      "winner": "pending_live_evidence"
+    },
+    {
+      "dexter": {
+        "reason": "no samples available",
+        "status": "unavailable",
+        "unit": "pct",
+        "value": null
+      },
+      "metric": "realized_vs_peak_gap_pct",
+      "mewx": {
+        "aggregation": "median",
+        "samples": 3,
+        "status": "ok",
+        "unit": "pct",
+        "value": -0.0450105721347618
+      },
+      "notes": "Winner deferred until matched live packages are collected.",
+      "winner": "pending_live_evidence"
+    },
+    {
+      "dexter": {
+        "reason": "no position_closed events were observed",
+        "status": "unavailable",
+        "unit": "ratio",
+        "value": null
+      },
+      "metric": "stale_position_ratio",
+      "mewx": {
+        "aggregation": "run_ratio",
+        "details": {
+          "closed_positions": 3,
+          "stale_positions": 3
+        },
+        "status": "ok",
+        "unit": "ratio",
+        "value": 1.0
+      },
+      "notes": "Winner deferred until matched live packages are collected.",
+      "winner": "pending_live_evidence"
+    }
+  ],
+  "validation": {
+    "dexter": {
+      "checks": {
+        "event_envelope_ok": true,
+        "payload_fields_ok": true,
+        "proof_attribution_ok": true,
+        "required_event_types_ok": false,
+        "run_identity_ok": true,
+        "source_exports_ok": true
+      },
+      "classification": "partial",
+      "comparison_readiness": "observe_only",
+      "coverage": {
+        "event_completeness_ratio": 0.3333333333333333,
+        "missing_event_types": [
+          "candidate_rejected",
+          "entry_attempt",
+          "entry_fill",
+          "exit_fill",
+          "exit_signal",
+          "position_closed",
+          "run_summary",
+          "session_update"
+        ],
+        "observed_event_types": [
+          "creator_candidate",
+          "entry_rejected",
+          "entry_signal",
+          "mint_observed"
+        ],
+        "required_event_types_present": 4,
+        "required_event_types_total": 12,
+        "total_events": 107078
+      },
+      "issues": [
+        {
+          "code": "missing_required_event_types",
+          "message": "required event types were not observed in the run package: candidate_rejected, entry_attempt, entry_fill, exit_fill, exit_signal, position_closed, run_summary, session_update",
+          "path": "/Users/cabbala/Documents/vexter/task005-pass-grade-pair/artifacts/tmp/winlan-packages-resume-after-pr8-20260321T0743/dexter-resume-after-pr8-20260321T0743/events.ndjson",
+          "severity": "error"
+        }
+      ],
+      "package_dir": "/Users/cabbala/Documents/vexter/task005-pass-grade-pair/artifacts/tmp/winlan-packages-resume-after-pr8-20260321T0743/dexter-resume-after-pr8-20260321T0743",
+      "run_id": "dexter-resume-after-pr8-20260321T0743",
+      "source_system": "dexter"
+    },
+    "mewx": {
+      "checks": {
+        "event_envelope_ok": true,
+        "payload_fields_ok": true,
+        "proof_attribution_ok": true,
+        "required_event_types_ok": false,
+        "run_identity_ok": true,
+        "source_exports_ok": false
+      },
+      "classification": "partial",
+      "comparison_readiness": "observe_only",
+      "coverage": {
+        "event_completeness_ratio": 0.6666666666666666,
+        "missing_event_types": [
+          "candidate_rejected",
+          "creator_candidate",
+          "entry_rejected",
+          "run_summary"
+        ],
+        "observed_event_types": [
+          "entry_attempt",
+          "entry_fill",
+          "entry_signal",
+          "exit_fill",
+          "exit_signal",
+          "mint_observed",
+          "position_closed",
+          "session_update"
+        ],
+        "required_event_types_present": 8,
+        "required_event_types_total": 12,
+        "total_events": 26
+      },
+      "issues": [
+        {
+          "code": "missing_required_event_types",
+          "message": "required event types were not observed in the run package: candidate_rejected, creator_candidate, entry_rejected, run_summary",
+          "path": "/Users/cabbala/Documents/vexter/task005-pass-grade-pair/artifacts/tmp/winlan-packages-resume-after-pr8-20260321T0743/mewx-resume-after-pr8-20260321T0743/events.ndjson",
+          "severity": "error"
+        },
+        {
+          "code": "missing_source_export",
+          "message": "missing source export pointer: session_summary",
+          "path": "/Users/cabbala/Documents/vexter/task005-pass-grade-pair/artifacts/tmp/winlan-packages-resume-after-pr8-20260321T0743/mewx-resume-after-pr8-20260321T0743/run_metadata.json",
+          "severity": "error"
+        }
+      ],
+      "package_dir": "/Users/cabbala/Documents/vexter/task005-pass-grade-pair/artifacts/tmp/winlan-packages-resume-after-pr8-20260321T0743/mewx-resume-after-pr8-20260321T0743",
+      "run_id": "mewx-resume-after-pr8-20260321T0743",
+      "source_system": "mewx"
+    }
+  }
+}

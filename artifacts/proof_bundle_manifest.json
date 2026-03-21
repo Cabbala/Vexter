@@ -133,6 +133,7 @@
   "next_task": {
     "id": "BLOCKED",
     "state": "awaiting_matched_live_window_with_full_event_coverage",
+    "candidate_followup": "If repeated TASK-005 retries keep stalling on Dexter coverage, do a design-only review of a minimal Dexter paper-mode or paper-equivalent path before any TASK-006 work.",
     "resume_requirements": [
       "Keep Dexter and Mew-X strategy, execution, and instrumentation logic frozen.",
       "Keep Mew-X in sim mode and Dexter in observe-only unless a formal safer paper path is proven.",

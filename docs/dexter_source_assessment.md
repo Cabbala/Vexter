@@ -144,6 +144,10 @@ Current replay gaps:
 
 Current state: replayable for historical creator scoring, only partially replayable for live profitability attribution.
 
+## Deferred Design Note
+
+If repeated `TASK-005` matched-pair retries keep stalling on Dexter event coverage, the next design-only step should be a source-faithful review of a minimal Dexter paper-mode or paper-equivalent path. That note is for comparison-readiness analysis only, not for `TASK-006` or for changing Dexter strategy semantics; until a formal paper mode is confirmed, Dexter stays on the `observe_live` zero-balance safety path.
+
 ## Observability Required Next
 
 Dexter should emit the following instrumentation points before profitability claims are trusted:

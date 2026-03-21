@@ -61,3 +61,4 @@
   - Mew-X `sim_live` still did not emit `creator_candidate`, `entry_rejected`, or `run_summary`, and `candidate_rejected` dropped out again on the promoted retry
 - Winner / tie decisions remain deferred for candidate sourcing, execution quality, exit quality, and replayability.
 - `TASK-006` remains blocked until a matched pair supports non-partial validation or an explicitly approved safer Dexter paper-equivalent path can produce the missing execution/exit classes.
+- Deferred next-task candidate only: if repeated `TASK-005` resume retries keep stalling on Dexter coverage, document and review a minimal Dexter paper-mode or paper-equivalent path before any `TASK-006` work. Keep analysis paper/sim-first, prefer Mew-X `sim` / `sim_live`, and keep Dexter on the observe-only / zero-balance safety path until a formal paper mode is confirmed.

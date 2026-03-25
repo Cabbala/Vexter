@@ -1,0 +1,20 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Downstream Research
+継続タスクID: TASK-007-DOWNSTREAM-RESEARCH-INTAKE
+
+PR #27 merged main を基準に、TASK-007 downstream research intake は完了しています。comparison closeout と research handoff は formal source of truth のままで、promoted baseline は `task005-pass-grade-pair-20260325T180027Z`、promoted live / repaired replay はどちらも `winner_mode: derived`、scored-metric split は live / replay ともに Dexter `6`, Mew-X `4`, tie `2` で固定です。Dexter と Mew-X の replay coverage / gap はどちらも `100.00% / 0.0000`、confirmatory residual は Mew-X `candidate_rejected` のみで promoted baseline を overturn しません。caveat は replay parity の claim 範囲で、current zero-gap は close-summary / `position_closed` realized-return fidelity を示すもので full path equivalence ではありません。
+
+次の作業は comparison を開き直すことではなく、`artifacts/reports/task-007-downstream-research-intake-report.md` と `artifacts/proofs/task-007-downstream-research-intake-check.json` を起点に、以下の hypothesis lane のどれかを選んで research / strategy planning / execution planning を切ることです。
+
+- `candidate_generation_vs_quality`
+- `execution_timing_vs_retention`
+- `risk_containment_vs_exit_capture`
+- `path_sensitive_retention_scope`
+
+再実行してはいけないもの:
+- promoted-baseline selection
+- current-facts live evidence collection
+- validator / source logic changes
+- replay claim の full path equivalence 化
+
+必要なら `TASK-006` の research handoff / comparison closeout surfaces と promoted live / repaired replay comparison directories を supporting evidence として再利用してください。

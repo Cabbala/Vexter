@@ -1,0 +1,260 @@
+{
+  "task_id": "TASK-007-DOWNSTREAM-RESEARCH-INTAKE",
+  "generated_at_utc": "2026-03-25T22:28:41Z",
+  "verified_github": {
+    "latest_vexter_pr": 27,
+    "latest_vexter_main_commit": "d8149e624b9682e2da55ac4bfcaa30fcaa3d94df",
+    "latest_vexter_merged_at_utc": "2026-03-25T22:17:31Z",
+    "supporting_vexter_prs": [
+      26,
+      25,
+      24,
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17,
+      16
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "intake_source_of_truth": {
+    "research_handoff_report": "artifacts/reports/task-006-research-handoff-report.md",
+    "research_handoff_proof": "artifacts/proofs/task-006-research-handoff-check.json",
+    "research_handoff_summary": "artifacts/proofs/task-006-research-handoff-summary.md",
+    "comparison_closeout_report": "artifacts/reports/task-006-comparison-closeout.md",
+    "comparison_closeout_proof": "artifacts/proofs/task-006-comparison-closeout-check.json",
+    "promoted_live_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison",
+    "promoted_replay_comparison_dir": "artifacts/reports/task006-replay-surface-fix-20260325T180027Z-replay-comparison",
+    "confirmatory_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180604Z-comparison",
+    "intake_rule": "Treat TASK-006 research handoff plus comparison closeout as fixed input surfaces; do not reopen comparison work."
+  },
+  "implementation": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "dexter_strategy_changed": false,
+    "mewx_strategy_changed": false,
+    "minimal_reaggregation_only": true
+  },
+  "fixed_facts": {
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "promoted_live_winner_mode": "derived",
+    "promoted_replay_winner_mode": "derived",
+    "live_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "replay_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "dexter_strengths": [
+      "candidate_count",
+      "signal_to_attempt_latency_ms",
+      "quote_vs_fill_slippage_bps",
+      "max_favorable_excursion_pct",
+      "realized_exit_pct",
+      "stale_position_ratio"
+    ],
+    "mewx_strengths": [
+      "attempt_to_fill_latency_ms",
+      "max_adverse_excursion_pct",
+      "time_to_peak_ms",
+      "realized_vs_peak_gap_pct"
+    ],
+    "ties": [
+      "fill_success_rate",
+      "replayability_grade"
+    ],
+    "dexter_replay_coverage_ratio": 1.0,
+    "dexter_live_vs_replay_gap_pct": 0.0,
+    "mewx_replay_coverage_ratio": 1.0,
+    "mewx_live_vs_replay_gap_pct": 0.0,
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false,
+    "winner_mode_meaning": "Derived winner mode records component-level metric winners; it does not assert a scalar overall winner field."
+  },
+  "comparison_research_boundary": {
+    "comparison_workstream_closed": true,
+    "research_scope": [
+      "Interpret fixed comparison tradeoffs.",
+      "Choose a next hypothesis lane.",
+      "Define required evidence for future targeted work.",
+      "Preserve the comparison source of truth while planning downstream work."
+    ],
+    "non_goals": [
+      "Do not rerun promoted-baseline selection.",
+      "Do not reopen evidence collection on current facts.",
+      "Do not change Dexter, Mew-X, or validator rules.",
+      "Do not claim a scalar overall winner.",
+      "Do not widen replay parity to full path equivalence.",
+      "Do not use funded live trading during intake."
+    ],
+    "overall_rule": "Research interprets fixed comparison facts and defines targeted next questions; it does not revalidate the comparison baseline."
+  },
+  "priority_research_questions": [
+    {
+      "id": "RQ1",
+      "priority": "high",
+      "lane": "candidate_generation_vs_quality",
+      "question": "How much of Dexter's candidate-count lead converts into realized edge rather than simple opportunity breadth?",
+      "working_hypothesis": "Dexter's candidate breadth plus slippage and realized-exit lead likely reflects real edge conversion on the promoted baseline, but cross-source candidate-quality claims stay bounded because Mew-X candidate_precision_proxy is unavailable.",
+      "required_evidence": [
+        "Promoted live and replay comparison matrices",
+        "Candidate snapshot surfaces",
+        "Session summaries",
+        "Close-summary outcome metrics"
+      ],
+      "non_goal": "Do not infer missing Mew-X candidate precision from absent creator_candidate exports."
+    },
+    {
+      "id": "RQ2",
+      "priority": "high",
+      "lane": "execution_timing_vs_retention",
+      "question": "Is the core cross-source tradeoff Dexter's signal-to-attempt and slippage advantage versus Mew-X's fill-speed and retention advantage after an attempt is placed?",
+      "working_hypothesis": "Dexter wins earlier in the path, while Mew-X wins later in the path by filling faster after attempt and retaining more local peak performance.",
+      "required_evidence": [
+        "Promoted live and replay timing metrics",
+        "Session-level timing fields",
+        "Exit and peak summary metrics"
+      ],
+      "non_goal": "Do not change entry thresholds, trust logic, or routing semantics while evaluating this lane."
+    },
+    {
+      "id": "RQ3",
+      "priority": "medium",
+      "lane": "risk_containment_vs_exit_capture",
+      "question": "Which source should downstream planning prefer once drawdown containment and realized upside capture are weighted explicitly?",
+      "working_hypothesis": "The next decision is objective-dependent rather than evidence-blocked because the current comparison already fixes the relevant tradeoff surface.",
+      "required_evidence": [
+        "Current metric surfaces",
+        "Downstream objective weighting inputs",
+        "Risk tolerance assumptions"
+      ],
+      "non_goal": "Do not claim a universal winner without an explicit objective function."
+    },
+    {
+      "id": "RQ4",
+      "priority": "medium",
+      "lane": "path_sensitive_retention_scope",
+      "question": "Does any next claim require path-level evidence beyond the current close-summary replay scope?",
+      "working_hypothesis": "Current facts are enough for intake and planning, but any stronger path-retention or path-equivalence claim should become a separate future evidence task rather than a TASK-006 reopen.",
+      "required_evidence": [
+        "Current replay-scope caveat",
+        "Promoted replay comparison",
+        "Separate path-equivalence evidence design if this lane is selected"
+      ],
+      "non_goal": "Do not treat the current Dexter realized_vs_peak_gap_pct drift as proof that close-summary parity is invalid."
+    }
+  ],
+  "hypothesis_lanes": {
+    "candidate_generation_vs_quality": {
+      "focus": "Candidate breadth versus usable edge conversion",
+      "fixed_inputs": [
+        "Dexter candidate_count lead",
+        "Dexter slippage and realized-exit lead",
+        "Mew-X candidate_precision_proxy unavailable caveat"
+      ],
+      "required_evidence": [
+        "Candidate snapshots",
+        "Comparison matrices",
+        "Session outcome summaries"
+      ],
+      "success_signal": "A downstream task can state how candidate-generation breadth should be interpreted without reopening frozen exports."
+    },
+    "execution_timing_vs_retention": {
+      "focus": "Upstream reaction speed versus downstream fill and retention behavior",
+      "fixed_inputs": [
+        "Dexter signal_to_attempt_latency_ms lead",
+        "Mew-X attempt_to_fill_latency_ms lead",
+        "Dexter slippage and realized_exit_pct lead",
+        "Mew-X time_to_peak_ms and realized_vs_peak_gap_pct lead"
+      ],
+      "required_evidence": [
+        "Timing metrics",
+        "Exit metrics",
+        "Session summaries"
+      ],
+      "success_signal": "A downstream task can explain where each source wins along the execution path without changing source logic."
+    },
+    "risk_containment_vs_exit_capture": {
+      "focus": "Objective weighting between drawdown containment and upside capture",
+      "fixed_inputs": [
+        "Dexter favorable excursion and realized_exit_pct lead",
+        "Mew-X max_adverse_excursion_pct lead",
+        "Stable live and replay split"
+      ],
+      "required_evidence": [
+        "Current comparison metrics",
+        "Objective weighting assumptions",
+        "Risk tolerance assumptions"
+      ],
+      "success_signal": "A downstream task can choose a planning direction from the fixed tradeoff surface rather than from missing comparison evidence."
+    },
+    "path_sensitive_retention_scope": {
+      "focus": "Whether deeper path-level evidence is actually needed",
+      "fixed_inputs": [
+        "Replay parity scope caveat",
+        "Dexter realized_vs_peak_gap_pct drift",
+        "Promoted replay coverage and zero realized-return gap"
+      ],
+      "required_evidence": [
+        "Replay-scope caveat",
+        "Promoted replay metrics",
+        "Future path-equivalence task design only if selected"
+      ],
+      "success_signal": "A downstream task can decide whether to stay within current replay scope or request a separate path-equivalence task."
+    }
+  },
+  "artifact_surfaces": {
+    "primary": [
+      "artifacts/reports/task-007-downstream-research-intake-report.md",
+      "artifacts/reports/task-007-downstream-research-intake-status.md",
+      "artifacts/proofs/task-007-downstream-research-intake-check.json",
+      "artifacts/proofs/task-007-downstream-research-intake-summary.md"
+    ],
+    "fixed_input": [
+      "artifacts/reports/task-006-research-handoff-report.md",
+      "artifacts/proofs/task-006-research-handoff-check.json",
+      "artifacts/proofs/task-006-research-handoff-summary.md",
+      "artifacts/reports/task-006-comparison-closeout.md",
+      "artifacts/proofs/task-006-comparison-closeout-check.json"
+    ],
+    "supporting": [
+      "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison",
+      "artifacts/reports/task006-replay-surface-fix-20260325T180027Z-replay-comparison",
+      "artifacts/reports/task005-validator-rule-implement-20260325T180604Z-comparison"
+    ],
+    "bundle": "artifacts/bundles/task-007-downstream-research-intake.tar.gz"
+  },
+  "residual_and_caveats": {
+    "confirmatory_label": "task005-pass-grade-pair-20260325T180604Z",
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false,
+    "replay_scope": "Current zero-gap evidence is scoped to close-summary and position_closed realized-return fidelity rather than full execution-path equivalence.",
+    "dexter_metric_scope_gap": {
+      "metric": "realized_vs_peak_gap_pct",
+      "live_value": 20.533046470504612,
+      "replay_value": 25.804157291090654,
+      "why_it_matters": "Path-sensitive derived metrics can still drift even when matched realized-return gap is zero."
+    },
+    "candidate_metric_asymmetry": "Mew-X candidate_precision_proxy remains unavailable because creator_candidate is absent under the frozen-source export surface."
+  },
+  "decision": {
+    "selected_outcome": "A",
+    "key_finding": "research_intake_ready",
+    "task_state": "research_intake_ready",
+    "next_research_workstream_ready": true,
+    "intake_blocked": false,
+    "new_evidence_collection_required": false,
+    "recommended_next_step": "hypothesis_specific_research",
+    "recommended_next_task_id": "HYPOTHESIS-RESEARCH"
+  }
+}

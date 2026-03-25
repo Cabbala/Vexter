@@ -1,0 +1,6 @@
+Vexter / 既存Codexスレッド / TASK-005-VALIDATOR-RULE-REVIEW
+
+GitHub 最新状態は Vexter PR #18 merge `b7c8cb900ced104f4fe76cfd9ca48c2b21b82d81`、支援状態は PR #17 `b09033d6c8ce21510da23025cee935e46f3ef4df` と PR #16 `b71b5f744027024e2a04606f6c1aa369d0a6c3e3`、Dexter は PR #3 merge `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`、frozen Mew-X は `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a` まで再確認済み。
+結論は Outcome `A`、key finding は `rule memo ready`。`run_summary` は両 source とも finalizer 専用で current helper shutdown の成功条件に依存するため、healthy matched pair の source-agnostic hard gate には向かない。`entry_rejected` は Dexter / Mew-X とも failure-path-only で、successful fills を伴う健全 run に常時要求するのは不自然。Mew-X `creator_candidate` は non-empty candidate snapshot が前提で、promoted pair では initial / refresh とも `observations: []`、`source_counts: {}` のままでも fills と closeouts は成立している。
+したがって proposal レベルの妥当線は、`run_summary` を clean shutdown 条件付きまたは replayability 系 evidence に落とすこと、`entry_rejected` を entry failure 発生時のみ conditional にすること、Mew-X `creator_candidate` を non-empty candidate snapshot 時のみ source-specific conditional にすること。これは memo 化までで、validator rules 本体はまだ変えていない。
+次に進めるなら approval-driven な validator rule implementation task を切る。TASK-006 はまだ blocked で、必要なら後続の helper hardening は `run_summary` 専用に分離する。

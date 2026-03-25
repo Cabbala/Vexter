@@ -1,5 +1,5 @@
 {
-  "built_at_utc": "2026-03-25T18:56:12Z",
+  "built_at_utc": "2026-03-25T19:16:56Z",
   "comparison_matrix": {
     "candidate_generation": [
       {
@@ -470,7 +470,7 @@
           "total_events": 16
         },
         "issues": [],
-        "package_dir": "/Users/cabbala/Projects/Vexter/tests/fixtures/comparison_packages/dexter_fixture",
+        "package_dir": "/Users/cabbala/Documents/vexter/task005-validator-rule-review/tests/fixtures/comparison_packages/dexter_fixture",
         "run_id": "dexter-fixture-001",
         "source_system": "dexter"
       },
@@ -507,7 +507,7 @@
           "total_events": 25
         },
         "issues": [],
-        "package_dir": "/Users/cabbala/Projects/Vexter/tests/fixtures/comparison_packages/mewx_fixture",
+        "package_dir": "/Users/cabbala/Documents/vexter/task005-validator-rule-review/tests/fixtures/comparison_packages/mewx_fixture",
         "run_id": "mewx-fixture-001",
         "source_system": "mewx"
       }
@@ -637,7 +637,7 @@
           "value": 60000.0
         }
       },
-      "package_dir": "/Users/cabbala/Projects/Vexter/tests/fixtures/comparison_packages/dexter_fixture",
+      "package_dir": "/Users/cabbala/Documents/vexter/task005-validator-rule-review/tests/fixtures/comparison_packages/dexter_fixture",
       "run_id": "dexter-fixture-001",
       "source_system": "dexter"
     },
@@ -764,7 +764,7 @@
           "value": 67500.0
         }
       },
-      "package_dir": "/Users/cabbala/Projects/Vexter/tests/fixtures/comparison_packages/mewx_fixture",
+      "package_dir": "/Users/cabbala/Documents/vexter/task005-validator-rule-review/tests/fixtures/comparison_packages/mewx_fixture",
       "run_id": "mewx-fixture-001",
       "source_system": "mewx"
     }
@@ -805,7 +805,7 @@
         "total_events": 16
       },
       "issues": [],
-      "package_dir": "/Users/cabbala/Projects/Vexter/tests/fixtures/comparison_packages/dexter_fixture",
+      "package_dir": "/Users/cabbala/Documents/vexter/task005-validator-rule-review/tests/fixtures/comparison_packages/dexter_fixture",
       "run_id": "dexter-fixture-001",
       "source_system": "dexter"
     },
@@ -842,7 +842,7 @@
         "total_events": 25
       },
       "issues": [],
-      "package_dir": "/Users/cabbala/Projects/Vexter/tests/fixtures/comparison_packages/mewx_fixture",
+      "package_dir": "/Users/cabbala/Documents/vexter/task005-validator-rule-review/tests/fixtures/comparison_packages/mewx_fixture",
       "run_id": "mewx-fixture-001",
       "source_system": "mewx"
     }

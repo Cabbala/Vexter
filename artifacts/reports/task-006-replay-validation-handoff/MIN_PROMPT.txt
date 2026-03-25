@@ -1,0 +1,5 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+継続タスクID: TASK-006-REPLAY-VALIDATION
+
+PR #20 merged main を基準に、promoted comparable pack は replay input accepted、confirmatory 側の残差は Mew-X `candidate_rejected` のみです。次は source logic を変えずに promoted baseline から replay deepening を進め、replay-mode evidence と live-versus-replay gap を詰めてください。partial replayability のまま残っている surface 差分を evidence ベースで整理し、TASK-006 artifacts を継続更新してください。

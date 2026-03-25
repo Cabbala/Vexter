@@ -11,13 +11,11 @@
   "comparison_readiness": "comparable",
   "contract": {
     "active_required_event_types": [
-      "creator_candidate",
       "candidate_rejected",
       "mint_observed",
       "entry_signal",
       "entry_attempt",
       "entry_fill",
-      "entry_rejected",
       "session_update",
       "exit_signal",
       "exit_fill",
@@ -25,12 +23,12 @@
     ],
     "conditional_requirements": {
       "creator_candidate": {
-        "reason": "mewx candidate snapshot exports contained observations or source additions",
-        "required": true
+        "reason": "mewx candidate snapshot exports were empty for this run package",
+        "required": false
       },
       "entry_rejected": {
-        "reason": "at least one entry attempt did not produce a matching fill",
-        "required": true
+        "reason": "all observed entry attempts produced matching fills",
+        "required": false
       },
       "run_summary": {
         "reason": "no clean shutdown completion proof was exported for this run package",
@@ -52,6 +50,8 @@
       "run_summary"
     ],
     "waived_event_types": [
+      "creator_candidate",
+      "entry_rejected",
       "run_summary"
     ]
   },
@@ -61,24 +61,21 @@
     "missing_event_types": [],
     "observed_event_types": [
       "candidate_rejected",
-      "creator_candidate",
       "entry_attempt",
       "entry_fill",
-      "entry_rejected",
       "entry_signal",
       "exit_fill",
       "exit_signal",
       "mint_observed",
       "position_closed",
-      "run_summary",
       "session_update"
     ],
-    "required_event_types_present": 11,
-    "required_event_types_total": 11,
-    "total_events": 25
+    "required_event_types_present": 9,
+    "required_event_types_total": 9,
+    "total_events": 56
   },
   "issues": [],
-  "package_dir": "/Users/cabbala/Documents/worktrees/Vexter-task006-replay-validation/tests/fixtures/comparison_packages/mewx_fixture",
-  "run_id": "mewx-fixture-001",
+  "package_dir": "/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326/artifacts/tmp/winlan-packages-task005-pass-grade-pair-20260325T180027Z/mewx-task005-pass-grade-pair-20260325T180027Z",
+  "run_id": "mewx-task005-pass-grade-pair-20260325T180027Z",
   "source_system": "mewx"
 }

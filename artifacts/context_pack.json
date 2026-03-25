@@ -20,21 +20,21 @@
     "mewx_mode_preference": "sim_live",
     "agent_usage_note": "No sub-agents were used in this audit."
   },
-  "phase": "TASK-005-GAP-AUDIT",
-  "status": "structural_gap_confirmed",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_gap_audit_bundle.tar.gz",
+  "phase": "TASK-005-VALIDATOR-CONTRACT-AUDIT",
+  "status": "rule_review_needed",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_validator_contract_audit_bundle.tar.gz",
   "starting_point": {
-    "verified_latest_vexter_main": "b71b5f744027024e2a04606f6c1aa369d0a6c3e3",
-    "verified_latest_vexter_pr": 16,
-    "verified_task_base_main": "28c15b5c7655fe7647c12774494c80b83c58c04f",
-    "verified_task_base_pr": 15,
+    "verified_latest_vexter_main": "b09033d6c8ce21510da23025cee935e46f3ef4df",
+    "verified_latest_vexter_pr": 17,
+    "verified_previous_audit_main": "b71b5f744027024e2a04606f6c1aa369d0a6c3e3",
+    "verified_previous_audit_pr": 16,
     "verified_dexter_main": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_dexter_pr": 3,
     "verified_mewx_frozen": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
-    "work_branch": "codex/task-005-gap-audit"
+    "work_branch": "codex/task-005-validator-contract-audit"
   },
   "background": {
-    "previous_task_id": "TASK-005-PASS-GRADE-PAIR",
+    "previous_task_id": "TASK-005-GAP-AUDIT",
     "promoted_pair": "task005-pass-grade-pair-20260325T180027Z",
     "confirmatory_pair": "task005-pass-grade-pair-20260325T180604Z",
     "pre_audit_task_006_ready": false
@@ -54,7 +54,10 @@
       "position_closed",
       "run_summary"
     ],
-    "validator_file": "vexter/comparison/constants.py",
+    "validator_files": [
+      "vexter/comparison/constants.py",
+      "vexter/comparison/validator.py"
+    ],
     "validator_rule": "All required event types must be present for classification pass."
   },
   "frozen_source_commits": {
@@ -62,7 +65,12 @@
     "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
   },
   "evidence": {
-    "revalidated_pairs": [
+    "github_latest": {
+      "vexter_pr_17_merged_at": "2026-03-25T18:40:50Z",
+      "dexter_pr_3_merged_at": "2026-03-21T11:31:07Z",
+      "mewx_commit_reverified_at": "2026-03-20T16:05:19Z"
+    },
+    "supporting_pairs": [
       {
         "label": "task005-pass-grade-pair-20260325T180027Z",
         "proof_dir": "artifacts/proofs/task005-gap-audit-20260325T180027Z-results",
@@ -100,10 +108,12 @@
         "grace_seconds": 60
       }
     ],
-    "run_summary": {
-      "dexter_finalizer_file": "sources/Dexter/DexLab/instrumentation.py",
-      "mewx_finalizer_file": "sources/Mew-X/src/mew/instrumentation.rs",
+    "shutdown_and_packaging": {
+      "shutdown_helper_file": "scripts/collect_matched_live_pair.py",
+      "packager_file": "scripts/collect_comparison_package.ps1",
       "current_collection_shutdown": "CTRL_BREAK_EVENT",
+      "full_stream_fallback_used": true,
+      "packaging_loss_ruled_out": true,
       "observed_exit_code": 3221225786,
       "observed_exit_code_hex": "0xC000013A",
       "dexter_state_status": "running",
@@ -111,32 +121,46 @@
       "dexter_ended_at_utc": null,
       "mewx_ended_at_utc": null
     },
-    "mewx_creator_candidate": {
-      "initial_selection_observations": 0,
-      "refresh_observations": 0,
-      "initial_selection_source_counts": {},
-      "refresh_source_counts": {},
-      "same_runs_still_produced_fills": true
-    },
-    "entry_rejected": {
-      "dexter_condition": "buy failure path only",
-      "mewx_condition": "transport_send_failed only",
-      "promoted_pair_dexter_entry_fills": 4,
-      "promoted_pair_mewx_entry_fills": 6,
-      "promoted_pair_dexter_entry_rejected": 0,
-      "promoted_pair_mewx_entry_rejected": 0
+    "contract_classification": {
+      "run_summary": {
+        "classification": "shutdown_success_dependent",
+        "source_files": [
+          "/Users/cabbala/Documents/Dexter/DexLab/instrumentation.py",
+          "sources/Mew-X/src/mew/instrumentation.rs"
+        ],
+        "helper_fix_viable": true,
+        "packaging_fix_sufficient": false,
+        "note": "Finalizer-only on both sources; current helper exit path prevents finalizer completion, but this only addresses run_summary."
+      },
+      "entry_rejected": {
+        "classification": "failure_path_only",
+        "source_files": [
+          "/Users/cabbala/Documents/Dexter/Dexter.py",
+          "sources/Mew-X/src/mew/snipe/handler.rs"
+        ],
+        "helper_fix_viable": false,
+        "packaging_fix_sufficient": false,
+        "note": "Absent from healthy promoted full-stream evidence because both frozen sources emit only on failed entry paths."
+      },
+      "mewx_creator_candidate": {
+        "classification": "source_specific_conditional",
+        "source_files": [
+          "sources/Mew-X/src/main.rs",
+          "sources/Mew-X/src/mew/instrumentation.rs",
+          "sources/Mew-X/src/mew/snipe/handler.rs"
+        ],
+        "helper_fix_viable": false,
+        "packaging_fix_sufficient": false,
+        "note": "Frozen Mew-X emitted rich fill/close evidence while candidate snapshots stayed empty, so this event is not dependable under the current environment."
+      }
     }
   },
-  "minimal_additional_recollection": {
-    "performed": false,
-    "reason": "Existing full-stream fallback pairs plus frozen-source audit were sufficient to close the collectability question."
-  },
   "current_task": {
-    "id": "TASK-005-GAP-AUDIT",
+    "id": "TASK-005-VALIDATOR-CONTRACT-AUDIT",
     "scope": [
       "Verify latest GitHub merged state for Vexter, Dexter, and frozen Mew-X.",
-      "Audit whether run_summary, entry_rejected, and creator_candidate are collectible under the current frozen sources and validator contract.",
-      "Revalidate promoted and confirmatory pair packages on current Vexter main.",
+      "Audit whether validator requirements should be relaxed or whether helper-side fixes alone can restore collectability.",
+      "Classify run_summary, entry_rejected, and Mew-X creator_candidate at contract level without changing source logic or validator rules.",
       "Update audit artifacts and TASK-006 readiness."
     ],
     "deliverables": [
@@ -144,37 +168,35 @@
       "artifacts/context_pack.json",
       "artifacts/proof_bundle_manifest.json",
       "artifacts/task_ledger.jsonl",
-      "artifacts/reports/task-005-gap-audit.md",
-      "artifacts/reports/task-005-gap-audit-readiness.md",
-      "artifacts/reports/task-005-gap-audit-handoff/DETAILS.md",
-      "artifacts/reports/task-005-gap-audit-handoff/MIN_PROMPT.txt",
-      "artifacts/proofs/task-005-gap-audit-check.json",
-      "artifacts/proofs/task005-gap-audit-20260325T180027Z-results",
-      "artifacts/proofs/task005-gap-audit-20260325T180604Z-results",
-      "artifacts/proofs/task005-gap-audit-20260325T180027Z.collection.json",
-      "artifacts/proofs/task005-gap-audit-20260325T180604Z.collection.json",
-      "artifacts/bundles/task-005-gap-audit.tar.gz"
+      "artifacts/reports/task-005-validator-contract-audit.md",
+      "artifacts/reports/task-005-validator-contract-audit-readiness.md",
+      "artifacts/reports/task-005-validator-contract-audit-handoff/DETAILS.md",
+      "artifacts/reports/task-005-validator-contract-audit-handoff/MIN_PROMPT.txt",
+      "artifacts/proofs/task-005-validator-contract-audit-check.json",
+      "artifacts/bundles/task-005-validator-contract-audit.tar.gz"
     ]
   },
   "recommendation": {
+    "outcome": "A",
     "decision": "BLOCKED",
-    "key_finding": "structurally_not_collectible_under_current_contract",
+    "key_finding": "rule_review_needed",
+    "helper_fix_scope": "run_summary_only",
     "task_006_ready": false,
-    "recommended_next_step": "validator_contract_audit_or_rule_exception_review",
+    "recommended_next_step": "approved_validator_rule_review_then_optional_run_summary_shutdown_hardening",
     "why": [
-      "run_summary depends on finalizers that the current matched-pair shutdown flow does not reach.",
-      "entry_rejected is failure-path-only on both sources and is not dependable pass-grade coverage.",
-      "Mew-X creator_candidate depends on non-empty Deagle candidate reports, but both audited full-stream runs exported zero observations."
+      "run_summary sits inside the shutdown-success boundary and may be recoverable with helper hardening.",
+      "entry_rejected remains failure-path-only on both frozen sources and is absent from healthy promoted full-stream evidence.",
+      "Mew-X creator_candidate remains conditional on non-empty candidate reports and is absent even when the same runs still produce fills and position closeouts."
     ]
   },
   "next_task": {
     "id": "BLOCKED",
-    "state": "awaiting_validator_contract_audit_or_rule_exception_review",
+    "state": "awaiting_validator_rule_review_approval",
     "task_006_ready": false,
     "resume_requirements": [
       "Keep Dexter and Mew-X source logic frozen.",
-      "Do not advance to TASK-006 until the validator contract is reconciled with frozen-source event semantics.",
-      "Use the current audit proof before approving any more same-shape recollection."
+      "Do not change validator rules without explicit approval.",
+      "Treat any helper-side follow-up as a narrow run_summary shutdown-hygiene task, not as a complete fix for TASK-005."
     ]
   }
 }

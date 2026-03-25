@@ -1,0 +1,94 @@
+{
+  "task_id": "TASK-005-VALIDATOR-CONTRACT-AUDIT",
+  "checked_at_utc": "2026-03-25T18:52:25Z",
+  "status": "rule_review_needed",
+  "github_latest": {
+    "vexter_main_commit": "b09033d6c8ce21510da23025cee935e46f3ef4df",
+    "vexter_pr": 17,
+    "vexter_pr_17_merged_at": "2026-03-25T18:40:50Z",
+    "previous_gap_audit_main_commit": "b71b5f744027024e2a04606f6c1aa369d0a6c3e3",
+    "previous_gap_audit_pr": 16,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr": 3,
+    "dexter_pr_3_merged_at": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "mewx_frozen_reverified_at": "2026-03-20T16:05:19Z"
+  },
+  "contract": {
+    "validator_files": [
+      "vexter/comparison/constants.py",
+      "vexter/comparison/validator.py"
+    ],
+    "hard_pass_rule": "All required event types must be present for classification pass.",
+    "packager_file": "scripts/collect_comparison_package.ps1",
+    "shutdown_helper_file": "scripts/collect_matched_live_pair.py"
+  },
+  "supporting_evidence": {
+    "promoted": {
+      "label": "task005-pass-grade-pair-20260325T180027Z",
+      "proof_dir": "artifacts/proofs/task005-gap-audit-20260325T180027Z-results",
+      "collection_payload": "artifacts/proofs/task005-gap-audit-20260325T180027Z.collection.json",
+      "dexter_missing_event_types": [
+        "entry_rejected",
+        "run_summary"
+      ],
+      "mewx_missing_event_types": [
+        "creator_candidate",
+        "entry_rejected",
+        "run_summary"
+      ],
+      "full_stream_fallback": true
+    },
+    "confirmatory": {
+      "label": "task005-pass-grade-pair-20260325T180604Z",
+      "proof_dir": "artifacts/proofs/task005-gap-audit-20260325T180604Z-results",
+      "collection_payload": "artifacts/proofs/task005-gap-audit-20260325T180604Z.collection.json",
+      "dexter_missing_event_types": [
+        "entry_rejected",
+        "run_summary"
+      ],
+      "mewx_missing_event_types": [
+        "candidate_rejected",
+        "creator_candidate",
+        "entry_rejected",
+        "run_summary"
+      ],
+      "full_stream_fallback": true,
+      "grace_seconds": 60
+    }
+  },
+  "event_classification": {
+    "run_summary": {
+      "classification": "shutdown_success_dependent",
+      "helper_fix_viable": true,
+      "packaging_fix_sufficient": false,
+      "evidence": "Both frozen sources emit run_summary only in finalizers. The current helper still shuts down with CTRL_BREAK_EVENT, both supporting collection payloads ended with exit code 3221225786 (0xC000013A), and state exports stayed unfinished. Because full_stream_fallback already copied the full raw stream, this is not a packaging-only loss."
+    },
+    "entry_rejected": {
+      "classification": "failure_path_only",
+      "helper_fix_viable": false,
+      "packaging_fix_sufficient": false,
+      "evidence": "Frozen Dexter emits entry_rejected only on failed buy paths, and frozen Mew-X emits it only when buy_result.success is false with transport_send_failed. The promoted pair still had successful fills on both sides with zero entry_rejected."
+    },
+    "mewx_creator_candidate": {
+      "classification": "source_specific_conditional",
+      "helper_fix_viable": false,
+      "packaging_fix_sufficient": false,
+      "evidence": "Frozen Mew-X emits creator_candidate only from non-empty initial-selection or refresh-addition reports. The supporting candidate snapshots stayed empty while the same runs still emitted fills and position closeouts."
+    }
+  },
+  "responsibility_boundary": {
+    "packaging_contract": "already_full_stream_fallback_copies_raw_events_when_window_filtering_returns_zero",
+    "shutdown_contract": "can_only_help_finalizer_bound_artifacts_like_run_summary",
+    "validator_contract": "currently promotes shutdown-dependent, failure-path, and source-conditional evidence into one hard pass gate"
+  },
+  "decision": {
+    "selected_outcome": "A",
+    "key_finding": "rule_review_needed",
+    "helper_fix_scope": "run_summary_only",
+    "helper_fix_sufficient_for_all_missing_events": false,
+    "comparison_contract_satisfied": false,
+    "task_006_ready": false,
+    "next_step": "approved_validator_rule_review_then_optional_run_summary_shutdown_hardening"
+  }
+}

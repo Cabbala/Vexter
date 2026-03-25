@@ -1,0 +1,226 @@
+{
+  "task_id": "TASK-007-RISK-CONTAINMENT-VS-EXIT-CAPTURE",
+  "generated_at_utc": "2026-03-25T23:30:00Z",
+  "verified_github": {
+    "latest_vexter_pr": 30,
+    "latest_vexter_main_commit": "052de6ccecef1461d2291fb4f0ef5fbf8883d548",
+    "latest_vexter_merged_at_utc": "2026-03-25T23:15:40Z",
+    "supporting_vexter_prs": [
+      29,
+      28,
+      27,
+      26,
+      25,
+      24,
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17,
+      16
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "fixed_input_surface": {
+    "timing_retention_lane_report": "artifacts/reports/task-007-execution-timing-vs-retention-report.md",
+    "timing_retention_lane_proof": "artifacts/proofs/task-007-execution-timing-vs-retention-check.json",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "promoted_live_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison",
+    "promoted_replay_comparison_dir": "artifacts/reports/task006-replay-surface-fix-20260325T180027Z-replay-comparison",
+    "confirmatory_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180604Z-comparison",
+    "promoted_live_winner_mode": "derived",
+    "promoted_replay_winner_mode": "derived",
+    "live_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "replay_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "dexter_replay_coverage_ratio": 1.0,
+    "dexter_live_vs_replay_gap_pct": 0.0,
+    "mewx_replay_coverage_ratio": 1.0,
+    "mewx_live_vs_replay_gap_pct": 0.0,
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false
+  },
+  "implementation": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "dexter_strategy_changed": false,
+    "mewx_strategy_changed": false,
+    "minimal_reaggregation_only": true,
+    "new_evidence_collection_required": false
+  },
+  "risk_exit_surfaces": {
+    "live_comparison_matrix": "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison/comparison_matrix.json",
+    "replay_comparison_matrix": "artifacts/reports/task006-replay-surface-fix-20260325T180027Z-replay-comparison/comparison_matrix.json",
+    "dexter_close_summary_index": "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-augmented-dexter-package/exports/dexter-close-summary-index.json",
+    "mewx_session_summaries_dir": "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-replay-packages/mewx-replay/exports",
+    "used_session_counts": {
+      "dexter_close_summaries": 4,
+      "mewx_session_summaries": 6
+    }
+  },
+  "lane_analysis": {
+    "question": "On the frozen promoted baseline, how should the comparison be read once downstream planning explicitly weights drawdown containment against favorable excursion, realized exit capture, and stale-position avoidance?",
+    "working_hypothesis": "Mew-X wins price-path containment and local-peak retention, while Dexter wins absolute exit capture and lifecycle control, so the next decision is objective weighting rather than missing evidence.",
+    "stable_metric_split": {
+      "price_path_containment": {
+        "max_adverse_excursion_pct": {
+          "dexter": -6.05468749267574,
+          "mewx": 0.0,
+          "winner": "mewx"
+        },
+        "time_to_peak_ms": {
+          "dexter": 5299.0,
+          "mewx": 20.5,
+          "winner": "mewx"
+        },
+        "realized_vs_peak_gap_pct": {
+          "live": {
+            "dexter": 20.533046470504612,
+            "mewx": -1.1795332965443079e-14,
+            "winner": "mewx"
+          },
+          "replay": {
+            "dexter": 25.804157291090654,
+            "mewx": 0.0,
+            "winner": "mewx"
+          }
+        }
+      },
+      "exit_capture_and_lifecycle": {
+        "max_favorable_excursion_pct": {
+          "dexter": 34.844263534142286,
+          "mewx": 6.792904253675385,
+          "winner": "dexter"
+        },
+        "realized_exit_pct": {
+          "dexter": 7.164077921477945,
+          "mewx": 0.0,
+          "winner": "dexter"
+        },
+        "quote_vs_fill_slippage_bps": {
+          "dexter": 0.0,
+          "mewx": 7.706128082620904,
+          "winner": "dexter"
+        },
+        "stale_position_ratio": {
+          "dexter": 0.0,
+          "mewx": 1.0,
+          "winner": "dexter"
+        }
+      }
+    },
+    "dexter_close_surface": {
+      "closed_positions": 4,
+      "exit_reasons": {
+        "safe": 2,
+        "malicious": 2
+      },
+      "median_realized_exit_pct": 7.164077921477945,
+      "median_mfe_pct": 34.844263534142286,
+      "median_mae_pct": -6.05468749267574,
+      "median_time_to_peak_ms": 5299.0,
+      "median_quote_vs_fill_slippage_bps": 0.0,
+      "stale_position_ratio": 0.0
+    },
+    "mewx_close_surface": {
+      "closed_positions": 6,
+      "exit_reasons": {
+        "inactivity_timeout": 6
+      },
+      "median_realized_exit_pct": 0.0,
+      "median_mfe_pct": 6.792904253675385,
+      "median_mae_pct": 0.0,
+      "median_time_to_peak_ms": 20.5,
+      "median_realized_vs_peak_gap_pct": 0.0,
+      "median_quote_vs_fill_slippage_bps": 7.706128082620904,
+      "stale_position_ratio": 1.0,
+      "peak_to_close_ms_values": [
+        5013,
+        5016,
+        5017,
+        5018,
+        5024,
+        5028
+      ]
+    },
+    "objective_cases": {
+      "drawdown_containment": {
+        "preferred_source": "mewx",
+        "why": [
+          "Median adverse excursion is zero.",
+          "Median local peak arrives almost immediately.",
+          "Median giveback versus local peak stays at zero in both live and repaired replay."
+        ],
+        "bound": "This preference is limited to price-path containment and does not imply better realized exit or lifecycle control."
+      },
+      "upside_capture": {
+        "preferred_source": "dexter",
+        "why": [
+          "Median favorable excursion is much larger.",
+          "Median realized exit stays positive while Mew-X is flat at zero.",
+          "Quote-to-fill slippage remains tighter."
+        ],
+        "bound": "Dexter gives back more from peak, so this is an absolute-upside preference rather than a peak-retention preference."
+      },
+      "stale_risk_avoidance": {
+        "preferred_source": "dexter",
+        "why": [
+          "Dexter never leaves a stale position open on the promoted baseline.",
+          "Every Mew-X close still terminates through inactivity timeout.",
+          "Dexter closes observed positions via active safe or malicious paths instead of a uniform timeout path."
+        ],
+        "bound": "This is lifecycle containment, not an overturn of Mew-X's local-path drawdown edge."
+      }
+    },
+    "bounded_interpretation": [
+      "Mew-X's risk edge is best read as price-path containment and local-peak retention.",
+      "Dexter's edge is best read as realized exit capture plus lifecycle containment.",
+      "Risk containment is therefore split across different operational surfaces rather than awarding a universal winner.",
+      "The next unresolved step is objective weighting, not another evidence-collection lane."
+    ]
+  },
+  "residual_and_caveats": {
+    "confirmatory_label": "task005-pass-grade-pair-20260325T180604Z",
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false,
+    "replay_scope": "Current zero-gap evidence is scoped to close-summary and position_closed realized-return fidelity rather than full execution-path equivalence.",
+    "dexter_metric_scope_gap": {
+      "metric": "realized_vs_peak_gap_pct",
+      "live_value": 20.533046470504612,
+      "replay_value": 25.804157291090654,
+      "why_it_matters": "A stronger claim about path-sensitive retention still requires a separate lane."
+    },
+    "tradeoff_boundary": "Mew-X owns price-path containment and local-peak retention, while Dexter owns realized exit capture and stale-position control on the promoted baseline."
+  },
+  "decision": {
+    "selected_outcome": "A",
+    "key_finding": "risk_exit_tradeoff_supported",
+    "claim_boundary": "tradeoff_bounded",
+    "task_state": "risk_exit_tradeoff_supported",
+    "decision": "planning_ready",
+    "recommended_next_step": "strategy_planning",
+    "recommended_next_task_id": "STRATEGY-PLANNING",
+    "new_evidence_collection_required": false,
+    "strategy_planning_ready": true,
+    "execution_planning_ready": false,
+    "path_sensitive_retention_scope_required": false,
+    "blocked": false,
+    "why": [
+      "The current surfaces already isolate price-path containment from realized exit capture and stale control.",
+      "Objective weighting is now the blocker to action, not evidence availability.",
+      "Execution-level design should follow only after strategy priorities are made explicit."
+    ]
+  }
+}

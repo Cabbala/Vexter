@@ -1,23 +1,25 @@
 {
-  "task_id": "TASK-005-PAPER-REVALIDATE",
-  "status": "paper_live_improved_but_partial_validation",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_paper_revalidate_bundle.tar.gz",
-  "bundle_path": "artifacts/bundles/task-005-paper-revalidate.tar.gz",
+  "task_id": "TASK-005-PASS-GRADE-PAIR",
+  "status": "pass_grade_pair_collected_but_partial_validation",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_pass_grade_pair_bundle.tar.gz",
+  "bundle_path": "artifacts/bundles/task-005-pass-grade-pair.tar.gz",
   "context_pack": "artifacts/context_pack.json",
   "summary": "artifacts/summary.md",
   "task_ledger": "artifacts/task_ledger.jsonl",
   "reports": [
-    "artifacts/reports/task-005-paper-revalidate-readiness.md",
+    "artifacts/reports/task-005-pass-grade-pair-readiness.md",
+    "artifacts/reports/task-005-live-collection-blocker.md",
     "artifacts/reports/task-005-windows-runtime-recovery.md",
-    "artifacts/reports/task005-paper-revalidate-20260321T123011Z-comparison",
-    "artifacts/reports/task005-paper-revalidate-20260321T123426Z-comparison",
-    "artifacts/reports/task-005-paper-revalidate-handoff"
+    "artifacts/reports/task005-pass-grade-pair-20260325T180027Z-comparison",
+    "artifacts/reports/task005-pass-grade-pair-20260325T180604Z-comparison",
+    "artifacts/reports/task-005-pass-grade-pair-handoff"
   ],
   "proof_files": [
-    "artifacts/proofs/task-005-paper-revalidate-check.json",
+    "artifacts/proofs/task-005-pass-grade-pair-check.json",
+    "artifacts/proofs/task-005-live-collection-check.json",
     "artifacts/proofs/task-005-windows-runtime-recovery.json",
-    "artifacts/proofs/task005-paper-revalidate-20260321T123011Z-results",
-    "artifacts/proofs/task005-paper-revalidate-20260321T123426Z-results"
+    "artifacts/proofs/task005-pass-grade-pair-20260325T180027Z-results",
+    "artifacts/proofs/task005-pass-grade-pair-20260325T180604Z-results"
   ],
   "manifests": [
     "manifests/reference_repos.json",
@@ -60,47 +62,42 @@
     "vexter/comparison/"
   ],
   "task_result": {
-    "verified_main_commit": "3a720a64a5dbbda482513446b3bc47c341dde2ae",
+    "verified_main_commit": "28c15b5c7655fe7647c12774494c80b83c58c04f",
     "verified_prs": [
-      14
+      15
     ],
     "verified_dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_dexter_pr": 3,
-    "promoted_same_attempt_label": "task005-paper-revalidate-20260321T123011Z",
-    "confirmatory_same_attempt_label": "task005-paper-revalidate-20260321T123426Z",
-    "baseline_previous_label": "resume-after-pr9-20260321T1737",
-    "previous_paper_validation_promoted_label": "task005-paper-validation-20260321T1950",
-    "dexter_required_event_types_present": 9,
+    "promoted_same_attempt_label": "task005-pass-grade-pair-20260325T180027Z",
+    "confirmatory_same_attempt_label": "task005-pass-grade-pair-20260325T180604Z",
+    "previous_paper_revalidate_label": "task005-paper-revalidate-20260321T123011Z",
+    "dexter_required_event_types_present": 10,
     "dexter_required_event_types_total": 12,
-    "mewx_required_event_types_present": 8,
+    "mewx_required_event_types_present": 9,
     "mewx_required_event_types_total": 12,
     "run_summary_present": false,
-    "paper_live_mode_confirmed": true,
-    "creator_only_ceiling_resolved": true,
     "comparison_ready": false,
     "recommendation": "BLOCKED",
-    "next_task_id": "TASK-005-PASS-GRADE-PAIR"
+    "next_task_id": "BLOCKED"
   },
   "proofs": {
     "paper_sim_first_preserved": true,
     "dexter_strategy_changed": false,
     "mewx_strategy_changed": false,
     "instrumentation_contract_changed": false,
-    "pinned_dexter_commit_inspected": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
-    "pinned_mewx_commit_inspected": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
-    "github_visible_closeout_required": true,
-    "best_fresh_pair_exact_overlap_ms": 117795,
-    "confirmatory_retry_exact_overlap_ms": 108930,
-    "previous_paper_validation_ceiling_resolved": true
+    "packaging_fix_applied": true,
+    "best_fresh_pair_exact_overlap_ms": 162941,
+    "confirmatory_retry_exact_overlap_ms": 53315,
+    "best_pair_still_partial": true,
+    "extended_grace_recovered_run_summary": false
   },
   "next_task": {
-    "id": "TASK-005-PASS-GRADE-PAIR",
-    "state": "collect_fresh_pass_grade_matched_pair",
+    "id": "BLOCKED",
+    "state": "awaiting_pass_grade_matched_live_pair",
     "resume_requirements": [
       "Keep Dexter on merged main paper_live and keep Mew-X unchanged on sim_live.",
       "Do not change Dexter strategy semantics, trust logic, thresholds, or comparison rules.",
-      "Collect another fresh matched pair that captures the remaining required event types, especially run_summary.",
-      "Use the GitHub-visible artifacts from this task as the new baseline for TASK-005 follow-up work.",
+      "Preserve the Vexter-side packaging regression fix for full-stream fallback exports.",
       "Do not start TASK-006 until a matched pair validates beyond partial and winner_mode is no longer deferred."
     ]
   },

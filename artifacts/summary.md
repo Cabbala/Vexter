@@ -1,64 +1,66 @@
-# TASK-005-PAPER-REVALIDATE Summary
+# TASK-005-PASS-GRADE-PAIR Summary
 
 ## Verified Start
 
-- `Cabbala/Vexter` `origin/main` was re-verified at `3a720a64a5dbbda482513446b3bc47c341dde2ae` after merged PR `#14` on `2026-03-21`.
+- `Cabbala/Vexter` `origin/main` was re-verified at `28c15b5c7655fe7647c12774494c80b83c58c04f` after merged PR `#15` on `2026-03-21`.
 - `Cabbala/Dexter` `main` was re-verified at `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938` after merged PR `#3` on `2026-03-21`.
-- Prior authoritative pre-paper baseline remained `resume-after-pr9-20260321T1737` with Dexter `4 / 12` and Mew-X `8 / 12`.
-- Prior paper-validation ceiling remained `task005-paper-validation-20260321T1950` and `task005-paper-validation-20260321T2005`, where Dexter stayed at `1 / 12` despite `paper_live`.
+- Prior paper-revalidate promoted pair remained `task005-paper-revalidate-20260321T123011Z` with Dexter `9 / 12` and Mew-X `8 / 12`.
+- Frozen Mew-X source stayed pinned at `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`.
 
 ## Execution
 
-- Updated Vexter to pin Dexter `main` at `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938` in the sync script, Windows recovery script, and pinned-source manifests.
-- Recovered `win-lan`, verified PostgreSQL `17.9`, and confirmed the Windows Dexter checkout at `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938` plus frozen Mew-X at `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`.
+- Rechecked `win-lan`, verified PostgreSQL `17.9`, and confirmed the Windows Dexter checkout at `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938` plus frozen Mew-X at `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`.
+- Fixed a Vexter-side packaging regression in `scripts/collect_comparison_package.ps1` so the Mew-X full-stream fallback no longer fails when exactly one copied `session_summary` export is present.
 - Recollected two fresh same-attempt Dexter `paper_live` x Mew-X `sim_live` pairs:
-  - `task005-paper-revalidate-20260321T123011Z`
-  - `task005-paper-revalidate-20260321T123426Z`
+  - `task005-pass-grade-pair-20260325T180027Z`
+  - `task005-pass-grade-pair-20260325T180604Z`
 - Reran `validate`, `derive-metrics`, and `build-pack` for both fresh pairs.
 
 ## Fresh Results
 
-### Promoted pair: `task005-paper-revalidate-20260321T123011Z`
+### Promoted pair: `task005-pass-grade-pair-20260325T180027Z`
 
-- Exact event overlap: `117,795 ms`
-- Dexter validation: `partial` with `9 / 12`
-- Dexter now emitted: `creator_candidate, entry_attempt, entry_fill, entry_signal, exit_fill, exit_signal, mint_observed, position_closed, session_update`
-- Dexter still missed: `candidate_rejected, entry_rejected, run_summary`
+- Exact event overlap: `162,941 ms`
+- Dexter validation: `partial` with `10 / 12`
+- Dexter now emitted: `candidate_rejected, creator_candidate, entry_attempt, entry_fill, entry_signal, exit_fill, exit_signal, mint_observed, position_closed, session_update`
+- Dexter still missed: `entry_rejected, run_summary`
+- Mew-X validation: `partial` with `9 / 12`
+- Mew-X now emitted: `candidate_rejected, entry_attempt, entry_fill, entry_signal, exit_fill, exit_signal, mint_observed, position_closed, session_update`
+- Mew-X still missed: `creator_candidate, entry_rejected, run_summary`
+- Dexter startup wallet-balance `HTTP 429` count: `0`
+- Dexter wsLogs `HTTP 429` count: `10`
+
+### Confirmatory pair: `task005-pass-grade-pair-20260325T180604Z`
+
+- Exact event overlap: `53,315 ms`
+- Dexter validation: `partial` with `10 / 12`
 - Mew-X validation: `partial` with `8 / 12`
-- Mew-X still missed: `candidate_rejected, creator_candidate, entry_rejected, run_summary`
-- Dexter startup `HTTP 429` count: `1`
-- Dexter wsLogs `HTTP 429` count: `0`
-
-### Confirmatory pair: `task005-paper-revalidate-20260321T123426Z`
-
-- Exact event overlap: `108,930 ms`
-- Dexter validation: `partial` with `9 / 12`
-- Mew-X validation: `partial` with `8 / 12`
-- Dexter again reached mint, entry, session, exit, and closeout coverage instead of stopping at creator-only.
-- Missing event types stayed the same as the promoted pair, so the confirmatory retry reinforced the improvement but did not reach pass-grade coverage.
+- A longer `--grace-seconds 60` did not recover `run_summary` for either source.
+- Dexter held the same missing-event pattern as the promoted pair; Mew-X regressed by losing `candidate_rejected`.
 
 ## Before / After
 
-- Previous paper-validation ceiling: Dexter `1 / 12` -> fresh revalidation `9 / 12` on both retries.
-- Previous authoritative pre-paper baseline: Dexter `4 / 12` -> fresh revalidation `9 / 12` on the promoted pair.
-- Mew-X stayed `8 / 12` on both fresh revalidations, so the matched pair still did not cross the validator's pass threshold.
-- The creator-only Dexter paper ceiling is resolved, but the validation contract is still not fully satisfied.
+- Previous paper-revalidate promoted pair: Dexter `9 / 12` -> fresh pass-grade pair `10 / 12` on both retries.
+- Previous paper-revalidate promoted pair: Mew-X `8 / 12` -> fresh promoted pass-grade pair `9 / 12`.
+- The promoted pair is the strongest matched paper/sim evidence so far on merged PR `#15` main, but it still does not cross the validator's pass threshold.
+- The best remaining gaps are now narrower and more specific than before: `run_summary` on both sources, `entry_rejected` on Dexter and Mew-X, and `creator_candidate` on Mew-X.
 
 ## Evidence-Based TASK-006 Readiness
 
 - Decision: `BLOCKED`
-- Reason 1: Dexter improved materially beyond the prior paper ceiling, but both source packages still classify as `partial` under the current contract.
-- Reason 2: `candidate_rejected`, `entry_rejected`, and `run_summary` remained absent for Dexter; `candidate_rejected`, `creator_candidate`, `entry_rejected`, and `run_summary` remained absent for Mew-X.
-- Reason 3: `comparison_pack` winner mode stayed `deferred` on both fresh pairs.
-- Next TASK-005 follow-up: `TASK-005-PASS-GRADE-PAIR` to collect a pass-grade matched paper/sim pair without changing source logic or comparison rules.
+- Reason 1: the promoted fresh pair still classifies as `partial` under the current contract at Dexter `10 / 12` and Mew-X `9 / 12`.
+- Reason 2: `run_summary` stayed absent on both sources across both fresh attempts, even after the confirmatory retry extended graceful shutdown.
+- Reason 3: Dexter still never emitted `entry_rejected`, while Mew-X still never emitted `creator_candidate` or `entry_rejected`.
+- Reason 4: `comparison_pack` winner mode stayed `deferred` on both fresh pairs.
+- Next state: `BLOCKED` until another approved TASK-005 follow-up can prove a true pass-grade matched pair or explain why the remaining frozen-source gaps are not collectible under the current contract.
 
 ## Key Paths
 
 - Promoted comparison output:
-  - `/Users/cabbala/Documents/worktrees/Vexter-task005-paper-revalidate/artifacts/reports/task005-paper-revalidate-20260321T123011Z-comparison`
+  - `/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326/artifacts/reports/task005-pass-grade-pair-20260325T180027Z-comparison`
 - Confirmatory comparison output:
-  - `/Users/cabbala/Documents/worktrees/Vexter-task005-paper-revalidate/artifacts/reports/task005-paper-revalidate-20260321T123426Z-comparison`
+  - `/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326/artifacts/reports/task005-pass-grade-pair-20260325T180604Z-comparison`
 - Readiness proof:
-  - `/Users/cabbala/Documents/worktrees/Vexter-task005-paper-revalidate/artifacts/proofs/task-005-paper-revalidate-check.json`
+  - `/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326/artifacts/proofs/task-005-pass-grade-pair-check.json`
 - Windows recovery proof:
-  - `/Users/cabbala/Documents/worktrees/Vexter-task005-paper-revalidate/artifacts/proofs/task-005-windows-runtime-recovery.json`
+  - `/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326/artifacts/proofs/task-005-windows-runtime-recovery.json`

@@ -1,30 +1,30 @@
-# TASK-006 Replay Status
+# TASK-006 Replay And Comparison Status
 
 ## Verified Start
 
-- Vexter `origin/main` verified at PR `#23` merge commit `eaa5acc2f189d5bea5c55f9de059d8e6a8d36091`
+- Vexter `origin/main` verified at PR `#24` merge commit `2c8b654fde4b4fcff11f3ecca2e1f4d27ceb610d`
 - Dexter `main` verified at PR `#3` commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`
 - Frozen Mew-X verified at `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`
 
 ## Current Result
 
-- Promoted replay input accepted: `yes`
+- Promoted live comparison winner mode: `derived`
+- Promoted replay comparison winner mode: `derived`
+- Live scored-metric split: Dexter `6`, Mew-X `4`, tie `2`
+- Replay scored-metric split: Dexter `6`, Mew-X `4`, tie `2`
 - Confirmatory residual overturning: `no`
 - Confirmatory residual note: `Mew-X candidate_rejected`
-- Dexter augmented close-summary exports: `4`
-- Dexter replay package validation: `pass`
 - Dexter replay coverage: `100.00%`
 - Dexter `live_vs_replay_gap_pct`: `0.0000`
-- Dexter unmatched live sessions: `[]`
-- Mew-X replay package validation: `pass`
 - Mew-X replay coverage: `100.00%`
 - Mew-X `live_vs_replay_gap_pct`: `0.0000`
-- Promoted comparison pack winner mode: `derived`
+- Remaining caveat: replay parity is scoped to close-summary / `position_closed` realized-return fidelity
 
 ## Decision
 
-- TASK-006: `ready_for_downstream_comparative_analysis`
-- Key finding: `surface_fix_applied`
-- Next step: `task_006_downstream_comparative_analysis`
+- TASK-006: `comparison_closeout_ready`
+- Key finding: `comparison_closeout_ready`
+- Next step: `task_006_comparison_closeout`
+- Downstream research handoff ready: `yes`
 
-The promoted Dexter replay blocker is now resolved on the repaired replay surface. Vexter augments the promoted Dexter package with source-faithful close-summary replay exports for non-stagnant closes, leaving stagnant-mint exports intact; that closes the missing `6aH...` session hole and eliminates the prior `AdCv...` safe-exit mismatch on the promoted baseline.
+The repaired replay surface leaves the promoted cross-source interpretation stable rather than reopening it. Dexter still leads on candidate generation, signal-to-attempt latency, slippage, realized exit, favorable excursion, and stale-position control; Mew-X still leads on fill latency, drawdown containment, time-to-peak, and realized-vs-peak retention. The only remaining confirmatory miss is Mew-X `candidate_rejected`, and it does not overturn the promoted baseline.

@@ -264,14 +264,14 @@ if ($ConfigSnapshot -and (Test-Path $ConfigSnapshot)) {
     Copy-Item $ConfigSnapshot $configTarget -Force
 }
 
-$exportFiles = Copy-Files -Files (Get-ScopedFiles -SearchRoot $ExportDir -LowerBound $timeBounds.LowerBound -UpperBound $timeBounds.UpperBound -RunId $RunId -PreferRunId) -DestinationPath $exportsOut
-$replayFiles = Copy-Files -Files (Get-ScopedFiles -SearchRoot $ReplayDir -LowerBound $timeBounds.LowerBound -UpperBound $timeBounds.UpperBound -RunId $RunId) -DestinationPath $replaysOut
-$logFiles = Copy-Files -Files (Get-ScopedFiles -SearchRoot $LogDir -LowerBound $timeBounds.LowerBound -UpperBound $timeBounds.UpperBound -RunId $RunId -PreferRunId) -DestinationPath $logsOut
+$exportFiles = @(Copy-Files -Files (Get-ScopedFiles -SearchRoot $ExportDir -LowerBound $timeBounds.LowerBound -UpperBound $timeBounds.UpperBound -RunId $RunId -PreferRunId) -DestinationPath $exportsOut)
+$replayFiles = @(Copy-Files -Files (Get-ScopedFiles -SearchRoot $ReplayDir -LowerBound $timeBounds.LowerBound -UpperBound $timeBounds.UpperBound -RunId $RunId) -DestinationPath $replaysOut)
+$logFiles = @(Copy-Files -Files (Get-ScopedFiles -SearchRoot $LogDir -LowerBound $timeBounds.LowerBound -UpperBound $timeBounds.UpperBound -RunId $RunId -PreferRunId) -DestinationPath $logsOut)
 
 $sessionExportFiles = @()
 if ($Source -eq "mewx") {
     $sessionExportDir = Join-Path $ExportDir "sessions"
-    $sessionExportFiles = Copy-Files -Files (Get-ScopedFiles -SearchRoot $sessionExportDir -LowerBound $timeBounds.LowerBound -UpperBound $timeBounds.UpperBound -RunId "") -DestinationPath $exportsOut
+    $sessionExportFiles = @(Copy-Files -Files (Get-ScopedFiles -SearchRoot $sessionExportDir -LowerBound $timeBounds.LowerBound -UpperBound $timeBounds.UpperBound -RunId "") -DestinationPath $exportsOut)
     $exportFiles = @($exportFiles + $sessionExportFiles | Select-Object -Unique)
 }
 
@@ -290,15 +290,15 @@ if ($Source -eq "dexter") {
 if ($Source -eq "mewx") {
     $refresh = Select-LatestMatchingFile -SearchRoot $exportsOut -Patterns @("candidate", "refresh") -RunId $RunId
     $session = $null
-    if ($sessionExportFiles.Count -gt 0) {
-        $session = @(
+    if (@($sessionExportFiles).Count -gt 0) {
+        $sessionCandidates = @(
             $sessionExportFiles |
                 ForEach-Object { if (Test-Path $_) { Get-Item $_ } } |
                 Sort-Object LastWriteTimeUtc -Descending |
                 Select-Object -First 1
         )
-        if ($session) {
-            $session = $session[0]
+        if ($sessionCandidates.Count -gt 0) {
+            $session = $sessionCandidates[0]
         }
     }
     if (-not $session) {

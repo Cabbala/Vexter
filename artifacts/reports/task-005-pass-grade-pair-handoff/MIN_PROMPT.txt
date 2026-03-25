@@ -1,0 +1,7 @@
+Vexter / 既存Codexスレッド / TASK-005-PASS-GRADE-PAIR
+
+Vexter 最新 main は PR #15 merge commit `28c15b5c7655fe7647c12774494c80b83c58c04f`、Dexter 最新 main は PR #3 merge commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938` まで確認済み。
+source logic / comparison rules は変えず、Vexter 側では `scripts/collect_comparison_package.ps1` の packaging fallback バグだけ修正して fresh matched Dexter `paper_live` x Mew-X `sim_live` を 2 本再収集し、validate→derive-metrics→build-pack を再実行した。
+promoted pair は `task005-pass-grade-pair-20260325T180027Z` で、Dexter `10/12`, Mew-X `9/12`, exact overlap `162,941 ms`。confirmatory pair は `task005-pass-grade-pair-20260325T180604Z` で、Dexter `10/12`, Mew-X `8/12`, exact overlap `53,315 ms`。
+ただし両 pair とも validator では `partial` のままで、Dexter は `entry_rejected` / `run_summary`、Mew-X は `creator_candidate` / `entry_rejected` / `run_summary` が欠落した。extended grace でも `run_summary` は出ず、winner mode も deferred のままなので TASK-006 は引き続き blocked。
+次に進めるなら、現 contract のまま pass-grade matched pair を本当に取れるかを再評価するか、収集条件ではなく frozen source event gap を design-only で再点検する。

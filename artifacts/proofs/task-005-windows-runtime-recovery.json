@@ -1,6 +1,6 @@
 {
-  "task_id": "TASK-005-PAPER-REVALIDATE",
-  "checked_at_utc": "2026-03-21T12:41:51Z",
+  "task_id": "TASK-005-PASS-GRADE-PAIR",
+  "checked_at_utc": "2026-03-25T18:16:58Z",
   "status": "runtime_ready",
   "windows_runtime_host": "win-lan",
   "resolved_windows_hostname": "DESKTOP-NNC6MPS",
@@ -19,5 +19,10 @@
   "postgres": {
     "version": "psql (PostgreSQL) 17.9",
     "listener": "127.0.0.1:5432 - accepting connections"
+  },
+  "tool_versions": {
+    "python": "Python 3.11.9",
+    "cargo": "cargo 1.94.0 (85eff7c80 2026-01-15)",
+    "rustc": "rustc 1.94.0 (4a4ef493e 2026-03-02)"
   }
 }

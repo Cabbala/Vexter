@@ -16,6 +16,7 @@ if str(REPO_ROOT) not in sys.path:
 from vexter.comparison import (
     build_comparison_pack,
     derive_metrics,
+    run_replay_deepening,
     run_replay_validation,
     validate_run_package,
 )
@@ -82,6 +83,23 @@ def _build_parser() -> argparse.ArgumentParser:
     replay_parser.add_argument("--output", required=True)
     replay_parser.add_argument("--summary-output")
 
+    deepening_parser = subparsers.add_parser(
+        "replay-deepening",
+        help="Reconstruct replay-mode packages from a promoted live baseline and measure live-vs-replay gap",
+    )
+    deepening_parser.add_argument("--latest-vexter-pr", required=True, type=int)
+    deepening_parser.add_argument("--latest-vexter-main-commit", required=True)
+    deepening_parser.add_argument("--dexter-main-commit", required=True)
+    deepening_parser.add_argument("--mewx-frozen-commit", required=True)
+    deepening_parser.add_argument("--promoted-label", required=True)
+    deepening_parser.add_argument("--promoted-dexter-package", required=True)
+    deepening_parser.add_argument("--promoted-mewx-package", required=True)
+    deepening_parser.add_argument("--replay-package-root", required=True)
+    deepening_parser.add_argument("--replay-output-dir", required=True)
+    deepening_parser.add_argument("--confirmatory-residual-note", required=True)
+    deepening_parser.add_argument("--output", required=True)
+    deepening_parser.add_argument("--summary-output")
+
     return parser
 
 
@@ -121,6 +139,23 @@ def main() -> int:
             confirmatory_output_dir=args.confirmatory_output_dir,
             promoted_summary_note=args.promoted_summary_note,
             confirmatory_summary_note=args.confirmatory_summary_note,
+        )
+        _write_payload(payload, args.output)
+        _write_text(summary, args.summary_output)
+        return 0
+
+    if args.command == "replay-deepening":
+        payload, summary = run_replay_deepening(
+            latest_vexter_pr=args.latest_vexter_pr,
+            latest_vexter_main_commit=args.latest_vexter_main_commit,
+            dexter_main_commit=args.dexter_main_commit,
+            mewx_frozen_commit=args.mewx_frozen_commit,
+            promoted_label=args.promoted_label,
+            promoted_dexter_package_dir=args.promoted_dexter_package,
+            promoted_mewx_package_dir=args.promoted_mewx_package,
+            replay_package_root=args.replay_package_root,
+            replay_output_dir=args.replay_output_dir,
+            confirmatory_residual_note=args.confirmatory_residual_note,
         )
         _write_payload(payload, args.output)
         _write_text(summary, args.summary_output)

@@ -1,0 +1,5 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+継続タスクID: TASK-006-REPLAY-DEEPENING
+
+PR #21 merged main を基準に、promoted comparable pack から replay-mode evidence を再構築し、live-versus-replay gap まで測定済みです。Dexter replay package は `3/4` closed sessions を再構築でき、`live_vs_replay_gap_pct` は `17.6205`、未被覆 1 session と大きい outlier gap 1 件が残っています。Mew-X replay package は `6/6` sessions を再構築し、`live_vs_replay_gap_pct` は `0` です。confirmatory の Mew-X `candidate_rejected` residual は context note のままです。次は source logic を変えずに Dexter 側の gap explanation / replay analysis を進め、TASK-006 を次段へ整理してください。

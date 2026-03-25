@@ -1,0 +1,31 @@
+{
+  "config": [
+    "config/config_snapshot.json"
+  ],
+  "db_exports": [
+    "exports/9P5yvvqE7oyHVXuuYrFyeF35XMxyJpntWMtTu7Dkpump-1774461628711.json",
+    "exports/AUyJcGpbJWrUwC7smpcC8sYi1vfUTBN7bCZ2bVMpJFPR-1774461628711.json",
+    "exports/BMRQB1eP9xnc4WUfVwQjb2BCBEpCQd6fjpbMYTBGpump-1774461628711.json",
+    "exports/DYa5q3SFrZ2HsYHqFNNK2LYmeBtPKgY9pDDMBjWepump-1774461628711.json",
+    "exports/H79BmixeCauzgEYz7AB4p4iFpJibjJztJ999QJG8PHHa-1774461628711.json",
+    "exports/fmFU8JoLhb4atKqvFddgAb6cd4mE12kBpmtCcf8pump-1774461628711.json"
+  ],
+  "exports": [
+    "exports/mewx-task005-pass-grade-pair-20260325T180027Z-replay.state.json",
+    "exports/mewx-task005-pass-grade-pair-20260325T180027Z.candidates.initial_selection.json",
+    "exports/mewx-task005-pass-grade-pair-20260325T180027Z.candidates.refresh.json",
+    "exports/mewx-task005-pass-grade-pair-20260325T180027Z.state.json"
+  ],
+  "logs": [],
+  "raw_events": [
+    "inputs/source_events.ndjson"
+  ],
+  "replays": [
+    "exports/9P5yvvqE7oyHVXuuYrFyeF35XMxyJpntWMtTu7Dkpump-1774461628711.json",
+    "exports/AUyJcGpbJWrUwC7smpcC8sYi1vfUTBN7bCZ2bVMpJFPR-1774461628711.json",
+    "exports/BMRQB1eP9xnc4WUfVwQjb2BCBEpCQd6fjpbMYTBGpump-1774461628711.json",
+    "exports/DYa5q3SFrZ2HsYHqFNNK2LYmeBtPKgY9pDDMBjWepump-1774461628711.json",
+    "exports/H79BmixeCauzgEYz7AB4p4iFpJibjJztJ999QJG8PHHa-1774461628711.json",
+    "exports/fmFU8JoLhb4atKqvFddgAb6cd4mE12kBpmtCcf8pump-1774461628711.json"
+  ]
+}

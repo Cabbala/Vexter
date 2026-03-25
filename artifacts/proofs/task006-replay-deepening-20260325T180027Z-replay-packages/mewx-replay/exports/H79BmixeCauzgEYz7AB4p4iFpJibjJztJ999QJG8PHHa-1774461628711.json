@@ -1,0 +1,18 @@
+{
+  "candidate_source": "dev_best_friend",
+  "closed_at_utc": "2026-03-25T18:04:00.182Z",
+  "creator": "8ov9RE6UcpYVtP2k2qhHLajRMeuJctKJEsG8vtYGTWY6",
+  "entry_price": 2.8796042853939567e-8,
+  "exit_price": 3.365342541811734e-8,
+  "exit_reason": "inactivity_timeout",
+  "mae_pct": 0.0,
+  "market": "pump_fun",
+  "mfe_pct": 16.868229391154816,
+  "mint": "H79BmixeCauzgEYz7AB4p4iFpJibjJztJ999QJG8PHHa",
+  "pool_id": "E65WAWrzR2vkTMUAreqD1AdgL24uAcBwByLid8QDrtzw",
+  "realized_return_pct": 16.868229391154816,
+  "run_id": "mewx-task005-pass-grade-pair-20260325T180027Z",
+  "session_duration_ms": 6318,
+  "session_id": "H79BmixeCauzgEYz7AB4p4iFpJibjJztJ999QJG8PHHa-1774461628711",
+  "time_to_peak_ms": 1300
+}

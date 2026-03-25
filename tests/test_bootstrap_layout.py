@@ -48,6 +48,7 @@ def test_required_paths_exist() -> None:
         "vexter/comparison/validator.py",
         "vexter/comparison/metrics.py",
         "vexter/comparison/pack.py",
+        "vexter/comparison/replay_deepening.py",
         "tests/conftest.py",
         "artifacts/context_pack.json",
         "artifacts/summary.md",
@@ -66,10 +67,15 @@ def test_required_paths_exist() -> None:
         "artifacts/reports/task-006-replay-validation-status.md",
         "artifacts/reports/task-006-replay-validation-handoff/DETAILS.md",
         "artifacts/reports/task-006-replay-validation-handoff/MIN_PROMPT.txt",
+        "artifacts/reports/task-006-replay-deepening.md",
+        "artifacts/reports/task-006-replay-deepening-handoff/DETAILS.md",
+        "artifacts/reports/task-006-replay-deepening-handoff/MIN_PROMPT.txt",
         "artifacts/proofs/task-005-live-collection-check.json",
         "artifacts/proofs/task-005-pass-grade-pair-check.json",
         "artifacts/proofs/task-005-windows-runtime-recovery.json",
         "artifacts/proofs/task-006-replay-validation-check.json",
+        "artifacts/proofs/task-006-replay-deepening-check.json",
+        "artifacts/proofs/task-006-replay-deepening-summary.md",
         "artifacts/examples/task-004-sample-comparison/pack_manifest.json",
         ".github/workflows/validate.yml",
     ]
@@ -147,6 +153,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-005-VALIDATOR-RULE-REVIEW",
         "TASK-005-VALIDATOR-RULE-IMPLEMENT",
         "TASK-006-REPLAY-VALIDATION",
+        "TASK-006-REPLAY-DEEPENING",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -163,6 +170,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "rule_review_memo_ready_for_approval",
         "rule_implementation_applied",
         "replay_validation_in_progress",
+        "replay_gap_measured",
     }
     assert payload["branch"] in {
         "codex/task-005-live-comparison-evidence",
@@ -180,6 +188,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-005-validator-rule-review",
         "codex/task-005-validator-rule-implement",
         "codex/task-006-replay-validation",
+        "codex/task-006-replay-deepening",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -204,6 +213,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "awaiting_explicit_approval_to_modify_validator_rules",
         "ready_for_replay_validation",
         "replay_validation_in_progress",
+        "ready_for_next_replay_analysis_step",
     }
 
 
@@ -226,6 +236,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "rule_memo_ready",
         "rule_implementation_applied",
         "replay_validation_in_progress",
+        "replay_gap_measured",
     }
     assert manifest["next_task"]["id"] in {
         "TASK-005-RESUME",
@@ -249,6 +260,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "awaiting_explicit_approval_to_modify_validator_rules",
         "ready_for_replay_validation",
         "replay_validation_in_progress",
+        "ready_for_next_replay_analysis_step",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]
@@ -271,6 +283,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "templates/windows_runtime/dexter.env.example" in names
     assert "templates/windows_runtime/mewx.env.example" in names
     assert "vexter/comparison/validator.py" in names
+    assert "vexter/comparison/replay_deepening.py" in names
     assert "artifacts/examples/task-004-sample-comparison/summary.md" in names
     assert "artifacts/reports/task-005-live-collection-blocker.md" in names
     assert "artifacts/reports/task-005-windows-runtime-recovery.md" in names
@@ -282,9 +295,14 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/reports/task-006-replay-validation-status.md" in names
     assert "artifacts/reports/task-006-replay-validation-handoff/DETAILS.md" in names
     assert "artifacts/reports/task-006-replay-validation-handoff/MIN_PROMPT.txt" in names
+    assert "artifacts/reports/task-006-replay-deepening.md" in names
+    assert "artifacts/reports/task-006-replay-deepening-handoff/DETAILS.md" in names
+    assert "artifacts/reports/task-006-replay-deepening-handoff/MIN_PROMPT.txt" in names
     assert "artifacts/proofs/task-005-live-collection-check.json" in names
     assert "artifacts/proofs/task-005-windows-runtime-recovery.json" in names
     assert "artifacts/proofs/task-006-replay-validation-check.json" in names
+    assert "artifacts/proofs/task-006-replay-deepening-check.json" in names
+    assert "artifacts/proofs/task-006-replay-deepening-summary.md" in names
     assert "artifacts/context_pack.json" in names
     assert "artifacts/proof_bundle_manifest.json" in names
     assert "tests/__pycache__/" not in names

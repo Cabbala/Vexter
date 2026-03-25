@@ -1,0 +1,19 @@
+{
+  "built_at_utc": "2026-03-25T20:29:36Z",
+  "inputs": {
+    "dexter_package": "/Users/cabbala/Documents/worktrees/Vexter-task006-replay-validation/artifacts/proofs/task006-replay-deepening-20260325T180027Z-replay-packages/dexter-replay",
+    "mewx_package": "/Users/cabbala/Documents/worktrees/Vexter-task006-replay-validation/artifacts/proofs/task006-replay-deepening-20260325T180027Z-replay-packages/mewx-replay"
+  },
+  "outputs": [
+    "dexter_validation.json",
+    "mewx_validation.json",
+    "dexter_metrics.json",
+    "mewx_metrics.json",
+    "comparison_matrix.json",
+    "comparison_matrix.md",
+    "comparison_pack.json",
+    "summary.md"
+  ],
+  "pack_id": "comparison-dexter-task005-pass-grade-pair-20260325T180027Z-replay-vs-mewx-task005-pass-grade-pair-20260325T180027Z-replay",
+  "winner_mode": "derived"
+}

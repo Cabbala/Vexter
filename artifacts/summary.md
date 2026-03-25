@@ -1,66 +1,74 @@
-# TASK-005-PASS-GRADE-PAIR Summary
+# TASK-005-GAP-AUDIT Summary
 
-## Verified Start
+## Verified GitHub State
 
-- `Cabbala/Vexter` `origin/main` was re-verified at `28c15b5c7655fe7647c12774494c80b83c58c04f` after merged PR `#15` on `2026-03-21`.
-- `Cabbala/Dexter` `main` was re-verified at `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938` after merged PR `#3` on `2026-03-21`.
-- Prior paper-revalidate promoted pair remained `task005-paper-revalidate-20260321T123011Z` with Dexter `9 / 12` and Mew-X `8 / 12`.
-- Frozen Mew-X source stayed pinned at `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`.
+- `Cabbala/Vexter` latest merged `main` was reverified at PR `#16` merge commit `b71b5f744027024e2a04606f6c1aa369d0a6c3e3` on `2026-03-25`.
+- The pass-grade pair evidence being audited was originally collected from PR `#15` base `28c15b5c7655fe7647c12774494c80b83c58c04f`.
+- `Cabbala/Dexter` `main` stayed pinned at merged PR `#3` commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`.
+- Frozen `Cabbala/Mew-X` stayed pinned at `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`.
 
-## Execution
+## What This Audit Revalidated
 
-- Rechecked `win-lan`, verified PostgreSQL `17.9`, and confirmed the Windows Dexter checkout at `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938` plus frozen Mew-X at `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`.
-- Fixed a Vexter-side packaging regression in `scripts/collect_comparison_package.ps1` so the Mew-X full-stream fallback no longer fails when exactly one copied `session_summary` export is present.
-- Recollected two fresh same-attempt Dexter `paper_live` x Mew-X `sim_live` pairs:
-  - `task005-pass-grade-pair-20260325T180027Z`
-  - `task005-pass-grade-pair-20260325T180604Z`
-- Reran `validate`, `derive-metrics`, and `build-pack` for both fresh pairs.
+- Re-ran `validate`, `derive-metrics`, and `build-pack` on the promoted pair `task005-pass-grade-pair-20260325T180027Z`.
+- Re-ran `validate`, `derive-metrics`, and `build-pack` on the confirmatory pair `task005-pass-grade-pair-20260325T180604Z`.
+- Audited current validator requirements against frozen Dexter and frozen Mew-X source code.
+- Audited the copied full-stream collection payloads, source exports, and state exports to distinguish source non-emission from packaging loss.
+- Did not perform more live recollection because the copied full-stream evidence plus source audit already closed the collectability question.
 
-## Fresh Results
+## Current Pair Results
 
-### Promoted pair: `task005-pass-grade-pair-20260325T180027Z`
+### Promoted pair `task005-pass-grade-pair-20260325T180027Z`
 
-- Exact event overlap: `162,941 ms`
-- Dexter validation: `partial` with `10 / 12`
-- Dexter now emitted: `candidate_rejected, creator_candidate, entry_attempt, entry_fill, entry_signal, exit_fill, exit_signal, mint_observed, position_closed, session_update`
-- Dexter still missed: `entry_rejected, run_summary`
-- Mew-X validation: `partial` with `9 / 12`
-- Mew-X now emitted: `candidate_rejected, entry_attempt, entry_fill, entry_signal, exit_fill, exit_signal, mint_observed, position_closed, session_update`
-- Mew-X still missed: `creator_candidate, entry_rejected, run_summary`
-- Dexter startup wallet-balance `HTTP 429` count: `0`
-- Dexter wsLogs `HTTP 429` count: `10`
+- Dexter stayed `partial` at `10 / 12`; missing `entry_rejected`, `run_summary`.
+- Mew-X stayed `partial` at `9 / 12`; missing `creator_candidate`, `entry_rejected`, `run_summary`.
+- Exact raw overlap remained `162,941 ms`.
+- The revalidated package was still built from `full_stream_fallback`, so the missing events are absent from the copied full raw stream, not only from window filtering.
 
-### Confirmatory pair: `task005-pass-grade-pair-20260325T180604Z`
+### Confirmatory pair `task005-pass-grade-pair-20260325T180604Z`
 
-- Exact event overlap: `53,315 ms`
-- Dexter validation: `partial` with `10 / 12`
-- Mew-X validation: `partial` with `8 / 12`
-- A longer `--grace-seconds 60` did not recover `run_summary` for either source.
-- Dexter held the same missing-event pattern as the promoted pair; Mew-X regressed by losing `candidate_rejected`.
+- Dexter stayed `partial` at `10 / 12`; missing `entry_rejected`, `run_summary`.
+- Mew-X stayed `partial` at `8 / 12`; missing `candidate_rejected`, `creator_candidate`, `entry_rejected`, `run_summary`.
+- Exact raw overlap remained `53,315 ms`.
+- Extending grace to `60` seconds still did not produce `run_summary`.
 
-## Before / After
+## Key Audit Findings
 
-- Previous paper-revalidate promoted pair: Dexter `9 / 12` -> fresh pass-grade pair `10 / 12` on both retries.
-- Previous paper-revalidate promoted pair: Mew-X `8 / 12` -> fresh promoted pass-grade pair `9 / 12`.
-- The promoted pair is the strongest matched paper/sim evidence so far on merged PR `#15` main, but it still does not cross the validator's pass threshold.
-- The best remaining gaps are now narrower and more specific than before: `run_summary` on both sources, `entry_rejected` on Dexter and Mew-X, and `creator_candidate` on Mew-X.
+### `run_summary`
 
-## Evidence-Based TASK-006 Readiness
+- Dexter emits `run_summary` only from `DexLab/instrumentation.py` finalizer.
+- Mew-X emits `run_summary` only from `src/mew/instrumentation.rs` finalizer, reached on `ctrl_c`, normal end-of-main, or `Drop`.
+- Both 2026-03-25 collection payloads show the current runner requested shutdown with `CTRL_BREAK_EVENT`, and both source processes exited with `3221225786` (`0xC000013A`).
+- Both exported state files still showed `status: "running"` and `ended_at_utc: null`, which means the finalizer did not complete.
+- Therefore `run_summary` is not collectible under the current matched-pair shutdown flow even though the validator requires it.
 
-- Decision: `BLOCKED`
-- Reason 1: the promoted fresh pair still classifies as `partial` under the current contract at Dexter `10 / 12` and Mew-X `9 / 12`.
-- Reason 2: `run_summary` stayed absent on both sources across both fresh attempts, even after the confirmatory retry extended graceful shutdown.
-- Reason 3: Dexter still never emitted `entry_rejected`, while Mew-X still never emitted `creator_candidate` or `entry_rejected`.
-- Reason 4: `comparison_pack` winner mode stayed `deferred` on both fresh pairs.
-- Next state: `BLOCKED` until another approved TASK-005 follow-up can prove a true pass-grade matched pair or explain why the remaining frozen-source gaps are not collectible under the current contract.
+### `entry_rejected`
+
+- Dexter emits `entry_rejected` only on buy failure paths such as missing bonding curve, insufficient balance, zero quote, creator vault unavailable, migration, price-too-high, or failed confirmation.
+- Mew-X emits `entry_rejected` only when `buy_result.success` is false, recorded as `transport_send_failed`.
+- The promoted pair still contained multiple successful fills on both sides with zero `entry_rejected`.
+- Requiring `entry_rejected` from both sources in the same healthy matched pair means requiring at least one exceptional failed entry on each source, which is not normal pass-grade coverage.
+
+### `creator_candidate` on Mew-X
+
+- Mew-X emits `creator_candidate` only from `algo_choose_creators_report` output on initial selection or refresh additions.
+- In both audited runs, the copied `candidates.initial_selection.json` and `candidates.refresh.json` exports had `observations: []` and `source_counts: {}`.
+- The same full streams still produced `mint_observed`, `entry_fill`, `exit_fill`, and `position_closed`, which shows frozen Mew-X can produce rich comparable sessions through non-creator paths while never emitting `creator_candidate`.
+- Under the current environment, `creator_candidate` is therefore not a dependable required event for a matched paper/sim pair.
+
+## Decision
+
+- Key finding: `structurally not collectible under current contract`
+- Interpretation: with frozen Dexter `ddeb18c` and frozen Mew-X `dba3dc8`, the remaining gaps are not realistically collectible together as one pass-grade matched pair without depending on finalizer-specific shutdown behavior plus exceptional failure-path events.
+- TASK-006 readiness: `blocked`
+- Recommended next step: validator contract audit / rule exception review, or a frozen-source gap memo, instead of more same-shape recollection.
 
 ## Key Paths
 
-- Promoted comparison output:
-  - `/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326/artifacts/reports/task005-pass-grade-pair-20260325T180027Z-comparison`
-- Confirmatory comparison output:
-  - `/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326/artifacts/reports/task005-pass-grade-pair-20260325T180604Z-comparison`
-- Readiness proof:
-  - `/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326/artifacts/proofs/task-005-pass-grade-pair-check.json`
-- Windows recovery proof:
-  - `/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326/artifacts/proofs/task-005-windows-runtime-recovery.json`
+- Audit report: `artifacts/reports/task-005-gap-audit.md`
+- Readiness report: `artifacts/reports/task-005-gap-audit-readiness.md`
+- Audit proof: `artifacts/proofs/task-005-gap-audit-check.json`
+- Promoted pair revalidation: `artifacts/proofs/task005-gap-audit-20260325T180027Z-results`
+- Confirmatory pair revalidation: `artifacts/proofs/task005-gap-audit-20260325T180604Z-results`
+- Collection payload copies:
+  - `artifacts/proofs/task005-gap-audit-20260325T180027Z.collection.json`
+  - `artifacts/proofs/task005-gap-audit-20260325T180604Z.collection.json`

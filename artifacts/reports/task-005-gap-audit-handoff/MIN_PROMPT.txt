@@ -1,0 +1,6 @@
+Vexter / 既存Codexスレッド / TASK-005-GAP-AUDIT
+
+GitHub 最新状態は Vexter PR #16 merge `b71b5f744027024e2a04606f6c1aa369d0a6c3e3`、Dexter PR #3 merge `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`、frozen Mew-X `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a` まで再確認済み。
+promoted / confirmatory pair を current Vexter main で validate→derive-metrics→build-pack し直し、frozen source と current validator contract を照合した結果、結論は `structurally not collectible under current contract`。
+理由は 3 つで、`run_summary` は両 source とも finalizer 専用だが current matched-pair helper の shutdown は `CTRL_BREAK_EVENT` で、両 state export が `running` / `ended_at_utc: null` のまま終わっていること、`entry_rejected` は Dexter でも Mew-X でも failure-path 専用で healthy matched pair の必須 coverage ではないこと、Mew-X `creator_candidate` は non-empty Deagle candidate report が前提だが audited full-stream 2 本とも initial/refresh candidate snapshot が空だったこと。
+したがって TASK-006 はまだ blocked。次に進めるなら、同じ形の recollection 継続ではなく validator contract audit / rule exception review か frozen-source gap memo が適切。

@@ -1,0 +1,100 @@
+{
+  "task_id": "TASK-005-GAP-AUDIT",
+  "checked_at_utc": "2026-03-25T18:35:35Z",
+  "status": "structural_gap_confirmed",
+  "github_latest": {
+    "vexter_main_commit": "b71b5f744027024e2a04606f6c1aa369d0a6c3e3",
+    "vexter_pr": 16,
+    "audited_task_base_main": "28c15b5c7655fe7647c12774494c80b83c58c04f",
+    "audited_task_base_pr": 15,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr": 3,
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "minimal_additional_recollection": {
+    "performed": false,
+    "reason": "The copied promoted and confirmatory full-stream runs plus frozen-source audit already closed the collectability question."
+  },
+  "revalidated_pairs": {
+    "promoted": {
+      "label": "task005-pass-grade-pair-20260325T180027Z",
+      "proof_dir": "artifacts/proofs/task005-gap-audit-20260325T180027Z-results",
+      "collection_payload": "artifacts/proofs/task005-gap-audit-20260325T180027Z.collection.json",
+      "dexter_required_event_types_present": 10,
+      "dexter_required_event_types_total": 12,
+      "mewx_required_event_types_present": 9,
+      "mewx_required_event_types_total": 12,
+      "dexter_missing_event_types": [
+        "entry_rejected",
+        "run_summary"
+      ],
+      "mewx_missing_event_types": [
+        "creator_candidate",
+        "entry_rejected",
+        "run_summary"
+      ],
+      "full_stream_fallback": true
+    },
+    "confirmatory": {
+      "label": "task005-pass-grade-pair-20260325T180604Z",
+      "proof_dir": "artifacts/proofs/task005-gap-audit-20260325T180604Z-results",
+      "collection_payload": "artifacts/proofs/task005-gap-audit-20260325T180604Z.collection.json",
+      "dexter_required_event_types_present": 10,
+      "dexter_required_event_types_total": 12,
+      "mewx_required_event_types_present": 8,
+      "mewx_required_event_types_total": 12,
+      "dexter_missing_event_types": [
+        "entry_rejected",
+        "run_summary"
+      ],
+      "mewx_missing_event_types": [
+        "candidate_rejected",
+        "creator_candidate",
+        "entry_rejected",
+        "run_summary"
+      ],
+      "full_stream_fallback": true,
+      "grace_seconds": 60
+    }
+  },
+  "audit_findings": [
+    {
+      "code": "run_summary_finalizer_only_and_current_shutdown_mismatch",
+      "detail": "Dexter emits run_summary only from DexLab/instrumentation.py finalize(), and Mew-X emits run_summary only from src/mew/instrumentation.rs finalize(). The current matched-pair helper requests CTRL_BREAK_EVENT; both copied collection payloads show exit_code 3221225786 (0xC000013A), and both copied state exports remained status=running with ended_at_utc=null. The copied full raw streams still lacked run_summary."
+    },
+    {
+      "code": "dexter_entry_rejected_is_failure_path_only",
+      "detail": "Frozen Dexter records entry_rejected only on failed buy paths: missing bonding curve, insufficient balance, migrated, zero_quote, creator_vault_unavailable, price_too_high, or buy confirmation failure. The promoted pair still had 4 entry_fill and 0 entry_rejected."
+    },
+    {
+      "code": "mewx_entry_rejected_is_transport_send_failed_only",
+      "detail": "Frozen Mew-X records entry_rejected only when buy_result.success is false and the path is transport_send_failed. The promoted pair still had 6 entry_fill and 0 entry_rejected."
+    },
+    {
+      "code": "mewx_creator_candidate_requires_nonempty_candidate_reports",
+      "detail": "Frozen Mew-X emits creator_candidate only from initial_selection or refresh_addition reports. In both audited runs the copied candidates.initial_selection.json and candidates.refresh.json exports had observations=[] and source_counts={} while the same runs still produced fills and closed positions."
+    }
+  ],
+  "source_evidence": {
+    "run_summary": {
+      "dexter_file": "sources/Dexter/DexLab/instrumentation.py",
+      "mewx_file": "sources/Mew-X/src/mew/instrumentation.rs"
+    },
+    "entry_rejected": {
+      "dexter_file": "sources/Dexter/Dexter.py",
+      "mewx_file": "sources/Mew-X/src/mew/snipe/handler.rs"
+    },
+    "creator_candidate": {
+      "mewx_main_file": "sources/Mew-X/src/main.rs",
+      "mewx_refresh_file": "sources/Mew-X/src/mew/snipe/handler.rs"
+    }
+  },
+  "decision": {
+    "key_finding": "structurally_not_collectible_under_current_contract",
+    "comparison_contract_satisfied": false,
+    "winner_mode": "deferred",
+    "task_006_ready": false,
+    "recommendation": "BLOCKED",
+    "next_step": "validator_contract_audit_or_rule_exception_review"
+  }
+}

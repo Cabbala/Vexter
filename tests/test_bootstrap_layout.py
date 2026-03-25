@@ -87,6 +87,10 @@ def test_required_paths_exist() -> None:
         "artifacts/reports/task-006-research-handoff-status.md",
         "artifacts/reports/task-006-research-handoff/DETAILS.md",
         "artifacts/reports/task-006-research-handoff/MIN_PROMPT.txt",
+        "artifacts/reports/task-007-candidate-generation-vs-quality-report.md",
+        "artifacts/reports/task-007-candidate-generation-vs-quality-status.md",
+        "artifacts/reports/task-007-candidate-generation-vs-quality/DETAILS.md",
+        "artifacts/reports/task-007-candidate-generation-vs-quality/MIN_PROMPT.txt",
         "artifacts/proofs/task-005-live-collection-check.json",
         "artifacts/proofs/task-005-pass-grade-pair-check.json",
         "artifacts/proofs/task-005-windows-runtime-recovery.json",
@@ -103,6 +107,8 @@ def test_required_paths_exist() -> None:
         "artifacts/proofs/task-006-comparison-closeout-summary.md",
         "artifacts/proofs/task-006-research-handoff-check.json",
         "artifacts/proofs/task-006-research-handoff-summary.md",
+        "artifacts/proofs/task-007-candidate-generation-vs-quality-check.json",
+        "artifacts/proofs/task-007-candidate-generation-vs-quality-summary.md",
         "artifacts/examples/task-004-sample-comparison/pack_manifest.json",
         ".github/workflows/validate.yml",
     ]
@@ -187,6 +193,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-006-COMPARISON-CLOSEOUT",
         "TASK-006-RESEARCH-HANDOFF",
         "TASK-007-DOWNSTREAM-RESEARCH-INTAKE",
+        "TASK-007-CANDIDATE-GENERATION-VS-QUALITY",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -210,6 +217,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "comparison_closed_out",
         "research_handoff_completed",
         "research_intake_ready",
+        "candidate_edge_supported",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -236,6 +244,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-006-comparison-closeout",
         "codex/task-006-research-handoff",
         "codex/task-007-downstream-research-intake",
+        "codex/task-007-candidate-generation-vs-quality",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -299,6 +308,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "comparison_closed_out",
         "research_handoff_completed",
         "research_intake_ready",
+        "candidate_edge_supported",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -392,6 +402,10 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/reports/task-007-downstream-research-intake-status.md" in names
     assert "artifacts/reports/task-007-downstream-research-intake/DETAILS.md" in names
     assert "artifacts/reports/task-007-downstream-research-intake/MIN_PROMPT.txt" in names
+    assert "artifacts/reports/task-007-candidate-generation-vs-quality-report.md" in names
+    assert "artifacts/reports/task-007-candidate-generation-vs-quality-status.md" in names
+    assert "artifacts/reports/task-007-candidate-generation-vs-quality/DETAILS.md" in names
+    assert "artifacts/reports/task-007-candidate-generation-vs-quality/MIN_PROMPT.txt" in names
     assert "artifacts/proofs/task-005-live-collection-check.json" in names
     assert "artifacts/proofs/task-005-windows-runtime-recovery.json" in names
     assert "artifacts/proofs/task-006-replay-validation-check.json" in names
@@ -409,6 +423,8 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/proofs/task-006-research-handoff-summary.md" in names
     assert "artifacts/proofs/task-007-downstream-research-intake-check.json" in names
     assert "artifacts/proofs/task-007-downstream-research-intake-summary.md" in names
+    assert "artifacts/proofs/task-007-candidate-generation-vs-quality-check.json" in names
+    assert "artifacts/proofs/task-007-candidate-generation-vs-quality-summary.md" in names
     assert "artifacts/context_pack.json" in names
     assert "artifacts/proof_bundle_manifest.json" in names
     assert "tests/__pycache__/" not in names

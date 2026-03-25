@@ -1,14 +1,14 @@
 {
   "background": {
-    "previous_task_id": "TASK-007-EXECUTION-TIMING-VS-RETENTION",
-    "previous_key_finding": "timing_retention_tradeoff_supported",
+    "previous_task_id": "TASK-007-RISK-CONTAINMENT-VS-EXIT-CAPTURE",
+    "previous_key_finding": "risk_exit_tradeoff_supported",
     "previous_claim_boundary": "tradeoff_bounded",
     "promoted_pair": "task005-pass-grade-pair-20260325T180027Z",
     "confirmatory_pair": "task005-pass-grade-pair-20260325T180604Z",
     "comparison_source_of_truth_fixed_before_task": true,
     "prior_lane_completed_before_task": true
   },
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_risk_containment_vs_exit_capture_bundle.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_strategy_planning_bundle.tar.gz",
   "current_contract": {
     "conditional_rules": {
       "entry_rejected": "required_only_when_an_entry_attempt_lacks_a_matching_fill",
@@ -34,30 +34,31 @@
     ]
   },
   "current_task": {
-    "id": "TASK-007-RISK-CONTAINMENT-VS-EXIT-CAPTURE",
+    "id": "TASK-007-STRATEGY-PLANNING",
     "scope": [
       "Verify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X.",
-      "Treat TASK-007 execution-timing-vs-retention as the immediate source lane for this task.",
-      "Reuse only promoted live/replay comparisons, Mew-X session summaries, and Dexter close-summary metrics already committed in GitHub-visible artifacts.",
-      "Separate price-path containment, realized exit capture, and stale-position control without reopening comparison work.",
-      "Refresh lane report, status, proof, metadata, and bundle outputs with only minimal reaggregation."
+      "Treat the completed TASK-007 candidate, timing, and risk lanes as fixed input surfaces rather than collecting new evidence.",
+      "Translate the confirmed comparison split into objective-weighted source preference across strategy goals.",
+      "Document where Dexter or Mew-X should be primary, where selective adoption is source-faithful, and where current evidence remains bounded.",
+      "Refresh strategy-planning report, status, proof, metadata, and bundle outputs with only minimal reaggregation."
     ],
     "deliverables": [
       "artifacts/summary.md",
       "artifacts/context_pack.json",
       "artifacts/proof_bundle_manifest.json",
       "artifacts/task_ledger.jsonl",
-      "artifacts/reports/task-007-risk-containment-vs-exit-capture-report.md",
-      "artifacts/reports/task-007-risk-containment-vs-exit-capture-status.md",
-      "artifacts/reports/task-007-risk-containment-vs-exit-capture/DETAILS.md",
-      "artifacts/reports/task-007-risk-containment-vs-exit-capture/MIN_PROMPT.txt",
-      "artifacts/proofs/task-007-risk-containment-vs-exit-capture-check.json",
-      "artifacts/proofs/task-007-risk-containment-vs-exit-capture-summary.md",
-      "artifacts/bundles/task-007-risk-containment-vs-exit-capture.tar.gz"
+      "artifacts/reports/task-007-strategy-planning-report.md",
+      "artifacts/reports/task-007-strategy-planning-status.md",
+      "artifacts/reports/task-007-strategy-planning/DETAILS.md",
+      "artifacts/reports/task-007-strategy-planning/MIN_PROMPT.txt",
+      "artifacts/proofs/task-007-strategy-planning-check.json",
+      "artifacts/proofs/task-007-strategy-planning-summary.md",
+      "artifacts/bundles/task-007-strategy-planning.tar.gz"
     ]
   },
   "evidence": {
     "github_latest": {
+      "vexter_pr_31_merged_at": "2026-03-25T23:36:30Z",
       "vexter_pr_30_merged_at": "2026-03-25T23:15:40Z",
       "vexter_pr_29_merged_at": "2026-03-25T22:57:54Z",
       "vexter_pr_28_merged_at": "2026-03-25T22:36:55Z",
@@ -96,6 +97,19 @@
       "confirmatory_residual": "Mew-X candidate_rejected",
       "confirmatory_overturns_promoted_baseline": false
     },
+    "candidate_lane": {
+      "report": "artifacts/reports/task-007-candidate-generation-vs-quality-report.md",
+      "status_report": "artifacts/reports/task-007-candidate-generation-vs-quality-status.md",
+      "proof": "artifacts/proofs/task-007-candidate-generation-vs-quality-check.json",
+      "summary": "artifacts/proofs/task-007-candidate-generation-vs-quality-summary.md",
+      "handoff_dir": "artifacts/reports/task-007-candidate-generation-vs-quality",
+      "key_finding": "candidate_edge_supported",
+      "claim_boundary": "candidate_quality_bounded",
+      "task_state": "candidate_edge_supported",
+      "dexter_creator_candidate_count": 255,
+      "mewx_candidate_precision_proxy_status": "unavailable",
+      "preferred_objective": "upstream_opportunity_capture"
+    },
     "timing_retention_lane": {
       "report": "artifacts/reports/task-007-execution-timing-vs-retention-report.md",
       "status_report": "artifacts/reports/task-007-execution-timing-vs-retention-status.md",
@@ -105,7 +119,22 @@
       "key_finding": "timing_retention_tradeoff_supported",
       "claim_boundary": "tradeoff_bounded",
       "task_state": "timing_retention_tradeoff_supported",
-      "recommended_next_lane": "risk_containment_vs_exit_capture"
+      "signal_to_attempt_latency_ms": {
+        "dexter": 0.0,
+        "mewx": 891.0
+      },
+      "attempt_to_fill_latency_ms": {
+        "dexter": 502.5,
+        "mewx": 1.5
+      },
+      "quote_vs_fill_slippage_bps": {
+        "dexter": 0.0,
+        "mewx": 7.706128082620904
+      },
+      "preferred_objective_split": {
+        "pre_attempt_timing": "dexter",
+        "post_attempt_fill_speed": "mewx"
+      }
     },
     "risk_exit_lane": {
       "report": "artifacts/reports/task-007-risk-containment-vs-exit-capture-report.md",
@@ -117,46 +146,63 @@
       "claim_boundary": "tradeoff_bounded",
       "task_state": "risk_exit_tradeoff_supported",
       "decision": "planning_ready",
-      "comparison_surfaces": [
-        "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison",
-        "artifacts/reports/task006-replay-surface-fix-20260325T180027Z-replay-comparison"
-      ],
-      "dexter_close_summary_index": "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-augmented-dexter-package/exports/dexter-close-summary-index.json",
-      "mewx_session_summaries_dir": "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-replay-packages/mewx-replay/exports",
       "price_path_containment": {
-        "mewx_edge": {
-          "max_adverse_excursion_pct": 0.0,
-          "time_to_peak_ms": 20.5,
-          "realized_vs_peak_gap_pct_live": 0.0,
-          "realized_vs_peak_gap_pct_replay": 0.0
+        "preferred_source": "mewx",
+        "max_adverse_excursion_pct": {
+          "dexter": -6.05468749267574,
+          "mewx": 0.0
         },
-        "dexter_values": {
-          "max_adverse_excursion_pct": -6.05468749267574,
-          "time_to_peak_ms": 5299.0,
-          "realized_vs_peak_gap_pct_live": 20.533046470504612,
-          "realized_vs_peak_gap_pct_replay": 25.804157291090654
+        "time_to_peak_ms": {
+          "dexter": 5299.0,
+          "mewx": 20.5
+        },
+        "realized_vs_peak_gap_pct": {
+          "dexter_live": 20.533046470504612,
+          "dexter_replay": 25.804157291090654,
+          "mewx_live": 0.0,
+          "mewx_replay": 0.0
         }
       },
       "exit_capture_and_lifecycle": {
-        "dexter_edge": {
-          "max_favorable_excursion_pct": 34.844263534142286,
-          "realized_exit_pct": 7.164077921477945,
-          "quote_vs_fill_slippage_bps": 0.0,
-          "stale_position_ratio": 0.0
+        "preferred_source": "dexter",
+        "max_favorable_excursion_pct": {
+          "dexter": 34.844263534142286,
+          "mewx": 6.792904253675385
         },
-        "mewx_values": {
-          "max_favorable_excursion_pct": 6.792904253675385,
-          "realized_exit_pct": 0.0,
-          "quote_vs_fill_slippage_bps": 7.706128082620904,
-          "stale_position_ratio": 1.0
+        "realized_exit_pct": {
+          "dexter": 7.164077921477945,
+          "mewx": 0.0
+        },
+        "stale_position_ratio": {
+          "dexter": 0.0,
+          "mewx": 1.0
         }
       },
-      "objective_cases": {
+      "preferred_next_step": "strategy_planning"
+    },
+    "strategy_planning": {
+      "report": "artifacts/reports/task-007-strategy-planning-report.md",
+      "status_report": "artifacts/reports/task-007-strategy-planning-status.md",
+      "proof": "artifacts/proofs/task-007-strategy-planning-check.json",
+      "summary": "artifacts/proofs/task-007-strategy-planning-summary.md",
+      "handoff_dir": "artifacts/reports/task-007-strategy-planning",
+      "key_finding": "strategy_plan_ready",
+      "claim_boundary": "strategy_plan_bounded",
+      "task_state": "strategy_plan_ready",
+      "decision": "execution_planning_ready",
+      "default_primary_source": "dexter",
+      "objective_classes": {
+        "upstream_opportunity_capture": "prefer_dexter",
+        "low_slippage_entry": "prefer_dexter",
         "drawdown_containment": "prefer_mewx",
-        "upside_capture": "prefer_dexter",
+        "realized_exit_capture": "prefer_dexter",
         "stale_risk_avoidance": "prefer_dexter"
       },
-      "preferred_next_step": "strategy_planning"
+      "hybrid_design": {
+        "supported": "selective_adoption_or_objective_conditioned_portfolio_split",
+        "unsupported": "in_run_source_fusion_or_threshold_transplant"
+      },
+      "preferred_next_step": "execution_planning"
     },
     "caveat": {
       "replay_scope": "Current zero-gap evidence is scoped to close-summary and position_closed realized-return fidelity rather than full execution-path equivalence.",
@@ -165,59 +211,61 @@
         "live_value": 20.533046470504612,
         "replay_value": 25.804157291090654
       },
-      "tradeoff_boundary": "Mew-X's edge is price-path containment and local-peak retention, whereas Dexter owns realized exit capture and stale/lifecycle containment."
+      "candidate_surface_gap": "Mew-X candidate_precision_proxy remains unavailable because the frozen export surface does not expose a comparable creator_candidate path.",
+      "strategy_plan_boundary": "Dexter is the default primary planning source, but Mew-X remains the bounded primary choice for objectives centered on drawdown containment and local-peak retention."
     }
   },
   "frozen_source_commits": {
     "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
   },
-  "goal": "Maintain a GitHub-visible Mac control plane that reads the fixed comparison as an objective-weighted split between price-path containment and exit capture/lifecycle control without changing frozen source behavior.",
+  "goal": "Maintain a GitHub-visible Mac control plane that converts the fixed comparison into an objective-weighted strategy plan without changing frozen source behavior, validator rules, or comparison baselines.",
   "implementation": {
     "source_logic_changed": false,
     "validator_rules_changed": false,
     "minimal_reaggregation_only": true,
     "task_proofs_generated": [
-      "artifacts/proofs/task-007-risk-containment-vs-exit-capture-check.json",
-      "artifacts/proofs/task-007-risk-containment-vs-exit-capture-summary.md"
+      "artifacts/proofs/task-007-strategy-planning-check.json",
+      "artifacts/proofs/task-007-strategy-planning-summary.md"
     ],
     "task_reports_updated": [
-      "artifacts/reports/task-007-risk-containment-vs-exit-capture-report.md",
-      "artifacts/reports/task-007-risk-containment-vs-exit-capture-status.md",
-      "artifacts/reports/task-007-risk-containment-vs-exit-capture/DETAILS.md",
-      "artifacts/reports/task-007-risk-containment-vs-exit-capture/MIN_PROMPT.txt"
+      "artifacts/reports/task-007-strategy-planning-report.md",
+      "artifacts/reports/task-007-strategy-planning-status.md",
+      "artifacts/reports/task-007-strategy-planning/DETAILS.md",
+      "artifacts/reports/task-007-strategy-planning/MIN_PROMPT.txt"
     ]
   },
   "mac_control_plane": "/Users/cabbala/Projects/Vexter",
   "next_task": {
-    "id": "STRATEGY-PLANNING",
-    "state": "ready_for_objective_weighted_strategy_planning",
+    "id": "EXECUTION-PLANNING",
+    "state": "ready_for_execution_planning",
     "resume_requirements": [
       "Treat task005-pass-grade-pair-20260325T180027Z as the frozen promoted baseline.",
-      "Carry forward risk_exit_tradeoff_supported together with tradeoff_bounded as the current bounded conclusion.",
-      "Use TASK-007 risk-containment-vs-exit-capture plus the timing/retention lane and research intake artifacts as the source of truth.",
-      "Translate the objective split into explicit strategy weights before designing execution changes.",
-      "Do not reopen comparison or collection while choosing objective weights.",
-      "Keep Dexter and Mew-X strategy semantics and validator rules frozen.",
-      "Treat path-sensitive retention scope as a separate lane only if a stronger retention/path-equivalence claim becomes necessary."
+      "Carry forward strategy_plan_ready together with strategy_plan_bounded as the current planning conclusion.",
+      "Use TASK-007 strategy-planning plus the candidate, timing, and risk lane artifacts as the source of truth for objective weights.",
+      "Use Dexter as the default primary source unless the target strategy explicitly prioritizes drawdown containment and local-peak retention above realized exit and stale-risk avoidance.",
+      "Treat Mew-X selective adoption as bounded to objective-conditioned use rather than source fusion.",
+      "Do not reopen comparison, recollection, source logic, or validator rules while drafting execution design.",
+      "Only cut path_sensitive_retention_scope later if execution design requires a stronger path-equivalence claim."
     ]
   },
-  "phase": "TASK-007-RISK-CONTAINMENT-VS-EXIT-CAPTURE",
+  "phase": "TASK-007-STRATEGY-PLANNING",
   "project": "Vexter",
   "recommendation": {
-    "decision": "PLANNING_READY",
+    "decision": "EXECUTION_PLANNING_READY",
     "outcome": "A",
-    "key_finding": "risk_exit_tradeoff_supported",
-    "claim_boundary": "tradeoff_bounded",
-    "recommended_next_step": "strategy_planning",
+    "key_finding": "strategy_plan_ready",
+    "claim_boundary": "strategy_plan_bounded",
+    "recommended_next_step": "execution_planning",
     "strategy_planning_ready": true,
-    "execution_planning_ready": false,
+    "execution_planning_ready": true,
     "path_sensitive_retention_scope_required": false,
     "new_evidence_collection_required": false,
     "why": [
-      "The current evidence already isolates price-path containment from realized exit capture and stale control.",
-      "The remaining unresolved question is explicit objective weighting rather than additional evidence collection.",
-      "Execution planning should follow only after strategy priorities are made explicit."
+      "The current evidence now maps the fixed comparison to explicit objective classes rather than only component-level winners.",
+      "Dexter is the default primary choice for the broader operational objective set: upstream opportunity capture, low-slippage entry, realized exit capture, and stale-risk avoidance.",
+      "Mew-X still has a bounded primary role when drawdown containment and local-peak retention are weighted above realized exit and active lifecycle control.",
+      "That is sufficient to start execution-planning work without reopening comparison or collecting new evidence."
     ]
   },
   "repos": {
@@ -226,12 +274,13 @@
     "source_repo_b": "Cabbala/Mew-X"
   },
   "starting_point": {
-    "verified_latest_vexter_pr": 30,
-    "verified_latest_vexter_main": "052de6ccecef1461d2291fb4f0ef5fbf8883d548",
+    "verified_latest_vexter_pr": 31,
+    "verified_latest_vexter_main": "0905ec8c991ca6046b13d0c326c3224c49709a2d",
     "verified_dexter_pr": 3,
     "verified_dexter_main": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_mewx_frozen": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
     "verified_prior_supporting_vexter_prs": [
+      30,
       29,
       28,
       27,
@@ -247,8 +296,8 @@
       17,
       16
     ],
-    "work_branch": "codex/task-007-risk-containment-vs-exit-capture"
+    "work_branch": "codex/task-007-strategy-planning"
   },
-  "status": "risk_exit_tradeoff_supported",
+  "status": "strategy_plan_ready",
   "windows_runtime_host": "win-lan"
 }

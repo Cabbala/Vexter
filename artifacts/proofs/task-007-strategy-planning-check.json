@@ -1,0 +1,246 @@
+{
+  "task_id": "TASK-007-STRATEGY-PLANNING",
+  "generated_at_utc": "2026-03-25T23:45:13Z",
+  "verified_github": {
+    "latest_vexter_pr": 31,
+    "latest_vexter_main_commit": "0905ec8c991ca6046b13d0c326c3224c49709a2d",
+    "latest_vexter_merged_at_utc": "2026-03-25T23:36:30Z",
+    "supporting_vexter_prs": [
+      30,
+      29,
+      28,
+      27,
+      26,
+      25,
+      24,
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17,
+      16
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "fixed_input_surface": {
+    "candidate_lane_report": "artifacts/reports/task-007-candidate-generation-vs-quality-report.md",
+    "candidate_lane_proof": "artifacts/proofs/task-007-candidate-generation-vs-quality-check.json",
+    "timing_retention_lane_report": "artifacts/reports/task-007-execution-timing-vs-retention-report.md",
+    "timing_retention_lane_proof": "artifacts/proofs/task-007-execution-timing-vs-retention-check.json",
+    "risk_exit_lane_report": "artifacts/reports/task-007-risk-containment-vs-exit-capture-report.md",
+    "risk_exit_lane_proof": "artifacts/proofs/task-007-risk-containment-vs-exit-capture-check.json",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "promoted_live_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison",
+    "promoted_replay_comparison_dir": "artifacts/reports/task006-replay-surface-fix-20260325T180027Z-replay-comparison",
+    "confirmatory_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180604Z-comparison",
+    "promoted_live_winner_mode": "derived",
+    "promoted_replay_winner_mode": "derived",
+    "live_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "replay_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "dexter_replay_coverage_ratio": 1.0,
+    "dexter_live_vs_replay_gap_pct": 0.0,
+    "mewx_replay_coverage_ratio": 1.0,
+    "mewx_live_vs_replay_gap_pct": 0.0,
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false
+  },
+  "implementation": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "dexter_strategy_changed": false,
+    "mewx_strategy_changed": false,
+    "minimal_reaggregation_only": true,
+    "new_evidence_collection_required": false
+  },
+  "objective_weighted_strategy": {
+    "default_primary_source": "dexter",
+    "objective_classes": {
+      "upstream_opportunity_capture": {
+        "preferred_source": "dexter",
+        "evidence": {
+          "candidate_count": {
+            "dexter": 255,
+            "mewx": 0,
+            "note": "Mew-X has no comparable creator_candidate surface on the frozen exports."
+          },
+          "signal_to_attempt_latency_ms": {
+            "dexter": 0.0,
+            "mewx": 891.0,
+            "winner": "dexter"
+          },
+          "max_favorable_excursion_pct": {
+            "dexter": 34.844263534142286,
+            "mewx": 6.792904253675385,
+            "winner": "dexter"
+          },
+          "realized_exit_pct": {
+            "dexter": 7.164077921477945,
+            "mewx": 0.0,
+            "winner": "dexter"
+          }
+        },
+        "bound": "Cross-source candidate-precision claims remain bounded because Mew-X candidate_precision_proxy is unavailable."
+      },
+      "low_slippage_entry": {
+        "preferred_source": "dexter",
+        "evidence": {
+          "signal_to_attempt_latency_ms": {
+            "dexter": 0.0,
+            "mewx": 891.0,
+            "winner": "dexter"
+          },
+          "quote_vs_fill_slippage_bps": {
+            "dexter": 0.0,
+            "mewx": 7.706128082620904,
+            "winner": "dexter"
+          },
+          "attempt_to_fill_latency_ms": {
+            "dexter": 502.5,
+            "mewx": 1.5,
+            "winner": "mewx"
+          }
+        },
+        "bound": "Mew-X is faster after attempt placement, but that does not overturn Dexter's slippage edge on the promoted baseline."
+      },
+      "drawdown_containment": {
+        "preferred_source": "mewx",
+        "evidence": {
+          "max_adverse_excursion_pct": {
+            "dexter": -6.05468749267574,
+            "mewx": 0.0,
+            "winner": "mewx"
+          },
+          "attempt_to_fill_latency_ms": {
+            "dexter": 502.5,
+            "mewx": 1.5,
+            "winner": "mewx"
+          },
+          "time_to_peak_ms": {
+            "dexter": 5299.0,
+            "mewx": 20.5,
+            "winner": "mewx"
+          },
+          "realized_vs_peak_gap_pct": {
+            "dexter_live": 20.533046470504612,
+            "dexter_replay": 25.804157291090654,
+            "mewx_live": 0.0,
+            "mewx_replay": 0.0,
+            "winner": "mewx"
+          }
+        },
+        "bound": "This preference is local-path containment only and still assumes timeout-shaped lifecycle behavior is acceptable."
+      },
+      "realized_exit_capture": {
+        "preferred_source": "dexter",
+        "evidence": {
+          "max_favorable_excursion_pct": {
+            "dexter": 34.844263534142286,
+            "mewx": 6.792904253675385,
+            "winner": "dexter"
+          },
+          "realized_exit_pct": {
+            "dexter": 7.164077921477945,
+            "mewx": 0.0,
+            "winner": "dexter"
+          },
+          "quote_vs_fill_slippage_bps": {
+            "dexter": 0.0,
+            "mewx": 7.706128082620904,
+            "winner": "dexter"
+          }
+        },
+        "bound": "This is an absolute-upside preference, not a peak-retention preference."
+      },
+      "stale_risk_avoidance": {
+        "preferred_source": "dexter",
+        "evidence": {
+          "stale_position_ratio": {
+            "dexter": 0.0,
+            "mewx": 1.0,
+            "winner": "dexter"
+          },
+          "exit_reasons": {
+            "dexter": {
+              "safe": 2,
+              "malicious": 2
+            },
+            "mewx": {
+              "inactivity_timeout": 6
+            }
+          }
+        },
+        "bound": "This is lifecycle containment and does not overturn Mew-X's local drawdown edge."
+      }
+    },
+    "hybrid_selective_adoption": {
+      "supported": true,
+      "supported_forms": [
+        "Use Dexter as the default execution-planning backbone for opportunity capture, low-slippage entry, realized exit capture, and active lifecycle control.",
+        "Use Mew-X selectively for strategy variants whose explicit top objective is fast post-attempt fill, minimal adverse excursion, and local-peak retention.",
+        "Keep source selection objective-conditioned rather than attempting in-run source fusion."
+      ],
+      "not_supported": [
+        "No evidence supports additive gains from fusing Dexter and Mew-X logic inside one execution loop.",
+        "No evidence supports transplanting thresholds or trust logic across frozen sources.",
+        "No evidence upgrades replay fidelity into a full path-equivalence claim."
+      ]
+    },
+    "decidable_now": [
+      "Dexter should be the default primary source when objective weights include realized outcome and lifecycle control.",
+      "Mew-X should be preferred only when the objective explicitly prioritizes drawdown containment and local-peak retention over realized exit and stale-risk avoidance.",
+      "Execution planning can proceed without reopening comparison work."
+    ],
+    "not_decidable_now": [
+      "Whether a hybrid implementation would outperform both standalone sources after implementation.",
+      "Whether Mew-X would show upstream candidate-quality parity on a comparable creator_candidate surface.",
+      "Whether stronger path-sensitive retention claims would survive a path-equivalence review."
+    ]
+  },
+  "residual_and_caveats": {
+    "confirmatory_label": "task005-pass-grade-pair-20260325T180604Z",
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false,
+    "replay_scope": "Current zero-gap evidence is scoped to close-summary and position_closed realized-return fidelity rather than full execution-path equivalence.",
+    "dexter_metric_scope_gap": {
+      "metric": "realized_vs_peak_gap_pct",
+      "live_value": 20.533046470504612,
+      "replay_value": 25.804157291090654,
+      "why_it_matters": "A stronger claim about path-sensitive retention still requires a separate lane."
+    },
+    "candidate_surface_gap": "Mew-X candidate_precision_proxy remains unavailable because the frozen export surface does not expose a comparable creator_candidate path.",
+    "strategy_plan_boundary": "Dexter is the default primary planning source, but Mew-X remains the bounded primary choice for objectives centered on drawdown containment and local-peak retention."
+  },
+  "decision": {
+    "selected_outcome": "A",
+    "key_finding": "strategy_plan_ready",
+    "claim_boundary": "strategy_plan_bounded",
+    "task_state": "strategy_plan_ready",
+    "decision": "execution_planning_ready",
+    "recommended_next_step": "execution_planning",
+    "recommended_next_task_id": "EXECUTION-PLANNING",
+    "new_evidence_collection_required": false,
+    "strategy_planning_complete": true,
+    "execution_planning_ready": true,
+    "path_sensitive_retention_scope_required": false,
+    "blocked": false,
+    "why": [
+      "The current surfaces now map the fixed comparison into explicit objective classes rather than only metric-level winners.",
+      "Dexter is the default primary choice for the broader operational objective set: opportunity capture, low-slippage entry, realized exit capture, and stale-risk avoidance.",
+      "Mew-X still has a real but bounded primary role when drawdown containment and local-peak retention are weighted above realized exit and active lifecycle control.",
+      "That is sufficient to begin execution-planning work without reopening comparison or collecting new evidence."
+    ]
+  }
+}

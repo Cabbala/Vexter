@@ -1,0 +1,29 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+継続タスクID: TASK-007-STRATEGY-PLANNING
+
+GitHub-visible Vexter `main` は PR `#31` merged commit `0905ec8c991ca6046b13d0c326c3224c49709a2d` まで確認済みで、comparison baseline は `task005-pass-grade-pair-20260325T180027Z` のまま固定です。promoted live / repaired replay はどちらも `winner_mode: derived`、stable scored split は Dexter `6`, Mew-X `4`, tie `2`、Dexter / Mew-X の replay coverage / gap はどちらも `100.00% / 0.0000` を維持し、confirmatory residual は Mew-X `candidate_rejected` のみで promoted baseline を overturn しません。
+
+この task では、新証拠収集や source logic 変更は行わず、TASK-007 の確定 lane を objective-weighted strategy plan に変換しました。結論は以下です。
+
+- Key finding: `strategy_plan_ready`
+- Claim boundary: `strategy_plan_bounded`
+- Decision: `execution_planning_ready`
+
+source-faithful planning conclusion:
+
+- `upstream_opportunity_capture`: Dexter primary
+- `low_slippage_entry`: Dexter primary
+- `drawdown_containment` と local-peak retention: Mew-X primary
+- `realized_exit_capture`: Dexter primary
+- `stale_risk_avoidance`: Dexter primary
+
+したがって、単一の primary source で execution planning を始めるなら Dexter を基準にするのが妥当です。Mew-X は、fast post-attempt fill / minimal adverse excursion / local-peak retention を最優先する containment-first objective のときだけ selective adoption するのが source-faithful です。hybrid の余地はありますが、それは objective-conditioned portfolio split や selective adoption の範囲に限られ、source fusion や threshold transplant が有効だとまでは現時点で言えません。
+
+次に切る task は `execution_planning` を推奨します。`path_sensitive_retention_scope` は、より強い retention/path-equivalence claim が execution design 上で必要になった場合だけ後続で十分です。再実行してはいけないもの:
+
+- promoted-baseline selection
+- 新 live / replay evidence collection
+- validator / source logic changes
+- replay claim の full path equivalence 化
+- source fusion 前提の execution design

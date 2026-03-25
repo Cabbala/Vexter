@@ -1,0 +1,134 @@
+{
+  "task_id": "TASK-006-RESEARCH-HANDOFF",
+  "generated_at_utc": "2026-03-25T22:11:13Z",
+  "verified_github": {
+    "latest_vexter_pr": 26,
+    "latest_vexter_main_commit": "9d235176e628e0fcbdcf2182ce83def25f6a6b02",
+    "latest_vexter_merged_at_utc": "2026-03-25T22:05:02Z",
+    "supporting_vexter_prs": [
+      25,
+      24,
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17,
+      16
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "handoff_source_of_truth": {
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "promoted_live_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison",
+    "promoted_replay_comparison_dir": "artifacts/reports/task006-replay-surface-fix-20260325T180027Z-replay-comparison",
+    "comparison_closeout_report": "artifacts/reports/task-006-comparison-closeout.md",
+    "comparison_closeout_proof": "artifacts/proofs/task-006-comparison-closeout-check.json",
+    "comparison_closeout_summary": "artifacts/proofs/task-006-comparison-closeout-summary.md",
+    "confirmatory_label": "task005-pass-grade-pair-20260325T180604Z",
+    "confirmatory_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180604Z-comparison",
+    "handoff_rule": "Treat comparison closeout as the frozen source of truth for downstream research."
+  },
+  "implementation": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "dexter_strategy_changed": false,
+    "mewx_strategy_changed": false,
+    "minimal_reaggregation_only": true
+  },
+  "comparison_conclusion": {
+    "winner_mode_meaning": "Derived winner mode records component-level metric winners; it does not assert a scalar overall winner field.",
+    "promoted_live_winner_mode": "derived",
+    "promoted_replay_winner_mode": "derived",
+    "live_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "replay_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "dexter_strengths": [
+      "candidate_count",
+      "signal_to_attempt_latency_ms",
+      "quote_vs_fill_slippage_bps",
+      "max_favorable_excursion_pct",
+      "realized_exit_pct",
+      "stale_position_ratio"
+    ],
+    "mewx_strengths": [
+      "attempt_to_fill_latency_ms",
+      "max_adverse_excursion_pct",
+      "time_to_peak_ms",
+      "realized_vs_peak_gap_pct"
+    ],
+    "ties": [
+      "fill_success_rate",
+      "replayability_grade"
+    ],
+    "dexter_replay_coverage_ratio": 1.0,
+    "dexter_live_vs_replay_gap_pct": 0.0,
+    "mewx_replay_coverage_ratio": 1.0,
+    "mewx_live_vs_replay_gap_pct": 0.0,
+    "interpretation": "The promoted baseline remains a stable component-level comparison surface across live and repaired replay."
+  },
+  "residual_and_caveats": {
+    "confirmatory_label": "task005-pass-grade-pair-20260325T180604Z",
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false,
+    "replay_scope": "Current zero-gap evidence is scoped to close-summary and position_closed realized-return fidelity rather than full execution-path equivalence.",
+    "dexter_metric_scope_gap": {
+      "metric": "realized_vs_peak_gap_pct",
+      "live_value": 20.533046470504612,
+      "replay_value": 25.804157291090654,
+      "why_it_matters": "Path-sensitive derived metrics can still drift even when matched realized-return gap is zero."
+    },
+    "candidate_metric_asymmetry": "Mew-X candidate_precision_proxy remains unavailable because creator_candidate is absent under the frozen-source export surface."
+  },
+  "artifact_surfaces": {
+    "primary": [
+      "artifacts/reports/task-006-research-handoff-report.md",
+      "artifacts/proofs/task-006-research-handoff-check.json",
+      "artifacts/proofs/task-006-research-handoff-summary.md",
+      "artifacts/reports/task-006-research-handoff-status.md"
+    ],
+    "supporting": [
+      "artifacts/reports/task-006-comparison-closeout.md",
+      "artifacts/proofs/task-006-comparison-closeout-check.json",
+      "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison",
+      "artifacts/reports/task006-replay-surface-fix-20260325T180027Z-replay-comparison",
+      "artifacts/reports/task005-validator-rule-implement-20260325T180604Z-comparison"
+    ],
+    "bundle": "artifacts/bundles/task-006-research-handoff.tar.gz"
+  },
+  "downstream_guidance": {
+    "direct_use": [
+      "Use the promoted baseline as the fixed comparison input.",
+      "Use the repaired replay comparison to understand replay fidelity scope.",
+      "Carry the stable Dexter 6 / Mew-X 4 / tie 2 split as the comparative summary.",
+      "Carry Mew-X candidate_rejected only as a narrow confirmatory caveat."
+    ],
+    "do_not_repeat": [
+      "Do not rerun promoted-baseline selection.",
+      "Do not reopen evidence collection on current facts.",
+      "Do not widen replay parity to full path equivalence.",
+      "Do not change Dexter, Mew-X, or validator rules during downstream intake."
+    ]
+  },
+  "decision": {
+    "selected_outcome": "A",
+    "key_finding": "research_handoff_completed",
+    "task_state": "research_handoff_completed",
+    "comparison_source_of_truth_state": "comparison_closed_out",
+    "handoff_ready": true,
+    "handoff_blocked": false,
+    "new_evidence_collection_required": false,
+    "recommended_next_step": "downstream_research"
+  }
+}

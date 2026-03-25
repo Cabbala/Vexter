@@ -1,8 +1,8 @@
 {
-  "bundle_path": "artifacts/bundles/task-007-risk-containment-vs-exit-capture.tar.gz",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_risk_containment_vs_exit_capture_bundle.tar.gz",
-  "task_id": "TASK-007-RISK-CONTAINMENT-VS-EXIT-CAPTURE",
-  "status": "risk_exit_tradeoff_supported",
+  "bundle_path": "artifacts/bundles/task-007-strategy-planning.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_strategy_planning_bundle.tar.gz",
+  "task_id": "TASK-007-STRATEGY-PLANNING",
+  "status": "strategy_plan_ready",
   "summary": "artifacts/summary.md",
   "context_pack": "artifacts/context_pack.json",
   "task_ledger": "artifacts/task_ledger.jsonl",
@@ -67,6 +67,8 @@
     "templates/windows_runtime/mewx.env.example"
   ],
   "proof_files": [
+    "artifacts/proofs/task-007-strategy-planning-check.json",
+    "artifacts/proofs/task-007-strategy-planning-summary.md",
     "artifacts/proofs/task-007-risk-containment-vs-exit-capture-check.json",
     "artifacts/proofs/task-007-risk-containment-vs-exit-capture-summary.md",
     "artifacts/proofs/task-007-execution-timing-vs-retention-check.json",
@@ -92,6 +94,9 @@
     "artifacts/proofs/task-005-validator-rule-implement-check.json"
   ],
   "reports": [
+    "artifacts/reports/task-007-strategy-planning-report.md",
+    "artifacts/reports/task-007-strategy-planning-status.md",
+    "artifacts/reports/task-007-strategy-planning",
     "artifacts/reports/task-007-risk-containment-vs-exit-capture-report.md",
     "artifacts/reports/task-007-risk-containment-vs-exit-capture-status.md",
     "artifacts/reports/task-007-risk-containment-vs-exit-capture",
@@ -121,16 +126,16 @@
     "artifacts/reports/task-006-replay-validation.md"
   ],
   "next_task": {
-    "id": "STRATEGY-PLANNING",
-    "state": "ready_for_objective_weighted_strategy_planning",
+    "id": "EXECUTION-PLANNING",
+    "state": "ready_for_execution_planning",
     "resume_requirements": [
       "Treat task005-pass-grade-pair-20260325T180027Z as the frozen promoted baseline.",
-      "Carry forward risk_exit_tradeoff_supported together with tradeoff_bounded as the current bounded conclusion.",
-      "Use TASK-007 risk-containment-vs-exit-capture plus the timing/retention lane and research-intake artifacts as the source of truth.",
-      "Select strategy_planning before execution_planning unless explicit strategy weights are already fixed elsewhere.",
+      "Carry forward strategy_plan_ready together with strategy_plan_bounded as the current bounded planning conclusion.",
+      "Use TASK-007 strategy-planning plus the candidate, timing, and risk lane artifacts as the source of truth for objective weights.",
+      "Use Dexter as the default primary source unless the strategy explicitly prioritizes drawdown containment and local-peak retention above realized exit and stale-risk avoidance.",
+      "Treat Mew-X selective adoption as bounded to objective-conditioned use rather than proven source fusion.",
       "Keep Dexter and Mew-X strategy semantics frozen.",
-      "Keep the replay claim scoped to close-summary and position_closed realized-return fidelity unless a separate path-equivalence task is cut.",
-      "Treat path-sensitive retention scope as a separate future evidence lane, not as a blocker to current objective weighting."
+      "Keep the replay claim scoped to close-summary and position_closed realized-return fidelity unless a separate path-equivalence task is cut."
     ]
   },
   "proofs": {
@@ -139,11 +144,12 @@
     "mewx_strategy_changed": false,
     "validator_rules_changed": false,
     "comparison_source_of_truth_frozen": true,
+    "candidate_lane_reused": true,
     "timing_retention_lane_reused": true,
-    "risk_exit_tradeoff_supported": true,
-    "tradeoff_bounded": true,
-    "strategy_planning_ready": true,
-    "execution_planning_ready": false,
+    "risk_exit_lane_reused": true,
+    "strategy_plan_ready": true,
+    "strategy_plan_bounded": true,
+    "execution_planning_ready": true,
     "path_sensitive_retention_scope_required": false,
     "new_evidence_collection_required": false,
     "live_comparison_winner_mode_derived": true,
@@ -151,19 +157,20 @@
     "promoted_replay_coverage_full": true,
     "promoted_replay_gap_zero": true,
     "confirmatory_residual_narrow": true,
-    "replay_scope_preserved": true,
-    "recommended_next_step_is_strategy_planning": true,
+    "hybrid_selective_adoption_supported": true,
+    "default_primary_source_is_dexter": true,
+    "recommended_next_step_is_execution_planning": true,
     "paper_sim_first_preserved": true
   },
   "task_result": {
     "selected_outcome": "A",
-    "key_finding": "risk_exit_tradeoff_supported",
-    "claim_boundary": "tradeoff_bounded",
+    "key_finding": "strategy_plan_ready",
+    "claim_boundary": "strategy_plan_bounded",
     "comparison_source_of_truth_state": "comparison_closed_out",
-    "task_state": "risk_exit_tradeoff_supported",
-    "recommended_next_step": "strategy_planning",
-    "recommended_next_task_id": "STRATEGY-PLANNING",
-    "decision": "planning_ready",
+    "task_state": "strategy_plan_ready",
+    "recommended_next_step": "execution_planning",
+    "recommended_next_task_id": "EXECUTION-PLANNING",
+    "decision": "execution_planning_ready",
     "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
     "live_metric_winner_tally": {
       "dexter": 6,
@@ -180,12 +187,13 @@
     "mewx_replay_coverage_ratio": 1.0,
     "mewx_live_vs_replay_gap_pct": 0.0,
     "confirmatory_residual": "Mew-X candidate_rejected",
-    "strategy_planning_ready": true,
-    "verified_latest_vexter_pr": 30,
-    "verified_latest_vexter_main_commit": "052de6ccecef1461d2291fb4f0ef5fbf8883d548",
+    "default_primary_source": "dexter",
+    "selective_secondary_source": "mewx",
+    "verified_latest_vexter_pr": 31,
+    "verified_latest_vexter_main_commit": "0905ec8c991ca6046b13d0c326c3224c49709a2d",
     "verified_dexter_pr": 3,
     "verified_dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
-    "recommended_next_lane": "strategy_planning"
+    "recommended_next_lane": "execution_planning"
   }
 }

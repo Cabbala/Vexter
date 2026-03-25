@@ -99,6 +99,10 @@ def test_required_paths_exist() -> None:
         "artifacts/reports/task-007-risk-containment-vs-exit-capture-status.md",
         "artifacts/reports/task-007-risk-containment-vs-exit-capture/DETAILS.md",
         "artifacts/reports/task-007-risk-containment-vs-exit-capture/MIN_PROMPT.txt",
+        "artifacts/reports/task-007-strategy-planning-report.md",
+        "artifacts/reports/task-007-strategy-planning-status.md",
+        "artifacts/reports/task-007-strategy-planning/DETAILS.md",
+        "artifacts/reports/task-007-strategy-planning/MIN_PROMPT.txt",
         "artifacts/proofs/task-005-live-collection-check.json",
         "artifacts/proofs/task-005-pass-grade-pair-check.json",
         "artifacts/proofs/task-005-windows-runtime-recovery.json",
@@ -121,6 +125,8 @@ def test_required_paths_exist() -> None:
         "artifacts/proofs/task-007-execution-timing-vs-retention-summary.md",
         "artifacts/proofs/task-007-risk-containment-vs-exit-capture-check.json",
         "artifacts/proofs/task-007-risk-containment-vs-exit-capture-summary.md",
+        "artifacts/proofs/task-007-strategy-planning-check.json",
+        "artifacts/proofs/task-007-strategy-planning-summary.md",
         "artifacts/examples/task-004-sample-comparison/pack_manifest.json",
         ".github/workflows/validate.yml",
     ]
@@ -208,6 +214,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-CANDIDATE-GENERATION-VS-QUALITY",
         "TASK-007-EXECUTION-TIMING-VS-RETENTION",
         "TASK-007-RISK-CONTAINMENT-VS-EXIT-CAPTURE",
+        "TASK-007-STRATEGY-PLANNING",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -234,6 +241,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "candidate_edge_supported",
         "timing_retention_tradeoff_supported",
         "risk_exit_tradeoff_supported",
+        "strategy_plan_ready",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -263,6 +271,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-007-candidate-generation-vs-quality",
         "codex/task-007-execution-timing-vs-retention",
         "codex/task-007-risk-containment-vs-exit-capture",
+        "codex/task-007-strategy-planning",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -275,6 +284,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "DOWNSTREAM-RESEARCH",
         "HYPOTHESIS-RESEARCH",
         "STRATEGY-PLANNING",
+        "EXECUTION-PLANNING",
     }
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -299,6 +309,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "ready_to_start_from_handoff",
         "ready_for_hypothesis_specific_research",
         "ready_for_objective_weighted_strategy_planning",
+        "ready_for_execution_planning",
     }
 
 
@@ -331,6 +342,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "candidate_edge_supported",
         "timing_retention_tradeoff_supported",
         "risk_exit_tradeoff_supported",
+        "strategy_plan_ready",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -345,6 +357,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "DOWNSTREAM-RESEARCH",
         "HYPOTHESIS-RESEARCH",
         "STRATEGY-PLANNING",
+        "EXECUTION-PLANNING",
     }
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -368,6 +381,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "ready_to_start_from_handoff",
         "ready_for_hypothesis_specific_research",
         "ready_for_objective_weighted_strategy_planning",
+        "ready_for_execution_planning",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]
@@ -438,6 +452,10 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/reports/task-007-risk-containment-vs-exit-capture-status.md" in names
     assert "artifacts/reports/task-007-risk-containment-vs-exit-capture/DETAILS.md" in names
     assert "artifacts/reports/task-007-risk-containment-vs-exit-capture/MIN_PROMPT.txt" in names
+    assert "artifacts/reports/task-007-strategy-planning-report.md" in names
+    assert "artifacts/reports/task-007-strategy-planning-status.md" in names
+    assert "artifacts/reports/task-007-strategy-planning/DETAILS.md" in names
+    assert "artifacts/reports/task-007-strategy-planning/MIN_PROMPT.txt" in names
     assert "artifacts/proofs/task-005-live-collection-check.json" in names
     assert "artifacts/proofs/task-005-windows-runtime-recovery.json" in names
     assert "artifacts/proofs/task-006-replay-validation-check.json" in names
@@ -461,6 +479,8 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/proofs/task-007-execution-timing-vs-retention-summary.md" in names
     assert "artifacts/proofs/task-007-risk-containment-vs-exit-capture-check.json" in names
     assert "artifacts/proofs/task-007-risk-containment-vs-exit-capture-summary.md" in names
+    assert "artifacts/proofs/task-007-strategy-planning-check.json" in names
+    assert "artifacts/proofs/task-007-strategy-planning-summary.md" in names
     assert "artifacts/context_pack.json" in names
     assert "artifacts/proof_bundle_manifest.json" in names
     assert "tests/__pycache__/" not in names

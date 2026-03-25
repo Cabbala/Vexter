@@ -1,8 +1,8 @@
 {
-  "bundle_path": "artifacts/bundles/task-007-candidate-generation-vs-quality.tar.gz",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_candidate_generation_vs_quality_bundle.tar.gz",
-  "task_id": "TASK-007-CANDIDATE-GENERATION-VS-QUALITY",
-  "status": "candidate_edge_supported",
+  "bundle_path": "artifacts/bundles/task-007-execution-timing-vs-retention.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_execution_timing_vs_retention_bundle.tar.gz",
+  "task_id": "TASK-007-EXECUTION-TIMING-VS-RETENTION",
+  "status": "timing_retention_tradeoff_supported",
   "summary": "artifacts/summary.md",
   "context_pack": "artifacts/context_pack.json",
   "task_ledger": "artifacts/task_ledger.jsonl",
@@ -67,6 +67,8 @@
     "templates/windows_runtime/mewx.env.example"
   ],
   "proof_files": [
+    "artifacts/proofs/task-007-execution-timing-vs-retention-check.json",
+    "artifacts/proofs/task-007-execution-timing-vs-retention-summary.md",
     "artifacts/proofs/task-007-candidate-generation-vs-quality-check.json",
     "artifacts/proofs/task-007-candidate-generation-vs-quality-summary.md",
     "artifacts/proofs/task-007-downstream-research-intake-check.json",
@@ -88,6 +90,9 @@
     "artifacts/proofs/task-005-validator-rule-implement-check.json"
   ],
   "reports": [
+    "artifacts/reports/task-007-execution-timing-vs-retention-report.md",
+    "artifacts/reports/task-007-execution-timing-vs-retention-status.md",
+    "artifacts/reports/task-007-execution-timing-vs-retention",
     "artifacts/reports/task-007-candidate-generation-vs-quality-report.md",
     "artifacts/reports/task-007-candidate-generation-vs-quality-status.md",
     "artifacts/reports/task-007-candidate-generation-vs-quality",
@@ -115,9 +120,9 @@
     "state": "ready_for_hypothesis_specific_research",
     "resume_requirements": [
       "Treat task005-pass-grade-pair-20260325T180027Z as the frozen promoted baseline.",
-      "Carry forward candidate_edge_supported together with candidate_quality_bounded as the current bounded conclusion.",
-      "Use TASK-007 candidate-generation-vs-quality plus TASK-007 intake artifacts as the source of truth.",
-      "Select execution_timing_vs_retention before collecting any new evidence unless strategy direction changes.",
+      "Carry forward timing_retention_tradeoff_supported together with tradeoff_bounded as the current bounded conclusion.",
+      "Use TASK-007 execution-timing-vs-retention plus the candidate-lane and intake artifacts as the source of truth.",
+      "Select risk_containment_vs_exit_capture before jumping to strategy or execution planning unless an explicit objective function is already fixed.",
       "Keep Dexter and Mew-X strategy semantics frozen.",
       "Keep the replay claim scoped to close-summary and position_closed realized-return fidelity unless a separate path-equivalence task is cut.",
       "Treat derived winner mode as a component-level comparison surface rather than a scalar overall winner field.",
@@ -130,10 +135,9 @@
     "mewx_strategy_changed": false,
     "validator_rules_changed": false,
     "comparison_source_of_truth_frozen": true,
-    "research_handoff_source_reused": true,
-    "research_intake_ready": true,
-    "candidate_edge_supported": true,
-    "candidate_quality_bounded": true,
+    "candidate_lane_reused": true,
+    "timing_retention_tradeoff_supported": true,
+    "tradeoff_bounded": true,
     "comparison_boundary_preserved": true,
     "new_evidence_collection_required": false,
     "live_comparison_winner_mode_derived": true,
@@ -142,16 +146,16 @@
     "promoted_replay_gap_zero": true,
     "confirmatory_residual_narrow": true,
     "replay_scope_preserved": true,
-    "recommended_next_lane_is_execution_timing_vs_retention": true,
+    "recommended_next_lane_is_risk_containment_vs_exit_capture": true,
     "paper_sim_first_preserved": true
   },
   "task_result": {
     "selected_outcome": "A",
-    "key_finding": "candidate_edge_supported",
-    "claim_boundary": "candidate_quality_bounded",
+    "key_finding": "timing_retention_tradeoff_supported",
+    "claim_boundary": "tradeoff_bounded",
     "comparison_source_of_truth_state": "comparison_closed_out",
-    "task_state": "candidate_edge_supported",
-    "recommended_next_step": "execution_timing_vs_retention",
+    "task_state": "timing_retention_tradeoff_supported",
+    "recommended_next_step": "risk_containment_vs_exit_capture",
     "recommended_next_task_id": "HYPOTHESIS-RESEARCH",
     "decision": "next_lane_ready",
     "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
@@ -171,11 +175,11 @@
     "mewx_live_vs_replay_gap_pct": 0.0,
     "confirmatory_residual": "Mew-X candidate_rejected",
     "next_research_workstream_ready": true,
-    "verified_latest_vexter_pr": 28,
-    "verified_latest_vexter_main_commit": "4df259b90365787ac24085227fcc1b15b63d057d",
+    "verified_latest_vexter_pr": 29,
+    "verified_latest_vexter_main_commit": "17af013b0383fd142e15932108c8b4da5447f1f7",
     "verified_dexter_pr": 3,
     "verified_dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
-    "recommended_next_lane": "execution_timing_vs_retention"
+    "recommended_next_lane": "risk_containment_vs_exit_capture"
   }
 }

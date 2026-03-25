@@ -1,0 +1,27 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+継続タスクID: TASK-007-EXECUTION-TIMING-VS-RETENTION
+
+PR #29 merged main を基準に、TASK-007 の `execution_timing_vs_retention` lane は完了しています。comparison baseline は `task005-pass-grade-pair-20260325T180027Z` のまま固定で、promoted live / repaired replay はどちらも `winner_mode: derived`、stable scored split は Dexter `6`, Mew-X `4`, tie `2` です。Dexter / Mew-X の replay coverage / gap はどちらも `100.00% / 0.0000` を維持し、confirmatory residual は Mew-X `candidate_rejected` のみで promoted baseline を overturn しません。
+
+lane の bounded conclusion は以下です。
+
+- Key finding: `timing_retention_tradeoff_supported`
+- Claim boundary: `tradeoff_bounded`
+
+source-faithful evidence:
+
+- Dexter は `signal_to_attempt_latency_ms` で `0.0`、Mew-X は `891.0` なので upstream timing は Dexter 優位
+- Mew-X は `attempt_to_fill_latency_ms` で `1.5`、Dexter は `502.5` なので post-attempt fill speed は Mew-X 優位
+- Dexter は median slippage `0.0 bps`, median realized exit `7.1641 pct`, median MFE `34.8443 pct`, stale ratio `0.00%`
+- Mew-X は median MAE `0.0 pct`, median `time_to_peak_ms` `20.5`, median `realized_vs_peak_gap_pct` `0.0`
+- ただし Mew-X の close は全 `6` 件が `inactivity_timeout` で、Dexter は `safe=2`, `malicious=2`, stale `0`
+
+したがって、比較の本質は stage split としては支持できます。Dexter は「早く見つけて滑りにくく exit capture しやすい」、Mew-X は「attempt 後すぐ埋まり、drawdown を抑え、local peak を保持しやすい」です。ただし Mew-X の retention 優位は local peak retention に限られ、realized exit と stale-position control まで含む広い downstream 優位ではありません。
+
+次に切る lane は `risk_containment_vs_exit_capture` を推奨します。再実行してはいけないもの:
+
+- promoted-baseline selection
+- 新 live / replay evidence collection
+- validator / source logic changes
+- replay claim の full path equivalence 化

@@ -1,13 +1,14 @@
 {
   "background": {
-    "previous_task_id": "TASK-007-DOWNSTREAM-RESEARCH-INTAKE",
-    "previous_key_finding": "research_intake_ready",
+    "previous_task_id": "TASK-007-CANDIDATE-GENERATION-VS-QUALITY",
+    "previous_key_finding": "candidate_edge_supported",
+    "previous_claim_boundary": "candidate_quality_bounded",
     "promoted_pair": "task005-pass-grade-pair-20260325T180027Z",
     "confirmatory_pair": "task005-pass-grade-pair-20260325T180604Z",
     "comparison_source_of_truth_fixed_before_task": true,
-    "research_handoff_completed_before_task": true
+    "candidate_lane_completed_before_task": true
   },
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_candidate_generation_vs_quality_bundle.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_execution_timing_vs_retention_bundle.tar.gz",
   "current_contract": {
     "conditional_rules": {
       "entry_rejected": "required_only_when_an_entry_attempt_lacks_a_matching_fill",
@@ -33,30 +34,31 @@
     ]
   },
   "current_task": {
-    "id": "TASK-007-CANDIDATE-GENERATION-VS-QUALITY",
+    "id": "TASK-007-EXECUTION-TIMING-VS-RETENTION",
     "scope": [
       "Verify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X.",
-      "Treat TASK-007 downstream research intake as the formal source of truth for this lane.",
-      "Reuse only promoted live/replay comparisons, candidate snapshots, session summaries, and close-summary metrics already committed in GitHub-visible artifacts.",
-      "Determine whether Dexter's candidate_count lead connects to realized edge or only to broader opportunity breadth.",
-      "Refresh lane report, status, proof, metadata, and bundle outputs without reopening comparison work."
+      "Treat TASK-007 candidate-generation-vs-quality as the immediate source task for this lane.",
+      "Reuse only promoted live/replay comparisons, Mew-X session summaries, and Dexter close-summary metrics already committed in GitHub-visible artifacts.",
+      "Separate upstream timing, post-attempt fill speed, slippage control, exit capture, and local-retention claims without reopening comparison work.",
+      "Refresh lane report, status, proof, metadata, and bundle outputs with only minimal reaggregation."
     ],
     "deliverables": [
       "artifacts/summary.md",
       "artifacts/context_pack.json",
       "artifacts/proof_bundle_manifest.json",
       "artifacts/task_ledger.jsonl",
-      "artifacts/reports/task-007-candidate-generation-vs-quality-report.md",
-      "artifacts/reports/task-007-candidate-generation-vs-quality-status.md",
-      "artifacts/reports/task-007-candidate-generation-vs-quality/DETAILS.md",
-      "artifacts/reports/task-007-candidate-generation-vs-quality/MIN_PROMPT.txt",
-      "artifacts/proofs/task-007-candidate-generation-vs-quality-check.json",
-      "artifacts/proofs/task-007-candidate-generation-vs-quality-summary.md",
-      "artifacts/bundles/task-007-candidate-generation-vs-quality.tar.gz"
+      "artifacts/reports/task-007-execution-timing-vs-retention-report.md",
+      "artifacts/reports/task-007-execution-timing-vs-retention-status.md",
+      "artifacts/reports/task-007-execution-timing-vs-retention/DETAILS.md",
+      "artifacts/reports/task-007-execution-timing-vs-retention/MIN_PROMPT.txt",
+      "artifacts/proofs/task-007-execution-timing-vs-retention-check.json",
+      "artifacts/proofs/task-007-execution-timing-vs-retention-summary.md",
+      "artifacts/bundles/task-007-execution-timing-vs-retention.tar.gz"
     ]
   },
   "evidence": {
     "github_latest": {
+      "vexter_pr_29_merged_at": "2026-03-25T22:57:54Z",
       "vexter_pr_28_merged_at": "2026-03-25T22:36:55Z",
       "vexter_pr_27_merged_at": "2026-03-25T22:17:31Z",
       "vexter_pr_26_merged_at": "2026-03-25T22:05:02Z",
@@ -93,79 +95,7 @@
       "confirmatory_residual": "Mew-X candidate_rejected",
       "confirmatory_overturns_promoted_baseline": false
     },
-    "comparison_closeout": {
-      "report": "artifacts/reports/task-006-comparison-closeout.md",
-      "proof": "artifacts/proofs/task-006-comparison-closeout-check.json",
-      "summary": "artifacts/proofs/task-006-comparison-closeout-summary.md",
-      "handoff_dir": "artifacts/reports/task-006-comparison-closeout-handoff",
-      "key_finding": "comparison_closed_out",
-      "task_state": "comparison_closed_out",
-      "downstream_research_handoff_ready": true
-    },
-    "research_handoff": {
-      "report": "artifacts/reports/task-006-research-handoff-report.md",
-      "status_report": "artifacts/reports/task-006-research-handoff-status.md",
-      "proof": "artifacts/proofs/task-006-research-handoff-check.json",
-      "summary": "artifacts/proofs/task-006-research-handoff-summary.md",
-      "handoff_dir": "artifacts/reports/task-006-research-handoff",
-      "key_finding": "research_handoff_completed",
-      "task_state": "research_handoff_completed",
-      "downstream_research_ready": true
-    },
-    "research_intake": {
-      "report": "artifacts/reports/task-007-downstream-research-intake-report.md",
-      "status_report": "artifacts/reports/task-007-downstream-research-intake-status.md",
-      "proof": "artifacts/proofs/task-007-downstream-research-intake-check.json",
-      "summary": "artifacts/proofs/task-007-downstream-research-intake-summary.md",
-      "handoff_dir": "artifacts/reports/task-007-downstream-research-intake",
-      "key_finding": "research_intake_ready",
-      "task_state": "research_intake_ready",
-      "next_research_workstream_ready": true,
-      "primary_surfaces": [
-        "artifacts/reports/task-007-downstream-research-intake-report.md",
-        "artifacts/reports/task-007-downstream-research-intake-status.md",
-        "artifacts/proofs/task-007-downstream-research-intake-check.json",
-        "artifacts/proofs/task-007-downstream-research-intake-summary.md"
-      ],
-      "fixed_input_surfaces": [
-        "artifacts/reports/task-006-research-handoff-report.md",
-        "artifacts/proofs/task-006-research-handoff-check.json",
-        "artifacts/proofs/task-006-research-handoff-summary.md",
-        "artifacts/reports/task-006-comparison-closeout.md",
-        "artifacts/proofs/task-006-comparison-closeout-check.json"
-      ],
-      "supporting_surfaces": [
-        "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison",
-        "artifacts/reports/task006-replay-surface-fix-20260325T180027Z-replay-comparison",
-        "artifacts/reports/task005-validator-rule-implement-20260325T180604Z-comparison"
-      ],
-      "scope_boundary": [
-        "Research may interpret fixed comparison tradeoffs and define targeted next questions.",
-        "Research may reuse promoted live/replay and confirmatory surfaces as evidence inputs.",
-        "Research must not reopen baseline selection, evidence collection, or validator/source changes."
-      ],
-      "non_goals": [
-        "Do not change Dexter strategy semantics, trust logic, or thresholds.",
-        "Do not change frozen Mew-X source logic.",
-        "Do not change validator rules.",
-        "Do not claim a scalar overall winner.",
-        "Do not claim full execution-path equivalence from the current replay proof.",
-        "Do not use funded live trading as part of intake."
-      ],
-      "must_not_rerun": [
-        "Do not rerun promoted-baseline selection.",
-        "Do not rerun live evidence collection on current facts.",
-        "Do not rerun replay gap analysis unless a lane explicitly requires path-equivalence evidence.",
-        "Do not change source pins or export surfaces during intake."
-      ],
-      "priority_research_questions": [
-        "candidate_generation_vs_quality",
-        "execution_timing_vs_retention",
-        "risk_containment_vs_exit_capture",
-        "path_sensitive_retention_scope"
-      ]
-    },
-    "candidate_generation_vs_quality": {
+    "candidate_lane": {
       "report": "artifacts/reports/task-007-candidate-generation-vs-quality-report.md",
       "status_report": "artifacts/reports/task-007-candidate-generation-vs-quality-status.md",
       "proof": "artifacts/proofs/task-007-candidate-generation-vs-quality-check.json",
@@ -174,47 +104,63 @@
       "key_finding": "candidate_edge_supported",
       "claim_boundary": "candidate_quality_bounded",
       "task_state": "candidate_edge_supported",
-      "decision": "next_lane_ready",
       "recommended_next_lane": "execution_timing_vs_retention",
       "primary_surfaces": [
         "artifacts/reports/task-007-candidate-generation-vs-quality-report.md",
         "artifacts/reports/task-007-candidate-generation-vs-quality-status.md",
         "artifacts/proofs/task-007-candidate-generation-vs-quality-check.json",
         "artifacts/proofs/task-007-candidate-generation-vs-quality-summary.md"
+      ]
+    },
+    "timing_retention_lane": {
+      "report": "artifacts/reports/task-007-execution-timing-vs-retention-report.md",
+      "status_report": "artifacts/reports/task-007-execution-timing-vs-retention-status.md",
+      "proof": "artifacts/proofs/task-007-execution-timing-vs-retention-check.json",
+      "summary": "artifacts/proofs/task-007-execution-timing-vs-retention-summary.md",
+      "handoff_dir": "artifacts/reports/task-007-execution-timing-vs-retention",
+      "key_finding": "timing_retention_tradeoff_supported",
+      "claim_boundary": "tradeoff_bounded",
+      "task_state": "timing_retention_tradeoff_supported",
+      "primary_surfaces": [
+        "artifacts/reports/task-007-execution-timing-vs-retention-report.md",
+        "artifacts/reports/task-007-execution-timing-vs-retention-status.md",
+        "artifacts/proofs/task-007-execution-timing-vs-retention-check.json",
+        "artifacts/proofs/task-007-execution-timing-vs-retention-summary.md"
       ],
-      "supporting_surfaces": [
+      "comparison_surfaces": [
         "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison",
-        "artifacts/reports/task006-replay-surface-fix-20260325T180027Z-replay-comparison",
-        "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-augmented-dexter-package/exports/dexter-close-summary-index.json",
-        "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-replay-packages/mewx-replay/exports/mewx-task005-pass-grade-pair-20260325T180027Z.candidates.initial_selection.json",
-        "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-replay-packages/mewx-replay/exports/mewx-task005-pass-grade-pair-20260325T180027Z.candidates.refresh.json"
+        "artifacts/reports/task006-replay-surface-fix-20260325T180027Z-replay-comparison"
       ],
-      "dexter_funnel": {
-        "creator_candidate": 255,
-        "candidate_rejected": 8,
-        "mint_observed": 12,
-        "entry_fill": 4,
-        "position_closed": 4,
-        "candidate_to_fill_ratio": 0.01568627450980392,
-        "candidate_to_positive_realized_close_ratio": 0.00784313725490196,
-        "candidate_to_positive_mfe_close_ratio": 0.01568627450980392
+      "dexter_close_summary_index": "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-augmented-dexter-package/exports/dexter-close-summary-index.json",
+      "mewx_session_summaries_dir": "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-replay-packages/mewx-replay/exports",
+      "core_metric_split": {
+        "dexter_upstream_and_exit_edges": {
+          "signal_to_attempt_latency_ms": 0.0,
+          "quote_vs_fill_slippage_bps": 0.0,
+          "max_favorable_excursion_pct": 34.844263534142286,
+          "realized_exit_pct": 7.164077921477945,
+          "stale_position_ratio": 0.0
+        },
+        "mewx_post_attempt_and_local_retention_edges": {
+          "attempt_to_fill_latency_ms": 1.5,
+          "max_adverse_excursion_pct": 0.0,
+          "time_to_peak_ms": 20.5,
+          "realized_vs_peak_gap_pct": 0.0
+        }
       },
-      "dexter_outcome_medians": {
-        "realized_exit_pct": 7.164077921477945,
-        "max_favorable_excursion_pct": 34.844263534142286,
-        "quote_vs_fill_slippage_bps": 0.0,
+      "dexter_exit_pattern": {
+        "exit_reasons": {
+          "safe": 2,
+          "malicious": 2
+        },
+        "closed_positions": 4,
         "stale_position_ratio": 0.0
       },
-      "mewx_observable_candidate_surface": {
-        "creator_candidate_events_observed": 0,
-        "candidate_precision_proxy": "unavailable",
-        "initial_selection_observations": 0,
-        "refresh_observations": 0
-      },
-      "mewx_outcome_medians": {
-        "realized_exit_pct": 0.0,
-        "max_favorable_excursion_pct": 6.792904253675385,
-        "quote_vs_fill_slippage_bps": 7.706128082620904,
+      "mewx_session_exit_pattern": {
+        "exit_reasons": {
+          "inactivity_timeout": 6
+        },
+        "closed_positions": 6,
         "stale_position_ratio": 1.0
       }
     },
@@ -225,26 +171,27 @@
         "live_value": 20.533046470504612,
         "replay_value": 25.804157291090654
       },
-      "candidate_metric_asymmetry": "Mew-X candidate_precision_proxy remains unavailable because creator_candidate is absent under the frozen-source export surface."
+      "tradeoff_boundary": "Mew-X's downstream edge is local-peak retention and drawdown containment, while Dexter still owns realized exit and stale-position control on the promoted baseline."
     }
   },
   "frozen_source_commits": {
     "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
   },
-  "goal": "Maintain a GitHub-visible Mac control plane that reads whether Dexter's candidate-count edge converts into realized edge on the frozen promoted baseline without changing frozen source behavior.",
+  "goal": "Maintain a GitHub-visible Mac control plane that reads the current comparison as an objective-dependent timing-versus-retention tradeoff without changing frozen source behavior.",
   "implementation": {
     "source_logic_changed": false,
     "validator_rules_changed": false,
+    "minimal_reaggregation_only": true,
     "task_proofs_generated": [
-      "artifacts/proofs/task-007-candidate-generation-vs-quality-check.json",
-      "artifacts/proofs/task-007-candidate-generation-vs-quality-summary.md"
+      "artifacts/proofs/task-007-execution-timing-vs-retention-check.json",
+      "artifacts/proofs/task-007-execution-timing-vs-retention-summary.md"
     ],
     "task_reports_updated": [
-      "artifacts/reports/task-007-candidate-generation-vs-quality-report.md",
-      "artifacts/reports/task-007-candidate-generation-vs-quality-status.md",
-      "artifacts/reports/task-007-candidate-generation-vs-quality/DETAILS.md",
-      "artifacts/reports/task-007-candidate-generation-vs-quality/MIN_PROMPT.txt"
+      "artifacts/reports/task-007-execution-timing-vs-retention-report.md",
+      "artifacts/reports/task-007-execution-timing-vs-retention-status.md",
+      "artifacts/reports/task-007-execution-timing-vs-retention/DETAILS.md",
+      "artifacts/reports/task-007-execution-timing-vs-retention/MIN_PROMPT.txt"
     ]
   },
   "mac_control_plane": "/Users/cabbala/Projects/Vexter",
@@ -253,29 +200,30 @@
     "state": "ready_for_hypothesis_specific_research",
     "resume_requirements": [
       "Treat task005-pass-grade-pair-20260325T180027Z as the frozen promoted baseline.",
-      "Carry forward candidate_edge_supported together with candidate_quality_bounded as the current bounded conclusion.",
-      "Use TASK-007 candidate-generation-vs-quality plus TASK-007 intake artifacts as the source of truth.",
-      "Cut the next lane on existing evidence rather than reopening comparison or collection.",
+      "Carry forward timing_retention_tradeoff_supported together with tradeoff_bounded as the current bounded conclusion.",
+      "Use TASK-007 execution-timing-vs-retention plus the candidate lane and research intake artifacts as the source of truth.",
+      "Cut the next lane on current evidence rather than reopening comparison or collection.",
+      "Prefer risk_containment_vs_exit_capture unless an explicit strategy objective is already fixed.",
       "Keep Dexter and Mew-X strategy semantics and validator rules frozen.",
       "Keep the replay claim scoped to close-summary and position_closed realized-return fidelity unless a separate path-equivalence task is cut.",
       "Treat derived winner mode as component-level interpretation, not a scalar overall winner field.",
       "Carry the confirmatory Mew-X candidate_rejected miss as a caveat only unless contradictory evidence appears."
     ]
   },
-  "phase": "TASK-007-CANDIDATE-GENERATION-VS-QUALITY",
+  "phase": "TASK-007-EXECUTION-TIMING-VS-RETENTION",
   "project": "Vexter",
   "recommendation": {
     "decision": "NEXT_LANE_READY",
     "outcome": "A",
-    "key_finding": "candidate_edge_supported",
-    "claim_boundary": "candidate_quality_bounded",
-    "recommended_next_step": "execution_timing_vs_retention",
+    "key_finding": "timing_retention_tradeoff_supported",
+    "claim_boundary": "tradeoff_bounded",
+    "recommended_next_step": "risk_containment_vs_exit_capture",
     "next_research_workstream_ready": true,
     "new_evidence_collection_required": false,
     "why": [
-      "Dexter's broad candidate surface narrows into fewer but materially stronger downstream outcomes on the promoted baseline.",
-      "Mew-X still lacks a comparable upstream candidate surface, so the lane conclusion must remain bounded rather than upgraded into a full precision proof.",
-      "The next unresolved question on committed evidence is timing versus retention after attempt placement, not more candidate-lane work."
+      "The current evidence cleanly isolates upstream timing / slippage from post-attempt fill / local-retention behavior.",
+      "Dexter and Mew-X now look objective-dependent rather than globally incomparable or evidence-blocked.",
+      "The remaining unresolved question is explicit weighting between drawdown containment and exit capture, not another generic timing cut."
     ]
   },
   "repos": {
@@ -286,12 +234,13 @@
   "resolved_windows_hostname": "DESKTOP-NNC6MPS",
   "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
   "starting_point": {
-    "verified_latest_vexter_pr": 28,
-    "verified_latest_vexter_main": "4df259b90365787ac24085227fcc1b15b63d057d",
+    "verified_latest_vexter_pr": 29,
+    "verified_latest_vexter_main": "17af013b0383fd142e15932108c8b4da5447f1f7",
     "verified_dexter_pr": 3,
     "verified_dexter_main": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_mewx_frozen": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
     "verified_prior_supporting_vexter_prs": [
+      28,
       27,
       26,
       25,
@@ -305,9 +254,9 @@
       17,
       16
     ],
-    "work_branch": "codex/task-007-candidate-generation-vs-quality"
+    "work_branch": "codex/task-007-execution-timing-vs-retention"
   },
-  "status": "candidate_edge_supported",
+  "status": "timing_retention_tradeoff_supported",
   "windows_runtime_host": "win-lan",
   "workflow": {
     "analysis_priority": "paper_sim_first",
@@ -317,6 +266,5 @@
     "git_on_mac": true,
     "github_is_source_of_truth": true,
     "agent_usage_note": "No sub-agents were used in this task."
-  },
-  "working_tree": "/Users/cabbala/Documents/vexter/task005-validator-rule-review"
+  }
 }

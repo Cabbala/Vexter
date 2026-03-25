@@ -1,33 +1,28 @@
 {
-  "task_id": "TASK-005-VALIDATOR-RULE-IMPLEMENT",
-  "status": "rule_implementation_applied",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_validator_rule_implementation_bundle_v2.tar.gz",
-  "bundle_path": "artifacts/bundles/task-005-validator-rule-implement.tar.gz",
+  "task_id": "TASK-006-REPLAY-VALIDATION",
+  "status": "replay_validation_in_progress",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task006_replay_validation_bundle.tar.gz",
+  "bundle_path": "artifacts/bundles/task-006-replay-validation.tar.gz",
   "context_pack": "artifacts/context_pack.json",
   "summary": "artifacts/summary.md",
   "task_ledger": "artifacts/task_ledger.jsonl",
   "reports": [
+    "artifacts/reports/task-006-replay-validation.md",
+    "artifacts/reports/task-006-replay-validation-status.md",
+    "artifacts/reports/task-006-replay-validation-handoff",
     "artifacts/reports/task-005-validator-rule-implement.md",
     "artifacts/reports/task-005-validator-rule-implement-readiness.md",
-    "artifacts/reports/task-005-validator-rule-implement-handoff",
-    "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison",
-    "artifacts/reports/task005-validator-rule-implement-20260325T180604Z-comparison",
-    "artifacts/reports/task-005-validator-rule-review.md",
-    "artifacts/reports/task-005-validator-rule-review-readiness.md",
-    "artifacts/reports/task-005-validator-contract-audit.md",
-    "artifacts/reports/task-005-validator-contract-audit-readiness.md",
-    "artifacts/reports/task-005-gap-audit.md",
-    "artifacts/reports/task-005-gap-audit-readiness.md",
-    "artifacts/reports/task-005-pass-grade-pair-readiness.md"
+    "artifacts/reports/task-005-pass-grade-pair-readiness.md",
+    "artifacts/reports/task-005-windows-runtime-recovery.md"
   ],
   "proof_files": [
+    "artifacts/proofs/task-006-replay-validation-check.json",
+    "artifacts/proofs/task-006-replay-validation-summary.md",
+    "artifacts/proofs/task006-replay-validation-20260325T180027Z-results",
+    "artifacts/proofs/task006-replay-validation-20260325T180604Z-results",
     "artifacts/proofs/task-005-validator-rule-implement-check.json",
-    "artifacts/proofs/task005-validator-rule-implement-20260325T180027Z-results",
-    "artifacts/proofs/task005-validator-rule-implement-20260325T180604Z-results",
-    "artifacts/proofs/task-005-validator-rule-review-check.json",
-    "artifacts/proofs/task-005-validator-contract-audit-check.json",
-    "artifacts/proofs/task-005-gap-audit-check.json",
-    "artifacts/proofs/task-005-pass-grade-pair-check.json"
+    "artifacts/proofs/task-005-pass-grade-pair-check.json",
+    "artifacts/proofs/task-005-windows-runtime-recovery.json"
   ],
   "manifests": [
     "manifests/reference_repos.json",
@@ -67,13 +62,19 @@
     "templates/windows_runtime/mewx.env.example"
   ],
   "code": [
-    "vexter/comparison/",
-    "tests/test_comparison_analysis.py"
+    "vexter/comparison/"
   ],
   "task_result": {
-    "verified_latest_vexter_main_commit": "db59c2edc099c4e794d8e0ac177cedb6f6d57d2d",
-    "verified_latest_vexter_pr": 19,
-    "verified_supporting_vexter_prs": [
+    "verified_latest_vexter_main_commit": "6f2f50cc14dddfa52e6632db1dcbb98dbdb8a668",
+    "verified_latest_vexter_pr": 20,
+    "verified_prior_supporting_vexter_main_commits": [
+      "db59c2edc099c4e794d8e0ac177cedb6f6d57d2d",
+      "b7c8cb900ced104f4fe76cfd9ca48c2b21b82d81",
+      "b09033d6c8ce21510da23025cee935e46f3ef4df",
+      "b71b5f744027024e2a04606f6c1aa369d0a6c3e3"
+    ],
+    "verified_prior_supporting_vexter_prs": [
+      19,
       18,
       17,
       16
@@ -84,33 +85,36 @@
     "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
     "confirmatory_label": "task005-pass-grade-pair-20260325T180604Z",
     "selected_outcome": "A",
-    "key_finding": "rule_implementation_applied",
-    "validator_rules_changed": true,
-    "source_logic_changed": false,
-    "comparison_ready": true,
-    "task_006_ready": true,
-    "recommended_next_step": "task_006_replay_validation"
+    "key_finding": "replay_input_accepted",
+    "promoted_replay_input_accepted": true,
+    "promoted_winner_mode": "derived",
+    "promoted_dexter_replayability_grade": "partial",
+    "promoted_mewx_replayability_grade": "partial",
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "replay_validation_exit_ready": false,
+    "task_006_state": "in_progress",
+    "recommended_next_step": "task_006_replay_deepening"
   },
   "proofs": {
     "paper_sim_first_preserved": true,
     "dexter_strategy_changed": false,
     "mewx_strategy_changed": false,
-    "validator_rules_changed": true,
+    "validator_rules_changed": false,
     "source_logic_changed": false,
-    "approved_rule_treatments_applied": true,
-    "promoted_pair_comparable": true,
-    "promoted_winner_mode": "derived",
-    "confirmatory_pair_residual_missing_event_types": [
-      "candidate_rejected"
-    ]
+    "replay_validation_started": true,
+    "promoted_pack_reaccepted": true,
+    "confirmatory_residual_narrow": true,
+    "live_vs_replay_gap_measured": false,
+    "replay_exit_ready": false
   },
   "next_task": {
     "id": "TASK-006",
-    "state": "ready_for_replay_validation",
+    "state": "replay_validation_in_progress",
     "resume_requirements": [
+      "Keep Dexter and Mew-X source logic frozen.",
       "Use the promoted comparable pack as the replay-validation baseline.",
-      "Carry forward the confirmatory Mew-X candidate_rejected gap as a residual note only.",
-      "Keep Dexter and Mew-X source logic frozen unless a later task explicitly approves source changes."
+      "Carry forward the confirmatory Mew-X candidate_rejected miss as a narrow residual note only.",
+      "Deepen replay validation by reconstructing replay-mode evidence and then measuring live-versus-replay gap."
     ]
   },
   "included_paths": [

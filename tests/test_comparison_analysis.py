@@ -4,7 +4,12 @@ from pathlib import Path
 
 import pytest
 
-from vexter.comparison import build_comparison_pack, derive_metrics, validate_run_package
+from vexter.comparison import (
+    build_comparison_pack,
+    derive_metrics,
+    run_replay_validation,
+    validate_run_package,
+)
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -20,6 +25,37 @@ def _load_json(path: Path) -> dict:
 
 def _write_json(path: Path, payload: dict) -> None:
     path.write_text(json.dumps(payload, indent=2) + "\n")
+
+
+def _make_live_package(
+    fixture_dir: Path,
+    target_dir: Path,
+    *,
+    run_id: str,
+    started_at_utc: str,
+    ended_at_utc: str,
+) -> None:
+    shutil.copytree(fixture_dir, target_dir)
+
+    metadata = _load_json(target_dir / "run_metadata.json")
+    metadata["evidence_kind"] = "live"
+    metadata["run_id"] = run_id
+    metadata["started_at_utc"] = started_at_utc
+    metadata["ended_at_utc"] = ended_at_utc
+    _write_json(target_dir / "run_metadata.json", metadata)
+
+    events_path = target_dir / "events.ndjson"
+    events = [json.loads(line) for line in events_path.read_text().splitlines() if line.strip()]
+    for event in events:
+        event["run_id"] = run_id
+    events_path.write_text("".join(json.dumps(event) + "\n" for event in events))
+
+
+def _remove_event_type(target_dir: Path, event_type: str) -> None:
+    events_path = target_dir / "events.ndjson"
+    events = [json.loads(line) for line in events_path.read_text().splitlines() if line.strip()]
+    filtered = [event for event in events if event["event_type"] != event_type]
+    events_path.write_text("".join(json.dumps(event) + "\n" for event in filtered))
 
 
 def test_validate_run_package_passes_for_fixtures() -> None:
@@ -402,3 +438,117 @@ def test_build_comparison_pack_matched_partial_live_windows_updates_summary(
 
     assert "matched-window packages validate beyond `partial`" in summary
     assert "TASK-006 remains blocked" in summary
+
+
+def test_run_replay_validation_accepts_promoted_pack_and_keeps_residual_note(
+    tmp_path: Path,
+) -> None:
+    promoted_dexter = tmp_path / "promoted-dexter"
+    promoted_mewx = tmp_path / "promoted-mewx"
+    confirmatory_dexter = tmp_path / "confirmatory-dexter"
+    confirmatory_mewx = tmp_path / "confirmatory-mewx"
+
+    _make_live_package(
+        DEXTER_FIXTURE,
+        promoted_dexter,
+        run_id="dexter-promoted-live",
+        started_at_utc="2026-03-25T18:02:11Z",
+        ended_at_utc="2026-03-25T18:05:11Z",
+    )
+    _make_live_package(
+        MEWX_FIXTURE,
+        promoted_mewx,
+        run_id="mewx-promoted-live",
+        started_at_utc="2026-03-25T18:02:11Z",
+        ended_at_utc="2026-03-25T18:05:11Z",
+    )
+    _make_live_package(
+        DEXTER_FIXTURE,
+        confirmatory_dexter,
+        run_id="dexter-confirmatory-live",
+        started_at_utc="2026-03-25T18:07:10Z",
+        ended_at_utc="2026-03-25T18:10:10Z",
+    )
+    _make_live_package(
+        MEWX_FIXTURE,
+        confirmatory_mewx,
+        run_id="mewx-confirmatory-live",
+        started_at_utc="2026-03-25T18:07:10Z",
+        ended_at_utc="2026-03-25T18:10:10Z",
+    )
+    _remove_event_type(confirmatory_mewx, "candidate_rejected")
+
+    report, summary = run_replay_validation(
+        promoted_dexter_package_dir=promoted_dexter,
+        promoted_mewx_package_dir=promoted_mewx,
+        promoted_output_dir=tmp_path / "promoted-results",
+        confirmatory_dexter_package_dir=confirmatory_dexter,
+        confirmatory_mewx_package_dir=confirmatory_mewx,
+        confirmatory_output_dir=tmp_path / "confirmatory-results",
+        promoted_summary_note="Promoted baseline.",
+        confirmatory_summary_note="Confirmatory residual note.",
+    )
+
+    assert report["decision"]["key_finding"] == "replay_input_accepted"
+    assert report["decision"]["task_state"] == "in_progress"
+    assert report["promoted"]["accepted_as_replay_input"] is True
+    assert report["promoted"]["comparison_pack"]["winner_mode"] == "derived"
+    assert report["confirmatory"]["comparison_pack"]["winner_mode"] == "deferred"
+    assert report["confirmatory"]["residual"]["mewx_missing_event_types"] == [
+        "candidate_rejected"
+    ]
+    assert report["confirmatory"]["residual"]["narrow_note_only"] is True
+    assert (tmp_path / "promoted-results" / "comparison_pack.json").exists()
+    assert "Input accepted: `yes`" in summary
+
+
+def test_run_replay_validation_blocks_when_promoted_pack_is_not_derived(
+    tmp_path: Path,
+) -> None:
+    promoted_dexter = tmp_path / "promoted-dexter"
+    promoted_mewx = tmp_path / "promoted-mewx"
+    confirmatory_dexter = tmp_path / "confirmatory-dexter"
+    confirmatory_mewx = tmp_path / "confirmatory-mewx"
+
+    _make_live_package(
+        DEXTER_FIXTURE,
+        promoted_dexter,
+        run_id="dexter-promoted-live",
+        started_at_utc="2026-03-25T18:02:11Z",
+        ended_at_utc="2026-03-25T18:05:11Z",
+    )
+    _make_live_package(
+        MEWX_FIXTURE,
+        promoted_mewx,
+        run_id="mewx-promoted-live",
+        started_at_utc="2026-03-25T18:02:12Z",
+        ended_at_utc="2026-03-25T18:05:12Z",
+    )
+    _make_live_package(
+        DEXTER_FIXTURE,
+        confirmatory_dexter,
+        run_id="dexter-confirmatory-live",
+        started_at_utc="2026-03-25T18:07:10Z",
+        ended_at_utc="2026-03-25T18:10:10Z",
+    )
+    _make_live_package(
+        MEWX_FIXTURE,
+        confirmatory_mewx,
+        run_id="mewx-confirmatory-live",
+        started_at_utc="2026-03-25T18:07:10Z",
+        ended_at_utc="2026-03-25T18:10:10Z",
+    )
+
+    report, summary = run_replay_validation(
+        promoted_dexter_package_dir=promoted_dexter,
+        promoted_mewx_package_dir=promoted_mewx,
+        promoted_output_dir=tmp_path / "promoted-results",
+        confirmatory_dexter_package_dir=confirmatory_dexter,
+        confirmatory_mewx_package_dir=confirmatory_mewx,
+        confirmatory_output_dir=tmp_path / "confirmatory-results",
+    )
+
+    assert report["decision"]["key_finding"] == "replay_blocker_found"
+    assert report["decision"]["task_state"] == "blocked"
+    assert report["promoted"]["accepted_as_replay_input"] is False
+    assert "TASK-006 state: `blocked`" in summary

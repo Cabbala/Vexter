@@ -62,9 +62,14 @@ def test_required_paths_exist() -> None:
         "artifacts/reports/task-005-pass-grade-pair-readiness.md",
         "artifacts/reports/task-005-pass-grade-pair-handoff/DETAILS.md",
         "artifacts/reports/task-005-pass-grade-pair-handoff/MIN_PROMPT.txt",
+        "artifacts/reports/task-006-replay-validation.md",
+        "artifacts/reports/task-006-replay-validation-status.md",
+        "artifacts/reports/task-006-replay-validation-handoff/DETAILS.md",
+        "artifacts/reports/task-006-replay-validation-handoff/MIN_PROMPT.txt",
         "artifacts/proofs/task-005-live-collection-check.json",
         "artifacts/proofs/task-005-pass-grade-pair-check.json",
         "artifacts/proofs/task-005-windows-runtime-recovery.json",
+        "artifacts/proofs/task-006-replay-validation-check.json",
         "artifacts/examples/task-004-sample-comparison/pack_manifest.json",
         ".github/workflows/validate.yml",
     ]
@@ -141,6 +146,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-005-VALIDATOR-CONTRACT-AUDIT",
         "TASK-005-VALIDATOR-RULE-REVIEW",
         "TASK-005-VALIDATOR-RULE-IMPLEMENT",
+        "TASK-006-REPLAY-VALIDATION",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -156,6 +162,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "rule_review_needed_helper_fix_insufficient",
         "rule_review_memo_ready_for_approval",
         "rule_implementation_applied",
+        "replay_validation_in_progress",
     }
     assert payload["branch"] in {
         "codex/task-005-live-comparison-evidence",
@@ -172,6 +179,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-005-validator-contract-audit",
         "codex/task-005-validator-rule-review",
         "codex/task-005-validator-rule-implement",
+        "codex/task-006-replay-validation",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -195,6 +203,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "awaiting_validator_rule_review_approval",
         "awaiting_explicit_approval_to_modify_validator_rules",
         "ready_for_replay_validation",
+        "replay_validation_in_progress",
     }
 
 
@@ -216,6 +225,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "rule_review_needed",
         "rule_memo_ready",
         "rule_implementation_applied",
+        "replay_validation_in_progress",
     }
     assert manifest["next_task"]["id"] in {
         "TASK-005-RESUME",
@@ -238,6 +248,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "awaiting_validator_rule_review_approval",
         "awaiting_explicit_approval_to_modify_validator_rules",
         "ready_for_replay_validation",
+        "replay_validation_in_progress",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]
@@ -267,8 +278,13 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/reports/dexter-paper-design-handoff/MIN_PROMPT.txt" in names
     assert "artifacts/reports/task-005-paper-validation-handoff/DETAILS.md" in names
     assert "artifacts/reports/task-005-paper-validation-handoff/MIN_PROMPT.txt" in names
+    assert "artifacts/reports/task-006-replay-validation.md" in names
+    assert "artifacts/reports/task-006-replay-validation-status.md" in names
+    assert "artifacts/reports/task-006-replay-validation-handoff/DETAILS.md" in names
+    assert "artifacts/reports/task-006-replay-validation-handoff/MIN_PROMPT.txt" in names
     assert "artifacts/proofs/task-005-live-collection-check.json" in names
     assert "artifacts/proofs/task-005-windows-runtime-recovery.json" in names
+    assert "artifacts/proofs/task-006-replay-validation-check.json" in names
     assert "artifacts/context_pack.json" in names
     assert "artifacts/proof_bundle_manifest.json" in names
     assert "tests/__pycache__/" not in names

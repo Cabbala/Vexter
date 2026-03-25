@@ -1,8 +1,8 @@
 {
-  "bundle_path": "artifacts/bundles/task-006-research-handoff.tar.gz",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task006_research_handoff_bundle.tar.gz",
-  "task_id": "TASK-006-RESEARCH-HANDOFF",
-  "status": "research_handoff_completed",
+  "bundle_path": "artifacts/bundles/task-007-downstream-research-intake.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_downstream_research_intake_bundle.tar.gz",
+  "task_id": "TASK-007-DOWNSTREAM-RESEARCH-INTAKE",
+  "status": "research_intake_ready",
   "summary": "artifacts/summary.md",
   "context_pack": "artifacts/context_pack.json",
   "task_ledger": "artifacts/task_ledger.jsonl",
@@ -67,6 +67,8 @@
     "templates/windows_runtime/mewx.env.example"
   ],
   "proof_files": [
+    "artifacts/proofs/task-007-downstream-research-intake-check.json",
+    "artifacts/proofs/task-007-downstream-research-intake-summary.md",
     "artifacts/proofs/task-006-research-handoff-check.json",
     "artifacts/proofs/task-006-research-handoff-summary.md",
     "artifacts/proofs/task-006-comparison-closeout-check.json",
@@ -84,6 +86,9 @@
     "artifacts/proofs/task-005-validator-rule-implement-check.json"
   ],
   "reports": [
+    "artifacts/reports/task-007-downstream-research-intake-report.md",
+    "artifacts/reports/task-007-downstream-research-intake-status.md",
+    "artifacts/reports/task-007-downstream-research-intake",
     "artifacts/reports/task-006-research-handoff-report.md",
     "artifacts/reports/task-006-research-handoff-status.md",
     "artifacts/reports/task-006-research-handoff",
@@ -101,16 +106,16 @@
     "artifacts/reports/task-006-replay-validation.md"
   ],
   "next_task": {
-    "id": "DOWNSTREAM-RESEARCH",
-    "state": "ready_to_start_from_handoff",
+    "id": "HYPOTHESIS-RESEARCH",
+    "state": "ready_for_hypothesis_specific_research",
     "resume_requirements": [
       "Treat task005-pass-grade-pair-20260325T180027Z as the frozen promoted baseline.",
-      "Use research handoff plus comparison closeout artifacts as the source of truth.",
+      "Use TASK-007 research intake plus TASK-006 research handoff artifacts as the source of truth.",
+      "Select one hypothesis lane before collecting any new evidence.",
       "Keep Dexter and Mew-X strategy semantics frozen.",
-      "Keep the replay claim scoped to close-summary and position_closed realized-return fidelity.",
+      "Keep the replay claim scoped to close-summary and position_closed realized-return fidelity unless a separate path-equivalence task is cut.",
       "Treat derived winner mode as a component-level comparison surface rather than a scalar overall winner field.",
-      "Carry the confirmatory Mew-X candidate_rejected miss as a caveat only unless contradictory evidence appears.",
-      "Do not reopen evidence collection unless contradictory evidence appears."
+      "Carry the confirmatory Mew-X candidate_rejected miss as a caveat only unless contradictory evidence appears."
     ]
   },
   "proofs": {
@@ -119,8 +124,13 @@
     "mewx_strategy_changed": false,
     "validator_rules_changed": false,
     "comparison_source_of_truth_frozen": true,
-    "research_handoff_completed": true,
-    "downstream_research_ready": true,
+    "research_handoff_source_reused": true,
+    "research_intake_ready": true,
+    "research_questions_defined": true,
+    "hypothesis_lanes_defined": true,
+    "non_goals_defined": true,
+    "required_evidence_defined": true,
+    "comparison_boundary_preserved": true,
     "new_evidence_collection_required": false,
     "live_comparison_winner_mode_derived": true,
     "replay_comparison_winner_mode_derived": true,
@@ -132,10 +142,11 @@
   },
   "task_result": {
     "selected_outcome": "A",
-    "key_finding": "research_handoff_completed",
-    "task_006_comparison_state": "comparison_closed_out",
-    "task_state": "research_handoff_completed",
-    "recommended_next_step": "downstream_research",
+    "key_finding": "research_intake_ready",
+    "comparison_source_of_truth_state": "comparison_closed_out",
+    "task_state": "research_intake_ready",
+    "recommended_next_step": "hypothesis_specific_research",
+    "recommended_next_task_id": "HYPOTHESIS-RESEARCH",
     "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
     "live_metric_winner_tally": {
       "dexter": 6,
@@ -152,9 +163,9 @@
     "mewx_replay_coverage_ratio": 1.0,
     "mewx_live_vs_replay_gap_pct": 0.0,
     "confirmatory_residual": "Mew-X candidate_rejected",
-    "downstream_research_handoff_ready": true,
-    "verified_latest_vexter_pr": 26,
-    "verified_latest_vexter_main_commit": "9d235176e628e0fcbdcf2182ce83def25f6a6b02",
+    "next_research_workstream_ready": true,
+    "verified_latest_vexter_pr": 27,
+    "verified_latest_vexter_main_commit": "d8149e624b9682e2da55ac4bfcaa30fcaa3d94df",
     "verified_dexter_pr": 3,
     "verified_dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"

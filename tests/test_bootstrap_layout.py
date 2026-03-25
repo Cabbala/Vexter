@@ -138,6 +138,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-005-PAPER-REVALIDATE",
         "TASK-005-PASS-GRADE-PAIR",
         "TASK-005-GAP-AUDIT",
+        "TASK-005-VALIDATOR-CONTRACT-AUDIT",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -150,6 +151,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "paper_live_improved_but_partial_validation",
         "pass_grade_pair_collected_but_partial_validation",
         "structural_gap_confirmed",
+        "rule_review_needed_helper_fix_insufficient",
     }
     assert payload["branch"] in {
         "codex/task-005-live-comparison-evidence",
@@ -163,6 +165,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-005-paper-revalidate",
         "codex/task-005-pass-grade-pair-20260326",
         "codex/task-005-gap-audit",
+        "codex/task-005-validator-contract-audit",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -181,6 +184,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "collect_fresh_pass_grade_matched_pair",
         "awaiting_pass_grade_matched_live_pair",
         "awaiting_validator_contract_audit_or_rule_exception_review",
+        "awaiting_validator_rule_review_approval",
     }
 
 
@@ -199,6 +203,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "paper_live_improved_but_partial_validation",
         "pass_grade_pair_collected_but_partial_validation",
         "structural_gap_confirmed",
+        "rule_review_needed",
     }
     assert manifest["next_task"]["id"] in {
         "TASK-005-RESUME",
@@ -216,6 +221,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "awaiting_dexter_paper_live_session_coverage",
         "collect_fresh_pass_grade_matched_pair",
         "awaiting_validator_contract_audit_or_rule_exception_review",
+        "awaiting_validator_rule_review_approval",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]

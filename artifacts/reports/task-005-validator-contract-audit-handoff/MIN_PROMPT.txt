@@ -1,0 +1,6 @@
+Vexter / 既存Codexスレッド / TASK-005-VALIDATOR-CONTRACT-AUDIT
+
+GitHub 最新状態は Vexter PR #17 merge `b09033d6c8ce21510da23025cee935e46f3ef4df`、ひとつ前の支援監査 main は PR #16 merge `b71b5f744027024e2a04606f6c1aa369d0a6c3e3`、Dexter は PR #3 merge `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`、frozen Mew-X は `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a` まで再確認済み。
+結論は Outcome `A`、key finding は `rule review needed`。`run_summary` は両 source とも finalizer 専用で、current helper の `CTRL_BREAK_EVENT` shutdown では取りこぼしている可能性が高く、helper hardening の余地はある。ただし supporting proof はすでに `full_stream_fallback` で raw stream を丸ごとコピーしており、packaging 単独の問題ではない。
+一方で `entry_rejected` は Dexter でも Mew-X でも failure-path-only、Mew-X `creator_candidate` は non-empty candidate report 条件なので、shutdown / packaging の最小修正だけでは残差 3 件すべてを collectible に戻せない。つまり helper fix は `run_summary` 限定の改善余地にとどまり、TASK-005 全体の unblock 条件には足りない。
+したがって TASK-006 はまだ blocked。次に進めるなら validator rule review / exception memo を承認ベースで詰め、その後に必要なら `run_summary` 専用の shutdown hardening task を切るのが妥当。

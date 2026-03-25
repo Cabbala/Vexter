@@ -1,0 +1,203 @@
+{
+  "task_id": "TASK-007-CANDIDATE-GENERATION-VS-QUALITY",
+  "generated_at_utc": "2026-03-25T22:47:26Z",
+  "verified_github": {
+    "latest_vexter_pr": 28,
+    "latest_vexter_main_commit": "4df259b90365787ac24085227fcc1b15b63d057d",
+    "latest_vexter_merged_at_utc": "2026-03-25T22:36:55Z",
+    "supporting_vexter_prs": [
+      27,
+      26,
+      25,
+      24,
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17,
+      16
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "fixed_input_surface": {
+    "research_intake_report": "artifacts/reports/task-007-downstream-research-intake-report.md",
+    "research_intake_proof": "artifacts/proofs/task-007-downstream-research-intake-check.json",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "promoted_live_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison",
+    "promoted_replay_comparison_dir": "artifacts/reports/task006-replay-surface-fix-20260325T180027Z-replay-comparison",
+    "confirmatory_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180604Z-comparison",
+    "promoted_live_winner_mode": "derived",
+    "promoted_replay_winner_mode": "derived",
+    "live_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "replay_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "dexter_replay_coverage_ratio": 1.0,
+    "dexter_live_vs_replay_gap_pct": 0.0,
+    "mewx_replay_coverage_ratio": 1.0,
+    "mewx_live_vs_replay_gap_pct": 0.0,
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false
+  },
+  "implementation": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "dexter_strategy_changed": false,
+    "mewx_strategy_changed": false,
+    "minimal_reaggregation_only": true,
+    "new_evidence_collection_required": false
+  },
+  "candidate_evidence_surfaces": {
+    "live_comparison_matrix": "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison/comparison_matrix.json",
+    "replay_comparison_matrix": "artifacts/reports/task006-replay-surface-fix-20260325T180027Z-replay-comparison/comparison_matrix.json",
+    "dexter_state_export": "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-augmented-dexter-package/exports/dexter-task005-pass-grade-pair-20260325T180027Z.state.json",
+    "dexter_close_summary_index": "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-augmented-dexter-package/exports/dexter-close-summary-index.json",
+    "mewx_state_export": "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-replay-packages/mewx-replay/exports/mewx-task005-pass-grade-pair-20260325T180027Z.state.json",
+    "mewx_initial_candidate_snapshot": "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-replay-packages/mewx-replay/exports/mewx-task005-pass-grade-pair-20260325T180027Z.candidates.initial_selection.json",
+    "mewx_refresh_candidate_snapshot": "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-replay-packages/mewx-replay/exports/mewx-task005-pass-grade-pair-20260325T180027Z.candidates.refresh.json",
+    "mewx_session_summaries_dir": "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-replay-packages/mewx-replay/exports"
+  },
+  "lane_analysis": {
+    "question": "Does Dexter's candidate_count lead convert into realized edge on the promoted baseline rather than simple breadth?",
+    "working_hypothesis": "Dexter's candidate breadth plus its slippage and realized-exit lead suggest real edge conversion on the promoted baseline, but cross-source candidate-quality claims remain bounded because Mew-X lacks a comparable creator_candidate surface.",
+    "live_replay_metric_stability": {
+      "stable_metrics": {
+        "candidate_count": {
+          "dexter": 255,
+          "mewx": 0
+        },
+        "signal_to_attempt_latency_ms": {
+          "dexter": 0.0,
+          "mewx": 891.0
+        },
+        "attempt_to_fill_latency_ms": {
+          "dexter": 502.5,
+          "mewx": 1.5
+        },
+        "quote_vs_fill_slippage_bps": {
+          "dexter": 0.0,
+          "mewx": 7.706128082620904
+        },
+        "max_favorable_excursion_pct": {
+          "dexter": 34.844263534142286,
+          "mewx": 6.792904253675385
+        },
+        "realized_exit_pct": {
+          "dexter": 7.164077921477945,
+          "mewx": 0.0
+        },
+        "stale_position_ratio": {
+          "dexter": 0.0,
+          "mewx": 1.0
+        }
+      },
+      "path_sensitive_metric_drift": {
+        "metric": "realized_vs_peak_gap_pct",
+        "live_value": 20.533046470504612,
+        "replay_value": 25.804157291090654
+      }
+    },
+    "dexter_candidate_funnel": {
+      "creator_candidate": 255,
+      "candidate_rejected": 8,
+      "mint_observed": 12,
+      "entry_signal": 4,
+      "entry_attempt": 4,
+      "entry_fill": 4,
+      "position_closed": 4,
+      "candidate_to_observed_ratio": 0.047058823529411764,
+      "candidate_to_fill_ratio": 0.01568627450980392,
+      "candidate_to_positive_realized_close_ratio": 0.00784313725490196,
+      "candidate_to_positive_mfe_close_ratio": 0.01568627450980392,
+      "mint_observed_to_fill_ratio": 0.3333333333333333,
+      "fill_to_positive_realized_close_ratio": 0.5,
+      "fill_to_positive_mfe_close_ratio": 1.0
+    },
+    "dexter_outcome_summaries": {
+      "closed_positions": 4,
+      "positive_realized_closes": 2,
+      "positive_mfe_closes": 4,
+      "exit_reasons": {
+        "safe": 2,
+        "malicious": 2
+      },
+      "median_realized_return_pct": 7.164077921477945,
+      "median_mfe_pct": 34.844263534142286,
+      "median_quote_vs_fill_slippage_bps": 0.0,
+      "median_time_to_peak_ms": 5299.0,
+      "stale_position_ratio": 0.0
+    },
+    "mewx_observable_candidate_surface": {
+      "creator_candidate_events_observed": 0,
+      "candidate_precision_proxy_status": "unavailable",
+      "candidate_precision_proxy_reason": "no creator_candidate events were observed",
+      "initial_selection_snapshot_observations": 0,
+      "refresh_snapshot_observations": 0
+    },
+    "mewx_session_outcomes": {
+      "mint_observed": 9,
+      "entry_signal": 6,
+      "entry_attempt": 6,
+      "entry_fill": 6,
+      "position_closed": 6,
+      "mint_observed_to_fill_ratio": 0.6666666666666666,
+      "positive_realized_closes": 2,
+      "positive_mfe_closes": 3,
+      "median_realized_return_pct": 0.0,
+      "median_mfe_pct": 6.792904253675385,
+      "median_quote_vs_fill_slippage_bps": 7.706128082620904,
+      "median_time_to_peak_ms": 20.5,
+      "stale_position_ratio": 1.0,
+      "exit_reasons": {
+        "inactivity_timeout": 6
+      }
+    },
+    "bounded_interpretation": [
+      "Dexter breadth does not express itself as more fills than Mew-X; it expresses itself as fewer fills with much stronger median favorable excursion and realized exit.",
+      "Dexter's four closes all reached positive favorable excursion, and the same frozen comparison surface records zero median slippage and zero stale positions.",
+      "Mew-X still wins after attempt placement on fill latency and on realized-vs-peak retention, but its upstream candidate surface remains unobservable and its median realized exit stays at 0.0 pct on the promoted baseline.",
+      "The current source-faithful reading therefore supports a bounded edge-conversion claim for Dexter without upgrading it into a cross-source upstream precision proof."
+    ]
+  },
+  "residual_and_caveats": {
+    "confirmatory_label": "task005-pass-grade-pair-20260325T180604Z",
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false,
+    "replay_scope": "Current zero-gap evidence is scoped to close-summary and position_closed realized-return fidelity rather than full execution-path equivalence.",
+    "candidate_quality_bound": "Cross-source candidate quality remains bounded because Mew-X creator_candidate is absent and both committed candidate snapshots are empty.",
+    "dexter_metric_scope_gap": {
+      "metric": "realized_vs_peak_gap_pct",
+      "live_value": 20.533046470504612,
+      "replay_value": 25.804157291090654,
+      "why_it_matters": "Path-sensitive derived metrics can still drift even when replay preserves realized-return parity."
+    }
+  },
+  "decision": {
+    "selected_outcome": "A",
+    "key_finding": "candidate_edge_supported",
+    "claim_boundary": "candidate_quality_bounded",
+    "task_state": "candidate_edge_supported",
+    "decision": "next_lane_ready",
+    "recommended_next_lane": "execution_timing_vs_retention",
+    "recommended_next_task_id": "HYPOTHESIS-RESEARCH",
+    "new_evidence_collection_required": false,
+    "strategy_planning_ready": false,
+    "blocked": false,
+    "why": [
+      "Dexter's candidate-count lead survives into the same live/replay surfaces that show better realized exit, favorable excursion, slippage control, and stale-position control.",
+      "The strongest remaining unresolved tradeoff is now where Mew-X still wins after attempt placement: fill speed and retention versus peak.",
+      "That next question can still be answered with existing committed surfaces, so strategy planning is not the highest-value next cut yet."
+    ]
+  }
+}

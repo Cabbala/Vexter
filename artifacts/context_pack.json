@@ -1,13 +1,13 @@
 {
   "background": {
-    "previous_task_id": "TASK-006-RESEARCH-HANDOFF",
-    "previous_key_finding": "research_handoff_completed",
+    "previous_task_id": "TASK-007-DOWNSTREAM-RESEARCH-INTAKE",
+    "previous_key_finding": "research_intake_ready",
     "promoted_pair": "task005-pass-grade-pair-20260325T180027Z",
     "confirmatory_pair": "task005-pass-grade-pair-20260325T180604Z",
     "comparison_source_of_truth_fixed_before_task": true,
     "research_handoff_completed_before_task": true
   },
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_downstream_research_intake_bundle.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_candidate_generation_vs_quality_bundle.tar.gz",
   "current_contract": {
     "conditional_rules": {
       "entry_rejected": "required_only_when_an_entry_attempt_lacks_a_matching_fill",
@@ -33,30 +33,31 @@
     ]
   },
   "current_task": {
-    "id": "TASK-007-DOWNSTREAM-RESEARCH-INTAKE",
+    "id": "TASK-007-CANDIDATE-GENERATION-VS-QUALITY",
     "scope": [
       "Verify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X.",
-      "Treat TASK-006 research handoff plus comparison closeout outputs as the formal source of truth.",
-      "Define the comparison-versus-research boundary without changing source logic or validator rules.",
-      "Document fixed facts, fixed assumptions, non-goals, priority research questions, hypothesis lanes, required evidence types, and reusable artifact surfaces.",
-      "Refresh research intake report, status, proof, metadata, and bundle outputs."
+      "Treat TASK-007 downstream research intake as the formal source of truth for this lane.",
+      "Reuse only promoted live/replay comparisons, candidate snapshots, session summaries, and close-summary metrics already committed in GitHub-visible artifacts.",
+      "Determine whether Dexter's candidate_count lead connects to realized edge or only to broader opportunity breadth.",
+      "Refresh lane report, status, proof, metadata, and bundle outputs without reopening comparison work."
     ],
     "deliverables": [
       "artifacts/summary.md",
       "artifacts/context_pack.json",
       "artifacts/proof_bundle_manifest.json",
       "artifacts/task_ledger.jsonl",
-      "artifacts/reports/task-007-downstream-research-intake-report.md",
-      "artifacts/reports/task-007-downstream-research-intake-status.md",
-      "artifacts/reports/task-007-downstream-research-intake/DETAILS.md",
-      "artifacts/reports/task-007-downstream-research-intake/MIN_PROMPT.txt",
-      "artifacts/proofs/task-007-downstream-research-intake-check.json",
-      "artifacts/proofs/task-007-downstream-research-intake-summary.md",
-      "artifacts/bundles/task-007-downstream-research-intake.tar.gz"
+      "artifacts/reports/task-007-candidate-generation-vs-quality-report.md",
+      "artifacts/reports/task-007-candidate-generation-vs-quality-status.md",
+      "artifacts/reports/task-007-candidate-generation-vs-quality/DETAILS.md",
+      "artifacts/reports/task-007-candidate-generation-vs-quality/MIN_PROMPT.txt",
+      "artifacts/proofs/task-007-candidate-generation-vs-quality-check.json",
+      "artifacts/proofs/task-007-candidate-generation-vs-quality-summary.md",
+      "artifacts/bundles/task-007-candidate-generation-vs-quality.tar.gz"
     ]
   },
   "evidence": {
     "github_latest": {
+      "vexter_pr_28_merged_at": "2026-03-25T22:36:55Z",
       "vexter_pr_27_merged_at": "2026-03-25T22:17:31Z",
       "vexter_pr_26_merged_at": "2026-03-25T22:05:02Z",
       "vexter_pr_25_merged_at": "2026-03-25T21:43:44Z",
@@ -164,6 +165,59 @@
         "path_sensitive_retention_scope"
       ]
     },
+    "candidate_generation_vs_quality": {
+      "report": "artifacts/reports/task-007-candidate-generation-vs-quality-report.md",
+      "status_report": "artifacts/reports/task-007-candidate-generation-vs-quality-status.md",
+      "proof": "artifacts/proofs/task-007-candidate-generation-vs-quality-check.json",
+      "summary": "artifacts/proofs/task-007-candidate-generation-vs-quality-summary.md",
+      "handoff_dir": "artifacts/reports/task-007-candidate-generation-vs-quality",
+      "key_finding": "candidate_edge_supported",
+      "claim_boundary": "candidate_quality_bounded",
+      "task_state": "candidate_edge_supported",
+      "decision": "next_lane_ready",
+      "recommended_next_lane": "execution_timing_vs_retention",
+      "primary_surfaces": [
+        "artifacts/reports/task-007-candidate-generation-vs-quality-report.md",
+        "artifacts/reports/task-007-candidate-generation-vs-quality-status.md",
+        "artifacts/proofs/task-007-candidate-generation-vs-quality-check.json",
+        "artifacts/proofs/task-007-candidate-generation-vs-quality-summary.md"
+      ],
+      "supporting_surfaces": [
+        "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison",
+        "artifacts/reports/task006-replay-surface-fix-20260325T180027Z-replay-comparison",
+        "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-augmented-dexter-package/exports/dexter-close-summary-index.json",
+        "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-replay-packages/mewx-replay/exports/mewx-task005-pass-grade-pair-20260325T180027Z.candidates.initial_selection.json",
+        "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-replay-packages/mewx-replay/exports/mewx-task005-pass-grade-pair-20260325T180027Z.candidates.refresh.json"
+      ],
+      "dexter_funnel": {
+        "creator_candidate": 255,
+        "candidate_rejected": 8,
+        "mint_observed": 12,
+        "entry_fill": 4,
+        "position_closed": 4,
+        "candidate_to_fill_ratio": 0.01568627450980392,
+        "candidate_to_positive_realized_close_ratio": 0.00784313725490196,
+        "candidate_to_positive_mfe_close_ratio": 0.01568627450980392
+      },
+      "dexter_outcome_medians": {
+        "realized_exit_pct": 7.164077921477945,
+        "max_favorable_excursion_pct": 34.844263534142286,
+        "quote_vs_fill_slippage_bps": 0.0,
+        "stale_position_ratio": 0.0
+      },
+      "mewx_observable_candidate_surface": {
+        "creator_candidate_events_observed": 0,
+        "candidate_precision_proxy": "unavailable",
+        "initial_selection_observations": 0,
+        "refresh_observations": 0
+      },
+      "mewx_outcome_medians": {
+        "realized_exit_pct": 0.0,
+        "max_favorable_excursion_pct": 6.792904253675385,
+        "quote_vs_fill_slippage_bps": 7.706128082620904,
+        "stale_position_ratio": 1.0
+      }
+    },
     "caveat": {
       "replay_scope": "Current zero-gap evidence is scoped to close-summary and position_closed realized-return fidelity rather than full execution-path equivalence.",
       "dexter_path_sensitive_metric_drift": {
@@ -178,19 +232,19 @@
     "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
   },
-  "goal": "Maintain a GitHub-visible Mac control plane that turns the frozen Dexter versus Mew-X comparison conclusion into a direct-use downstream research intake without changing frozen source behavior.",
+  "goal": "Maintain a GitHub-visible Mac control plane that reads whether Dexter's candidate-count edge converts into realized edge on the frozen promoted baseline without changing frozen source behavior.",
   "implementation": {
     "source_logic_changed": false,
     "validator_rules_changed": false,
     "task_proofs_generated": [
-      "artifacts/proofs/task-007-downstream-research-intake-check.json",
-      "artifacts/proofs/task-007-downstream-research-intake-summary.md"
+      "artifacts/proofs/task-007-candidate-generation-vs-quality-check.json",
+      "artifacts/proofs/task-007-candidate-generation-vs-quality-summary.md"
     ],
     "task_reports_updated": [
-      "artifacts/reports/task-007-downstream-research-intake-report.md",
-      "artifacts/reports/task-007-downstream-research-intake-status.md",
-      "artifacts/reports/task-007-downstream-research-intake/DETAILS.md",
-      "artifacts/reports/task-007-downstream-research-intake/MIN_PROMPT.txt"
+      "artifacts/reports/task-007-candidate-generation-vs-quality-report.md",
+      "artifacts/reports/task-007-candidate-generation-vs-quality-status.md",
+      "artifacts/reports/task-007-candidate-generation-vs-quality/DETAILS.md",
+      "artifacts/reports/task-007-candidate-generation-vs-quality/MIN_PROMPT.txt"
     ]
   },
   "mac_control_plane": "/Users/cabbala/Projects/Vexter",
@@ -199,28 +253,29 @@
     "state": "ready_for_hypothesis_specific_research",
     "resume_requirements": [
       "Treat task005-pass-grade-pair-20260325T180027Z as the frozen promoted baseline.",
-      "Use TASK-007 research intake plus TASK-006 research handoff artifacts as the source of truth.",
-      "Select one hypothesis lane before collecting any new evidence.",
+      "Carry forward candidate_edge_supported together with candidate_quality_bounded as the current bounded conclusion.",
+      "Use TASK-007 candidate-generation-vs-quality plus TASK-007 intake artifacts as the source of truth.",
+      "Cut the next lane on existing evidence rather than reopening comparison or collection.",
       "Keep Dexter and Mew-X strategy semantics and validator rules frozen.",
       "Keep the replay claim scoped to close-summary and position_closed realized-return fidelity unless a separate path-equivalence task is cut.",
       "Treat derived winner mode as component-level interpretation, not a scalar overall winner field.",
       "Carry the confirmatory Mew-X candidate_rejected miss as a caveat only unless contradictory evidence appears."
     ]
   },
-  "phase": "TASK-007-DOWNSTREAM-RESEARCH-INTAKE",
+  "phase": "TASK-007-CANDIDATE-GENERATION-VS-QUALITY",
   "project": "Vexter",
   "recommendation": {
-    "decision": "RESEARCH_INTAKE_READY",
+    "decision": "NEXT_LANE_READY",
     "outcome": "A",
-    "key_finding": "research_intake_ready",
-    "recommended_next_step": "hypothesis_specific_research",
+    "key_finding": "candidate_edge_supported",
+    "claim_boundary": "candidate_quality_bounded",
+    "recommended_next_step": "execution_timing_vs_retention",
     "next_research_workstream_ready": true,
     "new_evidence_collection_required": false,
     "why": [
-      "Comparison closeout and research handoff already froze the promoted baseline as the source of truth.",
-      "The scored metric split is stable across live and repaired replay after the replay-surface fix.",
-      "The only remaining confirmatory miss is Mew-X candidate_rejected and it does not overturn the promoted baseline.",
-      "The remaining caveats are scope and surface caveats, so the highest-value next work is hypothesis selection rather than more comparison work."
+      "Dexter's broad candidate surface narrows into fewer but materially stronger downstream outcomes on the promoted baseline.",
+      "Mew-X still lacks a comparable upstream candidate surface, so the lane conclusion must remain bounded rather than upgraded into a full precision proof.",
+      "The next unresolved question on committed evidence is timing versus retention after attempt placement, not more candidate-lane work."
     ]
   },
   "repos": {
@@ -231,12 +286,13 @@
   "resolved_windows_hostname": "DESKTOP-NNC6MPS",
   "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
   "starting_point": {
-    "verified_latest_vexter_pr": 27,
-    "verified_latest_vexter_main": "d8149e624b9682e2da55ac4bfcaa30fcaa3d94df",
+    "verified_latest_vexter_pr": 28,
+    "verified_latest_vexter_main": "4df259b90365787ac24085227fcc1b15b63d057d",
     "verified_dexter_pr": 3,
     "verified_dexter_main": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_mewx_frozen": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
     "verified_prior_supporting_vexter_prs": [
+      27,
       26,
       25,
       24,
@@ -249,9 +305,9 @@
       17,
       16
     ],
-    "work_branch": "codex/task-007-downstream-research-intake"
+    "work_branch": "codex/task-007-candidate-generation-vs-quality"
   },
-  "status": "research_intake_ready",
+  "status": "candidate_edge_supported",
   "windows_runtime_host": "win-lan",
   "workflow": {
     "analysis_priority": "paper_sim_first",
@@ -262,5 +318,5 @@
     "github_is_source_of_truth": true,
     "agent_usage_note": "No sub-agents were used in this task."
   },
-  "working_tree": "/Users/cabbala/Documents/Vexter_repo_task007"
+  "working_tree": "/Users/cabbala/Documents/vexter/task005-validator-rule-review"
 }

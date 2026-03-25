@@ -1,0 +1,26 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+継続タスクID: TASK-007-CANDIDATE-GENERATION-VS-QUALITY
+
+PR #28 merged main を基準に、TASK-007 の `candidate_generation_vs_quality` lane は完了しています。comparison baseline は `task005-pass-grade-pair-20260325T180027Z` のまま固定で、promoted live / repaired replay はどちらも `winner_mode: derived`、stable scored split は Dexter `6`, Mew-X `4`, tie `2` です。Dexter / Mew-X の replay coverage / gap はどちらも `100.00% / 0.0000` を維持し、confirmatory residual は Mew-X `candidate_rejected` のみで promoted baseline を overturn しません。
+
+lane の bounded conclusion は以下です。
+
+- Key finding: `candidate_edge_supported`
+- Claim boundary: `candidate_quality_bounded`
+
+source-faithful evidence:
+
+- Dexter は `255 creator_candidate -> 12 mint_observed -> 4 entry_fill -> 4 position_closed`
+- Dexter close summaries の median realized exit は `7.1641 pct`, median MFE は `34.8443 pct`, median slippage は `0.0 bps`, stale ratio は `0.00%`
+- Mew-X は candidate snapshot が `initial_selection=0`, `refresh=0` で、`candidate_precision_proxy` は引き続き unavailable
+- Mew-X session summaries の median realized exit は `0.0 pct`, median MFE は `6.7929 pct`, stale ratio は `100.00%`
+
+したがって、Dexter の candidate breadth は単なる breadth ではなく promoted baseline 上で downstream realized edge に接続していると読むのが妥当ですが、Mew-X 側の comparable upstream precision がないため cross-source candidate quality の強い主張はまだできません。
+
+次に切る lane は `execution_timing_vs_retention` を推奨します。再実行してはいけないもの:
+
+- promoted-baseline selection
+- 新 live / replay evidence collection
+- validator / source logic changes
+- replay claim の full path equivalence 化

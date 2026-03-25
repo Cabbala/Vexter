@@ -139,6 +139,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-005-PASS-GRADE-PAIR",
         "TASK-005-GAP-AUDIT",
         "TASK-005-VALIDATOR-CONTRACT-AUDIT",
+        "TASK-005-VALIDATOR-RULE-REVIEW",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -152,6 +153,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "pass_grade_pair_collected_but_partial_validation",
         "structural_gap_confirmed",
         "rule_review_needed_helper_fix_insufficient",
+        "rule_review_memo_ready_for_approval",
     }
     assert payload["branch"] in {
         "codex/task-005-live-comparison-evidence",
@@ -166,12 +168,14 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-005-pass-grade-pair-20260326",
         "codex/task-005-gap-audit",
         "codex/task-005-validator-contract-audit",
+        "codex/task-005-validator-rule-review",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
         "BLOCKED",
         "DEXTER-PAPER-IMPLEMENT",
         "TASK-005-PASS-GRADE-PAIR",
+        "TASK-005-VALIDATOR-RULE-IMPLEMENTATION",
     }
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -185,6 +189,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "awaiting_pass_grade_matched_live_pair",
         "awaiting_validator_contract_audit_or_rule_exception_review",
         "awaiting_validator_rule_review_approval",
+        "awaiting_explicit_approval_to_modify_validator_rules",
     }
 
 
@@ -204,12 +209,14 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "pass_grade_pair_collected_but_partial_validation",
         "structural_gap_confirmed",
         "rule_review_needed",
+        "rule_memo_ready",
     }
     assert manifest["next_task"]["id"] in {
         "TASK-005-RESUME",
         "BLOCKED",
         "DEXTER-PAPER-IMPLEMENT",
         "TASK-005-PASS-GRADE-PAIR",
+        "TASK-005-VALIDATOR-RULE-IMPLEMENTATION",
     }
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -222,6 +229,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "collect_fresh_pass_grade_matched_pair",
         "awaiting_validator_contract_audit_or_rule_exception_review",
         "awaiting_validator_rule_review_approval",
+        "awaiting_explicit_approval_to_modify_validator_rules",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]

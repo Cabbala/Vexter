@@ -1,0 +1,112 @@
+{
+  "task_id": "TASK-005-VALIDATOR-RULE-REVIEW",
+  "checked_at_utc": "2026-03-25T19:10:39Z",
+  "status": "rule_memo_ready",
+  "github_latest": {
+    "vexter_main_commit": "b7c8cb900ced104f4fe76cfd9ca48c2b21b82d81",
+    "vexter_pr": 18,
+    "vexter_pr_18_merged_at": "2026-03-25T18:57:55Z",
+    "supporting_vexter_main_commits": [
+      "b09033d6c8ce21510da23025cee935e46f3ef4df",
+      "b71b5f744027024e2a04606f6c1aa369d0a6c3e3"
+    ],
+    "supporting_vexter_prs": [
+      17,
+      16
+    ],
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr": 3,
+    "dexter_pr_3_merged_at": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "mewx_frozen_reverified_at": "2026-03-20T16:05:19Z"
+  },
+  "contract": {
+    "validator_files": [
+      "vexter/comparison/constants.py",
+      "vexter/comparison/validator.py"
+    ],
+    "hard_pass_rule": "All required event types must be present for classification pass.",
+    "packager_file": "scripts/collect_comparison_package.ps1",
+    "shutdown_helper_file": "scripts/collect_matched_live_pair.py"
+  },
+  "supporting_evidence": {
+    "promoted": {
+      "label": "task005-pass-grade-pair-20260325T180027Z",
+      "proof_dir": "artifacts/proofs/task005-gap-audit-20260325T180027Z-results",
+      "collection_payload": "artifacts/proofs/task005-gap-audit-20260325T180027Z.collection.json",
+      "dexter_missing_event_types": [
+        "entry_rejected",
+        "run_summary"
+      ],
+      "mewx_missing_event_types": [
+        "creator_candidate",
+        "entry_rejected",
+        "run_summary"
+      ],
+      "full_stream_fallback": true,
+      "process_exit_code": 3221225786,
+      "process_exit_code_hex": "0xC000013A",
+      "dexter_state_status": "running",
+      "dexter_state_ended_at_utc": null,
+      "mewx_state_status": "running",
+      "mewx_state_ended_at_utc": null,
+      "mewx_initial_candidate_observation_count": 0,
+      "mewx_refresh_candidate_observation_count": 0
+    },
+    "confirmatory": {
+      "label": "task005-pass-grade-pair-20260325T180604Z",
+      "proof_dir": "artifacts/proofs/task005-gap-audit-20260325T180604Z-results",
+      "collection_payload": "artifacts/proofs/task005-gap-audit-20260325T180604Z.collection.json",
+      "dexter_missing_event_types": [
+        "entry_rejected",
+        "run_summary"
+      ],
+      "mewx_missing_event_types": [
+        "candidate_rejected",
+        "creator_candidate",
+        "entry_rejected",
+        "run_summary"
+      ],
+      "full_stream_fallback": true,
+      "grace_seconds": 60
+    }
+  },
+  "event_review": {
+    "run_summary": {
+      "taxonomy": "shutdown_success_dependent",
+      "frozen_source_basis": [
+        "Dexter emits run_summary in DexLab/instrumentation.py finalize(), reached from Dexter.close().",
+        "Mew-X emits run_summary in src/mew/instrumentation.rs finalize(), reached on ctrl_c or orderly end-of-main."
+      ],
+      "evidence": "Both supporting collections ended through CTRL_BREAK_EVENT with 0xC000013A, both copied state exports stayed running with ended_at_utc null, and full_stream_fallback already copied the full raw stream.",
+      "preferred_rule_treatment": "conditional_required_on_clean_shutdown_or_replayability_grade_only"
+    },
+    "entry_rejected": {
+      "taxonomy": "failure_path_only",
+      "frozen_source_basis": [
+        "Dexter records entry_rejected only on failed buy paths such as bonding_curve_missing, insufficient_balance, migrated, zero_quote, creator_vault_unavailable, price_too_high, or confirmation failure.",
+        "Mew-X records entry_rejected only when buy_result.success is false, currently attributed as transport_send_failed."
+      ],
+      "evidence": "The promoted pair still showed successful fills on both sides with zero entry_rejected.",
+      "preferred_rule_treatment": "conditional_required_only_if_entry_failure_occurs_otherwise_observed_if_present"
+    },
+    "mewx_creator_candidate": {
+      "taxonomy": "source_specific_conditional",
+      "frozen_source_basis": [
+        "Mew-X main exports the initial candidate snapshot and emits creator_candidate from candidate_report.observations.",
+        "Mew-X refresh emits creator_candidate only for added observation keys."
+      ],
+      "evidence": "The promoted initial and refresh candidate snapshots both exported observations [] and source_counts {}, while the same run still emitted mint_observed, entry_fill, exit_fill, and position_closed.",
+      "preferred_rule_treatment": "conditional_for_non_empty_candidate_snapshots_otherwise_source_specific_optional"
+    }
+  },
+  "decision": {
+    "selected_outcome": "A",
+    "key_finding": "rule_memo_ready",
+    "validator_rules_changed": false,
+    "validator_rule_implementation_ready_after_approval": true,
+    "task_006_ready": false,
+    "next_step": "approved_validator_rule_implementation",
+    "optional_follow_on": "run_summary_only_shutdown_hardening"
+  }
+}

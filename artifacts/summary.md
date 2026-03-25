@@ -1,53 +1,51 @@
-# TASK-005-VALIDATOR-CONTRACT-AUDIT Summary
+# TASK-005-VALIDATOR-RULE-REVIEW Summary
 
 ## Verified GitHub State
 
-- `Cabbala/Vexter` latest merged `main` was reverified at PR `#17` merge commit `b09033d6c8ce21510da23025cee935e46f3ef4df` on `2026-03-25T18:40:50Z`.
-- The supporting gap-audit evidence was the prior merged Vexter `main` at PR `#16` merge commit `b71b5f744027024e2a04606f6c1aa369d0a6c3e3`.
+- `Cabbala/Vexter` latest merged `main` was reverified at PR `#18` merge commit `b7c8cb900ced104f4fe76cfd9ca48c2b21b82d81` on `2026-03-25T18:57:55Z`.
+- Supporting merged Vexter states remained PR `#17` `b09033d6c8ce21510da23025cee935e46f3ef4df` and PR `#16` `b71b5f744027024e2a04606f6c1aa369d0a6c3e3`.
 - `Cabbala/Dexter` `main` stayed pinned at merged PR `#3` commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938` on `2026-03-21T11:31:07Z`.
 - Frozen `Cabbala/Mew-X` stayed pinned at commit `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`, reverified on GitHub at `2026-03-20T16:05:19Z`.
 
-## What This Audit Did
+## What This Review Did
 
-- Reconfirmed that the current validator contract still treats every entry in `REQUIRED_EVENT_TYPES` as a hard pass gate.
-- Reused the GitHub-visible promoted and confirmatory full-stream proofs from the merged gap audit instead of recollecting the same shape again.
-- Audited frozen Dexter, frozen Mew-X, the matched-pair shutdown helper, and the packaging fallback path to separate source non-emission from helper loss.
-- Kept source logic, source thresholds, and validator rules unchanged.
+- Reconfirmed that `vexter/comparison/constants.py` and `vexter/comparison/validator.py` still treat all `REQUIRED_EVENT_TYPES` as one hard pass gate.
+- Reused the GitHub-visible promoted and confirmatory pass-grade proofs plus the merged contract audit instead of recollecting the same frozen-source shape again.
+- Kept Dexter strategy semantics, Mew-X source logic, and validator rules unchanged while translating the audit result into an approval-grade rule review / exception memo.
 
-## Contract-Level Classification
+## Rule Review Result
 
 ### `run_summary`
 
-- Both frozen sources emit `run_summary` only from finalizers.
-- The current helper still shuts down with `CTRL_BREAK_EVENT`, and both 2026-03-25 collection payloads ended with process exit code `3221225786` (`0xC000013A`) while copied state remained unfinished.
-- The packager already used `full_stream_fallback`, so this is not a packaging-only loss.
-- Minimal helper hardening is plausible for `run_summary`, but only in the shutdown-success path.
+- Frozen Dexter and frozen Mew-X both emit `run_summary` only from finalizers.
+- Both 2026-03-25 supporting collections ended through `CTRL_BREAK_EVENT` with exit code `3221225786` (`0xC000013A`), and both copied state exports still showed `status: running` with `ended_at_utc: null`.
+- Recommended treatment: stop treating `run_summary` as source-agnostic always-required evidence; make it conditional on clean shutdown completion or reserve it for replayability / integration evidence.
 
 ### `entry_rejected`
 
-- Dexter and Mew-X both emit `entry_rejected` only on failed entry paths.
-- The promoted pair still showed successful fills on both sides with zero rejects.
-- Shutdown or packaging cannot recover an event that a healthy run never emitted.
+- Frozen Dexter records `entry_rejected` only on failed buy paths such as missing bonding curve, insufficient balance, migration, zero quote, creator vault unavailable, price-too-high, or confirmation failure.
+- Frozen Mew-X records `entry_rejected` only when `buy_result.success` is false and the rejection is attributed as `transport_send_failed`.
+- Recommended treatment: make `entry_rejected` conditional on observed entry failure rather than a healthy success-path pass gate; otherwise keep it as observed-if-present evidence.
 
 ### `creator_candidate` on Mew-X
 
 - Frozen Mew-X emits `creator_candidate` only from non-empty initial-selection or refresh-addition reports.
-- The copied candidate snapshots for the audited runs still had `observations: []` and `source_counts: {}` while the same runs produced fills and closed positions.
-- Shutdown or packaging cannot synthesize this event without changing source behavior or forcing different market conditions.
+- The promoted pair still exported `observations: []` and `source_counts: {}` in both initial and refresh candidate snapshots while also producing `mint_observed`, `entry_fill`, `exit_fill`, and `position_closed`.
+- Recommended treatment: keep it source-specific and conditional for Mew-X when candidate snapshots are non-empty; otherwise treat it as optional rather than a source-agnostic hard requirement.
 
 ## Decision
 
 - Outcome: `A`
-- Key finding: `rule review needed`
-- Interpretation: helper-side shutdown hardening may recover `run_summary`, but it cannot make `entry_rejected` or Mew-X `creator_candidate` dependable in healthy frozen-source matched pairs.
+- Key finding: `rule memo ready`
+- Rule implementation approved by this task: `no`
 - TASK-006 readiness: `blocked`
-- Recommended next step: approved validator rule review / exception memo first, with optional follow-on helper hardening scoped only to `run_summary`.
+- Recommended next step: approval-driven validator rule implementation, with optional later helper hardening scoped only to `run_summary`
 
 ## Key Paths
 
-- Contract audit report: `artifacts/reports/task-005-validator-contract-audit.md`
-- Readiness report: `artifacts/reports/task-005-validator-contract-audit-readiness.md`
-- Audit proof: `artifacts/proofs/task-005-validator-contract-audit-check.json`
+- Rule review memo: `artifacts/reports/task-005-validator-rule-review.md`
+- Readiness report: `artifacts/reports/task-005-validator-rule-review-readiness.md`
+- Review proof: `artifacts/proofs/task-005-validator-rule-review-check.json`
 - Supporting promoted proof dir: `artifacts/proofs/task005-gap-audit-20260325T180027Z-results`
 - Supporting confirmatory proof dir: `artifacts/proofs/task005-gap-audit-20260325T180604Z-results`
 - Supporting collection payloads:

@@ -1,8 +1,8 @@
 {
   "project": "Vexter",
   "goal": "Maintain a GitHub-visible Mac control plane for auditing Dexter and Mew-X comparison readiness without changing frozen source behavior.",
-  "mac_control_plane": "/Users/cabbala/Projects/Vexter",
-  "working_tree": "/Users/cabbala/Projects/Vexter",
+  "mac_control_plane": "/Users/cabbala/Documents/vexter/task005-validator-rule-review",
+  "working_tree": "/Users/cabbala/Documents/vexter/task005-validator-rule-review",
   "windows_runtime_host": "win-lan",
   "resolved_windows_hostname": "DESKTOP-NNC6MPS",
   "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
@@ -18,26 +18,32 @@
     "analysis_priority": "paper_sim_first",
     "dexter_mode_preference": "explicit_paper_live",
     "mewx_mode_preference": "sim_live",
-    "agent_usage_note": "No sub-agents were used in this audit."
+    "agent_usage_note": "No sub-agents were used in this review."
   },
-  "phase": "TASK-005-VALIDATOR-CONTRACT-AUDIT",
-  "status": "rule_review_needed",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_validator_contract_audit_bundle.tar.gz",
+  "phase": "TASK-005-VALIDATOR-RULE-REVIEW",
+  "status": "rule_memo_ready",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_validator_rule_review_bundle.tar.gz",
   "starting_point": {
-    "verified_latest_vexter_main": "b09033d6c8ce21510da23025cee935e46f3ef4df",
-    "verified_latest_vexter_pr": 17,
-    "verified_previous_audit_main": "b71b5f744027024e2a04606f6c1aa369d0a6c3e3",
-    "verified_previous_audit_pr": 16,
+    "verified_latest_vexter_main": "b7c8cb900ced104f4fe76cfd9ca48c2b21b82d81",
+    "verified_latest_vexter_pr": 18,
+    "verified_prior_supporting_vexter_main": [
+      "b09033d6c8ce21510da23025cee935e46f3ef4df",
+      "b71b5f744027024e2a04606f6c1aa369d0a6c3e3"
+    ],
+    "verified_prior_supporting_vexter_prs": [
+      17,
+      16
+    ],
     "verified_dexter_main": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_dexter_pr": 3,
     "verified_mewx_frozen": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
-    "work_branch": "codex/task-005-validator-contract-audit"
+    "work_branch": "codex/task-005-validator-rule-review"
   },
   "background": {
-    "previous_task_id": "TASK-005-GAP-AUDIT",
+    "previous_task_id": "TASK-005-VALIDATOR-CONTRACT-AUDIT",
     "promoted_pair": "task005-pass-grade-pair-20260325T180027Z",
     "confirmatory_pair": "task005-pass-grade-pair-20260325T180604Z",
-    "pre_audit_task_006_ready": false
+    "task_006_ready_before_review": false
   },
   "current_contract": {
     "required_event_types": [
@@ -66,7 +72,7 @@
   },
   "evidence": {
     "github_latest": {
-      "vexter_pr_17_merged_at": "2026-03-25T18:40:50Z",
+      "vexter_pr_18_merged_at": "2026-03-25T18:57:55Z",
       "dexter_pr_3_merged_at": "2026-03-21T11:31:07Z",
       "mewx_commit_reverified_at": "2026-03-20T16:05:19Z"
     },
@@ -86,7 +92,15 @@
           "entry_rejected",
           "run_summary"
         ],
-        "full_stream_fallback": true
+        "full_stream_fallback": true,
+        "process_exit_code": 3221225786,
+        "process_exit_code_hex": "0xC000013A",
+        "dexter_state_status": "running",
+        "dexter_state_ended_at_utc": null,
+        "mewx_state_status": "running",
+        "mewx_state_ended_at_utc": null,
+        "mewx_initial_candidate_observation_count": 0,
+        "mewx_refresh_candidate_observation_count": 0
       },
       {
         "label": "task005-pass-grade-pair-20260325T180604Z",
@@ -130,7 +144,12 @@
         ],
         "helper_fix_viable": true,
         "packaging_fix_sufficient": false,
-        "note": "Finalizer-only on both sources; current helper exit path prevents finalizer completion, but this only addresses run_summary."
+        "note": "Finalizer-only on both sources; current helper exit path prevents finalizer completion, but this only addresses run_summary.",
+        "recommended_treatment": "conditional_required_on_clean_shutdown_or_replayability_grade_only",
+        "rule_change_candidates": [
+          "Move run_summary out of always-required and make it conditional on proof that shutdown completed cleanly.",
+          "If approval prefers strictness, keep it as a later replayability or integration-ready gate rather than a comparable-pass gate."
+        ]
       },
       "entry_rejected": {
         "classification": "failure_path_only",
@@ -140,7 +159,12 @@
         ],
         "helper_fix_viable": false,
         "packaging_fix_sufficient": false,
-        "note": "Absent from healthy promoted full-stream evidence because both frozen sources emit only on failed entry paths."
+        "note": "Absent from healthy promoted full-stream evidence because both frozen sources emit only on failed entry paths.",
+        "recommended_treatment": "conditional_required_only_if_entry_failure_occurs_otherwise_observed_if_present",
+        "rule_change_candidates": [
+          "Remove entry_rejected from the healthy matched-pair always-required gate.",
+          "Require entry_rejected only when a source actually experiences an entry failure or an attempt lacks a fill."
+        ]
       },
       "mewx_creator_candidate": {
         "classification": "source_specific_conditional",
@@ -151,51 +175,60 @@
         ],
         "helper_fix_viable": false,
         "packaging_fix_sufficient": false,
-        "note": "Frozen Mew-X emitted rich fill/close evidence while candidate snapshots stayed empty, so this event is not dependable under the current environment."
+        "note": "Frozen Mew-X emitted rich fill/close evidence while candidate snapshots stayed empty, so this event is not dependable under the current environment.",
+        "recommended_treatment": "source_specific_conditional_for_non_empty_candidate_snapshots_otherwise_optional",
+        "rule_change_candidates": [
+          "Require Mew-X creator_candidate only when initial-selection or refresh candidate snapshots contain observations.",
+          "Otherwise allow downstream execution evidence to validate without forcing a source-agnostic creator_candidate hard gate."
+        ]
       }
     }
   },
   "current_task": {
-    "id": "TASK-005-VALIDATOR-CONTRACT-AUDIT",
+    "id": "TASK-005-VALIDATOR-RULE-REVIEW",
     "scope": [
       "Verify latest GitHub merged state for Vexter, Dexter, and frozen Mew-X.",
-      "Audit whether validator requirements should be relaxed or whether helper-side fixes alone can restore collectability.",
-      "Classify run_summary, entry_rejected, and Mew-X creator_candidate at contract level without changing source logic or validator rules.",
-      "Update audit artifacts and TASK-006 readiness."
+      "Translate the merged contract audit into an approval-grade validator rule review / exception memo.",
+      "Classify run_summary, entry_rejected, and Mew-X creator_candidate against current frozen-source reality without changing source logic or validator rules.",
+      "Record proposal-level requirement relaxation, conditional rule, and source-specific exception candidates.",
+      "Update review artifacts and TASK-006 readiness."
     ],
     "deliverables": [
       "artifacts/summary.md",
       "artifacts/context_pack.json",
       "artifacts/proof_bundle_manifest.json",
       "artifacts/task_ledger.jsonl",
-      "artifacts/reports/task-005-validator-contract-audit.md",
-      "artifacts/reports/task-005-validator-contract-audit-readiness.md",
-      "artifacts/reports/task-005-validator-contract-audit-handoff/DETAILS.md",
-      "artifacts/reports/task-005-validator-contract-audit-handoff/MIN_PROMPT.txt",
-      "artifacts/proofs/task-005-validator-contract-audit-check.json",
-      "artifacts/bundles/task-005-validator-contract-audit.tar.gz"
+      "artifacts/reports/task-005-validator-rule-review.md",
+      "artifacts/reports/task-005-validator-rule-review-readiness.md",
+      "artifacts/reports/task-005-validator-rule-review-handoff/DETAILS.md",
+      "artifacts/reports/task-005-validator-rule-review-handoff/MIN_PROMPT.txt",
+      "artifacts/proofs/task-005-validator-rule-review-check.json",
+      "artifacts/bundles/task-005-validator-rule-review.tar.gz"
     ]
   },
   "recommendation": {
     "outcome": "A",
-    "decision": "BLOCKED",
-    "key_finding": "rule_review_needed",
-    "helper_fix_scope": "run_summary_only",
+    "decision": "RULE_MEMO_READY",
+    "key_finding": "rule_memo_ready",
+    "helper_fix_scope": "run_summary_only_if_later_approved",
+    "validator_rule_implementation_ready": true,
     "task_006_ready": false,
-    "recommended_next_step": "approved_validator_rule_review_then_optional_run_summary_shutdown_hardening",
+    "recommended_next_step": "approved_validator_rule_implementation",
     "why": [
-      "run_summary sits inside the shutdown-success boundary and may be recoverable with helper hardening.",
+      "run_summary sits inside the shutdown-success boundary and is not dependable until shutdown completion is itself proven cleanly.",
       "entry_rejected remains failure-path-only on both frozen sources and is absent from healthy promoted full-stream evidence.",
-      "Mew-X creator_candidate remains conditional on non-empty candidate reports and is absent even when the same runs still produce fills and position closeouts."
+      "Mew-X creator_candidate remains conditional on non-empty candidate reports and is absent even when the same runs still produce fills and position closeouts.",
+      "The current approval-grade output is therefore a rule review memo, not an unapproved rule edit."
     ]
   },
   "next_task": {
-    "id": "BLOCKED",
-    "state": "awaiting_validator_rule_review_approval",
+    "id": "TASK-005-VALIDATOR-RULE-IMPLEMENTATION",
+    "state": "awaiting_explicit_approval_to_modify_validator_rules",
     "task_006_ready": false,
     "resume_requirements": [
       "Keep Dexter and Mew-X source logic frozen.",
       "Do not change validator rules without explicit approval.",
+      "Apply only the approved requirement relaxation / conditional rule / source-specific exception set.",
       "Treat any helper-side follow-up as a narrow run_summary shutdown-hygiene task, not as a complete fix for TASK-005."
     ]
   }

@@ -17,7 +17,6 @@
       "entry_signal",
       "entry_attempt",
       "entry_fill",
-      "entry_rejected",
       "session_update",
       "exit_signal",
       "exit_fill",
@@ -29,8 +28,8 @@
         "required": true
       },
       "entry_rejected": {
-        "reason": "at least one entry attempt did not produce a matching fill",
-        "required": true
+        "reason": "all observed entry attempts produced matching fills",
+        "required": false
       },
       "run_summary": {
         "reason": "no clean shutdown completion proof was exported for this run package",
@@ -52,6 +51,7 @@
       "run_summary"
     ],
     "waived_event_types": [
+      "entry_rejected",
       "run_summary"
     ]
   },
@@ -64,21 +64,19 @@
       "creator_candidate",
       "entry_attempt",
       "entry_fill",
-      "entry_rejected",
       "entry_signal",
       "exit_fill",
       "exit_signal",
       "mint_observed",
       "position_closed",
-      "run_summary",
       "session_update"
     ],
-    "required_event_types_present": 11,
-    "required_event_types_total": 11,
-    "total_events": 16
+    "required_event_types_present": 10,
+    "required_event_types_total": 10,
+    "total_events": 362
   },
   "issues": [],
-  "package_dir": "/Users/cabbala/Documents/vexter/task005-validator-rule-review/tests/fixtures/comparison_packages/dexter_fixture",
-  "run_id": "dexter-fixture-001",
+  "package_dir": "/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326/artifacts/tmp/winlan-packages-task005-pass-grade-pair-20260325T180604Z/dexter-task005-pass-grade-pair-20260325T180604Z",
+  "run_id": "dexter-task005-pass-grade-pair-20260325T180604Z",
   "source_system": "dexter"
 }

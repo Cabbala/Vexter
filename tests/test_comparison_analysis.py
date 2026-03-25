@@ -117,6 +117,146 @@ def test_validate_run_package_allows_entry_rejected_without_tx_signature(tmp_pat
     assert result["checks"]["payload_fields_ok"] is True
 
 
+def test_validate_run_package_allows_missing_run_summary_without_clean_shutdown_proof(
+    tmp_path: Path,
+) -> None:
+    target = tmp_path / "dexter_fixture"
+    shutil.copytree(DEXTER_FIXTURE, target)
+
+    events_path = target / "events.ndjson"
+    events = [json.loads(line) for line in events_path.read_text().splitlines() if line.strip()]
+    events = [event for event in events if event["event_type"] != "run_summary"]
+    events_path.write_text("".join(json.dumps(event) + "\n" for event in events))
+
+    result = validate_run_package(target)
+
+    assert result["classification"] == "pass"
+    assert "run_summary" in result["contract"]["waived_event_types"]
+    assert "run_summary" not in result["contract"]["active_required_event_types"]
+
+
+def test_validate_run_package_requires_run_summary_when_clean_shutdown_is_proven(
+    tmp_path: Path,
+) -> None:
+    target = tmp_path / "dexter_fixture"
+    shutil.copytree(DEXTER_FIXTURE, target)
+
+    state_export = target / "exports" / "dexter-fixture-001.state.json"
+    _write_json(
+        state_export,
+        {
+            "run_id": "dexter-fixture-001",
+            "status": "completed",
+            "ended_at_utc": "2026-03-21T01:20:00Z",
+        },
+    )
+
+    events_path = target / "events.ndjson"
+    events = [json.loads(line) for line in events_path.read_text().splitlines() if line.strip()]
+    events = [event for event in events if event["event_type"] != "run_summary"]
+    events_path.write_text("".join(json.dumps(event) + "\n" for event in events))
+
+    result = validate_run_package(target)
+
+    assert result["classification"] == "partial"
+    assert "run_summary" in result["contract"]["active_required_event_types"]
+    assert any(issue["code"] == "missing_required_event_types" for issue in result["issues"])
+
+
+def test_validate_run_package_requires_entry_rejected_when_attempt_has_no_fill(
+    tmp_path: Path,
+) -> None:
+    target = tmp_path / "dexter_fixture"
+    shutil.copytree(DEXTER_FIXTURE, target)
+
+    events_path = target / "events.ndjson"
+    events = [json.loads(line) for line in events_path.read_text().splitlines() if line.strip()]
+    events = [event for event in events if event["event_type"] != "entry_rejected"]
+    events_path.write_text("".join(json.dumps(event) + "\n" for event in events))
+
+    result = validate_run_package(target)
+
+    assert result["classification"] == "partial"
+    assert "entry_rejected" in result["contract"]["active_required_event_types"]
+    assert "entry_rejected" in result["coverage"]["missing_event_types"]
+
+
+def test_validate_run_package_allows_missing_entry_rejected_when_all_attempts_fill(
+    tmp_path: Path,
+) -> None:
+    target = tmp_path / "dexter_fixture"
+    shutil.copytree(DEXTER_FIXTURE, target)
+
+    events_path = target / "events.ndjson"
+    events = [json.loads(line) for line in events_path.read_text().splitlines() if line.strip()]
+
+    rejected_event = next(event for event in events if event["event_type"] == "entry_rejected")
+    replacement_fill = next(event for event in events if event["event_type"] == "entry_fill")
+    replacement_fill = json.loads(json.dumps(replacement_fill))
+    replacement_fill["event_id"] = "dex-added-fill"
+    replacement_fill["ts_utc"] = rejected_event["ts_utc"]
+    replacement_fill["session_id"] = rejected_event["session_id"]
+    replacement_fill["creator"] = rejected_event["creator"]
+    replacement_fill["mint"] = rejected_event["mint"]
+    replacement_fill["payload"]["attempt_index"] = rejected_event["payload"]["attempt_index"]
+
+    events = [event for event in events if event["event_type"] != "entry_rejected"]
+    events.append(replacement_fill)
+    events_path.write_text("".join(json.dumps(event) + "\n" for event in events))
+
+    result = validate_run_package(target)
+
+    assert result["classification"] == "pass"
+    assert "entry_rejected" in result["contract"]["waived_event_types"]
+    assert "entry_rejected" not in result["coverage"]["missing_event_types"]
+
+
+def test_validate_run_package_allows_mewx_missing_creator_candidate_when_snapshots_empty(
+    tmp_path: Path,
+) -> None:
+    target = tmp_path / "mewx_fixture"
+    shutil.copytree(MEWX_FIXTURE, target)
+
+    _write_json(
+        target / "exports" / "candidate_refresh_snapshot.json",
+        {
+            "captured_at_utc": "2026-03-21T01:00:00Z",
+            "observations": [],
+            "added_keys": [],
+            "source_counts": {},
+        },
+    )
+
+    events_path = target / "events.ndjson"
+    events = [json.loads(line) for line in events_path.read_text().splitlines() if line.strip()]
+    events = [event for event in events if event["event_type"] != "creator_candidate"]
+    events_path.write_text("".join(json.dumps(event) + "\n" for event in events))
+
+    result = validate_run_package(target)
+
+    assert result["classification"] == "pass"
+    assert "creator_candidate" in result["contract"]["waived_event_types"]
+    assert "creator_candidate" not in result["contract"]["active_required_event_types"]
+
+
+def test_validate_run_package_requires_mewx_creator_candidate_when_snapshots_non_empty(
+    tmp_path: Path,
+) -> None:
+    target = tmp_path / "mewx_fixture"
+    shutil.copytree(MEWX_FIXTURE, target)
+
+    events_path = target / "events.ndjson"
+    events = [json.loads(line) for line in events_path.read_text().splitlines() if line.strip()]
+    events = [event for event in events if event["event_type"] != "creator_candidate"]
+    events_path.write_text("".join(json.dumps(event) + "\n" for event in events))
+
+    result = validate_run_package(target)
+
+    assert result["classification"] == "partial"
+    assert "creator_candidate" in result["contract"]["active_required_event_types"]
+    assert "creator_candidate" in result["coverage"]["missing_event_types"]
+
+
 def test_derive_metrics_returns_expected_subset() -> None:
     dexter_metrics = derive_metrics(DEXTER_FIXTURE)["metrics"]
     mewx_metrics = derive_metrics(MEWX_FIXTURE)["metrics"]
@@ -240,6 +380,14 @@ def test_build_comparison_pack_matched_partial_live_windows_updates_summary(
         for event in events:
             event["run_id"] = run_id
         if package_dir == dexter_live:
+            _write_json(
+                package_dir / "exports" / f"{run_id}.state.json",
+                {
+                    "run_id": run_id,
+                    "status": "completed",
+                    "ended_at_utc": "2026-03-21T01:20:00Z",
+                },
+            )
             events = [event for event in events if event["event_type"] != "run_summary"]
         events_path.write_text("".join(json.dumps(event) + "\n" for event in events))
 

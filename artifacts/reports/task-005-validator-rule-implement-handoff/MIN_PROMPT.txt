@@ -1,0 +1,6 @@
+Vexter / 既存Codexスレッド / TASK-005-VALIDATOR-RULE-IMPLEMENT
+
+GitHub 最新状態は Vexter PR #19 merge `db59c2edc099c4e794d8e0ac177cedb6f6d57d2d`、支援状態は PR #18 `b7c8cb900ced104f4fe76cfd9ca48c2b21b82d81`、PR #17 `b09033d6c8ce21510da23025cee935e46f3ef4df`、PR #16 `b71b5f744027024e2a04606f6c1aa369d0a6c3e3`、Dexter は PR #3 merge `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`、frozen Mew-X は `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a` まで再確認済み。
+今回の変更は Vexter comparison validator だけで、Dexter / Mew-X source logic は触っていない。実装した rule treatment は 3 点で、`run_summary` は clean shutdown の exported state proof がある場合のみ required、`entry_rejected` は attempt に対応する fill が欠ける場合のみ required、Mew-X `creator_candidate` は candidate snapshot が non-empty の場合のみ required。
+結果として promoted pair `task005-pass-grade-pair-20260325T180027Z` は Dexter `pass 10/10`, Mew-X `pass 9/9` まで再分類され、comparison pack の `winner_mode` も `derived` になった。confirmatory pair `task005-pass-grade-pair-20260325T180604Z` は Dexter `pass`、Mew-X は `candidate_rejected` だけ残って `partial` のままだが、approved scope 外の narrow residual に縮小している。
+結論は Outcome `A`、key finding は `rule implementation applied`。promoted comparable pack ができたので TASK-006 readiness は `ready` と再判定した。次は promoted pack を入力に replay validation を進め、confirmatory の `candidate_rejected` 欠落は補助的な residual note として扱う。

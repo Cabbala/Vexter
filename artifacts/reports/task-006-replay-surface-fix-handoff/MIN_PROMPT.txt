@@ -1,0 +1,5 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+継続タスクID: TASK-006-REPLAY-SURFACE-FIX
+
+PR #23 merged main を基準に、promoted baseline の Dexter replay surface fix までは完了しています。Vexter は promoted Dexter package を source-faithful に augment し、non-stagnant close summaries を replay exports として追加しました。その結果、Dexter replay coverage は 100% に上がり、`live_vs_replay_gap_pct` は 0.0000 まで縮小しています。stagnant replay exports は残してあり、current claim は non-stagnant closes に関する summary fidelity です。次はこの repaired baseline を前提に downstream comparative analysis を進めてください。

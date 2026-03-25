@@ -1,0 +1,33 @@
+{
+  "exported_at_utc": "2026-03-25T18:03:11.565983Z",
+  "mint_id": "8qjACSrks4rHoMQKEpLpH4Zc5pMHsZc2NP3FTy17pump",
+  "payload": {
+    "kind": "stagnant_mint",
+    "row": {
+      "bonding_curve": "8KepnBtur7HTTPePJjAuTCpscVJziiSJvBzEEuaXsBE4",
+      "final_market_cap": 2580.7487387117753,
+      "final_ohlc": "{\"open\": 2.814338864462132e-08, \"high\": \"2.814338864462132E-8\", \"low\": 2.814338864462132e-08, \"close\": \"2.8143388644621319204302008058250772482011825559311546385288238525390625E-8\"}",
+      "holders": "{\"2g8QeRpMNCJX2rcGQUo2eXbDeLnzE8gYqk1uBxpsNwpx\": {\"balance\": 3520918.746848, \"balance_changes\": [{\"price_was\": 0.0, \"amount\": 3520918.746848, \"type\": \"buy\", \"timestamp\": 1774461759}]}}",
+      "mint_id": "8qjACSrks4rHoMQKEpLpH4Zc5pMHsZc2NP3FTy17pump",
+      "mint_sig": "2iZfYLRJtyPR3NQMBe9PhJBcTMBsahQiwQ1XpyfRPkewXEqeQ4KtG2jeqBEnP2uJfNAkCKcsNrBie8GdNkq7ZsBa",
+      "name": "TESLA OPTIMUS",
+      "owner": "2g8QeRpMNCJX2rcGQUo2eXbDeLnzE8gYqk1uBxpsNwpx",
+      "peak_market_cap": 2580.7487387117753,
+      "peak_price_change": 2.827299874899111e-15,
+      "price_history": "{\"1774461759.001\": 2.814338864462132e-08}",
+      "slot_delay": "1.518158197402954",
+      "symbol": "OPTIMUS",
+      "tx_counts": "{\"swaps\": 1, \"buys\": 1, \"sells\": 0}",
+      "volume": "{\"30sec\": {\"swaps\": 1, \"buys\": 1, \"sells\": 0}, \"1min\": {}, \"2min\": {}, \"5min\": {}}"
+    }
+  },
+  "runtime_layout": {
+    "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+    "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+    "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+    "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+    "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+    "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+    "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+  }
+}

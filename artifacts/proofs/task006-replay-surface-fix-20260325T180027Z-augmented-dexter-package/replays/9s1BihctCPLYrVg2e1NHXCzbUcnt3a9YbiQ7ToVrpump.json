@@ -1,0 +1,33 @@
+{
+  "exported_at_utc": "2026-03-25T17:57:33.675113Z",
+  "mint_id": "9s1BihctCPLYrVg2e1NHXCzbUcnt3a9YbiQ7ToVrpump",
+  "payload": {
+    "kind": "stagnant_mint",
+    "row": {
+      "bonding_curve": "BnBkk5HSFhQF11gjoDuTBfeH5ok1aM2gZcMFH41eSjCv",
+      "final_market_cap": 2600.546190940189,
+      "final_ohlc": "{\"open\": 2.832838987952275e-08, \"high\": \"2.832838987952275E-8\", \"low\": 2.832838987952275e-08, \"close\": \"2.832838987952275102132974047598745759302119040512479841709136962890625E-8\"}",
+      "holders": "{\"8VErcV78g5QpriLPDyiwzMZGfBwCF65hRu2aP7o3w1pB\": {\"balance\": 7018806.171954, \"balance_changes\": [{\"price_was\": 0.0, \"amount\": 7018806.171954, \"type\": \"buy\", \"timestamp\": 1774461421}]}}",
+      "mint_id": "9s1BihctCPLYrVg2e1NHXCzbUcnt3a9YbiQ7ToVrpump",
+      "mint_sig": "5h5kyJf8TgKBspfjxoNegEQ2AJqD9y1p4q7zWRr7XD2PeBQ7Gjg67Mm5oWcrRHbtgtNFix7MaBmHTVwx2EH6Tsq4",
+      "name": "Domino Effect",
+      "owner": "8VErcV78g5QpriLPDyiwzMZGfBwCF65hRu2aP7o3w1pB",
+      "peak_market_cap": 2600.5461909401884,
+      "peak_price_change": -3.605322239702223e-15,
+      "price_history": "{\"1774461421.001\": 2.832838987952275e-08}",
+      "slot_delay": "1.6622543334960938",
+      "symbol": "Domino",
+      "tx_counts": "{\"swaps\": 1, \"buys\": 1, \"sells\": 0}",
+      "volume": "{\"30sec\": {\"swaps\": 1, \"buys\": 1, \"sells\": 0}, \"1min\": {}, \"2min\": {}, \"5min\": {}}"
+    }
+  },
+  "runtime_layout": {
+    "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+    "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+    "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+    "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+    "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+    "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+    "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+  }
+}

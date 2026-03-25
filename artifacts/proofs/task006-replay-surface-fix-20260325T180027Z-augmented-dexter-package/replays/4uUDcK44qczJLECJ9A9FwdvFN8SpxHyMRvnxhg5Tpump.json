@@ -1,0 +1,33 @@
+{
+  "exported_at_utc": "2026-03-25T18:03:27.442919Z",
+  "mint_id": "4uUDcK44qczJLECJ9A9FwdvFN8SpxHyMRvnxhg5Tpump",
+  "payload": {
+    "kind": "stagnant_mint",
+    "row": {
+      "bonding_curve": "5Sm21KaiZEz6DbuTjqx2SppAiVNLzsWgZwASqV672Kqv",
+      "final_market_cap": 2693.6546203503517,
+      "final_ohlc": "{\"open\": 2.9374641443297182e-08, \"high\": \"2.9374641443297182E-8\", \"low\": 2.9374641443297182e-08, \"close\": \"2.9374641443297182465433322099378210534581512547447346150875091552734375E-8\"}",
+      "holders": "{\"ASG5z1gvqmRcwNMrJH6PnaQYkeJPg6BmdppJJcV6De5z\": {\"balance\": 26174721.694631, \"balance_changes\": [{\"price_was\": 0.0, \"amount\": 26174721.694631, \"type\": \"buy\", \"timestamp\": 1774461775}]}}",
+      "mint_id": "4uUDcK44qczJLECJ9A9FwdvFN8SpxHyMRvnxhg5Tpump",
+      "mint_sig": "4ZdaP1YYhjzi4sAC9mcUuVrh6ZRu7TUievLeyCCYc2wcUgmeuXwuTGeUVSAPukXWRUP8cRhBeXVEEd414agstmRi",
+      "name": "Indian Tire",
+      "owner": "ASG5z1gvqmRcwNMrJH6PnaQYkeJPg6BmdppJJcV6De5z",
+      "peak_market_cap": 2693.6546203503517,
+      "peak_price_change": -1.5844732028400045e-15,
+      "price_history": "{\"1774461775.001\": 2.9374641443297182e-08}",
+      "slot_delay": "1.3471043109893799",
+      "symbol": "IndiaTire",
+      "tx_counts": "{\"swaps\": 1, \"buys\": 1, \"sells\": 0}",
+      "volume": "{\"30sec\": {\"swaps\": 1, \"buys\": 1, \"sells\": 0}, \"1min\": {}, \"2min\": {}, \"5min\": {}}"
+    }
+  },
+  "runtime_layout": {
+    "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+    "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+    "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+    "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+    "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+    "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+    "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+  }
+}

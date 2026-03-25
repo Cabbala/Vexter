@@ -1,0 +1,33 @@
+{
+  "exported_at_utc": "2026-03-25T17:58:59.325940Z",
+  "mint_id": "px5b887TvwdFZbpvgaf5b2qwizCR1nRhgwcJoNzpump",
+  "payload": {
+    "kind": "stagnant_mint",
+    "row": {
+      "bonding_curve": "DeUCHUAUxyuQgyvrXkQSTyS3bH1ir76tiCPaUr6qw6U6",
+      "final_market_cap": 2566.652500473854,
+      "final_ohlc": "{\"open\": 2.7959177565074664e-08, \"high\": \"2.7959177565074664E-8\", \"low\": 2.7959177565074664e-08, \"close\": \"2.795917756507466383072982242692650078907945498940534889698028564453125E-8\"}",
+      "holders": "{\"97kGrFMZNxfbUKyJdmnwUh2axs8Ws2xoQFe1V6VFkcrx\": {\"balance\": 3532.41167, \"balance_changes\": [{\"price_was\": 0.0, \"amount\": 3532.41167, \"type\": \"buy\", \"timestamp\": 1774461507}]}}",
+      "mint_id": "px5b887TvwdFZbpvgaf5b2qwizCR1nRhgwcJoNzpump",
+      "mint_sig": "3HV2c1kG21Khax8zxUzSAcS7Mg2eSPHhHhCeysbwW8f3ANjY4DcVjRjJyirxn1uT4JBGJu4mXsEjw7Fm6Q1W3tD",
+      "name": "ITS REAL THEY TWEETED IT",
+      "owner": "97kGrFMZNxfbUKyJdmnwUh2axs8Ws2xoQFe1V6VFkcrx",
+      "peak_market_cap": 2566.652500473854,
+      "peak_price_change": 6.054190155597356e-16,
+      "price_history": "{\"1774461507.001\": 2.7959177565074664e-08}",
+      "slot_delay": "1.234522819519043",
+      "symbol": "NET",
+      "tx_counts": "{\"swaps\": 1, \"buys\": 1, \"sells\": 0}",
+      "volume": "{\"30sec\": {\"swaps\": 1, \"buys\": 1, \"sells\": 0}, \"1min\": {}, \"2min\": {}, \"5min\": {}}"
+    }
+  },
+  "runtime_layout": {
+    "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+    "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+    "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+    "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+    "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+    "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+    "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+  }
+}

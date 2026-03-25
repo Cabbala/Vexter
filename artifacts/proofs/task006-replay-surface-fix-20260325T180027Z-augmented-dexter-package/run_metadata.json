@@ -1,0 +1,19 @@
+{
+  "config_snapshot": "config/dexter-task005-pass-grade-pair-20260325T180027Z.config.json",
+  "ended_at_utc": "2026-03-25T18:05:11.148258Z",
+  "event_stream": "events.ndjson",
+  "host_role": "windows_runtime",
+  "mode": "paper_live",
+  "proof_manifest": "proof_manifest.json",
+  "run_id": "dexter-task005-pass-grade-pair-20260325T180027Z",
+  "runtime_root": "C:\\Users\\bot\\quant\\Vexter",
+  "source_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+  "source_exports": {
+    "close_summary_replay_index": "exports/dexter-close-summary-index.json",
+    "leaderboard_snapshot": "exports/dexter-task005-pass-grade-pair-20260325T180027Z.leaderboard.json",
+    "stagnant_mint_replay": "replays/8KTy4CMBhvb42hTArAg6XVx2ZAsmsknDdd6cypUSpump.json"
+  },
+  "source_system": "dexter",
+  "started_at_utc": "2026-03-25T18:02:11.066878Z",
+  "transport_mode": "ws"
+}

@@ -1,0 +1,25 @@
+{
+  "config": [
+    "config/config_snapshot.json"
+  ],
+  "db_exports": [
+    "replays/AdCvMqzaCbEdoVk4LyVgzgU4XSUEL6QqQ453de8ZxsRa.close-summary.json",
+    "replays/EADTG8t5bacSyhj6SH3r1aKKqhWad2Zgvi4gyjLfpump.close-summary.json",
+    "replays/6aHTh9r311kVEGTcQ3WTGoJofuqYiX6VeWoF6VwEThAb.close-summary.json",
+    "replays/GFYvctoWAyrmzrnRX19bxVdDiYtSzmnkicyMvLHxpump.close-summary.json"
+  ],
+  "exports": [
+    "exports/dexter-task005-pass-grade-pair-20260325T180027Z-replay.state.json",
+    "exports/leaderboard_snapshot.json"
+  ],
+  "logs": [],
+  "raw_events": [
+    "inputs/source_events.ndjson"
+  ],
+  "replays": [
+    "replays/AdCvMqzaCbEdoVk4LyVgzgU4XSUEL6QqQ453de8ZxsRa.close-summary.json",
+    "replays/EADTG8t5bacSyhj6SH3r1aKKqhWad2Zgvi4gyjLfpump.close-summary.json",
+    "replays/6aHTh9r311kVEGTcQ3WTGoJofuqYiX6VeWoF6VwEThAb.close-summary.json",
+    "replays/GFYvctoWAyrmzrnRX19bxVdDiYtSzmnkicyMvLHxpump.close-summary.json"
+  ]
+}

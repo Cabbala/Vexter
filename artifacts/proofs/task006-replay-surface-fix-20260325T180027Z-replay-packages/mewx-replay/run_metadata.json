@@ -1,0 +1,21 @@
+{
+  "config_snapshot": "config/config_snapshot.json",
+  "ended_at_utc": "2026-03-25T18:05:11.148258Z",
+  "event_stream": "events.ndjson",
+  "host_role": "windows_runtime",
+  "mode": "replay",
+  "proof_manifest": "proof_manifest.json",
+  "reconstructed_at_utc": "2026-03-25T21:19:37Z",
+  "reconstructed_from_package_dir": "/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326/artifacts/tmp/winlan-packages-task005-pass-grade-pair-20260325T180027Z/mewx-task005-pass-grade-pair-20260325T180027Z",
+  "reconstructed_from_run_id": "mewx-task005-pass-grade-pair-20260325T180027Z",
+  "run_id": "mewx-task005-pass-grade-pair-20260325T180027Z-replay",
+  "runtime_root": "C:\\Users\\bot\\quant\\Vexter",
+  "source_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+  "source_exports": {
+    "candidate_refresh_snapshot": "exports/mewx-task005-pass-grade-pair-20260325T180027Z.candidates.refresh.json",
+    "session_summary": "exports/9P5yvvqE7oyHVXuuYrFyeF35XMxyJpntWMtTu7Dkpump-1774461628711.json"
+  },
+  "source_system": "mewx",
+  "started_at_utc": "2026-03-25T18:02:11.066878Z",
+  "transport_mode": "mixed"
+}

@@ -1,0 +1,33 @@
+{
+  "exported_at_utc": "2026-03-25T17:56:53.341426Z",
+  "mint_id": "DSN795XfeRQ668CoaPzvNebshKUx3qwwypFcek8hpump",
+  "payload": {
+    "kind": "stagnant_mint",
+    "row": {
+      "bonding_curve": "kHaK8kgaMqWVFuMgJDHgSMxBdjiQmijejLMPYDZKAsL",
+      "final_market_cap": 2571.708002061561,
+      "final_ohlc": "{\"open\": 2.7960834426388913e-08, \"high\": \"2.8014248388470166E-8\", \"low\": 2.7958993477166823e-08, \"close\": \"2.8014248388470166036697708128976047614600020096986554563045501708984375E-8\"}",
+      "holders": "{\"Dkyrfp1DwzLEFDavx1hGpWuWLRK9Fcoxtw9sKcNUW5pk\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 0.0, \"amount\": 35323.892708, \"type\": \"buy\", \"timestamp\": 1774461376}, {\"price_was\": 2.7960834426388913e-08, \"amount\": 35323.892708, \"type\": \"sell\", \"timestamp\": 1774461377}]}, \"ETnjr2uM2196RvTPU8gyBEKsHSdpnftwNWAXuUr9XdjL\": {\"balance\": 1058707.391225, \"balance_changes\": [{\"price_was\": 2.7958993477166823e-08, \"amount\": 1058707.391225, \"type\": \"buy\", \"timestamp\": 1774461380}]}}",
+      "mint_id": "DSN795XfeRQ668CoaPzvNebshKUx3qwwypFcek8hpump",
+      "mint_sig": "3ghW8N9kDed2XvNQKa2WjZxZSzkr6ADVxtZNfYWNkm9CuSG3cPeMkeSr8FbMafA4kSoQwv7bhnBS92iMY3WJDQ48",
+      "name": "OG WITH X ACCOUNT and WEB????",
+      "owner": "Dkyrfp1DwzLEFDavx1hGpWuWLRK9Fcoxtw9sKcNUW5pk",
+      "peak_market_cap": 2571.7080020615613,
+      "peak_price_change": 0.1910313593175255,
+      "price_history": "{\"1774461376.001\": 2.7960834426388913e-08, \"1774461377.000\": 2.7958993477166823e-08, \"1774461380.000\": 2.8014248388470166e-08}",
+      "slot_delay": "1.2946500778198242",
+      "symbol": "???",
+      "tx_counts": "{\"swaps\": 3, \"buys\": 2, \"sells\": 1}",
+      "volume": "{\"30sec\": {\"swaps\": 3, \"buys\": 2, \"sells\": 1}, \"1min\": {}, \"2min\": {}, \"5min\": {}}"
+    }
+  },
+  "runtime_layout": {
+    "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+    "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+    "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+    "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+    "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+    "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+    "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+  }
+}

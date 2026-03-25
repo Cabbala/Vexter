@@ -1,0 +1,33 @@
+{
+  "exported_at_utc": "2026-03-25T18:03:22.903643Z",
+  "mint_id": "A1f6Z3Ps1ncPc6dHUkW8B71JfgyBz6K34aj5LQybpump",
+  "payload": {
+    "kind": "stagnant_mint",
+    "row": {
+      "bonding_curve": "C9Voopbg8o9sqd5wJDgrTNqRKxCCaqDyMCpAossmZx64",
+      "final_market_cap": 2563.839701941659,
+      "final_ohlc": "{\"open\": 3.5911773842808325e-08, \"high\": \"4.725069897483681E-8\", \"low\": 2.7958993478098787e-08, \"close\": \"2.795899347809878722835084485613676985593656354467384517192840576171875E-8\"}",
+      "holders": "{\"7naFFwuEJWeWwWYQUkgAWHsxYKg3KctEuUj42JdAMidP\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 0.0, \"amount\": 126235294.117647, \"type\": \"buy\", \"timestamp\": 1774461756}, {\"price_was\": 4.09347623496831e-08, \"amount\": 126235294.117647, \"type\": \"sell\", \"timestamp\": 1774461768}]}, \"moanTeQ4d1c1wtZYENytCm1yZDXwUcUYTnSNpjpB4jF\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 3.5911773842808325e-08, \"amount\": 61392244.119516, \"type\": \"buy\", \"timestamp\": 1774461756}, {\"price_was\": 4.725069897483681e-08, \"amount\": 61392244.119516, \"type\": \"sell\", \"timestamp\": 1774461768}]}, \"AHsdm6ebB7m8ezKwq56QnWJffgjPeJ5aQaWxtJqWhCTe\": {\"balance\": 59987846.37822, \"balance_changes\": [{\"price_was\": 3.136834927438011e-08, \"amount\": 59987846.37822, \"type\": \"sell\", \"timestamp\": 1774461768}]}}",
+      "mint_id": "A1f6Z3Ps1ncPc6dHUkW8B71JfgyBz6K34aj5LQybpump",
+      "mint_sig": "5vsqgg86PxzZu3r5UQgRwC9wek8UMEQFpUN4mq9CparMKeRVtheopwNiN42iuy8e3NnkUMmi2BXHW3ecCVD5mnGn",
+      "name": "Billy Boman",
+      "owner": "7naFFwuEJWeWwWYQUkgAWHsxYKg3KctEuUj42JdAMidP",
+      "peak_market_cap": 4332.889095992536,
+      "peak_price_change": 31.574394463667552,
+      "price_history": "{\"1774461756.001\": 3.5911773842808325e-08, \"1774461756.002\": 4.725069897483681e-08, \"1774461768.000\": 4.09347623496831e-08, \"1774461768.001\": 3.136834927438011e-08, \"1774461768.002\": 2.7958993478098787e-08}",
+      "slot_delay": "0.8991427421569824",
+      "symbol": "BOMAN",
+      "tx_counts": "{\"swaps\": 5, \"buys\": 2, \"sells\": 3}",
+      "volume": "{\"30sec\": {\"swaps\": 5, \"buys\": 2, \"sells\": 3}, \"1min\": {}, \"2min\": {}, \"5min\": {}}"
+    }
+  },
+  "runtime_layout": {
+    "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+    "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+    "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+    "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+    "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+    "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+    "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+  }
+}

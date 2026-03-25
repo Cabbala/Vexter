@@ -1,0 +1,21 @@
+{
+  "config_snapshot": "config/config_snapshot.json",
+  "ended_at_utc": "2026-03-25T18:05:11.148258Z",
+  "event_stream": "events.ndjson",
+  "host_role": "windows_runtime",
+  "mode": "replay",
+  "proof_manifest": "proof_manifest.json",
+  "reconstructed_at_utc": "2026-03-25T21:19:37Z",
+  "reconstructed_from_package_dir": "/Users/cabbala/Documents/vexter/task005-validator-rule-review/artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-augmented-dexter-package",
+  "reconstructed_from_run_id": "dexter-task005-pass-grade-pair-20260325T180027Z",
+  "run_id": "dexter-task005-pass-grade-pair-20260325T180027Z-replay",
+  "runtime_root": "C:\\Users\\bot\\quant\\Vexter",
+  "source_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+  "source_exports": {
+    "leaderboard_snapshot": "exports/leaderboard_snapshot.json",
+    "stagnant_mint_replay": "replays/AdCvMqzaCbEdoVk4LyVgzgU4XSUEL6QqQ453de8ZxsRa.close-summary.json"
+  },
+  "source_system": "dexter",
+  "started_at_utc": "2026-03-25T18:02:11.066878Z",
+  "transport_mode": "ws"
+}

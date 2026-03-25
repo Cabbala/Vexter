@@ -1,0 +1,33 @@
+{
+  "exported_at_utc": "2026-03-25T17:58:38.073932Z",
+  "mint_id": "FKhqCxpgF69CnNv4Rh8vWTQrM8ZZFyp8gnm98LJ4pump",
+  "payload": {
+    "kind": "stagnant_mint",
+    "row": {
+      "bonding_curve": "7CxAD1AQPm1J2YL2oQhkzh3rWFJQ7fSdRQ4wFKje3AaC",
+      "final_market_cap": 2734.923927640343,
+      "final_ohlc": "{\"open\": 2.973521745203466e-08, \"high\": \"2.9792199647498296E-8\", \"low\": 2.973521745203466e-08, \"close\": \"2.97921996474982961034571921250801995739720950950868427753448486328125E-8\"}",
+      "holders": "{\"93HbXAApHRt3iHYZZhdcr8BuPRJjsg2seX1U2xECbdDJ\": {\"balance\": 32541101.291559, \"balance_changes\": [{\"price_was\": 0.0, \"amount\": 32541101.291559, \"type\": \"buy\", \"timestamp\": 1774461481}]}, \"ETnjr2uM2196RvTPU8gyBEKsHSdpnftwNWAXuUr9XdjL\": {\"balance\": 995495.622646, \"balance_changes\": [{\"price_was\": 2.973521745203466e-08, \"amount\": 995495.622646, \"type\": \"buy\", \"timestamp\": 1774461486}]}}",
+      "mint_id": "FKhqCxpgF69CnNv4Rh8vWTQrM8ZZFyp8gnm98LJ4pump",
+      "mint_sig": "32pNfjxBEFVai6cww4aLBDmwHo5nZh2twQ2yerHvowJ54oDKusgdjqzcHwFfntQmRyjbFBmS8UVQn5jUCJnZULFX",
+      "name": "Salary Life 9-5 ",
+      "owner": "93HbXAApHRt3iHYZZhdcr8BuPRJjsg2seX1U2xECbdDJ",
+      "peak_market_cap": 2734.9239276403437,
+      "peak_price_change": 0.19163201195872162,
+      "price_history": "{\"1774461481.001\": 2.973521745203466e-08, \"1774461486.000\": 2.9792199647498296e-08}",
+      "slot_delay": "0.9518189430236816",
+      "symbol": "9-5",
+      "tx_counts": "{\"swaps\": 2, \"buys\": 2, \"sells\": 0}",
+      "volume": "{\"30sec\": {\"swaps\": 2, \"buys\": 2, \"sells\": 0}, \"1min\": {}, \"2min\": {}, \"5min\": {}}"
+    }
+  },
+  "runtime_layout": {
+    "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+    "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+    "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+    "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+    "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+    "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+    "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+  }
+}

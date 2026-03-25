@@ -1,0 +1,33 @@
+{
+  "exported_at_utc": "2026-03-25T17:58:05.914842Z",
+  "mint_id": "5tif9tPaAgMRkV8a2QDWahPSk77chHtQGEr6sGpeLPSU",
+  "payload": {
+    "kind": "stagnant_mint",
+    "row": {
+      "bonding_curve": "8ypHP38rke15cJFeu5BXD2MVm4gzPtf7bqzmhMHoxvBY",
+      "final_market_cap": 2566.635601289469,
+      "final_ohlc": "{\"open\": 3.792118119415761e-08, \"high\": \"4.3470460661267113E-8\", \"low\": 2.7958993478098787e-08, \"close\": \"2.795899347809878722835084485613676985593656354467384517192840576171875E-8\"}",
+      "holders": "{\"bwamJzztZsepfkteWRChggmXuiiCQvpLqPietdNfSXa\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 0.0, \"amount\": 151660777.334045, \"type\": \"buy\", \"timestamp\": 1774461439}, {\"price_was\": 3.792118119524298e-08, \"amount\": 151660777.334045, \"type\": \"sell\", \"timestamp\": 1774461451}]}, \"GSCSm1PRiSUewqR3fbDFN5f9Y6bHmsEgX1RezskiXiee\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 3.792118119415761e-08, \"amount\": 60814470.087692, \"type\": \"buy\", \"timestamp\": 1774461439}, {\"price_was\": 4.3470460661267113e-08, \"amount\": 60814470.087692, \"type\": \"sell\", \"timestamp\": 1774461450}]}}",
+      "mint_id": "5tif9tPaAgMRkV8a2QDWahPSk77chHtQGEr6sGpeLPSU",
+      "mint_sig": "4CsuQPVAaWrXpzhdY7hACZBgL8bxM5AURB6QkFm6z88Ac5zjEzLcYJYmLvP515fugcujaY5442r1z9LpF4ykAQzF",
+      "name": "NET DOLLAR",
+      "owner": "bwamJzztZsepfkteWRChggmXuiiCQvpLqPietdNfSXa",
+      "peak_market_cap": 3990.588288704321,
+      "peak_price_change": 14.633719974852642,
+      "price_history": "{\"1774461439.001\": 3.792118119415761e-08, \"1774461439.002\": 4.3470460661267113e-08, \"1774461450.000\": 3.792118119524298e-08, \"1774461451.000\": 2.7958993478098787e-08}",
+      "slot_delay": "0.7909376621246338",
+      "symbol": "NET",
+      "tx_counts": "{\"swaps\": 4, \"buys\": 2, \"sells\": 2}",
+      "volume": "{\"30sec\": {\"swaps\": 4, \"buys\": 2, \"sells\": 2}, \"1min\": {}, \"2min\": {}, \"5min\": {}}"
+    }
+  },
+  "runtime_layout": {
+    "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+    "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+    "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+    "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+    "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+    "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+    "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+  }
+}

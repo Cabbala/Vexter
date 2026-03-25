@@ -1,0 +1,36 @@
+{
+  "generated_at_utc": "2026-03-25T21:19:37Z",
+  "run_id": "dexter-task005-pass-grade-pair-20260325T180027Z",
+  "source_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+  "summaries": [
+    {
+      "closed_at_utc": "2026-03-25T18:03:10.787868Z",
+      "exit_reason": "safe",
+      "mint": "6aHTh9r311kVEGTcQ3WTGoJofuqYiX6VeWoF6VwEThAb",
+      "realized_return_pct": 37.52462072728383,
+      "session_id": "6aHTh9r311kVEGTcQ3WTGoJofuqYiX6VeWoF6VwEThAb-1774461707938"
+    },
+    {
+      "closed_at_utc": "2026-03-25T18:02:37.704576Z",
+      "exit_reason": "safe",
+      "mint": "AdCvMqzaCbEdoVk4LyVgzgU4XSUEL6QqQ453de8ZxsRa",
+      "realized_return_pct": 26.43753082830737,
+      "session_id": "AdCvMqzaCbEdoVk4LyVgzgU4XSUEL6QqQ453de8ZxsRa-1774461707938"
+    },
+    {
+      "closed_at_utc": "2026-03-25T18:03:01.842855Z",
+      "exit_reason": "malicious",
+      "mint": "EADTG8t5bacSyhj6SH3r1aKKqhWad2Zgvi4gyjLfpump",
+      "realized_return_pct": -26.53061223999998,
+      "session_id": "EADTG8t5bacSyhj6SH3r1aKKqhWad2Zgvi4gyjLfpump-1774461707938"
+    },
+    {
+      "closed_at_utc": "2026-03-25T18:04:50.931174Z",
+      "exit_reason": "malicious",
+      "mint": "GFYvctoWAyrmzrnRX19bxVdDiYtSzmnkicyMvLHxpump",
+      "realized_return_pct": -12.10937498535148,
+      "session_id": "GFYvctoWAyrmzrnRX19bxVdDiYtSzmnkicyMvLHxpump-1774461707938"
+    }
+  ],
+  "summary_count": 4
+}

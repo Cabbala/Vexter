@@ -1,0 +1,33 @@
+{
+  "exported_at_utc": "2026-03-25T18:03:43.379168Z",
+  "mint_id": "74W1oxPLU7GFLFEkQWMHPxWxHbFqQzei1MVGvKR9pump",
+  "payload": {
+    "kind": "stagnant_mint",
+    "row": {
+      "bonding_curve": "HZVaoNf96JAabFRwtPCjF5dYBuKtYgTCw1YCNEndNRRT",
+      "final_market_cap": 2688.548607245323,
+      "final_ohlc": "{\"open\": 2.8887029972133128e-08, \"high\": \"2.9318959730047145E-8\", \"low\": 2.8887029972133128e-08, \"close\": \"2.93189597300471452482706173625626178136371891014277935028076171875E-8\"}",
+      "holders": "{\"uHNYrMiFir7KLTqwBYpT2jM3RSUNcfSakxDnnr8KDQr\": {\"balance\": 24157426.326054, \"balance_changes\": [{\"price_was\": 0.0, \"amount\": 17376518.16691, \"type\": \"buy\", \"timestamp\": 1774461726}, {\"price_was\": 2.8943139396678888e-08, \"amount\": 3401389.274634, \"type\": \"buy\", \"timestamp\": 1774461783}, {\"price_was\": 2.9130746531043666e-08, \"amount\": 3379518.88451, \"type\": \"buy\", \"timestamp\": 1774461793}]}, \"E6PruT7KZcXAh7CjrzdoQ9Ceg9kSkijAXuYEQe4HqGrR\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 2.8887029972133128e-08, \"amount\": 512604.412091, \"type\": \"buy\", \"timestamp\": 1774461726}, {\"price_was\": 2.8971296438206692e-08, \"amount\": 512604.412091, \"type\": \"sell\", \"timestamp\": 1774461761}]}, \"ETnjr2uM2196RvTPU8gyBEKsHSdpnftwNWAXuUr9XdjL\": {\"balance\": 1023716.836538, \"balance_changes\": [{\"price_was\": 2.8915105157073242e-08, \"amount\": 1023716.836538, \"type\": \"buy\", \"timestamp\": 1774461729}]}}",
+      "mint_id": "74W1oxPLU7GFLFEkQWMHPxWxHbFqQzei1MVGvKR9pump",
+      "mint_sig": "21w7YwVkzyVCw3pSLNKnqSoLRroRwPMxqvJS7MYzKSWN2Br9NwJo4o44D6BpqJjaaLU1uy3y1dfYXBmtAYFzxHMY",
+      "name": "Tubbs the Shark",
+      "owner": "uHNYrMiFir7KLTqwBYpT2jM3RSUNcfSakxDnnr8KDQr",
+      "peak_market_cap": 2688.548607245323,
+      "peak_price_change": 1.4952376839387547,
+      "price_history": "{\"1774461726.001\": 2.8887029972133128e-08, \"1774461726.002\": 2.8915105157073242e-08, \"1774461729.000\": 2.8971296438206692e-08, \"1774461761.000\": 2.8943139396678888e-08, \"1774461783.000\": 2.9130746531043666e-08, \"1774461793.000\": 2.9318959730047145e-08}",
+      "slot_delay": "1.2547993659973145",
+      "symbol": "Tubbshark",
+      "tx_counts": "{\"swaps\": 6, \"buys\": 5, \"sells\": 1}",
+      "volume": "{\"30sec\": {\"swaps\": 3, \"buys\": 3, \"sells\": 0}, \"1min\": {\"swaps\": 5, \"buys\": 4, \"sells\": 1}, \"2min\": {\"swaps\": 6, \"buys\": 5, \"sells\": 1}, \"5min\": {}}"
+    }
+  },
+  "runtime_layout": {
+    "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+    "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+    "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+    "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+    "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+    "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+    "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+  }
+}

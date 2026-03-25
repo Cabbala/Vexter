@@ -1,6 +1,6 @@
 {
-  "bundle_path": "artifacts/bundles/task-006-replay-deepening.tar.gz",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task006_replay_deepening_bundle.tar.gz",
+  "bundle_path": "artifacts/bundles/task-006-replay-analysis.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task006_replay_analysis_bundle.tar.gz",
   "code": [
     "vexter/comparison/"
   ],
@@ -45,12 +45,12 @@
   "next_task": {
     "id": "TASK-006",
     "resume_requirements": [
-      "Keep Dexter and Mew-X source logic frozen.",
-      "Use the promoted comparable pack as the replay-analysis baseline.",
-      "Carry forward the confirmatory Mew-X candidate_rejected miss as a narrow residual note only.",
-      "Explain the Dexter replay outlier and missing replay coverage before claiming replay trust is uniform."
+      "Keep Dexter and Mew-X strategy semantics frozen.",
+      "Add or expose a Dexter replay surface that preserves safe exits and non-stagnant closed sessions.",
+      "Keep Mew-X session-summary replay as a baseline but do not overclaim it as full path replay.",
+      "Re-run replay analysis after the Dexter replay surface covers the promoted outlier and missing session."
     ],
-    "state": "ready_for_next_replay_analysis_step"
+    "state": "needs_replay_surface_fix"
   },
   "plans": [
     "plans/SOURCE_ASSESSMENT_DEXTER.md",
@@ -60,32 +60,35 @@
     "plans/integration_readiness_plan.md"
   ],
   "proof_files": [
+    "artifacts/proofs/task-006-replay-analysis-check.json",
+    "artifacts/proofs/task-006-replay-analysis-summary.md",
     "artifacts/proofs/task-006-replay-deepening-check.json",
     "artifacts/proofs/task-006-replay-deepening-summary.md",
     "artifacts/proofs/task006-replay-deepening-20260325T180027Z-replay-packages",
-    "artifacts/proofs/task006-replay-deepening-20260325T180027Z-replay-results",
-    "artifacts/proofs/task-006-replay-validation-check.json",
-    "artifacts/proofs/task-005-validator-rule-implement-check.json"
+    "artifacts/proofs/task-006-replay-validation-check.json"
   ],
   "proofs": {
     "confirmatory_residual_narrow": true,
     "dexter_strategy_changed": false,
+    "live_vs_replay_gap_interpreted": true,
     "live_vs_replay_gap_measured": true,
     "mewx_strategy_changed": false,
+    "mewx_summary_parity_confirmed": true,
     "paper_sim_first_preserved": true,
     "promoted_pack_reaccepted": true,
-    "replay_gap_context_complete": false,
+    "replay_gap_context_complete": true,
+    "replay_surface_fix_required": true,
     "replay_validation_started": true,
     "source_logic_changed": false,
     "validator_rules_changed": false
   },
   "reports": [
-    "artifacts/reports/task-006-replay-deepening.md",
+    "artifacts/reports/task-006-replay-analysis.md",
     "artifacts/reports/task-006-replay-validation-status.md",
-    "artifacts/reports/task-006-replay-deepening-handoff",
+    "artifacts/reports/task-006-replay-analysis-handoff",
+    "artifacts/reports/task-006-replay-deepening.md",
     "artifacts/reports/task006-replay-deepening-20260325T180027Z-replay-comparison",
-    "artifacts/reports/task-006-replay-validation.md",
-    "artifacts/reports/task-005-validator-rule-implement.md"
+    "artifacts/reports/task-006-replay-validation.md"
   ],
   "scripts": [
     "scripts/bootstrap_windows_workspace.sh",
@@ -96,25 +99,28 @@
     "scripts/collect_comparison_package.ps1",
     "scripts/collect_matched_live_pair.py"
   ],
-  "status": "replay_gap_measured",
+  "status": "needs_replay_surface_fix",
   "summary": "artifacts/summary.md",
-  "task_id": "TASK-006-REPLAY-DEEPENING",
+  "task_id": "TASK-006-REPLAY-ANALYSIS",
   "task_ledger": "artifacts/task_ledger.jsonl",
   "task_result": {
     "confirmatory_residual": "Mew-X candidate_rejected",
     "dexter_live_vs_replay_gap_pct": 17.620498335119425,
+    "dexter_outlier_session_key": "AdCvMqzaCbEdoVk4LyVgzgU4XSUEL6QqQ453de8ZxsRa-1774461707938",
     "dexter_replay_coverage_ratio": 0.75,
-    "key_finding": "gap_measured",
+    "dexter_uncovered_session_key": "6aHTh9r311kVEGTcQ3WTGoJofuqYiX6VeWoF6VwEThAb-1774461707938",
+    "key_finding": "replay_surface_gap_found",
     "mewx_live_vs_replay_gap_pct": 0.0,
     "mewx_replay_coverage_ratio": 1.0,
+    "mewx_summary_interpretation": "summary_fidelity",
     "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
-    "recommended_next_step": "task_006_replay_analysis",
+    "recommended_next_step": "task_006_replay_surface_fix",
     "selected_outcome": "A",
-    "task_006_state": "ready_for_next_replay_analysis_step",
+    "task_006_state": "needs_replay_surface_fix",
     "verified_dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_dexter_pr": 3,
-    "verified_latest_vexter_main_commit": "d7845b665afc912da593f2601e6a3d39524964d0",
-    "verified_latest_vexter_pr": 21,
+    "verified_latest_vexter_main_commit": "3db6d3e73c4a6d990e0fdf8fba33b31a3a436c5b",
+    "verified_latest_vexter_pr": 22,
     "verified_mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
   },
   "templates": [

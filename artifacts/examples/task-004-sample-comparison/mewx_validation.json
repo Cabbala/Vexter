@@ -78,7 +78,7 @@
     "total_events": 25
   },
   "issues": [],
-  "package_dir": "/Users/cabbala/Documents/worktrees/Vexter-task006-replay-validation/tests/fixtures/comparison_packages/mewx_fixture",
+  "package_dir": "/Users/cabbala/Documents/vexter/task005-validator-rule-review/tests/fixtures/comparison_packages/mewx_fixture",
   "run_id": "mewx-fixture-001",
   "source_system": "mewx"
 }

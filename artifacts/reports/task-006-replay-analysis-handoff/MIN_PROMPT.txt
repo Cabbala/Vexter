@@ -1,0 +1,5 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+継続タスクID: TASK-006-REPLAY-ANALYSIS
+
+PR #22 merged main を基準に、promoted replay-deepening baseline の gap interpretation までは完了しています。Dexter の coverage hole は `6aH...` safe close が frozen source の stagnant replay export 条件を満たす前に run が終了したためで、Vexter linkage bug ではありません。Dexter の outlier `AdCv...` は live が `safe` で早期 exit した一方、replay surface が後続の stagnant terminal price しか持たないために発生しています。Mew-X の `0.0000` gap は exported session summary が live close metrics と完全一致することを示しますが、full-path replay を意味するわけではありません。次は source semantics を変えずに Dexter replay surface を narrow に補修し、その後 replay analysis を再実行してください。

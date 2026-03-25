@@ -1,0 +1,5 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+継続タスクID: TASK-006-COMPARISON-CLOSEOUT
+
+PR #25 merged main を基準に、TASK-006 の comparison closeout までは完了しています。正式 source of truth は `task005-pass-grade-pair-20260325T180027Z` の promoted live / repaired replay pair で、どちらも `winner_mode: derived`、scored-metric split は live / replay ともに Dexter `6`, Mew-X `4`, tie `2` で安定です。Dexter と Mew-X の replay coverage / gap はどちらも `100.00% / 0.0000`。confirmatory residual は Mew-X `candidate_rejected` のみで promoted baseline を overturn しません。closeout caveat は replay parity の claim 範囲で、current zero-gap は close-summary / `position_closed` realized-return fidelity を示すもので full path equivalence ではありません。Dexter `realized_vs_peak_gap_pct` drift と Mew-X candidate-surface asymmetry は明示 caveat のままです。次は新しい evidence collection ではなく、この closeout bundle を source of truth として research handoff / downstream execution planning へ進めてください。

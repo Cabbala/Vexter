@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-BUNDLE_PATH="$ROOT_DIR/artifacts/bundles/task-006-downstream-comparative-analysis.tar.gz"
+BUNDLE_PATH="$ROOT_DIR/artifacts/bundles/task-006-comparison-closeout.tar.gz"
 SAMPLE_PACK_DIR="$ROOT_DIR/artifacts/examples/task-004-sample-comparison"
 export COPYFILE_DISABLE=1
 

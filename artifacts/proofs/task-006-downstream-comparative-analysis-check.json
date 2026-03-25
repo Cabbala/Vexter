@@ -1,0 +1,97 @@
+{
+  "task_id": "TASK-006-DOWNSTREAM-COMPARATIVE-ANALYSIS",
+  "generated_at_utc": "2026-03-25T21:37:18Z",
+  "verified_github": {
+    "latest_vexter_pr": 24,
+    "latest_vexter_main_commit": "2c8b654fde4b4fcff11f3ecca2e1f4d27ceb610d",
+    "latest_vexter_merged_at_utc": "2026-03-25T21:27:28Z",
+    "supporting_vexter_prs": [
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17,
+      16
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "formal_inputs": {
+    "promoted_live_label": "task005-pass-grade-pair-20260325T180027Z",
+    "promoted_live_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison",
+    "promoted_replay_comparison_dir": "artifacts/reports/task006-replay-surface-fix-20260325T180027Z-replay-comparison",
+    "confirmatory_label": "task005-pass-grade-pair-20260325T180604Z",
+    "confirmatory_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180604Z-comparison"
+  },
+  "live_comparison": {
+    "winner_mode": "derived",
+    "derived_winner_meaning": "Component-level winners are recorded in the comparison matrix; there is no scalar overall winner field.",
+    "scored_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "dexter_edges": [
+      "candidate_count",
+      "signal_to_attempt_latency_ms",
+      "quote_vs_fill_slippage_bps",
+      "max_favorable_excursion_pct",
+      "realized_exit_pct",
+      "stale_position_ratio"
+    ],
+    "mewx_edges": [
+      "attempt_to_fill_latency_ms",
+      "max_adverse_excursion_pct",
+      "time_to_peak_ms",
+      "realized_vs_peak_gap_pct"
+    ],
+    "ties": [
+      "fill_success_rate",
+      "replayability_grade"
+    ],
+    "interpretation": "Dexter is stronger on candidate generation, immediate post-signal action, slippage, realized upside capture, and stale-position control. Mew-X is stronger on fill latency, drawdown containment, time-to-peak, and holding closer to peak on exit."
+  },
+  "replay_consistency": {
+    "winner_mode": "derived",
+    "scored_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "dexter_replay_coverage_ratio": 1.0,
+    "dexter_live_vs_replay_gap_pct": 0.0,
+    "mewx_replay_coverage_ratio": 1.0,
+    "mewx_live_vs_replay_gap_pct": 0.0,
+    "consistent_with_live_interpretation": true,
+    "interpretation": "The replay-surface repair preserves the same component-level comparison shape seen on the promoted live baseline rather than changing it."
+  },
+  "confirmatory": {
+    "label": "task005-pass-grade-pair-20260325T180604Z",
+    "dexter_classification": "pass",
+    "mewx_classification": "partial",
+    "mewx_missing_event_types": [
+      "candidate_rejected"
+    ],
+    "winner_mode": "deferred",
+    "overturns_promoted_baseline": false
+  },
+  "caveats": {
+    "replay_scope": "Current zero-gap evidence is scoped to close-summary and position_closed realized-return fidelity rather than full execution-path equivalence.",
+    "mewx_scope": "Mew-X replay parity remains a summary-fidelity claim because replay reconstruction uses exported session summaries from the same session state that emitted position_closed.",
+    "dexter_scope": "Dexter replay parity now depends on the narrow added close-summary surface for promoted non-stagnant closes and should stay scoped to that repaired surface.",
+    "metric_scope_gap": "The gap proof measures matched position_closed realized_return_pct only; Dexter realized_vs_peak_gap_pct shifts from 20.533046470504612 live to 25.804157291090654 replay while the close-return gap stays zero.",
+    "candidate_metric_asymmetry": "Mew-X candidate_precision_proxy remains unavailable because creator_candidate is absent under the frozen-source export surface."
+  },
+  "decision": {
+    "selected_outcome": "A",
+    "key_finding": "comparison_closeout_ready",
+    "task_state": "comparison_closeout_ready",
+    "recommended_next_step": "task_006_comparison_closeout",
+    "downstream_research_handoff_ready": true,
+    "new_evidence_collection_required": false
+  }
+}

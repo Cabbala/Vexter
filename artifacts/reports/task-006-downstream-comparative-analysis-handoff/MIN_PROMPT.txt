@@ -1,0 +1,5 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+継続タスクID: TASK-006-DOWNSTREAM-COMPARATIVE-ANALYSIS
+
+PR #24 merged main を基準に、promoted baseline の downstream comparative analysis までは完了しています。promoted live pack と repaired replay pack はどちらも `winner_mode: derived` で、scored-metric split は live / replay ともに Dexter `6`, Mew-X `4`, tie `2` で安定です。confirmatory 側の残差は Mew-X `candidate_rejected` のみで、promoted baseline を overturn しません。注意点は replay parity の claim 範囲だけで、current zero-gap は close-summary / `position_closed` realized-return fidelity を示すもので full path equivalence ではありません。次は `TASK-006` comparison closeout か downstream research judgment へ渡してください。新しい evidence collection は現時点では不要です。

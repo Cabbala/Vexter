@@ -1,0 +1,24 @@
+{
+  "ended_at_utc": "2026-03-25T18:05:11.148258Z",
+  "event_counts": {
+    "candidate_rejected": 8,
+    "creator_candidate": 255,
+    "entry_attempt": 3,
+    "entry_fill": 3,
+    "entry_signal": 3,
+    "exit_fill": 3,
+    "exit_signal": 3,
+    "mint_observed": 3,
+    "position_closed": 3,
+    "run_summary": 1,
+    "session_update": 66
+  },
+  "host_role": "windows_runtime",
+  "mode": "replay",
+  "run_id": "dexter-task005-pass-grade-pair-20260325T180027Z-replay",
+  "source_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+  "source_system": "dexter",
+  "started_at_utc": "2026-03-25T18:02:11.066878Z",
+  "status": "completed",
+  "transport_mode": "ws"
+}

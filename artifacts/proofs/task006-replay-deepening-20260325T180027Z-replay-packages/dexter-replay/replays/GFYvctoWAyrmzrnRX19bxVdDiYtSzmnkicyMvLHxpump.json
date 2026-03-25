@@ -1,0 +1,33 @@
+{
+  "exported_at_utc": "2026-03-25T18:05:07.113471Z",
+  "mint_id": "GFYvctoWAyrmzrnRX19bxVdDiYtSzmnkicyMvLHxpump",
+  "payload": {
+    "kind": "stagnant_mint",
+    "row": {
+      "bonding_curve": "2GJ6rLgvCFAJBgQX6HCeEEnjiGdUmi9bJr51zknNqTv2",
+      "final_market_cap": 2563.839702198043,
+      "final_ohlc": "{\"open\": 3.181112146629385e-08, \"high\": \"3.944065972912961E-8\", \"low\": 2.7958993480894687e-08, \"close\": \"2.7958993480894687477282130306198426605845952508389018476009368896484375E-8\"}",
+      "holders": "{\"49gbkrRvKVoNC3xZM5ZyEjPMyp3zy2mdeLk8XDY6Vg2j\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 0.0, \"amount\": 67062499.999999, \"type\": \"buy\", \"timestamp\": 1774461870}, {\"price_was\": 3.944065972912961e-08, \"amount\": 67062499.999999, \"type\": \"sell\", \"timestamp\": 1774461871}]}, \"2ezv4U5HmPpkt2xLsKnw1FyyGmjFBeW7c166p99Hw2xB\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 3.181112146629385e-08, \"amount\": 43690726.0, \"type\": \"buy\", \"timestamp\": 1774461870}, {\"price_was\": 3.417810471784032e-08, \"amount\": 43690726.0, \"type\": \"sell\", \"timestamp\": 1774461872}]}, \"5qWVBpuvN51TWgeegrTLsDCo7e5M7pHwaZg7mKNU49Lm\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 3.4765465524958946e-08, \"amount\": 7050228.664794, \"type\": \"buy\", \"timestamp\": 1774461870}, {\"price_was\": 3.129673314389684e-08, \"amount\": 7050228.664794, \"type\": \"sell\", \"timestamp\": 1774461872}]}, \"72PN9dogN9zmirA2QSYBaPqy6gUdp2tTPNcGD1e2BtXV\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 3.528056167243958e-08, \"amount\": 40223183.760966, \"type\": \"buy\", \"timestamp\": 1774461870}, {\"price_was\": 3.025284212347726e-08, \"amount\": 40223183.760966, \"type\": \"sell\", \"timestamp\": 1774461873}]}, \"97jv9pjCf5D7VUZEyj6XnXBC5JF23Vsagc3bvSF6GRmL\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 3.845068456033447e-08, \"amount\": 10298639.463672, \"type\": \"buy\", \"timestamp\": 1774461870}, {\"price_was\": 3.086609662773201e-08, \"amount\": 10298639.463672, \"type\": \"sell\", \"timestamp\": 1774461873}]}, \"3k76an7krQNhXdhsUSyWduCW947e2hEPLFro3jCW6EX3\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 3.933109751424137e-08, \"amount\": 1257421.875, \"type\": \"buy\", \"timestamp\": 1774461871}, {\"price_was\": 2.802463773954581e-08, \"amount\": 1257421.875, \"type\": \"sell\", \"timestamp\": 1774461877}]}}",
+      "mint_id": "GFYvctoWAyrmzrnRX19bxVdDiYtSzmnkicyMvLHxpump",
+      "mint_sig": "5BrpLR3kZ87jY6oAvyTd3kwvgQSxWR4MzQJ3Ja8SvRGcvKWrXjDcQWTUGcYShgguaiyABS79eqtdEuzgW1Xdfuhu",
+      "name": "Billy Boman",
+      "owner": "49gbkrRvKVoNC3xZM5ZyEjPMyp3zy2mdeLk8XDY6Vg2j",
+      "peak_market_cap": 3616.7084971611853,
+      "peak_price_change": 23.983870769597985,
+      "price_history": "{\"1774461870.001\": 3.181112146629385e-08, \"1774461870.002\": 3.4765465524958946e-08, \"1774461870.003\": 3.528056167243958e-08, \"1774461870.004\": 3.845068456033447e-08, \"1774461870.005\": 3.933109751424137e-08, \"1774461871.000\": 3.944065972912961e-08, \"1774461871.001\": 3.417810471784032e-08, \"1774461872.000\": 3.129673314389684e-08, \"1774461872.001\": 3.086609662773201e-08, \"1774461873.000\": 3.025284212347726e-08, \"1774461873.001\": 2.802463773954581e-08, \"1774461877.000\": 2.7958993480894687e-08}",
+      "slot_delay": "1.0073001384735107",
+      "symbol": "Boman",
+      "tx_counts": "{\"swaps\": 12, \"buys\": 6, \"sells\": 6}",
+      "volume": "{\"30sec\": {\"swaps\": 12, \"buys\": 6, \"sells\": 6}, \"1min\": {}, \"2min\": {}, \"5min\": {}}"
+    }
+  },
+  "runtime_layout": {
+    "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+    "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+    "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+    "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+    "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+    "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+    "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+  }
+}

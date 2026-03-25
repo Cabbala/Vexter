@@ -7,6 +7,7 @@ import pytest
 from vexter.comparison import (
     build_comparison_pack,
     derive_metrics,
+    run_replay_deepening,
     run_replay_validation,
     validate_run_package,
 )
@@ -56,6 +57,79 @@ def _remove_event_type(target_dir: Path, event_type: str) -> None:
     events = [json.loads(line) for line in events_path.read_text().splitlines() if line.strip()]
     filtered = [event for event in events if event["event_type"] != event_type]
     events_path.write_text("".join(json.dumps(event) + "\n" for event in filtered))
+
+
+def _write_dexter_replay_export(target_dir: Path) -> None:
+    _write_json(
+        target_dir / "exports" / "stagnant_mint_replay.json",
+        {
+            "exported_at_utc": "2026-03-21T01:05:01Z",
+            "mint_id": "mint-alpha",
+            "payload": {
+                "kind": "stagnant_mint",
+                "row": {
+                    "mint_id": "mint-alpha",
+                    "name": "Alpha",
+                    "final_market_cap": 1200.0,
+                    "price_history": json.dumps(
+                        {
+                            "1774054805.000": 1.05,
+                            "1774054860.000": 1.26,
+                            "1774055101.000": 1.10,
+                        }
+                    ),
+                },
+            },
+            "runtime_layout": {
+                "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter"
+            },
+        },
+    )
+
+
+def _write_mewx_session_summaries(target_dir: Path) -> None:
+    _write_json(
+        target_dir / "exports" / "session-x-summary.json",
+        {
+            "candidate_source": "deagle",
+            "closed_at_utc": "2026-03-21T01:04:31Z",
+            "creator": "creator-r",
+            "entry_price": 1.015,
+            "exit_price": 1.13,
+            "exit_reason": "profit_target",
+            "mae_pct": -6.0,
+            "market": "pumpfun",
+            "mfe_pct": 24.0,
+            "mint": "mint-x",
+            "pool_id": "pool-x",
+            "realized_return_pct": 11.3300492611,
+            "run_id": "mewx-promoted-live",
+            "session_duration_ms": 270000,
+            "session_id": "session-x",
+            "time_to_peak_ms": 45000,
+        },
+    )
+    _write_json(
+        target_dir / "exports" / "session-y-summary.json",
+        {
+            "candidate_source": "grand_chillers",
+            "closed_at_utc": "2026-03-21T01:14:01Z",
+            "creator": "creator-s",
+            "entry_price": 0.96,
+            "exit_price": 0.92,
+            "exit_reason": "inactivity_timeout",
+            "mae_pct": -12.0,
+            "market": "pumpfun",
+            "mfe_pct": 5.0,
+            "mint": "mint-y",
+            "pool_id": "pool-y",
+            "realized_return_pct": -4.1666666667,
+            "run_id": "mewx-promoted-live",
+            "session_duration_ms": 240000,
+            "session_id": "session-y",
+            "time_to_peak_ms": 90000,
+        },
+    )
 
 
 def test_validate_run_package_passes_for_fixtures() -> None:
@@ -552,3 +626,60 @@ def test_run_replay_validation_blocks_when_promoted_pack_is_not_derived(
     assert report["decision"]["task_state"] == "blocked"
     assert report["promoted"]["accepted_as_replay_input"] is False
     assert "TASK-006 state: `blocked`" in summary
+
+
+def test_run_replay_deepening_reconstructs_replay_packages_and_measures_gap(
+    tmp_path: Path,
+) -> None:
+    promoted_dexter = tmp_path / "promoted-dexter"
+    promoted_mewx = tmp_path / "promoted-mewx"
+
+    _make_live_package(
+        DEXTER_FIXTURE,
+        promoted_dexter,
+        run_id="dexter-promoted-live",
+        started_at_utc="2026-03-21T01:00:00Z",
+        ended_at_utc="2026-03-21T01:20:00Z",
+    )
+    _make_live_package(
+        MEWX_FIXTURE,
+        promoted_mewx,
+        run_id="mewx-promoted-live",
+        started_at_utc="2026-03-21T01:00:00Z",
+        ended_at_utc="2026-03-21T01:20:00Z",
+    )
+
+    _write_dexter_replay_export(promoted_dexter)
+    _write_mewx_session_summaries(promoted_mewx)
+
+    report, summary = run_replay_deepening(
+        latest_vexter_pr=21,
+        latest_vexter_main_commit="d7845b665afc912da593f2601e6a3d39524964d0",
+        dexter_main_commit="ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+        mewx_frozen_commit="dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+        promoted_label="task005-pass-grade-pair-20260325T180027Z",
+        promoted_dexter_package_dir=promoted_dexter,
+        promoted_mewx_package_dir=promoted_mewx,
+        replay_package_root=tmp_path / "replay-packages",
+        replay_output_dir=tmp_path / "replay-results",
+        confirmatory_residual_note="Mew-X candidate_rejected",
+    )
+
+    dexter_replay_dir = tmp_path / "replay-packages" / "dexter-replay"
+    mewx_replay_dir = tmp_path / "replay-packages" / "mewx-replay"
+
+    assert dexter_replay_dir.joinpath("run_metadata.json").exists()
+    assert mewx_replay_dir.joinpath("run_metadata.json").exists()
+    assert report["decision"]["key_finding"] == "gap_measured"
+    assert report["decision"]["task_state"] == "ready_for_next_replay_analysis_step"
+    assert report["promoted"]["dexter"]["replay_package"]["validation"]["classification"] == "pass"
+    assert report["promoted"]["mewx"]["replay_package"]["validation"]["classification"] == "pass"
+    assert report["promoted"]["dexter"]["gap"]["matched_position_closed_count"] == 1
+    assert report["promoted"]["mewx"]["gap"]["matched_position_closed_count"] == 2
+    assert report["promoted"]["dexter"]["gap"]["live_vs_replay_gap_pct"] == pytest.approx(
+        8.5714285714,
+        rel=1e-4,
+    )
+    assert report["promoted"]["mewx"]["gap"]["live_vs_replay_gap_pct"] == pytest.approx(0.0)
+    assert report["replay_pack"]["winner_mode"] == "derived"
+    assert "Dexter live-vs-replay gap" in summary

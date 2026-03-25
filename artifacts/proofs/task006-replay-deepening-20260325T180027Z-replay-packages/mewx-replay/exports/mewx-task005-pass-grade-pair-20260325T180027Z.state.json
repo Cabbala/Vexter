@@ -1,0 +1,51 @@
+{
+  "ended_at_utc": null,
+  "event_counts": {
+    "candidate_rejected": 1,
+    "entry_attempt": 6,
+    "entry_fill": 6,
+    "entry_signal": 6,
+    "exit_fill": 6,
+    "exit_signal": 6,
+    "mint_observed": 9,
+    "position_closed": 6,
+    "session_update": 10
+  },
+  "host_role": "windows_runtime",
+  "mode": "sim_live",
+  "paths": {
+    "candidate_snapshots": [
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export\\candidates\\mewx-task005-pass-grade-pair-20260325T180027Z.candidates.initial_selection.json",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export\\candidates\\mewx-task005-pass-grade-pair-20260325T180027Z.candidates.refresh.json",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export\\candidates\\mewx-task005-pass-grade-pair-20260325T180027Z.candidates.refresh.json",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export\\candidates\\mewx-task005-pass-grade-pair-20260325T180027Z.candidates.refresh.json",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export\\candidates\\mewx-task005-pass-grade-pair-20260325T180027Z.candidates.refresh.json",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export\\candidates\\mewx-task005-pass-grade-pair-20260325T180027Z.candidates.refresh.json"
+    ],
+    "config_snapshot": "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\config\\mewx-task005-pass-grade-pair-20260325T180027Z.config.json",
+    "raw_events_file": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx\\mewx-task005-pass-grade-pair-20260325T180027Z.ndjson",
+    "runtime_layout": {
+      "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\config",
+      "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\mewx",
+      "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export",
+      "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\mewx",
+      "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx",
+      "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\mewx",
+      "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+    },
+    "session_summaries": [
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export\\sessions\\9P5yvvqE7oyHVXuuYrFyeF35XMxyJpntWMtTu7Dkpump-1774461628711.json",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export\\sessions\\DYa5q3SFrZ2HsYHqFNNK2LYmeBtPKgY9pDDMBjWepump-1774461628711.json",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export\\sessions\\fmFU8JoLhb4atKqvFddgAb6cd4mE12kBpmtCcf8pump-1774461628711.json",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export\\sessions\\AUyJcGpbJWrUwC7smpcC8sYi1vfUTBN7bCZ2bVMpJFPR-1774461628711.json",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export\\sessions\\BMRQB1eP9xnc4WUfVwQjb2BCBEpCQd6fjpbMYTBGpump-1774461628711.json",
+      "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export\\sessions\\H79BmixeCauzgEYz7AB4p4iFpJibjJztJ999QJG8PHHa-1774461628711.json"
+    ]
+  },
+  "run_id": "mewx-task005-pass-grade-pair-20260325T180027Z",
+  "source_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+  "source_system": "mewx",
+  "started_at_utc": "2026-03-25T18:00:28.711Z",
+  "status": "running",
+  "transport_mode": "mixed"
+}

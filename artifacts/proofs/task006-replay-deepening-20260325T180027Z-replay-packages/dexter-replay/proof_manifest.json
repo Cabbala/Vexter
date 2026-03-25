@@ -1,0 +1,23 @@
+{
+  "config": [
+    "config/config_snapshot.json"
+  ],
+  "db_exports": [
+    "replays/AdCvMqzaCbEdoVk4LyVgzgU4XSUEL6QqQ453de8ZxsRa.json",
+    "replays/EADTG8t5bacSyhj6SH3r1aKKqhWad2Zgvi4gyjLfpump.json",
+    "replays/GFYvctoWAyrmzrnRX19bxVdDiYtSzmnkicyMvLHxpump.json"
+  ],
+  "exports": [
+    "exports/dexter-task005-pass-grade-pair-20260325T180027Z-replay.state.json",
+    "exports/leaderboard_snapshot.json"
+  ],
+  "logs": [],
+  "raw_events": [
+    "inputs/source_events.ndjson"
+  ],
+  "replays": [
+    "replays/AdCvMqzaCbEdoVk4LyVgzgU4XSUEL6QqQ453de8ZxsRa.json",
+    "replays/EADTG8t5bacSyhj6SH3r1aKKqhWad2Zgvi4gyjLfpump.json",
+    "replays/GFYvctoWAyrmzrnRX19bxVdDiYtSzmnkicyMvLHxpump.json"
+  ]
+}

@@ -1,0 +1,263 @@
+{
+  "label": "task005-pass-grade-pair-20260325T180027Z",
+  "windows_host": "win-lan",
+  "windows_root": "C:\\Users\\bot\\quant\\Vexter",
+  "requested_modes": {
+    "dexter": "paper_live",
+    "mewx": "sim"
+  },
+  "measurement_window": {
+    "started_at_utc": "2026-03-25T18:02:11.066878Z",
+    "ended_at_utc": "2026-03-25T18:05:11.148258Z"
+  },
+  "remote_collection": {
+    "label": "task005-pass-grade-pair-20260325T180027Z",
+    "host": "DESKTOP-NNC6MPS",
+    "measurement_window": {
+      "started_at_utc": "2026-03-25T18:02:11.066878Z",
+      "ended_at_utc": "2026-03-25T18:05:11.148258Z"
+    },
+    "mewx_readiness": {
+      "timeout_seconds": 90,
+      "event_observed_before_dexter_start": true,
+      "observed_at_utc": "2026-03-25T18:01:16.993726Z",
+      "process_exited_before_event": false,
+      "event_summary": {
+        "path": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx\\mewx-task005-pass-grade-pair-20260325T180027Z.ndjson",
+        "exists": true,
+        "event_count": 5,
+        "first_ts_utc": "2026-03-25T18:01:16.425Z",
+        "last_ts_utc": "2026-03-25T18:01:16.914Z",
+        "event_types": {
+          "mint_observed": 1,
+          "entry_signal": 1,
+          "entry_attempt": 1,
+          "entry_fill": 1,
+          "session_update": 1
+        },
+        "modes": [
+          "sim_live"
+        ],
+        "transport_modes": [
+          "mixed"
+        ]
+      }
+    },
+    "dexter_readiness": {
+      "timeout_seconds": 30,
+      "event_observed_after_start": true,
+      "observed_at_utc": "2026-03-25T18:02:11.066878Z",
+      "process_exited_before_event": false,
+      "event_summary": {
+        "path": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter\\dexter-task005-pass-grade-pair-20260325T180027Z.ndjson",
+        "exists": true,
+        "event_count": 255,
+        "first_ts_utc": "2026-03-25T18:01:49.160299Z",
+        "last_ts_utc": "2026-03-25T18:01:49.357451Z",
+        "event_types": {
+          "creator_candidate": 255
+        },
+        "modes": [
+          "paper_live"
+        ],
+        "transport_modes": [
+          "ws"
+        ]
+      }
+    },
+    "dexter_startup": {
+      "attempts_allowed": 3,
+      "retry_backoff_seconds": 45,
+      "prestart_quiet_seconds": 30,
+      "prestart_quiet_started_at_utc": "2026-03-25T18:01:16.993726Z",
+      "prestart_quiet_ended_at_utc": "2026-03-25T18:01:46.994924Z",
+      "startup_delay_seconds": 2,
+      "attempts": [
+        {
+          "attempt": 1,
+          "started_at_utc": "2026-03-25T18:01:46.994924Z",
+          "finished_at_utc": "2026-03-25T18:02:11.066878Z",
+          "event_observed": true,
+          "observed_at_utc": "2026-03-25T18:02:11.066878Z",
+          "process_exited_before_event": false,
+          "event_count": 255,
+          "exit_code": null,
+          "stderr_path": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\unified\\matched_pair_runner\\dexter-task005-pass-grade-pair-20260325T180027Z.stderr.log",
+          "wslogs_started_before_attempt": false,
+          "wslogs_started_during_attempt": true,
+          "head_start_seconds_before_wslogs": 2,
+          "wallet_balance_http_429_count": 0,
+          "wallet_balance_rate_limited": false,
+          "stderr_tail": []
+        }
+      ]
+    },
+    "stale_process_cleanup": {
+      "listed_at_utc": "2026-03-25T18:00:27.511390Z",
+      "list_exit_code": 0,
+      "list_stderr_tail": [],
+      "found": [],
+      "stopped": []
+    },
+    "dexter_wslogs_readiness": {
+      "started": true,
+      "launch_strategy": "start_after_dexter_head_start",
+      "started_after_attempt": 1,
+      "timeout_seconds": 75,
+      "subscription_observed_before_dexter_start": true,
+      "observed_at_utc": "2026-03-25T18:01:56.062895Z",
+      "process_exited_before_subscription": false,
+      "settle_seconds": 15,
+      "settle_started_at_utc": "2026-03-25T18:01:56.062895Z",
+      "settle_ended_at_utc": "2026-03-25T18:02:11.064866Z",
+      "stderr_path": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\unified\\matched_pair_runner\\dexter_wslogs-task005-pass-grade-pair-20260325T180027Z.stderr.log",
+      "http_429_count": 10,
+      "stderr_tail": [
+        "\u001b[94m[DexLab] INFO | Price history not found for mint HkYRYVixLftVXvC9u5MjS4oWg238KTFbttHoXzB9pump.\u001b[0m",
+        "\u001b[94m[DexLab] INFO | \u001b[36mSocket Latency: 0.85s\u001b[0m\u001b[0m",
+        "\u001b[94m[DexLab] INFO | \u001b[95mNew mint found! 5nkKRC9LLi4YLM9rAKdosgP3jXppDo1KgKQzFGVCbhdVCuEsYyuUAXdVqGmxQV58iPV5ZoT3sYGQfMwtx7QP2DLX \u001b[0m\u001b[0m",
+        "\u001b[94m[DexLab] INFO | \u001b[95mNew mint found! 3p2p52gAkHTMa8eFC8x4VowtJJgcPWBfiRsYP4rYq2JWG2RYQwv1VS38FDZP3tT2XuMgTkqvPqJHs4yBFfq6XzGU \u001b[0m\u001b[0m",
+        "\u001b[94m[DexLab] INFO | \u001b[95mNew mint found! 2wQoEbcU8DRB66U8fjTX3rsLMLkr9LmEE8EwajWCbTQwUt5hLEPvuCUdXwLpwkHHKMxfv4K38mJmptygeiM4fpEY \u001b[0m\u001b[0m",
+        "\u001b[94m[DexLab] INFO | \u001b[36mSocket Latency: 1.43s\u001b[0m\u001b[0m",
+        "\u001b[94m[DexLab] INFO | \u001b[36mSocket Latency: 1.43s\u001b[0m\u001b[0m",
+        "\u001b[94m[DexLab] INFO | \u001b[95mNew mint found! 3WNiXckud8tLrn3XXhoABuwtjFYJYcbbJ7amZEA6uhReguRrzJ2xhvz582isEtP4Nvx8x3JrfHhJZmqWadXCWRAY \u001b[0m\u001b[0m",
+        "\u001b[94m[DexLab] INFO | \u001b[95mNew mint found! 5fnPJtmfPCca6SdocTZWVjeDbYKXgtSEiNZuGK8refRJYToA49aaaENSB22U3PgW61rorVhQDsfkWfVpiqcmz814 \u001b[0m\u001b[0m",
+        "\u001b[94m[DexLab] INFO | \u001b[95mNew mint found! 59pdwbERjb1UyhYhoruBCc5CJeMVK5xvVV56jHY1BwGJDKcPM3Mgg3veggw4W7kqVd2y3UFV6aLVWzucZ6zstidi \u001b[0m\u001b[0m",
+        "\u001b[94m[DexLab] INFO | \u001b[95mNew mint found! R1D48yY4YxqV8PBxkDXxQVcxSrgpL84fWcubYozXgyFgsyRyYPtK66KB6BWP7U2JTkusLcxyhNgRCu6jzvSsiGe \u001b[0m\u001b[0m",
+        "\u001b[94m[DexLab] INFO | \u001b[95mNew mint found! xDqAWjBio2pRVeunhvK6Qq2R76k7qKZG1Sq83nFR3dDPguxeG63w5zCAonvJs26GnDnwQ2mYszKuzRBWQMiL4QX \u001b[0m\u001b[0m"
+      ]
+    },
+    "launch_events": [
+      {
+        "name": "mewx",
+        "pid": 37168,
+        "launched_at_utc": "2026-03-25T18:00:27.958137Z",
+        "cwd": "C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X",
+        "cmd": [
+          "C:\\Users\\bot\\quant\\Vexter\\sources\\Mew-X\\target\\debug\\mew.exe"
+        ],
+        "stdout_path": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\unified\\matched_pair_runner\\mewx-task005-pass-grade-pair-20260325T180027Z.stdout.log",
+        "stderr_path": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\unified\\matched_pair_runner\\mewx-task005-pass-grade-pair-20260325T180027Z.stderr.log"
+      },
+      {
+        "name": "dexter",
+        "pid": 21740,
+        "launched_at_utc": "2026-03-25T18:01:46.997532Z",
+        "cwd": "C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter",
+        "cmd": [
+          "C:\\Users\\bot\\quant\\Vexter\\venvs\\dexter\\Scripts\\python.exe",
+          "Dexter.py"
+        ],
+        "stdout_path": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\unified\\matched_pair_runner\\dexter-task005-pass-grade-pair-20260325T180027Z.stdout.log",
+        "stderr_path": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\unified\\matched_pair_runner\\dexter-task005-pass-grade-pair-20260325T180027Z.stderr.log"
+      },
+      {
+        "name": "dexter_wslogs",
+        "pid": 18776,
+        "launched_at_utc": "2026-03-25T18:01:49.001624Z",
+        "cwd": "C:\\Users\\bot\\quant\\Vexter\\sources\\Dexter",
+        "cmd": [
+          "C:\\Users\\bot\\quant\\Vexter\\venvs\\dexter\\Scripts\\python.exe",
+          "DexLab/wsLogs.py"
+        ],
+        "stdout_path": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\unified\\matched_pair_runner\\dexter_wslogs-task005-pass-grade-pair-20260325T180027Z.stdout.log",
+        "stderr_path": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\unified\\matched_pair_runner\\dexter_wslogs-task005-pass-grade-pair-20260325T180027Z.stderr.log"
+      }
+    ],
+    "process_results": [
+      {
+        "name": "mewx",
+        "pid": 37168,
+        "exit_code": 3221225786
+      },
+      {
+        "name": "dexter",
+        "pid": 21740,
+        "exit_code": 3221225786
+      },
+      {
+        "name": "dexter_wslogs",
+        "pid": 18776,
+        "exit_code": 3221225786
+      }
+    ],
+    "runs": {
+      "dexter": {
+        "run_id": "dexter-task005-pass-grade-pair-20260325T180027Z",
+        "event_summary": {
+          "path": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter\\dexter-task005-pass-grade-pair-20260325T180027Z.ndjson",
+          "exists": true,
+          "event_count": 323,
+          "first_ts_utc": "2026-03-25T18:01:49.160299Z",
+          "last_ts_utc": "2026-03-25T18:04:55.388903Z",
+          "event_types": {
+            "creator_candidate": 255,
+            "mint_observed": 12,
+            "entry_signal": 4,
+            "entry_attempt": 4,
+            "entry_fill": 4,
+            "session_update": 24,
+            "candidate_rejected": 8,
+            "exit_signal": 4,
+            "exit_fill": 4,
+            "position_closed": 4
+          },
+          "modes": [
+            "paper_live"
+          ],
+          "transport_modes": [
+            "ws"
+          ]
+        }
+      },
+      "mewx": {
+        "run_id": "mewx-task005-pass-grade-pair-20260325T180027Z",
+        "event_summary": {
+          "path": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx\\mewx-task005-pass-grade-pair-20260325T180027Z.ndjson",
+          "exists": true,
+          "event_count": 56,
+          "first_ts_utc": "2026-03-25T18:01:16.425Z",
+          "last_ts_utc": "2026-03-25T18:04:32.102Z",
+          "event_types": {
+            "mint_observed": 9,
+            "entry_signal": 6,
+            "entry_attempt": 6,
+            "entry_fill": 6,
+            "session_update": 10,
+            "exit_signal": 6,
+            "exit_fill": 6,
+            "position_closed": 6,
+            "candidate_rejected": 1
+          },
+          "modes": [
+            "sim_live"
+          ],
+          "transport_modes": [
+            "mixed"
+          ]
+        }
+      }
+    },
+    "log_root": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\unified\\matched_pair_runner"
+  },
+  "remote_packages": {
+    "dexter": "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified\\comparison_inputs\\dexter\\dexter-task005-pass-grade-pair-20260325T180027Z",
+    "mewx": "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified\\comparison_inputs\\mewx\\mewx-task005-pass-grade-pair-20260325T180027Z"
+  },
+  "packaging": {
+    "dexter": {
+      "package_path": "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified\\comparison_inputs\\dexter\\dexter-task005-pass-grade-pair-20260325T180027Z",
+      "event_window_mode": "full_stream_fallback",
+      "event_window_note": "Remote PowerShell window filtering returned zero events; the helper copied the full run-scoped stream instead."
+    },
+    "mewx": {
+      "package_path": "C:\\Users\\bot\\quant\\Vexter\\artifacts\\unified\\comparison_inputs\\mewx\\mewx-task005-pass-grade-pair-20260325T180027Z",
+      "event_window_mode": "full_stream_fallback",
+      "event_window_note": "Remote PowerShell window filtering returned zero events; the helper copied the full run-scoped stream instead."
+    }
+  },
+  "local_packages": {
+    "dexter": "/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326/artifacts/tmp/winlan-packages-task005-pass-grade-pair-20260325T180027Z/dexter-task005-pass-grade-pair-20260325T180027Z",
+    "mewx": "/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326/artifacts/tmp/winlan-packages-task005-pass-grade-pair-20260325T180027Z/mewx-task005-pass-grade-pair-20260325T180027Z"
+  }
+}

@@ -31,7 +31,7 @@
     "total_events": 16
   },
   "issues": [],
-  "package_dir": "/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326/tests/fixtures/comparison_packages/dexter_fixture",
+  "package_dir": "/Users/cabbala/Projects/Vexter/tests/fixtures/comparison_packages/dexter_fixture",
   "run_id": "dexter-fixture-001",
   "source_system": "dexter"
 }

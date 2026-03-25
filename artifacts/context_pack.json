@@ -1,8 +1,8 @@
 {
   "project": "Vexter",
-  "goal": "Build the Mac-side control plane and evidence base for comparing Dexter and Mew-X without silently changing frozen strategy behavior.",
+  "goal": "Maintain a GitHub-visible Mac control plane for auditing Dexter and Mew-X comparison readiness without changing frozen source behavior.",
   "mac_control_plane": "/Users/cabbala/Projects/Vexter",
-  "working_tree": "/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326",
+  "working_tree": "/Users/cabbala/Projects/Vexter",
   "windows_runtime_host": "win-lan",
   "resolved_windows_hostname": "DESKTOP-NNC6MPS",
   "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
@@ -15,85 +15,58 @@
     "git_on_mac": true,
     "runtime_on_windows": true,
     "github_is_source_of_truth": true,
-    "push_changes_for_github_visibility": true,
     "analysis_priority": "paper_sim_first",
-    "mewx_mode_preference": "sim_or_sim_live",
     "dexter_mode_preference": "explicit_paper_live",
-    "agent_usage_note": "No sub-agents were required for this closeout; the main thread reverified GitHub state, repaired Vexter-side packaging, recollected fresh pairs, and rebuilt artifacts directly."
+    "mewx_mode_preference": "sim_live",
+    "agent_usage_note": "No sub-agents were used in this audit."
   },
-  "phase": "TASK-005-PASS-GRADE-PAIR",
-  "status": "pass_grade_pair_collected_but_partial_validation",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_pass_grade_pair_bundle.tar.gz",
+  "phase": "TASK-005-GAP-AUDIT",
+  "status": "structural_gap_confirmed",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_gap_audit_bundle.tar.gz",
   "starting_point": {
-    "verified_main": "28c15b5c7655fe7647c12774494c80b83c58c04f",
-    "verified_prs": [
-      15
-    ],
-    "verified_pr_15_merge": "28c15b5c7655fe7647c12774494c80b83c58c04f",
+    "verified_latest_vexter_main": "b71b5f744027024e2a04606f6c1aa369d0a6c3e3",
+    "verified_latest_vexter_pr": 16,
+    "verified_task_base_main": "28c15b5c7655fe7647c12774494c80b83c58c04f",
+    "verified_task_base_pr": 15,
     "verified_dexter_main": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_dexter_pr": 3,
-    "work_branch": "codex/task-005-pass-grade-pair-20260326"
+    "verified_mewx_frozen": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "work_branch": "codex/task-005-gap-audit"
   },
   "background": {
-    "previous_task_id": "TASK-005-PAPER-REVALIDATE",
-    "prior_authoritative_label": "task005-paper-revalidate-20260321T123011Z",
-    "prior_authoritative_confirmatory_label": "task005-paper-revalidate-20260321T123426Z",
-    "prior_authoritative_dexter_required_event_types_present": 9,
-    "prior_authoritative_mewx_required_event_types_present": 8,
-    "task_006_started": false
+    "previous_task_id": "TASK-005-PASS-GRADE-PAIR",
+    "promoted_pair": "task005-pass-grade-pair-20260325T180027Z",
+    "confirmatory_pair": "task005-pass-grade-pair-20260325T180604Z",
+    "pre_audit_task_006_ready": false
   },
-  "source_analysis": {
-    "pinned_source_commits": {
-      "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
-      "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
-    },
-    "dexter": {
-      "formal_paper_mode_confirmed": true,
-      "paper_live_merged_on_main": true,
-      "creation_classification_fix_reverified": true,
-      "strategy_semantics_changed": false,
-      "trust_logic_changed": false,
-      "thresholds_changed": false
-    },
-    "mewx": {
-      "formal_sim_mode_confirmed": true,
-      "mode_env_key": "MODE",
-      "source_changed": false
-    }
+  "current_contract": {
+    "required_event_types": [
+      "creator_candidate",
+      "candidate_rejected",
+      "mint_observed",
+      "entry_signal",
+      "entry_attempt",
+      "entry_fill",
+      "entry_rejected",
+      "session_update",
+      "exit_signal",
+      "exit_fill",
+      "position_closed",
+      "run_summary"
+    ],
+    "validator_file": "vexter/comparison/constants.py",
+    "validator_rule": "All required event types must be present for classification pass."
   },
-  "packaging_fix": {
-    "applied": true,
-    "file": "scripts/collect_comparison_package.ps1",
-    "detail": "Array-wrap copied export file lists so a single Mew-X session export no longer triggers PropertyNotFoundStrict on .Count during full-stream fallback packaging."
+  "frozen_source_commits": {
+    "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
   },
-  "pass_grade_pair": {
-    "prior_authoritative_label": "task005-paper-revalidate-20260321T123011Z",
-    "prior_dexter_required_event_types_present": 9,
-    "prior_mewx_required_event_types_present": 8,
-    "attempts": [
+  "evidence": {
+    "revalidated_pairs": [
       {
         "label": "task005-pass-grade-pair-20260325T180027Z",
-        "requested_modes": {
-          "dexter": "paper_live",
-          "mewx": "sim"
-        },
-        "measurement_window": {
-          "started_at_utc": "2026-03-25T18:02:11.066878Z",
-          "ended_at_utc": "2026-03-25T18:05:11.148258Z"
-        },
-        "event_spans": {
-          "dexter": {
-            "started_at_utc": "2026-03-25T18:01:49.160299Z",
-            "ended_at_utc": "2026-03-25T18:04:55.388903Z",
-            "event_count": 323
-          },
-          "mewx": {
-            "started_at_utc": "2026-03-25T18:01:16.425Z",
-            "ended_at_utc": "2026-03-25T18:04:32.102Z",
-            "event_count": 56
-          }
-        },
-        "exact_event_overlap_duration_ms": 162941,
+        "proof_dir": "artifacts/proofs/task005-gap-audit-20260325T180027Z-results",
+        "collection_payload": "artifacts/proofs/task005-gap-audit-20260325T180027Z.collection.json",
         "dexter_required_event_types_present": 10,
         "mewx_required_event_types_present": 9,
         "dexter_missing_event_types": [
@@ -105,40 +78,12 @@
           "entry_rejected",
           "run_summary"
         ],
-        "full_stream_fallback": true,
-        "local_packages": {
-          "dexter": "/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326/artifacts/tmp/winlan-packages-task005-pass-grade-pair-20260325T180027Z/dexter-task005-pass-grade-pair-20260325T180027Z",
-          "mewx": "/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326/artifacts/tmp/winlan-packages-task005-pass-grade-pair-20260325T180027Z/mewx-task005-pass-grade-pair-20260325T180027Z"
-        },
-        "comparison_output_dir": "artifacts/reports/task005-pass-grade-pair-20260325T180027Z-comparison",
-        "comparison_pack": "artifacts/reports/task005-pass-grade-pair-20260325T180027Z-comparison/comparison_pack.json",
-        "dexter_wslogs_http_429_count": 10,
-        "dexter_wallet_balance_http_429_count": 0,
-        "notable_issue": "Best fresh pair so far: Dexter reached 10/12 and Mew-X reached 9/12, but both packages still validated only as partial because run_summary and rejection gaps remained."
+        "full_stream_fallback": true
       },
       {
         "label": "task005-pass-grade-pair-20260325T180604Z",
-        "requested_modes": {
-          "dexter": "paper_live",
-          "mewx": "sim"
-        },
-        "measurement_window": {
-          "started_at_utc": "2026-03-25T18:07:10.273070Z",
-          "ended_at_utc": "2026-03-25T18:10:10.333158Z"
-        },
-        "event_spans": {
-          "dexter": {
-            "started_at_utc": "2026-03-25T18:06:50.493994Z",
-            "ended_at_utc": "2026-03-25T18:09:43.332322Z",
-            "event_count": 362
-          },
-          "mewx": {
-            "started_at_utc": "2026-03-25T18:06:18.110Z",
-            "ended_at_utc": "2026-03-25T18:07:43.809Z",
-            "event_count": 29
-          }
-        },
-        "exact_event_overlap_duration_ms": 53315,
+        "proof_dir": "artifacts/proofs/task005-gap-audit-20260325T180604Z-results",
+        "collection_payload": "artifacts/proofs/task005-gap-audit-20260325T180604Z.collection.json",
         "dexter_required_event_types_present": 10,
         "mewx_required_event_types_present": 8,
         "dexter_missing_event_types": [
@@ -152,77 +97,84 @@
           "run_summary"
         ],
         "full_stream_fallback": true,
-        "local_packages": {
-          "dexter": "/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326/artifacts/tmp/winlan-packages-task005-pass-grade-pair-20260325T180604Z/dexter-task005-pass-grade-pair-20260325T180604Z",
-          "mewx": "/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326/artifacts/tmp/winlan-packages-task005-pass-grade-pair-20260325T180604Z/mewx-task005-pass-grade-pair-20260325T180604Z"
-        },
-        "comparison_output_dir": "artifacts/reports/task005-pass-grade-pair-20260325T180604Z-comparison",
-        "comparison_pack": "artifacts/reports/task005-pass-grade-pair-20260325T180604Z-comparison/comparison_pack.json",
-        "dexter_wslogs_http_429_count": 6,
-        "dexter_wallet_balance_http_429_count": 0,
-        "notable_issue": "Extending graceful shutdown to 60 seconds did not recover run_summary and the Mew-X side regressed to 8/12, reinforcing that the blocker is evidence coverage rather than packaging."
+        "grace_seconds": 60
       }
     ],
-    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
-    "confirmatory_label": "task005-pass-grade-pair-20260325T180604Z",
-    "promoted_exact_event_overlap_ms": 162941,
-    "confirmatory_exact_event_overlap_ms": 53315,
-    "winner_mode": "deferred",
-    "full_stream_fallback_used_on_both_attempts": true,
-    "best_pair_improves_dexter_over_revalidate": true,
-    "best_pair_improves_mewx_over_revalidate": true,
-    "task_006_started": false
+    "run_summary": {
+      "dexter_finalizer_file": "sources/Dexter/DexLab/instrumentation.py",
+      "mewx_finalizer_file": "sources/Mew-X/src/mew/instrumentation.rs",
+      "current_collection_shutdown": "CTRL_BREAK_EVENT",
+      "observed_exit_code": 3221225786,
+      "observed_exit_code_hex": "0xC000013A",
+      "dexter_state_status": "running",
+      "mewx_state_status": "running",
+      "dexter_ended_at_utc": null,
+      "mewx_ended_at_utc": null
+    },
+    "mewx_creator_candidate": {
+      "initial_selection_observations": 0,
+      "refresh_observations": 0,
+      "initial_selection_source_counts": {},
+      "refresh_source_counts": {},
+      "same_runs_still_produced_fills": true
+    },
+    "entry_rejected": {
+      "dexter_condition": "buy failure path only",
+      "mewx_condition": "transport_send_failed only",
+      "promoted_pair_dexter_entry_fills": 4,
+      "promoted_pair_mewx_entry_fills": 6,
+      "promoted_pair_dexter_entry_rejected": 0,
+      "promoted_pair_mewx_entry_rejected": 0
+    }
   },
-  "recommendation": {
-    "decision": "BLOCKED",
-    "next_task_id": "BLOCKED",
-    "keep_task_006_blocked": true,
-    "sharpest_blockers": [
-      "Dexter still missed entry_rejected and run_summary on both fresh same-attempt recollections.",
-      "Mew-X still missed creator_candidate, entry_rejected, and run_summary on the promoted pair, and extending graceful shutdown did not recover run_summary.",
-      "Winner mode stayed deferred because both fresh matched packages still validated only as partial."
-    ]
+  "minimal_additional_recollection": {
+    "performed": false,
+    "reason": "Existing full-stream fallback pairs plus frozen-source audit were sufficient to close the collectability question."
   },
   "current_task": {
-    "id": "TASK-005-PASS-GRADE-PAIR",
+    "id": "TASK-005-GAP-AUDIT",
     "scope": [
-      "Verify the latest Vexter and Dexter merged-main state on GitHub.",
-      "Keep Dexter paper_live, frozen Mew-X sim_live, and the current validator contract unchanged.",
-      "Collect fresh same-attempt matched pairs until the best evidence-backed pass-grade candidate is identified.",
-      "Rerun validate, derive-metrics, and build-pack for the fresh pairs.",
-      "Judge TASK-006 readiness from the refreshed evidence."
+      "Verify latest GitHub merged state for Vexter, Dexter, and frozen Mew-X.",
+      "Audit whether run_summary, entry_rejected, and creator_candidate are collectible under the current frozen sources and validator contract.",
+      "Revalidate promoted and confirmatory pair packages on current Vexter main.",
+      "Update audit artifacts and TASK-006 readiness."
     ],
-    "frozen_source_commits": {
-      "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
-      "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
-    },
     "deliverables": [
       "artifacts/summary.md",
       "artifacts/context_pack.json",
       "artifacts/proof_bundle_manifest.json",
       "artifacts/task_ledger.jsonl",
-      "artifacts/reports/task-005-pass-grade-pair-readiness.md",
-      "artifacts/reports/task005-pass-grade-pair-20260325T180027Z-comparison",
-      "artifacts/reports/task005-pass-grade-pair-20260325T180604Z-comparison",
-      "artifacts/reports/task-005-pass-grade-pair-handoff/DETAILS.md",
-      "artifacts/reports/task-005-pass-grade-pair-handoff/MIN_PROMPT.txt",
-      "artifacts/proofs/task-005-pass-grade-pair-check.json",
-      "artifacts/proofs/task-005-windows-runtime-recovery.json",
-      "artifacts/proofs/task005-pass-grade-pair-20260325T180027Z-results",
-      "artifacts/proofs/task005-pass-grade-pair-20260325T180604Z-results",
-      "artifacts/bundles/task-005-pass-grade-pair.tar.gz"
+      "artifacts/reports/task-005-gap-audit.md",
+      "artifacts/reports/task-005-gap-audit-readiness.md",
+      "artifacts/reports/task-005-gap-audit-handoff/DETAILS.md",
+      "artifacts/reports/task-005-gap-audit-handoff/MIN_PROMPT.txt",
+      "artifacts/proofs/task-005-gap-audit-check.json",
+      "artifacts/proofs/task005-gap-audit-20260325T180027Z-results",
+      "artifacts/proofs/task005-gap-audit-20260325T180604Z-results",
+      "artifacts/proofs/task005-gap-audit-20260325T180027Z.collection.json",
+      "artifacts/proofs/task005-gap-audit-20260325T180604Z.collection.json",
+      "artifacts/bundles/task-005-gap-audit.tar.gz"
+    ]
+  },
+  "recommendation": {
+    "decision": "BLOCKED",
+    "key_finding": "structurally_not_collectible_under_current_contract",
+    "task_006_ready": false,
+    "recommended_next_step": "validator_contract_audit_or_rule_exception_review",
+    "why": [
+      "run_summary depends on finalizers that the current matched-pair shutdown flow does not reach.",
+      "entry_rejected is failure-path-only on both sources and is not dependable pass-grade coverage.",
+      "Mew-X creator_candidate depends on non-empty Deagle candidate reports, but both audited full-stream runs exported zero observations."
     ]
   },
   "next_task": {
     "id": "BLOCKED",
-    "state": "awaiting_pass_grade_matched_live_pair",
+    "state": "awaiting_validator_contract_audit_or_rule_exception_review",
     "task_006_ready": false,
-    "candidate_followup": "If another TASK-005 retry is approved, keep paper/sim modes fixed and determine whether the remaining frozen-source gaps are collectible under the current validator contract before any TASK-006 work.",
     "resume_requirements": [
-      "Keep Dexter on merged main paper_live and keep Mew-X unchanged on sim_live.",
-      "Do not change Dexter strategy semantics, trust logic, thresholds, or comparison rules.",
-      "Preserve the Vexter-side packaging regression fix for full-stream fallback exports.",
-      "Advance to TASK-006 only after a matched pair validates beyond partial and winner_mode is no longer deferred."
+      "Keep Dexter and Mew-X source logic frozen.",
+      "Do not advance to TASK-006 until the validator contract is reconciled with frozen-source event semantics.",
+      "Use the current audit proof before approving any more same-shape recollection."
     ]
   }
 }

@@ -1,0 +1,124 @@
+{
+  "task_id": "TASK-006-COMPARISON-CLOSEOUT",
+  "generated_at_utc": "2026-03-25T21:59:20Z",
+  "verified_github": {
+    "latest_vexter_pr": 25,
+    "latest_vexter_main_commit": "727589b40d26c453c2fef78dc5060aa1098c1aad",
+    "latest_vexter_merged_at_utc": "2026-03-25T21:43:44Z",
+    "supporting_vexter_prs": [
+      24,
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17,
+      16
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "formal_source_of_truth": {
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "promoted_live_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison",
+    "promoted_replay_comparison_dir": "artifacts/reports/task006-replay-surface-fix-20260325T180027Z-replay-comparison",
+    "downstream_analysis_report": "artifacts/reports/task-006-downstream-comparative-analysis.md",
+    "downstream_analysis_proof": "artifacts/proofs/task-006-downstream-comparative-analysis-check.json",
+    "confirmatory_label": "task005-pass-grade-pair-20260325T180604Z",
+    "confirmatory_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180604Z-comparison",
+    "closeout_scope": "Formalize the promoted baseline as the final comparison source of truth without changing source logic."
+  },
+  "implementation": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "dexter_strategy_changed": false,
+    "mewx_strategy_changed": false
+  },
+  "final_conclusion": {
+    "winner_mode_meaning": "Derived winner mode records component-level metric winners; it does not assert a scalar overall winner field.",
+    "promoted_live_winner_mode": "derived",
+    "promoted_replay_winner_mode": "derived",
+    "live_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "replay_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "dexter_strengths": [
+      "candidate_count",
+      "signal_to_attempt_latency_ms",
+      "quote_vs_fill_slippage_bps",
+      "max_favorable_excursion_pct",
+      "realized_exit_pct",
+      "stale_position_ratio"
+    ],
+    "mewx_strengths": [
+      "attempt_to_fill_latency_ms",
+      "max_adverse_excursion_pct",
+      "time_to_peak_ms",
+      "realized_vs_peak_gap_pct"
+    ],
+    "ties": [
+      "fill_success_rate",
+      "replayability_grade"
+    ],
+    "dexter_replay_coverage_ratio": 1.0,
+    "dexter_live_vs_replay_gap_pct": 0.0,
+    "mewx_replay_coverage_ratio": 1.0,
+    "mewx_live_vs_replay_gap_pct": 0.0,
+    "interpretation": "The promoted baseline now stands as a stable component-level comparison surface across both live and repaired replay."
+  },
+  "residual": {
+    "confirmatory_label": "task005-pass-grade-pair-20260325T180604Z",
+    "note": "Mew-X candidate_rejected",
+    "overturns_promoted_baseline": false,
+    "treatment": "Carry as a narrow caveat only; do not reopen the promoted baseline without contradictory evidence."
+  },
+  "caveats": {
+    "replay_scope": "Current zero-gap evidence is scoped to close-summary and position_closed realized-return fidelity rather than full execution-path equivalence.",
+    "dexter_metric_scope_gap": {
+      "metric": "realized_vs_peak_gap_pct",
+      "live_value": 20.533046470504612,
+      "replay_value": 25.804157291090654,
+      "why_it_matters": "Path-sensitive derived metrics can still drift even when matched realized-return gap is zero."
+    },
+    "candidate_metric_asymmetry": "Mew-X candidate_precision_proxy remains unavailable because creator_candidate is absent under the frozen-source export surface."
+  },
+  "research_handoff": {
+    "ready": true,
+    "frozen_comparative_facts": [
+      "Promoted baseline is task005-pass-grade-pair-20260325T180027Z.",
+      "Live and repaired replay comparisons both remain pass/pass with winner_mode derived.",
+      "Stable scored split is Dexter 6, Mew-X 4, tie 2 across live and replay.",
+      "Dexter leads candidate generation, signal-to-attempt latency, slippage, realized exit, favorable excursion, and stale-position control.",
+      "Mew-X leads fill latency, drawdown containment, time-to-peak, and realized-vs-peak retention.",
+      "Dexter and Mew-X replay coverage / gap are both 100% / 0.0000 on the promoted baseline.",
+      "Confirmatory residual remains only Mew-X candidate_rejected and does not overturn the promoted baseline."
+    ],
+    "non_claims": [
+      "Do not treat derived winner mode as a scalar overall winner.",
+      "Do not widen replay parity to full execution-path equivalence.",
+      "Do not reopen evidence collection absent contradictory evidence."
+    ],
+    "recommended_next_cuts": [
+      "Use the closeout bundle as the frozen baseline for downstream research and execution planning.",
+      "If deeper replay claims are needed later, separate path-equivalence work from the current close-summary fidelity claim.",
+      "If candidate-surface asymmetry matters downstream, treat it as a source-specific caveat rather than a comparison blocker."
+    ]
+  },
+  "decision": {
+    "selected_outcome": "A",
+    "key_finding": "comparison_closed_out",
+    "task_state": "comparison_closed_out",
+    "research_handoff_ready": true,
+    "new_evidence_collection_required": false,
+    "closeout_blocked": false
+  }
+}

@@ -1,11 +1,11 @@
 {
   "background": {
-    "previous_task_id": "TASK-006-REPLAY-SURFACE-FIX",
+    "previous_task_id": "TASK-006-DOWNSTREAM-COMPARATIVE-ANALYSIS",
     "promoted_pair": "task005-pass-grade-pair-20260325T180027Z",
     "confirmatory_pair": "task005-pass-grade-pair-20260325T180604Z",
-    "task_006_ready_before_analysis": true
+    "comparison_closeout_ready_before_task": true
   },
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task006_downstream_comparative_analysis_bundle.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task006_comparison_closeout_bundle.tar.gz",
   "current_contract": {
     "conditional_rules": {
       "entry_rejected": "required_only_when_an_entry_attempt_lacks_a_matching_fill",
@@ -31,29 +31,30 @@
     ]
   },
   "current_task": {
-    "id": "TASK-006-DOWNSTREAM-COMPARATIVE-ANALYSIS",
+    "id": "TASK-006-COMPARISON-CLOSEOUT",
     "scope": [
       "Verify latest GitHub merged state for Vexter, Dexter, and frozen Mew-X.",
-      "Treat the replay-surface-fixed promoted baseline as the formal downstream comparison input.",
-      "Consolidate live comparison, replay consistency, confirmatory residual, and remaining caveats without changing source logic.",
-      "Refresh downstream comparative analysis artifacts, status, handoff, and bundle outputs."
+      "Treat the promoted downstream comparative analysis outputs as the formal closeout source of truth.",
+      "Freeze the final comparison conclusion, residual treatment, caveats, and downstream research handoff facts without changing source logic.",
+      "Refresh closeout artifacts, status, handoff, and bundle outputs."
     ],
     "deliverables": [
       "artifacts/summary.md",
       "artifacts/context_pack.json",
       "artifacts/proof_bundle_manifest.json",
       "artifacts/task_ledger.jsonl",
-      "artifacts/reports/task-006-downstream-comparative-analysis.md",
+      "artifacts/reports/task-006-comparison-closeout.md",
       "artifacts/reports/task-006-replay-validation-status.md",
-      "artifacts/reports/task-006-downstream-comparative-analysis-handoff/DETAILS.md",
-      "artifacts/reports/task-006-downstream-comparative-analysis-handoff/MIN_PROMPT.txt",
-      "artifacts/proofs/task-006-downstream-comparative-analysis-check.json",
-      "artifacts/proofs/task-006-downstream-comparative-analysis-summary.md",
-      "artifacts/bundles/task-006-downstream-comparative-analysis.tar.gz"
+      "artifacts/reports/task-006-comparison-closeout-handoff/DETAILS.md",
+      "artifacts/reports/task-006-comparison-closeout-handoff/MIN_PROMPT.txt",
+      "artifacts/proofs/task-006-comparison-closeout-check.json",
+      "artifacts/proofs/task-006-comparison-closeout-summary.md",
+      "artifacts/bundles/task-006-comparison-closeout.tar.gz"
     ]
   },
   "evidence": {
     "github_latest": {
+      "vexter_pr_25_merged_at": "2026-03-25T21:43:44Z",
       "vexter_pr_24_merged_at": "2026-03-25T21:27:28Z",
       "vexter_pr_23_merged_at": "2026-03-25T21:05:35Z",
       "vexter_pr_22_merged_at": "2026-03-25T20:35:55Z",
@@ -97,13 +98,38 @@
       "task_state": "comparison_closeout_ready",
       "downstream_research_handoff_ready": true
     },
+    "comparison_closeout": {
+      "report": "artifacts/reports/task-006-comparison-closeout.md",
+      "proof": "artifacts/proofs/task-006-comparison-closeout-check.json",
+      "summary": "artifacts/proofs/task-006-comparison-closeout-summary.md",
+      "handoff_dir": "artifacts/reports/task-006-comparison-closeout-handoff",
+      "key_finding": "comparison_closed_out",
+      "task_state": "comparison_closed_out",
+      "downstream_research_handoff_ready": true
+    },
     "caveat": {
       "replay_scope": "Current zero-gap evidence is scoped to close-summary and position_closed realized-return fidelity rather than full execution-path equivalence.",
       "dexter_path_sensitive_metric_drift": {
         "metric": "realized_vs_peak_gap_pct",
         "live_value": 20.533046470504612,
         "replay_value": 25.804157291090654
-      }
+      },
+      "candidate_metric_asymmetry": "Mew-X candidate_precision_proxy remains unavailable because creator_candidate is absent under the frozen-source export surface."
+    },
+    "research_handoff": {
+      "ready": true,
+      "frozen_comparative_facts": [
+        "Promoted baseline is task005-pass-grade-pair-20260325T180027Z.",
+        "Promoted live and repaired replay packs both remain pass/pass with winner_mode derived.",
+        "Stable scored split is Dexter 6, Mew-X 4, tie 2 across live and replay.",
+        "Dexter replay coverage / gap and Mew-X replay coverage / gap are both 100% / 0.0000 on the promoted baseline.",
+        "Confirmatory residual remains only Mew-X candidate_rejected and does not overturn the promoted baseline."
+      ],
+      "non_claims": [
+        "Do not treat derived winner mode as a scalar overall winner.",
+        "Do not widen replay parity to full execution-path equivalence.",
+        "Do not reopen evidence collection unless contradictory evidence appears."
+      ]
     }
   },
   "frozen_source_commits": {
@@ -115,42 +141,44 @@
     "source_logic_changed": false,
     "validator_rules_changed": false,
     "task_proofs_generated": [
-      "artifacts/proofs/task-006-downstream-comparative-analysis-check.json",
-      "artifacts/proofs/task-006-downstream-comparative-analysis-summary.md"
+      "artifacts/proofs/task-006-comparison-closeout-check.json",
+      "artifacts/proofs/task-006-comparison-closeout-summary.md"
     ],
     "task_reports_updated": [
-      "artifacts/reports/task-006-downstream-comparative-analysis.md",
+      "artifacts/reports/task-006-comparison-closeout.md",
       "artifacts/reports/task-006-replay-validation-status.md",
-      "artifacts/reports/task-006-downstream-comparative-analysis-handoff/DETAILS.md",
-      "artifacts/reports/task-006-downstream-comparative-analysis-handoff/MIN_PROMPT.txt"
+      "artifacts/reports/task-006-comparison-closeout-handoff/DETAILS.md",
+      "artifacts/reports/task-006-comparison-closeout-handoff/MIN_PROMPT.txt"
     ]
   },
-  "mac_control_plane": "/Users/cabbala/Documents/Vexter_repo",
+  "mac_control_plane": "/Users/cabbala/Projects/Vexter",
   "next_task": {
-    "id": "TASK-006",
-    "state": "comparison_closeout_ready",
+    "id": "RESEARCH-HANDOFF",
+    "state": "research_handoff_ready",
     "task_006_started": true,
     "resume_requirements": [
+      "Treat task005-pass-grade-pair-20260325T180027Z as the frozen promoted baseline.",
       "Keep Dexter and Mew-X strategy semantics frozen.",
       "Keep the replay claim scoped to close-summary and position_closed realized-return fidelity.",
       "Treat derived winner mode as component-level interpretation, not a scalar overall winner field.",
-      "Carry the confirmatory Mew-X candidate_rejected miss as a caveat only unless contradictory evidence appears."
+      "Carry the confirmatory Mew-X candidate_rejected miss as a caveat only unless contradictory evidence appears.",
+      "Do not reopen evidence collection unless contradictory evidence appears."
     ]
   },
-  "phase": "TASK-006-DOWNSTREAM-COMPARATIVE-ANALYSIS",
+  "phase": "TASK-006-COMPARISON-CLOSEOUT",
   "project": "Vexter",
   "recommendation": {
-    "decision": "COMPARISON_CLOSEOUT_READY",
+    "decision": "COMPARISON_CLOSED_OUT",
     "outcome": "A",
-    "key_finding": "comparison_closeout_ready",
-    "recommended_next_step": "task_006_comparison_closeout",
+    "key_finding": "comparison_closed_out",
+    "recommended_next_step": "research_handoff",
     "downstream_research_handoff_ready": true,
     "new_evidence_collection_required": false,
     "why": [
       "Promoted live and replay packs are both comparable with winner_mode derived.",
-      "The scored metric split is stable across live and replay after the replay-surface repair.",
+      "The scored metric split is stable across live and replay after the replay-surface repair and downstream analysis.",
       "The confirmatory retry narrows to Mew-X candidate_rejected only and does not overturn the promoted baseline.",
-      "Remaining caveats are interpretive scope caveats rather than new evidence blockers."
+      "Remaining caveats are scope caveats, not evidence blockers, so the comparison can be formally closed out."
     ]
   },
   "repos": {
@@ -161,12 +189,13 @@
   "resolved_windows_hostname": "DESKTOP-NNC6MPS",
   "selected_windows_root": "C:\\Users\\bot\\quant\\Vexter",
   "starting_point": {
-    "verified_latest_vexter_pr": 24,
-    "verified_latest_vexter_main": "2c8b654fde4b4fcff11f3ecca2e1f4d27ceb610d",
+    "verified_latest_vexter_pr": 25,
+    "verified_latest_vexter_main": "727589b40d26c453c2fef78dc5060aa1098c1aad",
     "verified_dexter_pr": 3,
     "verified_dexter_main": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_mewx_frozen": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
     "verified_prior_supporting_vexter_prs": [
+      24,
       23,
       22,
       21,
@@ -176,9 +205,9 @@
       17,
       16
     ],
-    "work_branch": "codex/task-006-downstream-comparative-analysis"
+    "work_branch": "codex/task-006-comparison-closeout"
   },
-  "status": "comparison_closeout_ready",
+  "status": "comparison_closed_out",
   "windows_runtime_host": "win-lan",
   "workflow": {
     "analysis_priority": "paper_sim_first",
@@ -189,5 +218,5 @@
     "github_is_source_of_truth": true,
     "agent_usage_note": "No sub-agents were used in this task."
   },
-  "working_tree": "/Users/cabbala/Documents/Vexter_repo"
+  "working_tree": "/Users/cabbala/Documents/vexter/task005-validator-rule-review"
 }

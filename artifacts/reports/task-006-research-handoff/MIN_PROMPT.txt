@@ -1,0 +1,5 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Research Handoff
+継続タスクID: TASK-006-RESEARCH-HANDOFF
+
+PR #26 merged main を基準に、TASK-006 の comparison closeout は正式 source of truth として確定しています。promoted baseline は `task005-pass-grade-pair-20260325T180027Z` で、promoted live / repaired replay はどちらも `winner_mode: derived`、scored-metric split は live / replay ともに Dexter `6`, Mew-X `4`, tie `2` で安定です。Dexter と Mew-X の replay coverage / gap はどちらも `100.00% / 0.0000`。confirmatory residual は Mew-X `candidate_rejected` のみで promoted baseline を overturn しません。caveat は replay parity の claim 範囲で、current zero-gap は close-summary / `position_closed` realized-return fidelity を示すもので full path equivalence ではありません。次は新しい evidence collection ではなく、`artifacts/reports/task-006-research-handoff-report.md` と `artifacts/proofs/task-006-research-handoff-check.json` を起点に downstream research / strategy / execution planning へ進めてください。

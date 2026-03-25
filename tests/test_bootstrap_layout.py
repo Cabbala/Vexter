@@ -83,6 +83,10 @@ def test_required_paths_exist() -> None:
         "artifacts/reports/task-006-comparison-closeout.md",
         "artifacts/reports/task-006-comparison-closeout-handoff/DETAILS.md",
         "artifacts/reports/task-006-comparison-closeout-handoff/MIN_PROMPT.txt",
+        "artifacts/reports/task-006-research-handoff-report.md",
+        "artifacts/reports/task-006-research-handoff-status.md",
+        "artifacts/reports/task-006-research-handoff/DETAILS.md",
+        "artifacts/reports/task-006-research-handoff/MIN_PROMPT.txt",
         "artifacts/proofs/task-005-live-collection-check.json",
         "artifacts/proofs/task-005-pass-grade-pair-check.json",
         "artifacts/proofs/task-005-windows-runtime-recovery.json",
@@ -97,6 +101,8 @@ def test_required_paths_exist() -> None:
         "artifacts/proofs/task-006-downstream-comparative-analysis-summary.md",
         "artifacts/proofs/task-006-comparison-closeout-check.json",
         "artifacts/proofs/task-006-comparison-closeout-summary.md",
+        "artifacts/proofs/task-006-research-handoff-check.json",
+        "artifacts/proofs/task-006-research-handoff-summary.md",
         "artifacts/examples/task-004-sample-comparison/pack_manifest.json",
         ".github/workflows/validate.yml",
     ]
@@ -179,6 +185,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-006-REPLAY-SURFACE-FIX",
         "TASK-006-DOWNSTREAM-COMPARATIVE-ANALYSIS",
         "TASK-006-COMPARISON-CLOSEOUT",
+        "TASK-006-RESEARCH-HANDOFF",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -200,6 +207,8 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "surface_fix_applied",
         "comparison_closeout_ready",
         "comparison_closed_out",
+        "research_handoff_completed",
+        "handoff_blocked",
     }
     assert payload["branch"] in {
         "codex/task-005-live-comparison-evidence",
@@ -222,6 +231,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-006-replay-surface-fix",
         "codex/task-006-downstream-comparative-analysis",
         "codex/task-006-comparison-closeout",
+        "codex/task-006-research-handoff",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -231,6 +241,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-005-VALIDATOR-RULE-IMPLEMENTATION",
         "TASK-006",
         "RESEARCH-HANDOFF",
+        "DOWNSTREAM-RESEARCH",
     }
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -252,6 +263,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "ready_for_downstream_comparative_analysis",
         "comparison_closeout_ready",
         "research_handoff_ready",
+        "ready_to_start_from_handoff",
     }
 
 
@@ -279,6 +291,8 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "surface_fix_applied",
         "comparison_closeout_ready",
         "comparison_closed_out",
+        "research_handoff_completed",
+        "handoff_blocked",
     }
     assert manifest["next_task"]["id"] in {
         "TASK-005-RESUME",
@@ -288,6 +302,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "TASK-005-VALIDATOR-RULE-IMPLEMENTATION",
         "TASK-006",
         "RESEARCH-HANDOFF",
+        "DOWNSTREAM-RESEARCH",
     }
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -308,6 +323,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "ready_for_downstream_comparative_analysis",
         "comparison_closeout_ready",
         "research_handoff_ready",
+        "ready_to_start_from_handoff",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]
@@ -358,6 +374,10 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/reports/task-006-comparison-closeout.md" in names
     assert "artifacts/reports/task-006-comparison-closeout-handoff/DETAILS.md" in names
     assert "artifacts/reports/task-006-comparison-closeout-handoff/MIN_PROMPT.txt" in names
+    assert "artifacts/reports/task-006-research-handoff-report.md" in names
+    assert "artifacts/reports/task-006-research-handoff-status.md" in names
+    assert "artifacts/reports/task-006-research-handoff/DETAILS.md" in names
+    assert "artifacts/reports/task-006-research-handoff/MIN_PROMPT.txt" in names
     assert "artifacts/proofs/task-005-live-collection-check.json" in names
     assert "artifacts/proofs/task-005-windows-runtime-recovery.json" in names
     assert "artifacts/proofs/task-006-replay-validation-check.json" in names
@@ -371,6 +391,8 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/proofs/task-006-downstream-comparative-analysis-summary.md" in names
     assert "artifacts/proofs/task-006-comparison-closeout-check.json" in names
     assert "artifacts/proofs/task-006-comparison-closeout-summary.md" in names
+    assert "artifacts/proofs/task-006-research-handoff-check.json" in names
+    assert "artifacts/proofs/task-006-research-handoff-summary.md" in names
     assert "artifacts/context_pack.json" in names
     assert "artifacts/proof_bundle_manifest.json" in names
     assert "tests/__pycache__/" not in names

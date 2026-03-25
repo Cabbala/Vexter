@@ -1,0 +1,236 @@
+{
+  "task_id": "TASK-007-EXECUTION-TIMING-VS-RETENTION",
+  "generated_at_utc": "2026-03-25T23:08:39Z",
+  "verified_github": {
+    "latest_vexter_pr": 29,
+    "latest_vexter_main_commit": "17af013b0383fd142e15932108c8b4da5447f1f7",
+    "latest_vexter_merged_at_utc": "2026-03-25T22:57:54Z",
+    "supporting_vexter_prs": [
+      28,
+      27,
+      26,
+      25,
+      24,
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17,
+      16
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "fixed_input_surface": {
+    "candidate_lane_report": "artifacts/reports/task-007-candidate-generation-vs-quality-report.md",
+    "candidate_lane_proof": "artifacts/proofs/task-007-candidate-generation-vs-quality-check.json",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "promoted_live_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison",
+    "promoted_replay_comparison_dir": "artifacts/reports/task006-replay-surface-fix-20260325T180027Z-replay-comparison",
+    "confirmatory_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180604Z-comparison",
+    "promoted_live_winner_mode": "derived",
+    "promoted_replay_winner_mode": "derived",
+    "live_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "replay_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "dexter_replay_coverage_ratio": 1.0,
+    "dexter_live_vs_replay_gap_pct": 0.0,
+    "mewx_replay_coverage_ratio": 1.0,
+    "mewx_live_vs_replay_gap_pct": 0.0,
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false
+  },
+  "implementation": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "dexter_strategy_changed": false,
+    "mewx_strategy_changed": false,
+    "minimal_reaggregation_only": true,
+    "new_evidence_collection_required": false
+  },
+  "timing_retention_surfaces": {
+    "live_comparison_matrix": "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison/comparison_matrix.json",
+    "replay_comparison_matrix": "artifacts/reports/task006-replay-surface-fix-20260325T180027Z-replay-comparison/comparison_matrix.json",
+    "dexter_close_summary_index": "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-augmented-dexter-package/exports/dexter-close-summary-index.json",
+    "dexter_close_summary_files": [
+      "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-augmented-dexter-package/replays/6aHTh9r311kVEGTcQ3WTGoJofuqYiX6VeWoF6VwEThAb.close-summary.json",
+      "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-augmented-dexter-package/replays/AdCvMqzaCbEdoVk4LyVgzgU4XSUEL6QqQ453de8ZxsRa.close-summary.json",
+      "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-augmented-dexter-package/replays/EADTG8t5bacSyhj6SH3r1aKKqhWad2Zgvi4gyjLfpump.close-summary.json",
+      "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-augmented-dexter-package/replays/GFYvctoWAyrmzrnRX19bxVdDiYtSzmnkicyMvLHxpump.close-summary.json"
+    ],
+    "mewx_session_summaries_dir": "artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-replay-packages/mewx-replay/exports",
+    "used_session_counts": {
+      "dexter_close_summaries": 4,
+      "mewx_session_summaries": 6
+    }
+  },
+  "lane_analysis": {
+    "question": "Is the main cross-source tradeoff a stage split between Dexter's upstream timing / slippage edge and Mew-X's post-attempt fill-speed / local-retention edge?",
+    "working_hypothesis": "Dexter wins earlier in the pipeline and on realized exit capture, while Mew-X wins after attempt placement on fill speed, drawdown containment, and local-peak retention.",
+    "live_replay_metric_stability": {
+      "stable_metrics": {
+        "signal_to_attempt_latency_ms": {
+          "dexter": 0.0,
+          "mewx": 891.0,
+          "winner": "dexter"
+        },
+        "attempt_to_fill_latency_ms": {
+          "dexter": 502.5,
+          "mewx": 1.5,
+          "winner": "mewx"
+        },
+        "quote_vs_fill_slippage_bps": {
+          "dexter": 0.0,
+          "mewx": 7.706128082620904,
+          "winner": "dexter"
+        },
+        "max_favorable_excursion_pct": {
+          "dexter": 34.844263534142286,
+          "mewx": 6.792904253675385,
+          "winner": "dexter"
+        },
+        "max_adverse_excursion_pct": {
+          "dexter": -6.05468749267574,
+          "mewx": 0.0,
+          "winner": "mewx"
+        },
+        "time_to_peak_ms": {
+          "dexter": 5299.0,
+          "mewx": 20.5,
+          "winner": "mewx"
+        },
+        "realized_exit_pct": {
+          "dexter": 7.164077921477945,
+          "mewx": 0.0,
+          "winner": "dexter"
+        },
+        "stale_position_ratio": {
+          "dexter": 0.0,
+          "mewx": 1.0,
+          "winner": "dexter"
+        }
+      },
+      "path_sensitive_metric_drift": {
+        "metric": "realized_vs_peak_gap_pct",
+        "live": {
+          "dexter": 20.533046470504612,
+          "mewx": -1.1795332965443079e-14,
+          "winner": "mewx"
+        },
+        "replay": {
+          "dexter": 25.804157291090654,
+          "mewx": 0.0,
+          "winner": "mewx"
+        }
+      }
+    },
+    "stage_split": {
+      "upstream_timing_edge": {
+        "metric": "signal_to_attempt_latency_ms",
+        "dexter": 0.0,
+        "mewx": 891.0,
+        "winner": "dexter"
+      },
+      "post_attempt_fill_edge": {
+        "metric": "attempt_to_fill_latency_ms",
+        "dexter": 502.5,
+        "mewx": 1.5,
+        "winner": "mewx"
+      },
+      "slippage_control_edge": {
+        "metric": "quote_vs_fill_slippage_bps",
+        "dexter": 0.0,
+        "mewx": 7.706128082620904,
+        "winner": "dexter"
+      }
+    },
+    "dexter_exit_surface": {
+      "closed_positions": 4,
+      "exit_reasons": {
+        "safe": 2,
+        "malicious": 2
+      },
+      "median_realized_exit_pct": 7.164077921477945,
+      "median_mfe_pct": 34.844263534142286,
+      "median_mae_pct": -6.05468749267574,
+      "median_time_to_peak_ms": 5299.0,
+      "median_quote_vs_fill_slippage_bps": 0.0,
+      "stale_position_ratio": 0.0
+    },
+    "mewx_exit_surface": {
+      "closed_positions": 6,
+      "exit_reasons": {
+        "inactivity_timeout": 6
+      },
+      "median_realized_exit_pct": 0.0,
+      "median_mfe_pct": 6.792904253675385,
+      "median_mae_pct": 0.0,
+      "median_time_to_peak_ms": 20.5,
+      "median_realized_vs_peak_gap_pct": 0.0,
+      "median_quote_vs_fill_slippage_bps": 7.706128082620904,
+      "stale_position_ratio": 1.0
+    },
+    "bounded_interpretation": [
+      "Dexter is faster before attempt placement, while Mew-X is faster after the attempt exists.",
+      "Dexter's slower post-attempt fill path still carries better slippage, favorable excursion, realized exit, and stale-position control on the promoted baseline.",
+      "Mew-X contains drawdown better, reaches local peak faster, and gives back less versus local peak, but that retention edge does not extend to median realized exit or stale-position control.",
+      "The source-faithful reading therefore supports a real stage-specific tradeoff while keeping the broader retention claim bounded."
+    ],
+    "objective_function_view": {
+      "prefer_dexter_when_weighting": [
+        "earlier signal capture",
+        "lower quote-to-fill slippage",
+        "larger favorable excursion capture",
+        "positive realized exit",
+        "non-stale lifecycle control"
+      ],
+      "prefer_mewx_when_weighting": [
+        "faster fill after attempt placement",
+        "lower adverse excursion",
+        "faster local peak discovery",
+        "minimal giveback versus local peak"
+      ]
+    }
+  },
+  "residual_and_caveats": {
+    "confirmatory_label": "task005-pass-grade-pair-20260325T180604Z",
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false,
+    "replay_scope": "Current zero-gap evidence is scoped to close-summary and position_closed realized-return fidelity rather than full execution-path equivalence.",
+    "dexter_metric_scope_gap": {
+      "metric": "realized_vs_peak_gap_pct",
+      "live_value": 20.533046470504612,
+      "replay_value": 25.804157291090654,
+      "why_it_matters": "Path-sensitive retention readings can still drift even when replay preserves realized-return parity."
+    },
+    "tradeoff_boundary": "Mew-X's downstream edge is local-peak retention and drawdown containment, not an overall realized-exit or stale-control advantage on the promoted baseline."
+  },
+  "decision": {
+    "selected_outcome": "A",
+    "key_finding": "timing_retention_tradeoff_supported",
+    "claim_boundary": "tradeoff_bounded",
+    "task_state": "timing_retention_tradeoff_supported",
+    "decision": "next_lane_ready",
+    "recommended_next_lane": "risk_containment_vs_exit_capture",
+    "recommended_next_task_id": "HYPOTHESIS-RESEARCH",
+    "new_evidence_collection_required": false,
+    "strategy_planning_ready": false,
+    "blocked": false,
+    "why": [
+      "The lane isolated a real stage split between upstream timing / slippage and post-attempt fill / local retention on committed evidence only.",
+      "The remaining unresolved choice is how downstream planning should weight drawdown containment against favorable excursion and realized exit.",
+      "That next question still fits the current fixed evidence surface, so another hypothesis lane is higher value than immediate strategy or execution planning."
+    ]
+  }
+}

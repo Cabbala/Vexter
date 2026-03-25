@@ -1,0 +1,127 @@
+{
+  "derived_metrics": [
+    "candidate_count",
+    "candidate_precision_proxy",
+    "fill_success_rate",
+    "signal_to_attempt_latency_ms",
+    "attempt_to_fill_latency_ms",
+    "quote_vs_fill_slippage_bps",
+    "max_favorable_excursion_pct",
+    "max_adverse_excursion_pct",
+    "time_to_peak_ms",
+    "realized_exit_pct",
+    "realized_vs_peak_gap_pct",
+    "stale_position_ratio",
+    "replayability_grade"
+  ],
+  "metrics": {
+    "attempt_to_fill_latency_ms": {
+      "aggregation": "median",
+      "samples": 5,
+      "status": "ok",
+      "unit": "ms",
+      "value": 319.0
+    },
+    "candidate_count": {
+      "aggregation": "count",
+      "status": "ok",
+      "unit": "count",
+      "value": 274
+    },
+    "candidate_precision_proxy": {
+      "aggregation": "run_ratio",
+      "details": {
+        "candidate_count": 274,
+        "successful_positions": 4
+      },
+      "status": "ok",
+      "unit": "ratio",
+      "value": 0.014598540145985401
+    },
+    "fill_success_rate": {
+      "aggregation": "run_ratio",
+      "details": {
+        "attempts": 5,
+        "fills": 5
+      },
+      "status": "ok",
+      "unit": "ratio",
+      "value": 1.0
+    },
+    "max_adverse_excursion_pct": {
+      "aggregation": "median",
+      "samples": 5,
+      "status": "ok",
+      "unit": "pct",
+      "value": -17.169549278173445
+    },
+    "max_favorable_excursion_pct": {
+      "aggregation": "median",
+      "samples": 5,
+      "status": "ok",
+      "unit": "pct",
+      "value": 22.473001144953553
+    },
+    "quote_vs_fill_slippage_bps": {
+      "aggregation": "median",
+      "samples": 5,
+      "status": "ok",
+      "unit": "bps",
+      "value": 0.0
+    },
+    "realized_exit_pct": {
+      "aggregation": "median",
+      "samples": 5,
+      "status": "ok",
+      "unit": "pct",
+      "value": -14.930989283590412
+    },
+    "realized_vs_peak_gap_pct": {
+      "aggregation": "median",
+      "samples": 5,
+      "status": "ok",
+      "unit": "pct",
+      "value": 43.968996598815316
+    },
+    "replayability_grade": {
+      "aggregation": "classification",
+      "details": {
+        "db_exports": 147,
+        "logs": 0,
+        "raw_events": 1,
+        "replayable_flag": false,
+        "replays": 147
+      },
+      "status": "ok",
+      "unit": "grade",
+      "value": "partial"
+    },
+    "signal_to_attempt_latency_ms": {
+      "aggregation": "median",
+      "samples": 5,
+      "status": "ok",
+      "unit": "ms",
+      "value": 0.0
+    },
+    "stale_position_ratio": {
+      "aggregation": "run_ratio",
+      "details": {
+        "closed_positions": 5,
+        "stale_positions": 0
+      },
+      "status": "ok",
+      "unit": "ratio",
+      "value": 0.0
+    },
+    "time_to_peak_ms": {
+      "aggregation": "median",
+      "samples": 5,
+      "status": "ok",
+      "unit": "ms",
+      "value": 2517.0
+    }
+  },
+  "package_dir": "/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326/artifacts/tmp/winlan-packages-task005-pass-grade-pair-20260325T180604Z/dexter-task005-pass-grade-pair-20260325T180604Z",
+  "run_id": "dexter-task005-pass-grade-pair-20260325T180604Z",
+  "source_system": "dexter"
+}

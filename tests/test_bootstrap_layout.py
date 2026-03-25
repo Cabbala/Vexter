@@ -140,6 +140,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-005-GAP-AUDIT",
         "TASK-005-VALIDATOR-CONTRACT-AUDIT",
         "TASK-005-VALIDATOR-RULE-REVIEW",
+        "TASK-005-VALIDATOR-RULE-IMPLEMENT",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -154,6 +155,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "structural_gap_confirmed",
         "rule_review_needed_helper_fix_insufficient",
         "rule_review_memo_ready_for_approval",
+        "rule_implementation_applied",
     }
     assert payload["branch"] in {
         "codex/task-005-live-comparison-evidence",
@@ -169,6 +171,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-005-gap-audit",
         "codex/task-005-validator-contract-audit",
         "codex/task-005-validator-rule-review",
+        "codex/task-005-validator-rule-implement",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -176,6 +179,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "DEXTER-PAPER-IMPLEMENT",
         "TASK-005-PASS-GRADE-PAIR",
         "TASK-005-VALIDATOR-RULE-IMPLEMENTATION",
+        "TASK-006",
     }
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -190,6 +194,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "awaiting_validator_contract_audit_or_rule_exception_review",
         "awaiting_validator_rule_review_approval",
         "awaiting_explicit_approval_to_modify_validator_rules",
+        "ready_for_replay_validation",
     }
 
 
@@ -210,6 +215,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "structural_gap_confirmed",
         "rule_review_needed",
         "rule_memo_ready",
+        "rule_implementation_applied",
     }
     assert manifest["next_task"]["id"] in {
         "TASK-005-RESUME",
@@ -217,6 +223,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "DEXTER-PAPER-IMPLEMENT",
         "TASK-005-PASS-GRADE-PAIR",
         "TASK-005-VALIDATOR-RULE-IMPLEMENTATION",
+        "TASK-006",
     }
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -230,6 +237,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "awaiting_validator_contract_audit_or_rule_exception_review",
         "awaiting_validator_rule_review_approval",
         "awaiting_explicit_approval_to_modify_validator_rules",
+        "ready_for_replay_validation",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]

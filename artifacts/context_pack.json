@@ -18,35 +18,37 @@
     "analysis_priority": "paper_sim_first",
     "dexter_mode_preference": "explicit_paper_live",
     "mewx_mode_preference": "sim_live",
-    "agent_usage_note": "No sub-agents were used in this review."
+    "agent_usage_note": "No sub-agents were used in this task."
   },
-  "phase": "TASK-005-VALIDATOR-RULE-REVIEW",
-  "status": "rule_memo_ready",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_validator_rule_review_bundle.tar.gz",
+  "phase": "TASK-005-VALIDATOR-RULE-IMPLEMENT",
+  "status": "rule_implementation_applied",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task005_validator_rule_implementation_bundle_v2.tar.gz",
   "starting_point": {
-    "verified_latest_vexter_main": "b7c8cb900ced104f4fe76cfd9ca48c2b21b82d81",
-    "verified_latest_vexter_pr": 18,
+    "verified_latest_vexter_main": "db59c2edc099c4e794d8e0ac177cedb6f6d57d2d",
+    "verified_latest_vexter_pr": 19,
     "verified_prior_supporting_vexter_main": [
+      "b7c8cb900ced104f4fe76cfd9ca48c2b21b82d81",
       "b09033d6c8ce21510da23025cee935e46f3ef4df",
       "b71b5f744027024e2a04606f6c1aa369d0a6c3e3"
     ],
     "verified_prior_supporting_vexter_prs": [
+      18,
       17,
       16
     ],
     "verified_dexter_main": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_dexter_pr": 3,
     "verified_mewx_frozen": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
-    "work_branch": "codex/task-005-validator-rule-review"
+    "work_branch": "codex/task-005-validator-rule-implement"
   },
   "background": {
-    "previous_task_id": "TASK-005-VALIDATOR-CONTRACT-AUDIT",
+    "previous_task_id": "TASK-005-VALIDATOR-RULE-REVIEW",
     "promoted_pair": "task005-pass-grade-pair-20260325T180027Z",
     "confirmatory_pair": "task005-pass-grade-pair-20260325T180604Z",
-    "task_006_ready_before_review": false
+    "task_006_ready_before_implementation": false
   },
   "current_contract": {
-    "required_event_types": [
+    "event_type_catalog": [
       "creator_candidate",
       "candidate_rejected",
       "mint_observed",
@@ -61,175 +63,107 @@
       "run_summary"
     ],
     "validator_files": [
-      "vexter/comparison/constants.py",
       "vexter/comparison/validator.py"
     ],
-    "validator_rule": "All required event types must be present for classification pass."
+    "conditional_rules": {
+      "run_summary": "required_only_when_clean_shutdown_completion_is_proven",
+      "entry_rejected": "required_only_when_an_entry_attempt_lacks_a_matching_fill",
+      "mewx_creator_candidate": "required_only_when_candidate_snapshots_are_non_empty"
+    }
   },
   "frozen_source_commits": {
     "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
   },
+  "implementation": {
+    "validator_rules_changed": true,
+    "source_logic_changed": false,
+    "tests_updated": [
+      "tests/test_comparison_analysis.py"
+    ]
+  },
   "evidence": {
     "github_latest": {
-      "vexter_pr_18_merged_at": "2026-03-25T18:57:55Z",
+      "vexter_pr_19_merged_at": "2026-03-25T19:18:46Z",
       "dexter_pr_3_merged_at": "2026-03-21T11:31:07Z",
       "mewx_commit_reverified_at": "2026-03-20T16:05:19Z"
     },
-    "supporting_pairs": [
-      {
-        "label": "task005-pass-grade-pair-20260325T180027Z",
-        "proof_dir": "artifacts/proofs/task005-gap-audit-20260325T180027Z-results",
-        "collection_payload": "artifacts/proofs/task005-gap-audit-20260325T180027Z.collection.json",
-        "dexter_required_event_types_present": 10,
-        "mewx_required_event_types_present": 9,
-        "dexter_missing_event_types": [
-          "entry_rejected",
-          "run_summary"
-        ],
-        "mewx_missing_event_types": [
-          "creator_candidate",
-          "entry_rejected",
-          "run_summary"
-        ],
-        "full_stream_fallback": true,
-        "process_exit_code": 3221225786,
-        "process_exit_code_hex": "0xC000013A",
-        "dexter_state_status": "running",
-        "dexter_state_ended_at_utc": null,
-        "mewx_state_status": "running",
-        "mewx_state_ended_at_utc": null,
-        "mewx_initial_candidate_observation_count": 0,
-        "mewx_refresh_candidate_observation_count": 0
-      },
-      {
-        "label": "task005-pass-grade-pair-20260325T180604Z",
-        "proof_dir": "artifacts/proofs/task005-gap-audit-20260325T180604Z-results",
-        "collection_payload": "artifacts/proofs/task005-gap-audit-20260325T180604Z.collection.json",
-        "dexter_required_event_types_present": 10,
-        "mewx_required_event_types_present": 8,
-        "dexter_missing_event_types": [
-          "entry_rejected",
-          "run_summary"
-        ],
-        "mewx_missing_event_types": [
-          "candidate_rejected",
-          "creator_candidate",
-          "entry_rejected",
-          "run_summary"
-        ],
-        "full_stream_fallback": true,
-        "grace_seconds": 60
-      }
-    ],
-    "shutdown_and_packaging": {
-      "shutdown_helper_file": "scripts/collect_matched_live_pair.py",
-      "packager_file": "scripts/collect_comparison_package.ps1",
-      "current_collection_shutdown": "CTRL_BREAK_EVENT",
-      "full_stream_fallback_used": true,
-      "packaging_loss_ruled_out": true,
-      "observed_exit_code": 3221225786,
-      "observed_exit_code_hex": "0xC000013A",
-      "dexter_state_status": "running",
-      "mewx_state_status": "running",
-      "dexter_ended_at_utc": null,
-      "mewx_ended_at_utc": null
+    "promoted_pair": {
+      "label": "task005-pass-grade-pair-20260325T180027Z",
+      "proof_dir": "artifacts/proofs/task005-validator-rule-implement-20260325T180027Z-results",
+      "comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison",
+      "dexter_classification": "pass",
+      "dexter_required_event_types_present": 10,
+      "dexter_required_event_types_total": 10,
+      "dexter_waived_event_types": [
+        "entry_rejected",
+        "run_summary"
+      ],
+      "mewx_classification": "pass",
+      "mewx_required_event_types_present": 9,
+      "mewx_required_event_types_total": 9,
+      "mewx_waived_event_types": [
+        "creator_candidate",
+        "entry_rejected",
+        "run_summary"
+      ],
+      "winner_mode": "derived"
     },
-    "contract_classification": {
-      "run_summary": {
-        "classification": "shutdown_success_dependent",
-        "source_files": [
-          "/Users/cabbala/Documents/Dexter/DexLab/instrumentation.py",
-          "sources/Mew-X/src/mew/instrumentation.rs"
-        ],
-        "helper_fix_viable": true,
-        "packaging_fix_sufficient": false,
-        "note": "Finalizer-only on both sources; current helper exit path prevents finalizer completion, but this only addresses run_summary.",
-        "recommended_treatment": "conditional_required_on_clean_shutdown_or_replayability_grade_only",
-        "rule_change_candidates": [
-          "Move run_summary out of always-required and make it conditional on proof that shutdown completed cleanly.",
-          "If approval prefers strictness, keep it as a later replayability or integration-ready gate rather than a comparable-pass gate."
-        ]
-      },
-      "entry_rejected": {
-        "classification": "failure_path_only",
-        "source_files": [
-          "/Users/cabbala/Documents/Dexter/Dexter.py",
-          "sources/Mew-X/src/mew/snipe/handler.rs"
-        ],
-        "helper_fix_viable": false,
-        "packaging_fix_sufficient": false,
-        "note": "Absent from healthy promoted full-stream evidence because both frozen sources emit only on failed entry paths.",
-        "recommended_treatment": "conditional_required_only_if_entry_failure_occurs_otherwise_observed_if_present",
-        "rule_change_candidates": [
-          "Remove entry_rejected from the healthy matched-pair always-required gate.",
-          "Require entry_rejected only when a source actually experiences an entry failure or an attempt lacks a fill."
-        ]
-      },
-      "mewx_creator_candidate": {
-        "classification": "source_specific_conditional",
-        "source_files": [
-          "sources/Mew-X/src/main.rs",
-          "sources/Mew-X/src/mew/instrumentation.rs",
-          "sources/Mew-X/src/mew/snipe/handler.rs"
-        ],
-        "helper_fix_viable": false,
-        "packaging_fix_sufficient": false,
-        "note": "Frozen Mew-X emitted rich fill/close evidence while candidate snapshots stayed empty, so this event is not dependable under the current environment.",
-        "recommended_treatment": "source_specific_conditional_for_non_empty_candidate_snapshots_otherwise_optional",
-        "rule_change_candidates": [
-          "Require Mew-X creator_candidate only when initial-selection or refresh candidate snapshots contain observations.",
-          "Otherwise allow downstream execution evidence to validate without forcing a source-agnostic creator_candidate hard gate."
-        ]
-      }
+    "confirmatory_pair": {
+      "label": "task005-pass-grade-pair-20260325T180604Z",
+      "proof_dir": "artifacts/proofs/task005-validator-rule-implement-20260325T180604Z-results",
+      "comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180604Z-comparison",
+      "dexter_classification": "pass",
+      "mewx_classification": "partial",
+      "mewx_missing_event_types": [
+        "candidate_rejected"
+      ],
+      "winner_mode": "deferred"
     }
   },
   "current_task": {
-    "id": "TASK-005-VALIDATOR-RULE-REVIEW",
+    "id": "TASK-005-VALIDATOR-RULE-IMPLEMENT",
     "scope": [
       "Verify latest GitHub merged state for Vexter, Dexter, and frozen Mew-X.",
-      "Translate the merged contract audit into an approval-grade validator rule review / exception memo.",
-      "Classify run_summary, entry_rejected, and Mew-X creator_candidate against current frozen-source reality without changing source logic or validator rules.",
-      "Record proposal-level requirement relaxation, conditional rule, and source-specific exception candidates.",
-      "Update review artifacts and TASK-006 readiness."
+      "Apply the approved validator contract change inside the Vexter comparison layer only.",
+      "Revalidate the promoted and confirmatory matched pairs with the updated validator.",
+      "Refresh readiness, handoff, and bundle artifacts.",
+      "Rejudge TASK-006 readiness from the updated evidence."
     ],
     "deliverables": [
       "artifacts/summary.md",
       "artifacts/context_pack.json",
       "artifacts/proof_bundle_manifest.json",
       "artifacts/task_ledger.jsonl",
-      "artifacts/reports/task-005-validator-rule-review.md",
-      "artifacts/reports/task-005-validator-rule-review-readiness.md",
-      "artifacts/reports/task-005-validator-rule-review-handoff/DETAILS.md",
-      "artifacts/reports/task-005-validator-rule-review-handoff/MIN_PROMPT.txt",
-      "artifacts/proofs/task-005-validator-rule-review-check.json",
-      "artifacts/bundles/task-005-validator-rule-review.tar.gz"
+      "artifacts/reports/task-005-validator-rule-implement.md",
+      "artifacts/reports/task-005-validator-rule-implement-readiness.md",
+      "artifacts/reports/task-005-validator-rule-implement-handoff/DETAILS.md",
+      "artifacts/reports/task-005-validator-rule-implement-handoff/MIN_PROMPT.txt",
+      "artifacts/proofs/task-005-validator-rule-implement-check.json",
+      "artifacts/bundles/task-005-validator-rule-implement.tar.gz"
     ]
   },
   "recommendation": {
     "outcome": "A",
-    "decision": "RULE_MEMO_READY",
-    "key_finding": "rule_memo_ready",
-    "helper_fix_scope": "run_summary_only_if_later_approved",
-    "validator_rule_implementation_ready": true,
-    "task_006_ready": false,
-    "recommended_next_step": "approved_validator_rule_implementation",
+    "decision": "RULE_IMPLEMENTATION_APPLIED",
+    "key_finding": "rule_implementation_applied",
+    "task_006_ready": true,
+    "recommended_next_step": "task_006_replay_validation",
     "why": [
-      "run_summary sits inside the shutdown-success boundary and is not dependable until shutdown completion is itself proven cleanly.",
-      "entry_rejected remains failure-path-only on both frozen sources and is absent from healthy promoted full-stream evidence.",
-      "Mew-X creator_candidate remains conditional on non-empty candidate reports and is absent even when the same runs still produce fills and position closeouts.",
-      "The current approval-grade output is therefore a rule review memo, not an unapproved rule edit."
+      "The approved rule treatments were applied without touching frozen source logic.",
+      "The promoted matched pair now validates as pass/pass under the updated contract.",
+      "The promoted comparison pack now reports winner_mode derived and points directly to downstream replay validation.",
+      "The confirmatory retry leaves only a narrow Mew-X candidate_rejected miss, which does not overturn the promoted comparable pack."
     ]
   },
   "next_task": {
-    "id": "TASK-005-VALIDATOR-RULE-IMPLEMENTATION",
-    "state": "awaiting_explicit_approval_to_modify_validator_rules",
-    "task_006_ready": false,
+    "id": "TASK-006",
+    "state": "ready_for_replay_validation",
+    "task_006_ready": true,
     "resume_requirements": [
-      "Keep Dexter and Mew-X source logic frozen.",
-      "Do not change validator rules without explicit approval.",
-      "Apply only the approved requirement relaxation / conditional rule / source-specific exception set.",
-      "Treat any helper-side follow-up as a narrow run_summary shutdown-hygiene task, not as a complete fix for TASK-005."
+      "Use the promoted comparable pack as the replay-validation baseline.",
+      "Carry forward the confirmatory Mew-X candidate_rejected gap as a residual note only.",
+      "Keep Dexter and Mew-X source logic frozen unless a later task explicitly approves source changes."
     ]
   }
 }

@@ -9,8 +9,55 @@
   },
   "classification": "pass",
   "comparison_readiness": "comparable",
+  "contract": {
+    "active_required_event_types": [
+      "creator_candidate",
+      "candidate_rejected",
+      "mint_observed",
+      "entry_signal",
+      "entry_attempt",
+      "entry_fill",
+      "entry_rejected",
+      "session_update",
+      "exit_signal",
+      "exit_fill",
+      "position_closed"
+    ],
+    "conditional_requirements": {
+      "creator_candidate": {
+        "reason": "mewx candidate snapshot exports contained observations or source additions",
+        "required": true
+      },
+      "entry_rejected": {
+        "reason": "at least one entry attempt did not produce a matching fill",
+        "required": true
+      },
+      "run_summary": {
+        "reason": "no clean shutdown completion proof was exported for this run package",
+        "required": false
+      }
+    },
+    "event_type_catalog": [
+      "creator_candidate",
+      "candidate_rejected",
+      "mint_observed",
+      "entry_signal",
+      "entry_attempt",
+      "entry_fill",
+      "entry_rejected",
+      "session_update",
+      "exit_signal",
+      "exit_fill",
+      "position_closed",
+      "run_summary"
+    ],
+    "waived_event_types": [
+      "run_summary"
+    ]
+  },
   "coverage": {
     "event_completeness_ratio": 1.0,
+    "event_type_catalog_total": 12,
     "missing_event_types": [],
     "observed_event_types": [
       "candidate_rejected",
@@ -26,8 +73,8 @@
       "run_summary",
       "session_update"
     ],
-    "required_event_types_present": 12,
-    "required_event_types_total": 12,
+    "required_event_types_present": 11,
+    "required_event_types_total": 11,
     "total_events": 25
   },
   "issues": [],

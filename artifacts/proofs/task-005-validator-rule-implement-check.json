@@ -1,0 +1,82 @@
+{
+  "task_id": "TASK-005-VALIDATOR-RULE-IMPLEMENT",
+  "checked_at_utc": "2026-03-25T19:41:40Z",
+  "status": "rule_implementation_applied",
+  "github_latest": {
+    "vexter_main_commit": "db59c2edc099c4e794d8e0ac177cedb6f6d57d2d",
+    "vexter_pr": 19,
+    "vexter_pr_19_merged_at": "2026-03-25T19:18:46Z",
+    "supporting_vexter_main_commits": [
+      "b7c8cb900ced104f4fe76cfd9ca48c2b21b82d81",
+      "b09033d6c8ce21510da23025cee935e46f3ef4df",
+      "b71b5f744027024e2a04606f6c1aa369d0a6c3e3"
+    ],
+    "supporting_vexter_prs": [
+      18,
+      17,
+      16
+    ],
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr": 3,
+    "dexter_pr_3_merged_at": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "mewx_frozen_reverified_at": "2026-03-20T16:05:19Z"
+  },
+  "implementation": {
+    "validator_files": [
+      "vexter/comparison/validator.py"
+    ],
+    "tests_updated": [
+      "tests/test_comparison_analysis.py"
+    ],
+    "source_logic_changed": false,
+    "rule_treatments": {
+      "run_summary": "required_only_when_clean_shutdown_completion_is_proven",
+      "entry_rejected": "required_only_when_an_entry_attempt_lacks_a_matching_fill",
+      "mewx_creator_candidate": "required_only_when_candidate_snapshots_are_non_empty"
+    }
+  },
+  "revalidation": {
+    "promoted": {
+      "label": "task005-pass-grade-pair-20260325T180027Z",
+      "proof_dir": "artifacts/proofs/task005-validator-rule-implement-20260325T180027Z-results",
+      "comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison",
+      "dexter_classification": "pass",
+      "dexter_required_event_types_present": 10,
+      "dexter_required_event_types_total": 10,
+      "dexter_waived_event_types": [
+        "entry_rejected",
+        "run_summary"
+      ],
+      "mewx_classification": "pass",
+      "mewx_required_event_types_present": 9,
+      "mewx_required_event_types_total": 9,
+      "mewx_waived_event_types": [
+        "creator_candidate",
+        "entry_rejected",
+        "run_summary"
+      ],
+      "winner_mode": "derived"
+    },
+    "confirmatory": {
+      "label": "task005-pass-grade-pair-20260325T180604Z",
+      "proof_dir": "artifacts/proofs/task005-validator-rule-implement-20260325T180604Z-results",
+      "comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180604Z-comparison",
+      "dexter_classification": "pass",
+      "mewx_classification": "partial",
+      "mewx_missing_event_types": [
+        "candidate_rejected"
+      ],
+      "winner_mode": "deferred"
+    }
+  },
+  "decision": {
+    "selected_outcome": "A",
+    "key_finding": "rule_implementation_applied",
+    "promoted_pair_comparable": true,
+    "confirmatory_pair_fully_comparable": false,
+    "residual_note": "confirmatory_mewx_candidate_rejected_only",
+    "task_006_ready": true,
+    "next_step": "task_006_replay_validation"
+  }
+}

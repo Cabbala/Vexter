@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 from typing import Any
 
@@ -24,6 +25,15 @@ CRITICAL_ISSUE_CODES = {
 }
 
 ISSUE_SAMPLE_EVENT_LIMIT = 10
+CLEAN_SHUTDOWN_STATUSES = {
+    "closed",
+    "completed",
+    "exited",
+    "finalized",
+    "finished",
+    "shutdown_complete",
+    "stopped",
+}
 
 
 def _has_value(value: Any) -> bool:
@@ -32,6 +42,157 @@ def _has_value(value: Any) -> bool:
     if isinstance(value, str):
         return bool(value.strip())
     return True
+
+
+def _load_optional_json(path: Path) -> dict[str, Any] | None:
+    if not path.exists():
+        return None
+    try:
+        with path.open() as handle:
+            payload = json.load(handle)
+    except (OSError, json.JSONDecodeError):
+        return None
+    if not isinstance(payload, dict):
+        return None
+    return payload
+
+
+def _session_key(event: dict[str, Any]) -> str:
+    return str(
+        event.get("session_id")
+        or event.get("mint")
+        or event.get("event_id")
+        or "unknown-session"
+    )
+
+
+def _attempt_key(event: dict[str, Any]) -> tuple[str, int | None]:
+    payload = event.get("payload", {})
+    attempt_index = payload.get("attempt_index") if isinstance(payload, dict) else None
+    return (_session_key(event), attempt_index)
+
+
+def _event_types_by_requirement(
+    package,
+    *,
+    source_system: str | None,
+) -> tuple[list[str], dict[str, dict[str, Any]]]:
+    observed_entry_failure = _observed_entry_failure(package.events)
+    clean_shutdown_proven = _clean_shutdown_proven(package.package_dir)
+    mewx_candidate_snapshots_non_empty = _mewx_candidate_snapshots_non_empty(package)
+
+    conditional_requirements = {
+        "run_summary": {
+            "required": clean_shutdown_proven,
+            "reason": (
+                "clean shutdown completion was proven by exported run-state evidence"
+                if clean_shutdown_proven
+                else "no clean shutdown completion proof was exported for this run package"
+            ),
+        },
+        "entry_rejected": {
+            "required": observed_entry_failure,
+            "reason": (
+                "at least one entry attempt did not produce a matching fill"
+                if observed_entry_failure
+                else "all observed entry attempts produced matching fills"
+            ),
+        },
+        "creator_candidate": {
+            "required": source_system != "mewx" or mewx_candidate_snapshots_non_empty,
+            "reason": (
+                "source is not mewx, so creator_candidate stays required"
+                if source_system != "mewx"
+                else (
+                    "mewx candidate snapshot exports contained observations or source additions"
+                    if mewx_candidate_snapshots_non_empty
+                    else "mewx candidate snapshot exports were empty for this run package"
+                )
+            ),
+        },
+    }
+
+    active_required_event_types = [
+        event_type
+        for event_type in REQUIRED_EVENT_TYPES
+        if conditional_requirements.get(event_type, {}).get("required", True)
+    ]
+    return active_required_event_types, conditional_requirements
+
+
+def _observed_entry_failure(events: list[dict[str, Any]]) -> bool:
+    fill_attempts = {
+        _attempt_key(event)
+        for event in events
+        if str(event.get("event_type")) == "entry_fill"
+    }
+
+    for event in events:
+        if str(event.get("event_type")) != "entry_attempt":
+            continue
+        if _attempt_key(event) not in fill_attempts:
+            return True
+    return any(str(event.get("event_type")) == "entry_rejected" for event in events)
+
+
+def _clean_shutdown_proven(package_dir: Path) -> bool:
+    for state_path in sorted((package_dir / "exports").glob("*.state.json")):
+        payload = _load_optional_json(state_path)
+        if payload is None:
+            continue
+
+        ended_at_utc = payload.get("ended_at_utc")
+        if isinstance(ended_at_utc, str) and parse_utc_timestamp(ended_at_utc) is not None:
+            return True
+
+        status = payload.get("status")
+        if isinstance(status, str) and status.strip().lower() in CLEAN_SHUTDOWN_STATUSES:
+            return True
+    return False
+
+
+def _mewx_candidate_snapshots_non_empty(package) -> bool:
+    if package.metadata.get("source_system") != "mewx":
+        return False
+
+    snapshot_paths = sorted((package.package_dir / "exports").glob("*.candidates*.json"))
+    source_exports = package.metadata.get("source_exports", {})
+    if isinstance(source_exports, dict):
+        refresh_export = source_exports.get("candidate_refresh_snapshot")
+        if isinstance(refresh_export, str):
+            refresh_path = package.resolve_relative_path(refresh_export)
+            if refresh_path not in snapshot_paths:
+                snapshot_paths.append(refresh_path)
+
+    for snapshot_path in snapshot_paths:
+        payload = _load_optional_json(snapshot_path)
+        if payload is None:
+            continue
+        if _candidate_snapshot_has_candidates(payload):
+            return True
+    return False
+
+
+def _candidate_snapshot_has_candidates(payload: dict[str, Any]) -> bool:
+    observations = payload.get("observations")
+    if isinstance(observations, list) and observations:
+        return True
+
+    added_keys = payload.get("added_keys")
+    if isinstance(added_keys, list) and added_keys:
+        return True
+
+    source_counts = payload.get("source_counts")
+    if isinstance(source_counts, dict):
+        for value in source_counts.values():
+            if isinstance(value, (int, float)) and value > 0:
+                return True
+
+    sources = payload.get("sources")
+    if isinstance(sources, list) and sources:
+        return True
+
+    return False
 
 
 def _issue(
@@ -122,6 +283,10 @@ def validate_run_package(package_dir: str | Path) -> dict[str, Any]:
 
     metadata = package.metadata
     source_system = metadata.get("source_system")
+    active_required_event_types, conditional_requirements = _event_types_by_requirement(
+        package,
+        source_system=source_system if isinstance(source_system, str) else None,
+    )
 
     if source_system not in SOURCE_REQUIRED_EXPORT_KEYS:
         _issue(
@@ -346,7 +511,7 @@ def validate_run_package(package_dir: str | Path) -> dict[str, Any]:
                 path=str(package.event_stream_path),
             )
 
-    missing_event_types = sorted(set(REQUIRED_EVENT_TYPES) - observed_event_types)
+    missing_event_types = sorted(set(active_required_event_types) - observed_event_types)
     required_event_types_ok = not missing_event_types
     if missing_event_types:
         _issue(
@@ -370,8 +535,10 @@ def validate_run_package(package_dir: str | Path) -> dict[str, Any]:
     else:
         classification = "pass"
 
-    coverage_ratio = len(observed_event_types & set(REQUIRED_EVENT_TYPES)) / len(
-        REQUIRED_EVENT_TYPES
+    active_required_event_type_set = set(active_required_event_types)
+    coverage_ratio = len(observed_event_types & active_required_event_type_set) / max(
+        len(active_required_event_types),
+        1,
     )
 
     return {
@@ -380,6 +547,12 @@ def validate_run_package(package_dir: str | Path) -> dict[str, Any]:
         "source_system": source_system,
         "classification": classification,
         "comparison_readiness": "comparable" if classification == "pass" else "observe_only",
+        "contract": {
+            "event_type_catalog": REQUIRED_EVENT_TYPES,
+            "active_required_event_types": active_required_event_types,
+            "waived_event_types": sorted(set(REQUIRED_EVENT_TYPES) - active_required_event_type_set),
+            "conditional_requirements": conditional_requirements,
+        },
         "checks": {
             "run_identity_ok": run_identity_ok,
             "required_event_types_ok": required_event_types_ok,
@@ -389,8 +562,9 @@ def validate_run_package(package_dir: str | Path) -> dict[str, Any]:
             "proof_attribution_ok": proof_attribution_ok,
         },
         "coverage": {
-            "required_event_types_present": len(observed_event_types & set(REQUIRED_EVENT_TYPES)),
-            "required_event_types_total": len(REQUIRED_EVENT_TYPES),
+            "required_event_types_present": len(observed_event_types & active_required_event_type_set),
+            "required_event_types_total": len(active_required_event_types),
+            "event_type_catalog_total": len(REQUIRED_EVENT_TYPES),
             "event_completeness_ratio": coverage_ratio,
             "observed_event_types": sorted(observed_event_types),
             "missing_event_types": missing_event_types,

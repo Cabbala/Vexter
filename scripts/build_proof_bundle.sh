@@ -2,8 +2,9 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-BUNDLE_PATH="$ROOT_DIR/artifacts/bundles/task-006-replay-analysis.tar.gz"
+BUNDLE_PATH="$ROOT_DIR/artifacts/bundles/task-006-replay-surface-fix.tar.gz"
 SAMPLE_PACK_DIR="$ROOT_DIR/artifacts/examples/task-004-sample-comparison"
+export COPYFILE_DISABLE=1
 
 mkdir -p "$ROOT_DIR/artifacts/bundles"
 mkdir -p "$ROOT_DIR/artifacts/examples"

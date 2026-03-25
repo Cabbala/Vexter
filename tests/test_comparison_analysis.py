@@ -8,6 +8,7 @@ from vexter.comparison import (
     build_comparison_pack,
     derive_metrics,
     run_replay_deepening,
+    run_replay_surface_fix,
     run_replay_validation,
     validate_run_package,
 )
@@ -683,3 +684,54 @@ def test_run_replay_deepening_reconstructs_replay_packages_and_measures_gap(
     assert report["promoted"]["mewx"]["gap"]["live_vs_replay_gap_pct"] == pytest.approx(0.0)
     assert report["replay_pack"]["winner_mode"] == "derived"
     assert "Dexter live-vs-replay gap" in summary
+
+
+def test_run_replay_surface_fix_augments_promoted_dexter_package_and_eliminates_gap(
+    tmp_path: Path,
+) -> None:
+    promoted_dexter = tmp_path / "promoted-dexter"
+    promoted_mewx = tmp_path / "promoted-mewx"
+
+    _make_live_package(
+        DEXTER_FIXTURE,
+        promoted_dexter,
+        run_id="dexter-promoted-live",
+        started_at_utc="2026-03-21T01:00:00Z",
+        ended_at_utc="2026-03-21T01:20:00Z",
+    )
+    _make_live_package(
+        MEWX_FIXTURE,
+        promoted_mewx,
+        run_id="mewx-promoted-live",
+        started_at_utc="2026-03-21T01:00:00Z",
+        ended_at_utc="2026-03-21T01:20:00Z",
+    )
+
+    _write_dexter_replay_export(promoted_dexter)
+    _write_mewx_session_summaries(promoted_mewx)
+
+    report, summary = run_replay_surface_fix(
+        latest_vexter_pr=23,
+        latest_vexter_main_commit="eaa5acc2f189d5bea5c55f9de059d8e6a8d36091",
+        dexter_main_commit="ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+        mewx_frozen_commit="dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+        promoted_label="task005-pass-grade-pair-20260325T180027Z",
+        promoted_dexter_package_dir=promoted_dexter,
+        promoted_mewx_package_dir=promoted_mewx,
+        augmented_dexter_package_dir=tmp_path / "augmented-dexter",
+        promoted_output_dir=tmp_path / "promoted-results",
+        replay_package_root=tmp_path / "replay-packages",
+        replay_output_dir=tmp_path / "replay-results",
+        confirmatory_residual_note="Mew-X candidate_rejected",
+    )
+
+    dexter_gap = report["promoted"]["replay_measurement"]["dexter"]["gap"]
+
+    assert report["decision"]["key_finding"] == "surface_fix_applied"
+    assert report["decision"]["task_state"] == "ready_for_downstream_comparative_analysis"
+    assert report["promoted"]["dexter_surface"]["close_summary_count"] == 1
+    assert dexter_gap["matched_position_closed_count"] == 1
+    assert dexter_gap["coverage_ratio"] == pytest.approx(1.0)
+    assert dexter_gap["live_vs_replay_gap_pct"] == pytest.approx(0.0)
+    assert report["promoted"]["baseline_pack"]["winner_mode"] == "derived"
+    assert "TASK-006 state: `ready_for_downstream_comparative_analysis`" in summary

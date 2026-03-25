@@ -1,0 +1,33 @@
+{
+  "exported_at_utc": "2026-03-25T17:57:09.088970Z",
+  "mint_id": "GqCEig3NKC8wn7y54qfbVzygdwbEtY3u8sFYKyKupump",
+  "payload": {
+    "kind": "stagnant_mint",
+    "row": {
+      "bonding_curve": "FK1hsb6pwJovEQAhQuZR9zpXjTkNrCEpeV6TDQ2ccn1s",
+      "final_market_cap": 2566.635601203914,
+      "final_ohlc": "{\"open\": 3.37544867122444e-08, \"high\": \"3.37544867122444E-8\", \"low\": 2.7958993477166823e-08, \"close\": \"2.7958993477166822684522049847523350596389946076669730246067047119140625E-8\"}",
+      "holders": "{\"DdZG8dw12CsHjj2Ytfo1vKNPPoU4DEYSMSxdhPjo5U6N\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 0.0, \"amount\": 96449438.173719, \"type\": \"buy\", \"timestamp\": 1774461387}, {\"price_was\": 3.37544867122444e-08, \"amount\": 96449438.173719, \"type\": \"sell\", \"timestamp\": 1774461396}]}}",
+      "mint_id": "GqCEig3NKC8wn7y54qfbVzygdwbEtY3u8sFYKyKupump",
+      "mint_sig": "4kG3Z1fWxy1pqX5inE4GwfAvkFtwEZ7XSEEb7vhDvCMXiWzFurDRSvZG51z7iZkgqcKx31pDE7dyMXmkq6SoMZ3x",
+      "name": "NET DOLLAR\\",
+      "owner": "DdZG8dw12CsHjj2Ytfo1vKNPPoU4DEYSMSxdhPjo5U6N",
+      "peak_market_cap": 3098.661880184036,
+      "peak_price_change": 7.128101663303719e-15,
+      "price_history": "{\"1774461387.001\": 3.37544867122444e-08, \"1774461396.000\": 2.7958993477166823e-08}",
+      "slot_delay": "1.0691053867340088",
+      "symbol": "NET",
+      "tx_counts": "{\"swaps\": 2, \"buys\": 1, \"sells\": 1}",
+      "volume": "{\"30sec\": {\"swaps\": 2, \"buys\": 1, \"sells\": 1}, \"1min\": {}, \"2min\": {}, \"5min\": {}}"
+    }
+  },
+  "runtime_layout": {
+    "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+    "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+    "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+    "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+    "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+    "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+    "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+  }
+}

@@ -186,7 +186,17 @@ def _dexter_replay_payloads(package) -> dict[str, tuple[Path, dict[str, Any]]]:
         mint_id = payload.get("mint_id")
         if not isinstance(mint_id, str) or not mint_id.strip():
             continue
-        payloads[mint_id] = (candidate_path, payload)
+        existing = payloads.get(mint_id)
+        existing_kind = (
+            str(existing[1].get("payload", {}).get("kind"))
+            if existing is not None
+            else ""
+        )
+        candidate_kind = str(payload.get("payload", {}).get("kind"))
+        if existing is not None and existing_kind == "close_summary" and candidate_kind != "close_summary":
+            continue
+        if candidate_kind == "close_summary" or existing is None:
+            payloads[mint_id] = (candidate_path, payload)
     return payloads
 
 
@@ -358,6 +368,14 @@ def _reconstruct_dexter_session_events(
     replay_payload: dict[str, Any],
     run_id: str,
 ) -> list[dict[str, Any]]:
+    replay_kind = str(replay_payload.get("payload", {}).get("kind") or "")
+    if replay_kind == "close_summary":
+        return _reconstruct_dexter_close_summary_events(
+            live_session_events=live_session_events,
+            replay_payload=replay_payload,
+            run_id=run_id,
+        )
+
     rows = [_clone_event(event, run_id=run_id, mode="replay") for event in _selected_live_events(live_session_events)]
     if not live_session_events:
         return rows
@@ -501,6 +519,141 @@ def _reconstruct_dexter_session_events(
                     "time_to_peak_ms": time_to_peak_ms,
                     "session_duration_ms": session_duration_ms,
                     "stale_position_flag": True,
+                },
+            },
+        ]
+    )
+    return rows
+
+
+def _reconstruct_dexter_close_summary_events(
+    *,
+    live_session_events: list[dict[str, Any]],
+    replay_payload: dict[str, Any],
+    run_id: str,
+) -> list[dict[str, Any]]:
+    rows = [_clone_event(event, run_id=run_id, mode="replay") for event in _selected_live_events(live_session_events)]
+    if not live_session_events:
+        return rows
+
+    seed_event = live_session_events[0]
+    summary_payload = replay_payload["payload"]
+    session_id = str(summary_payload.get("session_id") or seed_event.get("session_id") or "")
+    mint = str(summary_payload.get("mint") or seed_event.get("mint") or replay_payload.get("mint_id") or "")
+    creator = str(summary_payload.get("creator") or seed_event.get("creator") or "")
+    closed_at_utc = str(summary_payload["closed_at_utc"])
+    entry_price = float(summary_payload["entry_price"])
+    exit_price = float(summary_payload["exit_price"])
+    realized_return_pct = float(summary_payload["realized_return_pct"])
+    mfe_pct = float(summary_payload["mfe_pct"])
+    mae_pct = float(summary_payload["mae_pct"])
+    time_to_peak_ms = int(summary_payload["time_to_peak_ms"])
+    session_duration_ms = int(summary_payload["session_duration_ms"])
+    exit_reason = str(summary_payload.get("exit_reason") or "close_summary")
+    theoretical_best_price = float(
+        summary_payload.get("theoretical_best_price")
+        or (entry_price * (1.0 + (mfe_pct / 100.0)))
+    )
+    signal_price = float(summary_payload.get("signal_price") or exit_price)
+
+    source_commit = seed_event["source_commit"]
+    transport_mode = seed_event.get("transport_mode")
+
+    rows.extend(
+        [
+            {
+                "run_id": run_id,
+                "event_type": "session_update",
+                "ts_utc": _replay_timestamp(closed_at_utc, shift_ms=-2),
+                "source_system": "dexter",
+                "source_commit": source_commit,
+                "mode": "replay",
+                "transport_mode": transport_mode,
+                "session_id": session_id,
+                "mint": mint,
+                "creator": creator,
+                "payload": {
+                    "price": exit_price,
+                    "highest_price": theoretical_best_price,
+                    "buys": 0,
+                    "sells": 0,
+                    "liquidity": 0.0,
+                    "mfe_pct": mfe_pct,
+                    "mae_pct": mae_pct,
+                    "state_reason": str(summary_payload.get("state_reason") or "close_summary"),
+                    "creator_sold": False,
+                },
+            },
+            {
+                "run_id": run_id,
+                "event_type": "exit_signal",
+                "ts_utc": _replay_timestamp(closed_at_utc, shift_ms=-1),
+                "source_system": "dexter",
+                "source_commit": source_commit,
+                "mode": "replay",
+                "transport_mode": transport_mode,
+                "session_id": session_id,
+                "mint": mint,
+                "creator": creator,
+                "payload": {
+                    "exit_reason": exit_reason,
+                    "signal_price": signal_price,
+                    "theoretical_best_price": theoretical_best_price,
+                    "realized_vs_peak_gap_pct": float(
+                        summary_payload.get("realized_vs_peak_gap_pct")
+                        or max(mfe_pct - realized_return_pct, 0.0)
+                    ),
+                },
+            },
+            {
+                "run_id": run_id,
+                "event_type": "exit_fill",
+                "ts_utc": closed_at_utc,
+                "source_system": "dexter",
+                "source_commit": source_commit,
+                "mode": "replay",
+                "transport_mode": transport_mode,
+                "session_id": session_id,
+                "mint": mint,
+                "creator": creator,
+                "payload": {
+                    "fill_price": exit_price,
+                    "fill_qty": float(summary_payload.get("fill_qty") or 0.0),
+                    "fill_latency_ms": int(summary_payload.get("fill_latency_ms") or 0),
+                    "tx_signature": str(
+                        summary_payload.get("tx_signature")
+                        or f"replay-close-summary-exit:{mint}"
+                    ),
+                    "exit_reason": exit_reason,
+                    "wallet_balance_after": float(
+                        summary_payload.get("wallet_balance_after") or 0.0
+                    ),
+                    "confirmation_path": summary_payload.get("confirmation_path") or "",
+                    "tx_strategy": summary_payload.get("tx_strategy") or "",
+                },
+            },
+            {
+                "run_id": run_id,
+                "event_type": "position_closed",
+                "ts_utc": closed_at_utc,
+                "source_system": "dexter",
+                "source_commit": source_commit,
+                "mode": "replay",
+                "transport_mode": transport_mode,
+                "session_id": session_id,
+                "mint": mint,
+                "creator": creator,
+                "payload": {
+                    "entry_price": entry_price,
+                    "exit_price": exit_price,
+                    "realized_return_pct": realized_return_pct,
+                    "mfe_pct": mfe_pct,
+                    "mae_pct": mae_pct,
+                    "time_to_peak_ms": time_to_peak_ms,
+                    "session_duration_ms": session_duration_ms,
+                    "stale_position_flag": bool(
+                        summary_payload.get("stale_position_flag")
+                    ),
                 },
             },
         ]

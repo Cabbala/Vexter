@@ -1,0 +1,845 @@
+{
+  "confirmatory_context": {
+    "overturns_promoted_baseline": false,
+    "residual_note": "Mew-X candidate_rejected"
+  },
+  "decision": {
+    "key_finding": "surface_fix_applied",
+    "next_step": "task_006_downstream_comparative_analysis",
+    "task_state": "ready_for_downstream_comparative_analysis"
+  },
+  "generated_at_utc": "2026-03-25T21:19:37Z",
+  "promoted": {
+    "augmented_dexter_package_dir": "/Users/cabbala/Documents/vexter/task005-validator-rule-review/artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-augmented-dexter-package",
+    "baseline_pack": {
+      "comparison_output_dir": "/Users/cabbala/Documents/vexter/task005-validator-rule-review/artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-results",
+      "pack_id": "comparison-dexter-task005-pass-grade-pair-20260325T180027Z-vs-mewx-task005-pass-grade-pair-20260325T180027Z",
+      "winner_mode": "derived"
+    },
+    "dexter_surface": {
+      "augmented_from_package_dir": "/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326/artifacts/tmp/winlan-packages-task005-pass-grade-pair-20260325T180027Z/dexter-task005-pass-grade-pair-20260325T180027Z",
+      "close_summary_count": 4,
+      "close_summary_index": "exports/dexter-close-summary-index.json",
+      "close_summary_paths": [
+        "replays/6aHTh9r311kVEGTcQ3WTGoJofuqYiX6VeWoF6VwEThAb.close-summary.json",
+        "replays/AdCvMqzaCbEdoVk4LyVgzgU4XSUEL6QqQ453de8ZxsRa.close-summary.json",
+        "replays/EADTG8t5bacSyhj6SH3r1aKKqhWad2Zgvi4gyjLfpump.close-summary.json",
+        "replays/GFYvctoWAyrmzrnRX19bxVdDiYtSzmnkicyMvLHxpump.close-summary.json"
+      ],
+      "close_summary_session_keys": [
+        "6aHTh9r311kVEGTcQ3WTGoJofuqYiX6VeWoF6VwEThAb-1774461707938",
+        "AdCvMqzaCbEdoVk4LyVgzgU4XSUEL6QqQ453de8ZxsRa-1774461707938",
+        "EADTG8t5bacSyhj6SH3r1aKKqhWad2Zgvi4gyjLfpump-1774461707938",
+        "GFYvctoWAyrmzrnRX19bxVdDiYtSzmnkicyMvLHxpump-1774461707938"
+      ],
+      "metrics": {
+        "derived_metrics": [
+          "candidate_count",
+          "candidate_precision_proxy",
+          "fill_success_rate",
+          "signal_to_attempt_latency_ms",
+          "attempt_to_fill_latency_ms",
+          "quote_vs_fill_slippage_bps",
+          "max_favorable_excursion_pct",
+          "max_adverse_excursion_pct",
+          "time_to_peak_ms",
+          "realized_exit_pct",
+          "realized_vs_peak_gap_pct",
+          "stale_position_ratio",
+          "replayability_grade"
+        ],
+        "metrics": {
+          "attempt_to_fill_latency_ms": {
+            "aggregation": "median",
+            "samples": 4,
+            "status": "ok",
+            "unit": "ms",
+            "value": 502.5
+          },
+          "candidate_count": {
+            "aggregation": "count",
+            "status": "ok",
+            "unit": "count",
+            "value": 255
+          },
+          "candidate_precision_proxy": {
+            "aggregation": "run_ratio",
+            "details": {
+              "candidate_count": 255,
+              "successful_positions": 4
+            },
+            "status": "ok",
+            "unit": "ratio",
+            "value": 0.01568627450980392
+          },
+          "fill_success_rate": {
+            "aggregation": "run_ratio",
+            "details": {
+              "attempts": 4,
+              "fills": 4
+            },
+            "status": "ok",
+            "unit": "ratio",
+            "value": 1.0
+          },
+          "max_adverse_excursion_pct": {
+            "aggregation": "median",
+            "samples": 4,
+            "status": "ok",
+            "unit": "pct",
+            "value": -6.05468749267574
+          },
+          "max_favorable_excursion_pct": {
+            "aggregation": "median",
+            "samples": 4,
+            "status": "ok",
+            "unit": "pct",
+            "value": 34.844263534142286
+          },
+          "quote_vs_fill_slippage_bps": {
+            "aggregation": "median",
+            "samples": 4,
+            "status": "ok",
+            "unit": "bps",
+            "value": 0.0
+          },
+          "realized_exit_pct": {
+            "aggregation": "median",
+            "samples": 4,
+            "status": "ok",
+            "unit": "pct",
+            "value": 7.164077921477945
+          },
+          "realized_vs_peak_gap_pct": {
+            "aggregation": "median",
+            "samples": 4,
+            "status": "ok",
+            "unit": "pct",
+            "value": 20.533046470504612
+          },
+          "replayability_grade": {
+            "aggregation": "classification",
+            "details": {
+              "db_exports": 96,
+              "logs": 0,
+              "raw_events": 1,
+              "replayable_flag": false,
+              "replays": 96
+            },
+            "status": "ok",
+            "unit": "grade",
+            "value": "partial"
+          },
+          "signal_to_attempt_latency_ms": {
+            "aggregation": "median",
+            "samples": 4,
+            "status": "ok",
+            "unit": "ms",
+            "value": 0.0
+          },
+          "stale_position_ratio": {
+            "aggregation": "run_ratio",
+            "details": {
+              "closed_positions": 4,
+              "stale_positions": 0
+            },
+            "status": "ok",
+            "unit": "ratio",
+            "value": 0.0
+          },
+          "time_to_peak_ms": {
+            "aggregation": "median",
+            "samples": 4,
+            "status": "ok",
+            "unit": "ms",
+            "value": 5299.0
+          }
+        },
+        "package_dir": "/Users/cabbala/Documents/vexter/task005-validator-rule-review/artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-augmented-dexter-package",
+        "run_id": "dexter-task005-pass-grade-pair-20260325T180027Z",
+        "source_system": "dexter"
+      },
+      "package_dir": "/Users/cabbala/Documents/vexter/task005-validator-rule-review/artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-augmented-dexter-package",
+      "validation": {
+        "checks": {
+          "event_envelope_ok": true,
+          "payload_fields_ok": true,
+          "proof_attribution_ok": true,
+          "required_event_types_ok": true,
+          "run_identity_ok": true,
+          "source_exports_ok": true
+        },
+        "classification": "pass",
+        "comparison_readiness": "comparable",
+        "contract": {
+          "active_required_event_types": [
+            "creator_candidate",
+            "candidate_rejected",
+            "mint_observed",
+            "entry_signal",
+            "entry_attempt",
+            "entry_fill",
+            "session_update",
+            "exit_signal",
+            "exit_fill",
+            "position_closed"
+          ],
+          "conditional_requirements": {
+            "creator_candidate": {
+              "reason": "source is not mewx, so creator_candidate stays required",
+              "required": true
+            },
+            "entry_rejected": {
+              "reason": "all observed entry attempts produced matching fills",
+              "required": false
+            },
+            "run_summary": {
+              "reason": "no clean shutdown completion proof was exported for this run package",
+              "required": false
+            }
+          },
+          "event_type_catalog": [
+            "creator_candidate",
+            "candidate_rejected",
+            "mint_observed",
+            "entry_signal",
+            "entry_attempt",
+            "entry_fill",
+            "entry_rejected",
+            "session_update",
+            "exit_signal",
+            "exit_fill",
+            "position_closed",
+            "run_summary"
+          ],
+          "waived_event_types": [
+            "entry_rejected",
+            "run_summary"
+          ]
+        },
+        "coverage": {
+          "event_completeness_ratio": 1.0,
+          "event_type_catalog_total": 12,
+          "missing_event_types": [],
+          "observed_event_types": [
+            "candidate_rejected",
+            "creator_candidate",
+            "entry_attempt",
+            "entry_fill",
+            "entry_signal",
+            "exit_fill",
+            "exit_signal",
+            "mint_observed",
+            "position_closed",
+            "session_update"
+          ],
+          "required_event_types_present": 10,
+          "required_event_types_total": 10,
+          "total_events": 323
+        },
+        "issues": [],
+        "package_dir": "/Users/cabbala/Documents/vexter/task005-validator-rule-review/artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-augmented-dexter-package",
+        "run_id": "dexter-task005-pass-grade-pair-20260325T180027Z",
+        "source_system": "dexter"
+      }
+    },
+    "label": "task005-pass-grade-pair-20260325T180027Z",
+    "mewx_package_dir": "/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326/artifacts/tmp/winlan-packages-task005-pass-grade-pair-20260325T180027Z/mewx-task005-pass-grade-pair-20260325T180027Z",
+    "original_dexter_package_dir": "/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326/artifacts/tmp/winlan-packages-task005-pass-grade-pair-20260325T180027Z/dexter-task005-pass-grade-pair-20260325T180027Z",
+    "replay_measurement": {
+      "accepted_as_replay_input": true,
+      "dexter": {
+        "gap": {
+          "coverage_ratio": 1.0,
+          "gap_measured": true,
+          "live_position_closed_count": 4,
+          "live_vs_replay_gap_pct": 0.0,
+          "matched_position_closed_count": 4,
+          "max_abs_gap_pct": 0.0,
+          "per_session": [
+            {
+              "abs_gap_pct": 0.0,
+              "creator": "9AVeMVwzivhB4tCQ8ouMfcgFquBokRxKQQeKgTAiQLPG",
+              "gap_pct": 0.0,
+              "live_realized_return_pct": 37.52462072728383,
+              "mint": "6aHTh9r311kVEGTcQ3WTGoJofuqYiX6VeWoF6VwEThAb",
+              "replay_realized_return_pct": 37.52462072728383,
+              "session_key": "6aHTh9r311kVEGTcQ3WTGoJofuqYiX6VeWoF6VwEThAb-1774461707938"
+            },
+            {
+              "abs_gap_pct": 0.0,
+              "creator": "9xaPjSYagiWEVddmysThnUERhuaBx4r65j21JjhtHgpG",
+              "gap_pct": 0.0,
+              "live_realized_return_pct": 26.43753082830737,
+              "mint": "AdCvMqzaCbEdoVk4LyVgzgU4XSUEL6QqQ453de8ZxsRa",
+              "replay_realized_return_pct": 26.43753082830737,
+              "session_key": "AdCvMqzaCbEdoVk4LyVgzgU4XSUEL6QqQ453de8ZxsRa-1774461707938"
+            },
+            {
+              "abs_gap_pct": 0.0,
+              "creator": "whamNNP9tHoxLg92yHvJPdYhghEoCg1qYTsh5a2oLbx",
+              "gap_pct": 0.0,
+              "live_realized_return_pct": -26.53061223999998,
+              "mint": "EADTG8t5bacSyhj6SH3r1aKKqhWad2Zgvi4gyjLfpump",
+              "replay_realized_return_pct": -26.53061223999998,
+              "session_key": "EADTG8t5bacSyhj6SH3r1aKKqhWad2Zgvi4gyjLfpump-1774461707938"
+            },
+            {
+              "abs_gap_pct": 0.0,
+              "creator": "49gbkrRvKVoNC3xZM5ZyEjPMyp3zy2mdeLk8XDY6Vg2j",
+              "gap_pct": 0.0,
+              "live_realized_return_pct": -12.10937498535148,
+              "mint": "GFYvctoWAyrmzrnRX19bxVdDiYtSzmnkicyMvLHxpump",
+              "replay_realized_return_pct": -12.10937498535148,
+              "session_key": "GFYvctoWAyrmzrnRX19bxVdDiYtSzmnkicyMvLHxpump-1774461707938"
+            }
+          ],
+          "replay_position_closed_count": 4,
+          "unmatched_live_session_keys": [],
+          "unmatched_replay_session_keys": []
+        },
+        "live_package_dir": "/Users/cabbala/Documents/vexter/task005-validator-rule-review/artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-augmented-dexter-package",
+        "replay_package": {
+          "coverage_ratio": 1.0,
+          "live_position_closed_count": 4,
+          "metrics": {
+            "derived_metrics": [
+              "candidate_count",
+              "candidate_precision_proxy",
+              "fill_success_rate",
+              "signal_to_attempt_latency_ms",
+              "attempt_to_fill_latency_ms",
+              "quote_vs_fill_slippage_bps",
+              "max_favorable_excursion_pct",
+              "max_adverse_excursion_pct",
+              "time_to_peak_ms",
+              "realized_exit_pct",
+              "realized_vs_peak_gap_pct",
+              "stale_position_ratio",
+              "replayability_grade"
+            ],
+            "metrics": {
+              "attempt_to_fill_latency_ms": {
+                "aggregation": "median",
+                "samples": 4,
+                "status": "ok",
+                "unit": "ms",
+                "value": 502.5
+              },
+              "candidate_count": {
+                "aggregation": "count",
+                "status": "ok",
+                "unit": "count",
+                "value": 255
+              },
+              "candidate_precision_proxy": {
+                "aggregation": "run_ratio",
+                "details": {
+                  "candidate_count": 255,
+                  "successful_positions": 4
+                },
+                "status": "ok",
+                "unit": "ratio",
+                "value": 0.01568627450980392
+              },
+              "fill_success_rate": {
+                "aggregation": "run_ratio",
+                "details": {
+                  "attempts": 4,
+                  "fills": 4
+                },
+                "status": "ok",
+                "unit": "ratio",
+                "value": 1.0
+              },
+              "max_adverse_excursion_pct": {
+                "aggregation": "median",
+                "samples": 4,
+                "status": "ok",
+                "unit": "pct",
+                "value": -6.05468749267574
+              },
+              "max_favorable_excursion_pct": {
+                "aggregation": "median",
+                "samples": 4,
+                "status": "ok",
+                "unit": "pct",
+                "value": 34.844263534142286
+              },
+              "quote_vs_fill_slippage_bps": {
+                "aggregation": "median",
+                "samples": 4,
+                "status": "ok",
+                "unit": "bps",
+                "value": 0.0
+              },
+              "realized_exit_pct": {
+                "aggregation": "median",
+                "samples": 4,
+                "status": "ok",
+                "unit": "pct",
+                "value": 7.164077921477945
+              },
+              "realized_vs_peak_gap_pct": {
+                "aggregation": "median",
+                "samples": 4,
+                "status": "ok",
+                "unit": "pct",
+                "value": 25.804157291090654
+              },
+              "replayability_grade": {
+                "aggregation": "classification",
+                "details": {
+                  "db_exports": 4,
+                  "logs": 0,
+                  "raw_events": 1,
+                  "replayable_flag": true,
+                  "replays": 4
+                },
+                "status": "ok",
+                "unit": "grade",
+                "value": "partial"
+              },
+              "signal_to_attempt_latency_ms": {
+                "aggregation": "median",
+                "samples": 4,
+                "status": "ok",
+                "unit": "ms",
+                "value": 0.0
+              },
+              "stale_position_ratio": {
+                "aggregation": "run_ratio",
+                "details": {
+                  "closed_positions": 4,
+                  "stale_positions": 0
+                },
+                "status": "ok",
+                "unit": "ratio",
+                "value": 0.0
+              },
+              "time_to_peak_ms": {
+                "aggregation": "median",
+                "samples": 4,
+                "status": "ok",
+                "unit": "ms",
+                "value": 5299.0
+              }
+            },
+            "package_dir": "/Users/cabbala/Documents/vexter/task005-validator-rule-review/artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-replay-packages/dexter-replay",
+            "run_id": "dexter-task005-pass-grade-pair-20260325T180027Z-replay",
+            "source_system": "dexter"
+          },
+          "missing_replay_sessions": [],
+          "package_dir": "/Users/cabbala/Documents/vexter/task005-validator-rule-review/artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-replay-packages/dexter-replay",
+          "reconstructed_position_closed_count": 4,
+          "reconstructed_session_keys": [
+            "6aHTh9r311kVEGTcQ3WTGoJofuqYiX6VeWoF6VwEThAb-1774461707938",
+            "AdCvMqzaCbEdoVk4LyVgzgU4XSUEL6QqQ453de8ZxsRa-1774461707938",
+            "EADTG8t5bacSyhj6SH3r1aKKqhWad2Zgvi4gyjLfpump-1774461707938",
+            "GFYvctoWAyrmzrnRX19bxVdDiYtSzmnkicyMvLHxpump-1774461707938"
+          ],
+          "run_id": "dexter-task005-pass-grade-pair-20260325T180027Z-replay",
+          "source_system": "dexter",
+          "used_replay_inputs": [
+            "replays/AdCvMqzaCbEdoVk4LyVgzgU4XSUEL6QqQ453de8ZxsRa.close-summary.json",
+            "replays/EADTG8t5bacSyhj6SH3r1aKKqhWad2Zgvi4gyjLfpump.close-summary.json",
+            "replays/6aHTh9r311kVEGTcQ3WTGoJofuqYiX6VeWoF6VwEThAb.close-summary.json",
+            "replays/GFYvctoWAyrmzrnRX19bxVdDiYtSzmnkicyMvLHxpump.close-summary.json"
+          ],
+          "validation": {
+            "checks": {
+              "event_envelope_ok": true,
+              "payload_fields_ok": true,
+              "proof_attribution_ok": true,
+              "required_event_types_ok": true,
+              "run_identity_ok": true,
+              "source_exports_ok": true
+            },
+            "classification": "pass",
+            "comparison_readiness": "comparable",
+            "contract": {
+              "active_required_event_types": [
+                "creator_candidate",
+                "candidate_rejected",
+                "mint_observed",
+                "entry_signal",
+                "entry_attempt",
+                "entry_fill",
+                "session_update",
+                "exit_signal",
+                "exit_fill",
+                "position_closed",
+                "run_summary"
+              ],
+              "conditional_requirements": {
+                "creator_candidate": {
+                  "reason": "source is not mewx, so creator_candidate stays required",
+                  "required": true
+                },
+                "entry_rejected": {
+                  "reason": "all observed entry attempts produced matching fills",
+                  "required": false
+                },
+                "run_summary": {
+                  "reason": "clean shutdown completion was proven by exported run-state evidence",
+                  "required": true
+                }
+              },
+              "event_type_catalog": [
+                "creator_candidate",
+                "candidate_rejected",
+                "mint_observed",
+                "entry_signal",
+                "entry_attempt",
+                "entry_fill",
+                "entry_rejected",
+                "session_update",
+                "exit_signal",
+                "exit_fill",
+                "position_closed",
+                "run_summary"
+              ],
+              "waived_event_types": [
+                "entry_rejected"
+              ]
+            },
+            "coverage": {
+              "event_completeness_ratio": 1.0,
+              "event_type_catalog_total": 12,
+              "missing_event_types": [],
+              "observed_event_types": [
+                "candidate_rejected",
+                "creator_candidate",
+                "entry_attempt",
+                "entry_fill",
+                "entry_signal",
+                "exit_fill",
+                "exit_signal",
+                "mint_observed",
+                "position_closed",
+                "run_summary",
+                "session_update"
+              ],
+              "required_event_types_present": 11,
+              "required_event_types_total": 11,
+              "total_events": 296
+            },
+            "issues": [],
+            "package_dir": "/Users/cabbala/Documents/vexter/task005-validator-rule-review/artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-replay-packages/dexter-replay",
+            "run_id": "dexter-task005-pass-grade-pair-20260325T180027Z-replay",
+            "source_system": "dexter"
+          }
+        }
+      },
+      "label": "task005-pass-grade-pair-20260325T180027Z",
+      "mewx": {
+        "gap": {
+          "coverage_ratio": 1.0,
+          "gap_measured": true,
+          "live_position_closed_count": 6,
+          "live_vs_replay_gap_pct": 0.0,
+          "matched_position_closed_count": 6,
+          "max_abs_gap_pct": 0.0,
+          "per_session": [
+            {
+              "abs_gap_pct": 0.0,
+              "creator": "5sFCBEGFRXvohvXdJ1yVcq6noaXXMkT3touX3anMU3ab",
+              "gap_pct": 0.0,
+              "live_realized_return_pct": 0.0,
+              "mint": "9P5yvvqE7oyHVXuuYrFyeF35XMxyJpntWMtTu7Dkpump",
+              "replay_realized_return_pct": 0.0,
+              "session_key": "9P5yvvqE7oyHVXuuYrFyeF35XMxyJpntWMtTu7Dkpump-1774461628711"
+            },
+            {
+              "abs_gap_pct": 0.0,
+              "creator": "EpGbL652zKNPAobeKvNYiM1NXkddbzksBm4QWSNBPo31",
+              "gap_pct": 0.0,
+              "live_realized_return_pct": 0.0,
+              "mint": "AUyJcGpbJWrUwC7smpcC8sYi1vfUTBN7bCZ2bVMpJFPR",
+              "replay_realized_return_pct": 0.0,
+              "session_key": "AUyJcGpbJWrUwC7smpcC8sYi1vfUTBN7bCZ2bVMpJFPR-1774461628711"
+            },
+            {
+              "abs_gap_pct": 0.0,
+              "creator": "2xM4f2ESBZWxsi5HnSppcESxq3AZfUgUf1tXeJGbD9Jm",
+              "gap_pct": 0.0,
+              "live_realized_return_pct": 0.0,
+              "mint": "BMRQB1eP9xnc4WUfVwQjb2BCBEpCQd6fjpbMYTBGpump",
+              "replay_realized_return_pct": 0.0,
+              "session_key": "BMRQB1eP9xnc4WUfVwQjb2BCBEpCQd6fjpbMYTBGpump-1774461628711"
+            },
+            {
+              "abs_gap_pct": 0.0,
+              "creator": "kAc6C85HViRx9y5bNQjADkSWzp3Rn1qPwhJTfegYyFU",
+              "gap_pct": 0.0,
+              "live_realized_return_pct": 16.437728695911638,
+              "mint": "DYa5q3SFrZ2HsYHqFNNK2LYmeBtPKgY9pDDMBjWepump",
+              "replay_realized_return_pct": 16.437728695911638,
+              "session_key": "DYa5q3SFrZ2HsYHqFNNK2LYmeBtPKgY9pDDMBjWepump-1774461628711"
+            },
+            {
+              "abs_gap_pct": 0.0,
+              "creator": "8ov9RE6UcpYVtP2k2qhHLajRMeuJctKJEsG8vtYGTWY6",
+              "gap_pct": 0.0,
+              "live_realized_return_pct": 16.868229391154816,
+              "mint": "H79BmixeCauzgEYz7AB4p4iFpJibjJztJ999QJG8PHHa",
+              "replay_realized_return_pct": 16.868229391154816,
+              "session_key": "H79BmixeCauzgEYz7AB4p4iFpJibjJztJ999QJG8PHHa-1774461628711"
+            },
+            {
+              "abs_gap_pct": 0.0,
+              "creator": "Co73YSgdDWR4J6Paxufia7S8dmHE6t6WdjJNLsu3NECE",
+              "gap_pct": 0.0,
+              "live_realized_return_pct": 0.0,
+              "mint": "fmFU8JoLhb4atKqvFddgAb6cd4mE12kBpmtCcf8pump",
+              "replay_realized_return_pct": 0.0,
+              "session_key": "fmFU8JoLhb4atKqvFddgAb6cd4mE12kBpmtCcf8pump-1774461628711"
+            }
+          ],
+          "replay_position_closed_count": 6,
+          "unmatched_live_session_keys": [],
+          "unmatched_replay_session_keys": []
+        },
+        "live_package_dir": "/Users/cabbala/Documents/worktrees/Vexter-task005-pass-grade-pair-20260326/artifacts/tmp/winlan-packages-task005-pass-grade-pair-20260325T180027Z/mewx-task005-pass-grade-pair-20260325T180027Z",
+        "replay_package": {
+          "coverage_ratio": 1.0,
+          "live_position_closed_count": 6,
+          "metrics": {
+            "derived_metrics": [
+              "candidate_count",
+              "candidate_precision_proxy",
+              "fill_success_rate",
+              "signal_to_attempt_latency_ms",
+              "attempt_to_fill_latency_ms",
+              "quote_vs_fill_slippage_bps",
+              "max_favorable_excursion_pct",
+              "max_adverse_excursion_pct",
+              "time_to_peak_ms",
+              "realized_exit_pct",
+              "realized_vs_peak_gap_pct",
+              "stale_position_ratio",
+              "replayability_grade"
+            ],
+            "metrics": {
+              "attempt_to_fill_latency_ms": {
+                "aggregation": "median",
+                "samples": 6,
+                "status": "ok",
+                "unit": "ms",
+                "value": 1.5
+              },
+              "candidate_count": {
+                "aggregation": "count",
+                "status": "ok",
+                "unit": "count",
+                "value": 0
+              },
+              "candidate_precision_proxy": {
+                "reason": "no creator_candidate events were observed",
+                "status": "unavailable",
+                "unit": "ratio",
+                "value": null
+              },
+              "fill_success_rate": {
+                "aggregation": "run_ratio",
+                "details": {
+                  "attempts": 6,
+                  "fills": 6
+                },
+                "status": "ok",
+                "unit": "ratio",
+                "value": 1.0
+              },
+              "max_adverse_excursion_pct": {
+                "aggregation": "median",
+                "samples": 6,
+                "status": "ok",
+                "unit": "pct",
+                "value": 0.0
+              },
+              "max_favorable_excursion_pct": {
+                "aggregation": "median",
+                "samples": 6,
+                "status": "ok",
+                "unit": "pct",
+                "value": 6.792904253675385
+              },
+              "quote_vs_fill_slippage_bps": {
+                "aggregation": "median",
+                "samples": 6,
+                "status": "ok",
+                "unit": "bps",
+                "value": 7.706128082620904
+              },
+              "realized_exit_pct": {
+                "aggregation": "median",
+                "samples": 6,
+                "status": "ok",
+                "unit": "pct",
+                "value": 0.0
+              },
+              "realized_vs_peak_gap_pct": {
+                "aggregation": "median",
+                "samples": 6,
+                "status": "ok",
+                "unit": "pct",
+                "value": 0.0
+              },
+              "replayability_grade": {
+                "aggregation": "classification",
+                "details": {
+                  "db_exports": 6,
+                  "logs": 0,
+                  "raw_events": 1,
+                  "replayable_flag": true,
+                  "replays": 6
+                },
+                "status": "ok",
+                "unit": "grade",
+                "value": "partial"
+              },
+              "signal_to_attempt_latency_ms": {
+                "aggregation": "median",
+                "samples": 6,
+                "status": "ok",
+                "unit": "ms",
+                "value": 891.0
+              },
+              "stale_position_ratio": {
+                "aggregation": "run_ratio",
+                "details": {
+                  "closed_positions": 6,
+                  "stale_positions": 6
+                },
+                "status": "ok",
+                "unit": "ratio",
+                "value": 1.0
+              },
+              "time_to_peak_ms": {
+                "aggregation": "median",
+                "samples": 6,
+                "status": "ok",
+                "unit": "ms",
+                "value": 20.5
+              }
+            },
+            "package_dir": "/Users/cabbala/Documents/vexter/task005-validator-rule-review/artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-replay-packages/mewx-replay",
+            "run_id": "mewx-task005-pass-grade-pair-20260325T180027Z-replay",
+            "source_system": "mewx"
+          },
+          "missing_replay_sessions": [],
+          "package_dir": "/Users/cabbala/Documents/vexter/task005-validator-rule-review/artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-replay-packages/mewx-replay",
+          "reconstructed_position_closed_count": 6,
+          "reconstructed_session_keys": [
+            "9P5yvvqE7oyHVXuuYrFyeF35XMxyJpntWMtTu7Dkpump-1774461628711",
+            "AUyJcGpbJWrUwC7smpcC8sYi1vfUTBN7bCZ2bVMpJFPR-1774461628711",
+            "BMRQB1eP9xnc4WUfVwQjb2BCBEpCQd6fjpbMYTBGpump-1774461628711",
+            "DYa5q3SFrZ2HsYHqFNNK2LYmeBtPKgY9pDDMBjWepump-1774461628711",
+            "H79BmixeCauzgEYz7AB4p4iFpJibjJztJ999QJG8PHHa-1774461628711",
+            "fmFU8JoLhb4atKqvFddgAb6cd4mE12kBpmtCcf8pump-1774461628711"
+          ],
+          "run_id": "mewx-task005-pass-grade-pair-20260325T180027Z-replay",
+          "source_system": "mewx",
+          "used_replay_inputs": [
+            "exports/9P5yvvqE7oyHVXuuYrFyeF35XMxyJpntWMtTu7Dkpump-1774461628711.json",
+            "exports/AUyJcGpbJWrUwC7smpcC8sYi1vfUTBN7bCZ2bVMpJFPR-1774461628711.json",
+            "exports/BMRQB1eP9xnc4WUfVwQjb2BCBEpCQd6fjpbMYTBGpump-1774461628711.json",
+            "exports/DYa5q3SFrZ2HsYHqFNNK2LYmeBtPKgY9pDDMBjWepump-1774461628711.json",
+            "exports/H79BmixeCauzgEYz7AB4p4iFpJibjJztJ999QJG8PHHa-1774461628711.json",
+            "exports/fmFU8JoLhb4atKqvFddgAb6cd4mE12kBpmtCcf8pump-1774461628711.json"
+          ],
+          "validation": {
+            "checks": {
+              "event_envelope_ok": true,
+              "payload_fields_ok": true,
+              "proof_attribution_ok": true,
+              "required_event_types_ok": true,
+              "run_identity_ok": true,
+              "source_exports_ok": true
+            },
+            "classification": "pass",
+            "comparison_readiness": "comparable",
+            "contract": {
+              "active_required_event_types": [
+                "candidate_rejected",
+                "mint_observed",
+                "entry_signal",
+                "entry_attempt",
+                "entry_fill",
+                "session_update",
+                "exit_signal",
+                "exit_fill",
+                "position_closed",
+                "run_summary"
+              ],
+              "conditional_requirements": {
+                "creator_candidate": {
+                  "reason": "mewx candidate snapshot exports were empty for this run package",
+                  "required": false
+                },
+                "entry_rejected": {
+                  "reason": "all observed entry attempts produced matching fills",
+                  "required": false
+                },
+                "run_summary": {
+                  "reason": "clean shutdown completion was proven by exported run-state evidence",
+                  "required": true
+                }
+              },
+              "event_type_catalog": [
+                "creator_candidate",
+                "candidate_rejected",
+                "mint_observed",
+                "entry_signal",
+                "entry_attempt",
+                "entry_fill",
+                "entry_rejected",
+                "session_update",
+                "exit_signal",
+                "exit_fill",
+                "position_closed",
+                "run_summary"
+              ],
+              "waived_event_types": [
+                "creator_candidate",
+                "entry_rejected"
+              ]
+            },
+            "coverage": {
+              "event_completeness_ratio": 1.0,
+              "event_type_catalog_total": 12,
+              "missing_event_types": [],
+              "observed_event_types": [
+                "candidate_rejected",
+                "entry_attempt",
+                "entry_fill",
+                "entry_signal",
+                "exit_fill",
+                "exit_signal",
+                "mint_observed",
+                "position_closed",
+                "run_summary",
+                "session_update"
+              ],
+              "required_event_types_present": 10,
+              "required_event_types_total": 10,
+              "total_events": 50
+            },
+            "issues": [],
+            "package_dir": "/Users/cabbala/Documents/vexter/task005-validator-rule-review/artifacts/proofs/task006-replay-surface-fix-20260325T180027Z-replay-packages/mewx-replay",
+            "run_id": "mewx-task005-pass-grade-pair-20260325T180027Z-replay",
+            "source_system": "mewx"
+          }
+        }
+      }
+    }
+  },
+  "replay_summary": "# TASK-006 Replay Deepening\n\n## GitHub Basis\n\n- Latest merged Vexter main: PR `#23` commit `eaa5acc2f189d5bea5c55f9de059d8e6a8d36091`\n- Dexter main: PR `#3` commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`\n- Frozen Mew-X: `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`\n\n## Promoted Baseline\n\n- Label: `task005-pass-grade-pair-20260325T180027Z`\n- Accepted replay input: `yes`\n- Confirmatory note only: `Mew-X candidate_rejected`\n\n## Replay Reconstruction\n\n- Dexter replay package: `pass` with coverage `100.00%`\n- Dexter live-vs-replay gap: `0.0000 pct`\n- Mew-X replay package: `pass` with coverage `100.00%`\n- Mew-X live-vs-replay gap: `0.0000 pct`\n- Replay comparison pack winner mode: `derived`\n\n## Decision\n\n- Key finding: `gap_measured`\n- TASK-006 state: `ready_for_next_replay_analysis_step`\n- Next step: `task_006_replay_analysis`\n",
+  "task_id": "TASK-006-REPLAY-SURFACE-FIX",
+  "verified_github": {
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "latest_vexter_main_commit": "eaa5acc2f189d5bea5c55f9de059d8e6a8d36091",
+    "latest_vexter_pr": 23,
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  }
+}

@@ -17,6 +17,7 @@ from vexter.comparison import (
     build_comparison_pack,
     derive_metrics,
     run_replay_deepening,
+    run_replay_surface_fix,
     run_replay_validation,
     validate_run_package,
 )
@@ -100,6 +101,25 @@ def _build_parser() -> argparse.ArgumentParser:
     deepening_parser.add_argument("--output", required=True)
     deepening_parser.add_argument("--summary-output")
 
+    surface_fix_parser = subparsers.add_parser(
+        "replay-surface-fix",
+        help="Augment the promoted Dexter package with close-summary replay exports and rerun replay measurement",
+    )
+    surface_fix_parser.add_argument("--latest-vexter-pr", required=True, type=int)
+    surface_fix_parser.add_argument("--latest-vexter-main-commit", required=True)
+    surface_fix_parser.add_argument("--dexter-main-commit", required=True)
+    surface_fix_parser.add_argument("--mewx-frozen-commit", required=True)
+    surface_fix_parser.add_argument("--promoted-label", required=True)
+    surface_fix_parser.add_argument("--promoted-dexter-package", required=True)
+    surface_fix_parser.add_argument("--promoted-mewx-package", required=True)
+    surface_fix_parser.add_argument("--augmented-dexter-package", required=True)
+    surface_fix_parser.add_argument("--promoted-output-dir", required=True)
+    surface_fix_parser.add_argument("--replay-package-root", required=True)
+    surface_fix_parser.add_argument("--replay-output-dir", required=True)
+    surface_fix_parser.add_argument("--confirmatory-residual-note", required=True)
+    surface_fix_parser.add_argument("--output", required=True)
+    surface_fix_parser.add_argument("--summary-output")
+
     return parser
 
 
@@ -153,6 +173,25 @@ def main() -> int:
             promoted_label=args.promoted_label,
             promoted_dexter_package_dir=args.promoted_dexter_package,
             promoted_mewx_package_dir=args.promoted_mewx_package,
+            replay_package_root=args.replay_package_root,
+            replay_output_dir=args.replay_output_dir,
+            confirmatory_residual_note=args.confirmatory_residual_note,
+        )
+        _write_payload(payload, args.output)
+        _write_text(summary, args.summary_output)
+        return 0
+
+    if args.command == "replay-surface-fix":
+        payload, summary = run_replay_surface_fix(
+            latest_vexter_pr=args.latest_vexter_pr,
+            latest_vexter_main_commit=args.latest_vexter_main_commit,
+            dexter_main_commit=args.dexter_main_commit,
+            mewx_frozen_commit=args.mewx_frozen_commit,
+            promoted_label=args.promoted_label,
+            promoted_dexter_package_dir=args.promoted_dexter_package,
+            promoted_mewx_package_dir=args.promoted_mewx_package,
+            augmented_dexter_package_dir=args.augmented_dexter_package,
+            promoted_output_dir=args.promoted_output_dir,
             replay_package_root=args.replay_package_root,
             replay_output_dir=args.replay_output_dir,
             confirmatory_residual_note=args.confirmatory_residual_note,

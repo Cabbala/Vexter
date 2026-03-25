@@ -1,0 +1,33 @@
+{
+  "exported_at_utc": "2026-03-25T17:58:03.051011Z",
+  "mint_id": "3yN1uoXL8MbG7r1cErK3URGLMiTVthMAq6CDYrsypump",
+  "payload": {
+    "kind": "stagnant_mint",
+    "row": {
+      "bonding_curve": "4zxRoN9BRS691M35U6YvWFuuA5iy6AyZMK6ycyJg8ZKw",
+      "final_market_cap": 2738.5885833802436,
+      "final_ohlc": "{\"open\": 2.983021808809611e-08, \"high\": \"2.9832119644664964E-8\", \"low\": 2.983021808809611e-08, \"close\": \"2.98321196446649642802141796059378631156278061098419129848480224609375E-8\"}",
+      "holders": "{\"yZ77YBXseFmUdQb1Koe4yZyrbgTsyiNL48UV4UkHBck\": {\"balance\": 34199203.154141, \"balance_changes\": [{\"price_was\": 0.0, \"amount\": 34199203.154141, \"type\": \"buy\", \"timestamp\": 1774461451}]}, \"FhYEp13RZLbQrajU44QMs95qAH6vzyV9kPykPrs1H9Jq\": {\"balance\": 33108.089225, \"balance_changes\": [{\"price_was\": 2.983021808809611e-08, \"amount\": 33108.089225, \"type\": \"buy\", \"timestamp\": 1774461451}]}}",
+      "mint_id": "3yN1uoXL8MbG7r1cErK3URGLMiTVthMAq6CDYrsypump",
+      "mint_sig": "5hRUR7N9pRh55w9L9SN8pAzv7MpLX2QhvFPDzTXPH2NksKrytEwRUBgcdj6RsAK9bQaFv1edcd4G3VaYyjEG9VB2",
+      "name": "The Gooner",
+      "owner": "yZ77YBXseFmUdQb1Koe4yZyrbgTsyiNL48UV4UkHBck",
+      "peak_market_cap": 2738.5885833802436,
+      "peak_price_change": 0.006374598278955874,
+      "price_history": "{\"1774461451.001\": 2.983021808809611e-08, \"1774461451.002\": 2.9832119644664964e-08}",
+      "slot_delay": "1.0058674812316895",
+      "symbol": "GOONER",
+      "tx_counts": "{\"swaps\": 2, \"buys\": 2, \"sells\": 0}",
+      "volume": "{\"30sec\": {\"swaps\": 2, \"buys\": 2, \"sells\": 0}, \"1min\": {}, \"2min\": {}, \"5min\": {}}"
+    }
+  },
+  "runtime_layout": {
+    "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+    "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+    "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+    "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+    "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+    "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+    "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+  }
+}

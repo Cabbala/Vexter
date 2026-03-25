@@ -1,0 +1,81 @@
+{
+  "algorithm": {
+    "grand_chillers": {
+      "min_buys": 50,
+      "min_hmc": 15000.0,
+      "min_mints": 2,
+      "use_gc": false
+    },
+    "limit": 100000,
+    "min_buys": 200,
+    "min_deagle_sol": 1.0,
+    "min_mints": 1,
+    "min_volume": 10.0,
+    "use_deagles": true,
+    "use_vol_creators": false
+  },
+  "captured_at_utc": "2026-03-25T18:00:28.713Z",
+  "config": {
+    "grpc_token": null,
+    "grpc_url": "http...0000",
+    "mode": "sim_live",
+    "nonce_account": "",
+    "rpc_url": "http...3584",
+    "transport_mode": "mixed",
+    "ws_url": "wss:...3584"
+  },
+  "environment": {
+    "DB_URL": "post...5432",
+    "PRIVATE_KEY": "P8uY...PQPx",
+    "REGIONS": "Germany,Netherlands,UnitedKingdom"
+  },
+  "initial_source_counts": {},
+  "paths": {
+    "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\config",
+    "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\mewx",
+    "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\mewx\\export",
+    "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\mewx",
+    "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\mewx",
+    "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\mewx",
+    "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+  },
+  "run_id": "mewx-task005-pass-grade-pair-20260325T180027Z",
+  "snipe": {
+    "buy_amount": 0.0001,
+    "chp_lower": 0.09,
+    "chp_upper": 0.21,
+    "max_loss": 10.0,
+    "max_na_on_start_ms": 5000,
+    "max_no_activity_ms": 60000,
+    "min_dev_sold": 20000000,
+    "slippage": 30.0,
+    "take_profit": 0.0,
+    "tiz_lower": 3,
+    "tiz_upper": 12,
+    "use_chp": true,
+    "use_tiz": true
+  },
+  "source_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+  "strategies": {
+    "abs_min_buys": 5,
+    "abs_min_volume": 5.0,
+    "abs_n": 2,
+    "dbf_max_chp": 10.0,
+    "enable_abs": false,
+    "enable_dbf": true,
+    "enable_mtd": true,
+    "mtd_max_loss": 15.0,
+    "mtd_min_mc": 20.0,
+    "mtd_pct": 20,
+    "mtd_stable_time": 10,
+    "mtd_take_profit": 40.0
+  },
+  "tx_settings": {
+    "blox_key": null,
+    "nextblock_key": null,
+    "temporal_key": null,
+    "tip_lamports": 1100000,
+    "tx_strat": "swqos",
+    "zero_slot_key": null
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "exported_at_utc": "2026-03-25T18:05:03.067587Z",
+  "mint_id": "DHWd5xPX7zpbdRS4EvWcTYFrk3Xerh8DVvEfYvjMpump",
+  "payload": {
+    "kind": "stagnant_mint",
+    "row": {
+      "bonding_curve": "DQe8RiGqNf64DjKrKDGA2FBnXknfDS9RMS3EEpZaGJE8",
+      "final_market_cap": 2614.040918797603,
+      "final_ohlc": "{\"open\": 2.7977405718113755e-08, \"high\": \"2.850644404359436E-8\", \"low\": 2.7977405718113755e-08, \"close\": \"2.8506444043594360377936317084250628095531965300324372947216033935546875E-8\"}",
+      "holders": "{\"FUyTxAefzLQtuXc4NYdFJ1s3TKfQk7iE4ehtiCrUb8da\": {\"balance\": 353134.727201, \"balance_changes\": [{\"price_was\": 0.0, \"amount\": 353134.727201, \"type\": \"buy\", \"timestamp\": 1774461871}]}, \"GnDsjB4PHYuK65qyBjRvD6MxHpH2HDv3GpzuhPgM1WUL\": {\"balance\": 10000000.0, \"balance_changes\": [{\"price_was\": 2.7977405718113755e-08, \"amount\": 10000000.0, \"type\": \"buy\", \"timestamp\": 1774461872}]}}",
+      "mint_id": "DHWd5xPX7zpbdRS4EvWcTYFrk3Xerh8DVvEfYvjMpump",
+      "mint_sig": "2SBkyVsuVbobXZHh8mxRbYTwZBXTjk6G2w3dHwcaLJcRYMN2WjkndNTza85eLFvGRyRHFRsZHkzRZZkB2VovzNtL",
+      "name": "Squishy Dumplings",
+      "owner": "FUyTxAefzLQtuXc4NYdFJ1s3TKfQk7iE4ehtiCrUb8da",
+      "peak_market_cap": 2614.040918797603,
+      "peak_price_change": 1.8909484703868857,
+      "price_history": "{\"1774461871.001\": 2.7977405718113755e-08, \"1774461872.000\": 2.850644404359436e-08}",
+      "slot_delay": "1.0448801517486572",
+      "symbol": "Dumpling",
+      "tx_counts": "{\"swaps\": 2, \"buys\": 2, \"sells\": 0}",
+      "volume": "{\"30sec\": {\"swaps\": 2, \"buys\": 2, \"sells\": 0}, \"1min\": {}, \"2min\": {}, \"5min\": {}}"
+    }
+  },
+  "runtime_layout": {
+    "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+    "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+    "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+    "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+    "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+    "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+    "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+  }
+}

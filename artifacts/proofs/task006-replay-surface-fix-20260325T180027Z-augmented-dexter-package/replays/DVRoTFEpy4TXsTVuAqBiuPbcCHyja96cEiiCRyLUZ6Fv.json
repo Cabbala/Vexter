@@ -1,0 +1,33 @@
+{
+  "exported_at_utc": "2026-03-25T18:03:44.073762Z",
+  "mint_id": "DVRoTFEpy4TXsTVuAqBiuPbcCHyja96cEiiCRyLUZ6Fv",
+  "payload": {
+    "kind": "stagnant_mint",
+    "row": {
+      "bonding_curve": "6TS5Snkts8hhDBWytE64PZ5PnDPKX4D3oEnir7xUXv21",
+      "final_market_cap": 2598.138179729784,
+      "final_ohlc": "{\"open\": 4.0260950605778174e-08, \"high\": \"4.0260950605778174E-8\", \"low\": 2.7958993477166823e-08, \"close\": \"2.8333022679714112097589296421044913198983294932986609637737274169921875E-8\"}",
+      "holders": "{\"3z5FDHPFQTDo2GYpDZT7XCbSVY9q1ehr7T6Gzuu4UMyx\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 0.0, \"amount\": 178833333.333333, \"type\": \"buy\", \"timestamp\": 1774461782}, {\"price_was\": 4.0260950605778174e-08, \"amount\": 178833333.333333, \"type\": \"sell\", \"timestamp\": 1774461784}]}, \"8EPbematu3wi9sNp6huTYZKP3PVBJNher2dCCR75CKnv\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 2.7958993477166823e-08, \"amount\": 3520918.746731, \"type\": \"buy\", \"timestamp\": 1774461789}, {\"price_was\": 2.8143388645553277e-08, \"amount\": 3520918.746731, \"type\": \"sell\", \"timestamp\": 1774461792}]}, \"FEJvzFTtWnVaQSuqrDGYHThBFWuFhyMwvh56sZWR8nLJ\": {\"balance\": 7105960.26443, \"balance_changes\": [{\"price_was\": 2.7958993478098787e-08, \"amount\": 7105960.26443, \"type\": \"buy\", \"timestamp\": 1774461792}]}}",
+      "mint_id": "DVRoTFEpy4TXsTVuAqBiuPbcCHyja96cEiiCRyLUZ6Fv",
+      "mint_sig": "4XwdjwE5H6hdH3tz1roZ22VERbySEYmxcGmXkMRqLuYP78z3sRQZ8KBCRjhB8f6oFxfyMdDYcvRcWuEMQArPXn2G",
+      "name": "Parliament",
+      "owner": "3z5FDHPFQTDo2GYpDZT7XCbSVY9q1ehr7T6Gzuu4UMyx",
+      "peak_market_cap": 3691.9291705498586,
+      "peak_price_change": -4.316592955480269e-17,
+      "price_history": "{\"1774461782.001\": 4.0260950605778174e-08, \"1774461784.000\": 2.7958993477166823e-08, \"1774461789.000\": 2.8143388645553277e-08, \"1774461792.000\": 2.7958993478098787e-08, \"1774461792.001\": 2.8333022679714112e-08}",
+      "slot_delay": "1.0373969078063965",
+      "symbol": "PARLIAMENT",
+      "tx_counts": "{\"swaps\": 5, \"buys\": 3, \"sells\": 2}",
+      "volume": "{\"30sec\": {\"swaps\": 5, \"buys\": 3, \"sells\": 2}, \"1min\": {}, \"2min\": {}, \"5min\": {}}"
+    }
+  },
+  "runtime_layout": {
+    "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+    "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+    "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+    "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+    "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+    "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+    "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+  }
+}

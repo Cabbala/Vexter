@@ -1,0 +1,33 @@
+{
+  "exported_at_utc": "2026-03-25T17:57:33.760866Z",
+  "mint_id": "68YwMZhaXpdCMUdDVPVPg3dGC2cpNPZH98HJkWgppump",
+  "payload": {
+    "kind": "stagnant_mint",
+    "row": {
+      "bonding_curve": "6SGetMsRagP5uwbiUnsRFymNwoMXkSQgnxaAUQsdn9so",
+      "final_market_cap": 2566.635601717241,
+      "final_ohlc": "{\"open\": 3.5599499019372706e-08, \"high\": \"4.029409398876327E-8\", \"low\": 2.795899348275862e-08, \"close\": \"2.795899348275861987366217053553596461057395572424866259098052978515625E-8\"}",
+      "holders": "{\"EVreRxxps7EB1RSBV356eNQwjnPk5iSS9ifkCuB1Z6h6\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 0.0, \"amount\": 34500066.931522, \"type\": \"buy\", \"timestamp\": 1774461392}, {\"price_was\": 3.426586768349445e-08, \"amount\": 34500066.931522, \"type\": \"sell\", \"timestamp\": 1774461423}]}, \"Dwo2kj88YYhwcFJiybTjXezR9a6QjkMASz5xXD7kujXC\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 3.5599499019372706e-08, \"amount\": 32166024.351333, \"type\": \"buy\", \"timestamp\": 1774461392}, {\"price_was\": 2.9713790438792742e-08, \"amount\": 32166024.351333, \"type\": \"sell\", \"timestamp\": 1774461423}]}, \"HvJbZSjDjkcKGYpVXuBPLTyqL3rZfego1zkKwdtgNVus\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 3.813587958477363e-08, \"amount\": 50494117.566461, \"type\": \"buy\", \"timestamp\": 1774461392}, {\"price_was\": 4.029409398876327e-08, \"amount\": 50494117.566461, \"type\": \"sell\", \"timestamp\": 1774461393}]}, \"2sapuxSmfbKAziDJKTwJWtqfZoukBLKX5zeBCVdPDpz7\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 3.078855781746198e-08, \"amount\": 12643239.503768, \"type\": \"buy\", \"timestamp\": 1774461392}, {\"price_was\": 3.5177633908361876e-08, \"amount\": 12643239.503768, \"type\": \"sell\", \"timestamp\": 1774461393}]}, \"BMkHjN2N8K2PdCqeC92YYjUovn9ecW4GvFpH6yDggXWJ\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 3.9207561737225705e-08, \"amount\": 12299984.133184, \"type\": \"buy\", \"timestamp\": 1774461392}, {\"price_was\": 3.6100022067786246e-08, \"amount\": 12299984.133184, \"type\": \"sell\", \"timestamp\": 1774461393}]}, \"AoimsEGpxqSk4jcfpXAzE1GkuVkPQYivWQ3rLGRZxyfe\": {\"balance\": 37097719.026324, \"balance_changes\": [{\"price_was\": 3.195080120042574e-08, \"amount\": 37097719.026324, \"type\": \"sell\", \"timestamp\": 1774461423}]}}",
+      "mint_id": "68YwMZhaXpdCMUdDVPVPg3dGC2cpNPZH98HJkWgppump",
+      "mint_sig": "6RbXuNbCrbKBpGLX2sZHqJvf2nj8qe2k4Wa3ni6GY9GC1txTyv8FLi7Zfq6sSnoXVvHTudY1HBaFakQFtKhW5Bi",
+      "name": "NET",
+      "owner": "HvJbZSjDjkcKGYpVXuBPLTyqL3rZfego1zkKwdtgNVus",
+      "peak_market_cap": 3698.997828168468,
+      "peak_price_change": 13.187250098198957,
+      "price_history": "{\"1774461392.001\": 3.5599499019372706e-08, \"1774461392.002\": 3.813587958477363e-08, \"1774461392.003\": 3.078855781746198e-08, \"1774461392.004\": 3.9207561737225705e-08, \"1774461392.005\": 4.029409398876327e-08, \"1774461393.000\": 3.6100022067786246e-08, \"1774461393.001\": 3.5177633908361876e-08, \"1774461393.002\": 3.426586768349445e-08, \"1774461423.000\": 3.195080120042574e-08, \"1774461423.001\": 2.9713790438792742e-08, \"1774461423.002\": 2.795899348275862e-08}",
+      "slot_delay": "0.6702089309692383",
+      "symbol": "$NET",
+      "tx_counts": "{\"swaps\": 11, \"buys\": 5, \"sells\": 6}",
+      "volume": "{\"30sec\": {\"swaps\": 8, \"buys\": 5, \"sells\": 3}, \"1min\": {\"swaps\": 11, \"buys\": 5, \"sells\": 6}, \"2min\": {}, \"5min\": {}}"
+    }
+  },
+  "runtime_layout": {
+    "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+    "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+    "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+    "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+    "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+    "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+    "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+  }
+}

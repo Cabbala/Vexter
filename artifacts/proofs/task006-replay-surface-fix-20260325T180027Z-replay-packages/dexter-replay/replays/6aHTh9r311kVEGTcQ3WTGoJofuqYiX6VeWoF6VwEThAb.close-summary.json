@@ -1,0 +1,39 @@
+{
+  "exported_at_utc": "2026-03-25T18:03:10.787868Z",
+  "mint_id": "6aHTh9r311kVEGTcQ3WTGoJofuqYiX6VeWoF6VwEThAb",
+  "payload": {
+    "closed_at_utc": "2026-03-25T18:03:10.787868Z",
+    "confirmation_path": "paper_fill",
+    "creator": "9AVeMVwzivhB4tCQ8ouMfcgFquBokRxKQQeKgTAiQLPG",
+    "entry_price": 3.375448671019636e-08,
+    "exit_price": 4.642072982663897e-08,
+    "exit_reason": "safe",
+    "fill_latency_ms": 43,
+    "fill_qty": 2628041327.0,
+    "kind": "close_summary",
+    "mae_pct": 0.0,
+    "mfe_pct": 37.52462072728383,
+    "mint": "6aHTh9r311kVEGTcQ3WTGoJofuqYiX6VeWoF6VwEThAb",
+    "realized_return_pct": 37.52462072728383,
+    "realized_vs_peak_gap_pct": 0.0,
+    "session_duration_ms": 4033,
+    "session_id": "6aHTh9r311kVEGTcQ3WTGoJofuqYiX6VeWoF6VwEThAb-1774461707938",
+    "signal_price": 4.7854890676626315e-08,
+    "stale_position_flag": false,
+    "state_reason": "safe",
+    "theoretical_best_price": 4.7854890676626315e-08,
+    "time_to_peak_ms": 3579,
+    "tx_signature": "paper-exit:6aHTh9r311kVEGTcQ3WTGoJofuqYiX6VeWoF6VwEThAb",
+    "tx_strategy": "paper_quote",
+    "wallet_balance_after": 9999986631
+  },
+  "runtime_layout": {
+    "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+    "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+    "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+    "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+    "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+    "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+    "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+  }
+}

@@ -49,6 +49,7 @@ def test_required_paths_exist() -> None:
         "vexter/comparison/metrics.py",
         "vexter/comparison/pack.py",
         "vexter/comparison/replay_deepening.py",
+        "vexter/comparison/replay_surface_fix.py",
         "tests/conftest.py",
         "artifacts/context_pack.json",
         "artifacts/summary.md",
@@ -73,6 +74,9 @@ def test_required_paths_exist() -> None:
         "artifacts/reports/task-006-replay-analysis.md",
         "artifacts/reports/task-006-replay-analysis-handoff/DETAILS.md",
         "artifacts/reports/task-006-replay-analysis-handoff/MIN_PROMPT.txt",
+        "artifacts/reports/task-006-replay-surface-fix.md",
+        "artifacts/reports/task-006-replay-surface-fix-handoff/DETAILS.md",
+        "artifacts/reports/task-006-replay-surface-fix-handoff/MIN_PROMPT.txt",
         "artifacts/proofs/task-005-live-collection-check.json",
         "artifacts/proofs/task-005-pass-grade-pair-check.json",
         "artifacts/proofs/task-005-windows-runtime-recovery.json",
@@ -81,6 +85,8 @@ def test_required_paths_exist() -> None:
         "artifacts/proofs/task-006-replay-deepening-summary.md",
         "artifacts/proofs/task-006-replay-analysis-check.json",
         "artifacts/proofs/task-006-replay-analysis-summary.md",
+        "artifacts/proofs/task-006-replay-surface-fix-check.json",
+        "artifacts/proofs/task-006-replay-surface-fix-summary.md",
         "artifacts/examples/task-004-sample-comparison/pack_manifest.json",
         ".github/workflows/validate.yml",
     ]
@@ -160,6 +166,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-006-REPLAY-VALIDATION",
         "TASK-006-REPLAY-DEEPENING",
         "TASK-006-REPLAY-ANALYSIS",
+        "TASK-006-REPLAY-SURFACE-FIX",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -178,6 +185,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "replay_validation_in_progress",
         "replay_gap_measured",
         "needs_replay_surface_fix",
+        "surface_fix_applied",
     }
     assert payload["branch"] in {
         "codex/task-005-live-comparison-evidence",
@@ -197,6 +205,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-006-replay-validation",
         "codex/task-006-replay-deepening",
         "codex/task-006-replay-analysis",
+        "codex/task-006-replay-surface-fix",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -223,6 +232,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "replay_validation_in_progress",
         "ready_for_next_replay_analysis_step",
         "needs_replay_surface_fix",
+        "ready_for_downstream_comparative_analysis",
     }
 
 
@@ -247,6 +257,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "replay_validation_in_progress",
         "replay_gap_measured",
         "needs_replay_surface_fix",
+        "surface_fix_applied",
     }
     assert manifest["next_task"]["id"] in {
         "TASK-005-RESUME",
@@ -272,6 +283,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "replay_validation_in_progress",
         "ready_for_next_replay_analysis_step",
         "needs_replay_surface_fix",
+        "ready_for_downstream_comparative_analysis",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]
@@ -295,6 +307,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "templates/windows_runtime/mewx.env.example" in names
     assert "vexter/comparison/validator.py" in names
     assert "vexter/comparison/replay_deepening.py" in names
+    assert "vexter/comparison/replay_surface_fix.py" in names
     assert "artifacts/examples/task-004-sample-comparison/summary.md" in names
     assert "artifacts/reports/task-005-live-collection-blocker.md" in names
     assert "artifacts/reports/task-005-windows-runtime-recovery.md" in names
@@ -312,6 +325,9 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/reports/task-006-replay-analysis.md" in names
     assert "artifacts/reports/task-006-replay-analysis-handoff/DETAILS.md" in names
     assert "artifacts/reports/task-006-replay-analysis-handoff/MIN_PROMPT.txt" in names
+    assert "artifacts/reports/task-006-replay-surface-fix.md" in names
+    assert "artifacts/reports/task-006-replay-surface-fix-handoff/DETAILS.md" in names
+    assert "artifacts/reports/task-006-replay-surface-fix-handoff/MIN_PROMPT.txt" in names
     assert "artifacts/proofs/task-005-live-collection-check.json" in names
     assert "artifacts/proofs/task-005-windows-runtime-recovery.json" in names
     assert "artifacts/proofs/task-006-replay-validation-check.json" in names
@@ -319,6 +335,8 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/proofs/task-006-replay-deepening-summary.md" in names
     assert "artifacts/proofs/task-006-replay-analysis-check.json" in names
     assert "artifacts/proofs/task-006-replay-analysis-summary.md" in names
+    assert "artifacts/proofs/task-006-replay-surface-fix-check.json" in names
+    assert "artifacts/proofs/task-006-replay-surface-fix-summary.md" in names
     assert "artifacts/context_pack.json" in names
     assert "artifacts/proof_bundle_manifest.json" in names
     assert "tests/__pycache__/" not in names

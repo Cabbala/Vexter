@@ -1,0 +1,33 @@
+{
+  "exported_at_utc": "2026-03-25T17:58:46.647854Z",
+  "mint_id": "HTjjZpw2jpoMfHe3fDx3CJMqBAib42JRrWsGumhTpump",
+  "payload": {
+    "kind": "stagnant_mint",
+    "row": {
+      "bonding_curve": "FaGEMf4o4m9QXVzWnzgXowhqvHM9Abn7efCwCxB91U1Z",
+      "final_market_cap": 2571.708002489334,
+      "final_ohlc": "{\"open\": 3.181112146629385e-08, \"high\": \"3.729135198218202E-8\", \"low\": 2.7958993481826655e-08, \"close\": \"2.8014248393129998682009033808375242369237412276561371982097625732421875E-8\"}",
+      "holders": "{\"CXoUJHtBGnuNR6zJ3zm8nTnNzCwXxFViXh29d1kTJQmK\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 0.0, \"amount\": 67062499.999999, \"type\": \"buy\", \"timestamp\": 1774461485}, {\"price_was\": 3.729135198218202e-08, \"amount\": 33531249.999999, \"type\": \"sell\", \"timestamp\": 1774461487}, {\"price_was\": 2.9791893157923217e-08, \"amount\": 33531250.0, \"type\": \"sell\", \"timestamp\": 1774461489}]}, \"BERUnzY7bGqxQstdrQPXBxYwK3tcMWJDF2NxhjbzivcZ\": {\"balance\": 3.725290298461914e-09, \"balance_changes\": [{\"price_was\": 3.181112146629385e-08, \"amount\": 46774021.421478, \"type\": \"buy\", \"timestamp\": 1774461485}, {\"price_was\": 3.473863233604486e-08, \"amount\": 23387010.710738, \"type\": \"sell\", \"timestamp\": 1774461488}, {\"price_was\": 3.205057253680816e-08, \"amount\": 18418410.004742, \"type\": \"sell\", \"timestamp\": 1774461489}, {\"price_was\": 3.007875535565223e-08, \"amount\": 4968600.705998, \"type\": \"sell\", \"timestamp\": 1774461489}]}, \"5qWVBpuvN51TWgeegrTLsDCo7e5M7pHwaZg7mKNU49Lm\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 3.498933662042318e-08, \"amount\": 13908983.089293, \"type\": \"buy\", \"timestamp\": 1774461485}, {\"price_was\": 3.090419011688137e-08, \"amount\": 13908983.089293, \"type\": \"sell\", \"timestamp\": 1774461489}]}, \"7qvLrGK7iL3LZLgv8EVKgNr3QSahgivkQ6QkCMNh9pWA\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 3.602661626843118e-08, \"amount\": 16167408.661312, \"type\": \"buy\", \"timestamp\": 1774461485}, {\"price_was\": 3.3110248184247424e-08, \"amount\": 16167408.661312, \"type\": \"sell\", \"timestamp\": 1774461488}]}, \"ETnjr2uM2196RvTPU8gyBEKsHSdpnftwNWAXuUr9XdjL\": {\"balance\": 1058707.391049, \"balance_changes\": [{\"price_was\": 2.7958993481826655e-08, \"amount\": 1058707.391049, \"type\": \"buy\", \"timestamp\": 1774461496}]}}",
+      "mint_id": "HTjjZpw2jpoMfHe3fDx3CJMqBAib42JRrWsGumhTpump",
+      "mint_sig": "5WFt8VuBbGuTReyuoyDUsnZzhuTqNn6w3tpng1gYv7PDY2V3tHMhALED7qJZn7gz5Kok6bUZg5ZNWwd4hMrMQrap",
+      "name": "Project Marionette",
+      "owner": "CXoUJHtBGnuNR6zJ3zm8nTnNzCwXxFViXh29d1kTJQmK",
+      "peak_market_cap": 3423.3461119643093,
+      "peak_price_change": 17.22740432680082,
+      "price_history": "{\"1774461485.001\": 3.181112146629385e-08, \"1774461485.002\": 3.498933662042318e-08, \"1774461485.003\": 3.602661626843118e-08, \"1774461485.004\": 3.729135198218202e-08, \"1774461487.000\": 3.473863233604486e-08, \"1774461488.000\": 3.3110248184247424e-08, \"1774461488.001\": 3.205057253680816e-08, \"1774461489.000\": 3.090419011688137e-08, \"1774461489.001\": 3.007875535565223e-08, \"1774461489.002\": 2.9791893157923217e-08, \"1774461489.003\": 2.7958993481826655e-08, \"1774461496.000\": 2.801424839313e-08}",
+      "slot_delay": "0.614905834197998",
+      "symbol": "Marionette",
+      "tx_counts": "{\"swaps\": 12, \"buys\": 5, \"sells\": 7}",
+      "volume": "{\"30sec\": {\"swaps\": 12, \"buys\": 5, \"sells\": 7}, \"1min\": {}, \"2min\": {}, \"5min\": {}}"
+    }
+  },
+  "runtime_layout": {
+    "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+    "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+    "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+    "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+    "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+    "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+    "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+  }
+}

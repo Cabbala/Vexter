@@ -2,7 +2,7 @@
 
 ## Verified Start
 
-- Vexter `origin/main` verified at PR `#22` merge commit `3db6d3e73c4a6d990e0fdf8fba33b31a3a436c5b`
+- Vexter `origin/main` verified at PR `#23` merge commit `eaa5acc2f189d5bea5c55f9de059d8e6a8d36091`
 - Dexter `main` verified at PR `#3` commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`
 - Frozen Mew-X verified at `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`
 
@@ -11,20 +11,20 @@
 - Promoted replay input accepted: `yes`
 - Confirmatory residual overturning: `no`
 - Confirmatory residual note: `Mew-X candidate_rejected`
+- Dexter augmented close-summary exports: `4`
 - Dexter replay package validation: `pass`
-- Dexter replay coverage: `75.00%`
-- Dexter `live_vs_replay_gap_pct`: `17.6205`
-- Dexter uncovered live session: `6aHTh9r311kVEGTcQ3WTGoJofuqYiX6VeWoF6VwEThAb-1774461707938`
-- Dexter outlier gap session: `AdCvMqzaCbEdoVk4LyVgzgU4XSUEL6QqQ453de8ZxsRa-1774461707938`
+- Dexter replay coverage: `100.00%`
+- Dexter `live_vs_replay_gap_pct`: `0.0000`
+- Dexter unmatched live sessions: `[]`
 - Mew-X replay package validation: `pass`
 - Mew-X replay coverage: `100.00%`
 - Mew-X `live_vs_replay_gap_pct`: `0.0000`
-- Replay comparison pack winner mode: `derived`
+- Promoted comparison pack winner mode: `derived`
 
 ## Decision
 
-- TASK-006: `needs replay-surface fix`
-- Key finding: `replay_surface_gap_found`
-- Next step: `task_006_replay_surface_fix`
+- TASK-006: `ready_for_downstream_comparative_analysis`
+- Key finding: `surface_fix_applied`
+- Next step: `task_006_downstream_comparative_analysis`
 
-The promoted comparable pack is no longer just replay-input-ready: the measured Dexter gap is now explained. One promoted Dexter close has no replay export because the frozen source never moved that mint into the stagnant replay surface before shutdown, and the `AdCv...` outlier diverges because replay reconstruction exits at the later stagnant terminal price instead of the live `safe` exit. Mew-X replay summaries still match the promoted live closes exactly, but that result should be interpreted as summary fidelity rather than full-path replay equivalence.
+The promoted Dexter replay blocker is now resolved on the repaired replay surface. Vexter augments the promoted Dexter package with source-faithful close-summary replay exports for non-stagnant closes, leaving stagnant-mint exports intact; that closes the missing `6aH...` session hole and eliminates the prior `AdCv...` safe-exit mismatch on the promoted baseline.

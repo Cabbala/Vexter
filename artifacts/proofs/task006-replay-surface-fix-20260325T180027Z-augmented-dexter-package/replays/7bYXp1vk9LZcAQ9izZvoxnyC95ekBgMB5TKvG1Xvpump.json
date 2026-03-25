@@ -1,0 +1,33 @@
+{
+  "exported_at_utc": "2026-03-25T18:04:09.974451Z",
+  "mint_id": "7bYXp1vk9LZcAQ9izZvoxnyC95ekBgMB5TKvG1Xvpump",
+  "payload": {
+    "kind": "stagnant_mint",
+    "row": {
+      "bonding_curve": "An2mfNmnX5BqaHiVMG2c9fY8e4WK5H2qEzktdPAqVD5U",
+      "final_market_cap": 2635.563163863134,
+      "final_ohlc": "{\"open\": 2.8569797550417357e-08, \"high\": \"3.4819314738892664E-8\", \"low\": 2.8569797550417357e-08, \"close\": \"2.87411468251159624267814115226860050000823321170173585414886474609375E-8\"}",
+      "holders": "{\"6wWgJ4xhZWBhGWKm36MmPDd2GdJp2Wg7og4wvL6AcnMf\": {\"balance\": 11531997.978509, \"balance_changes\": [{\"price_was\": 0.0, \"amount\": 11531997.978509, \"type\": \"buy\", \"timestamp\": 1774461788}]}, \"ETnjr2uM2196RvTPU8gyBEKsHSdpnftwNWAXuUr9XdjL\": {\"balance\": 1036083.888496, \"balance_changes\": [{\"price_was\": 2.8569797550417357e-08, \"amount\": 1036083.888496, \"type\": \"buy\", \"timestamp\": 1774461790}]}, \"621iQYxhT2ojcM8M4wRooE61nVAjAfZXsjF3DgNHkwaC\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 2.8625652465689863e-08, \"amount\": 21395899.826406, \"type\": \"buy\", \"timestamp\": 1774461796}, {\"price_was\": 3.4819314738892664e-08, \"amount\": 21395899.826406, \"type\": \"sell\", \"timestamp\": 1774461796}]}, \"8t9RdMzBENynfUqZerUrHcsvBdqQiFkGTPiJPsctCyRY\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 2.9816713430677746e-08, \"amount\": 20528735.119348, \"type\": \"buy\", \"timestamp\": 1774461796}, {\"price_was\": 2.9767006460440625e-08, \"amount\": 20528735.119348, \"type\": \"sell\", \"timestamp\": 1774461796}]}, \"DEN1jQa65ZMQfaBSep5BMFgwuJBFeQQHTtvC7o1amkgW\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 3.103078047031478e-08, \"amount\": 20593041.721844, \"type\": \"buy\", \"timestamp\": 1774461796}, {\"price_was\": 3.331990830195124e-08, \"amount\": 20593041.721844, \"type\": \"sell\", \"timestamp\": 1774461796}]}, \"B23dGsdhReCpSbeA9f1KriEufnCR8nkjKTuShDS8uzKi\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 3.232470242596346e-08, \"amount\": 15914016.746724, \"type\": \"buy\", \"timestamp\": 1774461796}, {\"price_was\": 3.06994258363136e-08, \"amount\": 15914016.746724, \"type\": \"sell\", \"timestamp\": 1774461796}]}, \"GK1AkmJV8fTXx3KHwBKVfc4sofqssUhrFDfF488EusTY\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 3.33808816035566e-08, \"amount\": 20497811.674208, \"type\": \"buy\", \"timestamp\": 1774461796}, {\"price_was\": 3.196639828652977e-08, \"amount\": 20497811.674208, \"type\": \"sell\", \"timestamp\": 1774461796}]}, \"ADmu3aiYg5pEPcRV5bMMGjbEkiJKLjVHpXWAbR8SyeXN\": {\"balance\": 1722319.106831, \"balance_changes\": [{\"price_was\": 2.8625652472290946e-08, \"amount\": 1722319.106831, \"type\": \"buy\", \"timestamp\": 1774461804}]}, \"E5JfGKZ1TkgVVdwtgv7Ypf11UzT8iNvTttmfDwtE4S1u\": {\"balance\": 410462.562347, \"balance_changes\": [{\"price_was\": 2.8718865212866176e-08, \"amount\": 410462.562347, \"type\": \"buy\", \"timestamp\": 1774461818}]}}",
+      "mint_id": "7bYXp1vk9LZcAQ9izZvoxnyC95ekBgMB5TKvG1Xvpump",
+      "mint_sig": "2CusHQKcX1Bt8CvUy461KKevkM3nK1412mHdxjYGPh6aQTnG8fRQBJ3MQuFLsb8s2V19SZH1wvoXJY6yPxmiWfs7",
+      "name": "Speck Of Existence ",
+      "owner": "6wWgJ4xhZWBhGWKm36MmPDd2GdJp2Wg7og4wvL6AcnMf",
+      "peak_market_cap": 3192.9311615564575,
+      "peak_price_change": 21.87455888494391,
+      "price_history": "{\"1774461788.001\": 2.8569797550417357e-08, \"1774461790.000\": 2.8625652465689863e-08, \"1774461796.000\": 2.9816713430677746e-08, \"1774461796.001\": 3.103078047031478e-08, \"1774461796.002\": 3.232470242596346e-08, \"1774461796.003\": 3.33808816035566e-08, \"1774461796.004\": 3.4819314738892664e-08, \"1774461796.005\": 3.331990830195124e-08, \"1774461796.006\": 3.196639828652977e-08, \"1774461796.007\": 3.06994258363136e-08, \"1774461796.008\": 2.9767006460440625e-08, \"1774461796.009\": 2.8625652472290946e-08, \"1774461804.000\": 2.8718865212866176e-08, \"1774461818.000\": 2.8741146825115962e-08}",
+      "slot_delay": "0.8627822399139404",
+      "symbol": "$SPECK",
+      "tx_counts": "{\"swaps\": 14, \"buys\": 9, \"sells\": 5}",
+      "volume": "{\"30sec\": {\"swaps\": 14, \"buys\": 9, \"sells\": 5}, \"1min\": {}, \"2min\": {}, \"5min\": {}}"
+    }
+  },
+  "runtime_layout": {
+    "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+    "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+    "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+    "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+    "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+    "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+    "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+  }
+}

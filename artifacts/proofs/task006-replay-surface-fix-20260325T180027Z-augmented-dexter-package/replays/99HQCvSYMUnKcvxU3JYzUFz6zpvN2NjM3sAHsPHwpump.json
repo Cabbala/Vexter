@@ -1,0 +1,33 @@
+{
+  "exported_at_utc": "2026-03-25T17:57:12.673390Z",
+  "mint_id": "99HQCvSYMUnKcvxU3JYzUFz6zpvN2NjM3sAHsPHwpump",
+  "payload": {
+    "kind": "stagnant_mint",
+    "row": {
+      "bonding_curve": "81kstbFnhFPhQWqSFicD2bb2QN4m75M79RBieNBRWXG7",
+      "final_market_cap": 2566.6356018883503,
+      "final_ohlc": "{\"open\": 3.58075307216741e-08, \"high\": \"5.727540130568927E-8\", \"low\": 2.7958993484622552e-08, \"close\": \"2.7958993484622552270042210764873502615301958940108306705951690673828125E-8\"}",
+      "holders": "{\"6BfmGsSq9Q56DSmH15Do5MiYgndFNLeYbrgNkMMYHmMG\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 0.0, \"amount\": 124858181.791634, \"type\": \"buy\", \"timestamp\": 1774461391}, {\"price_was\": 5.461131793357364e-08, \"amount\": 12485818.179163, \"type\": \"sell\", \"timestamp\": 1774461395}, {\"price_was\": 5.287745196062261e-08, \"amount\": 12485818.179163, \"type\": \"sell\", \"timestamp\": 1774461395}, {\"price_was\": 5.122486730035096e-08, \"amount\": 24971636.358327, \"type\": \"sell\", \"timestamp\": 1774461396}, {\"price_was\": 4.7133016881639545e-08, \"amount\": 74914909.074981, \"type\": \"sell\", \"timestamp\": 1774461397}]}, \"5oYs27exQdpwFu193jGcHERuzt56QSQoLkd9A48bSuPR\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 3.58075307216741e-08, \"amount\": 61877372.221001, \"type\": \"buy\", \"timestamp\": 1774461391}, {\"price_was\": 3.962360656284751e-08, \"amount\": 61877372.221001, \"type\": \"sell\", \"timestamp\": 1774461399}]}, \"8r7TrPXhFZMGBTBBjjEUF5u7skc4jckcvCdeCZ1E84VL\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 4.098211072264746e-08, \"amount\": 26791363.133324, \"type\": \"buy\", \"timestamp\": 1774461391}, {\"price_was\": 2.9409278824297224e-08, \"amount\": 26791363.133324, \"type\": \"sell\", \"timestamp\": 1774461399}]}, \"72PN9dogN9zmirA2QSYBaPqy6gUdp2tTPNcGD1e2BtXV\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 5.339128447533457e-08, \"amount\": 18067972.362266, \"type\": \"buy\", \"timestamp\": 1774461391}, {\"price_was\": 5.727540130568927e-08, \"amount\": 18067972.362266, \"type\": \"sell\", \"timestamp\": 1774461393}]}, \"GsmyZHdRuFHpYjKSkD8n2M1SssA8MxcZkt2S5Lv4yDsm\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 5.5965544081546244e-08, \"amount\": 41355178.280421, \"type\": \"buy\", \"timestamp\": 1774461391}, {\"price_was\": 3.469620827179037e-08, \"amount\": 41355178.280421, \"type\": \"sell\", \"timestamp\": 1774461399}]}, \"B9qpfTs4YS5LWoiUByX55oN1dWVmTN93zm3naubSQuUa\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 4.509213816105817e-08, \"amount\": 41646790.750689, \"type\": \"buy\", \"timestamp\": 1774461391}, {\"price_was\": 3.18983058652819e-08, \"amount\": 41646790.750689, \"type\": \"sell\", \"timestamp\": 1774461399}]}, \"9K1aeEDBXJGMLr5RPxetR13xxejAQpzDC3Dq5oZfuCxQ\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 4.988913988220864e-08, \"amount\": 8722290.254916, \"type\": \"buy\", \"timestamp\": 1774461391}, {\"price_was\": 4.8143912037147744e-08, \"amount\": 8722290.254916, \"type\": \"sell\", \"timestamp\": 1774461397}]}}",
+      "mint_id": "99HQCvSYMUnKcvxU3JYzUFz6zpvN2NjM3sAHsPHwpump",
+      "mint_sig": "sDmmF3vELxxaxEu5c29GN79d96TBACn3g7q3GDe1jJzbmmTUaACPGoTKZVjT7A3NbQd5BKeUazvUMVKwSsmfGSL",
+      "name": "Slopoly",
+      "owner": "6BfmGsSq9Q56DSmH15Do5MiYgndFNLeYbrgNkMMYHmMG",
+      "peak_market_cap": 5257.881839862275,
+      "peak_price_change": 59.9535074084871,
+      "price_history": "{\"1774461391.001\": 3.58075307216741e-08, \"1774461391.002\": 4.098211072264746e-08, \"1774461391.003\": 5.339128447533457e-08, \"1774461391.004\": 5.5965544081546244e-08, \"1774461391.005\": 4.509213816105817e-08, \"1774461391.006\": 4.988913988220864e-08, \"1774461391.007\": 5.727540130568927e-08, \"1774461393.000\": 5.461131793357364e-08, \"1774461395.000\": 5.287745196062261e-08, \"1774461395.001\": 5.122486730035096e-08, \"1774461396.000\": 4.8143912037147744e-08, \"1774461397.000\": 4.7133016881639545e-08, \"1774461397.001\": 3.962360656284751e-08, \"1774461399.000\": 3.469620827179037e-08, \"1774461399.001\": 3.18983058652819e-08, \"1774461399.002\": 2.9409278824297224e-08, \"1774461399.003\": 2.7958993484622552e-08}",
+      "slot_delay": "0.6369695663452148",
+      "symbol": "SLOPOLY",
+      "tx_counts": "{\"swaps\": 17, \"buys\": 7, \"sells\": 10}",
+      "volume": "{\"30sec\": {\"swaps\": 17, \"buys\": 7, \"sells\": 10}, \"1min\": {}, \"2min\": {}, \"5min\": {}}"
+    }
+  },
+  "runtime_layout": {
+    "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+    "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+    "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+    "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+    "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+    "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+    "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+  }
+}

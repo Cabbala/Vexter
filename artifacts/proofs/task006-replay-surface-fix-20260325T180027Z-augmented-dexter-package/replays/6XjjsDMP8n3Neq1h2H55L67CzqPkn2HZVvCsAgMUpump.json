@@ -1,0 +1,33 @@
+{
+  "exported_at_utc": "2026-03-25T18:03:30.398794Z",
+  "mint_id": "6XjjsDMP8n3Neq1h2H55L67CzqPkn2HZVvCsAgMUpump",
+  "payload": {
+    "kind": "stagnant_mint",
+    "row": {
+      "bonding_curve": "EMK9ScoYFcT24XxjDQVdLLBBBF2j2FXGSoUdSzZuCi6e",
+      "final_market_cap": 2563.841389632151,
+      "final_ohlc": "{\"open\": 2.7959011882575256e-08, \"high\": \"2.7959011882575256E-8\", \"low\": 2.7959011882575256e-08, \"close\": \"2.795901188257525634086288137021558686257094450411386787891387939453125E-8\"}",
+      "holders": "{\"9k7n6mMY7rrabkqS8uk9mRLCyM2MMtRXu6BkyxEaGBMs\": {\"balance\": 353.195717, \"balance_changes\": [{\"price_was\": 0.0, \"amount\": 353.195717, \"type\": \"buy\", \"timestamp\": 1774461778}]}}",
+      "mint_id": "6XjjsDMP8n3Neq1h2H55L67CzqPkn2HZVvCsAgMUpump",
+      "mint_sig": "5pggpyc84ya3nT3C6hewAMbXzXzL5edaks5tBu8CdLgVqSd2r77tQ2CzwggLeiLwBcHizAEUNcZLeXceVRnCrCcV",
+      "name": "Squishy Dumplings",
+      "owner": "9k7n6mMY7rrabkqS8uk9mRLCyM2MMtRXu6BkyxEaGBMs",
+      "peak_market_cap": 2563.8413896321513,
+      "peak_price_change": -1.2191521030922045e-15,
+      "price_history": "{\"1774461778.001\": 2.7959011882575256e-08}",
+      "slot_delay": "1.3400022983551025",
+      "symbol": "Dumplings",
+      "tx_counts": "{\"swaps\": 1, \"buys\": 1, \"sells\": 0}",
+      "volume": "{\"30sec\": {\"swaps\": 1, \"buys\": 1, \"sells\": 0}, \"1min\": {}, \"2min\": {}, \"5min\": {}}"
+    }
+  },
+  "runtime_layout": {
+    "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+    "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+    "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+    "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+    "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+    "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+    "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+  }
+}

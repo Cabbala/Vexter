@@ -1,0 +1,23 @@
+{
+  "ended_at_utc": "2026-03-25T18:05:11.148258Z",
+  "event_counts": {
+    "candidate_rejected": 1,
+    "entry_attempt": 6,
+    "entry_fill": 6,
+    "entry_signal": 6,
+    "exit_fill": 6,
+    "exit_signal": 6,
+    "mint_observed": 6,
+    "position_closed": 6,
+    "run_summary": 1,
+    "session_update": 6
+  },
+  "host_role": "windows_runtime",
+  "mode": "replay",
+  "run_id": "mewx-task005-pass-grade-pair-20260325T180027Z-replay",
+  "source_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+  "source_system": "mewx",
+  "started_at_utc": "2026-03-25T18:02:11.066878Z",
+  "status": "completed",
+  "transport_mode": "mixed"
+}

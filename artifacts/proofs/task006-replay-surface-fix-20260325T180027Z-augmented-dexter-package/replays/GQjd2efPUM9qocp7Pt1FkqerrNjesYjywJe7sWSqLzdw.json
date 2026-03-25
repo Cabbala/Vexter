@@ -1,0 +1,33 @@
+{
+  "exported_at_utc": "2026-03-25T18:03:34.520528Z",
+  "mint_id": "GQjd2efPUM9qocp7Pt1FkqerrNjesYjywJe7sWSqLzdw",
+  "payload": {
+    "kind": "stagnant_mint",
+    "row": {
+      "bonding_curve": "AqpwjkSnDZART1PSsFWHjeXPTNRNuzD9u4PmhjK1ARdU",
+      "final_market_cap": 2568.0265015369996,
+      "final_ohlc": "{\"open\": 3.383038210624416e-08, \"high\": \"3.38911597813872E-8\", \"low\": 2.8004651052748086e-08, \"close\": \"2.80046510527480863038090187593087687645265759783796966075897216796875E-8\"}",
+      "holders": "{\"BCuAu2fiJUX9UoREdobaecaAgcUGULm9X5a13r6ducwT\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 0.0, \"amount\": 97545454.545454, \"type\": \"buy\", \"timestamp\": 1774461762}, {\"price_was\": 3.38911597813872e-08, \"amount\": 97545454.545454, \"type\": \"sell\", \"timestamp\": 1774461783}]}, \"ETnjr2uM2196RvTPU8gyBEKsHSdpnftwNWAXuUr9XdjL\": {\"balance\": 875043.275938, \"balance_changes\": [{\"price_was\": 3.383038210624416e-08, \"amount\": 875043.275938, \"type\": \"buy\", \"timestamp\": 1774461766}]}}",
+      "mint_id": "GQjd2efPUM9qocp7Pt1FkqerrNjesYjywJe7sWSqLzdw",
+      "mint_sig": "266hmCjYGVwGMUprFrzkcPDF41W5PNWqCx7VDUdFDELwozoweYyYXWKx48XQoV9vT4ABF7cfxbN2WfTUgKwBosR5",
+      "name": "@Billy_Boman",
+      "owner": "BCuAu2fiJUX9UoREdobaecaAgcUGULm9X5a13r6ducwT",
+      "peak_market_cap": 3107.8193519532065,
+      "peak_price_change": 0.17965411963769615,
+      "price_history": "{\"1774461762.001\": 3.383038210624416e-08, \"1774461766.000\": 3.38911597813872e-08, \"1774461783.000\": 2.8004651052748086e-08}",
+      "slot_delay": "1.4745218753814697",
+      "symbol": "Boman",
+      "tx_counts": "{\"swaps\": 3, \"buys\": 2, \"sells\": 1}",
+      "volume": "{\"30sec\": {\"swaps\": 3, \"buys\": 2, \"sells\": 1}, \"1min\": {}, \"2min\": {}, \"5min\": {}}"
+    }
+  },
+  "runtime_layout": {
+    "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+    "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+    "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+    "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+    "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+    "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+    "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+  }
+}

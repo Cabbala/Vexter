@@ -1,0 +1,33 @@
+{
+  "exported_at_utc": "2026-03-25T17:57:30.351751Z",
+  "mint_id": "FmF8yMYw6yGcyGJyDJcQzYgKhs8RQnvr6jvAMXQJqWJz",
+  "payload": {
+    "kind": "stagnant_mint",
+    "row": {
+      "bonding_curve": "59hW4jVbKguMiCJc3isE4YaMYDjevkYq564ZqiN1dRWd",
+      "final_market_cap": 2566.6356013750233,
+      "final_ohlc": "{\"open\": 3.792118119415761e-08, \"high\": \"5.062959936123527E-8\", \"low\": 2.7958993479030755e-08, \"close\": \"2.79589934790307550809020900768608886011179492925293743610382080078125E-8\"}",
+      "holders": "{\"bwamJzztZsepfkteWRChggmXuiiCQvpLqPietdNfSXa\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 0.0, \"amount\": 151660777.334045, \"type\": \"buy\", \"timestamp\": 1774461393}, {\"price_was\": 3.792118119632836e-08, \"amount\": 151660777.334045, \"type\": \"sell\", \"timestamp\": 1774461420}]}, \"GSCSm1PRiSUewqR3fbDFN5f9Y6bHmsEgX1RezskiXiee\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 3.792118119415761e-08, \"amount\": 60814470.087692, \"type\": \"buy\", \"timestamp\": 1774461393}, {\"price_was\": 4.3470460662429196e-08, \"amount\": 60814470.087692, \"type\": \"sell\", \"timestamp\": 1774461418}]}, \"4JF17HfnBSS22o4QKtAfnAXZ7WDbRWyHJ3oLSewLTGyG\": {\"balance\": 0.0, \"balance_changes\": [{\"price_was\": 4.3470460661267113e-08, \"amount\": 63157779.970739, \"type\": \"buy\", \"timestamp\": 1774461396}, {\"price_was\": 5.062959936123527e-08, \"amount\": 63157779.970739, \"type\": \"sell\", \"timestamp\": 1774461418}]}}",
+      "mint_id": "FmF8yMYw6yGcyGJyDJcQzYgKhs8RQnvr6jvAMXQJqWJz",
+      "mint_sig": "3Fff6Zf6bRLjBbtXb8UPVDnrC2idEHvhTTLnVVA9naoUkSHvKm3uUizePNFYCEJ1zM8NHkB9nfZQYeLYVWretnRb",
+      "name": "NET DOLLAR",
+      "owner": "bwamJzztZsepfkteWRChggmXuiiCQvpLqPietdNfSXa",
+      "peak_market_cap": 4647.7972213613975,
+      "peak_price_change": 33.51271708022536,
+      "price_history": "{\"1774461393.001\": 3.792118119415761e-08, \"1774461393.002\": 4.3470460661267113e-08, \"1774461396.000\": 5.062959936123527e-08, \"1774461418.000\": 4.3470460662429196e-08, \"1774461418.001\": 3.792118119632836e-08, \"1774461420.000\": 2.7958993479030755e-08}",
+      "slot_delay": "1.3305344581604004",
+      "symbol": "NET",
+      "tx_counts": "{\"swaps\": 6, \"buys\": 3, \"sells\": 3}",
+      "volume": "{\"30sec\": {\"swaps\": 6, \"buys\": 3, \"sells\": 3}, \"1min\": {}, \"2min\": {}, \"5min\": {}}"
+    }
+  },
+  "runtime_layout": {
+    "config_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\config",
+    "db_exports_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\postgres\\dexter",
+    "export_dir": "C:\\Users\\bot\\quant\\Vexter\\runtime\\dexter\\export",
+    "logs_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\logs\\dexter",
+    "raw_events_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\raw\\dexter",
+    "replays_dir": "C:\\Users\\bot\\quant\\Vexter\\data\\replays\\dexter",
+    "runtime_root": "C:\\Users\\bot\\quant\\Vexter"
+  }
+}

@@ -1,8 +1,8 @@
 {
-  "bundle_path": "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-runtime.tar.gz",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_livepaper_observability_shift_handoff_watchdog_runtime_bundle.tar.gz",
-  "task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",
-  "status": "livepaper_observability_shift_handoff_watchdog_runtime_passed",
+  "bundle_path": "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_livepaper_observability_shift_handoff_watchdog_regression_pack_bundle.tar.gz",
+  "task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
+  "status": "livepaper_observability_shift_handoff_watchdog_regression_pack_passed",
   "summary": "artifacts/summary.md",
   "context_pack": "artifacts/context_pack.json",
   "task_ledger": "artifacts/task_ledger.jsonl",
@@ -67,7 +67,8 @@
     "scripts/comparison_analysis.py",
     "scripts/collect_comparison_package.ps1",
     "scripts/collect_matched_live_pair.py",
-    "scripts/run_transport_livepaper_observability_watchdog_regression_pack.sh"
+    "scripts/run_transport_livepaper_observability_watchdog_regression_pack.sh",
+    "scripts/run_livepaper_observability_shift_handoff_watchdog_regression_pack.sh"
   ],
   "proof_files": [
     "artifacts/proofs/task-007-livepaper-observability-shift-handoff-ci-check-check.json",
@@ -107,7 +108,9 @@
     "artifacts/proofs/task-007-transport-runtime-smoke-check.json",
     "artifacts/proofs/task-007-transport-runtime-smoke-summary.md",
     "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-regression-pack-check.json",
-    "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-regression-pack-summary.md"
+    "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-regression-pack-summary.md",
+    "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack-check.json",
+    "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack-summary.md"
   ],
   "reports": [
     "artifacts/reports/task-007-livepaper-observability-shift-handoff-ci-check-report.md",
@@ -166,18 +169,21 @@
     "artifacts/reports/task-007-transport-runtime-smoke",
     "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack-report.md",
     "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack-status.md",
-    "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack"
+    "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack",
+    "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack-report.md",
+    "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack-status.md",
+    "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack"
   ],
   "next_task": {
-    "id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
-    "state": "ready_for_livepaper_observability_shift_handoff_watchdog_regression_pack",
+    "id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
+    "state": "ready_for_livepaper_observability_shift_handoff_watchdog_ci_gate",
     "resume_requirements": [
       "Treat task005-pass-grade-pair-20260325T180027Z as the frozen promoted baseline.",
-      "Carry forward livepaper_observability_shift_handoff_watchdog_runtime_continuity_confirmed together with livepaper_observability_shift_handoff_watchdog_runtime_bounded as the current evidence conclusion.",
-      "Use docs/livepaper_observability_shift_handoff_template.md, docs/livepaper_observability_shift_handoff_drill.md, the runtime handoff watchdog handoff, docs/livepaper_observability_shift_checklist.md, docs/livepaper_observability_operator_runbook.md, and specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md as the operator-facing source of truth.",
+      "Carry forward livepaper_observability_shift_handoff_watchdog_regression_pack_durable together with livepaper_observability_shift_handoff_watchdog_regression_pack_bounded as the current evidence conclusion.",
+      "Use the fixed handoff contract, runbook, checklist, template, drill, baseline handoff watchdog proof, runtime handoff watchdog proof, and regression-pack handoff proof as the operator-facing source of truth.",
       "Preserve the current Dexter and Mew-X source pins together with fixed poll_first delivery and manual_latched_stop_all semantics.",
       "Do not reopen comparison work or change source logic in the next lane.",
-      "Package the same handoff watchdog faces across both the baseline handoff and the runtime-shaped follow-up handoff."
+      "Run the durable regression pack on every handoff-facing change."
     ]
   },
   "proofs": {
@@ -263,26 +269,32 @@
     "livepaper_observability_shift_handoff_watchdog_runtime_terminal_failure_visibility_guarded": true,
     "livepaper_observability_shift_handoff_watchdog_runtime_open_questions_guarded": true,
     "livepaper_observability_shift_handoff_watchdog_runtime_priority_checks_guarded": true,
-    "recommended_next_step_is_livepaper_observability_shift_handoff_watchdog_regression_pack": true
+    "recommended_next_step_is_livepaper_observability_shift_handoff_watchdog_regression_pack": true,
+    "livepaper_observability_shift_handoff_watchdog_regression_pack_added": true,
+    "livepaper_observability_shift_handoff_watchdog_regression_pack_workflow_enforced": true,
+    "livepaper_observability_shift_handoff_watchdog_regression_pack_proof_emitted": true,
+    "livepaper_observability_shift_handoff_watchdog_regression_pack_dual_handoffs_locked": true,
+    "livepaper_observability_shift_handoff_watchdog_regression_pack_terminal_failure_pointers_locked": true,
+    "recommended_next_step_is_livepaper_observability_shift_handoff_watchdog_ci_gate": true
   },
   "task_result": {
     "selected_outcome": "A",
-    "key_finding": "livepaper_observability_shift_handoff_watchdog_runtime_continuity_confirmed",
-    "claim_boundary": "livepaper_observability_shift_handoff_watchdog_runtime_bounded",
+    "key_finding": "livepaper_observability_shift_handoff_watchdog_regression_pack_durable",
+    "claim_boundary": "livepaper_observability_shift_handoff_watchdog_regression_pack_bounded",
     "comparison_source_of_truth_state": "comparison_closed_out",
-    "task_state": "livepaper_observability_shift_handoff_watchdog_runtime_passed",
-    "recommended_next_step": "livepaper_observability_shift_handoff_watchdog_regression_pack",
-    "recommended_next_task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
-    "decision": "livepaper_observability_shift_handoff_watchdog_regression_pack_ready",
+    "task_state": "livepaper_observability_shift_handoff_watchdog_regression_pack_passed",
+    "recommended_next_step": "livepaper_observability_shift_handoff_watchdog_ci_gate",
+    "recommended_next_task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
+    "decision": "livepaper_observability_shift_handoff_watchdog_ci_gate_ready",
     "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
     "default_execution_anchor": "dexter",
     "selective_option_source": "mewx",
-    "verified_latest_vexter_pr": 66,
-    "verified_latest_vexter_main_commit": "2cd19d8ddbd5ef4918b41536494e10d4f2a9c125",
+    "verified_latest_vexter_pr": 67,
+    "verified_latest_vexter_main_commit": "7ab737a306ceca06193044d384e6b17d371838e2",
     "verified_dexter_pr": 3,
     "verified_dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
-    "recommended_next_lane": "livepaper_observability_shift_handoff_watchdog_regression_pack"
+    "recommended_next_lane": "livepaper_observability_shift_handoff_watchdog_ci_gate"
   },
   "spec_documents": [
     "specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md"

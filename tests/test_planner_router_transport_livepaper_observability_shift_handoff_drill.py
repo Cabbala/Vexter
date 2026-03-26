@@ -123,16 +123,19 @@ def test_livepaper_observability_shift_handoff_drill_artifacts_are_wired_for_inc
     assert manifest["task_id"] in {
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
     }
     assert manifest["status"] == ledger["status"]
     assert manifest["status"] in {
         "livepaper_observability_shift_handoff_watchdog_passed",
         "livepaper_observability_shift_handoff_watchdog_runtime_passed",
+        "livepaper_observability_shift_handoff_watchdog_regression_pack_passed",
     }
     assert manifest["bundle_path"] == ledger["artifact_bundle"]
     assert manifest["bundle_path"] in {
         "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog.tar.gz",
         "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-runtime.tar.gz",
+        "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack.tar.gz",
     }
     assert (
         proof["task_result"]["key_finding"]
@@ -154,16 +157,18 @@ def test_livepaper_observability_shift_handoff_drill_artifacts_are_wired_for_inc
     assert manifest["next_task"]["id"] in {
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
     }
     assert manifest["next_task"]["state"] == context["next_task"]["state"] == ledger["next_task_state"]
     assert manifest["next_task"]["state"] in {
         "ready_for_livepaper_observability_shift_handoff_watchdog_runtime",
         "ready_for_livepaper_observability_shift_handoff_watchdog_regression_pack",
+        "ready_for_livepaper_observability_shift_handoff_watchdog_ci_gate",
     }
     assert "livepaper_observability_shift_handoff_ci_check" in summary_text
     assert "livepaper_observability_shift_handoff_drill_passed" in status_text
     assert "livepaper_observability_shift_handoff_ci_check" in report_text
-    assert "task-007-livepaper-observability-shift-handoff-watchdog-runtime.tar.gz" in bundle_script
+    assert "task-007-livepaper-observability-shift-handoff-watchdog-regression-pack.tar.gz" in bundle_script
 
 
 def test_livepaper_observability_shift_handoff_drill_doc_and_sample_handoff_capture_required_faces() -> None:

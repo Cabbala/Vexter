@@ -10,6 +10,10 @@ if str(REPO_ROOT) not in sys.path:
 def pytest_configure(config) -> None:
     config.addinivalue_line(
         "markers",
+        "livepaper_observability_shift_handoff_watchdog_regression_pack: live-paper shift handoff watchdog regression-pack suite for durable dual-handoff omission, drift, and partial-visibility coverage",
+    )
+    config.addinivalue_line(
+        "markers",
         "livepaper_observability_shift_handoff_watchdog_runtime: live-paper shift handoff watchdog suite for runtime-oriented follow-up continuity",
     )
     config.addinivalue_line(

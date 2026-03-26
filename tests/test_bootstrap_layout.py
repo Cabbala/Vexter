@@ -45,6 +45,7 @@ def test_required_paths_exist() -> None:
         "scripts/run_livepaper_observability_shift_handoff_ci_check.sh",
         "scripts/run_livepaper_observability_shift_handoff_watchdog.sh",
         "scripts/run_livepaper_observability_shift_handoff_watchdog_runtime.sh",
+        "scripts/run_livepaper_observability_shift_handoff_watchdog_regression_pack.sh",
         "scripts/run_transport_livepaper_observability_ci_gate.sh",
         "scripts/run_transport_livepaper_observability_watchdog.sh",
         "scripts/run_transport_livepaper_observability_watchdog_runtime.sh",
@@ -239,6 +240,12 @@ def test_required_paths_exist() -> None:
         "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack/DETAILS.md",
         "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack/MIN_PROMPT.txt",
         "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack/CONTEXT.json",
+        "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack-report.md",
+        "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack-status.md",
+        "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack/DETAILS.md",
+        "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack/MIN_PROMPT.txt",
+        "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack/CONTEXT.json",
+        "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack/HANDOFF.md",
         "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate-report.md",
         "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate-status.md",
         "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate/DETAILS.md",
@@ -332,6 +339,7 @@ def test_required_paths_exist() -> None:
         "artifacts/bundles/task-007-transport-livepaper-observability-watchdog-runtime.tar.gz",
         "artifacts/bundles/task-007-transport-livepaper-observability-watchdog-regression-pack.tar.gz",
         "artifacts/bundles/task-007-transport-livepaper-observability-watchdog-ci-gate.tar.gz",
+        "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack.tar.gz",
         "tests/test_planner_router_transport_livepaper_observability_smoke.py",
         "tests/test_planner_router_transport_livepaper_observability_runtime.py",
         "tests/test_planner_router_transport_livepaper_observability_hardening.py",
@@ -347,6 +355,7 @@ def test_required_paths_exist() -> None:
         "tests/test_planner_router_transport_livepaper_observability_shift_handoff_drill.py",
         "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog.py",
         "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog_runtime.py",
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog_regression_pack.py",
         "artifacts/examples/task-004-sample-comparison/pack_manifest.json",
         "artifacts/reports/task-007-livepaper-observability-spec-report.md",
         "artifacts/reports/task-007-livepaper-observability-spec-status.md",
@@ -390,6 +399,12 @@ def test_required_paths_exist() -> None:
         "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-runtime/MIN_PROMPT.txt",
         "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-runtime/CONTEXT.json",
         "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-runtime/HANDOFF.md",
+        "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack-report.md",
+        "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack-status.md",
+        "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack/DETAILS.md",
+        "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack/MIN_PROMPT.txt",
+        "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack/CONTEXT.json",
+        "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack/HANDOFF.md",
         "artifacts/proofs/task-007-livepaper-observability-spec-check.json",
         "artifacts/proofs/task-007-livepaper-observability-spec-summary.md",
         "artifacts/proofs/task-007-livepaper-observability-operator-runbook-check.json",
@@ -406,6 +421,8 @@ def test_required_paths_exist() -> None:
         "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-summary.md",
         "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-runtime-check.json",
         "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-runtime-summary.md",
+        "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack-check.json",
+        "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack-summary.md",
         "artifacts/bundles/task-007-livepaper-observability-spec.tar.gz",
         "artifacts/bundles/task-007-livepaper-observability-operator-runbook.tar.gz",
         "artifacts/bundles/task-007-livepaper-observability-shift-checklist.tar.gz",
@@ -489,6 +506,24 @@ def test_livepaper_observability_shift_handoff_watchdog_runtime_is_wired_into_va
     assert "-m \"$SUITE_MARKER\"" in script
     assert "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog_runtime.py" in script
     assert "livepaper_observability_shift_handoff_watchdog_runtime" in pytest_ini
+
+
+def test_livepaper_observability_shift_handoff_watchdog_regression_pack_is_wired_into_validation() -> None:
+    workflow = (REPO_ROOT / ".github" / "workflows" / "validate.yml").read_text()
+    script = (
+        REPO_ROOT / "scripts" / "run_livepaper_observability_shift_handoff_watchdog_regression_pack.sh"
+    ).read_text()
+    pytest_ini = (REPO_ROOT / "pytest.ini").read_text()
+
+    assert "./scripts/run_livepaper_observability_shift_handoff_watchdog_regression_pack.sh" in workflow
+    assert "livepaper-observability-shift-handoff-watchdog-regression-pack-proof" in workflow
+    assert "not livepaper_observability_shift_handoff_watchdog_regression_pack" in workflow
+    assert "-m \"$SUITE_MARKER\"" in script
+    assert (
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog_regression_pack.py"
+        in script
+    )
+    assert "livepaper_observability_shift_handoff_watchdog_regression_pack" in pytest_ini
 
 
 def test_transport_livepaper_observability_watchdog_is_wired_into_validation() -> None:
@@ -641,6 +676,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-CI-CHECK",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -699,6 +735,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "livepaper_observability_shift_handoff_ci_check_passed",
         "livepaper_observability_shift_handoff_watchdog_passed",
         "livepaper_observability_shift_handoff_watchdog_runtime_passed",
+        "livepaper_observability_shift_handoff_watchdog_regression_pack_passed",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -760,6 +797,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-007-livepaper-observability-shift-handoff-ci-check",
         "codex/task-007-livepaper-observability-shift-handoff-watchdog",
         "codex/task-007-livepaper-observability-shift-handoff-watchdog-runtime",
+        "codex/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -805,6 +843,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
     }
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -862,6 +901,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "ready_for_livepaper_observability_shift_handoff_watchdog",
         "ready_for_livepaper_observability_shift_handoff_watchdog_runtime",
         "ready_for_livepaper_observability_shift_handoff_watchdog_regression_pack",
+        "ready_for_livepaper_observability_shift_handoff_watchdog_ci_gate",
     }
 
 
@@ -926,6 +966,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "livepaper_observability_shift_handoff_ci_check_passed",
         "livepaper_observability_shift_handoff_watchdog_passed",
         "livepaper_observability_shift_handoff_watchdog_runtime_passed",
+        "livepaper_observability_shift_handoff_watchdog_regression_pack_passed",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -973,6 +1014,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
     }
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -1029,6 +1071,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "ready_for_livepaper_observability_shift_handoff_watchdog",
         "ready_for_livepaper_observability_shift_handoff_watchdog_runtime",
         "ready_for_livepaper_observability_shift_handoff_watchdog_regression_pack",
+        "ready_for_livepaper_observability_shift_handoff_watchdog_ci_gate",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]
@@ -1244,6 +1287,12 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-runtime/MIN_PROMPT.txt" in names
     assert "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-runtime/CONTEXT.json" in names
     assert "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-runtime/HANDOFF.md" in names
+    assert "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack-report.md" in names
+    assert "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack-status.md" in names
+    assert "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack/DETAILS.md" in names
+    assert "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack/MIN_PROMPT.txt" in names
+    assert "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack/CONTEXT.json" in names
+    assert "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack/HANDOFF.md" in names
     assert "artifacts/reports/task-007-transport-livepaper-observability-ci-gate/MIN_PROMPT.txt" in names
     assert "artifacts/reports/task-007-transport-livepaper-observability-ci-gate/CONTEXT.json" in names
     assert "artifacts/proofs/task-005-live-collection-check.json" in names
@@ -1327,6 +1376,8 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-summary.md" in names
     assert "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-runtime-check.json" in names
     assert "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-runtime-summary.md" in names
+    assert "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack-check.json" in names
+    assert "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack-summary.md" in names
     assert "tests/test_planner_router_transport_livepaper_observability_smoke.py" in names
     assert "tests/test_planner_router_transport_livepaper_observability_runtime.py" in names
     assert "tests/test_planner_router_transport_livepaper_observability_hardening.py" in names
@@ -1341,11 +1392,13 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "tests/test_planner_router_transport_livepaper_observability_shift_handoff_ci_check.py" in names
     assert "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog.py" in names
     assert "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog_runtime.py" in names
+    assert "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog_regression_pack.py" in names
     assert "tests/test_planner_router_transport_livepaper_smoke.py" in names
     assert "pytest.ini" in names
     assert "scripts/run_livepaper_observability_shift_handoff_ci_check.sh" in names
     assert "scripts/run_livepaper_observability_shift_handoff_watchdog.sh" in names
     assert "scripts/run_livepaper_observability_shift_handoff_watchdog_runtime.sh" in names
+    assert "scripts/run_livepaper_observability_shift_handoff_watchdog_regression_pack.sh" in names
     assert "scripts/run_transport_livepaper_observability_ci_gate.sh" in names
     assert "scripts/run_transport_livepaper_observability_watchdog.sh" in names
     assert "scripts/run_transport_livepaper_observability_watchdog_runtime.sh" in names

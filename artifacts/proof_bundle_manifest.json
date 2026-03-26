@@ -1,8 +1,8 @@
 {
-  "bundle_path": "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate.tar.gz",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_livepaper_observability_shift_handoff_watchdog_ci_gate_bundle.tar.gz",
-  "task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
-  "status": "livepaper_observability_shift_handoff_watchdog_ci_gate_passed",
+  "bundle_path": "artifacts/bundles/pattern-a-demo-executor-cutover.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_patternA_demo_executor_cutover_bundle.tar.gz",
+  "task_id": "PATTERN-A-DEMO-EXECUTOR-CUTOVER",
+  "status": "pattern_a_demo_executor_cutover_ready",
   "summary": "artifacts/summary.md",
   "context_pack": "artifacts/context_pack.json",
   "task_ledger": "artifacts/task_ledger.jsonl",
@@ -113,7 +113,9 @@
     "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack-check.json",
     "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack-summary.md",
     "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-check.json",
-    "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-summary.md"
+    "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-summary.md",
+    "artifacts/proofs/pattern-a-demo-executor-cutover-check.json",
+    "artifacts/proofs/pattern-a-demo-executor-cutover-summary.md"
   ],
   "reports": [
     "artifacts/reports/task-007-livepaper-observability-shift-handoff-ci-check-report.md",
@@ -178,17 +180,20 @@
     "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack",
     "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-report.md",
     "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-status.md",
-    "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate"
+    "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate",
+    "artifacts/reports/pattern-a-demo-executor-cutover-report.md",
+    "artifacts/reports/pattern-a-demo-executor-cutover-status.md",
+    "artifacts/reports/pattern-a-demo-executor-cutover"
   ],
   "next_task": {
-    "id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-ACCEPTANCE-PACK",
-    "state": "ready_for_transport_livepaper_observability_acceptance_pack",
+    "id": "DEMO-EXECUTOR-ADAPTER-IMPLEMENTATION",
+    "state": "ready_for_demo_executor_adapter_implementation",
     "resume_requirements": [
-      "Treat task005-pass-grade-pair-20260325T180027Z as the frozen promoted baseline.",
-      "Carry forward the livepaper_observability_shift_handoff_watchdog_ci_gate_enforced conclusion together with the bounded gate proof as the current evidence surface.",
-      "Use the fixed transport watchdog CI gate and handoff watchdog CI gate proofs as the operator-facing source of truth.",
-      "Preserve the current Dexter and Mew-X source pins together with fixed poll_first delivery and manual_latched_stop_all semantics.",
-      "Do not reopen comparison work or change source logic in the next lane."
+      "Keep Dexter pinned at ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938 and Mew-X frozen at dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a.",
+      "Treat the transport watchdog CI gate and shift-handoff watchdog CI gate as the current sufficient observability surface.",
+      "Implement Dexter-only demo execution first and keep Mew-X sim_live unchanged.",
+      "Preserve poll_first and manual_latched_stop_all semantics.",
+      "Do not reopen comparison work or change source logic."
     ]
   },
   "proofs": {
@@ -284,7 +289,10 @@
     "livepaper_observability_shift_handoff_watchdog_ci_gate_added": true,
     "livepaper_observability_shift_handoff_watchdog_ci_gate_workflow_enforced": true,
     "livepaper_observability_shift_handoff_watchdog_ci_gate_proof_emitted": true,
-    "livepaper_observability_shift_handoff_watchdog_ci_gate_suite_grouped": true
+    "livepaper_observability_shift_handoff_watchdog_ci_gate_suite_grouped": true,
+    "observability_stop_boundary_fixed": true,
+    "pattern_a_demo_boundary_fixed": true,
+    "pattern_a_guardrails_fixed": true
   },
   "task_result": {
     "selected_outcome": "A",

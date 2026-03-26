@@ -28,6 +28,7 @@ def test_required_paths_exist() -> None:
         "specs/FIXED_WORKFLOW.md",
         "specs/ANALYSIS_CONTRACT.md",
         "specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md",
+        "specs/PATTERN_A_DEMO_EXECUTOR_CUTOVER.md",
         "ops/CODEX_MEMORY.md",
         "plans/IMPLEMENTATION_PLAN.md",
         "plans/TASK_000_BOOTSTRAP.md",
@@ -36,6 +37,7 @@ def test_required_paths_exist() -> None:
         "plans/dexter_instrumentation_plan.md",
         "plans/mewx_instrumentation_plan.md",
         "plans/integration_readiness_plan.md",
+        "plans/demo_executor_adapter_implementation_plan.md",
         "manifests/reference_repos.json",
         "manifests/windows_runtime.json",
         "scripts/bootstrap_windows_workspace.sh",
@@ -95,6 +97,7 @@ def test_required_paths_exist() -> None:
         "tests/test_planner_router_executor_transport_spec_contract.py",
         "tests/test_planner_router_executor_transport_implementation.py",
         "tests/test_planner_router_transport.py",
+        "tests/test_pattern_a_demo_executor_cutover.py",
         "artifacts/context_pack.json",
         "artifacts/summary.md",
         "artifacts/proof_bundle_manifest.json",
@@ -253,6 +256,12 @@ def test_required_paths_exist() -> None:
         "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate/MIN_PROMPT.txt",
         "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate/CONTEXT.json",
         "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate/HANDOFF.md",
+        "artifacts/reports/pattern-a-demo-executor-cutover-report.md",
+        "artifacts/reports/pattern-a-demo-executor-cutover-status.md",
+        "artifacts/reports/pattern-a-demo-executor-cutover/DETAILS.md",
+        "artifacts/reports/pattern-a-demo-executor-cutover/MIN_PROMPT.txt",
+        "artifacts/reports/pattern-a-demo-executor-cutover/CONTEXT.json",
+        "artifacts/reports/pattern-a-demo-executor-cutover/HANDOFF.md",
         "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate-report.md",
         "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate-status.md",
         "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate/DETAILS.md",
@@ -331,6 +340,8 @@ def test_required_paths_exist() -> None:
         "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-ci-gate-summary.md",
         "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-check.json",
         "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-summary.md",
+        "artifacts/proofs/pattern-a-demo-executor-cutover-check.json",
+        "artifacts/proofs/pattern-a-demo-executor-cutover-summary.md",
         "artifacts/bundles/task-007-planner-router-code-implementation.tar.gz",
         "artifacts/bundles/task-007-planner-router-integration-smoke.tar.gz",
         "artifacts/bundles/task-007-monitor-killswitch-spec.tar.gz",
@@ -350,6 +361,7 @@ def test_required_paths_exist() -> None:
         "artifacts/bundles/task-007-transport-livepaper-observability-watchdog-ci-gate.tar.gz",
         "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack.tar.gz",
         "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate.tar.gz",
+        "artifacts/bundles/pattern-a-demo-executor-cutover.tar.gz",
         "tests/test_planner_router_transport_livepaper_observability_smoke.py",
         "tests/test_planner_router_transport_livepaper_observability_runtime.py",
         "tests/test_planner_router_transport_livepaper_observability_hardening.py",
@@ -713,6 +725,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
+        "PATTERN-A-DEMO-EXECUTOR-CUTOVER",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -774,6 +787,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "livepaper_observability_shift_handoff_watchdog_regression_pack_passed",
         "livepaper_observability_shift_handoff_watchdog_ci_gate_passed",
         "livepaper_observability_shift_handoff_watchdog_ci_gate_failed",
+        "pattern_a_demo_executor_cutover_ready",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -837,6 +851,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-007-livepaper-observability-shift-handoff-watchdog-runtime",
         "codex/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack",
         "codex/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate",
+        "codex/pattern-a-demo-executor-cutover",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -884,6 +899,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
+        "DEMO-EXECUTOR-ADAPTER-IMPLEMENTATION",
     }
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -943,6 +959,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "ready_for_livepaper_observability_shift_handoff_watchdog_runtime",
         "ready_for_livepaper_observability_shift_handoff_watchdog_regression_pack",
         "ready_for_livepaper_observability_shift_handoff_watchdog_ci_gate",
+        "ready_for_demo_executor_adapter_implementation",
     }
 
 
@@ -1010,6 +1027,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "livepaper_observability_shift_handoff_watchdog_regression_pack_passed",
         "livepaper_observability_shift_handoff_watchdog_ci_gate_passed",
         "livepaper_observability_shift_handoff_watchdog_ci_gate_failed",
+        "pattern_a_demo_executor_cutover_ready",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -1059,6 +1077,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
+        "DEMO-EXECUTOR-ADAPTER-IMPLEMENTATION",
     }
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -1117,6 +1136,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "ready_for_livepaper_observability_shift_handoff_watchdog_runtime",
         "ready_for_livepaper_observability_shift_handoff_watchdog_regression_pack",
         "ready_for_livepaper_observability_shift_handoff_watchdog_ci_gate",
+        "ready_for_demo_executor_adapter_implementation",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]

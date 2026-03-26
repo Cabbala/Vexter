@@ -242,31 +242,40 @@ def test_livepaper_observability_shift_handoff_watchdog_manifest_and_context_poi
     report_text = REPORT_PATH.read_text()
     bundle_script = (REPO_ROOT / "scripts" / "build_proof_bundle.sh").read_text()
 
+    current_task_id = manifest["task_id"]
+
     assert manifest["task_id"] == context["current_task"]["id"] == ledger["task_id"]
-    assert manifest["task_id"] in {
-        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG",
-        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",
-        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
-        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
-    }
     assert manifest["status"] == ledger["status"]
-    assert manifest["status"] in {
-        "livepaper_observability_shift_handoff_watchdog_passed",
-        "livepaper_observability_shift_handoff_watchdog_runtime_passed",
-        "livepaper_observability_shift_handoff_watchdog_regression_pack_passed",
-        "livepaper_observability_shift_handoff_watchdog_ci_gate_passed",
-        "livepaper_observability_shift_handoff_watchdog_ci_gate_failed",
-    }
     assert (
         manifest["bundle_path"]
         == ledger["artifact_bundle"]
     )
-    assert manifest["bundle_path"] in {
-        "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog.tar.gz",
-        "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-runtime.tar.gz",
-        "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack.tar.gz",
-        "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate.tar.gz",
-    }
+    if current_task_id == "PATTERN-A-DEMO-EXECUTOR-CUTOVER":
+        assert manifest["status"] == "pattern_a_demo_executor_cutover_ready"
+        assert (
+            manifest["bundle_path"]
+            == "artifacts/bundles/pattern-a-demo-executor-cutover.tar.gz"
+        )
+    else:
+        assert current_task_id in {
+            "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG",
+            "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",
+            "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
+            "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
+        }
+        assert manifest["status"] in {
+            "livepaper_observability_shift_handoff_watchdog_passed",
+            "livepaper_observability_shift_handoff_watchdog_runtime_passed",
+            "livepaper_observability_shift_handoff_watchdog_regression_pack_passed",
+            "livepaper_observability_shift_handoff_watchdog_ci_gate_passed",
+            "livepaper_observability_shift_handoff_watchdog_ci_gate_failed",
+        }
+        assert manifest["bundle_path"] in {
+            "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog.tar.gz",
+            "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-runtime.tar.gz",
+            "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack.tar.gz",
+            "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate.tar.gz",
+        }
     assert "scripts/run_livepaper_observability_shift_handoff_watchdog.sh" in manifest["scripts"]
     assert (
         "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-report.md"
@@ -295,7 +304,10 @@ def test_livepaper_observability_shift_handoff_watchdog_manifest_and_context_poi
     assert "livepaper_observability_shift_handoff_watchdog_runtime" in summary_text
     assert "livepaper_observability_shift_handoff_watchdog_passed" in status_text
     assert "livepaper_observability_shift_handoff_watchdog_runtime" in report_text
-    assert "task-007-livepaper-observability-shift-handoff-watchdog-ci-gate.tar.gz" in bundle_script
+    if current_task_id == "PATTERN-A-DEMO-EXECUTOR-CUTOVER":
+        assert "pattern-a-demo-executor-cutover.tar.gz" in bundle_script
+    else:
+        assert "task-007-livepaper-observability-shift-handoff-watchdog-ci-gate.tar.gz" in bundle_script
 
 
 def test_livepaper_observability_shift_handoff_watchdog_script_targets_current_suite() -> None:

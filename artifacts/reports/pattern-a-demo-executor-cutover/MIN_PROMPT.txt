@@ -1,0 +1,5 @@
+GitHub最新状態を確認し、Vexter main / Dexter PR #3 merged main / frozen Mew-X を前提に、Pattern A の demo executor adapter 実装へ進んでください。
+observability / handoff / watchdog は十分条件として固定し、Dexter `paper_live` を first demo target、Mew-X `sim_live` を simulated のまま維持してください。
+planner 側の public boundary は `prepare / start / status / stop / snapshot` のまま、adapter 内部で demo order submit / cancel / status / fill / stop-all を担ってください。
+最初の acceptance slice は Dexter-only・1 handle・1 open position max・small lot・allowlist・operator-supervised window です。
+source logic 変更や新証拠収集は行わず、tests・artifacts・handoff bundle を更新してください。

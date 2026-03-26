@@ -1,0 +1,11 @@
+{
+  "task_id": "PATTERN-A-DEMO-EXECUTOR-CUTOVER",
+  "task_state": "pattern_a_demo_executor_cutover_ready",
+  "recommended_next_step": "demo_executor_adapter_implementation",
+  "recommended_next_task_id": "DEMO-EXECUTOR-ADAPTER-IMPLEMENTATION",
+  "first_demo_target": "dexter_paper_live",
+  "source_faithful_seam": {
+    "dexter": "paper_live",
+    "mewx": "sim_live"
+  }
+}

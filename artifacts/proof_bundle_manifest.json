@@ -1,8 +1,8 @@
 {
-  "bundle_path": "artifacts/bundles/task-007-monitor-killswitch-spec.tar.gz",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_monitor_killswitch_spec_bundle.tar.gz",
-  "task_id": "TASK-007-MONITOR-KILLSWITCH-SPEC",
-  "status": "monitor_killswitch_spec_ready",
+  "bundle_path": "artifacts/bundles/task-007-planner-router-livepaper-smoke.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_planner_router_livepaper_smoke_bundle.tar.gz",
+  "task_id": "TASK-007-PLANNER-ROUTER-LIVEPAPER-SMOKE",
+  "status": "planner_router_livepaper_smoke_passed",
   "summary": "artifacts/summary.md",
   "context_pack": "artifacts/context_pack.json",
   "task_ledger": "artifacts/task_ledger.jsonl",
@@ -57,6 +57,8 @@
     "scripts/collect_matched_live_pair.py"
   ],
   "proof_files": [
+    "artifacts/proofs/task-007-planner-router-livepaper-smoke-check.json",
+    "artifacts/proofs/task-007-planner-router-livepaper-smoke-summary.md",
     "artifacts/proofs/task-007-monitor-killswitch-spec-check.json",
     "artifacts/proofs/task-007-monitor-killswitch-spec-summary.md",
     "artifacts/proofs/task-007-planner-router-runtime-smoke-check.json",
@@ -73,6 +75,9 @@
     "artifacts/proofs/task-007-planner-router-interface-spec-summary.md"
   ],
   "reports": [
+    "artifacts/reports/task-007-planner-router-livepaper-smoke-report.md",
+    "artifacts/reports/task-007-planner-router-livepaper-smoke-status.md",
+    "artifacts/reports/task-007-planner-router-livepaper-smoke",
     "artifacts/reports/task-007-monitor-killswitch-spec-report.md",
     "artifacts/reports/task-007-monitor-killswitch-spec-status.md",
     "artifacts/reports/task-007-monitor-killswitch-spec",
@@ -93,13 +98,13 @@
     "artifacts/reports/task-007-concrete-planner-router-implementation-spec"
   ],
   "next_task": {
-    "id": "TASK-007-PLANNER-ROUTER-LIVEPAPER-SMOKE",
-    "state": "ready_for_planner_router_livepaper_smoke",
+    "id": "TASK-007-PLANNER-ROUTER-EXECUTOR-TRANSPORT-SPEC",
+    "state": "ready_for_planner_router_executor_transport_spec",
     "resume_requirements": [
       "Treat task005-pass-grade-pair-20260325T180027Z as the frozen promoted baseline.",
-      "Carry forward monitor_killswitch_contract_fixed together with monitor_killswitch_spec_bounded as the current evidence conclusion.",
+      "Carry forward planner_router_livepaper_smoke_passed together with livepaper_smoke_bounded as the current evidence conclusion.",
       "Preserve the current source pins for Dexter and Mew-X.",
-      "Apply the fixed quarantine, stop-all rollback, global-halt, and typed failure contract to live-paper execution without changing source logic.",
+      "Keep the fixed quarantine, stop-all rollback, global-halt, and typed failure contract intact while specifying transport boundaries.",
       "Do not reopen comparison or finalize numeric timeout, heartbeat, retry, or cap values."
     ]
   },
@@ -109,34 +114,32 @@
     "mewx_strategy_changed": false,
     "validator_rules_changed": false,
     "comparison_source_of_truth_frozen": true,
-    "planner_router_runtime_smoke_inherited": true,
-    "monitor_profile_classes_fixed": true,
-    "admission_gate_contract_fixed": true,
-    "timeout_envelope_classes_fixed": true,
-    "quarantine_scope_fixed": true,
-    "global_halt_participation_fixed": true,
-    "typed_failure_escalation_fixed": true,
-    "runtime_invalid_transition_smoked": true,
+    "monitor_killswitch_spec_inherited": true,
+    "livepaper_admission_gate_verified": true,
+    "livepaper_immutable_handoff_verified": true,
+    "livepaper_runtime_progression_verified": true,
+    "livepaper_quarantine_signal_verified": true,
+    "livepaper_manual_stop_all_verified": true,
     "numeric_thresholds_deferred": true,
-    "recommended_next_step_is_livepaper_smoke": true
+    "recommended_next_step_is_executor_transport_spec": true
   },
   "task_result": {
     "selected_outcome": "A",
-    "key_finding": "monitor_killswitch_contract_fixed",
-    "claim_boundary": "monitor_killswitch_spec_bounded",
+    "key_finding": "planner_router_livepaper_smoke_passed",
+    "claim_boundary": "livepaper_smoke_bounded",
     "comparison_source_of_truth_state": "comparison_closed_out",
-    "task_state": "monitor_killswitch_spec_ready",
-    "recommended_next_step": "planner_router_livepaper_smoke",
-    "recommended_next_task_id": "TASK-007-PLANNER-ROUTER-LIVEPAPER-SMOKE",
-    "decision": "planner_router_livepaper_smoke_ready",
+    "task_state": "planner_router_livepaper_smoke_passed",
+    "recommended_next_step": "planner_router_executor_transport_spec",
+    "recommended_next_task_id": "TASK-007-PLANNER-ROUTER-EXECUTOR-TRANSPORT-SPEC",
+    "decision": "planner_router_executor_transport_spec_ready",
     "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
     "default_execution_anchor": "dexter",
     "selective_option_source": "mewx",
-    "verified_latest_vexter_pr": 40,
-    "verified_latest_vexter_main_commit": "a4e7a3c74460dc711c3e2897ac31386272e91c27",
+    "verified_latest_vexter_pr": 41,
+    "verified_latest_vexter_main_commit": "0b174515c9c0deb04b70fd38c2c2882736a22273",
     "verified_dexter_pr": 3,
     "verified_dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
-    "recommended_next_lane": "planner_router_livepaper_smoke"
+    "recommended_next_lane": "planner_router_executor_transport_spec"
   }
 }

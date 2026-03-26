@@ -1,0 +1,16 @@
+TASK-007 planner/router live-paper smoke は完了です。現在の結論は `planner_router_livepaper_smoke_passed` / `livepaper_smoke_bounded` です。
+
+- 最新 GitHub visible Vexter `main` は PR `#41` merge commit `0b174515c9c0deb04b70fd38c2c2882736a22273` として再確認した
+- Dexter は PR `#3` merge commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938` のまま固定し、Mew-X も frozen commit `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a` のまま維持した
+- planner/router の source logic は変えず、`tests/test_planner_router_livepaper_smoke.py` で `plan_request()` と `plan_and_dispatch()` を source-faithful な paper/sim executor seams に通した
+- `plan_request()` 側では overlay batch が immutable なまま Dexter `paper_live` / Mew-X `sim_live` stub に渡せることと、active `manual_latched_stop_all` が admission gate で fail closed することを確認した
+- `plan_and_dispatch()` 側では store -> prepare -> start -> status の後、Mew-X `mewx_timeout_guard` に紐づく quarantine と reverse-order `manual_latched_stop_all` stop propagation を確認した
+- 新証拠収集、Dexter/Mew-X/validator logic 変更、numeric threshold finalization、cross-source handoff claim は行っていない
+- 検証は `./scripts/build_proof_bundle.sh` と `pytest -q` で `61 passed`
+
+次は `planner_router_executor_transport_spec` を優先してください。理由は、control plane と kill-switch contract は paper-like seam 上で bounded に通ったため、次の最大の未確定点は immutable plan を source-native session start/status/stop にどう運ぶかという transport contract だからです。再実行してはいけないもの:
+
+- promoted baseline の再選定
+- live / replay evidence の再収集
+- Dexter / Mew-X / validator source logic の改変
+- numeric timeout / heartbeat / retry / escalation threshold の確定

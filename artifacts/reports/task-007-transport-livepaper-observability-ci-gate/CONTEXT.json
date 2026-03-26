@@ -1,0 +1,15 @@
+{
+  "recommended_next_task": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-CI-GATE",
+  "visible_main_state": {
+    "latest_vexter_pr": 52,
+    "latest_vexter_main_commit": "64d0670c328f446d1caddda0e2d9c81534ef8787",
+    "dexter_main": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "mewx_frozen": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "current_state": {
+    "current_task": "transport_livepaper_observability_regression_pack_passed",
+    "recommended_next_step": "transport_livepaper_observability_ci_gate",
+    "default_execution_anchor": "Dexter",
+    "mewx_role": "containment-first selective option"
+  }
+}

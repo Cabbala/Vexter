@@ -1,0 +1,29 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+次タスクID: TASK-007-PLANNER-ROUTER-RUNTIME-SMOKE
+
+GitHub-visible Vexter `main` は PR `#38` main commit `b1ceac48af931db0571a25ea197b1e4e5df52543` まで確認済みで、comparison baseline は `task005-pass-grade-pair-20260325T180027Z` のまま固定です。Dexter は merged PR `#3` commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`、Mew-X は frozen commit `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a` を維持しています。promoted live / replay はどちらも `winner_mode: derived`、stable scored split は Dexter `6`, Mew-X `4`, tie `2`、Dexter / Mew-X の replay coverage / gap はどちらも `100.00% / 0.0000` を維持し、confirmatory residual は Mew-X `candidate_rejected` のみで promoted baseline を overturn しません。
+
+この task では、新証拠収集や source logic 変更は行わず、実装済み planner/router control plane の integration smoke を追加しました。結論は以下です。
+
+- Key finding: `planner_router_integration_smoke_passed`
+- Claim boundary: `integration_smoke_bounded`
+- Decision: `runtime_smoke_ready`
+
+fixed integration-smoke conclusion:
+
+- `tests/test_planner_router_integration_smoke.py` を追加し、public entrypoint の `plan_request()` と `plan_and_dispatch()` を直接 smoke した
+- 正常系では `plan_request()` が committed config から `mixed_default` の immutable Dexter batch を emit し、`plan_and_dispatch()` は explicit overlay で store -> prepare -> start -> status を最後まで通すことを確認した
+- fail-closed系では invalid objective、invalid profile contract、pin mismatch、missing cross-reference が partial batch を残さず reject されることを確認した
+- rollback系では partial prepare failure と partial start failure の両方で stop-all rollback が走ることを確認した
+- source-faithful executor seam は `PlanStore` / `ExecutorAdapter` / `ExecutorRegistry` / `StatusSink` のまま維持し、numeric monitor threshold と transport ownership は deferred のままにした
+- validation は `pytest -q` で `49 passed`
+
+次は `planner_router_runtime_smoke` を優先してください。理由は、control-plane の wiring は public entrypoint まで証明できたので、次の最短リスクは source-faithful adapter seam をまたいだ bounded runtime behavior にあるためです。`monitor_killswitch_spec` は immutable plan に monitor binding が通ることを確認した後でも遅くなく、`executor_boundary_spec` も abstract seam が十分保たれているため runtime smoke より先に切る必要はありません。再実行してはいけないもの:
+
+- promoted-baseline selection
+- 新 live / replay evidence collection
+- validator / source logic changes
+- numeric timeout / heartbeat / retry / cap value の先行確定
+- planner 層への transport / trust logic の持ち込み
+

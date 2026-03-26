@@ -1,0 +1,196 @@
+{
+  "task_id": "TASK-007-PLANNER-ROUTER-INTEGRATION-SMOKE",
+  "generated_at_utc": "2026-03-26T02:22:55Z",
+  "verified_github": {
+    "latest_vexter_pr": 38,
+    "latest_vexter_main_commit": "b1ceac48af931db0571a25ea197b1e4e5df52543",
+    "latest_vexter_merged_at_utc": "2026-03-26T02:10:03Z",
+    "supporting_vexter_prs": [
+      37,
+      36,
+      35,
+      34,
+      33,
+      32,
+      31,
+      30,
+      29,
+      28,
+      27,
+      26,
+      25,
+      24,
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "mewx_frozen_commit_date_utc": "2026-03-20T16:05:19Z"
+  },
+  "fixed_input_surface": {
+    "planner_router_code_implementation_report": "artifacts/reports/task-007-planner-router-code-implementation-report.md",
+    "planner_router_code_implementation_proof": "artifacts/proofs/task-007-planner-router-code-implementation-check.json",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "promoted_live_winner_mode": "derived",
+    "promoted_replay_winner_mode": "derived",
+    "live_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "replay_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "dexter_replay_coverage_ratio": 1.0,
+    "dexter_live_vs_replay_gap_pct": 0.0,
+    "mewx_replay_coverage_ratio": 1.0,
+    "mewx_live_vs_replay_gap_pct": 0.0,
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false
+  },
+  "smoke_execution": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "dexter_strategy_changed": false,
+    "mewx_strategy_changed": false,
+    "new_evidence_collection_required": false,
+    "smoke_test_files": [
+      "tests/test_planner_router_integration_smoke.py"
+    ],
+    "supporting_test_files": [
+      "tests/test_planner_router_config_loader.py",
+      "tests/test_planner_router_objective_resolver.py",
+      "tests/test_planner_router_plan_emitter.py",
+      "tests/test_planner_router_dispatch_state_machine.py"
+    ],
+    "pytest_command": "pytest -q",
+    "pytest_result": "49 passed"
+  },
+  "planner_router_integration_smoke": {
+    "plan_request_smoke": {
+      "request_id": "req-smoke-default",
+      "config_root": "config/planner_router",
+      "resolved_objective_profile_id": "mixed_default",
+      "selected_sleeves": [
+        "dexter_default"
+      ],
+      "selected_sources": [
+        "dexter"
+      ],
+      "budget_bindings": {
+        "dexter_default": "100%"
+      },
+      "immutable_plan_emitted": true,
+      "source_pin_embedded": true,
+      "plan_store_write_count": 1
+    },
+    "plan_and_dispatch_smoke": {
+      "request_id": "req-smoke-overlay",
+      "objective_profile_id": "dexter_with_mewx_overlay",
+      "overlay_enabled_for_smoke": true,
+      "selected_sources": [
+        "dexter",
+        "mewx"
+      ],
+      "budget_bindings": {
+        "dexter_default": "80%",
+        "mewx_containment": "20%"
+      },
+      "mewx_cap_reference": "mewx_overlay_minor_cap",
+      "status_sequence": [
+        "starting",
+        "running",
+        "starting",
+        "running"
+      ],
+      "event_sequence": [
+        "store",
+        "prepare:dexter",
+        "prepare:mewx",
+        "start:dexter",
+        "status:dexter",
+        "start:mewx",
+        "status:mewx"
+      ],
+      "dispatch_successful": true
+    },
+    "fail_closed_cases": {
+      "invalid_objective_id": {
+        "failure_code": "unknown_objective_profile",
+        "partial_batch_emitted": false
+      },
+      "invalid_profile_contract": {
+        "failure_code": "route_mode_invalid",
+        "partial_batch_emitted": false
+      },
+      "pin_mismatch": {
+        "failure_code": "pin_mismatch",
+        "partial_batch_emitted": false
+      },
+      "missing_cross_reference": {
+        "failure_code": "config_missing",
+        "partial_batch_emitted": false
+      }
+    },
+    "rollback_cases": {
+      "prepare_failure": {
+        "failure_code": "prepare_failed",
+        "stop_reason": "prepare_failed",
+        "stopped_plan_count": 1,
+        "reverse_order_stop_all": true
+      },
+      "start_failure": {
+        "failure_code": "start_failed",
+        "stop_reason": "start_failed",
+        "stopped_plan_count": 2,
+        "reverse_order_stop_all": true
+      }
+    }
+  },
+  "next_task_evaluation": {
+    "planner_router_runtime_smoke": {
+      "recommended": true,
+      "reasons": [
+        "Public-entrypoint integration smoke now proves the planner-side control plane is wired.",
+        "The next bounded unknown is runtime behavior at the source-faithful executor seam.",
+        "Runtime smoke advances the stack without reopening comparison or changing frozen source logic."
+      ]
+    },
+    "monitor_killswitch_spec": {
+      "recommended": false,
+      "reasons": [
+        "Monitor bindings already survive immutable plan emission and public-entrypoint orchestration.",
+        "The remaining monitor work is numeric and escalation-policy detail rather than a wiring blocker."
+      ]
+    },
+    "executor_boundary_spec": {
+      "recommended": false,
+      "reasons": [
+        "Abstract adapter seams and pinned method ownership remain intact after integration smoke.",
+        "A bounded runtime smoke is now more informative than another contract-only pass."
+      ]
+    }
+  },
+  "task_result": {
+    "selected_outcome": "A",
+    "key_finding": "planner_router_integration_smoke_passed",
+    "claim_boundary": "integration_smoke_bounded",
+    "comparison_source_of_truth_state": "comparison_closed_out",
+    "task_state": "planner_router_integration_smoke_passed",
+    "recommended_next_step": "planner_router_runtime_smoke",
+    "recommended_next_task_id": "TASK-007-PLANNER-ROUTER-RUNTIME-SMOKE",
+    "decision": "runtime_smoke_ready",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "default_execution_anchor": "dexter",
+    "selective_option_source": "mewx"
+  }
+}

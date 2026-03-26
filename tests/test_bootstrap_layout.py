@@ -144,6 +144,10 @@ def test_required_paths_exist() -> None:
         "artifacts/reports/task-007-planner-router-code-implementation-status.md",
         "artifacts/reports/task-007-planner-router-code-implementation/DETAILS.md",
         "artifacts/reports/task-007-planner-router-code-implementation/MIN_PROMPT.txt",
+        "artifacts/reports/task-007-planner-router-integration-smoke-report.md",
+        "artifacts/reports/task-007-planner-router-integration-smoke-status.md",
+        "artifacts/reports/task-007-planner-router-integration-smoke/DETAILS.md",
+        "artifacts/reports/task-007-planner-router-integration-smoke/MIN_PROMPT.txt",
         "artifacts/proofs/task-005-live-collection-check.json",
         "artifacts/proofs/task-005-pass-grade-pair-check.json",
         "artifacts/proofs/task-005-windows-runtime-recovery.json",
@@ -178,7 +182,10 @@ def test_required_paths_exist() -> None:
         "artifacts/proofs/task-007-concrete-planner-router-implementation-spec-summary.md",
         "artifacts/proofs/task-007-planner-router-code-implementation-check.json",
         "artifacts/proofs/task-007-planner-router-code-implementation-summary.md",
+        "artifacts/proofs/task-007-planner-router-integration-smoke-check.json",
+        "artifacts/proofs/task-007-planner-router-integration-smoke-summary.md",
         "artifacts/bundles/task-007-planner-router-code-implementation.tar.gz",
+        "artifacts/bundles/task-007-planner-router-integration-smoke.tar.gz",
         "artifacts/examples/task-004-sample-comparison/pack_manifest.json",
         ".github/workflows/validate.yml",
     ]
@@ -273,6 +280,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-CONCRETE-PLANNER-ROUTER-IMPLEMENTATION-SPEC",
         "TASK-007-CONCRETE-PLANNER-ROUTER-CODE-SPEC",
         "TASK-007-PLANNER-ROUTER-CODE-IMPLEMENTATION",
+        "TASK-007-PLANNER-ROUTER-INTEGRATION-SMOKE",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -306,6 +314,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "concrete_planner_router_spec_ready",
         "planner_router_code_spec_ready",
         "planner_router_code_implemented",
+        "planner_router_integration_smoke_passed",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -342,6 +351,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-007-concrete-planner-router-implementation-spec",
         "codex/task-007-concrete-planner-router-code-spec",
         "codex/task-007-planner-router-code-implementation",
+        "codex/task-007-planner-router-integration-smoke",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -361,6 +371,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "CONCRETE-PLANNER-ROUTER-CODE-SPEC",
         "TASK-007-PLANNER-ROUTER-CODE-IMPLEMENTATION",
         "TASK-007-PLANNER-ROUTER-INTEGRATION-SMOKE",
+        "TASK-007-PLANNER-ROUTER-RUNTIME-SMOKE",
     }
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -392,6 +403,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "ready_for_concrete_planner_router_code_spec",
         "ready_for_planner_router_code_implementation",
         "ready_for_planner_router_integration_smoke",
+        "ready_for_planner_router_runtime_smoke",
     }
 
 
@@ -431,6 +443,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "concrete_planner_router_spec_ready",
         "planner_router_code_spec_ready",
         "planner_router_code_implemented",
+        "planner_router_integration_smoke_passed",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -452,6 +465,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "CONCRETE-PLANNER-ROUTER-CODE-SPEC",
         "TASK-007-PLANNER-ROUTER-CODE-IMPLEMENTATION",
         "TASK-007-PLANNER-ROUTER-INTEGRATION-SMOKE",
+        "TASK-007-PLANNER-ROUTER-RUNTIME-SMOKE",
     }
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -482,6 +496,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "ready_for_concrete_planner_router_code_spec",
         "ready_for_planner_router_code_implementation",
         "ready_for_planner_router_integration_smoke",
+        "ready_for_planner_router_runtime_smoke",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]
@@ -574,6 +589,14 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/reports/task-007-concrete-planner-router-implementation-spec-status.md" in names
     assert "artifacts/reports/task-007-concrete-planner-router-implementation-spec/DETAILS.md" in names
     assert "artifacts/reports/task-007-concrete-planner-router-implementation-spec/MIN_PROMPT.txt" in names
+    assert "artifacts/reports/task-007-planner-router-code-implementation-report.md" in names
+    assert "artifacts/reports/task-007-planner-router-code-implementation-status.md" in names
+    assert "artifacts/reports/task-007-planner-router-code-implementation/DETAILS.md" in names
+    assert "artifacts/reports/task-007-planner-router-code-implementation/MIN_PROMPT.txt" in names
+    assert "artifacts/reports/task-007-planner-router-integration-smoke-report.md" in names
+    assert "artifacts/reports/task-007-planner-router-integration-smoke-status.md" in names
+    assert "artifacts/reports/task-007-planner-router-integration-smoke/DETAILS.md" in names
+    assert "artifacts/reports/task-007-planner-router-integration-smoke/MIN_PROMPT.txt" in names
     assert "artifacts/proofs/task-005-live-collection-check.json" in names
     assert "artifacts/proofs/task-005-windows-runtime-recovery.json" in names
     assert "artifacts/proofs/task-006-replay-validation-check.json" in names
@@ -607,6 +630,10 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/proofs/task-007-planner-router-interface-spec-summary.md" in names
     assert "artifacts/proofs/task-007-concrete-planner-router-implementation-spec-check.json" in names
     assert "artifacts/proofs/task-007-concrete-planner-router-implementation-spec-summary.md" in names
+    assert "artifacts/proofs/task-007-planner-router-code-implementation-check.json" in names
+    assert "artifacts/proofs/task-007-planner-router-code-implementation-summary.md" in names
+    assert "artifacts/proofs/task-007-planner-router-integration-smoke-check.json" in names
+    assert "artifacts/proofs/task-007-planner-router-integration-smoke-summary.md" in names
     assert "artifacts/context_pack.json" in names
     assert "artifacts/proof_bundle_manifest.json" in names
     assert "tests/__pycache__/" not in names

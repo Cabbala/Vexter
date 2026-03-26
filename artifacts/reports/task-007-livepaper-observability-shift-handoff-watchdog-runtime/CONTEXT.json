@@ -1,0 +1,16 @@
+{
+  "recommended_next_task": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
+  "visible_main_state": {
+    "latest_vexter_pr": 66,
+    "latest_vexter_main_commit": "2cd19d8ddbd5ef4918b41536494e10d4f2a9c125",
+    "dexter_main": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "mewx_frozen": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "current_state": {
+    "current_task": "livepaper_observability_shift_handoff_watchdog_runtime_passed",
+    "recommended_next_step": "livepaper_observability_shift_handoff_watchdog_regression_pack",
+    "broken_handoff_watchdog_surfaces_or_none": [
+      "none"
+    ]
+  }
+}

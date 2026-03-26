@@ -99,18 +99,22 @@ def test_livepaper_observability_shift_handoff_template_current_artifacts_are_co
     report_text = REPORT_PATH.read_text()
 
     assert proof["task_id"] == "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-TEMPLATE"
-    assert manifest["task_id"] == context["current_task"]["id"] == ledger["task_id"] == (
-        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG"
-    )
-    assert (
-        manifest["status"] == ledger["status"] == "livepaper_observability_shift_handoff_watchdog_passed"
-    )
+    assert manifest["task_id"] == context["current_task"]["id"] == ledger["task_id"]
+    assert manifest["task_id"] in {
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",
+    }
+    assert manifest["status"] == ledger["status"]
+    assert manifest["status"] in {
+        "livepaper_observability_shift_handoff_watchdog_passed",
+        "livepaper_observability_shift_handoff_watchdog_runtime_passed",
+    }
     assert proof["task_result"]["task_state"] == "livepaper_observability_shift_handoff_template_ready"
-    assert (
-        manifest["bundle_path"] == ledger["artifact_bundle"] == (
-            "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog.tar.gz"
-        )
-    )
+    assert manifest["bundle_path"] == ledger["artifact_bundle"]
+    assert manifest["bundle_path"] in {
+        "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog.tar.gz",
+        "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-runtime.tar.gz",
+    }
     assert (
         proof["task_result"]["key_finding"]
         == context["evidence"]["livepaper_observability_shift_handoff_template"]["key_finding"]
@@ -127,13 +131,16 @@ def test_livepaper_observability_shift_handoff_template_current_artifacts_are_co
         == prompt_context["current_state"]["recommended_next_step"]
         == "livepaper_observability_shift_handoff_drill"
     )
-    assert manifest["next_task"]["id"] == context["next_task"]["id"] == ledger["next_task_id"] == (
-        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME"
-    )
-    assert (
-        manifest["next_task"]["state"] == context["next_task"]["state"] == ledger["next_task_state"]
-        == "ready_for_livepaper_observability_shift_handoff_watchdog_runtime"
-    )
+    assert manifest["next_task"]["id"] == context["next_task"]["id"] == ledger["next_task_id"]
+    assert manifest["next_task"]["id"] in {
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
+    }
+    assert manifest["next_task"]["state"] == context["next_task"]["state"] == ledger["next_task_state"]
+    assert manifest["next_task"]["state"] in {
+        "ready_for_livepaper_observability_shift_handoff_watchdog_runtime",
+        "ready_for_livepaper_observability_shift_handoff_watchdog_regression_pack",
+    }
     assert (
         prompt_context["recommended_next_task"]
         == "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-DRILL"

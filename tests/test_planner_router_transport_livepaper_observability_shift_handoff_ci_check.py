@@ -262,18 +262,22 @@ def test_livepaper_observability_shift_handoff_ci_check_manifest_and_context_poi
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
     }
     assert manifest["status"] == ledger["status"]
     assert manifest["status"] in {
         "livepaper_observability_shift_handoff_watchdog_passed",
         "livepaper_observability_shift_handoff_watchdog_runtime_passed",
         "livepaper_observability_shift_handoff_watchdog_regression_pack_passed",
+        "livepaper_observability_shift_handoff_watchdog_ci_gate_passed",
+        "livepaper_observability_shift_handoff_watchdog_ci_gate_failed",
     }
     assert manifest["bundle_path"] == ledger["artifact_bundle"]
     assert manifest["bundle_path"] in {
         "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog.tar.gz",
         "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-runtime.tar.gz",
         "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack.tar.gz",
+        "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate.tar.gz",
     }
     assert "scripts/run_livepaper_observability_shift_handoff_ci_check.sh" in manifest["scripts"]
     assert (
@@ -303,7 +307,7 @@ def test_livepaper_observability_shift_handoff_ci_check_manifest_and_context_poi
     )
     assert "livepaper_observability_shift_handoff_ci_check_passed" in status_text
     assert "livepaper_observability_shift_handoff_watchdog" in report_text
-    assert "task-007-livepaper-observability-shift-handoff-watchdog-regression-pack.tar.gz" in bundle_script
+    assert "task-007-livepaper-observability-shift-handoff-watchdog-ci-gate.tar.gz" in bundle_script
 
 
 def test_livepaper_observability_shift_handoff_ci_check_script_targets_current_suite() -> None:

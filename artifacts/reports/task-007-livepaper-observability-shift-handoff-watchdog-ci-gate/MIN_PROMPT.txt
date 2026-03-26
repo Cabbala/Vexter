@@ -1,0 +1,5 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+次タスクID: TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-ACCEPTANCE-PACK
+
+GitHub最新状態を確認し、Vexter main / Dexter PR #3 merged main / frozen Mew-X を前提に、transport livepaper observability acceptance pack を整理してください。transport livepaper observability watchdog CI gate と livepaper observability shift handoff watchdog CI gate を source of truth とし、comparison baseline は固定のまま、Dexter `paper_live` / frozen Mew-X `sim_live` seam の acceptance surfaces / proof bundle / operator-facing artifacts を整理してください。source logic 変更や新証拠収集は行わず、docs/tests/artifacts/handoff bundle を更新してください。

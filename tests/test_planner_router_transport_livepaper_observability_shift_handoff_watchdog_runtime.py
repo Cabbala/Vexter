@@ -14,7 +14,10 @@ from vexter.planner_router.handoff_watchdog import (
 )
 
 
-pytestmark = pytest.mark.livepaper_observability_shift_handoff_watchdog_runtime
+pytestmark = [
+    pytest.mark.livepaper_observability_shift_handoff_watchdog_runtime,
+    pytest.mark.livepaper_observability_shift_handoff_watchdog_ci_gate,
+]
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 HANDOFF_PATH = (
@@ -202,6 +205,9 @@ def test_livepaper_observability_shift_handoff_watchdog_runtime_workflow_runs_af
     handoff_watchdog_regression_pack_index = workflow.index(
         "- name: Run livepaper observability shift handoff watchdog regression pack"
     )
+    handoff_watchdog_ci_gate_index = workflow.index(
+        "- name: Run livepaper observability shift handoff watchdog CI gate"
+    )
     build_bundle_index = workflow.index("- name: Build proof bundle")
     remaining_tests_index = workflow.index("- name: Run remaining tests")
 
@@ -220,6 +226,7 @@ def test_livepaper_observability_shift_handoff_watchdog_runtime_workflow_runs_af
         < handoff_watchdog_index
         < handoff_watchdog_runtime_index
         < handoff_watchdog_regression_pack_index
+        < handoff_watchdog_ci_gate_index
         < build_bundle_index
         < remaining_tests_index
     )
@@ -238,16 +245,20 @@ def test_livepaper_observability_shift_handoff_watchdog_runtime_manifest_and_con
     assert manifest["task_id"] in {
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
     }
     assert manifest["status"] == ledger["status"]
     assert manifest["status"] in {
         "livepaper_observability_shift_handoff_watchdog_runtime_passed",
         "livepaper_observability_shift_handoff_watchdog_regression_pack_passed",
+        "livepaper_observability_shift_handoff_watchdog_ci_gate_passed",
+        "livepaper_observability_shift_handoff_watchdog_ci_gate_failed",
     }
     assert manifest["bundle_path"] == ledger["artifact_bundle"]
     assert manifest["bundle_path"] in {
         "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-runtime.tar.gz",
         "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack.tar.gz",
+        "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate.tar.gz",
     }
     assert "scripts/run_livepaper_observability_shift_handoff_watchdog_runtime.sh" in manifest["scripts"]
     assert (

@@ -104,12 +104,15 @@ def test_livepaper_observability_shift_handoff_template_current_artifacts_are_co
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
     }
     assert manifest["status"] == ledger["status"]
     assert manifest["status"] in {
         "livepaper_observability_shift_handoff_watchdog_passed",
         "livepaper_observability_shift_handoff_watchdog_runtime_passed",
         "livepaper_observability_shift_handoff_watchdog_regression_pack_passed",
+        "livepaper_observability_shift_handoff_watchdog_ci_gate_passed",
+        "livepaper_observability_shift_handoff_watchdog_ci_gate_failed",
     }
     assert proof["task_result"]["task_state"] == "livepaper_observability_shift_handoff_template_ready"
     assert manifest["bundle_path"] == ledger["artifact_bundle"]
@@ -117,6 +120,7 @@ def test_livepaper_observability_shift_handoff_template_current_artifacts_are_co
         "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog.tar.gz",
         "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-runtime.tar.gz",
         "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack.tar.gz",
+        "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate.tar.gz",
     }
     assert (
         proof["task_result"]["key_finding"]
@@ -139,12 +143,14 @@ def test_livepaper_observability_shift_handoff_template_current_artifacts_are_co
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
+        "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-ACCEPTANCE-PACK",
     }
     assert manifest["next_task"]["state"] == context["next_task"]["state"] == ledger["next_task_state"]
     assert manifest["next_task"]["state"] in {
         "ready_for_livepaper_observability_shift_handoff_watchdog_runtime",
         "ready_for_livepaper_observability_shift_handoff_watchdog_regression_pack",
         "ready_for_livepaper_observability_shift_handoff_watchdog_ci_gate",
+        "ready_for_transport_livepaper_observability_acceptance_pack",
     }
     assert (
         prompt_context["recommended_next_task"]

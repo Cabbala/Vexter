@@ -1,0 +1,16 @@
+{
+  "recommended_next_task": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-ACCEPTANCE-PACK",
+  "visible_main_state": {
+    "latest_vexter_pr": 68,
+    "latest_vexter_main_commit": "32133ff2acd233e0873d3de5817f2b31acafe809",
+    "dexter_main": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "mewx_frozen": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "current_state": {
+    "current_task": "livepaper_observability_shift_handoff_watchdog_ci_gate_passed",
+    "recommended_next_step": "transport_livepaper_observability_acceptance_pack",
+    "broken_handoff_watchdog_surfaces_or_none": [
+      "none"
+    ]
+  }
+}

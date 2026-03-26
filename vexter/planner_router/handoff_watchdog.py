@@ -25,6 +25,9 @@ HANDOFF_PATH = Path("artifacts/reports/task-007-livepaper-observability-shift-ha
 HANDOFF_RUNTIME_PATH = Path(
     "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-runtime/HANDOFF.md"
 )
+HANDOFF_CI_GATE_PATH = Path(
+    "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate/HANDOFF.md"
+)
 DEFAULT_FIRST_DEEP_PROOF_PATH = (
     "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-ci-gate-check.json"
 )
@@ -59,6 +62,19 @@ RUNTIME_TERMINAL_SNAPSHOT_POINTER = (
 RUNTIME_FAILURE_DETAIL_POINTER = (
     "tests/test_planner_router_transport_livepaper_observability_watchdog_runtime.py"
 )
+CI_GATE_FIRST_DEEP_PROOF_PATH = (
+    "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack-check.json"
+)
+CI_GATE_CURRENT_TASK_STATE = "livepaper_observability_shift_handoff_watchdog_ci_gate_passed"
+CI_GATE_RECOMMENDED_NEXT_STEP = "transport_livepaper_observability_acceptance_pack"
+CI_GATE_CURRENT_POINTER_PATHS = {
+    "current_status_report": "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-status.md",
+    "current_report": "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-report.md",
+    "current_proof_summary": "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-summary.md",
+    "current_proof_json": "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-check.json",
+}
+CI_GATE_TERMINAL_SNAPSHOT_POINTER = RUNTIME_TERMINAL_SNAPSHOT_POINTER
+CI_GATE_FAILURE_DETAIL_POINTER = RUNTIME_FAILURE_DETAIL_POINTER
 
 _IMPLICIT_VALUE_MARKERS = (
     "same as before",

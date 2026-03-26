@@ -78,7 +78,7 @@
     "total_events": 16
   },
   "issues": [],
-  "package_dir": "/Users/cabbala/Documents/vexter/.repo/tests/fixtures/comparison_packages/dexter_fixture",
+  "package_dir": "/private/tmp/vexter_task007_watchdog/tests/fixtures/comparison_packages/dexter_fixture",
   "run_id": "dexter-fixture-001",
   "source_system": "dexter"
 }

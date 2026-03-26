@@ -88,38 +88,38 @@ def test_transport_livepaper_observability_ci_gate_workflow_runs_gate_runner_bef
     workflow = (REPO_ROOT / ".github" / "workflows" / "validate.yml").read_text()
 
     gate_index = workflow.index("Run transport livepaper observability CI gate")
+    watchdog_index = workflow.index("Run transport livepaper observability watchdog")
     build_bundle_index = workflow.index("Build proof bundle")
     remaining_tests_index = workflow.index("Run remaining tests")
 
     assert "./scripts/run_transport_livepaper_observability_ci_gate.sh" in workflow
     assert "transport-livepaper-observability-ci-gate-proof" in workflow
     assert "cat artifacts/proofs/task-007-transport-livepaper-observability-ci-gate-summary.md" in workflow
-    assert 'pytest -q -m "not transport_livepaper_observability_ci_gate"' in workflow
-    assert gate_index < build_bundle_index < remaining_tests_index
+    assert 'pytest -q -m "not transport_livepaper_observability_ci_gate and not transport_livepaper_observability_watchdog"' in workflow
+    assert gate_index < watchdog_index < build_bundle_index < remaining_tests_index
 
 
 def test_transport_livepaper_observability_ci_gate_manifest_and_context_point_to_gate_bundle() -> None:
     manifest = json.loads((REPO_ROOT / "artifacts" / "proof_bundle_manifest.json").read_text())
     context = json.loads((REPO_ROOT / "artifacts" / "context_pack.json").read_text())
 
-    assert manifest["bundle_path"] == "artifacts/bundles/task-007-transport-livepaper-observability-ci-gate.tar.gz"
-    assert manifest["task_id"] == "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-CI-GATE"
-    assert manifest["status"] == "transport_livepaper_observability_ci_gate_passed"
     assert "scripts/run_transport_livepaper_observability_ci_gate.sh" in manifest["scripts"]
     assert (
         "artifacts/reports/task-007-transport-livepaper-observability-ci-gate-report.md" in manifest["reports"]
     )
-    assert context["current_task"]["id"] == "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-CI-GATE"
-    assert context["current_contract"]["ci_gate_marker"] == "transport_livepaper_observability_ci_gate"
     assert (
-        "tests/test_planner_router_transport_livepaper_observability_ci_gate.py"
-        in context["current_task"]["deliverables"]
+        "artifacts/proofs/task-007-transport-livepaper-observability-ci-gate-check.json"
+        in manifest["proof_files"]
     )
+    assert context["current_contract"]["ci_gate_marker"] == "transport_livepaper_observability_ci_gate"
     assert (
         "tests/test_planner_router_transport_livepaper_observability_ci_gate.py"
         in context["evidence"]["transport_livepaper_observability_ci_gate"]["gate_test_files"]
     )
-    assert context["next_task"]["id"] == "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG"
+    assert (
+        context["evidence"]["transport_livepaper_observability_ci_gate"]["preferred_next_step"]
+        == "transport_livepaper_observability_watchdog"
+    )
 
 
 def test_transport_livepaper_observability_ci_gate_script_targets_current_suite() -> None:

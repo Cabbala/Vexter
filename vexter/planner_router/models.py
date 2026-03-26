@@ -273,6 +273,15 @@ class DispatchHandle:
     native_handle: Any
     plan: ExecutionPlan | None = None
 
+    @property
+    def handle_id(self) -> str | None:
+        if isinstance(self.native_handle, Mapping):
+            value = self.native_handle.get("handle_id")
+            if value is None:
+                return None
+            return str(value)
+        return None
+
 
 @dataclass(frozen=True, slots=True)
 class StatusSnapshot:

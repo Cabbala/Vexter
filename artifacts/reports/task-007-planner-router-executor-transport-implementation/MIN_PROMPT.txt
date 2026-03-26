@@ -1,0 +1,5 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+次タスクID: TASK-007-PLANNER-ROUTER-EXECUTOR-TRANSPORT-IMPLEMENTATION
+
+GitHub最新状態を確認し、Vexter main / Dexter PR #3 merged main / frozen Mew-X を前提に、planner/router control plane の次段として executor transport spec を実装しました。comparison baseline は固定のまま、source-faithful な Dexter `paper_live` / Mew-X `sim_live` seam を前提に、ExecutorAdapter / ExecutorRegistry / PlanStore / StatusSink の transport ownership、handle-based request/response envelope、idempotent `prepare/start/stop`、ack/failure propagation、stop confirmation、poll-first status reconciliation を bounded 実装として追加しています。source logic 変更や新証拠収集は行っていません。次は `transport_runtime_smoke` を優先してください。

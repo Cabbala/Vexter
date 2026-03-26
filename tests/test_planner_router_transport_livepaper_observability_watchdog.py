@@ -15,6 +15,8 @@ from vexter.planner_router.transport import (
     evaluate_livepaper_observability_watchdog,
 )
 
+pytestmark = pytest.mark.transport_livepaper_observability_watchdog
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CONFIG_ROOT = REPO_ROOT / "config" / "planner_router"
@@ -153,7 +155,6 @@ def make_snapshot(
     )
 
 
-@pytest.mark.transport_livepaper_observability_watchdog
 def test_livepaper_observability_watchdog_passes_on_complete_runtime_visibility(tmp_path: Path) -> None:
     store, sink, handles_by_plan_id, terminal_snapshots = asyncio.run(build_watchdog_runtime(tmp_path))
     batch = store.batches[0]
@@ -172,7 +173,6 @@ def test_livepaper_observability_watchdog_passes_on_complete_runtime_visibility(
     assert report.surface_status == {surface: True for surface in EXPECTED_WATCHDOG_SURFACES}
 
 
-@pytest.mark.transport_livepaper_observability_watchdog
 def test_livepaper_observability_watchdog_flags_drift_and_partial_visibility(tmp_path: Path) -> None:
     store, sink, handles_by_plan_id, terminal_snapshots = asyncio.run(build_watchdog_runtime(tmp_path))
     batch = store.batches[0]
@@ -274,6 +274,81 @@ def test_livepaper_observability_watchdog_flags_drift_and_partial_visibility(tmp
     assert "normalized_failure_detail_passthrough" in surfaces
 
 
+def test_livepaper_observability_watchdog_flags_sink_detail_truncation_without_sequence_drift(
+    tmp_path: Path,
+) -> None:
+    store, sink, handles_by_plan_id, terminal_snapshots = asyncio.run(build_watchdog_runtime(tmp_path))
+    batch = store.batches[0]
+    runtime_snapshots = tuple(sink.snapshots)
+    sink_snapshots = list(runtime_snapshots)
+    primary_index = 0
+
+    sink_snapshots[primary_index] = make_snapshot(
+        runtime_snapshots[primary_index],
+        remove_fields=("monitor_profile_id",),
+    )
+
+    report = evaluate_livepaper_observability_watchdog(
+        batch.plans,
+        handles_by_plan_id,
+        runtime_snapshots=runtime_snapshots,
+        sink_snapshots=tuple(sink_snapshots),
+        terminal_snapshots=terminal_snapshots,
+    )
+
+    assert report.passed is False
+    assert {finding.surface for finding in report.findings} == {"partial_status_sink_fan_in"}
+
+
+def test_livepaper_observability_watchdog_does_not_require_ack_history_inside_valid_failure_detail(
+    tmp_path: Path,
+) -> None:
+    store, sink, handles_by_plan_id, terminal_snapshots = asyncio.run(build_watchdog_runtime(tmp_path))
+    batch = store.batches[0]
+    primary_plan = batch.plans[0]
+    handle_detail = dict(handles_by_plan_id[primary_plan.plan_id].native_handle)
+
+    valid_failure_details = {
+        primary_plan.plan_id: {
+            "code": "status_timeout",
+            "stage": "status",
+            "plan_id": primary_plan.plan_id,
+            "source": primary_plan.route.selected_source.value,
+            "source_reason": "status timeout",
+            "detail": {
+                "plan_id": primary_plan.plan_id,
+                "plan_batch_id": primary_plan.plan_batch_id,
+                "objective_profile_id": primary_plan.objective_profile_id,
+                "source": primary_plan.route.selected_source.value,
+                "selected_sleeve_id": primary_plan.route.selected_sleeve_id,
+                "monitor_profile_id": primary_plan.monitor_binding.monitor_profile_id,
+                "timeout_envelope_class": primary_plan.monitor_binding.timeout_envelope_class,
+                "quarantine_scope": primary_plan.monitor_binding.quarantine_scope,
+                "global_halt_participation": primary_plan.monitor_binding.global_halt_participation,
+                "executor_profile_id": primary_plan.executor_binding.executor_profile_id,
+                "pinned_commit": primary_plan.executor_binding.pinned_commit,
+                "entrypoint": handle_detail["entrypoint"],
+                "execution_mode": handle_detail["execution_mode"],
+                "startup_method": handle_detail["startup_method"],
+                "handle_id": handle_detail["handle_id"],
+                "transport_version": handle_detail["transport_version"],
+            },
+        }
+    }
+
+    report = evaluate_livepaper_observability_watchdog(
+        batch.plans,
+        handles_by_plan_id,
+        runtime_snapshots=tuple(sink.snapshots),
+        sink_snapshots=tuple(sink.snapshots),
+        terminal_snapshots=terminal_snapshots,
+        failure_details_by_plan_id=valid_failure_details,
+    )
+
+    assert report.passed is True
+    assert report.findings == ()
+
+
 def load_watchdog_proof() -> dict[str, object]:
     return json.loads(
         (
@@ -349,9 +424,12 @@ def test_transport_livepaper_observability_watchdog_manifest_and_context_point_t
 
 def test_transport_livepaper_observability_watchdog_script_targets_current_suite() -> None:
     watchdog_script = (REPO_ROOT / "scripts" / "run_transport_livepaper_observability_watchdog.sh").read_text()
+    bundle_script = (REPO_ROOT / "scripts" / "build_proof_bundle.sh").read_text()
     pytest_ini = (REPO_ROOT / "pytest.ini").read_text()
 
     for file_name in EXPECTED_WATCHDOG_TEST_FILES:
         assert file_name in watchdog_script
     assert "transport_livepaper_observability_watchdog" in watchdog_script
     assert "transport_livepaper_observability_watchdog" in pytest_ini
+    assert 'comparison_analysis.py" build-pack' not in bundle_script
+    assert 'rm -rf "$SAMPLE_PACK_DIR"' not in bundle_script

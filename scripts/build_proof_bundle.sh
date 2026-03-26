@@ -3,7 +3,6 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 BUNDLE_PATH="$ROOT_DIR/artifacts/bundles/task-007-transport-livepaper-observability-watchdog.tar.gz"
-SAMPLE_PACK_DIR="$ROOT_DIR/artifacts/examples/task-004-sample-comparison"
 export COPYFILE_DISABLE=1
 
 mkdir -p "$ROOT_DIR/artifacts/bundles"
@@ -12,14 +11,6 @@ mkdir -p "$ROOT_DIR/artifacts/reports"
 mkdir -p "$ROOT_DIR/artifacts/proofs"
 
 rm -f "$BUNDLE_PATH"
-rm -rf "$SAMPLE_PACK_DIR"
-
-python "$ROOT_DIR/scripts/comparison_analysis.py" build-pack \
-  --dexter-package "$ROOT_DIR/tests/fixtures/comparison_packages/dexter_fixture" \
-  --mewx-package "$ROOT_DIR/tests/fixtures/comparison_packages/mewx_fixture" \
-  --output-dir "$SAMPLE_PACK_DIR" \
-  --summary-note "Fixture-based sample pack for TASK-004 scaffolding. Live Windows comparison remains pending." \
-  --defer-winners
 
 tar -czf "$BUNDLE_PATH" \
   --exclude='__pycache__' \

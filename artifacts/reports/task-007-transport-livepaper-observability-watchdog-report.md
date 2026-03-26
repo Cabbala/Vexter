@@ -11,7 +11,7 @@
 
 - Started from the merged CI-gate lane on PR `#53` and kept the promoted comparison baseline frozen.
 - Added a bounded, read-only live-paper observability watchdog evaluator on top of the existing executor transport surface instead of changing transport execution semantics.
-- Made the watchdog explicitly detect required field omission, planned-versus-runtime metadata drift, partial status-sink fan-in, ack-history retention collapse, quarantine-reason omission, manual stop-all visibility loss, terminal snapshot gaps, and normalized failure-detail passthrough loss.
+- Made the watchdog explicitly detect required field omission, handle lifecycle continuity drift, planned-versus-runtime metadata drift, partial status-sink fan-in, ack-history retention collapse, quarantine-reason omission, manual stop-all visibility loss, terminal snapshot gaps, and normalized failure-detail passthrough loss.
 - Added a dedicated watchdog suite plus workflow proof surfacing so CI can fail early when observability becomes partial or drifts while the source-faithful Dexter `paper_live` / Mew-X `sim_live` seam stays fixed.
 - Refreshed the summary, context pack, manifest, ledger, proof bundle target, and handoff bundle metadata without collecting new evidence or reopening comparison work.
 

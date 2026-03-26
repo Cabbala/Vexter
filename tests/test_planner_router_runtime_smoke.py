@@ -440,6 +440,7 @@ def test_plan_and_dispatch_runtime_smoke_fails_closed_on_invalid_runtime_transit
     assert dispatch_snapshots[-1].detail["failure_code"] == FailureCode.INVALID_STATUS_TRANSITION.value
     assert dexter_adapter.stopped == [(dexter_plan.plan_id, FailureCode.INVALID_STATUS_TRANSITION.value)]
     assert mewx_adapter.stopped == [(mewx_plan.plan_id, FailureCode.INVALID_STATUS_TRANSITION.value)]
+    assert dispatch_snapshots[-1].detail["rollback_attempted"] is True
     assert events == [
         "store:req-runtime-invalid:batch",
         f"prepare:dexter:{dexter_plan.plan_id}",
@@ -449,5 +450,8 @@ def test_plan_and_dispatch_runtime_smoke_fails_closed_on_invalid_runtime_transit
         f"start:mewx:{mewx_plan.plan_id}",
         f"status:mewx:{mewx_plan.plan_id}",
         f"stop:mewx:{mewx_plan.plan_id}:{FailureCode.INVALID_STATUS_TRANSITION.value}",
+        f"status:mewx:{mewx_plan.plan_id}",
         f"stop:dexter:{dexter_plan.plan_id}:{FailureCode.INVALID_STATUS_TRANSITION.value}",
+        f"status:dexter:{dexter_plan.plan_id}",
+        f"snapshot:dexter:{dexter_plan.plan_id}",
     ]

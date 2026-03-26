@@ -67,6 +67,7 @@ def test_required_paths_exist() -> None:
         "vexter/planner_router/plan_emitter.py",
         "vexter/planner_router/dispatch_state_machine.py",
         "vexter/planner_router/planner.py",
+        "vexter/planner_router/transport.py",
         "tests/conftest.py",
         "tests/test_planner_router_config_loader.py",
         "tests/test_planner_router_objective_resolver.py",
@@ -75,6 +76,8 @@ def test_required_paths_exist() -> None:
         "tests/test_monitor_killswitch_spec_contract.py",
         "tests/test_planner_router_livepaper_smoke.py",
         "tests/test_planner_router_executor_transport_spec_contract.py",
+        "tests/test_planner_router_executor_transport_implementation.py",
+        "tests/test_planner_router_transport.py",
         "artifacts/context_pack.json",
         "artifacts/summary.md",
         "artifacts/proof_bundle_manifest.json",
@@ -166,6 +169,11 @@ def test_required_paths_exist() -> None:
         "artifacts/reports/task-007-planner-router-executor-transport-spec/DETAILS.md",
         "artifacts/reports/task-007-planner-router-executor-transport-spec/MIN_PROMPT.txt",
         "artifacts/reports/task-007-planner-router-executor-transport-spec/CONTEXT.json",
+        "artifacts/reports/task-007-planner-router-executor-transport-implementation-report.md",
+        "artifacts/reports/task-007-planner-router-executor-transport-implementation-status.md",
+        "artifacts/reports/task-007-planner-router-executor-transport-implementation/DETAILS.md",
+        "artifacts/reports/task-007-planner-router-executor-transport-implementation/MIN_PROMPT.txt",
+        "artifacts/reports/task-007-planner-router-executor-transport-implementation/CONTEXT.json",
         "artifacts/proofs/task-005-live-collection-check.json",
         "artifacts/proofs/task-005-pass-grade-pair-check.json",
         "artifacts/proofs/task-005-windows-runtime-recovery.json",
@@ -208,11 +216,14 @@ def test_required_paths_exist() -> None:
         "artifacts/proofs/task-007-planner-router-livepaper-smoke-summary.md",
         "artifacts/proofs/task-007-planner-router-executor-transport-spec-check.json",
         "artifacts/proofs/task-007-planner-router-executor-transport-spec-summary.md",
+        "artifacts/proofs/task-007-planner-router-executor-transport-implementation-check.json",
+        "artifacts/proofs/task-007-planner-router-executor-transport-implementation-summary.md",
         "artifacts/bundles/task-007-planner-router-code-implementation.tar.gz",
         "artifacts/bundles/task-007-planner-router-integration-smoke.tar.gz",
         "artifacts/bundles/task-007-monitor-killswitch-spec.tar.gz",
         "artifacts/bundles/task-007-planner-router-livepaper-smoke.tar.gz",
         "artifacts/bundles/task-007-planner-router-executor-transport-spec.tar.gz",
+        "artifacts/bundles/task-007-planner-router-executor-transport-implementation.tar.gz",
         "artifacts/examples/task-004-sample-comparison/pack_manifest.json",
         ".github/workflows/validate.yml",
     ]
@@ -312,6 +323,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-MONITOR-KILLSWITCH-SPEC",
         "TASK-007-PLANNER-ROUTER-LIVEPAPER-SMOKE",
         "TASK-007-PLANNER-ROUTER-EXECUTOR-TRANSPORT-SPEC",
+        "TASK-007-PLANNER-ROUTER-EXECUTOR-TRANSPORT-IMPLEMENTATION",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -350,6 +362,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "monitor_killswitch_spec_ready",
         "planner_router_livepaper_smoke_passed",
         "planner_router_executor_transport_spec_ready",
+        "planner_router_executor_transport_implemented",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -391,6 +404,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-007-monitor-killswitch-spec",
         "codex/task-007-planner-router-livepaper-smoke",
         "codex/task-007-planner-router-executor-transport-spec",
+        "codex/task-007-planner-router-executor-transport-implementation",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -415,6 +429,9 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-PLANNER-ROUTER-LIVEPAPER-SMOKE",
         "TASK-007-PLANNER-ROUTER-EXECUTOR-TRANSPORT-SPEC",
         "TASK-007-PLANNER-ROUTER-EXECUTOR-TRANSPORT-IMPLEMENTATION",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SPEC",
+        "TASK-007-EXECUTOR-BOUNDARY-CODE-SPEC",
+        "TASK-007-TRANSPORT-RUNTIME-SMOKE",
     }
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -451,6 +468,9 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "ready_for_planner_router_livepaper_smoke",
         "ready_for_planner_router_executor_transport_spec",
         "ready_for_planner_router_executor_transport_implementation",
+        "ready_for_livepaper_observability_spec",
+        "ready_for_executor_boundary_code_spec",
+        "ready_for_transport_runtime_smoke",
     }
 
 
@@ -495,6 +515,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "monitor_killswitch_spec_ready",
         "planner_router_livepaper_smoke_passed",
         "planner_router_executor_transport_spec_ready",
+        "planner_router_executor_transport_implemented",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -521,6 +542,9 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "TASK-007-PLANNER-ROUTER-LIVEPAPER-SMOKE",
         "TASK-007-PLANNER-ROUTER-EXECUTOR-TRANSPORT-SPEC",
         "TASK-007-PLANNER-ROUTER-EXECUTOR-TRANSPORT-IMPLEMENTATION",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SPEC",
+        "TASK-007-EXECUTOR-BOUNDARY-CODE-SPEC",
+        "TASK-007-TRANSPORT-RUNTIME-SMOKE",
     }
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -556,6 +580,9 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "ready_for_planner_router_livepaper_smoke",
         "ready_for_planner_router_executor_transport_spec",
         "ready_for_planner_router_executor_transport_implementation",
+        "ready_for_livepaper_observability_spec",
+        "ready_for_executor_boundary_code_spec",
+        "ready_for_transport_runtime_smoke",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]
@@ -671,6 +698,11 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/reports/task-007-planner-router-executor-transport-spec/DETAILS.md" in names
     assert "artifacts/reports/task-007-planner-router-executor-transport-spec/MIN_PROMPT.txt" in names
     assert "artifacts/reports/task-007-planner-router-executor-transport-spec/CONTEXT.json" in names
+    assert "artifacts/reports/task-007-planner-router-executor-transport-implementation-report.md" in names
+    assert "artifacts/reports/task-007-planner-router-executor-transport-implementation-status.md" in names
+    assert "artifacts/reports/task-007-planner-router-executor-transport-implementation/DETAILS.md" in names
+    assert "artifacts/reports/task-007-planner-router-executor-transport-implementation/MIN_PROMPT.txt" in names
+    assert "artifacts/reports/task-007-planner-router-executor-transport-implementation/CONTEXT.json" in names
     assert "artifacts/proofs/task-005-live-collection-check.json" in names
     assert "artifacts/proofs/task-005-windows-runtime-recovery.json" in names
     assert "artifacts/proofs/task-006-replay-validation-check.json" in names
@@ -714,6 +746,8 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/proofs/task-007-planner-router-livepaper-smoke-summary.md" in names
     assert "artifacts/proofs/task-007-planner-router-executor-transport-spec-check.json" in names
     assert "artifacts/proofs/task-007-planner-router-executor-transport-spec-summary.md" in names
+    assert "artifacts/proofs/task-007-planner-router-executor-transport-implementation-check.json" in names
+    assert "artifacts/proofs/task-007-planner-router-executor-transport-implementation-summary.md" in names
     assert "artifacts/context_pack.json" in names
     assert "artifacts/proof_bundle_manifest.json" in names
     assert "tests/__pycache__/" not in names

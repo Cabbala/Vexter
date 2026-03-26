@@ -7,15 +7,35 @@ from .objective_resolver import resolve_objective_profile
 from .plan_emitter import build_execution_plans, emit_plan_batch
 from .planner import plan_and_dispatch, plan_request
 from .sleeve_selector import select_sleeves
+from .transport import (
+    AckState,
+    InMemoryPlanStore,
+    ReconcilingStatusSink,
+    SourceFaithfulTransportAdapter,
+    TransportEnvelope,
+    TransportExecutorRegistry,
+    TransportFailureMode,
+    TransportMessageType,
+    build_source_faithful_transport_registry,
+)
 
 __all__ = [
     "bind_budgets",
     "build_execution_plans",
     "dispatch_plan_batch",
     "emit_plan_batch",
+    "AckState",
+    "InMemoryPlanStore",
     "load_planner_router_package",
     "plan_and_dispatch",
     "plan_request",
+    "ReconcilingStatusSink",
     "resolve_objective_profile",
     "select_sleeves",
+    "SourceFaithfulTransportAdapter",
+    "TransportEnvelope",
+    "TransportExecutorRegistry",
+    "TransportFailureMode",
+    "TransportMessageType",
+    "build_source_faithful_transport_registry",
 ]

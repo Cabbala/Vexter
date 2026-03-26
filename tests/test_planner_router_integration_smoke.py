@@ -344,14 +344,22 @@ def test_plan_and_dispatch_smoke_rolls_back_overlay_batch_on_partial_failure(
 
     if fail_prepare_for_mewx:
         assert mewx_adapter.stopped == []
+        assert snapshots[0].detail["rollback_attempted"] is True
+        assert snapshots[0].detail["rollback_confirmed"] is False
+        assert snapshots[0].detail["rollback_failure_code"] == FailureCode.SHUTDOWN_UNCONFIRMED.value
+        assert snapshots[1].detail["rollback_attempted"] is False
         assert events == [
             "store:req-rollback:batch",
             f"prepare:dexter:{plan_ids[0]}",
             f"prepare:mewx:{plan_ids[1]}",
             f"stop:dexter:{plan_ids[0]}:{expected_stop_reason}",
+            f"status:dexter:{plan_ids[0]}",
         ]
     else:
         assert mewx_adapter.stopped == [(plan_ids[1], expected_stop_reason)]
+        assert snapshots[-1].detail["rollback_attempted"] is True
+        assert snapshots[-1].detail["rollback_confirmed"] is False
+        assert snapshots[-1].detail["rollback_failure_code"] == FailureCode.SHUTDOWN_UNCONFIRMED.value
         assert events == [
             "store:req-rollback:batch",
             f"prepare:dexter:{plan_ids[0]}",
@@ -360,5 +368,7 @@ def test_plan_and_dispatch_smoke_rolls_back_overlay_batch_on_partial_failure(
             f"status:dexter:{plan_ids[0]}",
             f"start:mewx:{plan_ids[1]}",
             f"stop:mewx:{plan_ids[1]}:{expected_stop_reason}",
+            f"status:mewx:{plan_ids[1]}",
             f"stop:dexter:{plan_ids[0]}:{expected_stop_reason}",
+            f"status:dexter:{plan_ids[0]}",
         ]

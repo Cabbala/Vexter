@@ -1,0 +1,5 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+次タスクID: TASK-007-TRANSPORT-RUNTIME-SMOKE
+
+GitHub最新状態を確認し、Vexter main / Dexter PR #3 merged main / frozen Mew-X を前提に、planner/router executor transport 実装の bounded runtime smoke を行ってください。comparison baseline は固定のまま、source-faithful な Dexter `paper_live` / Mew-X `sim_live` seam を保ちつつ、handle-based transport が `prepare/start/status/stop/snapshot` を通じて runtime-like に進行し、idempotent command handling・poll-first reconciliation・stop confirmation・transport-originated failure normalization・reverse-order rollback stop fanout を end-to-end で検証してください。source logic 変更や新証拠収集は行わず、tests・artifacts・handoff bundle を更新し、次タスクとして `transport_livepaper_smoke` / `livepaper_observability_spec` / `executor_boundary_code_spec` のどれが最短の evidence cut かを示してください。

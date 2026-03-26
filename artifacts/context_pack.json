@@ -1,14 +1,14 @@
 {
   "background": {
-    "previous_task_id": "TASK-007-PLANNER-ROUTER-INTERFACE-SPEC",
-    "previous_key_finding": "planner_router_spec_ready",
-    "previous_claim_boundary": "planner_router_spec_bounded",
+    "previous_task_id": "TASK-007-CONCRETE-PLANNER-ROUTER-IMPLEMENTATION-SPEC",
+    "previous_key_finding": "concrete_planner_router_spec_ready",
+    "previous_claim_boundary": "concrete_spec_bounded",
     "promoted_pair": "task005-pass-grade-pair-20260325T180027Z",
     "confirmatory_pair": "task005-pass-grade-pair-20260325T180604Z",
     "comparison_source_of_truth_fixed_before_task": true,
     "prior_lane_completed_before_task": true
   },
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_concrete_planner_router_implementation_spec_bundle.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_concrete_planner_router_code_spec_bundle.tar.gz",
   "current_contract": {
     "conditional_rules": {
       "entry_rejected": "required_only_when_an_entry_attempt_lacks_a_matching_fill",
@@ -34,30 +34,31 @@
     ]
   },
   "current_task": {
-    "id": "TASK-007-CONCRETE-PLANNER-ROUTER-IMPLEMENTATION-SPEC",
+    "id": "TASK-007-CONCRETE-PLANNER-ROUTER-CODE-SPEC",
     "scope": [
       "Verify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X.",
-      "Treat the completed TASK-007 planner/router interface output as the formal baseline instead of reopening comparison work.",
-      "Fix the concrete planner-side config-load, validation, route-resolution, budget-binding, plan-emission, and dispatch flow.",
-      "Define normalized plan lifecycle and failure semantics without changing frozen source logic.",
-      "Recommend which implementation-facing spec should follow next."
+      "Treat the completed concrete planner/router implementation output as the formal baseline instead of reopening comparison work.",
+      "Fix the code-ready module layout, typed objects, function boundaries, rollback semantics, and failure surfaces for the planner/router layer.",
+      "Keep the planner-side contract source-faithful to Dexter and Mew-X config, session, buy, sell, and instrumentation entrypoints.",
+      "Recommend whether the next task should be monitor_killswitch_spec, executor_boundary_spec, or planner_router_code_implementation."
     ],
     "deliverables": [
       "artifacts/summary.md",
       "artifacts/context_pack.json",
       "artifacts/proof_bundle_manifest.json",
       "artifacts/task_ledger.jsonl",
-      "artifacts/reports/task-007-concrete-planner-router-implementation-spec-report.md",
-      "artifacts/reports/task-007-concrete-planner-router-implementation-spec-status.md",
-      "artifacts/reports/task-007-concrete-planner-router-implementation-spec/DETAILS.md",
-      "artifacts/reports/task-007-concrete-planner-router-implementation-spec/MIN_PROMPT.txt",
-      "artifacts/proofs/task-007-concrete-planner-router-implementation-spec-check.json",
-      "artifacts/proofs/task-007-concrete-planner-router-implementation-spec-summary.md",
-      "artifacts/bundles/task-007-concrete-planner-router-implementation-spec.tar.gz"
+      "artifacts/reports/task-007-concrete-planner-router-code-spec-report.md",
+      "artifacts/reports/task-007-concrete-planner-router-code-spec-status.md",
+      "artifacts/reports/task-007-concrete-planner-router-code-spec/DETAILS.md",
+      "artifacts/reports/task-007-concrete-planner-router-code-spec/MIN_PROMPT.txt",
+      "artifacts/proofs/task-007-concrete-planner-router-code-spec-check.json",
+      "artifacts/proofs/task-007-concrete-planner-router-code-spec-summary.md",
+      "artifacts/bundles/task-007-concrete-planner-router-code-spec.tar.gz"
     ]
   },
   "evidence": {
     "github_latest": {
+      "vexter_pr_36_merged_at": "2026-03-26T01:24:01Z",
       "vexter_pr_35_merged_at": "2026-03-26T01:03:31Z",
       "vexter_pr_34_merged_at": "2026-03-26T00:39:22Z",
       "vexter_pr_33_merged_at": "2026-03-26T00:21:56Z",
@@ -102,47 +103,6 @@
       "confirmatory_residual": "Mew-X candidate_rejected",
       "confirmatory_overturns_promoted_baseline": false
     },
-    "planner_router_interface_spec": {
-      "report": "artifacts/reports/task-007-planner-router-interface-spec-report.md",
-      "status_report": "artifacts/reports/task-007-planner-router-interface-spec-status.md",
-      "proof": "artifacts/proofs/task-007-planner-router-interface-spec-check.json",
-      "summary": "artifacts/proofs/task-007-planner-router-interface-spec-summary.md",
-      "handoff_dir": "artifacts/reports/task-007-planner-router-interface-spec",
-      "key_finding": "planner_router_spec_ready",
-      "claim_boundary": "planner_router_spec_bounded",
-      "task_state": "planner_router_spec_ready",
-      "decision": "next_spec_ready",
-      "immutable_plan_fields": [
-        "plan_id",
-        "created_at_utc",
-        "objective_profile_id",
-        "route",
-        "sleeve_binding",
-        "budget_binding",
-        "monitor_binding",
-        "executor_binding",
-        "source_pin",
-        "invariants"
-      ],
-      "objective_profile_defaults": {
-        "mixed_default": "dexter_default",
-        "containment_first": "mewx_containment"
-      },
-      "budget_policies": [
-        "single_anchor_default",
-        "selective_overlay",
-        "dedicated_containment_template"
-      ],
-      "monitor_profiles": [
-        "dexter_default",
-        "mewx_timeout_guard"
-      ],
-      "executor_profiles": [
-        "dexter_main_pinned",
-        "mewx_frozen_pinned"
-      ],
-      "preferred_next_step": "concrete_planner_router_implementation_spec"
-    },
     "concrete_planner_router_implementation_spec": {
       "report": "artifacts/reports/task-007-concrete-planner-router-implementation-spec-report.md",
       "status_report": "artifacts/reports/task-007-concrete-planner-router-implementation-spec-status.md",
@@ -153,55 +113,115 @@
       "claim_boundary": "concrete_spec_bounded",
       "task_state": "concrete_planner_router_spec_ready",
       "decision": "next_spec_ready",
-      "config_files": [
-        "planner.json",
-        "objective_profiles.json",
-        "sleeves.json",
-        "budget_policies.json",
-        "monitor_profiles.json",
-        "executor_profiles.json"
+      "preferred_next_step": "concrete_planner_router_code_spec"
+    },
+    "planner_router_code_spec": {
+      "report": "artifacts/reports/task-007-concrete-planner-router-code-spec-report.md",
+      "status_report": "artifacts/reports/task-007-concrete-planner-router-code-spec-status.md",
+      "proof": "artifacts/proofs/task-007-concrete-planner-router-code-spec-check.json",
+      "summary": "artifacts/proofs/task-007-concrete-planner-router-code-spec-summary.md",
+      "handoff_dir": "artifacts/reports/task-007-concrete-planner-router-code-spec",
+      "key_finding": "planner_router_code_spec_ready",
+      "claim_boundary": "code_spec_bounded",
+      "task_state": "planner_router_code_spec_ready",
+      "decision": "implementation_ready",
+      "package_root": "vexter/planner_router",
+      "modules": [
+        "models.py",
+        "errors.py",
+        "interfaces.py",
+        "config_loader.py",
+        "objective_resolver.py",
+        "sleeve_selector.py",
+        "budget_binder.py",
+        "plan_emitter.py",
+        "dispatch_state_machine.py",
+        "planner.py"
       ],
-      "loading_sequence": [
-        "planner",
-        "objective_profiles",
-        "sleeves",
-        "budget_policies",
-        "monitor_profiles",
-        "executor_profiles",
-        "source_pin_registry",
-        "run_request"
+      "typed_objects": {
+        "config_models": [
+          "PlannerConfig",
+          "ObjectiveProfileConfig",
+          "SleeveConfig",
+          "BudgetPolicyConfig",
+          "MonitorProfileConfig",
+          "ExecutorProfileConfig",
+          "SourcePinRegistry"
+        ],
+        "resolved_models": [
+          "PlanRequest",
+          "PlannerRouterPackage",
+          "ResolvedObjectiveProfile",
+          "SelectedSleeve",
+          "BudgetBinding",
+          "ResolvedPlanningContext"
+        ],
+        "plan_models": [
+          "PlanStatus",
+          "ExecutionPlan",
+          "PlanBatch",
+          "DispatchHandle",
+          "StatusSnapshot",
+          "FailureDetail"
+        ]
+      },
+      "public_entrypoints": [
+        "load_planner_router_package",
+        "resolve_objective_profile",
+        "select_sleeves",
+        "bind_budgets",
+        "build_execution_plans",
+        "emit_plan_batch",
+        "dispatch_plan_batch",
+        "plan_request",
+        "plan_and_dispatch"
       ],
-      "route_modes": [
-        "single_sleeve",
-        "portfolio_split"
-      ],
-      "normalized_statuses": [
-        "planned",
-        "starting",
-        "running",
-        "quarantined",
-        "stopping",
-        "stopped",
-        "failed"
-      ],
-      "pre_emit_failures": [
-        "config_missing",
-        "duplicate_config_id",
-        "unknown_objective_profile",
-        "route_mode_invalid",
-        "sleeve_disabled",
-        "executor_source_mismatch",
-        "pin_mismatch",
-        "unknown_budget_policy",
-        "mewx_cap_required",
-        "budget_share_overflow",
-        "global_halt_active"
+      "dispatch_invariants": [
+        "prepare_all_before_start",
+        "rollback_on_prepare_failure",
+        "stop_all_on_partial_start_failure",
+        "no_mid_trade_handoff",
+        "source_reason_passthrough_only"
       ],
       "deferred_specs": [
         "monitor_killswitch_spec",
         "executor_boundary_spec"
       ],
-      "preferred_next_step": "concrete_planner_router_code_spec"
+      "preferred_next_step": "planner_router_code_implementation"
+    },
+    "source_faithful_anchors": {
+      "dexter": {
+        "config_file": "sources/Dexter/settings.py",
+        "runtime_file": "sources/Dexter/Dexter.py",
+        "instrumentation_file": "sources/Dexter/DexLab/instrumentation.py",
+        "entrypoints": [
+          "_settings_snapshot",
+          "_reserve_buy_spend",
+          "_release_buy_spend",
+          "_finalize_buy_spend",
+          "set_trust_level",
+          "buy",
+          "sell",
+          "monitor_mint_session"
+        ]
+      },
+      "mewx": {
+        "config_file": "sources/Mew-X/src/mew/config.rs",
+        "runtime_file": "sources/Mew-X/src/mew/snipe/handler.rs",
+        "bootstrap_file": "sources/Mew-X/src/main.rs",
+        "instrumentation_file": "sources/Mew-X/src/mew/instrumentation.rs",
+        "entrypoints": [
+          "config",
+          "get_snipe_config",
+          "get_strats_config",
+          "get_tx_settings",
+          "start_session",
+          "sim_session",
+          "trade_session",
+          "buy",
+          "sell"
+        ]
+      }
     },
     "caveat": {
       "replay_scope": "Current zero-gap evidence is scoped to close-summary and position_closed realized-return fidelity rather than full execution-path equivalence.",
@@ -211,58 +231,57 @@
         "replay_value": 25.804157291090654
       },
       "candidate_surface_gap": "Mew-X candidate_precision_proxy remains unavailable because the frozen export surface does not expose a comparable creator_candidate path.",
-      "concrete_spec_boundary": "Planner-side config loading, validation, immutable plan emission, and dispatch order are fixed, while numeric monitor thresholds, retry values, heartbeat values, and executor transport remain later defaults."
+      "code_spec_boundary": "File layout, typed objects, function APIs, and rollback semantics are fixed, while numeric monitor thresholds and executor transport remain later defaults."
     }
   },
   "frozen_source_commits": {
     "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
   },
-  "goal": "Maintain a GitHub-visible Mac control plane that converts the fixed comparison plus immutable planner/router contract into a deterministic config-load through dispatch implementation spec without changing frozen source behavior, validator rules, or comparison baselines.",
+  "goal": "Maintain a GitHub-visible Mac control plane that converts the fixed planner-side flow into a code-ready Python module, data-model, and function boundary without changing frozen source behavior, validator rules, or comparison baselines.",
   "implementation": {
     "source_logic_changed": false,
     "validator_rules_changed": false,
     "minimal_reaggregation_only": true,
     "task_proofs_generated": [
-      "artifacts/proofs/task-007-concrete-planner-router-implementation-spec-check.json",
-      "artifacts/proofs/task-007-concrete-planner-router-implementation-spec-summary.md"
+      "artifacts/proofs/task-007-concrete-planner-router-code-spec-check.json",
+      "artifacts/proofs/task-007-concrete-planner-router-code-spec-summary.md"
     ],
     "task_reports_updated": [
-      "artifacts/reports/task-007-concrete-planner-router-implementation-spec-report.md",
-      "artifacts/reports/task-007-concrete-planner-router-implementation-spec-status.md",
-      "artifacts/reports/task-007-concrete-planner-router-implementation-spec/DETAILS.md",
-      "artifacts/reports/task-007-concrete-planner-router-implementation-spec/MIN_PROMPT.txt"
+      "artifacts/reports/task-007-concrete-planner-router-code-spec-report.md",
+      "artifacts/reports/task-007-concrete-planner-router-code-spec-status.md",
+      "artifacts/reports/task-007-concrete-planner-router-code-spec/DETAILS.md",
+      "artifacts/reports/task-007-concrete-planner-router-code-spec/MIN_PROMPT.txt"
     ]
   },
   "mac_control_plane": "/Users/cabbala/Projects/Vexter",
   "next_task": {
-    "id": "CONCRETE-PLANNER-ROUTER-CODE-SPEC",
-    "state": "ready_for_concrete_planner_router_code_spec",
+    "id": "TASK-007-PLANNER-ROUTER-CODE-IMPLEMENTATION",
+    "state": "ready_for_planner_router_code_implementation",
     "resume_requirements": [
       "Treat task005-pass-grade-pair-20260325T180027Z as the frozen promoted baseline.",
-      "Carry forward concrete_planner_router_spec_ready together with concrete_spec_bounded as the current implementation-level conclusion.",
-      "Preserve deterministic config loading, fail-closed validation, and explicit Mew-X enablement semantics.",
-      "Reuse atomic plan_batch emission with one immutable execution_plan per sleeve.",
-      "Keep prepare-then-start dispatch ordering and forbid mid-trade source handoff.",
-      "Do not reopen comparison, numeric monitor thresholds, or executor transport while producing the code spec."
+      "Carry forward planner_router_code_spec_ready together with code_spec_bounded as the current code-level conclusion.",
+      "Implement the planner/router root at vexter/planner_router using the fixed module split from the code spec.",
+      "Keep config loading, objective resolution, sleeve selection, budget binding, plan emission, and dispatch separated by module boundary.",
+      "Keep prepare-then-start dispatch ordering and prohibit mid-trade source handoff.",
+      "Do not reopen comparison, numeric monitor thresholds, or executor transport while building the first implementation skeleton."
     ]
   },
-  "phase": "TASK-007-CONCRETE-PLANNER-ROUTER-IMPLEMENTATION-SPEC",
+  "phase": "TASK-007-CONCRETE-PLANNER-ROUTER-CODE-SPEC",
   "project": "Vexter",
   "recommendation": {
-    "decision": "NEXT_SPEC_READY",
+    "decision": "IMPLEMENTATION_READY",
     "outcome": "A",
-    "key_finding": "concrete_planner_router_spec_ready",
-    "claim_boundary": "concrete_spec_bounded",
-    "recommended_next_step": "concrete_planner_router_code_spec",
-    "concrete_planner_router_spec_ready": true,
-    "next_spec_ready": true,
-    "concrete_planner_router_code_spec_ready": true,
+    "key_finding": "planner_router_code_spec_ready",
+    "claim_boundary": "code_spec_bounded",
+    "recommended_next_step": "planner_router_code_implementation",
+    "planner_router_code_spec_ready": true,
+    "implementation_ready": true,
     "new_evidence_collection_required": false,
     "why": [
-      "The current evidence now fixes the deterministic planner-side load, resolve, bind, emit, and dispatch order strongly enough to map directly into modules and functions.",
-      "Monitor and kill-switch thresholds can attach to the fixed plan registry and normalized lifecycle instead of leading the design.",
-      "Executor ownership is already fixed at the contract level, while transport remains an implementation detail rather than an evidence question."
+      "The file layout, typed objects, public entrypoints, and rollback semantics are now fixed strongly enough to implement directly.",
+      "Monitor thresholds can attach to the fixed PlanStatus and FailureDetail surfaces instead of leading the design.",
+      "Executor transport and process model are already isolated behind ExecutorAdapter and ExecutorRegistry protocols."
     ]
   },
   "repos": {
@@ -271,12 +290,13 @@
     "source_repo_b": "Cabbala/Mew-X"
   },
   "starting_point": {
-    "verified_latest_vexter_pr": 35,
-    "verified_latest_vexter_main": "2bec1badde788ef1c75251af2df17609643720fb",
+    "verified_latest_vexter_pr": 36,
+    "verified_latest_vexter_main": "8713b9ba8de82accda48526fdff8732531d7b620",
     "verified_dexter_pr": 3,
     "verified_dexter_main": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_mewx_frozen": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
     "verified_prior_supporting_vexter_prs": [
+      35,
       34,
       33,
       32,
@@ -297,8 +317,8 @@
       17,
       16
     ],
-    "work_branch": "codex/task-007-concrete-planner-router-implementation-spec"
+    "work_branch": "codex/task-007-concrete-planner-router-code-spec"
   },
-  "status": "concrete_planner_router_spec_ready",
+  "status": "planner_router_code_spec_ready",
   "windows_runtime_host": "win-lan"
 }

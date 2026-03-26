@@ -1,0 +1,251 @@
+{
+  "task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-OPERATOR-RUNBOOK",
+  "generated_at_utc": "2026-03-26T17:10:57Z",
+  "verified_github": {
+    "latest_vexter_pr": 59,
+    "latest_vexter_main_commit": "4be21e4e52fbe686e585dea6b573efea759e0933",
+    "latest_vexter_merged_at_utc": "2026-03-26T16:54:45Z",
+    "open_non_authoritative_vexter_prs": [
+      50
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "mewx_frozen_commit_date_utc": "2026-03-20T16:05:19Z"
+  },
+  "fixed_input_surface": {
+    "canonical_contract": "specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md",
+    "runbook_doc": "docs/livepaper_observability_operator_runbook.md",
+    "spec_report": "artifacts/reports/task-007-livepaper-observability-spec-report.md",
+    "spec_status_report": "artifacts/reports/task-007-livepaper-observability-spec-status.md",
+    "spec_proof": "artifacts/proofs/task-007-livepaper-observability-spec-check.json",
+    "spec_summary": "artifacts/proofs/task-007-livepaper-observability-spec-summary.md",
+    "watchdog_ci_gate_report": "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate-report.md",
+    "watchdog_ci_gate_proof": "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-ci-gate-check.json",
+    "watchdog_runtime_report": "artifacts/reports/task-007-transport-livepaper-observability-watchdog-runtime-report.md",
+    "watchdog_runtime_proof": "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-runtime-check.json",
+    "watchdog_regression_pack_report": "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack-report.md",
+    "watchdog_regression_pack_proof": "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-regression-pack-check.json",
+    "watchdog_report": "artifacts/reports/task-007-transport-livepaper-observability-watchdog-report.md",
+    "watchdog_proof": "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-check.json",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "comparison_source_of_truth": "comparison_closed_out",
+    "global_halt_mode": "manual_latched_stop_all",
+    "status_delivery": "poll_first"
+  },
+  "implementation": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "dexter_strategy_changed": false,
+    "mewx_strategy_changed": false,
+    "minimal_reaggregation_only": true,
+    "new_evidence_collection_required": false
+  },
+  "livepaper_observability_operator_runbook": {
+    "source_faithful_modes": {
+      "dexter": "paper_live",
+      "mewx": "sim_live"
+    },
+    "operator_meanings": {
+      "omission": "A required field or required surface is missing.",
+      "drift": "A required field is present but no longer matches the planned source-faithful envelope.",
+      "partial_visibility": "The lifecycle happened, but the operator-facing surface did not preserve all required detail."
+    },
+    "first_check_order": [
+      "artifacts/reports/task-007-livepaper-observability-operator-runbook-status.md",
+      "artifacts/reports/task-007-livepaper-observability-operator-runbook-report.md",
+      "artifacts/proofs/task-007-livepaper-observability-operator-runbook-summary.md",
+      "specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md",
+      "artifacts/proofs/task-007-livepaper-observability-operator-runbook-check.json"
+    ],
+    "incident_localization_order": [
+      "Start with the watchdog CI gate.",
+      "Read the failing watchdog surface name before individual snapshots.",
+      "Classify the break as omission, drift, or partial_visibility.",
+      "For terminal or failed paths, prefer snapshot-backed terminal detail and normalized failure detail over sink snippets.",
+      "For manual stop-all incidents, confirm peer-plan propagation before treating one plan as isolated."
+    ],
+    "first_deep_proof": "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-ci-gate-check.json",
+    "required_surfaces": [
+      "required_observability_field_omission",
+      "handle_lifecycle_continuity",
+      "planned_runtime_metadata_drift",
+      "partial_status_sink_fan_in",
+      "ack_history_retention",
+      "quarantine_reason_completeness",
+      "manual_stop_all_propagation",
+      "snapshot_backed_terminal_detail",
+      "normalized_failure_detail_passthrough"
+    ],
+    "failure_surface_priority": [
+      {
+        "priority": 0,
+        "surface": "manual_stop_all_propagation",
+        "group": "containment_and_halt_confidence"
+      },
+      {
+        "priority": 0,
+        "surface": "quarantine_reason_completeness",
+        "group": "containment_and_halt_confidence"
+      },
+      {
+        "priority": 0,
+        "surface": "snapshot_backed_terminal_detail",
+        "group": "containment_and_halt_confidence"
+      },
+      {
+        "priority": 0,
+        "surface": "normalized_failure_detail_passthrough",
+        "group": "containment_and_halt_confidence"
+      },
+      {
+        "priority": 1,
+        "surface": "planned_runtime_metadata_drift",
+        "group": "identity_and_planned_runtime_integrity"
+      },
+      {
+        "priority": 1,
+        "surface": "handle_lifecycle_continuity",
+        "group": "identity_and_planned_runtime_integrity"
+      },
+      {
+        "priority": 1,
+        "surface": "required_observability_field_omission",
+        "group": "identity_and_planned_runtime_integrity"
+      },
+      {
+        "priority": 2,
+        "surface": "partial_status_sink_fan_in",
+        "group": "visibility_quality_after_containment"
+      },
+      {
+        "priority": 2,
+        "surface": "ack_history_retention",
+        "group": "visibility_quality_after_containment"
+      }
+    ],
+    "ack_history_interpretation": {
+      "monotonic_counts": [
+        "prepare_request_count",
+        "start_request_count",
+        "stop_request_count"
+      ],
+      "sticky_flags_must_not_collapse": true,
+      "duplicate_or_terminal_visibility_required_above_one": true
+    },
+    "operational_decisions": {
+      "manual_stop_all": {
+        "treat_as": "propagation_event",
+        "required_fields": [
+          "halt_mode",
+          "trigger_plan_id",
+          "stop_reason",
+          "stop_requested",
+          "stop_confirmed"
+        ]
+      },
+      "quarantine": {
+        "treat_as": "containment_surface",
+        "required_fields": [
+          "quarantine_reason",
+          "monitor_profile_id",
+          "executor_profile_id"
+        ]
+      },
+      "terminal_snapshot": {
+        "required_signal": "snapshot",
+        "preferred_record": "snapshot_backed_terminal_detail"
+      },
+      "normalized_failure_detail": {
+        "route_by": [
+          "code",
+          "stage",
+          "plan_id",
+          "source"
+        ],
+        "preserve_source_reason": true,
+        "rollback_snapshot_required_when": "rollback_confirmed"
+      }
+    },
+    "bounded_escalation": {
+      "halt_when": [
+        "containment surfaces fail",
+        "planned/runtime identity drifts",
+        "terminal detail is not snapshot-backed",
+        "normalized failure detail loses identity continuity"
+      ],
+      "continue_when": [
+        "quarantine reason remains visible",
+        "manual stop-all propagation remains visible",
+        "terminal snapshot remains snapshot-backed",
+        "failure detail remains normalized and source-faithful"
+      ],
+      "inspect_more_deeply_when": [
+        "sink fan-in loses required detail but runtime and terminal surfaces still retain it",
+        "ack-history detail becomes incomplete while containment remains intact"
+      ]
+    },
+    "proof_outputs": [
+      "docs/livepaper_observability_operator_runbook.md",
+      "artifacts/reports/task-007-livepaper-observability-operator-runbook-report.md",
+      "artifacts/reports/task-007-livepaper-observability-operator-runbook-status.md",
+      "artifacts/reports/task-007-livepaper-observability-operator-runbook/DETAILS.md",
+      "artifacts/reports/task-007-livepaper-observability-operator-runbook/MIN_PROMPT.txt",
+      "artifacts/reports/task-007-livepaper-observability-operator-runbook/CONTEXT.json",
+      "artifacts/proofs/task-007-livepaper-observability-operator-runbook-check.json",
+      "artifacts/proofs/task-007-livepaper-observability-operator-runbook-summary.md",
+      "artifacts/bundles/task-007-livepaper-observability-operator-runbook.tar.gz"
+    ]
+  },
+  "validation": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "new_evidence_collection_required": false,
+    "contract_test_files": [
+      "tests/test_planner_router_transport_livepaper_observability_spec_contract.py",
+      "tests/test_planner_router_transport_livepaper_observability_operator_runbook.py",
+      "tests/test_planner_router_transport_livepaper_observability_watchdog_runtime.py",
+      "tests/test_bootstrap_layout.py"
+    ],
+    "pytest_command": "pytest -q",
+    "pytest_result": "152 passed"
+  },
+  "next_task_evaluation": {
+    "livepaper_observability_shift_checklist": {
+      "recommended": true,
+      "reasons": [
+        "The contract now fixes what must stay visible and the runbook now fixes how operators should read it.",
+        "A shift checklist is the smallest next cut that converts that read order into repeatable pre-shift and during-shift actions.",
+        "It can be written without reopening runtime behavior, evidence collection, or ownership boundaries."
+      ]
+    },
+    "transport_livepaper_observability_acceptance_pack": {
+      "recommended": false,
+      "reasons": [
+        "An acceptance pack would mostly restate the same bounded surfaces before the minimum shift procedure is reduced to a concise checklist.",
+        "The acceptance pack can become sharper after the checklist fixes the minimum operator checks derived from the runbook."
+      ]
+    },
+    "executor_boundary_code_spec": {
+      "recommended": false,
+      "reasons": [
+        "The executor boundary is already bounded by the earlier executor transport spec and the watchdog CI gate.",
+        "The remaining gap is operator procedure, not code-boundary ambiguity."
+      ]
+    }
+  },
+  "task_result": {
+    "selected_outcome": "A",
+    "key_finding": "livepaper_observability_operator_runbook_fixed",
+    "claim_boundary": "livepaper_observability_operator_runbook_bounded",
+    "comparison_source_of_truth_state": "comparison_closed_out",
+    "task_state": "livepaper_observability_operator_runbook_ready",
+    "recommended_next_step": "livepaper_observability_shift_checklist",
+    "recommended_next_task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-CHECKLIST",
+    "decision": "livepaper_observability_shift_checklist_ready",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "default_execution_anchor": "dexter",
+    "selective_option_source": "mewx"
+  }
+}

@@ -15,6 +15,7 @@ def test_required_paths_exist() -> None:
         "docs/metrics_catalog.md",
         "docs/comparison_matrix_template.md",
         "docs/comparison_collection_runbook.md",
+        "docs/livepaper_observability_operator_runbook.md",
         "docs/windows_runtime_recovery.md",
         "docs/dexter_source_assessment.md",
         "docs/dexter_event_mapping.md",
@@ -333,15 +334,24 @@ def test_required_paths_exist() -> None:
         "tests/test_planner_router_transport_livepaper_observability_watchdog_runtime.py",
         "tests/test_planner_router_transport_livepaper_observability_watchdog_ci_gate.py",
         "tests/test_planner_router_transport_livepaper_observability_spec_contract.py",
+        "tests/test_planner_router_transport_livepaper_observability_operator_runbook.py",
         "artifacts/examples/task-004-sample-comparison/pack_manifest.json",
         "artifacts/reports/task-007-livepaper-observability-spec-report.md",
         "artifacts/reports/task-007-livepaper-observability-spec-status.md",
         "artifacts/reports/task-007-livepaper-observability-spec/DETAILS.md",
         "artifacts/reports/task-007-livepaper-observability-spec/MIN_PROMPT.txt",
         "artifacts/reports/task-007-livepaper-observability-spec/CONTEXT.json",
+        "artifacts/reports/task-007-livepaper-observability-operator-runbook-report.md",
+        "artifacts/reports/task-007-livepaper-observability-operator-runbook-status.md",
+        "artifacts/reports/task-007-livepaper-observability-operator-runbook/DETAILS.md",
+        "artifacts/reports/task-007-livepaper-observability-operator-runbook/MIN_PROMPT.txt",
+        "artifacts/reports/task-007-livepaper-observability-operator-runbook/CONTEXT.json",
         "artifacts/proofs/task-007-livepaper-observability-spec-check.json",
         "artifacts/proofs/task-007-livepaper-observability-spec-summary.md",
+        "artifacts/proofs/task-007-livepaper-observability-operator-runbook-check.json",
+        "artifacts/proofs/task-007-livepaper-observability-operator-runbook-summary.md",
         "artifacts/bundles/task-007-livepaper-observability-spec.tar.gz",
+        "artifacts/bundles/task-007-livepaper-observability-operator-runbook.tar.gz",
         ".github/workflows/validate.yml",
     ]
 
@@ -519,6 +529,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-REGRESSION-PACK",
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-CI-GATE",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SPEC",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-OPERATOR-RUNBOOK",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -570,6 +581,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "transport_livepaper_observability_watchdog_regression_pack_passed",
         "transport_livepaper_observability_watchdog_ci_gate_passed",
         "livepaper_observability_spec_ready",
+        "livepaper_observability_operator_runbook_ready",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -624,6 +636,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-007-transport-livepaper-observability-watchdog-regression-pack",
         "codex/task-007-transport-livepaper-observability-watchdog-ci-gate",
         "codex/task-007-livepaper-observability-spec",
+        "codex/task-007-livepaper-observability-operator-runbook",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -662,6 +675,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-REGRESSION-PACK",
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-CI-GATE",
         "TASK-007-LIVEPAPER-OBSERVABILITY-OPERATOR-RUNBOOK",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-CHECKLIST",
     }
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -712,6 +726,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "ready_for_transport_livepaper_observability_watchdog_regression_pack",
         "ready_for_transport_livepaper_observability_watchdog_ci_gate",
         "ready_for_livepaper_observability_operator_runbook",
+        "ready_for_livepaper_observability_shift_checklist",
     }
 
 
@@ -769,6 +784,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "transport_livepaper_observability_watchdog_regression_pack_passed",
         "transport_livepaper_observability_watchdog_ci_gate_passed",
         "livepaper_observability_spec_ready",
+        "livepaper_observability_operator_runbook_ready",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -809,6 +825,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-REGRESSION-PACK",
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-CI-GATE",
         "TASK-007-LIVEPAPER-OBSERVABILITY-OPERATOR-RUNBOOK",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-CHECKLIST",
     }
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -858,6 +875,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "ready_for_transport_livepaper_observability_watchdog_regression_pack",
         "ready_for_transport_livepaper_observability_watchdog_ci_gate",
         "ready_for_livepaper_observability_operator_runbook",
+        "ready_for_livepaper_observability_shift_checklist",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]
@@ -870,6 +888,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "docs/evaluation_contract.md" in names
     assert "docs/normalized_event_schema.md" in names
     assert "docs/comparison_collection_runbook.md" in names
+    assert "docs/livepaper_observability_operator_runbook.md" in names
     assert "docs/windows_runtime_recovery.md" in names
     assert "docs/dexter_event_mapping.md" in names
     assert "docs/dexter_paper_mode_design.md" in names

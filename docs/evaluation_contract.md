@@ -70,3 +70,4 @@ Profitability is only considered confirmed when all of the following are availab
 
 The executor transport live-paper seam has one operator-facing observability contract at `specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md`.
 That contract is fixed against the source-faithful Dexter `paper_live` and frozen Mew-X `sim_live` seam and must remain attributable to the pinned source commits, watchdog suites, and CI gate outputs already visible on GitHub.
+The operator reading order and bounded triage flow that sit on top of that contract now live at `docs/livepaper_observability_operator_runbook.md`.

@@ -1,0 +1,31 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+次タスクID: TASK-007-PLANNER-ROUTER-LIVEPAPER-SMOKE
+
+GitHub-visible Vexter `main` は PR `#40` main commit `a4e7a3c74460dc711c3e2897ac31386272e91c27` まで確認済みで、comparison baseline は `task005-pass-grade-pair-20260325T180027Z` のまま固定です。Dexter は merged PR `#3` commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`、Mew-X は frozen commit `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a` を維持しています。promoted live / replay はどちらも `winner_mode: derived`、stable scored split は Dexter `6`, Mew-X `4`, tie `2`、Dexter / Mew-X の replay coverage / gap はどちらも `100.00% / 0.0000` を維持し、confirmatory residual は Mew-X `candidate_rejected` のみで promoted baseline を overturn しません。
+
+この task では、新証拠収集や source logic 変更は行わず、runtime smoke までで固定できた control-plane seam に monitor / kill-switch contract を接続しました。結論は以下です。
+
+- Key finding: `monitor_killswitch_contract_fixed`
+- Claim boundary: `monitor_killswitch_spec_bounded`
+- Decision: `planner_router_livepaper_smoke_ready`
+
+fixed monitor/killswitch conclusion:
+
+- monitor profile は `monitor_profile_id`, `admission_gate_class`, `timeout_envelope_class`, `quarantine_scope`, `global_halt_participation` を持つ immutable per-plan binding として固定した
+- committed profile class は `dexter_default = lifecycle_control / dexter_lifecycle_control / sleeve / true`、`mewx_timeout_guard = timeout_aware / mewx_timeout_tolerant / sleeve / true` のまま維持した
+- admission gate は pre-emission fail-closed とし、config invalidity、pin mismatch、disabled sleeve、budget overflow、active global halt を launch blocker として固定した
+- timeout envelope は source-shaped boundary とし、Dexter は lifecycle-control、Mew-X は timeout-aware を維持しつつ、numeric timeout / heartbeat / retry は deferred boundary のまま残した
+- Mew-X `inactivity_timeout` は source-native close reason であり automatic incident ではない一方、timeout envelope 越えや normalized close / shutdown confirmation 欠落は quarantine / escalation 対象として固定した
+- quarantine は sleeve-local を維持し、cross-source handoff を禁止したまま、current participating profiles のもとでは reverse-order stop-all rollback へ escalte しうることを固定した
+- global halt は `manual_latched_stop_all` として freeze new planning + source-native stop requests only に固定し、threshold rewrite や source rebinding を許可しない
+- typed failure escalation は `FailureCode` / `FailureDetail` / `StatusSnapshot` に固定し、source-native reasons は passthrough metadata として保持した
+- validation は `pytest -q` で `58 passed`
+
+次は `planner_router_livepaper_smoke` を優先してください。理由は、live-paper 側が参照すべき quarantine / stop-all / global halt / typed failure boundary がこれで固定できたためで、runtime seam の有無や killswitch policy を再推定する必要がなくなったからです。再実行してはいけないもの:
+
+- promoted-baseline selection
+- 新 live / replay evidence collection
+- Dexter / Mew-X / validator changes
+- numeric timeout / heartbeat / retry / cap value の先行確定
+- cross-source handoff や threshold / trust-logic transplant の導入

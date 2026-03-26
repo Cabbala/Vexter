@@ -1,0 +1,5 @@
+{
+  "task": "TASK-007-MONITOR-KILLSWITCH-SPEC",
+  "state": "monitor_killswitch_spec_ready",
+  "next": "planner_router_livepaper_smoke"
+}

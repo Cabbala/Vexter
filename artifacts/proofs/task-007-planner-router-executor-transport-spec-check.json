@@ -1,0 +1,222 @@
+{
+  "task_id": "TASK-007-PLANNER-ROUTER-EXECUTOR-TRANSPORT-SPEC",
+  "generated_at_utc": "2026-03-26T03:42:39Z",
+  "verified_github": {
+    "latest_vexter_pr": 42,
+    "latest_vexter_main_commit": "23e6f354bf261935639941d541227b0c3f7a8435",
+    "latest_vexter_merged_at_utc": "2026-03-26T03:27:34Z",
+    "supporting_vexter_prs": [
+      41,
+      40,
+      39,
+      38,
+      37,
+      36,
+      35,
+      34,
+      33,
+      32,
+      31,
+      30,
+      29,
+      28,
+      27,
+      26,
+      25,
+      24,
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "mewx_frozen_commit_date_utc": "2026-03-20T16:05:19Z"
+  },
+  "fixed_input_surface": {
+    "livepaper_smoke_report": "artifacts/reports/task-007-planner-router-livepaper-smoke-report.md",
+    "livepaper_smoke_proof": "artifacts/proofs/task-007-planner-router-livepaper-smoke-check.json",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "promoted_live_winner_mode": "derived",
+    "promoted_replay_winner_mode": "derived",
+    "live_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "replay_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "dexter_replay_coverage_ratio": 1.0,
+    "dexter_live_vs_replay_gap_pct": 0.0,
+    "mewx_replay_coverage_ratio": 1.0,
+    "mewx_live_vs_replay_gap_pct": 0.0,
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false
+  },
+  "transport_contract": {
+    "ownership": {
+      "plan_store": "planner_owned_pre_runtime_batch_persistence",
+      "executor_registry": "planner_owned_in_process_adapter_lookup",
+      "executor_adapter": "adapter_owned_transport_bridge_and_native_handle_lifecycle",
+      "status_sink": "planner_owned_normalized_runtime_fan_in"
+    },
+    "process_boundary": {
+      "planner_router": "single_in_process_control_plane",
+      "executor_runtime": "one_long_lived_runtime_per_executor_profile",
+      "handle_granularity": "one_handle_per_plan_id",
+      "cross_source_handoff_forbidden": true
+    },
+    "source_faithful_entrypoints": {
+      "dexter": {
+        "execution_mode": "paper_live",
+        "entrypoint": "monitor_mint_session",
+        "pinned_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938"
+      },
+      "mewx": {
+        "safe_mode": "sim_live",
+        "startup_method": "start_session",
+        "safe_entrypoint": "sim_session",
+        "funded_entrypoint_deferred": "trade_session",
+        "pinned_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+      }
+    },
+    "envelope": {
+      "required_fields": [
+        "transport_version",
+        "message_type",
+        "message_id",
+        "sent_at_utc",
+        "plan_id",
+        "plan_batch_id",
+        "source",
+        "executor_profile_id",
+        "idempotency_key",
+        "payload"
+      ],
+      "prepare_ack_native_handle_fields": [
+        "transport_version",
+        "handle_id",
+        "ack_state",
+        "entrypoint",
+        "executor_profile_id",
+        "pinned_commit",
+        "status_delivery",
+        "prepared_at_utc"
+      ],
+      "status_snapshot_detail_fields": [
+        "handle_id",
+        "signal",
+        "sequence",
+        "entrypoint",
+        "pinned_commit"
+      ],
+      "prepare_is_only_full_plan_command": true
+    },
+    "idempotency": {
+      "prepare": "plan_id:prepare:v1",
+      "start": "plan_id:start:v1",
+      "stop": "plan_id:stop:<normalized_reason>:v1",
+      "duplicate_prepare_returns_same_handle": true,
+      "duplicate_start_must_not_open_second_session": true,
+      "duplicate_stop_must_not_trigger_second_shutdown": true
+    },
+    "ack_and_failure": {
+      "ack_states": [
+        "accepted",
+        "duplicate",
+        "rejected",
+        "terminal"
+      ],
+      "pre_start_rejection_maps_to": [
+        "prepare_failed",
+        "start_failed"
+      ],
+      "status_silence_maps_to": "status_timeout",
+      "stop_without_terminal_confirmation_maps_to": "shutdown_unconfirmed",
+      "explicit_native_stop_failure_maps_to": "source_stop_failed"
+    },
+    "status_model": {
+      "polling_is_authoritative_first_cut": true,
+      "push_optional": true,
+      "push_must_reconcile_to_status_snapshot": true,
+      "normalized_statuses": [
+        "planned",
+        "starting",
+        "running",
+        "quarantined",
+        "stopping",
+        "stopped",
+        "failed"
+      ]
+    },
+    "stop_semantics": {
+      "reverse_batch_order_for_halt_or_rollback": true,
+      "transport_ack_not_sufficient_for_stopped": true,
+      "planner_reasons_preserved": [
+        "manual_latched_stop_all",
+        "prepare_failed",
+        "start_failed",
+        "quarantine_escalation"
+      ]
+    }
+  },
+  "validation": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "new_evidence_collection_required": false,
+    "contract_test_files": [
+      "tests/test_planner_router_executor_transport_spec_contract.py",
+      "tests/test_planner_router_livepaper_smoke.py",
+      "tests/test_planner_router_runtime_smoke.py",
+      "tests/test_monitor_killswitch_spec_contract.py",
+      "tests/test_bootstrap_layout.py"
+    ],
+    "pytest_command": "pytest -q",
+    "pytest_result": "64 passed"
+  },
+  "next_task_evaluation": {
+    "planner_router_executor_transport_implementation": {
+      "recommended": true,
+      "reasons": [
+        "Ownership, handle semantics, ack/failure mapping, stop confirmation, and poll-first status reconciliation are now fixed enough to implement.",
+        "Implementation removes more remaining uncertainty than another spec-only pass.",
+        "Observability can attach to the implemented transport surface rather than another stub seam."
+      ]
+    },
+    "livepaper_observability_spec": {
+      "recommended": false,
+      "reasons": [
+        "The planner-owned lifecycle is already smoke-proven on source-faithful seams.",
+        "Observability will be sharper after real handle ids and transport errors exist in implementation."
+      ]
+    },
+    "executor_boundary_code_spec": {
+      "recommended": false,
+      "reasons": [
+        "The abstract interface boundary and code-ready surface were already fixed in earlier TASK-007 lanes.",
+        "This transport spec already closes the remaining ownership/process/envelope gap without needing another boundary-only restatement."
+      ]
+    }
+  },
+  "task_result": {
+    "selected_outcome": "A",
+    "key_finding": "executor_transport_contract_fixed",
+    "claim_boundary": "executor_transport_spec_bounded",
+    "comparison_source_of_truth_state": "comparison_closed_out",
+    "task_state": "planner_router_executor_transport_spec_ready",
+    "recommended_next_step": "planner_router_executor_transport_implementation",
+    "recommended_next_task_id": "TASK-007-PLANNER-ROUTER-EXECUTOR-TRANSPORT-IMPLEMENTATION",
+    "decision": "planner_router_executor_transport_implementation_ready",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "default_execution_anchor": "dexter",
+    "selective_option_source": "mewx"
+  }
+}

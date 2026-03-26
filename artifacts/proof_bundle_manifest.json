@@ -1,8 +1,8 @@
 {
-  "bundle_path": "artifacts/bundles/task-007-livepaper-observability-shift-handoff-ci-check.tar.gz",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_livepaper_observability_shift_handoff_ci_check_bundle.tar.gz",
-  "task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-CI-CHECK",
-  "status": "livepaper_observability_shift_handoff_ci_check_passed",
+  "bundle_path": "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_livepaper_observability_shift_handoff_watchdog_bundle.tar.gz",
+  "task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG",
+  "status": "livepaper_observability_shift_handoff_watchdog_passed",
   "summary": "artifacts/summary.md",
   "context_pack": "artifacts/context_pack.json",
   "task_ledger": "artifacts/task_ledger.jsonl",
@@ -58,6 +58,7 @@
     "scripts/sync_reference_repos.sh",
     "scripts/build_proof_bundle.sh",
     "scripts/run_livepaper_observability_shift_handoff_ci_check.sh",
+    "scripts/run_livepaper_observability_shift_handoff_watchdog.sh",
     "scripts/run_transport_livepaper_observability_watchdog_ci_gate.sh",
     "scripts/run_transport_livepaper_observability_ci_gate.sh",
     "scripts/run_transport_livepaper_observability_watchdog.sh",
@@ -70,6 +71,8 @@
   "proof_files": [
     "artifacts/proofs/task-007-livepaper-observability-shift-handoff-ci-check-check.json",
     "artifacts/proofs/task-007-livepaper-observability-shift-handoff-ci-check-summary.md",
+    "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-check.json",
+    "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-summary.md",
     "artifacts/proofs/task-007-livepaper-observability-shift-handoff-drill-check.json",
     "artifacts/proofs/task-007-livepaper-observability-shift-handoff-drill-summary.md",
     "artifacts/proofs/task-007-livepaper-observability-shift-handoff-template-check.json",
@@ -107,6 +110,9 @@
     "artifacts/reports/task-007-livepaper-observability-shift-handoff-ci-check-report.md",
     "artifacts/reports/task-007-livepaper-observability-shift-handoff-ci-check-status.md",
     "artifacts/reports/task-007-livepaper-observability-shift-handoff-ci-check",
+    "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-report.md",
+    "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-status.md",
+    "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog",
     "artifacts/reports/task-007-livepaper-observability-shift-handoff-drill-report.md",
     "artifacts/reports/task-007-livepaper-observability-shift-handoff-drill-status.md",
     "artifacts/reports/task-007-livepaper-observability-shift-handoff-drill",
@@ -157,15 +163,15 @@
     "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack"
   ],
   "next_task": {
-    "id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG",
-    "state": "ready_for_livepaper_observability_shift_handoff_watchdog",
+    "id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",
+    "state": "ready_for_livepaper_observability_shift_handoff_watchdog_runtime",
     "resume_requirements": [
       "Treat task005-pass-grade-pair-20260325T180027Z as the frozen promoted baseline.",
-      "Carry forward livepaper_observability_shift_handoff_ci_gate_enforced together with livepaper_observability_shift_handoff_ci_check_bounded as the current evidence conclusion.",
-      "Use docs/livepaper_observability_shift_handoff_drill.md, docs/livepaper_observability_shift_handoff_template.md, the drill sample handoff, docs/livepaper_observability_shift_checklist.md, docs/livepaper_observability_operator_runbook.md, and specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md as the operator-facing source of truth.",
+      "Carry forward livepaper_observability_shift_handoff_watchdog_guarded together with livepaper_observability_shift_handoff_watchdog_bounded as the current evidence conclusion.",
+      "Use docs/livepaper_observability_shift_handoff_template.md, docs/livepaper_observability_shift_handoff_drill.md, the current watchdog handoff, docs/livepaper_observability_shift_checklist.md, docs/livepaper_observability_operator_runbook.md, and specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md as the operator-facing source of truth.",
       "Preserve the current Dexter and Mew-X source pins together with fixed poll_first delivery and manual_latched_stop_all semantics.",
       "Do not reopen comparison work or change source logic in the next lane.",
-      "Extend the fixed handoff faces into ongoing drift monitoring without widening scope."
+      "Keep the same bounded handoff watchdog faces intact while extending them into runtime-oriented continuity."
     ]
   },
   "proofs": {
@@ -231,26 +237,36 @@
     "livepaper_observability_shift_handoff_ci_check_added": true,
     "livepaper_observability_shift_handoff_ci_check_workflow_enforced": true,
     "livepaper_observability_shift_handoff_ci_check_proof_emitted": true,
-    "recommended_next_step_is_livepaper_observability_shift_handoff_watchdog": true
+    "livepaper_observability_shift_handoff_watchdog_added": true,
+    "livepaper_observability_shift_handoff_watchdog_workflow_enforced": true,
+    "livepaper_observability_shift_handoff_watchdog_proof_emitted": true,
+    "livepaper_observability_shift_handoff_watchdog_current_status_guarded": true,
+    "livepaper_observability_shift_handoff_watchdog_pointer_integrity_guarded": true,
+    "livepaper_observability_shift_handoff_watchdog_explicit_false_none_guarded": true,
+    "livepaper_observability_shift_handoff_watchdog_containment_visibility_guarded": true,
+    "livepaper_observability_shift_handoff_watchdog_terminal_failure_visibility_guarded": true,
+    "livepaper_observability_shift_handoff_watchdog_open_questions_guarded": true,
+    "livepaper_observability_shift_handoff_watchdog_priority_checks_guarded": true,
+    "recommended_next_step_is_livepaper_observability_shift_handoff_watchdog_runtime": true
   },
   "task_result": {
     "selected_outcome": "A",
-    "key_finding": "livepaper_observability_shift_handoff_ci_gate_enforced",
-    "claim_boundary": "livepaper_observability_shift_handoff_ci_check_bounded",
+    "key_finding": "livepaper_observability_shift_handoff_watchdog_guarded",
+    "claim_boundary": "livepaper_observability_shift_handoff_watchdog_bounded",
     "comparison_source_of_truth_state": "comparison_closed_out",
-    "task_state": "livepaper_observability_shift_handoff_ci_check_passed",
-    "recommended_next_step": "livepaper_observability_shift_handoff_watchdog",
-    "recommended_next_task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG",
-    "decision": "livepaper_observability_shift_handoff_watchdog_ready",
+    "task_state": "livepaper_observability_shift_handoff_watchdog_passed",
+    "recommended_next_step": "livepaper_observability_shift_handoff_watchdog_runtime",
+    "recommended_next_task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",
+    "decision": "livepaper_observability_shift_handoff_watchdog_runtime_ready",
     "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
     "default_execution_anchor": "dexter",
     "selective_option_source": "mewx",
-    "verified_latest_vexter_pr": 64,
-    "verified_latest_vexter_main_commit": "30652c29570bf34d105befed6a46a60b551d59b7",
+    "verified_latest_vexter_pr": 65,
+    "verified_latest_vexter_main_commit": "51cfec8b85b5020ba5f6d0f72dceb5c47c339c06",
     "verified_dexter_pr": 3,
     "verified_dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
-    "recommended_next_lane": "livepaper_observability_shift_handoff_watchdog"
+    "recommended_next_lane": "livepaper_observability_shift_handoff_watchdog_runtime"
   },
   "spec_documents": [
     "specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md"

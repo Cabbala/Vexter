@@ -170,10 +170,10 @@ def test_livepaper_observability_shift_handoff_ci_check_proof_tracks_grouped_sui
     proof = load_ci_gate_proof()
 
     assert proof["task_id"] == "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-CI-CHECK"
-    assert proof["verified_github"]["latest_vexter_pr"] == 64
+    assert proof["verified_github"]["latest_vexter_pr"] == 65
     assert (
         proof["verified_github"]["latest_vexter_main_commit"]
-        == "30652c29570bf34d105befed6a46a60b551d59b7"
+        == "51cfec8b85b5020ba5f6d0f72dceb5c47c339c06"
     )
     assert (
         proof["livepaper_observability_shift_handoff_ci_check"]["suite_group"]
@@ -228,6 +228,7 @@ def test_livepaper_observability_shift_handoff_ci_check_workflow_runs_before_bun
 
     watchdog_ci_gate_index = workflow.index("- name: Run transport livepaper observability watchdog CI gate")
     handoff_ci_gate_index = workflow.index("- name: Run livepaper observability shift handoff CI check")
+    handoff_watchdog_index = workflow.index("- name: Run livepaper observability shift handoff watchdog")
     build_bundle_index = workflow.index("- name: Build proof bundle")
     remaining_tests_index = workflow.index("- name: Run remaining tests")
 
@@ -235,7 +236,13 @@ def test_livepaper_observability_shift_handoff_ci_check_workflow_runs_before_bun
     assert "livepaper-observability-shift-handoff-ci-check-proof" in workflow
     assert "cat artifacts/proofs/task-007-livepaper-observability-shift-handoff-ci-check-summary.md" in workflow
     assert "not livepaper_observability_shift_handoff_ci_check" in workflow
-    assert watchdog_ci_gate_index < handoff_ci_gate_index < build_bundle_index < remaining_tests_index
+    assert (
+        watchdog_ci_gate_index
+        < handoff_ci_gate_index
+        < handoff_watchdog_index
+        < build_bundle_index
+        < remaining_tests_index
+    )
 
 
 def test_livepaper_observability_shift_handoff_ci_check_manifest_and_context_point_to_bundle() -> None:
@@ -249,12 +256,15 @@ def test_livepaper_observability_shift_handoff_ci_check_manifest_and_context_poi
     report_text = REPORT_PATH.read_text()
     bundle_script = (REPO_ROOT / "scripts" / "build_proof_bundle.sh").read_text()
 
-    assert manifest["task_id"] == context["current_task"]["id"] == ledger["task_id"] == proof["task_id"]
-    assert manifest["status"] == ledger["status"] == "livepaper_observability_shift_handoff_ci_check_passed"
+    assert proof["task_id"] == "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-CI-CHECK"
+    assert manifest["task_id"] == context["current_task"]["id"] == ledger["task_id"] == (
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG"
+    )
+    assert manifest["status"] == ledger["status"] == "livepaper_observability_shift_handoff_watchdog_passed"
     assert (
         manifest["bundle_path"]
         == ledger["artifact_bundle"]
-        == "artifacts/bundles/task-007-livepaper-observability-shift-handoff-ci-check.tar.gz"
+        == "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog.tar.gz"
     )
     assert "scripts/run_livepaper_observability_shift_handoff_ci_check.sh" in manifest["scripts"]
     assert (
@@ -284,7 +294,7 @@ def test_livepaper_observability_shift_handoff_ci_check_manifest_and_context_poi
     )
     assert "livepaper_observability_shift_handoff_ci_check_passed" in status_text
     assert "livepaper_observability_shift_handoff_watchdog" in report_text
-    assert "task-007-livepaper-observability-shift-handoff-ci-check.tar.gz" in bundle_script
+    assert "task-007-livepaper-observability-shift-handoff-watchdog.tar.gz" in bundle_script
 
 
 def test_livepaper_observability_shift_handoff_ci_check_script_targets_current_suite() -> None:

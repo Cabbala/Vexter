@@ -3,6 +3,11 @@
 from .budget_binder import bind_budgets
 from .config_loader import load_planner_router_package
 from .dispatch_state_machine import dispatch_plan_batch
+from .handoff_watchdog import (
+    LivepaperShiftHandoffWatchdogFinding,
+    LivepaperShiftHandoffWatchdogReport,
+    evaluate_livepaper_observability_shift_handoff_watchdog,
+)
 from .objective_resolver import resolve_objective_profile
 from .plan_emitter import build_execution_plans, emit_plan_batch
 from .planner import plan_and_dispatch, plan_request
@@ -28,10 +33,13 @@ __all__ = [
     "dispatch_plan_batch",
     "emit_plan_batch",
     "AckState",
+    "evaluate_livepaper_observability_shift_handoff_watchdog",
     "evaluate_livepaper_observability_watchdog",
     "InMemoryPlanStore",
     "LivepaperObservabilityWatchdogFinding",
     "LivepaperObservabilityWatchdogReport",
+    "LivepaperShiftHandoffWatchdogFinding",
+    "LivepaperShiftHandoffWatchdogReport",
     "load_planner_router_package",
     "plan_and_dispatch",
     "plan_request",

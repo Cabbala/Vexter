@@ -1,0 +1,203 @@
+{
+  "task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG",
+  "generated_at_utc": "2026-03-26T20:04:28Z",
+  "verified_github": {
+    "latest_vexter_pr": 65,
+    "latest_vexter_main_commit": "51cfec8b85b5020ba5f6d0f72dceb5c47c339c06",
+    "latest_vexter_merged_at_utc": "2026-03-26T19:30:46Z",
+    "latest_recent_vexter_prs": [
+      65,
+      64,
+      63,
+      62
+    ],
+    "open_non_authoritative_vexter_prs": [
+      50
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "mewx_frozen_commit_date_utc": "2026-03-20T16:05:19Z"
+  },
+  "fixed_input_surface": {
+    "canonical_contract": "specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md",
+    "canonical_runbook": "docs/livepaper_observability_operator_runbook.md",
+    "canonical_checklist": "docs/livepaper_observability_shift_checklist.md",
+    "canonical_handoff_template": "docs/livepaper_observability_shift_handoff_template.md",
+    "canonical_handoff_drill": "docs/livepaper_observability_shift_handoff_drill.md",
+    "canonical_handoff_ci_check": "artifacts/proofs/task-007-livepaper-observability-shift-handoff-ci-check-check.json",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "comparison_source_of_truth": "comparison_closed_out",
+    "global_halt_mode": "manual_latched_stop_all",
+    "status_delivery": "poll_first"
+  },
+  "implementation": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "dexter_strategy_changed": false,
+    "mewx_strategy_changed": false,
+    "new_evidence_collection_required": false,
+    "comparison_baseline_reopened": false
+  },
+  "livepaper_observability_shift_handoff_watchdog": {
+    "suite_group": "livepaper_observability_shift_handoff_watchdog",
+    "runner_script": "scripts/run_livepaper_observability_shift_handoff_watchdog.sh",
+    "workflow": ".github/workflows/validate.yml",
+    "pytest_command": "pytest -q -m livepaper_observability_shift_handoff_watchdog tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog.py",
+    "pytest_result": "14 passed in 0.05s",
+    "watchdog_status": "passed",
+    "grouped_test_files": [
+      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog.py"
+    ],
+    "supporting_test_files": [
+      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog.py"
+    ],
+    "grouped_suite_markers": [
+      "livepaper_observability_shift_handoff_watchdog"
+    ],
+    "required_handoff_faces": [
+      "current_status",
+      "proof_and_report_pointers",
+      "omission_drift_partial_visibility",
+      "manual_stop_all",
+      "quarantine",
+      "terminal_snapshot",
+      "normalized_failure_detail",
+      "open_questions",
+      "next_shift_priority_checks"
+    ],
+    "monitored_surfaces": [
+      "current_status",
+      "proof_and_report_pointers",
+      "omission_drift_partial_visibility",
+      "manual_stop_all",
+      "quarantine",
+      "terminal_snapshot",
+      "normalized_failure_detail",
+      "open_questions",
+      "next_shift_priority_checks"
+    ],
+    "monitored_issue_classes": [
+      "omission",
+      "drift",
+      "partial_visibility"
+    ],
+    "watchdog_face_tests": {
+      "current_status": [
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog.py::test_livepaper_observability_shift_handoff_watchdog_flags_face_regression[current_status]"
+      ],
+      "proof_and_report_pointers": [
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog.py::test_livepaper_observability_shift_handoff_watchdog_flags_face_regression[proof_and_report_pointers]"
+      ],
+      "omission_drift_partial_visibility": [
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog.py::test_livepaper_observability_shift_handoff_watchdog_flags_face_regression[omission_drift_partial_visibility]"
+      ],
+      "manual_stop_all": [
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog.py::test_livepaper_observability_shift_handoff_watchdog_flags_face_regression[manual_stop_all]"
+      ],
+      "quarantine": [
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog.py::test_livepaper_observability_shift_handoff_watchdog_flags_face_regression[quarantine]"
+      ],
+      "terminal_snapshot": [
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog.py::test_livepaper_observability_shift_handoff_watchdog_flags_face_regression[terminal_snapshot]"
+      ],
+      "normalized_failure_detail": [
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog.py::test_livepaper_observability_shift_handoff_watchdog_flags_face_regression[normalized_failure_detail]"
+      ],
+      "open_questions": [
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog.py::test_livepaper_observability_shift_handoff_watchdog_flags_face_regression[open_questions]"
+      ],
+      "next_shift_priority_checks": [
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog.py::test_livepaper_observability_shift_handoff_watchdog_flags_face_regression[next_shift_priority_checks]"
+      ]
+    },
+    "proof_outputs": [
+      "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-check.json",
+      "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-summary.md"
+    ],
+    "proof_artifact_name": "livepaper-observability-shift-handoff-watchdog-proof",
+    "evaluated_handoff": "artifacts/reports/task-007-livepaper-observability-shift-handoff-drill/HANDOFF.md",
+    "watchdog_snapshot": {
+      "checked_handoff": "artifacts/reports/task-007-livepaper-observability-shift-handoff-drill/HANDOFF.md",
+      "findings": [],
+      "monitored_surfaces": [
+        "current_status",
+        "proof_and_report_pointers",
+        "omission_drift_partial_visibility",
+        "manual_stop_all",
+        "quarantine",
+        "terminal_snapshot",
+        "normalized_failure_detail",
+        "open_questions",
+        "next_shift_priority_checks"
+      ],
+      "passed": true,
+      "surface_status": {
+        "current_status": true,
+        "proof_and_report_pointers": true,
+        "omission_drift_partial_visibility": true,
+        "manual_stop_all": true,
+        "quarantine": true,
+        "terminal_snapshot": true,
+        "normalized_failure_detail": true,
+        "open_questions": true,
+        "next_shift_priority_checks": true
+      }
+    },
+    "normalized_failure_detail": {
+      "finding_surfaces_or_none": [
+        "none"
+      ],
+      "finding_classes_or_none": [
+        "none"
+      ],
+      "failed_tests_or_none": [
+        "none"
+      ],
+      "non_surface_failures_or_none": [
+        "none"
+      ]
+    },
+    "source_faithful_modes": {
+      "dexter": "paper_live",
+      "mewx": "sim_live"
+    }
+  },
+  "next_task_evaluation": {
+    "livepaper_observability_shift_handoff_watchdog_runtime": {
+      "recommended": true,
+      "reasons": [
+        "The bounded watchdog now detects omission, drift, and partial-visibility regressions directly on the shift handoff surface.",
+        "The next remaining risk is runtime-shaped continuity of the same handoff watchdog, not restating the contract."
+      ]
+    },
+    "transport_livepaper_observability_acceptance_pack": {
+      "recommended": false,
+      "reasons": [
+        "An acceptance pack would mostly repackage the fixed handoff surface that is now CI-gated and watchdog-checked.",
+        "Runtime continuity of the watchdog surface reduces more risk than repackaging the same fixed artifacts."
+      ]
+    },
+    "executor_boundary_code_spec": {
+      "recommended": false,
+      "reasons": [
+        "No new planner-to-transport boundary ambiguity surfaced while adding the handoff watchdog lane.",
+        "The remaining work is continuity of the existing handoff surface rather than interface discovery."
+      ]
+    }
+  },
+  "task_result": {
+    "selected_outcome": "A",
+    "key_finding": "livepaper_observability_shift_handoff_watchdog_guarded",
+    "claim_boundary": "livepaper_observability_shift_handoff_watchdog_bounded",
+    "comparison_source_of_truth_state": "comparison_closed_out",
+    "task_state": "livepaper_observability_shift_handoff_watchdog_passed",
+    "recommended_next_step": "livepaper_observability_shift_handoff_watchdog_runtime",
+    "recommended_next_task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",
+    "decision": "livepaper_observability_shift_handoff_watchdog_runtime_ready",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "default_execution_anchor": "dexter",
+    "selective_option_source": "mewx"
+  }
+}

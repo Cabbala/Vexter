@@ -1,0 +1,16 @@
+[
+  {
+    "monitor_profile_id": "dexter_default",
+    "admission_gate_class": "lifecycle_control",
+    "timeout_envelope_class": "dexter_lifecycle_control",
+    "quarantine_scope": "sleeve",
+    "global_halt_participation": true
+  },
+  {
+    "monitor_profile_id": "mewx_timeout_guard",
+    "admission_gate_class": "timeout_aware",
+    "timeout_envelope_class": "mewx_timeout_tolerant",
+    "quarantine_scope": "sleeve",
+    "global_halt_participation": true
+  }
+]

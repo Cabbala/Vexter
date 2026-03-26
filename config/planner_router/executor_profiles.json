@@ -1,0 +1,51 @@
+[
+  {
+    "executor_profile_id": "dexter_main_pinned",
+    "source": "dexter",
+    "pinned_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "methods": [
+      "_settings_snapshot",
+      "_reserve_buy_spend",
+      "_release_buy_spend",
+      "_finalize_buy_spend",
+      "set_trust_level",
+      "buy",
+      "sell",
+      "monitor_mint_session"
+    ],
+    "normalized_statuses": [
+      "planned",
+      "starting",
+      "running",
+      "quarantined",
+      "stopping",
+      "stopped",
+      "failed"
+    ]
+  },
+  {
+    "executor_profile_id": "mewx_frozen_pinned",
+    "source": "mewx",
+    "pinned_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "methods": [
+      "config",
+      "get_snipe_config",
+      "get_strats_config",
+      "get_tx_settings",
+      "start_session",
+      "sim_session",
+      "trade_session",
+      "buy",
+      "sell"
+    ],
+    "normalized_statuses": [
+      "planned",
+      "starting",
+      "running",
+      "quarantined",
+      "stopping",
+      "stopped",
+      "failed"
+    ]
+  }
+]

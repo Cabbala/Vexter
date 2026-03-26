@@ -1,0 +1,31 @@
+[
+  {
+    "budget_policy_id": "single_anchor_default",
+    "sleeve_shares": {
+      "dexter_default": "100%"
+    },
+    "explicit_cap_required": false,
+    "cap_reference_by_sleeve": {}
+  },
+  {
+    "budget_policy_id": "selective_overlay",
+    "sleeve_shares": {
+      "dexter_default": "80%",
+      "mewx_containment": "20%"
+    },
+    "explicit_cap_required": true,
+    "cap_reference_by_sleeve": {
+      "mewx_containment": "mewx_overlay_minor_cap"
+    }
+  },
+  {
+    "budget_policy_id": "dedicated_containment_template",
+    "sleeve_shares": {
+      "mewx_containment": "100%"
+    },
+    "explicit_cap_required": true,
+    "cap_reference_by_sleeve": {
+      "mewx_containment": "mewx_dedicated_cap"
+    }
+  }
+]

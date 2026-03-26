@@ -1,0 +1,16 @@
+[
+  {
+    "sleeve_id": "dexter_default",
+    "source": "dexter",
+    "enabled": true,
+    "budget_mode": "single_anchor_default",
+    "executor_profile_id": "dexter_main_pinned"
+  },
+  {
+    "sleeve_id": "mewx_containment",
+    "source": "mewx",
+    "enabled": false,
+    "budget_mode": "explicit_cap_only",
+    "executor_profile_id": "mewx_frozen_pinned"
+  }
+]

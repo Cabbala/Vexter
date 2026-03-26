@@ -1,8 +1,8 @@
 {
-  "bundle_path": "artifacts/bundles/task-007-concrete-planner-router-code-spec.tar.gz",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_concrete_planner_router_code_spec_bundle.tar.gz",
-  "task_id": "TASK-007-CONCRETE-PLANNER-ROUTER-CODE-SPEC",
-  "status": "planner_router_code_spec_ready",
+  "bundle_path": "artifacts/bundles/task-007-planner-router-code-implementation.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_planner_router_code_implementation_bundle.tar.gz",
+  "task_id": "TASK-007-PLANNER-ROUTER-CODE-IMPLEMENTATION",
+  "status": "planner_router_code_implemented",
   "summary": "artifacts/summary.md",
   "context_pack": "artifacts/context_pack.json",
   "task_ledger": "artifacts/task_ledger.jsonl",
@@ -12,6 +12,7 @@
     "specs/",
     "ops/",
     "plans/",
+    "config/",
     "vexter/",
     "manifests/",
     "scripts/",
@@ -27,7 +28,11 @@
     "artifacts/examples/"
   ],
   "code": [
-    "vexter/comparison/"
+    "vexter/comparison/",
+    "vexter/planner_router/"
+  ],
+  "config": [
+    "config/planner_router/"
   ],
   "docs": [
     "docs/evaluation_contract.md",
@@ -42,13 +47,6 @@
     "docs/mewx_event_mapping.md",
     "docs/dexter_paper_mode_design.md"
   ],
-  "plans": [
-    "plans/SOURCE_ASSESSMENT_DEXTER.md",
-    "plans/SOURCE_ASSESSMENT_MEWX.md",
-    "plans/dexter_instrumentation_plan.md",
-    "plans/mewx_instrumentation_plan.md",
-    "plans/integration_readiness_plan.md"
-  ],
   "scripts": [
     "scripts/bootstrap_windows_workspace.sh",
     "scripts/recover_windows_runtime.sh",
@@ -58,82 +56,36 @@
     "scripts/collect_comparison_package.ps1",
     "scripts/collect_matched_live_pair.py"
   ],
-  "manifests": [
-    "manifests/reference_repos.json",
-    "manifests/windows_runtime.json"
-  ],
-  "templates": [
-    "templates/windows_runtime/dexter.env.example",
-    "templates/windows_runtime/mewx.env.example"
-  ],
   "proof_files": [
+    "artifacts/proofs/task-007-planner-router-code-implementation-check.json",
+    "artifacts/proofs/task-007-planner-router-code-implementation-summary.md",
     "artifacts/proofs/task-007-concrete-planner-router-code-spec-check.json",
     "artifacts/proofs/task-007-concrete-planner-router-code-spec-summary.md",
     "artifacts/proofs/task-007-concrete-planner-router-implementation-spec-check.json",
     "artifacts/proofs/task-007-concrete-planner-router-implementation-spec-summary.md",
     "artifacts/proofs/task-007-planner-router-interface-spec-check.json",
-    "artifacts/proofs/task-007-planner-router-interface-spec-summary.md",
-    "artifacts/proofs/task-007-implementation-planning-check.json",
-    "artifacts/proofs/task-007-implementation-planning-summary.md",
-    "artifacts/proofs/task-007-execution-planning-check.json",
-    "artifacts/proofs/task-007-execution-planning-summary.md",
-    "artifacts/proofs/task-007-strategy-planning-check.json",
-    "artifacts/proofs/task-007-strategy-planning-summary.md",
-    "artifacts/proofs/task-007-risk-containment-vs-exit-capture-check.json",
-    "artifacts/proofs/task-007-risk-containment-vs-exit-capture-summary.md",
-    "artifacts/proofs/task-007-execution-timing-vs-retention-check.json",
-    "artifacts/proofs/task-007-execution-timing-vs-retention-summary.md",
-    "artifacts/proofs/task-007-candidate-generation-vs-quality-check.json",
-    "artifacts/proofs/task-007-candidate-generation-vs-quality-summary.md",
-    "artifacts/proofs/task-007-downstream-research-intake-check.json",
-    "artifacts/proofs/task-007-downstream-research-intake-summary.md",
-    "artifacts/proofs/task-006-research-handoff-check.json",
-    "artifacts/proofs/task-006-research-handoff-summary.md"
+    "artifacts/proofs/task-007-planner-router-interface-spec-summary.md"
   ],
   "reports": [
+    "artifacts/reports/task-007-planner-router-code-implementation-report.md",
+    "artifacts/reports/task-007-planner-router-code-implementation-status.md",
+    "artifacts/reports/task-007-planner-router-code-implementation",
     "artifacts/reports/task-007-concrete-planner-router-code-spec-report.md",
     "artifacts/reports/task-007-concrete-planner-router-code-spec-status.md",
     "artifacts/reports/task-007-concrete-planner-router-code-spec",
     "artifacts/reports/task-007-concrete-planner-router-implementation-spec-report.md",
     "artifacts/reports/task-007-concrete-planner-router-implementation-spec-status.md",
-    "artifacts/reports/task-007-concrete-planner-router-implementation-spec",
-    "artifacts/reports/task-007-planner-router-interface-spec-report.md",
-    "artifacts/reports/task-007-planner-router-interface-spec-status.md",
-    "artifacts/reports/task-007-planner-router-interface-spec",
-    "artifacts/reports/task-007-implementation-planning-report.md",
-    "artifacts/reports/task-007-implementation-planning-status.md",
-    "artifacts/reports/task-007-implementation-planning",
-    "artifacts/reports/task-007-execution-planning-report.md",
-    "artifacts/reports/task-007-execution-planning-status.md",
-    "artifacts/reports/task-007-execution-planning",
-    "artifacts/reports/task-007-strategy-planning-report.md",
-    "artifacts/reports/task-007-strategy-planning-status.md",
-    "artifacts/reports/task-007-strategy-planning",
-    "artifacts/reports/task-007-risk-containment-vs-exit-capture-report.md",
-    "artifacts/reports/task-007-risk-containment-vs-exit-capture-status.md",
-    "artifacts/reports/task-007-risk-containment-vs-exit-capture",
-    "artifacts/reports/task-007-execution-timing-vs-retention-report.md",
-    "artifacts/reports/task-007-execution-timing-vs-retention-status.md",
-    "artifacts/reports/task-007-execution-timing-vs-retention",
-    "artifacts/reports/task-007-candidate-generation-vs-quality-report.md",
-    "artifacts/reports/task-007-candidate-generation-vs-quality-status.md",
-    "artifacts/reports/task-007-candidate-generation-vs-quality",
-    "artifacts/reports/task-007-downstream-research-intake-report.md",
-    "artifacts/reports/task-007-downstream-research-intake-status.md",
-    "artifacts/reports/task-007-downstream-research-intake",
-    "artifacts/reports/task-006-research-handoff-report.md",
-    "artifacts/reports/task-006-research-handoff-status.md",
-    "artifacts/reports/task-006-research-handoff"
+    "artifacts/reports/task-007-concrete-planner-router-implementation-spec"
   ],
   "next_task": {
-    "id": "TASK-007-PLANNER-ROUTER-CODE-IMPLEMENTATION",
-    "state": "ready_for_planner_router_code_implementation",
+    "id": "TASK-007-PLANNER-ROUTER-INTEGRATION-SMOKE",
+    "state": "ready_for_planner_router_integration_smoke",
     "resume_requirements": [
       "Treat task005-pass-grade-pair-20260325T180027Z as the frozen promoted baseline.",
-      "Carry forward planner_router_code_spec_ready together with code_spec_bounded as the current code-level conclusion.",
-      "Implement vexter/planner_router using the fixed module split from the code spec.",
-      "Keep prepare-then-start dispatch ordering and prohibit mid-trade source handoff.",
-      "Do not reopen comparison, numeric monitor thresholds, or executor transport while building the first implementation skeleton."
+      "Carry forward planner_router_code_implemented together with implementation_bounded as the current implementation conclusion.",
+      "Exercise plan_request and plan_and_dispatch end to end with committed config and stubbed adapters.",
+      "Keep monitor numerics and executor transport deferred behind the current seams.",
+      "Do not reopen comparison or change frozen Dexter or Mew-X source logic."
     ]
   },
   "proofs": {
@@ -142,59 +94,35 @@
     "mewx_strategy_changed": false,
     "validator_rules_changed": false,
     "comparison_source_of_truth_frozen": true,
-    "concrete_planner_router_spec_reused": true,
-    "planner_router_code_spec_ready": true,
-    "code_spec_bounded": true,
-    "module_layout_fixed": true,
-    "typed_object_boundary_fixed": true,
-    "function_boundaries_fixed": true,
-    "dispatch_state_machine_fixed": true,
-    "rollback_semantics_fixed": true,
-    "source_adapter_boundaries_fixed": true,
+    "planner_router_code_spec_reused": true,
+    "planner_router_code_implemented": true,
+    "implementation_bounded": true,
+    "config_package_committed": true,
+    "unit_tests_added": true,
+    "dispatch_state_machine_implemented": true,
+    "rollback_semantics_implemented": true,
+    "source_adapter_seams_preserved": true,
     "monitor_thresholds_deferred": true,
     "executor_transport_deferred": true,
-    "new_evidence_collection_required": false,
-    "live_comparison_winner_mode_derived": true,
-    "replay_comparison_winner_mode_derived": true,
-    "promoted_replay_coverage_full": true,
-    "promoted_replay_gap_zero": true,
-    "confirmatory_residual_narrow": true,
-    "default_execution_anchor_is_dexter": true,
-    "mewx_selective_option_bounded": true,
-    "recommended_next_step_is_planner_router_code_implementation": true
+    "recommended_next_step_is_planner_router_integration_smoke": true
   },
   "task_result": {
     "selected_outcome": "A",
-    "key_finding": "planner_router_code_spec_ready",
-    "claim_boundary": "code_spec_bounded",
+    "key_finding": "planner_router_code_implemented",
+    "claim_boundary": "implementation_bounded",
     "comparison_source_of_truth_state": "comparison_closed_out",
-    "task_state": "planner_router_code_spec_ready",
-    "recommended_next_step": "planner_router_code_implementation",
-    "recommended_next_task_id": "TASK-007-PLANNER-ROUTER-CODE-IMPLEMENTATION",
-    "decision": "implementation_ready",
+    "task_state": "planner_router_code_implemented",
+    "recommended_next_step": "planner_router_integration_smoke",
+    "recommended_next_task_id": "TASK-007-PLANNER-ROUTER-INTEGRATION-SMOKE",
+    "decision": "integration_smoke_ready",
     "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
-    "live_metric_winner_tally": {
-      "dexter": 6,
-      "mewx": 4,
-      "tie": 2
-    },
-    "replay_metric_winner_tally": {
-      "dexter": 6,
-      "mewx": 4,
-      "tie": 2
-    },
-    "dexter_replay_coverage_ratio": 1.0,
-    "dexter_live_vs_replay_gap_pct": 0.0,
-    "mewx_replay_coverage_ratio": 1.0,
-    "mewx_live_vs_replay_gap_pct": 0.0,
-    "confirmatory_residual": "Mew-X candidate_rejected",
     "default_execution_anchor": "dexter",
     "selective_option_source": "mewx",
-    "verified_latest_vexter_pr": 36,
-    "verified_latest_vexter_main_commit": "8713b9ba8de82accda48526fdff8732531d7b620",
+    "verified_latest_vexter_pr": 37,
+    "verified_latest_vexter_main_commit": "786221a664637925f790e89af0448fa04832426e",
     "verified_dexter_pr": 3,
     "verified_dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
-    "recommended_next_lane": "planner_router_code_implementation"
+    "recommended_next_lane": "planner_router_integration_smoke"
   }
 }

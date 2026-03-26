@@ -1,0 +1,224 @@
+{
+  "task_id": "TASK-007-PLANNER-ROUTER-CODE-IMPLEMENTATION",
+  "generated_at_utc": "2026-03-26T02:04:24Z",
+  "verified_github": {
+    "latest_vexter_pr": 37,
+    "latest_vexter_main_commit": "786221a664637925f790e89af0448fa04832426e",
+    "latest_vexter_merged_at_utc": "2026-03-26T01:43:05Z",
+    "supporting_vexter_prs": [
+      36,
+      35,
+      34,
+      33,
+      32,
+      31,
+      30,
+      29,
+      28,
+      27,
+      26,
+      25,
+      24,
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17,
+      16
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "mewx_frozen_commit_date_utc": "2026-03-20T16:05:19Z"
+  },
+  "fixed_input_surface": {
+    "planner_router_code_spec_report": "artifacts/reports/task-007-concrete-planner-router-code-spec-report.md",
+    "planner_router_code_spec_proof": "artifacts/proofs/task-007-concrete-planner-router-code-spec-check.json",
+    "planner_router_implementation_spec_report": "artifacts/reports/task-007-concrete-planner-router-implementation-spec-report.md",
+    "planner_router_implementation_spec_proof": "artifacts/proofs/task-007-concrete-planner-router-implementation-spec-check.json",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "promoted_live_winner_mode": "derived",
+    "promoted_replay_winner_mode": "derived",
+    "live_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "replay_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "dexter_replay_coverage_ratio": 1.0,
+    "dexter_live_vs_replay_gap_pct": 0.0,
+    "mewx_replay_coverage_ratio": 1.0,
+    "mewx_live_vs_replay_gap_pct": 0.0,
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false
+  },
+  "implementation": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "dexter_strategy_changed": false,
+    "mewx_strategy_changed": false,
+    "new_evidence_collection_required": false,
+    "config_root": "config/planner_router",
+    "package_root": "vexter/planner_router",
+    "modules": [
+      "vexter/planner_router/__init__.py",
+      "vexter/planner_router/models.py",
+      "vexter/planner_router/errors.py",
+      "vexter/planner_router/interfaces.py",
+      "vexter/planner_router/config_loader.py",
+      "vexter/planner_router/objective_resolver.py",
+      "vexter/planner_router/sleeve_selector.py",
+      "vexter/planner_router/budget_binder.py",
+      "vexter/planner_router/plan_emitter.py",
+      "vexter/planner_router/dispatch_state_machine.py",
+      "vexter/planner_router/planner.py"
+    ],
+    "config_files": [
+      "config/planner_router/planner.json",
+      "config/planner_router/objective_profiles.json",
+      "config/planner_router/sleeves.json",
+      "config/planner_router/budget_policies.json",
+      "config/planner_router/monitor_profiles.json",
+      "config/planner_router/executor_profiles.json"
+    ],
+    "test_files": [
+      "tests/test_planner_router_config_loader.py",
+      "tests/test_planner_router_objective_resolver.py",
+      "tests/test_planner_router_plan_emitter.py",
+      "tests/test_planner_router_dispatch_state_machine.py"
+    ],
+    "pytest_command": "pytest -q",
+    "pytest_result": "41 passed"
+  },
+  "planner_router_code_implementation": {
+    "config_loading": {
+      "deterministic_file_order": [
+        "planner",
+        "objective_profiles",
+        "sleeves",
+        "budget_policies",
+        "monitor_profiles",
+        "executor_profiles"
+      ],
+      "missing_files_fail_closed": true,
+      "duplicate_ids_fail_closed": true,
+      "pin_mismatch_fail_closed": true
+    },
+    "objective_resolution": {
+      "omitted_intent_defaults_to": "mixed_default",
+      "explicit_unknown_ids_rejected": true,
+      "mewx_requires_explicit_containment": true,
+      "portfolio_split_remains_dexter_primary": true
+    },
+    "sleeve_selection": {
+      "mixed_default": [
+        "dexter_default"
+      ],
+      "containment_first": [
+        "mewx_containment"
+      ],
+      "overlay_template": [
+        "dexter_default",
+        "mewx_containment"
+      ],
+      "silent_fallback_forbidden": true
+    },
+    "budget_binding": {
+      "single_anchor_default": {
+        "dexter_default": "100%"
+      },
+      "selective_overlay": {
+        "dexter_default": "80%",
+        "mewx_containment": "20%"
+      },
+      "dedicated_containment_template": {
+        "mewx_containment": "100%"
+      },
+      "nonzero_mewx_requires_explicit_cap": true
+    },
+    "plan_emission": {
+      "immutable_execution_plan": true,
+      "atomic_batch_emission": true,
+      "source_pin_embedded": true
+    },
+    "dispatch_state_machine": {
+      "prepare_all_before_start": true,
+      "rollback_on_prepare_failure": true,
+      "rollback_on_start_failure": true,
+      "mid_trade_handoff_forbidden": true
+    },
+    "source_adapter_seams": {
+      "dexter": [
+        "settings.py",
+        "Dexter._settings_snapshot",
+        "Dexter._reserve_buy_spend",
+        "Dexter._release_buy_spend",
+        "Dexter._finalize_buy_spend",
+        "Dexter.set_trust_level",
+        "Dexter.buy",
+        "Dexter.sell",
+        "Dexter.monitor_mint_session"
+      ],
+      "mewx": [
+        "config.rs::config",
+        "config.rs::get_snipe_config",
+        "config.rs::get_strats_config",
+        "config.rs::get_tx_settings",
+        "MewSnipe.start_session",
+        "MewSnipe.sim_session",
+        "MewSnipe.trade_session",
+        "MewSnipe.buy",
+        "MewSnipe.sell"
+      ]
+    },
+    "deferred_specs": [
+      "monitor_killswitch_spec",
+      "executor_boundary_spec"
+    ],
+    "recommended_next_step": "planner_router_integration_smoke"
+  },
+  "next_task_evaluation": {
+    "planner_router_integration_smoke": {
+      "recommended": true,
+      "reasons": [
+        "The code-spec surface is now real code rather than only a report.",
+        "The public plan_request and plan_and_dispatch paths are ready for a higher-level smoke with stubbed adapters.",
+        "Integration smoke confirms the control-plane wiring before transport and monitor numerics are fixed."
+      ]
+    },
+    "monitor_killswitch_spec": {
+      "recommended": false,
+      "reasons": [
+        "Monitor binding points already exist in code and can be specified after the first orchestration smoke.",
+        "The remaining work is numeric and escalation-policy detail, not an implementation blocker."
+      ]
+    },
+    "executor_boundary_spec": {
+      "recommended": false,
+      "reasons": [
+        "Executor transport is already isolated behind protocols.",
+        "A smoke over the existing abstract seams is lower risk and narrower than choosing process ownership now."
+      ]
+    }
+  },
+  "task_result": {
+    "selected_outcome": "A",
+    "key_finding": "planner_router_code_implemented",
+    "claim_boundary": "implementation_bounded",
+    "comparison_source_of_truth_state": "comparison_closed_out",
+    "task_state": "planner_router_code_implemented",
+    "recommended_next_step": "planner_router_integration_smoke",
+    "recommended_next_task_id": "TASK-007-PLANNER-ROUTER-INTEGRATION-SMOKE",
+    "decision": "integration_smoke_ready",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "default_execution_anchor": "dexter",
+    "selective_option_source": "mewx"
+  }
+}

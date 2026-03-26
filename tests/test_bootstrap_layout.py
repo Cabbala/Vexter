@@ -41,6 +41,12 @@ def test_required_paths_exist() -> None:
         "scripts/collect_comparison_package.ps1",
         "templates/windows_runtime/dexter.env.example",
         "templates/windows_runtime/mewx.env.example",
+        "config/planner_router/planner.json",
+        "config/planner_router/objective_profiles.json",
+        "config/planner_router/sleeves.json",
+        "config/planner_router/budget_policies.json",
+        "config/planner_router/monitor_profiles.json",
+        "config/planner_router/executor_profiles.json",
         "vexter/__init__.py",
         "vexter/comparison/__init__.py",
         "vexter/comparison/constants.py",
@@ -50,7 +56,22 @@ def test_required_paths_exist() -> None:
         "vexter/comparison/pack.py",
         "vexter/comparison/replay_deepening.py",
         "vexter/comparison/replay_surface_fix.py",
+        "vexter/planner_router/__init__.py",
+        "vexter/planner_router/models.py",
+        "vexter/planner_router/errors.py",
+        "vexter/planner_router/interfaces.py",
+        "vexter/planner_router/config_loader.py",
+        "vexter/planner_router/objective_resolver.py",
+        "vexter/planner_router/sleeve_selector.py",
+        "vexter/planner_router/budget_binder.py",
+        "vexter/planner_router/plan_emitter.py",
+        "vexter/planner_router/dispatch_state_machine.py",
+        "vexter/planner_router/planner.py",
         "tests/conftest.py",
+        "tests/test_planner_router_config_loader.py",
+        "tests/test_planner_router_objective_resolver.py",
+        "tests/test_planner_router_plan_emitter.py",
+        "tests/test_planner_router_dispatch_state_machine.py",
         "artifacts/context_pack.json",
         "artifacts/summary.md",
         "artifacts/proof_bundle_manifest.json",
@@ -119,6 +140,10 @@ def test_required_paths_exist() -> None:
         "artifacts/reports/task-007-concrete-planner-router-implementation-spec-status.md",
         "artifacts/reports/task-007-concrete-planner-router-implementation-spec/DETAILS.md",
         "artifacts/reports/task-007-concrete-planner-router-implementation-spec/MIN_PROMPT.txt",
+        "artifacts/reports/task-007-planner-router-code-implementation-report.md",
+        "artifacts/reports/task-007-planner-router-code-implementation-status.md",
+        "artifacts/reports/task-007-planner-router-code-implementation/DETAILS.md",
+        "artifacts/reports/task-007-planner-router-code-implementation/MIN_PROMPT.txt",
         "artifacts/proofs/task-005-live-collection-check.json",
         "artifacts/proofs/task-005-pass-grade-pair-check.json",
         "artifacts/proofs/task-005-windows-runtime-recovery.json",
@@ -151,6 +176,9 @@ def test_required_paths_exist() -> None:
         "artifacts/proofs/task-007-planner-router-interface-spec-summary.md",
         "artifacts/proofs/task-007-concrete-planner-router-implementation-spec-check.json",
         "artifacts/proofs/task-007-concrete-planner-router-implementation-spec-summary.md",
+        "artifacts/proofs/task-007-planner-router-code-implementation-check.json",
+        "artifacts/proofs/task-007-planner-router-code-implementation-summary.md",
+        "artifacts/bundles/task-007-planner-router-code-implementation.tar.gz",
         "artifacts/examples/task-004-sample-comparison/pack_manifest.json",
         ".github/workflows/validate.yml",
     ]
@@ -244,6 +272,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-PLANNER-ROUTER-INTERFACE-SPEC",
         "TASK-007-CONCRETE-PLANNER-ROUTER-IMPLEMENTATION-SPEC",
         "TASK-007-CONCRETE-PLANNER-ROUTER-CODE-SPEC",
+        "TASK-007-PLANNER-ROUTER-CODE-IMPLEMENTATION",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -276,6 +305,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "planner_router_spec_ready",
         "concrete_planner_router_spec_ready",
         "planner_router_code_spec_ready",
+        "planner_router_code_implemented",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -311,6 +341,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-007-planner-router-interface-spec",
         "codex/task-007-concrete-planner-router-implementation-spec",
         "codex/task-007-concrete-planner-router-code-spec",
+        "codex/task-007-planner-router-code-implementation",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -329,6 +360,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "CONCRETE-PLANNER-ROUTER-IMPLEMENTATION-SPEC",
         "CONCRETE-PLANNER-ROUTER-CODE-SPEC",
         "TASK-007-PLANNER-ROUTER-CODE-IMPLEMENTATION",
+        "TASK-007-PLANNER-ROUTER-INTEGRATION-SMOKE",
     }
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -359,6 +391,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "ready_for_concrete_planner_router_implementation_spec",
         "ready_for_concrete_planner_router_code_spec",
         "ready_for_planner_router_code_implementation",
+        "ready_for_planner_router_integration_smoke",
     }
 
 
@@ -397,6 +430,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "planner_router_spec_ready",
         "concrete_planner_router_spec_ready",
         "planner_router_code_spec_ready",
+        "planner_router_code_implemented",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -417,6 +451,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "CONCRETE-PLANNER-ROUTER-IMPLEMENTATION-SPEC",
         "CONCRETE-PLANNER-ROUTER-CODE-SPEC",
         "TASK-007-PLANNER-ROUTER-CODE-IMPLEMENTATION",
+        "TASK-007-PLANNER-ROUTER-INTEGRATION-SMOKE",
     }
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -446,6 +481,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "ready_for_concrete_planner_router_implementation_spec",
         "ready_for_concrete_planner_router_code_spec",
         "ready_for_planner_router_code_implementation",
+        "ready_for_planner_router_integration_smoke",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]
@@ -470,6 +506,8 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "vexter/comparison/validator.py" in names
     assert "vexter/comparison/replay_deepening.py" in names
     assert "vexter/comparison/replay_surface_fix.py" in names
+    assert "vexter/planner_router/planner.py" in names
+    assert "config/planner_router/planner.json" in names
     assert "artifacts/examples/task-004-sample-comparison/summary.md" in names
     assert "artifacts/reports/task-005-live-collection-blocker.md" in names
     assert "artifacts/reports/task-005-windows-runtime-recovery.md" in names

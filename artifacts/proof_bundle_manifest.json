@@ -1,8 +1,8 @@
 {
-  "bundle_path": "artifacts/bundles/task-007-execution-planning.tar.gz",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_execution_planning_bundle.tar.gz",
-  "task_id": "TASK-007-EXECUTION-PLANNING",
-  "status": "execution_plan_ready",
+  "bundle_path": "artifacts/bundles/task-007-implementation-planning.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_implementation_planning_bundle.tar.gz",
+  "task_id": "TASK-007-IMPLEMENTATION-PLANNING",
+  "status": "implementation_plan_ready",
   "summary": "artifacts/summary.md",
   "context_pack": "artifacts/context_pack.json",
   "task_ledger": "artifacts/task_ledger.jsonl",
@@ -67,6 +67,8 @@
     "templates/windows_runtime/mewx.env.example"
   ],
   "proof_files": [
+    "artifacts/proofs/task-007-implementation-planning-check.json",
+    "artifacts/proofs/task-007-implementation-planning-summary.md",
     "artifacts/proofs/task-007-execution-planning-check.json",
     "artifacts/proofs/task-007-execution-planning-summary.md",
     "artifacts/proofs/task-007-strategy-planning-check.json",
@@ -96,6 +98,9 @@
     "artifacts/proofs/task-005-validator-rule-implement-check.json"
   ],
   "reports": [
+    "artifacts/reports/task-007-implementation-planning-report.md",
+    "artifacts/reports/task-007-implementation-planning-status.md",
+    "artifacts/reports/task-007-implementation-planning",
     "artifacts/reports/task-007-execution-planning-report.md",
     "artifacts/reports/task-007-execution-planning-status.md",
     "artifacts/reports/task-007-execution-planning",
@@ -131,16 +136,16 @@
     "artifacts/reports/task-006-replay-validation.md"
   ],
   "next_task": {
-    "id": "IMPLEMENTATION-PLANNING",
-    "state": "ready_for_implementation_planning",
+    "id": "PLANNER-ROUTER-INTERFACE-SPEC",
+    "state": "ready_for_planner_router_interface_spec",
     "resume_requirements": [
       "Treat task005-pass-grade-pair-20260325T180027Z as the frozen promoted baseline.",
-      "Carry forward execution_plan_ready together with execution_plan_bounded as the current bounded execution conclusion.",
+      "Carry forward implementation_plan_ready together with implementation_plan_bounded as the current implementation-level conclusion.",
       "Use Dexter as the default execution anchor unless the target sleeve explicitly prioritizes drawdown containment and local-peak retention above realized exit and stale-risk avoidance.",
-      "Treat Mew-X selective adoption as a containment-first sleeve rather than a source-fusion fallback.",
-      "Keep routing ex ante and objective-conditioned rather than mid-trade and compositional.",
-      "Keep Dexter and Mew-X strategy semantics frozen.",
-      "Keep the replay claim scoped to close-summary and position_closed realized-return fidelity unless a separate path-equivalence task is cut."
+      "Treat Mew-X as a containment-first selective sleeve rather than a source-fusion fallback.",
+      "Keep routing ex ante and sleeve-scoped rather than mid-trade and compositional.",
+      "Fix one immutable planner/router contract that binds route, budget, monitor profile, and executor profile.",
+      "Keep Dexter and Mew-X strategy semantics frozen."
     ]
   },
   "proofs": {
@@ -149,10 +154,11 @@
     "mewx_strategy_changed": false,
     "validator_rules_changed": false,
     "comparison_source_of_truth_frozen": true,
-    "strategy_lane_reused": true,
-    "execution_plan_ready": true,
-    "execution_plan_bounded": true,
-    "implementation_planning_ready": true,
+    "execution_plan_reused": true,
+    "implementation_plan_ready": true,
+    "implementation_plan_bounded": true,
+    "planner_router_interface_spec_ready": true,
+    "monitoring_kill_switch_spec_ready_after_interface": true,
     "path_sensitive_retention_scope_required": false,
     "new_evidence_collection_required": false,
     "live_comparison_winner_mode_derived": true,
@@ -162,20 +168,20 @@
     "confirmatory_residual_narrow": true,
     "default_execution_anchor_is_dexter": true,
     "mewx_selective_option_bounded": true,
-    "objective_conditioned_routing_supported": true,
+    "ex_ante_sleeve_routing_required": true,
     "source_fusion_not_supported": true,
-    "recommended_next_step_is_implementation_planning": true,
+    "recommended_next_step_is_planner_router_interface_spec": true,
     "paper_sim_first_preserved": true
   },
   "task_result": {
     "selected_outcome": "A",
-    "key_finding": "execution_plan_ready",
-    "claim_boundary": "execution_plan_bounded",
+    "key_finding": "implementation_plan_ready",
+    "claim_boundary": "implementation_plan_bounded",
     "comparison_source_of_truth_state": "comparison_closed_out",
-    "task_state": "execution_plan_ready",
-    "recommended_next_step": "implementation_planning",
-    "recommended_next_task_id": "IMPLEMENTATION-PLANNING",
-    "decision": "implementation_planning_ready",
+    "task_state": "implementation_plan_ready",
+    "recommended_next_step": "planner_router_interface_spec",
+    "recommended_next_task_id": "PLANNER-ROUTER-INTERFACE-SPEC",
+    "decision": "next_spec_ready",
     "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
     "live_metric_winner_tally": {
       "dexter": 6,
@@ -194,11 +200,11 @@
     "confirmatory_residual": "Mew-X candidate_rejected",
     "default_execution_anchor": "dexter",
     "selective_option_source": "mewx",
-    "verified_latest_vexter_pr": 32,
-    "verified_latest_vexter_main_commit": "a214ff04f0662e250b01181551a8963ce8e80dd6",
+    "verified_latest_vexter_pr": 33,
+    "verified_latest_vexter_main_commit": "c6dfaee621e3eea08ceec1cfba7f0fe65a5918fc",
     "verified_dexter_pr": 3,
     "verified_dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
-    "recommended_next_lane": "implementation_planning"
+    "recommended_next_lane": "planner_router_interface_spec"
   }
 }

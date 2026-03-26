@@ -222,6 +222,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-RISK-CONTAINMENT-VS-EXIT-CAPTURE",
         "TASK-007-STRATEGY-PLANNING",
         "TASK-007-EXECUTION-PLANNING",
+        "TASK-007-IMPLEMENTATION-PLANNING",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -250,6 +251,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "risk_exit_tradeoff_supported",
         "strategy_plan_ready",
         "execution_plan_ready",
+        "implementation_plan_ready",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -281,6 +283,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-007-risk-containment-vs-exit-capture",
         "codex/task-007-strategy-planning",
         "codex/task-007-execution-planning",
+        "codex/task-007-implementation-planning",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -295,6 +298,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "STRATEGY-PLANNING",
         "EXECUTION-PLANNING",
         "IMPLEMENTATION-PLANNING",
+        "PLANNER-ROUTER-INTERFACE-SPEC",
     }
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -321,6 +325,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "ready_for_objective_weighted_strategy_planning",
         "ready_for_execution_planning",
         "ready_for_implementation_planning",
+        "ready_for_planner_router_interface_spec",
     }
 
 
@@ -355,6 +360,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "risk_exit_tradeoff_supported",
         "strategy_plan_ready",
         "execution_plan_ready",
+        "implementation_plan_ready",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -371,6 +377,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "STRATEGY-PLANNING",
         "EXECUTION-PLANNING",
         "IMPLEMENTATION-PLANNING",
+        "PLANNER-ROUTER-INTERFACE-SPEC",
     }
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -396,6 +403,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "ready_for_objective_weighted_strategy_planning",
         "ready_for_execution_planning",
         "ready_for_implementation_planning",
+        "ready_for_planner_router_interface_spec",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]

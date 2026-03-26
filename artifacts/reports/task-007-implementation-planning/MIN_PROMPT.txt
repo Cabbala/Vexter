@@ -1,0 +1,28 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+次タスクID: PLANNER-ROUTER-INTERFACE-SPEC
+
+GitHub-visible Vexter `main` は PR `#33` merged commit `c6dfaee621e3eea08ceec1cfba7f0fe65a5918fc` まで確認済みで、comparison baseline は `task005-pass-grade-pair-20260325T180027Z` のまま固定です。Dexter は merged PR `#3` commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`、Mew-X は frozen commit `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a` を維持しています。promoted live / repaired replay はどちらも `winner_mode: derived`、stable scored split は Dexter `6`, Mew-X `4`, tie `2`、Dexter / Mew-X の replay coverage / gap はどちらも `100.00% / 0.0000` を維持し、confirmatory residual は Mew-X `candidate_rejected` のみで promoted baseline を overturn しません。
+
+この task では、新証拠収集や source logic 変更は行わず、TASK-007 execution planning の結論を implementation-ready design surface に落としました。結論は以下です。
+
+- Key finding: `implementation_plan_ready`
+- Claim boundary: `implementation_plan_bounded`
+- Decision: `next_spec_ready`
+
+source-faithful implementation conclusion:
+
+- planner/router の route unit は ex ante の sleeve or template selection
+- `Dexter` は default execution anchor のまま
+- `Mew-X` は containment-first selective sleeve に限定
+- portfolio split は `single_anchor_default`, `selective_overlay`, `dedicated_containment_template` の候補形に限定
+- monitoring は planner gate / sleeve quarantine / global halt の三層
+- executor boundary は immutable execution intent と source-native lifecycle ownership で分離
+
+次に切る task は `planner_router_interface_spec` を推奨します。先にこれを固めることで、config schema、route decision、sleeve budget binding、monitor profile 参照、executor contract を一つの上位インターフェースに固定できます。`monitoring_kill_switch_spec` はそのあとで十分で、`concrete_implementation_spec` を先に切ると範囲が広すぎます。再実行してはいけないもの:
+
+- promoted-baseline selection
+- 新 live / replay evidence collection
+- validator / source logic changes
+- mid-trade source handoff や fused-engine 前提の設計
+- replay claim の full path equivalence 化

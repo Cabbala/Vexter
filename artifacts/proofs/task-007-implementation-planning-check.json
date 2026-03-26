@@ -1,0 +1,314 @@
+{
+  "task_id": "TASK-007-IMPLEMENTATION-PLANNING",
+  "generated_at_utc": "2026-03-26T00:27:53Z",
+  "verified_github": {
+    "latest_vexter_pr": 33,
+    "latest_vexter_main_commit": "c6dfaee621e3eea08ceec1cfba7f0fe65a5918fc",
+    "latest_vexter_merged_at_utc": "2026-03-26T00:21:56Z",
+    "supporting_vexter_prs": [
+      32,
+      31,
+      30,
+      29,
+      28,
+      27,
+      26,
+      25,
+      24,
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17,
+      16
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "mewx_frozen_commit_date_utc": "2026-03-20T16:05:19Z"
+  },
+  "fixed_input_surface": {
+    "execution_lane_report": "artifacts/reports/task-007-execution-planning-report.md",
+    "execution_lane_proof": "artifacts/proofs/task-007-execution-planning-check.json",
+    "strategy_lane_report": "artifacts/reports/task-007-strategy-planning-report.md",
+    "strategy_lane_proof": "artifacts/proofs/task-007-strategy-planning-check.json",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "promoted_live_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison",
+    "promoted_replay_comparison_dir": "artifacts/reports/task006-replay-surface-fix-20260325T180027Z-replay-comparison",
+    "confirmatory_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180604Z-comparison",
+    "promoted_live_winner_mode": "derived",
+    "promoted_replay_winner_mode": "derived",
+    "live_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "replay_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "dexter_replay_coverage_ratio": 1.0,
+    "dexter_live_vs_replay_gap_pct": 0.0,
+    "mewx_replay_coverage_ratio": 1.0,
+    "mewx_live_vs_replay_gap_pct": 0.0,
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false
+  },
+  "implementation": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "dexter_strategy_changed": false,
+    "mewx_strategy_changed": false,
+    "minimal_reaggregation_only": true,
+    "new_evidence_collection_required": false
+  },
+  "implementation_planning_surface": {
+    "planner_router_layer": {
+      "route_unit": "objective_profile_bound_sleeve_selected_before_execution",
+      "responsibilities": [
+        "Validate objective profile, sleeve config, source pins, and budget declarations before execution starts.",
+        "Resolve mixed or unspecified objectives to the Dexter sleeve.",
+        "Bind budget policy, monitor profile, and executor profile into one immutable execution intent.",
+        "Launch exactly one source-specific executor per selected sleeve plan.",
+        "Translate normalized executor health into sleeve quarantine or global halt decisions."
+      ],
+      "must_not_do": [
+        "Modify source thresholds, trust logic, or execution semantics.",
+        "Compare live source internals inside one position lifecycle.",
+        "Hand an open position between Dexter and Mew-X.",
+        "Claim that a blended engine is already validated."
+      ]
+    },
+    "config_surface": {
+      "required_sections": [
+        "planner",
+        "objective_profiles",
+        "sleeves",
+        "executors",
+        "monitor_profiles"
+      ],
+      "fixed_defaults": {
+        "default_execution_anchor": "dexter",
+        "fallback_source": "dexter",
+        "route_unit": "sleeve",
+        "allow_mid_trade_handoff": false
+      },
+      "validation_rules": [
+        "Every objective profile must resolve to exactly one preferred source.",
+        "Mixed or unspecified objectives must resolve to Dexter.",
+        "Any nonzero Mew-X sleeve requires explicit enablement plus a containment-first objective profile.",
+        "No config may enable mid-trade handoff.",
+        "Budget declarations must be sleeve-scoped and fit inside total portfolio budget."
+      ]
+    },
+    "sleeve_boundaries": {
+      "dexter_default": {
+        "role": "default_execution_anchor",
+        "selected_when": [
+          "mixed_default",
+          "capture_first",
+          "low_slippage",
+          "realized_exit_capture",
+          "stale_risk_avoidance"
+        ],
+        "monitor_profile": "dexter_default",
+        "budget_modes_supported": [
+          "single_anchor_default",
+          "primary_share"
+        ]
+      },
+      "mewx_selective": {
+        "role": "containment_first_selective_sleeve",
+        "selected_when": [
+          "containment_first",
+          "fast_post_attempt_fill_when_timeout_behavior_is_acceptable",
+          "local_peak_retention"
+        ],
+        "monitor_profile": "mewx_timeout_guard",
+        "budget_modes_supported": [
+          "explicit_cap_only",
+          "dedicated_containment_template"
+        ],
+        "not_supported_for": [
+          "automatic failover",
+          "blended fallback",
+          "upstream candidate-quality parity claims",
+          "mid-trade takeover"
+        ]
+      }
+    },
+    "portfolio_split_design": {
+      "candidate_designs": {
+        "single_anchor_default": {
+          "dexter_share": "100%",
+          "mewx_share": "0%",
+          "use_case": "mixed or unspecified objectives"
+        },
+        "selective_overlay": {
+          "dexter_share": "primary",
+          "mewx_share": "explicitly capped minority sleeve",
+          "use_case": "portfolios that opt into a containment-first sleeve"
+        },
+        "dedicated_containment_template": {
+          "dexter_share": "0%",
+          "mewx_share": "100%",
+          "use_case": "fully separate containment-first strategy template"
+        }
+      },
+      "fixed_now": [
+        "The default deployment shape is single_anchor_default.",
+        "Any Mew-X budget must be explicit rather than implicit.",
+        "A portfolio split may exist only across separate sleeves, not inside one live position lifecycle."
+      ],
+      "not_fixed_now": [
+        "The exact numeric cap for a mixed-portfolio Mew-X overlay.",
+        "Dynamic rebalance rules between sleeves after start.",
+        "Per-strategy leverage or drawdown budgets inside the sleeve allocator."
+      ]
+    },
+    "monitoring_and_kill_switch": {
+      "planner_gates": [
+        "config invalid",
+        "pin mismatch",
+        "disabled sleeve",
+        "budget overflow",
+        "active global halt"
+      ],
+      "sleeve_quarantine_conditions": [
+        "repeated startup failures",
+        "heartbeat loss",
+        "unresolved lifecycle beyond the profile timeout envelope",
+        "budget exhaustion"
+      ],
+      "global_actions": [
+        "freeze all new planning",
+        "send source-native stop requests to active executors"
+      ],
+      "mewx_timeout_boundary": [
+        "A normal inactivity_timeout close reason is source-native and not an automatic incident.",
+        "Quarantine only when the session outlives the configured timeout envelope or fails to emit normalized close or shutdown confirmation.",
+        "Stopping the Mew-X sleeve must not transfer the position to Dexter."
+      ],
+      "handoff_forbidden": true
+    },
+    "executor_boundary": {
+      "execution_intent_fields": [
+        "plan_id",
+        "sleeve_id",
+        "source",
+        "objective_profile",
+        "budget_policy",
+        "monitor_profile",
+        "executor_profile",
+        "pinned_commit"
+      ],
+      "expected_executor_methods": [
+        "prepare",
+        "start",
+        "status",
+        "stop",
+        "snapshot"
+      ],
+      "normalized_statuses": [
+        "planned",
+        "starting",
+        "running",
+        "quarantined",
+        "stopping",
+        "stopped",
+        "failed"
+      ],
+      "planner_router_owns": [
+        "route choice",
+        "budget binding",
+        "monitor-profile binding",
+        "kill-switch dispatch"
+      ],
+      "executors_own": [
+        "source-native startup",
+        "source-native lifecycle",
+        "threshold use",
+        "trust logic",
+        "stop semantics"
+      ],
+      "transport_not_fixed": true
+    },
+    "assumptions_fixed_now": [
+      "Dexter remains the default execution anchor whenever objective weights are mixed or unspecified.",
+      "Mew-X remains a containment-first selective sleeve rather than a general fallback.",
+      "The route unit is an ex ante sleeve or template choice, not a mid-trade fusion mechanism.",
+      "Any first implementation must bind routing, budget, monitor profile, and executor profile in one immutable plan contract.",
+      "No new evidence collection is required before writing the first implementation spec.",
+      "No validator, Dexter, or Mew-X source logic changes are justified by this planning task."
+    ],
+    "not_fixed_now": [
+      "exact numeric Mew-X overlay caps",
+      "exact heartbeat, retry, and timeout thresholds inside each monitor profile",
+      "executor transport and process model",
+      "adaptive cross-sleeve rebalance logic",
+      "any claim that a future hybrid implementation will outperform both standalone sources"
+    ],
+    "next_spec_evaluation": {
+      "concrete_implementation_spec": {
+        "recommended": false,
+        "why": [
+          "It is too broad before the planner/router contract is explicit.",
+          "It would mix route schema, monitoring, and executor transport decisions in one step."
+        ]
+      },
+      "planner_router_interface_spec": {
+        "recommended": true,
+        "why": [
+          "It fixes the top-level contract that every other implementation piece depends on.",
+          "It locks the route unit, config schema, immutable execution intent, sleeve budget binding, and monitor-profile references.",
+          "Monitoring and kill-switch details can then attach to normalized statuses instead of inventing parallel contracts."
+        ]
+      },
+      "monitoring_kill_switch_spec": {
+        "recommended": false,
+        "why": [
+          "Timeout and quarantine thresholds depend on the normalized interface between planner/router and executors.",
+          "The action verbs for sleeve quarantine versus global halt should be defined against the shared contract first."
+        ]
+      }
+    }
+  },
+  "residual_and_caveats": {
+    "confirmatory_label": "task005-pass-grade-pair-20260325T180604Z",
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false,
+    "replay_scope": "Current zero-gap evidence is scoped to close-summary and position_closed realized-return fidelity rather than full execution-path equivalence.",
+    "dexter_metric_scope_gap": {
+      "metric": "realized_vs_peak_gap_pct",
+      "live_value": 20.533046470504612,
+      "replay_value": 25.804157291090654,
+      "why_it_matters": "A stronger claim about path-sensitive retention still requires a separate lane."
+    },
+    "candidate_surface_gap": "Mew-X candidate_precision_proxy remains unavailable because the frozen export surface does not expose a comparable creator_candidate path.",
+    "implementation_plan_boundary": "Dexter is the default execution anchor, but Mew-X remains the bounded selective option only for containment-first objectives and exact split caps plus monitor thresholds remain implementation defaults."
+  },
+  "decision": {
+    "selected_outcome": "A",
+    "key_finding": "implementation_plan_ready",
+    "claim_boundary": "implementation_plan_bounded",
+    "task_state": "implementation_plan_ready",
+    "decision": "next_spec_ready",
+    "recommended_next_step": "planner_router_interface_spec",
+    "recommended_next_task_id": "PLANNER-ROUTER-INTERFACE-SPEC",
+    "new_evidence_collection_required": false,
+    "implementation_planning_complete": true,
+    "planner_router_interface_spec_ready": true,
+    "monitoring_kill_switch_spec_ready_after_interface": true,
+    "blocked": false,
+    "why": [
+      "The fixed comparison and execution layers are now explicit enough to choose the route unit, config sections, sleeve boundaries, and executor ownership split.",
+      "Dexter remains the default execution backbone for the broader operational objective set.",
+      "Mew-X still has a real but bounded role for containment-first sleeves without upgrading into fusion or fallback behavior.",
+      "That is sufficient to move directly into a planner/router interface spec without reopening comparison work."
+    ]
+  }
+}

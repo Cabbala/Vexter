@@ -20,3 +20,7 @@ def pytest_configure(config) -> None:
         "markers",
         "transport_livepaper_observability_watchdog_runtime: transport live-paper observability watchdog runtime suite for runtime-oriented follow-up continuity",
     )
+    config.addinivalue_line(
+        "markers",
+        "transport_livepaper_observability_watchdog_regression_pack: transport live-paper observability watchdog regression-pack suite for durable drift and omission coverage",
+    )

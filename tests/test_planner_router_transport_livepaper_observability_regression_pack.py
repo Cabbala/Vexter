@@ -17,6 +17,7 @@ from vexter.planner_router.transport import (
     SourceFaithfulTransportAdapter,
     TransportExecutorRegistry,
     TransportFailureMode,
+    evaluate_livepaper_observability_watchdog,
 )
 
 
@@ -29,6 +30,7 @@ FROZEN_PINS = SourcePinRegistry(
 CREATED_AT = datetime(2026, 3, 26, 22, 10, tzinfo=timezone.utc)
 MANUAL_LATCHED_STOP_ALL = "manual_latched_stop_all"
 CI_GATE = pytest.mark.transport_livepaper_observability_ci_gate
+WATCHDOG_REGRESSION_PACK = pytest.mark.transport_livepaper_observability_watchdog_regression_pack
 
 
 class ObservabilityRegressionPlanStore:
@@ -228,6 +230,28 @@ def record_snapshot(
     sink.record(snapshot)
 
 
+def make_snapshot(
+    snapshot: StatusSnapshot,
+    *,
+    status: PlanStatus | None = None,
+    source_reason: str | None = None,
+    detail_changes: dict[str, object] | None = None,
+    remove_fields: tuple[str, ...] = (),
+) -> StatusSnapshot:
+    detail = dict(snapshot.detail)
+    if detail_changes:
+        detail.update(detail_changes)
+    for field_name in remove_fields:
+        detail.pop(field_name, None)
+    return StatusSnapshot(
+        plan_id=snapshot.plan_id,
+        status=status or snapshot.status,
+        source_reason=snapshot.source_reason if source_reason is None else source_reason,
+        observed_at_utc=snapshot.observed_at_utc,
+        detail=detail,
+    )
+
+
 async def propagate_manual_latched_stop_all(
     batch,
     store: ObservabilityRegressionPlanStore,
@@ -312,6 +336,22 @@ class FailureObservabilitySurface:
     mewx_failure: StatusSnapshot
     dexter_failure: StatusSnapshot
     status_errors: list[dict[str, object]]
+
+
+def watchdog_terminal_snapshots(
+    runtime_surface: RuntimeObservabilitySurface,
+) -> dict[str, dict[str, object]]:
+    mewx_terminal_snapshot = {
+        **dict(runtime_surface.terminal_snapshots[runtime_surface.mewx_plan.plan_id]),
+        "ack_state": runtime_surface.mewx_terminal_ack.detail["ack_state"],
+        "stop_terminal_seen": runtime_surface.mewx_terminal_ack.detail["stop_terminal_seen"],
+        "stop_duplicate_seen": runtime_surface.mewx_terminal_ack.detail["stop_duplicate_seen"],
+        "stop_request_count": runtime_surface.mewx_terminal_ack.detail["stop_request_count"],
+    }
+    return {
+        **runtime_surface.terminal_snapshots,
+        runtime_surface.mewx_plan.plan_id: mewx_terminal_snapshot,
+    }
 
 
 @pytest.fixture(scope="module")
@@ -460,6 +500,7 @@ def failure_surface(tmp_path_factory: pytest.TempPathFactory) -> FailureObservab
 
 
 @CI_GATE
+@WATCHDOG_REGRESSION_PACK
 def test_transport_livepaper_observability_ci_gate_locks_immutable_handoff_metadata_continuity(
     runtime_surface: RuntimeObservabilitySurface,
 ) -> None:
@@ -486,6 +527,7 @@ def test_transport_livepaper_observability_ci_gate_locks_immutable_handoff_metad
 
 
 @CI_GATE
+@WATCHDOG_REGRESSION_PACK
 def test_transport_livepaper_observability_ci_gate_locks_handle_lifecycle_continuity(
     runtime_surface: RuntimeObservabilitySurface,
 ) -> None:
@@ -506,6 +548,7 @@ def test_transport_livepaper_observability_ci_gate_locks_handle_lifecycle_contin
 
 
 @CI_GATE
+@WATCHDOG_REGRESSION_PACK
 def test_transport_livepaper_observability_ci_gate_locks_status_sink_fan_in(
     runtime_surface: RuntimeObservabilitySurface,
 ) -> None:
@@ -523,6 +566,7 @@ def test_transport_livepaper_observability_ci_gate_locks_status_sink_fan_in(
 
 
 @CI_GATE
+@WATCHDOG_REGRESSION_PACK
 def test_transport_livepaper_observability_ci_gate_locks_ack_history_retention(
     runtime_surface: RuntimeObservabilitySurface,
 ) -> None:
@@ -542,6 +586,7 @@ def test_transport_livepaper_observability_ci_gate_locks_ack_history_retention(
 
 
 @CI_GATE
+@WATCHDOG_REGRESSION_PACK
 def test_transport_livepaper_observability_ci_gate_locks_quarantine_reason_completeness(
     runtime_surface: RuntimeObservabilitySurface,
 ) -> None:
@@ -552,6 +597,7 @@ def test_transport_livepaper_observability_ci_gate_locks_quarantine_reason_compl
 
 
 @CI_GATE
+@WATCHDOG_REGRESSION_PACK
 def test_transport_livepaper_observability_ci_gate_locks_manual_stop_all_propagation(
     runtime_surface: RuntimeObservabilitySurface,
 ) -> None:
@@ -578,6 +624,7 @@ def test_transport_livepaper_observability_ci_gate_locks_manual_stop_all_propaga
 
 
 @CI_GATE
+@WATCHDOG_REGRESSION_PACK
 def test_transport_livepaper_observability_ci_gate_locks_snapshot_backed_terminal_detail(
     runtime_surface: RuntimeObservabilitySurface,
 ) -> None:
@@ -595,6 +642,7 @@ def test_transport_livepaper_observability_ci_gate_locks_snapshot_backed_termina
 
 
 @CI_GATE
+@WATCHDOG_REGRESSION_PACK
 def test_transport_livepaper_observability_ci_gate_locks_normalized_failure_detail_passthrough(
     failure_surface: FailureObservabilitySurface,
 ) -> None:
@@ -687,6 +735,74 @@ def test_transport_livepaper_observability_ci_gate_locks_normalized_failure_deta
     assert failure_surface.sink.latest_by_plan_id[failure_surface.mewx_plan.plan_id].detail["rollback_snapshot"]["stop_request_count"] == 1
 
 
+@WATCHDOG_REGRESSION_PACK
+def test_transport_livepaper_observability_watchdog_regression_pack_locks_planned_runtime_metadata_drift(
+    runtime_surface: RuntimeObservabilitySurface,
+) -> None:
+    expected_detail = {
+        "plan_batch_id": runtime_surface.mewx_plan.plan_batch_id,
+        "objective_profile_id": runtime_surface.mewx_plan.objective_profile_id,
+        "source": runtime_surface.mewx_plan.route.selected_source.value,
+        "selected_sleeve_id": runtime_surface.mewx_plan.route.selected_sleeve_id,
+        "monitor_profile_id": runtime_surface.mewx_plan.monitor_binding.monitor_profile_id,
+        "timeout_envelope_class": runtime_surface.mewx_plan.monitor_binding.timeout_envelope_class,
+        "quarantine_scope": runtime_surface.mewx_plan.monitor_binding.quarantine_scope,
+        "global_halt_participation": runtime_surface.mewx_plan.monitor_binding.global_halt_participation,
+        "executor_profile_id": runtime_surface.mewx_plan.executor_binding.executor_profile_id,
+        "pinned_commit": runtime_surface.mewx_plan.executor_binding.pinned_commit,
+        "execution_mode": "sim_live",
+    }
+
+    for detail in (
+        runtime_surface.mewx_follow_up.detail,
+        runtime_surface.mewx_quarantined.detail,
+        runtime_surface.mewx_terminal_ack.detail,
+        runtime_surface.terminal_snapshots[runtime_surface.mewx_plan.plan_id],
+    ):
+        for field_name, expected_value in expected_detail.items():
+            assert detail[field_name] == expected_value
+
+    report = evaluate_livepaper_observability_watchdog(
+        (runtime_surface.dexter_plan, runtime_surface.mewx_plan),
+        {
+            runtime_surface.dexter_plan.plan_id: runtime_surface.dexter_handle,
+            runtime_surface.mewx_plan.plan_id: runtime_surface.mewx_handle,
+        },
+        runtime_snapshots=tuple(runtime_surface.sink.snapshots),
+        sink_snapshots=tuple(runtime_surface.sink.snapshots),
+        terminal_snapshots=watchdog_terminal_snapshots(runtime_surface),
+    )
+
+    assert report.surface_status["planned_runtime_metadata_drift"] is True
+
+    drifted_runtime_snapshots = [
+        make_snapshot(
+            snapshot,
+            detail_changes={"monitor_profile_id": "drifted_monitor_profile"},
+        )
+        if snapshot.plan_id == runtime_surface.mewx_plan.plan_id and snapshot.status is PlanStatus.RUNNING
+        else snapshot
+        for snapshot in runtime_surface.sink.snapshots
+    ]
+    drifted_report = evaluate_livepaper_observability_watchdog(
+        (runtime_surface.dexter_plan, runtime_surface.mewx_plan),
+        {
+            runtime_surface.dexter_plan.plan_id: runtime_surface.dexter_handle,
+            runtime_surface.mewx_plan.plan_id: runtime_surface.mewx_handle,
+        },
+        runtime_snapshots=tuple(drifted_runtime_snapshots),
+        sink_snapshots=tuple(drifted_runtime_snapshots),
+        terminal_snapshots=watchdog_terminal_snapshots(runtime_surface),
+    )
+
+    assert drifted_report.surface_status["planned_runtime_metadata_drift"] is False
+    assert any(
+        finding.surface == "planned_runtime_metadata_drift"
+        and finding.plan_id == runtime_surface.mewx_plan.plan_id
+        for finding in drifted_report.findings
+    )
+
+
 def test_transport_livepaper_observability_ci_gate_proof_tracks_watchdog_as_next_step() -> None:
     proof = json.loads(
         (
@@ -711,3 +827,53 @@ def test_transport_livepaper_observability_ci_gate_proof_tracks_watchdog_as_next
         assert proof["task_result"]["recommended_next_step"] == "transport_livepaper_observability_watchdog"
     else:
         assert proof["task_result"]["recommended_next_step"] == "transport_livepaper_observability_ci_gate"
+
+
+def test_transport_livepaper_observability_watchdog_regression_pack_proof_tracks_watchdog_ci_gate_next_step() -> None:
+    proof = json.loads(
+        (
+            REPO_ROOT
+            / "artifacts"
+            / "proofs"
+            / "task-007-transport-livepaper-observability-watchdog-regression-pack-check.json"
+        ).read_text()
+    )
+
+    assert proof["task_id"] == "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-REGRESSION-PACK"
+    assert proof["verified_github"]["latest_vexter_pr"] == 56
+    assert (
+        proof["watchdog_regression_pack_suite"]["suite_group"]
+        == "transport_livepaper_observability_watchdog_regression_pack"
+    )
+    assert proof["watchdog_regression_pack_suite"]["runtime_test_files"] == [
+        "tests/test_planner_router_transport_livepaper_observability_regression_pack.py",
+    ]
+    assert proof["watchdog_regression_pack_suite"]["monitored_surfaces"] == [
+        "immutable_handoff_metadata_continuity",
+        "handle_lifecycle_continuity",
+        "planned_runtime_metadata_drift",
+        "status_sink_fan_in",
+        "ack_history_retention",
+        "quarantine_reason_completeness",
+        "manual_stop_all_propagation",
+        "snapshot_backed_terminal_detail",
+        "normalized_failure_detail_passthrough",
+    ]
+    assert (
+        proof["watchdog_regression_pack_suite"]["proof_artifact_name"]
+        == "transport-livepaper-observability-watchdog-regression-pack-proof"
+    )
+    assert proof["task_result"]["task_state"] in {
+        "transport_livepaper_observability_watchdog_regression_pack_passed",
+        "transport_livepaper_observability_watchdog_regression_pack_failed",
+    }
+    if proof["task_result"]["task_state"] == "transport_livepaper_observability_watchdog_regression_pack_passed":
+        assert (
+            proof["task_result"]["recommended_next_step"]
+            == "transport_livepaper_observability_watchdog_ci_gate"
+        )
+    else:
+        assert (
+            proof["task_result"]["recommended_next_step"]
+            == "transport_livepaper_observability_watchdog_regression_pack"
+        )

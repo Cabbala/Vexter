@@ -1,14 +1,14 @@
 {
   "background": {
-    "previous_task_id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG",
-    "previous_key_finding": "executor_transport_livepaper_observability_watchdog_passed",
-    "previous_claim_boundary": "transport_livepaper_observability_watchdog_bounded",
+    "previous_task_id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-RUNTIME",
+    "previous_key_finding": "executor_transport_livepaper_observability_watchdog_runtime_passed",
+    "previous_claim_boundary": "transport_livepaper_observability_watchdog_runtime_bounded",
     "promoted_pair": "task005-pass-grade-pair-20260325T180027Z",
     "confirmatory_pair": "task005-pass-grade-pair-20260325T180604Z",
     "comparison_source_of_truth_fixed_before_task": true,
     "prior_lane_completed_before_task": true
   },
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_transport_livepaper_observability_watchdog_runtime_bundle.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_transport_livepaper_observability_watchdog_regression_pack_bundle.tar.gz",
   "current_contract": {
     "comparison_source_of_truth": "comparison_closed_out",
     "promoted_live_winner_mode": "derived",
@@ -48,16 +48,17 @@
       "trust_logic_transplant",
       "funded_live_trading",
       "comparison_baseline_reopen"
-    ]
+    ],
+    "watchdog_regression_pack_marker": "transport_livepaper_observability_watchdog_regression_pack"
   },
   "current_task": {
-    "id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-RUNTIME",
+    "id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-REGRESSION-PACK",
     "scope": [
       "Verify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X.",
-      "Treat the merged watchdog lane as the formal baseline without reopening comparison work.",
-      "Prove the existing watchdog still detects runtime-follow-up drift, omission, and partial visibility after entry through plan_and_dispatch().",
-      "Keep the source-faithful Dexter paper_live and Mew-X sim_live seam fixed while exercising duplicate ack, quarantine, manual stop-all, terminal snapshot, and failure passthrough follow-up.",
-      "Refresh tests, workflow wiring, summary, context pack, proof manifest, task ledger, report, proof output, and handoff bundle without changing planner/router source logic."
+      "Treat the merged watchdog and watchdog-runtime lanes as the formal baseline without reopening comparison work.",
+      "Freeze the watchdog drift, omission, and partial-visibility surfaces into a durable regression pack on the source-faithful Dexter paper_live and Mew-X sim_live seam.",
+      "Lock immutable handoff metadata, handle lifecycle continuity, planned/runtime metadata drift detection, status sink fan-in, ack-history retention, quarantine completeness, manual stop-all propagation, snapshot-backed terminal detail, and normalized failure passthrough.",
+      "Refresh tests, summary, context pack, proof manifest, task ledger, report, proof output, and handoff bundle without changing planner/router source logic."
     ],
     "deliverables": [
       "pytest.ini",
@@ -65,22 +66,22 @@
       "tests/test_planner_router_transport_livepaper_observability_ci_gate.py",
       "tests/test_planner_router_transport_livepaper_observability_watchdog.py",
       "tests/test_planner_router_transport_livepaper_observability_watchdog_runtime.py",
+      "tests/test_planner_router_transport_livepaper_observability_regression_pack.py",
       "tests/test_bootstrap_layout.py",
-      ".github/workflows/validate.yml",
       "scripts/build_proof_bundle.sh",
-      "scripts/run_transport_livepaper_observability_watchdog_runtime.sh",
+      "scripts/run_transport_livepaper_observability_watchdog_regression_pack.sh",
       "artifacts/summary.md",
       "artifacts/context_pack.json",
       "artifacts/proof_bundle_manifest.json",
       "artifacts/task_ledger.jsonl",
-      "artifacts/reports/task-007-transport-livepaper-observability-watchdog-runtime-report.md",
-      "artifacts/reports/task-007-transport-livepaper-observability-watchdog-runtime-status.md",
-      "artifacts/reports/task-007-transport-livepaper-observability-watchdog-runtime/DETAILS.md",
-      "artifacts/reports/task-007-transport-livepaper-observability-watchdog-runtime/MIN_PROMPT.txt",
-      "artifacts/reports/task-007-transport-livepaper-observability-watchdog-runtime/CONTEXT.json",
-      "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-runtime-check.json",
-      "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-runtime-summary.md",
-      "artifacts/bundles/task-007-transport-livepaper-observability-watchdog-runtime.tar.gz"
+      "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack-report.md",
+      "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack-status.md",
+      "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack/DETAILS.md",
+      "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack/MIN_PROMPT.txt",
+      "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack/CONTEXT.json",
+      "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-regression-pack-check.json",
+      "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-regression-pack-summary.md",
+      "artifacts/bundles/task-007-transport-livepaper-observability-watchdog-regression-pack.tar.gz"
     ],
     "frozen_source_commits": {
       "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
@@ -171,27 +172,52 @@
         "normalized_failure_detail_passthrough"
       ],
       "preferred_next_step": "transport_livepaper_observability_watchdog_regression_pack"
+    },
+    "transport_livepaper_observability_watchdog_regression_pack": {
+      "report": "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack-report.md",
+      "status_report": "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack-status.md",
+      "proof": "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-regression-pack-check.json",
+      "summary": "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-regression-pack-summary.md",
+      "handoff_dir": "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack",
+      "key_finding": "executor_transport_livepaper_observability_watchdog_regression_pack_passed",
+      "claim_boundary": "transport_livepaper_observability_watchdog_regression_pack_bounded",
+      "task_state": "transport_livepaper_observability_watchdog_regression_pack_passed",
+      "runtime_test_files": [
+        "tests/test_planner_router_transport_livepaper_observability_regression_pack.py"
+      ],
+      "validated_axes": [
+        "immutable_handoff_metadata_continuity",
+        "handle_lifecycle_continuity",
+        "planned_runtime_metadata_drift",
+        "status_sink_fan_in",
+        "ack_history_retention",
+        "quarantine_reason_completeness",
+        "manual_stop_all_propagation",
+        "snapshot_backed_terminal_detail",
+        "normalized_failure_detail_passthrough"
+      ],
+      "preferred_next_step": "transport_livepaper_observability_watchdog_ci_gate"
     }
   },
   "frozen_source_commits": {
     "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
   },
-  "goal": "Maintain a GitHub-visible planner/router control plane whose CI gate, watchdog, and runtime-follow-up watchdog lanes keep the source-faithful live-paper transport observability surface continuously visible.",
+  "goal": "Maintain a GitHub-visible planner/router control plane whose CI gate, watchdog, watchdog-runtime, and watchdog-regression-pack lanes keep the source-faithful live-paper transport observability surface continuously visible.",
   "implementation": {
     "source_logic_changed": false,
     "validator_rules_changed": false,
     "minimal_reaggregation_only": true,
     "task_proofs_generated": [
-      "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-runtime-check.json",
-      "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-runtime-summary.md"
+      "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-regression-pack-check.json",
+      "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-regression-pack-summary.md"
     ],
     "task_reports_updated": [
-      "artifacts/reports/task-007-transport-livepaper-observability-watchdog-runtime-report.md",
-      "artifacts/reports/task-007-transport-livepaper-observability-watchdog-runtime-status.md",
-      "artifacts/reports/task-007-transport-livepaper-observability-watchdog-runtime/DETAILS.md",
-      "artifacts/reports/task-007-transport-livepaper-observability-watchdog-runtime/MIN_PROMPT.txt",
-      "artifacts/reports/task-007-transport-livepaper-observability-watchdog-runtime/CONTEXT.json"
+      "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack-report.md",
+      "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack-status.md",
+      "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack/DETAILS.md",
+      "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack/MIN_PROMPT.txt",
+      "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack/CONTEXT.json"
     ],
     "code_paths": [
       "pytest.ini",
@@ -199,19 +225,19 @@
       "tests/test_planner_router_transport_livepaper_observability_ci_gate.py",
       "tests/test_planner_router_transport_livepaper_observability_watchdog.py",
       "tests/test_planner_router_transport_livepaper_observability_watchdog_runtime.py",
+      "tests/test_planner_router_transport_livepaper_observability_regression_pack.py",
       "tests/test_bootstrap_layout.py",
-      ".github/workflows/validate.yml",
       "scripts/build_proof_bundle.sh",
-      "scripts/run_transport_livepaper_observability_watchdog_runtime.sh"
+      "scripts/run_transport_livepaper_observability_watchdog_regression_pack.sh"
     ]
   },
   "next_task": {
-    "id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-REGRESSION-PACK",
-    "state": "ready_for_transport_livepaper_observability_watchdog_regression_pack",
+    "id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-CI-GATE",
+    "state": "ready_for_transport_livepaper_observability_watchdog_ci_gate",
     "rationale": [
-      "The watchdog surface is now evidenced on both the bounded seam and runtime-oriented follow-up continuity.",
-      "The next leverage point is packaging this runtime-shaped watchdog coverage into a durable regression surface.",
-      "A regression-pack lane reduces more risk than another spec-only pass because the remaining work is preserving the surface, not discovering it."
+      "The remaining risk is no longer missing watchdog categories; it is making the watchdog regression pack run on every transport change.",
+      "A watchdog-specific CI gate operationalizes the durable regression surface without reopening the comparison baseline or changing source logic.",
+      "This path reduces future transport drift risk more than another spec-only or boundary-spec pass."
     ]
   }
 }

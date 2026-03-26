@@ -1,8 +1,8 @@
 {
-  "bundle_path": "artifacts/bundles/task-007-transport-livepaper-observability-watchdog-runtime.tar.gz",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_transport_livepaper_observability_watchdog_runtime_bundle.tar.gz",
-  "task_id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-RUNTIME",
-  "status": "transport_livepaper_observability_watchdog_runtime_passed",
+  "bundle_path": "artifacts/bundles/task-007-transport-livepaper-observability-watchdog-regression-pack.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_transport_livepaper_observability_watchdog_regression_pack_bundle.tar.gz",
+  "task_id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-REGRESSION-PACK",
+  "status": "transport_livepaper_observability_watchdog_regression_pack_passed",
   "summary": "artifacts/summary.md",
   "context_pack": "artifacts/context_pack.json",
   "task_ledger": "artifacts/task_ledger.jsonl",
@@ -58,7 +58,8 @@
     "scripts/run_transport_livepaper_observability_watchdog_runtime.sh",
     "scripts/comparison_analysis.py",
     "scripts/collect_comparison_package.ps1",
-    "scripts/collect_matched_live_pair.py"
+    "scripts/collect_matched_live_pair.py",
+    "scripts/run_transport_livepaper_observability_watchdog_regression_pack.sh"
   ],
   "proof_files": [
     "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-runtime-summary.md",
@@ -78,7 +79,9 @@
     "artifacts/proofs/task-007-transport-livepaper-smoke-check.json",
     "artifacts/proofs/task-007-transport-livepaper-smoke-summary.md",
     "artifacts/proofs/task-007-transport-runtime-smoke-check.json",
-    "artifacts/proofs/task-007-transport-runtime-smoke-summary.md"
+    "artifacts/proofs/task-007-transport-runtime-smoke-summary.md",
+    "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-regression-pack-check.json",
+    "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-regression-pack-summary.md"
   ],
   "reports": [
     "artifacts/reports/task-007-transport-livepaper-observability-watchdog-runtime",
@@ -107,16 +110,19 @@
     "artifacts/reports/task-007-transport-livepaper-smoke",
     "artifacts/reports/task-007-transport-runtime-smoke-report.md",
     "artifacts/reports/task-007-transport-runtime-smoke-status.md",
-    "artifacts/reports/task-007-transport-runtime-smoke"
+    "artifacts/reports/task-007-transport-runtime-smoke",
+    "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack-report.md",
+    "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack-status.md",
+    "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack"
   ],
   "next_task": {
-    "id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-REGRESSION-PACK",
-    "state": "ready_for_transport_livepaper_observability_watchdog_regression_pack",
+    "id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-CI-GATE",
+    "state": "ready_for_transport_livepaper_observability_watchdog_ci_gate",
     "resume_requirements": [
       "Treat task005-pass-grade-pair-20260325T180027Z as the frozen promoted baseline.",
-      "Carry forward executor_transport_livepaper_observability_watchdog_runtime_passed together with transport_livepaper_observability_watchdog_runtime_bounded as the current evidence conclusion.",
+      "Carry forward executor_transport_livepaper_observability_watchdog_regression_pack_passed together with transport_livepaper_observability_watchdog_regression_pack_bounded as the current evidence conclusion.",
       "Preserve the current Dexter and Mew-X source pins.",
-      "Keep the CI gate, watchdog, and watchdog-runtime suites visible in standard validation without reopening comparison work.",
+      "Keep the CI gate, watchdog, watchdog-runtime, and watchdog-regression-pack coverage visible in standard validation without reopening comparison work.",
       "Do not modify source trust logic in the next lane."
     ]
   },
@@ -156,25 +162,30 @@
     "watchdog_failure_passthrough_detection_added": true,
     "watchdog_runtime_follow_up_checked": true,
     "watchdog_runtime_failure_passthrough_checked": true,
-    "recommended_next_step_is_transport_livepaper_observability_watchdog_regression_pack": true
+    "recommended_next_step_is_transport_livepaper_observability_watchdog_regression_pack": true,
+    "transport_livepaper_observability_watchdog_regression_pack_added": true,
+    "watchdog_regression_pack_runner_added": true,
+    "watchdog_regression_pack_proof_emitted": true,
+    "watchdog_regression_pack_runtime_surface_locked": true,
+    "recommended_next_step_is_transport_livepaper_observability_watchdog_ci_gate": true
   },
   "task_result": {
     "selected_outcome": "A",
-    "key_finding": "executor_transport_livepaper_observability_watchdog_runtime_passed",
-    "claim_boundary": "transport_livepaper_observability_watchdog_runtime_bounded",
+    "key_finding": "executor_transport_livepaper_observability_watchdog_regression_pack_passed",
+    "claim_boundary": "transport_livepaper_observability_watchdog_regression_pack_bounded",
     "comparison_source_of_truth_state": "comparison_closed_out",
-    "task_state": "transport_livepaper_observability_watchdog_runtime_passed",
-    "recommended_next_step": "transport_livepaper_observability_watchdog_regression_pack",
-    "recommended_next_task_id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-REGRESSION-PACK",
-    "decision": "transport_livepaper_observability_watchdog_regression_pack_ready",
+    "task_state": "transport_livepaper_observability_watchdog_regression_pack_passed",
+    "recommended_next_step": "transport_livepaper_observability_watchdog_ci_gate",
+    "recommended_next_task_id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-CI-GATE",
+    "decision": "transport_livepaper_observability_watchdog_ci_gate_ready",
     "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
     "default_execution_anchor": "dexter",
     "selective_option_source": "mewx",
-    "verified_latest_vexter_pr": 55,
-    "verified_latest_vexter_main_commit": "79a74ee187f222be74d11a30cf7204cd5777f01e",
+    "verified_latest_vexter_pr": 56,
+    "verified_latest_vexter_main_commit": "cc8996e0204b7dd149ebce85f1988d7a3abf90cd",
     "verified_dexter_pr": 3,
     "verified_dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
-    "recommended_next_lane": "transport_livepaper_observability_watchdog_regression_pack"
+    "recommended_next_lane": "transport_livepaper_observability_watchdog_ci_gate"
   }
 }

@@ -362,7 +362,6 @@ def test_transport_livepaper_observability_watchdog_runtime_script_targets_curre
         REPO_ROOT / "scripts" / "run_transport_livepaper_observability_watchdog_runtime.sh"
     ).read_text()
     workflow = (REPO_ROOT / ".github" / "workflows" / "validate.yml").read_text()
-    bundle_script = (REPO_ROOT / "scripts" / "build_proof_bundle.sh").read_text()
     pytest_ini = (REPO_ROOT / "pytest.ini").read_text()
 
     for file_name in EXPECTED_WATCHDOG_RUNTIME_TEST_FILES:
@@ -371,7 +370,6 @@ def test_transport_livepaper_observability_watchdog_runtime_script_targets_curre
     assert "transport-livepaper-observability-watchdog-runtime-proof" in workflow
     assert "./scripts/run_transport_livepaper_observability_watchdog_runtime.sh" in workflow
     assert "transport_livepaper_observability_watchdog_runtime" in pytest_ini
-    assert "task-007-transport-livepaper-observability-watchdog-runtime.tar.gz" in bundle_script
 
 
 def test_transport_livepaper_observability_watchdog_runtime_workflow_runs_after_watchdog() -> None:
@@ -396,32 +394,25 @@ def test_transport_livepaper_observability_watchdog_runtime_manifest_and_context
     manifest = json.loads((REPO_ROOT / "artifacts" / "proof_bundle_manifest.json").read_text())
     context = json.loads((REPO_ROOT / "artifacts" / "context_pack.json").read_text())
 
-    assert (
-        manifest["bundle_path"]
-        == "artifacts/bundles/task-007-transport-livepaper-observability-watchdog-runtime.tar.gz"
-    )
-    assert manifest["task_id"] == "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-RUNTIME"
-    assert manifest["status"] == "transport_livepaper_observability_watchdog_runtime_passed"
     assert "scripts/run_transport_livepaper_observability_watchdog_runtime.sh" in manifest["scripts"]
     assert (
         "artifacts/reports/task-007-transport-livepaper-observability-watchdog-runtime-report.md"
         in manifest["reports"]
     )
-    assert context["current_task"]["id"] == "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-RUNTIME"
     assert (
         context["current_contract"]["watchdog_runtime_marker"]
         == "transport_livepaper_observability_watchdog_runtime"
     )
     assert (
         "tests/test_planner_router_transport_livepaper_observability_watchdog_runtime.py"
-        in context["current_task"]["deliverables"]
-    )
-    assert (
-        "tests/test_planner_router_transport_livepaper_observability_watchdog_runtime.py"
         in context["evidence"]["transport_livepaper_observability_watchdog_runtime"]["runtime_test_files"]
     )
     assert (
-        context["next_task"]["id"]
+        context["evidence"]["transport_livepaper_observability_watchdog_runtime"]["preferred_next_step"]
+        == "transport_livepaper_observability_watchdog_regression_pack"
+    )
+    assert (
+        context["current_task"]["id"]
         == "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-REGRESSION-PACK"
     )
 

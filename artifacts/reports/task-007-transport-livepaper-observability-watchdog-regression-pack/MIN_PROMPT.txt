@@ -1,0 +1,5 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+次タスクID: TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-CI-GATE
+
+GitHub 最新 merged main を確認し、watchdog regression pack を CI で恒常実行する gate として固定してください。comparison baseline は固定のまま、Dexter `paper_live` / frozen Mew-X `sim_live` seam と watchdog regression pack の surface を崩さず、tests・workflow・artifacts・handoff bundle を更新してください。

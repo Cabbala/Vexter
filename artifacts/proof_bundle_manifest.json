@@ -1,8 +1,8 @@
 {
-  "bundle_path": "artifacts/bundles/task-007-planner-router-interface-spec.tar.gz",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_planner_router_interface_spec_bundle.tar.gz",
-  "task_id": "TASK-007-PLANNER-ROUTER-INTERFACE-SPEC",
-  "status": "planner_router_spec_ready",
+  "bundle_path": "artifacts/bundles/task-007-concrete-planner-router-implementation-spec.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_concrete_planner_router_implementation_spec_bundle.tar.gz",
+  "task_id": "TASK-007-CONCRETE-PLANNER-ROUTER-IMPLEMENTATION-SPEC",
+  "status": "concrete_planner_router_spec_ready",
   "summary": "artifacts/summary.md",
   "context_pack": "artifacts/context_pack.json",
   "task_ledger": "artifacts/task_ledger.jsonl",
@@ -67,6 +67,8 @@
     "templates/windows_runtime/mewx.env.example"
   ],
   "proof_files": [
+    "artifacts/proofs/task-007-concrete-planner-router-implementation-spec-check.json",
+    "artifacts/proofs/task-007-concrete-planner-router-implementation-spec-summary.md",
     "artifacts/proofs/task-007-planner-router-interface-spec-check.json",
     "artifacts/proofs/task-007-planner-router-interface-spec-summary.md",
     "artifacts/proofs/task-007-implementation-planning-check.json",
@@ -87,6 +89,9 @@
     "artifacts/proofs/task-006-research-handoff-summary.md"
   ],
   "reports": [
+    "artifacts/reports/task-007-concrete-planner-router-implementation-spec-report.md",
+    "artifacts/reports/task-007-concrete-planner-router-implementation-spec-status.md",
+    "artifacts/reports/task-007-concrete-planner-router-implementation-spec",
     "artifacts/reports/task-007-planner-router-interface-spec-report.md",
     "artifacts/reports/task-007-planner-router-interface-spec-status.md",
     "artifacts/reports/task-007-planner-router-interface-spec",
@@ -116,15 +121,15 @@
     "artifacts/reports/task-006-research-handoff"
   ],
   "next_task": {
-    "id": "CONCRETE-PLANNER-ROUTER-IMPLEMENTATION-SPEC",
-    "state": "ready_for_concrete_planner_router_implementation_spec",
+    "id": "CONCRETE-PLANNER-ROUTER-CODE-SPEC",
+    "state": "ready_for_concrete_planner_router_code_spec",
     "resume_requirements": [
       "Treat task005-pass-grade-pair-20260325T180027Z as the frozen promoted baseline.",
-      "Carry forward planner_router_spec_ready together with planner_router_spec_bounded as the current implementation-level conclusion.",
-      "Use Dexter as the default execution anchor unless an explicit containment-first objective profile selects the Mew-X sleeve.",
-      "Reuse the immutable execution_plan contract without mutating route, budget, monitor, or executor bindings in place.",
-      "Implement planner-side validation, route resolution, and immutable plan emission before tightening numeric monitor thresholds.",
-      "Keep Dexter and Mew-X strategy semantics frozen."
+      "Carry forward concrete_planner_router_spec_ready together with concrete_spec_bounded as the current implementation-level conclusion.",
+      "Preserve the deterministic config load order and fail-closed validation semantics.",
+      "Implement one immutable execution_plan per sleeve and atomic plan_batch emission only for explicit split templates.",
+      "Keep prepare-then-start dispatch ordering and prohibit mid-trade source handoff.",
+      "Do not reopen comparison, numeric monitor thresholds, or executor transport while writing the code spec."
     ]
   },
   "proofs": {
@@ -133,15 +138,16 @@
     "mewx_strategy_changed": false,
     "validator_rules_changed": false,
     "comparison_source_of_truth_frozen": true,
-    "implementation_plan_reused": true,
-    "planner_router_spec_ready": true,
-    "planner_router_spec_bounded": true,
-    "immutable_plan_object_fixed": true,
-    "objective_profile_contract_fixed": true,
-    "sleeve_binding_fixed": true,
-    "budget_binding_fixed": true,
-    "monitor_profile_binding_fixed": true,
-    "executor_profile_binding_fixed": true,
+    "planner_router_interface_reused": true,
+    "concrete_planner_router_spec_ready": true,
+    "concrete_spec_bounded": true,
+    "config_loading_sequence_fixed": true,
+    "objective_profile_resolution_algorithm_fixed": true,
+    "sleeve_selection_algorithm_fixed": true,
+    "budget_binding_algorithm_fixed": true,
+    "immutable_plan_emission_flow_fixed": true,
+    "executor_dispatch_flow_fixed": true,
+    "normalized_plan_status_lifecycle_fixed": true,
     "mid_trade_handoff_forbidden": true,
     "source_fusion_not_supported": true,
     "new_evidence_collection_required": false,
@@ -152,16 +158,16 @@
     "confirmatory_residual_narrow": true,
     "default_execution_anchor_is_dexter": true,
     "mewx_selective_option_bounded": true,
-    "recommended_next_step_is_concrete_planner_router_implementation_spec": true
+    "recommended_next_step_is_concrete_planner_router_code_spec": true
   },
   "task_result": {
     "selected_outcome": "A",
-    "key_finding": "planner_router_spec_ready",
-    "claim_boundary": "planner_router_spec_bounded",
+    "key_finding": "concrete_planner_router_spec_ready",
+    "claim_boundary": "concrete_spec_bounded",
     "comparison_source_of_truth_state": "comparison_closed_out",
-    "task_state": "planner_router_spec_ready",
-    "recommended_next_step": "concrete_planner_router_implementation_spec",
-    "recommended_next_task_id": "CONCRETE-PLANNER-ROUTER-IMPLEMENTATION-SPEC",
+    "task_state": "concrete_planner_router_spec_ready",
+    "recommended_next_step": "concrete_planner_router_code_spec",
+    "recommended_next_task_id": "CONCRETE-PLANNER-ROUTER-CODE-SPEC",
     "decision": "next_spec_ready",
     "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
     "live_metric_winner_tally": {
@@ -181,11 +187,11 @@
     "confirmatory_residual": "Mew-X candidate_rejected",
     "default_execution_anchor": "dexter",
     "selective_option_source": "mewx",
-    "verified_latest_vexter_pr": 34,
-    "verified_latest_vexter_main_commit": "981f0977788cffd10de4bf78f14e5b430fbce4c1",
+    "verified_latest_vexter_pr": 35,
+    "verified_latest_vexter_main_commit": "2bec1badde788ef1c75251af2df17609643720fb",
     "verified_dexter_pr": 3,
     "verified_dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
-    "recommended_next_lane": "concrete_planner_router_implementation_spec"
+    "recommended_next_lane": "concrete_planner_router_code_spec"
   }
 }

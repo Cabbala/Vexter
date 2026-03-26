@@ -1,0 +1,5 @@
+{
+  "task": "TASK-007-PLANNER-ROUTER-LIVEPAPER-SMOKE",
+  "state": "planner_router_livepaper_smoke_passed",
+  "next": "planner_router_executor_transport_spec"
+}

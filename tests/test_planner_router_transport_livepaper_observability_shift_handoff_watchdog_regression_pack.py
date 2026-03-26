@@ -21,7 +21,10 @@ from vexter.planner_router.handoff_watchdog import (
 )
 
 
-pytestmark = pytest.mark.livepaper_observability_shift_handoff_watchdog_regression_pack
+pytestmark = [
+    pytest.mark.livepaper_observability_shift_handoff_watchdog_regression_pack,
+    pytest.mark.livepaper_observability_shift_handoff_watchdog_ci_gate,
+]
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 BASELINE_HANDOFF_PATH = (
@@ -437,6 +440,9 @@ def test_livepaper_observability_shift_handoff_watchdog_regression_pack_workflow
     handoff_watchdog_regression_pack_index = workflow.index(
         "- name: Run livepaper observability shift handoff watchdog regression pack"
     )
+    handoff_watchdog_ci_gate_index = workflow.index(
+        "- name: Run livepaper observability shift handoff watchdog CI gate"
+    )
     build_bundle_index = workflow.index("- name: Build proof bundle")
     remaining_tests_index = workflow.index("- name: Run remaining tests")
 
@@ -452,6 +458,7 @@ def test_livepaper_observability_shift_handoff_watchdog_regression_pack_workflow
         < handoff_watchdog_index
         < handoff_watchdog_runtime_index
         < handoff_watchdog_regression_pack_index
+        < handoff_watchdog_ci_gate_index
         < build_bundle_index
         < remaining_tests_index
     )
@@ -472,18 +479,34 @@ def test_livepaper_observability_shift_handoff_watchdog_regression_pack_manifest
         manifest["task_id"]
         == context["current_task"]["id"]
         == ledger["task_id"]
-        == "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK"
     )
+    assert manifest["task_id"] in {
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
+    }
+    assert context["current_task"]["id"] in {
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
+    }
+    assert ledger["task_id"] in {
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
+    }
     assert manifest["status"] == ledger["status"]
     assert manifest["status"] in {
         "livepaper_observability_shift_handoff_watchdog_regression_pack_passed",
         "livepaper_observability_shift_handoff_watchdog_regression_pack_failed",
+        "livepaper_observability_shift_handoff_watchdog_ci_gate_passed",
+        "livepaper_observability_shift_handoff_watchdog_ci_gate_failed",
     }
     assert (
         manifest["bundle_path"]
         == ledger["artifact_bundle"]
-        == "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack.tar.gz"
     )
+    assert manifest["bundle_path"] in {
+        "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack.tar.gz",
+        "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate.tar.gz",
+    }
     assert (
         context["current_contract"][
             "livepaper_observability_shift_handoff_watchdog_regression_pack_marker"
@@ -517,17 +540,10 @@ def test_livepaper_observability_shift_handoff_watchdog_regression_pack_manifest
         "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack-check.json"
         in manifest["proof_files"]
     )
-    assert (
-        "task-007-livepaper-observability-shift-handoff-watchdog-regression-pack.tar.gz"
-        in bundle_script
-    )
-    if manifest["status"] == "livepaper_observability_shift_handoff_watchdog_regression_pack_passed":
-        assert "livepaper_observability_shift_handoff_watchdog_ci_gate" in summary_text
-        assert "livepaper_observability_shift_handoff_watchdog_ci_gate" in report_text
-    else:
-        assert "livepaper_observability_shift_handoff_watchdog_regression_pack" in summary_text
-        assert "livepaper_observability_shift_handoff_watchdog_regression_pack" in report_text
-    assert manifest["status"] in status_text
+    assert "task-007-livepaper-observability-shift-handoff-watchdog-ci-gate.tar.gz" in bundle_script
+    assert "livepaper_observability_shift_handoff_watchdog_ci_gate" in summary_text
+    assert "livepaper_observability_shift_handoff_watchdog_ci_gate" in report_text
+    assert "livepaper_observability_shift_handoff_watchdog_regression_pack" in status_text
     assert (
         "- terminal_snapshot_pointer_or_none: tests/test_planner_router_transport_livepaper_observability_watchdog_runtime.py"
         in handoff_text

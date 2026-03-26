@@ -1,14 +1,14 @@
 {
   "background": {
-    "previous_task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG",
-    "previous_key_finding": "livepaper_observability_shift_handoff_watchdog_guarded",
-    "previous_claim_boundary": "livepaper_observability_shift_handoff_watchdog_bounded",
+    "previous_task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
+    "previous_key_finding": "livepaper_observability_shift_handoff_watchdog_regression_pack_durable",
+    "previous_claim_boundary": "livepaper_observability_shift_handoff_watchdog_regression_pack_bounded",
     "promoted_pair": "task005-pass-grade-pair-20260325T180027Z",
     "confirmatory_pair": "task005-pass-grade-pair-20260325T180604Z",
     "comparison_source_of_truth_fixed_before_task": true,
     "prior_lane_completed_before_task": true
   },
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_livepaper_observability_shift_handoff_watchdog_regression_pack_bundle.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_livepaper_observability_shift_handoff_watchdog_ci_gate_bundle.tar.gz",
   "current_contract": {
     "comparison_source_of_truth": "comparison_closed_out",
     "promoted_live_winner_mode": "derived",
@@ -68,40 +68,38 @@
     "livepaper_observability_shift_handoff_watchdog_ci_gate_marker": "livepaper_observability_shift_handoff_watchdog_ci_gate"
   },
   "current_task": {
-    "id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
+    "id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
     "scope": [
       "Verify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X.",
-      "Treat the fixed observability contract, operator runbook, shift checklist, handoff template, handoff drill, handoff watchdog proof, and handoff-watchdog-runtime proof as the formal live-paper observability handoff baseline without reopening comparison work.",
-      "Package the fixed handoff watchdog and handoff-watchdog-runtime conclusions into one durable regression pack.",
-      "Guard required handoff field omission, pointer shrinkage or ambiguity, implicit carry-over instead of explicit false/none, omission / drift / partial_visibility completeness, manual stop-all, quarantine, terminal snapshot, normalized failure detail, open questions, and next-shift priority checks across the baseline and runtime handoff paths.",
-      "Keep proof/report outputs and the regression-pack handoff explicit so the broken handoff face is immediately visible in workflow and proof outputs.",
-      "Recommend the next bounded cut among executor_boundary_code_spec, transport_livepaper_observability_acceptance_pack, and livepaper_observability_shift_handoff_watchdog_ci_gate.",
-      "Refresh tests, summary, context pack, proof manifest, task ledger, report, proof output, and handoff bundle without changing planner/router source logic."
+      "Treat the fixed observability contract, operator runbook, shift checklist, handoff template, handoff drill, handoff watchdog proof, runtime handoff watchdog proof, and handoff-watchdog-regression-pack proof as the formal live-paper observability handoff baseline without reopening comparison work.",
+      "Promote the fixed handoff watchdog surfaces into one always-on CI gate.",
+      "Keep current status, proof/report pointers, omission / drift / partial_visibility, manual stop-all, quarantine, terminal snapshot, normalized failure detail, open questions, and next-shift priority checks visible under one grouped watchdog gate.",
+      "Refresh tests, proof outputs, summary, context pack, proof manifest, task ledger, report, and handoff bundle without changing planner/router source logic."
     ],
     "deliverables": [
       "README.md",
-      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog_regression_pack.py",
-      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog_runtime.py",
       "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog.py",
-      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_ci_check.py",
+      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog_runtime.py",
+      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog_regression_pack.py",
+      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog_ci_gate.py",
       "tests/test_bootstrap_layout.py",
       "scripts/build_proof_bundle.sh",
-      "scripts/run_livepaper_observability_shift_handoff_watchdog_regression_pack.sh",
+      "scripts/run_livepaper_observability_shift_handoff_watchdog_ci_gate.sh",
       ".github/workflows/validate.yml",
       "pytest.ini",
       "artifacts/summary.md",
       "artifacts/context_pack.json",
       "artifacts/proof_bundle_manifest.json",
       "artifacts/task_ledger.jsonl",
-      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack-report.md",
-      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack-status.md",
-      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack/DETAILS.md",
-      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack/MIN_PROMPT.txt",
-      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack/CONTEXT.json",
-      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack/HANDOFF.md",
-      "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack-check.json",
-      "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack-summary.md",
-      "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack.tar.gz"
+      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-report.md",
+      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-status.md",
+      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate/DETAILS.md",
+      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate/MIN_PROMPT.txt",
+      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate/CONTEXT.json",
+      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate/HANDOFF.md",
+      "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-check.json",
+      "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-summary.md",
+      "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate.tar.gz"
     ],
     "frozen_source_commits": {
       "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
@@ -110,13 +108,13 @@
   },
   "evidence": {
     "github_latest": {
-      "latest_vexter_pr": 67,
-      "latest_vexter_main_commit": "7ab737a306ceca06193044d384e6b17d371838e2",
+      "latest_vexter_pr": 68,
+      "latest_vexter_main_commit": "32133ff2acd233e0873d3de5817f2b31acafe809",
       "latest_recent_vexter_prs": [
+        68,
         67,
         66,
-        65,
-        64
+        65
       ],
       "vexter_pr_65_merged_at": "2026-03-26T19:30:46Z",
       "vexter_pr_64_merged_at": "2026-03-26T18:53:07Z",
@@ -126,7 +124,8 @@
       "dexter_pr_3_merged_at": "2026-03-21T11:31:07Z",
       "mewx_frozen_commit_date_utc": "2026-03-20T16:05:19Z",
       "vexter_pr_66_merged_at": "2026-03-26T20:06:25Z",
-      "vexter_pr_67_merged_at": "2026-03-26T21:34:46Z"
+      "vexter_pr_67_merged_at": "2026-03-26T21:34:46Z",
+      "vexter_pr_68_merged_at": "2026-03-26T22:13:43Z"
     },
     "transport_livepaper_observability_ci_gate": {
       "report": "artifacts/reports/task-007-transport-livepaper-observability-ci-gate-report.md",
@@ -554,6 +553,39 @@
         "next_shift_priority_checks"
       ],
       "preferred_next_step": "livepaper_observability_shift_handoff_watchdog_ci_gate"
+    },
+    "livepaper_observability_shift_handoff_watchdog_ci_gate": {
+      "report": "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-report.md",
+      "status_report": "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-status.md",
+      "proof": "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-check.json",
+      "summary": "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-summary.md",
+      "handoff_dir": "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate",
+      "key_finding": "livepaper_observability_shift_handoff_watchdog_ci_gate_enforced",
+      "claim_boundary": "livepaper_observability_shift_handoff_watchdog_ci_gate_bounded",
+      "task_state": "livepaper_observability_shift_handoff_watchdog_ci_gate_passed",
+      "gate_test_files": [
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog.py",
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog_runtime.py",
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog_regression_pack.py",
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog_ci_gate.py"
+      ],
+      "grouped_suite_markers": [
+        "livepaper_observability_shift_handoff_watchdog",
+        "livepaper_observability_shift_handoff_watchdog_runtime",
+        "livepaper_observability_shift_handoff_watchdog_regression_pack"
+      ],
+      "validated_axes": [
+        "current_status",
+        "proof_and_report_pointers",
+        "omission_drift_partial_visibility",
+        "manual_stop_all",
+        "quarantine",
+        "terminal_snapshot",
+        "normalized_failure_detail",
+        "open_questions",
+        "next_shift_priority_checks"
+      ],
+      "preferred_next_step": "transport_livepaper_observability_acceptance_pack"
     }
   },
   "frozen_source_commits": {
@@ -597,12 +629,12 @@
     ]
   },
   "next_task": {
-    "id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
-    "state": "ready_for_livepaper_observability_shift_handoff_watchdog_ci_gate",
+    "id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-ACCEPTANCE-PACK",
+    "state": "ready_for_transport_livepaper_observability_acceptance_pack",
     "rationale": [
-      "The handoff watchdog surface is now durably packed across the baseline handoff, runtime follow-up handoff, and current regression-pack handoff.",
-      "The next bounded cut is enforcing that pack as an always-on CI gate instead of discovering another handoff face.",
-      "A transport-facing acceptance pack or executor-boundary restatement would reduce less risk than continuous enforcement of the fixed handoff-watchdog surface."
+      "The handoff watchdog surfaces are now always-on in CI and stay GitHub-visible through proof, report, and handoff outputs.",
+      "The next bounded cut is packaging the already-enforced transport-to-handoff acceptance story rather than adding another watchdog layer.",
+      "An executor-boundary restatement would reduce less risk than an operator-facing acceptance pack on top of the stable gates."
     ]
   },
   "proofs": {
@@ -615,6 +647,20 @@
     "livepaper_observability_shift_handoff_watchdog_regression_pack_drift_guarded": true,
     "livepaper_observability_shift_handoff_watchdog_regression_pack_partial_visibility_guarded": true,
     "livepaper_observability_shift_handoff_watchdog_regression_pack_dual_handoffs_locked": true,
-    "livepaper_observability_shift_handoff_watchdog_regression_pack_terminal_failure_pointers_locked": true
+    "livepaper_observability_shift_handoff_watchdog_regression_pack_terminal_failure_pointers_locked": true,
+    "livepaper_observability_shift_handoff_watchdog_ci_gate_added": true,
+    "livepaper_observability_shift_handoff_watchdog_ci_gate_workflow_enforced": true,
+    "livepaper_observability_shift_handoff_watchdog_ci_gate_proof_emitted": true,
+    "livepaper_observability_shift_handoff_watchdog_ci_gate_suite_grouped": true,
+    "livepaper_observability_shift_handoff_watchdog_ci_gate_current_status_guarded": true,
+    "livepaper_observability_shift_handoff_watchdog_ci_gate_pointer_integrity_guarded": true,
+    "livepaper_observability_shift_handoff_watchdog_ci_gate_visibility_classification_guarded": true,
+    "livepaper_observability_shift_handoff_watchdog_ci_gate_manual_stop_all_guarded": true,
+    "livepaper_observability_shift_handoff_watchdog_ci_gate_quarantine_guarded": true,
+    "livepaper_observability_shift_handoff_watchdog_ci_gate_terminal_snapshot_guarded": true,
+    "livepaper_observability_shift_handoff_watchdog_ci_gate_normalized_failure_detail_guarded": true,
+    "livepaper_observability_shift_handoff_watchdog_ci_gate_open_questions_guarded": true,
+    "livepaper_observability_shift_handoff_watchdog_ci_gate_next_shift_priorities_guarded": true,
+    "recommended_next_step_is_transport_livepaper_observability_acceptance_pack": true
   }
 }

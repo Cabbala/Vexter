@@ -14,6 +14,10 @@ def pytest_configure(config) -> None:
     )
     config.addinivalue_line(
         "markers",
+        "livepaper_observability_shift_handoff_watchdog_ci_gate: grouped live-paper shift handoff watchdog CI gate suite that keeps watchdog, runtime, and regression-pack surfaces green in CI",
+    )
+    config.addinivalue_line(
+        "markers",
         "livepaper_observability_shift_handoff_watchdog_runtime: live-paper shift handoff watchdog suite for runtime-oriented follow-up continuity",
     )
     config.addinivalue_line(

@@ -1,0 +1,29 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+次タスクID: TASK-007-PLANNER-ROUTER-INTEGRATION-SMOKE
+
+GitHub-visible Vexter `main` は PR `#37` main commit `786221a664637925f790e89af0448fa04832426e` まで確認済みで、comparison baseline は `task005-pass-grade-pair-20260325T180027Z` のまま固定です。Dexter は merged PR `#3` commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`、Mew-X は frozen commit `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a` を維持しています。promoted live / replay はどちらも `winner_mode: derived`、stable scored split は Dexter `6`, Mew-X `4`, tie `2`、Dexter / Mew-X の replay coverage / gap はどちらも `100.00% / 0.0000` を維持し、confirmatory residual は Mew-X `candidate_rejected` のみで promoted baseline を overturn しません。
+
+この task では、新証拠収集や source logic 変更は行わず、TASK-007 concrete planner/router code spec を実コードへ落としました。結論は以下です。
+
+- Key finding: `planner_router_code_implemented`
+- Claim boundary: `implementation_bounded`
+- Decision: `integration_smoke_ready`
+
+fixed implementation conclusion:
+
+- `config/planner_router/` に deterministic config package を追加した
+- `vexter/planner_router/` に `models.py`, `errors.py`, `interfaces.py`, `config_loader.py`, `objective_resolver.py`, `sleeve_selector.py`, `budget_binder.py`, `plan_emitter.py`, `dispatch_state_machine.py`, `planner.py` を実装した
+- omitted objective は `mixed_default` に寄せ、explicit unknown objective は reject する
+- Dexter default / explicit Mew-X containment だけを separate-sleeve で扱い、silent fallback と implicit Mew-X allocation を禁止した
+- immutable `ExecutionPlan` / `PlanBatch` を atomic に emit し、dispatch は `prepare` 全件成功後にだけ `start` する
+- partial prepare または partial start failure 時は stop-all rollback をかけ、cross-source handoff は行わない
+- executor transport は `ExecutorAdapter` / `ExecutorRegistry` seam の外に残し、Dexter `settings.py` / `Dexter.py` と Mew-X `config.rs` / `handler.rs` の source-faithful boundary を維持した
+
+次は `planner_router_integration_smoke` を優先してください。理由は、control-plane の code path と unit seam は揃った一方で、numeric monitor threshold や transport ownership はまだ deferred のため、次に確認すべきなのは `plan_request()` / `plan_and_dispatch()` を stubbed adapter と committed config で end-to-end に通せるかどうかだからです。`monitor_killswitch_spec` と `executor_boundary_spec` はそのあとで十分です。再実行してはいけないもの:
+
+- promoted-baseline selection
+- 新 live / replay evidence collection
+- validator / source logic changes
+- numeric timeout / heartbeat / retry / cap value の先行確定
+- planner 層への transport / trust logic の持ち込み

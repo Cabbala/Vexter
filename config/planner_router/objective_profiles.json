@@ -1,0 +1,34 @@
+[
+  {
+    "objective_profile_id": "mixed_default",
+    "preferred_source": "dexter",
+    "route_mode": "single_sleeve",
+    "primary_sleeve_id": "dexter_default",
+    "overlay_sleeve_ids": [],
+    "budget_policy_id": "single_anchor_default",
+    "monitor_profile_id": "dexter_default",
+    "executor_profile_id": "dexter_main_pinned"
+  },
+  {
+    "objective_profile_id": "containment_first",
+    "preferred_source": "mewx",
+    "route_mode": "single_sleeve",
+    "primary_sleeve_id": "mewx_containment",
+    "overlay_sleeve_ids": [],
+    "budget_policy_id": "dedicated_containment_template",
+    "monitor_profile_id": "mewx_timeout_guard",
+    "executor_profile_id": "mewx_frozen_pinned"
+  },
+  {
+    "objective_profile_id": "dexter_with_mewx_overlay",
+    "preferred_source": "dexter",
+    "route_mode": "portfolio_split",
+    "primary_sleeve_id": "dexter_default",
+    "overlay_sleeve_ids": [
+      "mewx_containment"
+    ],
+    "budget_policy_id": "selective_overlay",
+    "monitor_profile_id": "dexter_default",
+    "executor_profile_id": "dexter_main_pinned"
+  }
+]

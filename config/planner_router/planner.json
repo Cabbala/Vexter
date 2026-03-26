@@ -1,0 +1,20 @@
+{
+  "default_objective_profile_id": "mixed_default",
+  "default_execution_anchor": "dexter",
+  "allowed_route_modes": [
+    "single_sleeve",
+    "portfolio_split"
+  ],
+  "global_halt_policy": {
+    "mode": "manual_latched_stop_all",
+    "active": false
+  },
+  "config_package_order": [
+    "planner",
+    "objective_profiles",
+    "sleeves",
+    "budget_policies",
+    "monitor_profiles",
+    "executor_profiles"
+  ]
+}

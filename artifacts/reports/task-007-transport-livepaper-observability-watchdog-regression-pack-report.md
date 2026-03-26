@@ -16,7 +16,7 @@
 ## Validation
 
 - `pytest -q -m transport_livepaper_observability_watchdog_regression_pack tests/test_planner_router_transport_livepaper_observability_regression_pack.py`
-- `9 passed, 2 deselected in 0.04s`
+- `9 passed, 2 deselected in 0.66s`
 
 ## Recommendation Among Next Tasks
 

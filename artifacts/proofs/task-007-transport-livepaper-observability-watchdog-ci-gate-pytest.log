@@ -1,0 +1,29 @@
+..................................F...                                   [100%]
+=================================== FAILURES ===================================
+_ test_transport_livepaper_observability_watchdog_ci_gate_proof_tracks_grouped_suites_and_outputs _
+
+    def test_transport_livepaper_observability_watchdog_ci_gate_proof_tracks_grouped_suites_and_outputs() -> None:
+        proof = load_watchdog_ci_gate_proof()
+    
+        assert proof["task_id"] == "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-CI-GATE"
+        assert proof["verified_github"]["latest_vexter_pr"] == 57
+        assert (
+            proof["watchdog_ci_gate_suite"]["suite_group"]
+            == "transport_livepaper_observability_watchdog_ci_gate"
+        )
+        assert proof["watchdog_ci_gate_suite"]["grouped_test_files"] == EXPECTED_GROUPED_TEST_FILES
+        assert proof["watchdog_ci_gate_suite"]["grouped_suite_markers"] == [
+            "transport_livepaper_observability_watchdog",
+            "transport_livepaper_observability_watchdog_runtime",
+            "transport_livepaper_observability_watchdog_regression_pack",
+        ]
+>       assert proof["watchdog_ci_gate_suite"]["supporting_test_files"] == [
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            "tests/test_planner_router_transport_livepaper_observability_watchdog_ci_gate.py",
+        ]
+E       KeyError: 'supporting_test_files'
+
+tests/test_planner_router_transport_livepaper_observability_watchdog_ci_gate.py:86: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_planner_router_transport_livepaper_observability_watchdog_ci_gate.py::test_transport_livepaper_observability_watchdog_ci_gate_proof_tracks_grouped_suites_and_outputs
+1 failed, 37 passed in 0.09s

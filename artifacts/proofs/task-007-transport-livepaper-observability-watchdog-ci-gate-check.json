@@ -1,0 +1,184 @@
+{
+  "task_id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-CI-GATE",
+  "generated_at_utc": "2026-03-26T16:28:01Z",
+  "verified_github": {
+    "latest_vexter_pr": 57,
+    "latest_vexter_main_commit": "8368b545c3ef3c32db9843ac7e958528902fe67c",
+    "latest_vexter_merged_at_utc": "2026-03-26T15:58:51Z",
+    "open_non_authoritative_vexter_prs": [
+      50
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "mewx_frozen_commit_date_utc": "2026-03-20T16:05:19Z"
+  },
+  "fixed_input_surface": {
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "comparison_source_of_truth_state": "comparison_closed_out",
+    "watchdog_proof": "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-check.json",
+    "watchdog_runtime_proof": "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-runtime-check.json",
+    "watchdog_regression_pack_proof": "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-regression-pack-check.json",
+    "watchdog_status": "transport_livepaper_observability_watchdog_passed",
+    "watchdog_runtime_status": "transport_livepaper_observability_watchdog_runtime_passed",
+    "watchdog_regression_pack_status": "transport_livepaper_observability_watchdog_regression_pack_passed",
+    "dexter_replay_coverage_ratio": 1.0,
+    "dexter_live_vs_replay_gap_pct": 0.0,
+    "mewx_replay_coverage_ratio": 1.0,
+    "mewx_live_vs_replay_gap_pct": 0.0,
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false
+  },
+  "watchdog_ci_gate_suite": {
+    "suite_group": "transport_livepaper_observability_watchdog_ci_gate",
+    "pytest_command": "pytest -q -m transport_livepaper_observability_watchdog_ci_gate tests/test_planner_router_transport_livepaper_observability_watchdog.py tests/test_planner_router_transport_livepaper_observability_watchdog_runtime.py tests/test_planner_router_transport_livepaper_observability_regression_pack.py tests/test_planner_router_transport_livepaper_observability_watchdog_ci_gate.py",
+    "pytest_result": "1 failed, 37 passed in 0.09s",
+    "gate_status": "failed",
+    "runner_script": "scripts/run_transport_livepaper_observability_watchdog_ci_gate.sh",
+    "workflow": ".github/workflows/validate.yml",
+    "proof_outputs": [
+      "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-ci-gate-check.json",
+      "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-ci-gate-summary.md"
+    ],
+    "grouped_test_files": [
+      "tests/test_planner_router_transport_livepaper_observability_watchdog.py",
+      "tests/test_planner_router_transport_livepaper_observability_watchdog_runtime.py",
+      "tests/test_planner_router_transport_livepaper_observability_regression_pack.py",
+      "tests/test_planner_router_transport_livepaper_observability_watchdog_ci_gate.py"
+    ],
+    "supporting_test_files": [
+      "tests/test_planner_router_transport_livepaper_observability_watchdog_ci_gate.py"
+    ],
+    "grouped_suite_markers": [
+      "transport_livepaper_observability_watchdog",
+      "transport_livepaper_observability_watchdog_runtime",
+      "transport_livepaper_observability_watchdog_regression_pack"
+    ],
+    "supporting_runner_scripts": [
+      "scripts/run_transport_livepaper_observability_watchdog.sh",
+      "scripts/run_transport_livepaper_observability_watchdog_runtime.sh",
+      "scripts/run_transport_livepaper_observability_watchdog_regression_pack.sh"
+    ],
+    "component_suites": {
+      "watchdog": {
+        "test_files": [
+          "tests/test_planner_router_transport_livepaper_observability_watchdog.py"
+        ],
+        "monitored_surfaces": [
+          "required_observability_field_omission",
+          "handle_lifecycle_continuity",
+          "planned_runtime_metadata_drift",
+          "partial_status_sink_fan_in",
+          "ack_history_retention",
+          "quarantine_reason_completeness",
+          "manual_stop_all_propagation",
+          "snapshot_backed_terminal_detail",
+          "normalized_failure_detail_passthrough"
+        ]
+      },
+      "watchdog_runtime": {
+        "test_files": [
+          "tests/test_planner_router_transport_livepaper_observability_watchdog_runtime.py"
+        ],
+        "monitored_surfaces": [
+          "required_observability_field_omission",
+          "handle_lifecycle_continuity",
+          "planned_runtime_metadata_drift",
+          "partial_status_sink_fan_in",
+          "ack_history_retention",
+          "quarantine_reason_completeness",
+          "manual_stop_all_propagation",
+          "snapshot_backed_terminal_detail",
+          "normalized_failure_detail_passthrough"
+        ]
+      },
+      "watchdog_regression_pack": {
+        "test_files": [
+          "tests/test_planner_router_transport_livepaper_observability_regression_pack.py"
+        ],
+        "monitored_surfaces": [
+          "immutable_handoff_metadata_continuity",
+          "handle_lifecycle_continuity",
+          "planned_runtime_metadata_drift",
+          "status_sink_fan_in",
+          "ack_history_retention",
+          "quarantine_reason_completeness",
+          "manual_stop_all_propagation",
+          "snapshot_backed_terminal_detail",
+          "normalized_failure_detail_passthrough"
+        ]
+      }
+    },
+    "gate_surface_tests": {
+      "immutable_handoff_metadata_continuity": [
+        "tests/test_planner_router_transport_livepaper_observability_regression_pack.py::test_transport_livepaper_observability_ci_gate_locks_immutable_handoff_metadata_continuity"
+      ],
+      "handle_lifecycle_continuity": [
+        "tests/test_planner_router_transport_livepaper_observability_regression_pack.py::test_transport_livepaper_observability_ci_gate_locks_handle_lifecycle_continuity"
+      ],
+      "planned_runtime_metadata_drift": [
+        "tests/test_planner_router_transport_livepaper_observability_regression_pack.py::test_transport_livepaper_observability_watchdog_regression_pack_locks_planned_runtime_metadata_drift"
+      ],
+      "status_sink_fan_in": [
+        "tests/test_planner_router_transport_livepaper_observability_regression_pack.py::test_transport_livepaper_observability_ci_gate_locks_status_sink_fan_in"
+      ],
+      "ack_history_retention": [
+        "tests/test_planner_router_transport_livepaper_observability_regression_pack.py::test_transport_livepaper_observability_ci_gate_locks_ack_history_retention"
+      ],
+      "quarantine_reason_completeness": [
+        "tests/test_planner_router_transport_livepaper_observability_regression_pack.py::test_transport_livepaper_observability_ci_gate_locks_quarantine_reason_completeness"
+      ],
+      "manual_stop_all_propagation": [
+        "tests/test_planner_router_transport_livepaper_observability_regression_pack.py::test_transport_livepaper_observability_ci_gate_locks_manual_stop_all_propagation"
+      ],
+      "snapshot_backed_terminal_detail": [
+        "tests/test_planner_router_transport_livepaper_observability_regression_pack.py::test_transport_livepaper_observability_ci_gate_locks_snapshot_backed_terminal_detail"
+      ],
+      "normalized_failure_detail_passthrough": [
+        "tests/test_planner_router_transport_livepaper_observability_regression_pack.py::test_transport_livepaper_observability_ci_gate_locks_normalized_failure_detail_passthrough"
+      ]
+    },
+    "source_faithful_modes": {
+      "dexter": "paper_live",
+      "mewx": "sim_live"
+    },
+    "proof_artifact_name": "transport-livepaper-observability-watchdog-ci-gate-proof"
+  },
+  "next_task_evaluation": {
+    "livepaper_observability_spec": {
+      "recommended": false,
+      "reasons": [
+        "The watchdog seam is now locked in standard validation, so the highest remaining leverage is specifying the observability contract that the gate keeps enforcing.",
+        "A spec lane can now document the already-proven source-faithful surface without reopening comparison or transport behavior."
+      ]
+    },
+    "executor_boundary_code_spec": {
+      "recommended": false,
+      "reasons": [
+        "No new planner-to-transport boundary ambiguity surfaced while promoting the watchdog suites into CI.",
+        "The current residual risk is observability contract clarity rather than missing code-boundary shape."
+      ]
+    },
+    "transport_livepaper_observability_watchdog_watchdog_runtime": {
+      "recommended": false,
+      "reasons": [
+        "The watchdog-runtime lane is already merged and this CI gate now re-enforces it on every validation run.",
+        "Re-cutting a completed runtime watchdog lane would duplicate already-bounded evidence instead of extending coverage."
+      ]
+    }
+  },
+  "task_result": {
+    "selected_outcome": "watchdog_ci_gate_failed",
+    "key_finding": "executor_transport_livepaper_observability_watchdog_ci_gate_failed",
+    "claim_boundary": "transport_livepaper_observability_watchdog_ci_gate_bounded",
+    "comparison_source_of_truth_state": "comparison_closed_out",
+    "task_state": "transport_livepaper_observability_watchdog_ci_gate_failed",
+    "recommended_next_step": "transport_livepaper_observability_watchdog_ci_gate",
+    "recommended_next_task_id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-CI-GATE",
+    "decision": "transport_livepaper_observability_watchdog_ci_gate_failed",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "default_execution_anchor": "dexter",
+    "selective_option_source": "mewx"
+  }
+}

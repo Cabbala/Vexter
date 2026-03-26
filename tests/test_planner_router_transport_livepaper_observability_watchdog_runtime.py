@@ -23,7 +23,10 @@ from tests.test_planner_router_transport_livepaper_observability_regression_pack
 )
 
 
-pytestmark = pytest.mark.transport_livepaper_observability_watchdog_runtime
+pytestmark = [
+    pytest.mark.transport_livepaper_observability_watchdog_runtime,
+    pytest.mark.transport_livepaper_observability_watchdog_ci_gate,
+]
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -375,19 +378,33 @@ def test_transport_livepaper_observability_watchdog_runtime_script_targets_curre
 def test_transport_livepaper_observability_watchdog_runtime_workflow_runs_after_watchdog() -> None:
     workflow = (REPO_ROOT / ".github" / "workflows" / "validate.yml").read_text()
 
-    gate_index = workflow.index("Run transport livepaper observability CI gate")
-    watchdog_index = workflow.index("Run transport livepaper observability watchdog")
-    watchdog_runtime_index = workflow.index("Run transport livepaper observability watchdog runtime")
-    build_bundle_index = workflow.index("Build proof bundle")
-    remaining_tests_index = workflow.index("Run remaining tests")
+    gate_index = workflow.index("- name: Run transport livepaper observability CI gate")
+    watchdog_index = workflow.index("- name: Run transport livepaper observability watchdog")
+    watchdog_runtime_index = workflow.index("- name: Run transport livepaper observability watchdog runtime")
+    watchdog_regression_pack_index = workflow.index(
+        "- name: Run transport livepaper observability watchdog regression pack"
+    )
+    watchdog_ci_gate_index = workflow.index("- name: Run transport livepaper observability watchdog CI gate")
+    build_bundle_index = workflow.index("- name: Build proof bundle")
+    remaining_tests_index = workflow.index("- name: Run remaining tests")
 
     assert "cat artifacts/proofs/task-007-transport-livepaper-observability-watchdog-runtime-summary.md" in workflow
     assert (
-        'pytest -q -m "not transport_livepaper_observability_ci_gate and not '
+        'pytest -q -m "not transport_livepaper_observability_watchdog_ci_gate and not '
+        'transport_livepaper_observability_ci_gate and not '
         'transport_livepaper_observability_watchdog and not '
-        'transport_livepaper_observability_watchdog_runtime"'
+        'transport_livepaper_observability_watchdog_runtime and not '
+        'transport_livepaper_observability_watchdog_regression_pack"'
     ) in workflow
-    assert gate_index < watchdog_index < watchdog_runtime_index < build_bundle_index < remaining_tests_index
+    assert (
+        gate_index
+        < watchdog_index
+        < watchdog_runtime_index
+        < watchdog_regression_pack_index
+        < watchdog_ci_gate_index
+        < build_bundle_index
+        < remaining_tests_index
+    )
 
 
 def test_transport_livepaper_observability_watchdog_runtime_manifest_and_context_point_to_bundle() -> None:
@@ -411,10 +428,7 @@ def test_transport_livepaper_observability_watchdog_runtime_manifest_and_context
         context["evidence"]["transport_livepaper_observability_watchdog_runtime"]["preferred_next_step"]
         == "transport_livepaper_observability_watchdog_regression_pack"
     )
-    assert (
-        context["current_task"]["id"]
-        == "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-REGRESSION-PACK"
-    )
+    assert context["current_task"]["id"] == "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-CI-GATE"
 
 
 def test_transport_livepaper_observability_watchdog_runtime_proof_tracks_regression_pack_as_next_step() -> None:

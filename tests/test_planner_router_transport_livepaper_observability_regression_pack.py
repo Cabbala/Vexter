@@ -29,8 +29,10 @@ FROZEN_PINS = SourcePinRegistry(
 )
 CREATED_AT = datetime(2026, 3, 26, 22, 10, tzinfo=timezone.utc)
 MANUAL_LATCHED_STOP_ALL = "manual_latched_stop_all"
+WATCHDOG_CI_GATE = pytest.mark.transport_livepaper_observability_watchdog_ci_gate
 CI_GATE = pytest.mark.transport_livepaper_observability_ci_gate
 WATCHDOG_REGRESSION_PACK = pytest.mark.transport_livepaper_observability_watchdog_regression_pack
+pytestmark = WATCHDOG_CI_GATE
 
 
 class ObservabilityRegressionPlanStore:

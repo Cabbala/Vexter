@@ -1,0 +1,149 @@
+{
+  "task_id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-REGRESSION-PACK",
+  "generated_at_utc": "2026-03-26T13:40:00Z",
+  "verified_github": {
+    "latest_vexter_pr": 51,
+    "latest_vexter_main_commit": "23a3db49456743bdc83b3c8d7e36f0e28cf8ccd3",
+    "latest_vexter_merged_at_utc": "2026-03-26T13:16:59Z",
+    "supporting_vexter_prs": [
+      49,
+      48,
+      47,
+      46,
+      45,
+      44,
+      43,
+      42,
+      41,
+      40,
+      39,
+      38,
+      37,
+      36,
+      35,
+      34,
+      33,
+      32,
+      31,
+      30,
+      29,
+      28,
+      27,
+      26,
+      25,
+      24,
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "mewx_frozen_commit_date_utc": "2026-03-20T16:05:19Z",
+    "mewx_latest_main_commit_observed": "9c429fe199ea89d17ad9355cdbe58bf613db8ad4"
+  },
+  "fixed_input_surface": {
+    "transport_livepaper_observability_hardening_report": "artifacts/reports/task-007-transport-livepaper-observability-hardening-report.md",
+    "transport_livepaper_observability_hardening_proof": "artifacts/proofs/task-007-transport-livepaper-observability-hardening-check.json",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "promoted_live_winner_mode": "derived",
+    "promoted_replay_winner_mode": "derived",
+    "live_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "replay_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "dexter_replay_coverage_ratio": 1.0,
+    "dexter_live_vs_replay_gap_pct": 0.0,
+    "mewx_replay_coverage_ratio": 1.0,
+    "mewx_live_vs_replay_gap_pct": 0.0,
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false
+  },
+  "transport_livepaper_observability_regression_pack": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "new_evidence_collection_required": false,
+    "runtime_test_files": [
+      "tests/test_planner_router_transport_livepaper_observability_regression_pack.py"
+    ],
+    "supporting_test_files": [
+      "tests/test_planner_router_transport_livepaper_observability_hardening.py",
+      "tests/test_planner_router_transport_livepaper_observability_runtime.py",
+      "tests/test_planner_router_transport_livepaper_observability_smoke.py",
+      "tests/test_planner_router_transport_livepaper_smoke.py",
+      "tests/test_planner_router_transport.py",
+      "tests/test_bootstrap_layout.py"
+    ],
+    "pytest_command": "pytest -q",
+    "pytest_result": "93 passed",
+    "regression_axes": {
+      "immutable_handoff_metadata_continuity": true,
+      "handle_lifecycle_continuity_in_status_sink": true,
+      "status_sink_fan_in_completeness": true,
+      "first_vs_duplicate_ack_history_retention": true,
+      "quarantine_reason_completeness": true,
+      "manual_stop_all_reverse_order_propagation": true,
+      "snapshot_backed_terminal_detail_completeness": true,
+      "normalized_failure_detail_passthrough": true
+    },
+    "locked_surface": {
+      "prepared_handles_preserve_handoff_metadata": true,
+      "status_snapshots_preserve_request_counters_and_ack_flags": true,
+      "push_promoted_snapshots_keep_poll_and_push_detail": true,
+      "terminal_snapshots_keep_adapter_snapshot_and_halt_reason": true,
+      "failure_snapshots_keep_rollback_snapshot_and_source_faithful_fields": true,
+      "source_faithful_modes": {
+        "dexter": "paper_live",
+        "mewx": "sim_live"
+      }
+    }
+  },
+  "next_task_evaluation": {
+    "transport_livepaper_observability_ci_gate": {
+      "recommended": true,
+      "reasons": [
+        "This task converts the hardening conclusions into a durable regression pack, so the next bounded step is making that pack an always-on gate.",
+        "The remaining risk is regression coverage not being run consistently, not missing assertions or source ambiguity.",
+        "A CI gate operationalizes the bounded guarantees without reopening comparison work."
+      ]
+    },
+    "livepaper_observability_spec": {
+      "recommended": false,
+      "reasons": [
+        "The observability surface is already evidenced across smoke, runtime continuity, hardening, and regression-pack lanes.",
+        "A spec-only restatement would reduce less risk than ensuring the regression pack runs on future transport changes."
+      ]
+    },
+    "executor_boundary_code_spec": {
+      "recommended": false,
+      "reasons": [
+        "No new planner-to-transport boundary ambiguity surfaced in this task.",
+        "The bounded risk remains transport drift inside the current contract rather than contract shape uncertainty."
+      ]
+    }
+  },
+  "task_result": {
+    "selected_outcome": "A",
+    "key_finding": "executor_transport_livepaper_observability_regression_pack_passed",
+    "claim_boundary": "transport_livepaper_observability_regression_pack_bounded",
+    "comparison_source_of_truth_state": "comparison_closed_out",
+    "task_state": "transport_livepaper_observability_regression_pack_passed",
+    "recommended_next_step": "transport_livepaper_observability_ci_gate",
+    "recommended_next_task_id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-CI-GATE",
+    "decision": "transport_livepaper_observability_ci_gate_ready",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "default_execution_anchor": "dexter",
+    "selective_option_source": "mewx"
+  }
+}

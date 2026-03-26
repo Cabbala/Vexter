@@ -1,0 +1,17 @@
+{
+  "recommended_next_task": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG",
+  "visible_main_state": {
+    "latest_vexter_pr": 64,
+    "latest_vexter_main_commit": "30652c29570bf34d105befed6a46a60b551d59b7",
+    "dexter_main": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "mewx_frozen": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "current_state": {
+    "current_task": "livepaper_observability_shift_handoff_ci_check_passed",
+    "recommended_next_step": "livepaper_observability_shift_handoff_watchdog",
+    "first_deep_proof": "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-ci-gate-check.json",
+    "broken_handoff_faces_or_none": [
+      "none"
+    ]
+  }
+}

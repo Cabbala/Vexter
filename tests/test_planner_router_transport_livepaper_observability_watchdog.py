@@ -404,7 +404,8 @@ def test_transport_livepaper_observability_watchdog_workflow_runs_after_ci_gate(
     assert "transport-livepaper-observability-watchdog-proof" in workflow
     assert "cat artifacts/proofs/task-007-transport-livepaper-observability-watchdog-summary.md" in workflow
     assert (
-        'pytest -q -m "not transport_livepaper_observability_watchdog_ci_gate and not '
+        'pytest -q -m "not livepaper_observability_shift_handoff_ci_check and not '
+        'transport_livepaper_observability_watchdog_ci_gate and not '
         'transport_livepaper_observability_ci_gate and not '
         'transport_livepaper_observability_watchdog and not '
         'transport_livepaper_observability_watchdog_runtime and not '

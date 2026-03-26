@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
 
+import pytest
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DOC_PATH = REPO_ROOT / "docs" / "livepaper_observability_shift_handoff_template.md"
@@ -35,6 +37,8 @@ PROMPT_CONTEXT_PATH = (
     / "task-007-livepaper-observability-shift-handoff-template"
     / "CONTEXT.json"
 )
+
+pytestmark = pytest.mark.livepaper_observability_shift_handoff_ci_check
 
 
 def load_proof() -> dict[str, object]:
@@ -96,15 +100,15 @@ def test_livepaper_observability_shift_handoff_template_current_artifacts_are_co
 
     assert proof["task_id"] == "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-TEMPLATE"
     assert manifest["task_id"] == context["current_task"]["id"] == ledger["task_id"] == (
-        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-DRILL"
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-CI-CHECK"
     )
     assert (
-        manifest["status"] == ledger["status"] == "livepaper_observability_shift_handoff_drill_passed"
+        manifest["status"] == ledger["status"] == "livepaper_observability_shift_handoff_ci_check_passed"
     )
     assert proof["task_result"]["task_state"] == "livepaper_observability_shift_handoff_template_ready"
     assert (
         manifest["bundle_path"] == ledger["artifact_bundle"] == (
-            "artifacts/bundles/task-007-livepaper-observability-shift-handoff-drill.tar.gz"
+            "artifacts/bundles/task-007-livepaper-observability-shift-handoff-ci-check.tar.gz"
         )
     )
     assert (
@@ -124,11 +128,11 @@ def test_livepaper_observability_shift_handoff_template_current_artifacts_are_co
         == "livepaper_observability_shift_handoff_drill"
     )
     assert manifest["next_task"]["id"] == context["next_task"]["id"] == ledger["next_task_id"] == (
-        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-CI-CHECK"
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG"
     )
     assert (
         manifest["next_task"]["state"] == context["next_task"]["state"] == ledger["next_task_state"]
-        == "ready_for_livepaper_observability_shift_handoff_ci_check"
+        == "ready_for_livepaper_observability_shift_handoff_watchdog"
     )
     assert (
         prompt_context["recommended_next_task"]

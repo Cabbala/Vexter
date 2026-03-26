@@ -1,14 +1,14 @@
 {
   "background": {
-    "previous_task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
-    "previous_key_finding": "livepaper_observability_shift_handoff_watchdog_regression_pack_durable",
-    "previous_claim_boundary": "livepaper_observability_shift_handoff_watchdog_regression_pack_bounded",
+    "previous_task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
+    "previous_key_finding": "livepaper_observability_shift_handoff_watchdog_ci_gate_enforced",
+    "previous_claim_boundary": "livepaper_observability_shift_handoff_watchdog_ci_gate_bounded",
     "promoted_pair": "task005-pass-grade-pair-20260325T180027Z",
     "confirmatory_pair": "task005-pass-grade-pair-20260325T180604Z",
     "comparison_source_of_truth_fixed_before_task": true,
     "prior_lane_completed_before_task": true
   },
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_livepaper_observability_shift_handoff_watchdog_ci_gate_bundle.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_patternA_demo_executor_cutover_bundle.tar.gz",
   "current_contract": {
     "comparison_source_of_truth": "comparison_closed_out",
     "promoted_live_winner_mode": "derived",
@@ -65,41 +65,44 @@
     ],
     "livepaper_observability_shift_handoff_watchdog_runtime_marker": "livepaper_observability_shift_handoff_watchdog_runtime",
     "livepaper_observability_shift_handoff_watchdog_regression_pack_marker": "livepaper_observability_shift_handoff_watchdog_regression_pack",
-    "livepaper_observability_shift_handoff_watchdog_ci_gate_marker": "livepaper_observability_shift_handoff_watchdog_ci_gate"
+    "livepaper_observability_shift_handoff_watchdog_ci_gate_marker": "livepaper_observability_shift_handoff_watchdog_ci_gate",
+    "pattern_a_cutover_marker": "pattern_a_demo_executor_cutover",
+    "pattern_a_cutover_spec_path": "specs/PATTERN_A_DEMO_EXECUTOR_CUTOVER.md",
+    "pattern_a_cutover_plan_path": "plans/demo_executor_adapter_implementation_plan.md",
+    "first_demo_real_source": "dexter",
+    "first_demo_execution_mode": "paper_live",
+    "simulated_shadow_source": "mewx_sim_live"
   },
   "current_task": {
-    "id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
+    "id": "PATTERN-A-DEMO-EXECUTOR-CUTOVER",
     "scope": [
       "Verify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X.",
-      "Treat the fixed observability contract, operator runbook, shift checklist, handoff template, handoff drill, handoff watchdog proof, runtime handoff watchdog proof, and handoff-watchdog-regression-pack proof as the formal live-paper observability handoff baseline without reopening comparison work.",
-      "Promote the fixed handoff watchdog surfaces into one always-on CI gate.",
-      "Keep current status, proof/report pointers, omission / drift / partial_visibility, manual stop-all, quarantine, terminal snapshot, normalized failure detail, open questions, and next-shift priority checks visible under one grouped watchdog gate.",
-      "Refresh tests, proof outputs, summary, context pack, proof manifest, task ledger, report, and handoff bundle without changing planner/router source logic."
+      "Freeze the existing transport and handoff observability CI gates as sufficient stop conditions for Pattern A.",
+      "Fix the shortest real demo path while preserving the source-faithful Dexter `paper_live` / frozen Mew-X `sim_live` seam.",
+      "Choose the first demo target, the minimal executor boundary, the adapter-owned order surfaces, and the real-versus-simulated split.",
+      "Define guardrails, rollback and abort conditions, and the first demo-forward acceptance slice without changing source logic or collecting new evidence.",
+      "Refresh specs, plans, tests, summary, context pack, proof manifest, task ledger, report, proof output, and handoff bundle."
     ],
     "deliverables": [
       "README.md",
-      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog.py",
-      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog_runtime.py",
-      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog_regression_pack.py",
-      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog_ci_gate.py",
+      "specs/PATTERN_A_DEMO_EXECUTOR_CUTOVER.md",
+      "plans/demo_executor_adapter_implementation_plan.md",
+      "tests/test_pattern_a_demo_executor_cutover.py",
       "tests/test_bootstrap_layout.py",
       "scripts/build_proof_bundle.sh",
-      "scripts/run_livepaper_observability_shift_handoff_watchdog_ci_gate.sh",
-      ".github/workflows/validate.yml",
-      "pytest.ini",
       "artifacts/summary.md",
       "artifacts/context_pack.json",
       "artifacts/proof_bundle_manifest.json",
       "artifacts/task_ledger.jsonl",
-      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-report.md",
-      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-status.md",
-      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate/DETAILS.md",
-      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate/MIN_PROMPT.txt",
-      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate/CONTEXT.json",
-      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate/HANDOFF.md",
-      "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-check.json",
-      "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-summary.md",
-      "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate.tar.gz"
+      "artifacts/reports/pattern-a-demo-executor-cutover-report.md",
+      "artifacts/reports/pattern-a-demo-executor-cutover-status.md",
+      "artifacts/reports/pattern-a-demo-executor-cutover/DETAILS.md",
+      "artifacts/reports/pattern-a-demo-executor-cutover/MIN_PROMPT.txt",
+      "artifacts/reports/pattern-a-demo-executor-cutover/CONTEXT.json",
+      "artifacts/reports/pattern-a-demo-executor-cutover/HANDOFF.md",
+      "artifacts/proofs/pattern-a-demo-executor-cutover-check.json",
+      "artifacts/proofs/pattern-a-demo-executor-cutover-summary.md",
+      "artifacts/bundles/pattern-a-demo-executor-cutover.tar.gz"
     ],
     "frozen_source_commits": {
       "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
@@ -108,9 +111,10 @@
   },
   "evidence": {
     "github_latest": {
-      "latest_vexter_pr": 68,
-      "latest_vexter_main_commit": "32133ff2acd233e0873d3de5817f2b31acafe809",
+      "latest_vexter_pr": 69,
+      "latest_vexter_main_commit": "289eb1bc87a8db9a9801b9b0583a8dbc6b17a5b3",
       "latest_recent_vexter_prs": [
+        69,
         68,
         67,
         66,
@@ -125,7 +129,8 @@
       "mewx_frozen_commit_date_utc": "2026-03-20T16:05:19Z",
       "vexter_pr_66_merged_at": "2026-03-26T20:06:25Z",
       "vexter_pr_67_merged_at": "2026-03-26T21:34:46Z",
-      "vexter_pr_68_merged_at": "2026-03-26T22:13:43Z"
+      "vexter_pr_68_merged_at": "2026-03-26T22:13:43Z",
+      "vexter_pr_69_merged_at": "2026-03-26T23:03:14Z"
     },
     "transport_livepaper_observability_ci_gate": {
       "report": "artifacts/reports/task-007-transport-livepaper-observability-ci-gate-report.md",
@@ -586,55 +591,127 @@
         "next_shift_priority_checks"
       ],
       "preferred_next_step": "transport_livepaper_observability_acceptance_pack"
+    },
+    "pattern_a_demo_executor_cutover": {
+      "report": "artifacts/reports/pattern-a-demo-executor-cutover-report.md",
+      "status_report": "artifacts/reports/pattern-a-demo-executor-cutover-status.md",
+      "proof": "artifacts/proofs/pattern-a-demo-executor-cutover-check.json",
+      "summary": "artifacts/proofs/pattern-a-demo-executor-cutover-summary.md",
+      "handoff_dir": "artifacts/reports/pattern-a-demo-executor-cutover",
+      "key_finding": "pattern_a_demo_executor_boundary_fixed",
+      "claim_boundary": "pattern_a_demo_executor_cutover_bounded",
+      "task_state": "pattern_a_demo_executor_cutover_ready",
+      "first_demo_target": {
+        "source": "dexter",
+        "execution_mode": "paper_live",
+        "entrypoint": "monitor_mint_session",
+        "executor_profile_id": "dexter_main_pinned",
+        "pinned_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938"
+      },
+      "planner_owned_boundary": [
+        "immutable_plan_emission",
+        "correlation_and_idempotency",
+        "poll_first_status_reconciliation",
+        "quarantine_and_timeout_classification",
+        "manual_latched_stop_all",
+        "normalized_status_sink_fan_in"
+      ],
+      "adapter_owned_boundary": [
+        "paper_live_pin_and_mode_validation",
+        "handle_and_native_session_identity",
+        "demo_order_submit",
+        "demo_order_cancel",
+        "demo_order_status_polling",
+        "demo_fill_collection",
+        "terminal_stop_confirmation",
+        "normalized_failure_and_stop_reason_passthrough"
+      ],
+      "real_vs_simulated": {
+        "realized_now": [
+          "dexter_paper_live_demo_adapter"
+        ],
+        "still_simulated": [
+          "mewx_sim_live",
+          "funded_live_trading",
+          "portfolio_split_real_execution"
+        ],
+        "still_forbidden": [
+          "mid_trade_handoff",
+          "threshold_transplant",
+          "trust_logic_transplant",
+          "comparison_baseline_reopen"
+        ]
+      },
+      "guardrails": {
+        "route_mode": "single_sleeve",
+        "selected_sleeve_id": "dexter_default",
+        "max_active_real_demo_plans": 1,
+        "max_open_positions": 1,
+        "allowlist_required": true,
+        "small_lot_required": true,
+        "operator_supervised_window_required": true,
+        "mewx_overlay_enabled": false
+      },
+      "acceptance_slice": [
+        "prepare_start_status_stop_snapshot stay the only public planner boundary",
+        "Dexter-only real demo execution on paper_live",
+        "single handle and one open position max",
+        "entry or exit fill reconciles through poll_first status",
+        "manual_latched_stop_all remains visible and confirmed",
+        "terminal snapshot and normalized failure detail remain observable on existing CI-gated surfaces"
+      ],
+      "rollback_abort_conditions": [
+        "pin_or_mode_mismatch",
+        "status_or_fill_reconciliation_gap",
+        "duplicate_or_ambiguous_handle",
+        "unexpected_funded_live_path",
+        "cancel_or_stop_all_unconfirmed",
+        "quarantine_or_manual_halt_triggered"
+      ],
+      "preferred_next_step": "demo_executor_adapter_implementation"
     }
   },
   "frozen_source_commits": {
     "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
   },
-  "goal": "Maintain a GitHub-visible planner/router control plane whose live-paper observability surface stays source-faithful, CI-gated, readable through one bounded operator runbook, repeatable through one bounded shift checklist, transferable through one bounded shift handoff template, exercised through one bounded shift handoff drill, enforced through one bounded shift handoff CI check, guarded through one bounded shift handoff watchdog, and kept explicit on runtime-shaped follow-up through one bounded shift handoff watchdog runtime lane.",
+  "goal": "Fix the shortest Pattern A cutover from observability-complete planning into a bounded real demo executor implementation without changing source semantics.",
   "implementation": {
     "source_logic_changed": false,
     "validator_rules_changed": false,
-    "minimal_reaggregation_only": true,
+    "new_evidence_collected": false,
     "task_proofs_generated": [
-      "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-runtime-check.json",
-      "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-runtime-summary.md"
+      "artifacts/proofs/pattern-a-demo-executor-cutover-check.json",
+      "artifacts/proofs/pattern-a-demo-executor-cutover-summary.md"
     ],
     "task_reports_updated": [
-      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-runtime-report.md",
-      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-runtime-status.md",
-      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-runtime/DETAILS.md",
-      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-runtime/MIN_PROMPT.txt",
-      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-runtime/CONTEXT.json",
-      "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-runtime/HANDOFF.md"
+      "artifacts/reports/pattern-a-demo-executor-cutover-report.md",
+      "artifacts/reports/pattern-a-demo-executor-cutover-status.md",
+      "artifacts/reports/pattern-a-demo-executor-cutover/DETAILS.md",
+      "artifacts/reports/pattern-a-demo-executor-cutover/MIN_PROMPT.txt",
+      "artifacts/reports/pattern-a-demo-executor-cutover/CONTEXT.json",
+      "artifacts/reports/pattern-a-demo-executor-cutover/HANDOFF.md"
     ],
     "code_paths": [
       "README.md",
-      "vexter/planner_router/handoff_watchdog.py",
+      "specs/PATTERN_A_DEMO_EXECUTOR_CUTOVER.md",
+      "plans/demo_executor_adapter_implementation_plan.md",
+      "scripts/build_proof_bundle.sh",
+      "tests/test_pattern_a_demo_executor_cutover.py",
+      "tests/test_bootstrap_layout.py",
       "artifacts/summary.md",
       "artifacts/context_pack.json",
       "artifacts/proof_bundle_manifest.json",
-      "artifacts/task_ledger.jsonl",
-      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog.py",
-      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog_runtime.py",
-      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_ci_check.py",
-      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_drill.py",
-      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_template.py",
-      "tests/test_bootstrap_layout.py",
-      "scripts/build_proof_bundle.sh",
-      "scripts/run_livepaper_observability_shift_handoff_watchdog_runtime.sh",
-      ".github/workflows/validate.yml",
-      "pytest.ini"
+      "artifacts/task_ledger.jsonl"
     ]
   },
   "next_task": {
-    "id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-ACCEPTANCE-PACK",
-    "state": "ready_for_transport_livepaper_observability_acceptance_pack",
+    "id": "DEMO-EXECUTOR-ADAPTER-IMPLEMENTATION",
+    "state": "ready_for_demo_executor_adapter_implementation",
     "rationale": [
-      "The handoff watchdog surfaces are now always-on in CI and stay GitHub-visible through proof, report, and handoff outputs.",
-      "The next bounded cut is packaging the already-enforced transport-to-handoff acceptance story rather than adding another watchdog layer.",
-      "An executor-boundary restatement would reduce less risk than an operator-facing acceptance pack on top of the stable gates."
+      "The executor transport boundary is already fixed, so another code-spec restatement would duplicate existing work.",
+      "A concrete Dexter demo adapter is now the shortest path to forward testing on a demo account.",
+      "An acceptance pack becomes sharp only after the demo adapter exists and can be validated against the current CI-gated observability surface."
     ]
   },
   "proofs": {
@@ -661,6 +738,13 @@
     "livepaper_observability_shift_handoff_watchdog_ci_gate_normalized_failure_detail_guarded": true,
     "livepaper_observability_shift_handoff_watchdog_ci_gate_open_questions_guarded": true,
     "livepaper_observability_shift_handoff_watchdog_ci_gate_next_shift_priorities_guarded": true,
-    "recommended_next_step_is_transport_livepaper_observability_acceptance_pack": true
+    "recommended_next_step_is_transport_livepaper_observability_acceptance_pack": true,
+    "observability_stop_boundary_fixed": true,
+    "pattern_a_first_demo_target_fixed": true,
+    "pattern_a_demo_boundary_fixed": true,
+    "pattern_a_real_vs_simulated_split_fixed": true,
+    "pattern_a_guardrails_fixed": true,
+    "pattern_a_acceptance_slice_fixed": true,
+    "pattern_a_next_step_narrowed_to_demo_executor_adapter_implementation": true
   }
 }

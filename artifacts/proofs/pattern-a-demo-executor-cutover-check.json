@@ -1,0 +1,89 @@
+{
+  "task_id": "PATTERN-A-DEMO-EXECUTOR-CUTOVER",
+  "verified_github": {
+    "latest_vexter_pr": 69,
+    "latest_vexter_main_commit": "289eb1bc87a8db9a9801b9b0583a8dbc6b17a5b3",
+    "latest_vexter_merged_at": "2026-03-26T23:03:14Z",
+    "dexter_pr_3_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "open_vexter_pr_50_non_authoritative": true
+  },
+  "fixed_stop_boundary": {
+    "transport_watchdog_ci_gate_preserved": true,
+    "handoff_watchdog_ci_gate_preserved": true,
+    "poll_first_preserved": true,
+    "manual_latched_stop_all_preserved": true,
+    "source_faithful_seam_preserved": true
+  },
+  "pattern_a_demo_executor_cutover": {
+    "first_demo_target": {
+      "source": "dexter",
+      "execution_mode": "paper_live",
+      "entrypoint": "monitor_mint_session",
+      "executor_profile_id": "dexter_main_pinned",
+      "pinned_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938"
+    },
+    "planner_boundary": [
+      "prepare",
+      "start",
+      "status",
+      "stop",
+      "snapshot"
+    ],
+    "adapter_boundary": [
+      "submit_order",
+      "cancel_order",
+      "order_status",
+      "fill_collection",
+      "stop_all_fanout"
+    ],
+    "real_vs_simulated": {
+      "realized_now": [
+        "dexter_paper_live_demo_adapter"
+      ],
+      "still_simulated": [
+        "mewx_sim_live",
+        "funded_live_trading",
+        "portfolio_split_real_execution"
+      ]
+    },
+    "guardrails": {
+      "single_sleeve_only": true,
+      "dexter_only": true,
+      "max_active_handles": 1,
+      "max_open_positions": 1,
+      "small_lot_required": true,
+      "allowlist_required": true,
+      "operator_supervised_window_required": true
+    },
+    "acceptance_slice": [
+      "prepare_to_start_transition",
+      "entry_or_exit_fill_visibility",
+      "fill_status_reconciliation",
+      "cancel_or_stop_all_confirmation",
+      "terminal_snapshot_visibility"
+    ],
+    "rollback_abort_conditions": [
+      "pin_or_mode_mismatch",
+      "status_or_fill_reconciliation_gap",
+      "duplicate_or_ambiguous_handle",
+      "unexpected_funded_live_path",
+      "cancel_or_stop_all_unconfirmed",
+      "quarantine_or_manual_halt_triggered"
+    ],
+    "supporting_files": [
+      "specs/PATTERN_A_DEMO_EXECUTOR_CUTOVER.md",
+      "plans/demo_executor_adapter_implementation_plan.md",
+      "artifacts/reports/pattern-a-demo-executor-cutover/HANDOFF.md"
+    ]
+  },
+  "task_result": {
+    "outcome": "A",
+    "key_finding": "pattern_a_demo_executor_boundary_fixed",
+    "claim_boundary": "pattern_a_demo_executor_cutover_bounded",
+    "task_state": "pattern_a_demo_executor_cutover_ready",
+    "recommended_next_step": "demo_executor_adapter_implementation",
+    "recommended_next_task_id": "DEMO-EXECUTOR-ADAPTER-IMPLEMENTATION",
+    "decision": "demo_executor_adapter_implementation_ready"
+  }
+}

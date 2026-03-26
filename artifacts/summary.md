@@ -1,35 +1,33 @@
-# TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE Summary
+# PATTERN-A-DEMO-EXECUTOR-CUTOVER Summary
 
 ## Verified GitHub State
 
-- `Cabbala/Vexter` latest merged `main` was reverified at PR `#68` commit `32133ff2acd233e0873d3de5817f2b31acafe809` on `2026-03-26T22:13:43Z`.
-- The completed handoff watchdog regression-pack lane remained visible at PR `#68`.
+- `Cabbala/Vexter` latest merged `main` was reverified at PR `#69` merge commit `289eb1bc87a8db9a9801b9b0583a8dbc6b17a5b3` on `2026-03-26T23:03:14Z`.
 - `Cabbala/Dexter` `main` stayed pinned at merged PR `#3` commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`.
 - Frozen `Cabbala/Mew-X` stayed pinned at commit `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`.
 - Open Vexter PR `#50` (`feat(infra): refresh runtime observability artifacts`) remained non-authoritative relative to merged `main`.
 
 ## What This Task Did
 
-- Treated the fixed observability contract, runbook, checklist, handoff template, drill, handoff watchdog proof, runtime handoff watchdog proof, and regression-pack proof as the formal handoff baseline without reopening comparison work.
-- Added a dedicated watchdog CI gate lane through `scripts/run_livepaper_observability_shift_handoff_watchdog_ci_gate.sh` and `tests/test_planner_router_transport_livepaper_observability_shift_handoff_watchdog_ci_gate.py`.
-- Grouped the handoff watchdog, handoff watchdog runtime, and handoff watchdog regression-pack suites under one dedicated marker so current status, proof/report pointers, omission / drift / partial_visibility, manual stop-all, quarantine, terminal snapshot, normalized failure detail, open questions, and next-shift priority checks now fail directly in CI.
-- Refreshed workflow wiring, bundle metadata, context pack, proof manifest, task ledger, proof outputs, status/report, and the watchdog CI gate handoff bundle without changing planner/router source logic or collecting new evidence.
+- Treated the existing transport watchdog CI gate and shift-handoff watchdog CI gate as the sufficient stop boundary for observability, handoff, and watchdog work.
+- Fixed the first real demo target to Dexter `paper_live` only while keeping frozen Mew-X on `sim_live`.
+- Kept the planner boundary at `prepare / start / status / stop / snapshot` and fixed `submit / cancel / fill collection / stop-all` as adapter-owned responsibilities inside the future demo executor.
+- Fixed the first demo-forward acceptance slice to one Dexter handle, one open position max, small lot, operator-supervised window, and explicit abort on pin mismatch, reconciliation gaps, or unconfirmed stop-all.
 
 ## Decision
 
 - Outcome: `A`
-- Key finding: `livepaper_observability_shift_handoff_watchdog_ci_gate_enforced`
-- Claim boundary: `livepaper_observability_shift_handoff_watchdog_ci_gate_bounded`
-- Current task status: `livepaper_observability_shift_handoff_watchdog_ci_gate_passed`
-- Recommended next step: `transport_livepaper_observability_acceptance_pack`
-- Decision: `transport_livepaper_observability_acceptance_pack_ready`
+- Key finding: `pattern_a_demo_executor_boundary_fixed`
+- Claim boundary: `pattern_a_demo_executor_cutover_bounded`
+- Current task status: `pattern_a_demo_executor_cutover_ready`
+- Recommended next step: `demo_executor_adapter_implementation`
+- Decision: `demo_executor_adapter_implementation_ready`
 
 ## Key Paths
 
-- Watchdog CI gate proof: `artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-check.json`
-- Watchdog CI gate summary: `artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-summary.md`
-- Watchdog CI gate report: `artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-report.md`
-- Watchdog CI gate status: `artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-status.md`
-- Watchdog CI gate handoff: `artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate/HANDOFF.md`
-- Regression-pack proof: `artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-regression-pack-check.json`
-- Current bundle target: `artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate.tar.gz`
+- Current spec: `specs/PATTERN_A_DEMO_EXECUTOR_CUTOVER.md`
+- Current implementation plan: `plans/demo_executor_adapter_implementation_plan.md`
+- Current proof: `artifacts/proofs/pattern-a-demo-executor-cutover-check.json`
+- Current report: `artifacts/reports/pattern-a-demo-executor-cutover-report.md`
+- Current handoff: `artifacts/reports/pattern-a-demo-executor-cutover/HANDOFF.md`
+- Current bundle target: `artifacts/bundles/pattern-a-demo-executor-cutover.tar.gz`

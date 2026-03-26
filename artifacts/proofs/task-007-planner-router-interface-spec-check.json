@@ -1,0 +1,326 @@
+{
+  "task_id": "TASK-007-PLANNER-ROUTER-INTERFACE-SPEC",
+  "generated_at_utc": "2026-03-26T00:45:43Z",
+  "verified_github": {
+    "latest_vexter_pr": 34,
+    "latest_vexter_main_commit": "981f0977788cffd10de4bf78f14e5b430fbce4c1",
+    "latest_vexter_merged_at_utc": "2026-03-26T00:39:22Z",
+    "supporting_vexter_prs": [
+      33,
+      32,
+      31,
+      30,
+      29,
+      28,
+      27,
+      26,
+      25,
+      24,
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17,
+      16
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "mewx_frozen_commit_date_utc": "2026-03-20T16:05:19Z"
+  },
+  "fixed_input_surface": {
+    "implementation_planning_report": "artifacts/reports/task-007-implementation-planning-report.md",
+    "implementation_planning_proof": "artifacts/proofs/task-007-implementation-planning-check.json",
+    "execution_planning_report": "artifacts/reports/task-007-execution-planning-report.md",
+    "execution_planning_proof": "artifacts/proofs/task-007-execution-planning-check.json",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "promoted_live_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison",
+    "promoted_replay_comparison_dir": "artifacts/reports/task006-replay-surface-fix-20260325T180027Z-replay-comparison",
+    "confirmatory_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180604Z-comparison",
+    "promoted_live_winner_mode": "derived",
+    "promoted_replay_winner_mode": "derived",
+    "live_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "replay_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "dexter_replay_coverage_ratio": 1.0,
+    "dexter_live_vs_replay_gap_pct": 0.0,
+    "mewx_replay_coverage_ratio": 1.0,
+    "mewx_live_vs_replay_gap_pct": 0.0,
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false
+  },
+  "implementation": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "dexter_strategy_changed": false,
+    "mewx_strategy_changed": false,
+    "minimal_reaggregation_only": true,
+    "new_evidence_collection_required": false
+  },
+  "planner_router_interface_contract": {
+    "immutable_plan_object": {
+      "record_name": "execution_plan",
+      "required_fields": [
+        "plan_id",
+        "created_at_utc",
+        "objective_profile_id",
+        "route",
+        "sleeve_binding",
+        "budget_binding",
+        "monitor_binding",
+        "executor_binding",
+        "source_pin",
+        "invariants"
+      ],
+      "minimum_shape": {
+        "route.mode": "single_sleeve",
+        "route.selected_sleeve_id": "dexter_default|mewx_containment",
+        "route.selected_source": "dexter|mewx",
+        "budget_binding.policy": "single_anchor_default|selective_overlay|dedicated_containment_template",
+        "monitor_binding.monitor_profile_id": "dexter_default|mewx_timeout_guard",
+        "executor_binding.executor_profile_id": "dexter_main_pinned|mewx_frozen_pinned"
+      },
+      "invariants": [
+        "Exactly one selected sleeve and one selected source exist per plan.",
+        "Selected source must match the sleeve binding and executor binding source.",
+        "Budget, monitor, and executor bindings are fully resolved before the plan starts.",
+        "Pinned commit must match the selected executor profile and frozen source reference.",
+        "No emitted plan may mutate route, sleeve, budget, monitor, or executor binding in place."
+      ]
+    },
+    "objective_profile_contract": {
+      "required_fields": [
+        "objective_profile_id",
+        "preferred_source",
+        "allowed_sleeves",
+        "budget_policy",
+        "monitor_profile_id",
+        "executor_profile_id"
+      ],
+      "resolution_rules": [
+        "Every objective profile resolves to exactly one preferred source.",
+        "Mixed or unspecified objectives resolve to Dexter.",
+        "mixed_default resolves to dexter_default.",
+        "containment_first resolves to mewx_containment.",
+        "Any Mew-X profile explicitly accepts timeout-shaped lifecycle behavior.",
+        "Objective profiles may not authorize multi-source sleeves or in-run source fusion."
+      ],
+      "default_profile": "mixed_default",
+      "containment_profile": "containment_first"
+    },
+    "sleeve_binding_contract": {
+      "required_fields": [
+        "sleeve_id",
+        "source",
+        "enabled",
+        "budget_mode",
+        "executor_profile_id"
+      ],
+      "supported_sleeves": {
+        "dexter_default": {
+          "role": "default_execution_anchor",
+          "selected_when": [
+            "mixed_default",
+            "capture_first",
+            "low_slippage",
+            "realized_exit_capture",
+            "stale_risk_avoidance"
+          ]
+        },
+        "mewx_containment": {
+          "role": "containment_first_selective_sleeve",
+          "selected_when": [
+            "containment_first",
+            "fast_post_attempt_fill_when_timeout_behavior_is_acceptable",
+            "local_peak_retention"
+          ]
+        }
+      },
+      "invariants": [
+        "One plan binds exactly one sleeve.",
+        "A sleeve binds to exactly one source.",
+        "No plan may rebind between Dexter and Mew-X after start.",
+        "Mew-X sleeve enablement is always explicit."
+      ]
+    },
+    "budget_binding_contract": {
+      "required_fields": [
+        "portfolio_budget_id",
+        "policy",
+        "sleeve_share",
+        "explicit_cap_required"
+      ],
+      "supported_policies": {
+        "single_anchor_default": {
+          "dexter_share": "100%",
+          "mewx_share": "0%"
+        },
+        "selective_overlay": {
+          "dexter_share": "primary",
+          "mewx_share": "explicit minority cap"
+        },
+        "dedicated_containment_template": {
+          "dexter_share": "0%",
+          "mewx_share": "100%"
+        }
+      },
+      "invariants": [
+        "All budget declarations are sleeve-scoped.",
+        "Any Mew-X share is explicit and never implicit.",
+        "Mixed or unspecified objectives cannot emit a nonzero Mew-X budget by default.",
+        "No budget policy implies dynamic cross-sleeve rebalance inside one immutable plan."
+      ]
+    },
+    "monitor_profile_binding_contract": {
+      "required_fields": [
+        "monitor_profile_id",
+        "admission_gate_class",
+        "timeout_envelope_class",
+        "quarantine_scope",
+        "global_halt_participation"
+      ],
+      "binding_rules": [
+        "Every plan binds exactly one monitor profile.",
+        "dexter_default binds lifecycle-control monitoring.",
+        "mewx_timeout_guard binds timeout-aware monitoring.",
+        "Admission gates can block config invalidity, pin mismatch, disabled sleeve, budget overflow, or active global halt.",
+        "Quarantine remains sleeve-scoped.",
+        "Global halt freezes new planning and dispatches source-native stop requests only."
+      ],
+      "mewx_timeout_boundary": [
+        "A normal inactivity_timeout close reason is source-native and not an automatic incident.",
+        "Quarantine triggers only when the session outlives the configured timeout envelope or fails to emit normalized close or shutdown confirmation.",
+        "Mew-X quarantine must not transfer the position to Dexter."
+      ],
+      "not_fixed_now": [
+        "heartbeat numbers",
+        "retry counts",
+        "timeout durations"
+      ]
+    },
+    "executor_profile_binding_contract": {
+      "required_fields": [
+        "executor_profile_id",
+        "source",
+        "pinned_commit",
+        "methods",
+        "normalized_statuses"
+      ],
+      "expected_methods": [
+        "prepare",
+        "start",
+        "status",
+        "stop",
+        "snapshot"
+      ],
+      "normalized_statuses": [
+        "planned",
+        "starting",
+        "running",
+        "quarantined",
+        "stopping",
+        "stopped",
+        "failed"
+      ],
+      "invariants": [
+        "Executor binding source matches route.selected_source.",
+        "Pinned commit matches the frozen source reference.",
+        "Executors receive immutable plan data rather than mutable route instructions."
+      ],
+      "transport_not_fixed": true
+    },
+    "ownership_split": {
+      "planner_router_owns": [
+        "route choice",
+        "sleeve selection",
+        "budget binding",
+        "monitor binding",
+        "executor binding",
+        "kill-switch dispatch"
+      ],
+      "executors_own": [
+        "source-native startup",
+        "source-native lifecycle",
+        "threshold use",
+        "trust logic",
+        "stop semantics"
+      ]
+    },
+    "unsupported_patterns": [
+      "mid_trade_handoff",
+      "threshold_transplant",
+      "trust_logic_transplant",
+      "multi_source_sleeve",
+      "implicit_mewx_budget",
+      "fused_engine_superiority_claim",
+      "full_path_equivalence_claim"
+    ],
+    "next_spec_evaluation": {
+      "concrete_planner_router_implementation_spec": {
+        "recommended": true,
+        "why": [
+          "The immutable plan schema, route invariants, and binding references are now fixed strongly enough to implement planner-side validation and plan emission directly.",
+          "Executor boundary is already fixed at the contract level, so implementation can focus on config loading, route resolution, immutable plan construction, and dispatch orchestration.",
+          "Monitor thresholds can attach to the shared plan and status surface afterward without creating a parallel contract."
+        ]
+      },
+      "monitor_kill_switch_spec": {
+        "recommended": false,
+        "why": [
+          "Numeric timeout and quarantine thresholds remain implementation defaults rather than evidence decisions.",
+          "The monitoring spec should attach to the concrete planner lifecycle and plan registry rather than define that lifecycle indirectly."
+        ]
+      },
+      "executor_boundary_spec": {
+        "recommended": false,
+        "why": [
+          "The source-faithful boundary is already fixed here through methods, statuses, source pins, and ownership split.",
+          "What remains open is transport and process model, which is implementation-local rather than the next evidence-bound spec cut."
+        ]
+      }
+    }
+  },
+  "residual_and_caveats": {
+    "confirmatory_label": "task005-pass-grade-pair-20260325T180604Z",
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false,
+    "replay_scope": "Current zero-gap evidence is scoped to close-summary and position_closed realized-return fidelity rather than full execution-path equivalence.",
+    "dexter_metric_scope_gap": {
+      "metric": "realized_vs_peak_gap_pct",
+      "live_value": 20.533046470504612,
+      "replay_value": 25.804157291090654,
+      "why_it_matters": "A stronger claim about path-sensitive retention still requires a separate lane."
+    },
+    "candidate_surface_gap": "Mew-X candidate_precision_proxy remains unavailable because the frozen export surface does not expose a comparable creator_candidate path.",
+    "planner_router_spec_boundary": "Dexter remains the default execution anchor, Mew-X remains the bounded selective option for containment-first objectives, and numeric budget caps, numeric monitor thresholds, and transport details remain later defaults."
+  },
+  "decision": {
+    "selected_outcome": "A",
+    "key_finding": "planner_router_spec_ready",
+    "claim_boundary": "planner_router_spec_bounded",
+    "task_state": "planner_router_spec_ready",
+    "decision": "next_spec_ready",
+    "recommended_next_step": "concrete_planner_router_implementation_spec",
+    "recommended_next_task_id": "CONCRETE-PLANNER-ROUTER-IMPLEMENTATION-SPEC",
+    "new_evidence_collection_required": false,
+    "planner_router_interface_spec_complete": true,
+    "concrete_planner_router_implementation_spec_ready": true,
+    "blocked": false,
+    "why": [
+      "The fixed comparison, execution, and implementation layers are now explicit enough to freeze one immutable planner/router contract.",
+      "Dexter remains the default execution backbone for the broader operational objective set.",
+      "Mew-X still has a real but bounded role for containment-first sleeves without upgrading into fusion or fallback behavior.",
+      "That is sufficient to move directly into a concrete planner/router implementation spec without reopening comparison work."
+    ]
+  }
+}

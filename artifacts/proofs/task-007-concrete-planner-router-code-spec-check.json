@@ -1,0 +1,288 @@
+{
+  "task_id": "TASK-007-CONCRETE-PLANNER-ROUTER-CODE-SPEC",
+  "generated_at_utc": "2026-03-26T01:34:46Z",
+  "verified_github": {
+    "latest_vexter_pr": 36,
+    "latest_vexter_main_commit": "8713b9ba8de82accda48526fdff8732531d7b620",
+    "latest_vexter_merged_at_utc": "2026-03-26T01:24:01Z",
+    "supporting_vexter_prs": [
+      35,
+      34,
+      33,
+      32,
+      31,
+      30,
+      29,
+      28,
+      27,
+      26,
+      25,
+      24,
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17,
+      16
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "mewx_frozen_commit_date_utc": "2026-03-20T16:05:19Z"
+  },
+  "fixed_input_surface": {
+    "concrete_implementation_report": "artifacts/reports/task-007-concrete-planner-router-implementation-spec-report.md",
+    "concrete_implementation_proof": "artifacts/proofs/task-007-concrete-planner-router-implementation-spec-check.json",
+    "planner_router_interface_report": "artifacts/reports/task-007-planner-router-interface-spec-report.md",
+    "planner_router_interface_proof": "artifacts/proofs/task-007-planner-router-interface-spec-check.json",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "promoted_live_winner_mode": "derived",
+    "promoted_replay_winner_mode": "derived",
+    "live_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "replay_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "dexter_replay_coverage_ratio": 1.0,
+    "dexter_live_vs_replay_gap_pct": 0.0,
+    "mewx_replay_coverage_ratio": 1.0,
+    "mewx_live_vs_replay_gap_pct": 0.0,
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false
+  },
+  "implementation": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "dexter_strategy_changed": false,
+    "mewx_strategy_changed": false,
+    "minimal_reaggregation_only": true,
+    "new_evidence_collection_required": false
+  },
+  "planner_router_code_spec": {
+    "package_root": "vexter/planner_router",
+    "modules": [
+      {
+        "path": "vexter/planner_router/models.py",
+        "responsibility": "Frozen config, request, plan, batch, status, and failure dataclasses and enums."
+      },
+      {
+        "path": "vexter/planner_router/errors.py",
+        "responsibility": "Planner/router exception hierarchy."
+      },
+      {
+        "path": "vexter/planner_router/interfaces.py",
+        "responsibility": "PlanStore, ExecutorAdapter, ExecutorRegistry, and StatusSink protocols."
+      },
+      {
+        "path": "vexter/planner_router/config_loader.py",
+        "responsibility": "Deterministic config loading and cross-reference validation."
+      },
+      {
+        "path": "vexter/planner_router/objective_resolver.py",
+        "responsibility": "Objective-profile lookup and route resolution."
+      },
+      {
+        "path": "vexter/planner_router/sleeve_selector.py",
+        "responsibility": "Explicit sleeve selection with source-match enforcement."
+      },
+      {
+        "path": "vexter/planner_router/budget_binder.py",
+        "responsibility": "Sleeve-scoped share and cap-reference binding."
+      },
+      {
+        "path": "vexter/planner_router/plan_emitter.py",
+        "responsibility": "Immutable execution-plan creation and atomic plan-batch emission."
+      },
+      {
+        "path": "vexter/planner_router/dispatch_state_machine.py",
+        "responsibility": "Prepare/start/stop orchestration and normalized status transitions."
+      },
+      {
+        "path": "vexter/planner_router/planner.py",
+        "responsibility": "Public load -> resolve -> select -> bind -> emit -> dispatch orchestration."
+      }
+    ],
+    "typed_objects": {
+      "config_models": [
+        "PlannerConfig",
+        "ObjectiveProfileConfig",
+        "SleeveConfig",
+        "BudgetPolicyConfig",
+        "MonitorProfileConfig",
+        "ExecutorProfileConfig",
+        "SourcePinRegistry"
+      ],
+      "resolved_models": [
+        "PlanRequest",
+        "PlannerRouterPackage",
+        "ResolvedObjectiveProfile",
+        "SelectedSleeve",
+        "BudgetBinding",
+        "ResolvedPlanningContext"
+      ],
+      "plan_and_dispatch_models": [
+        "PlanStatus",
+        "ExecutionPlan",
+        "PlanBatch",
+        "DispatchHandle",
+        "StatusSnapshot",
+        "FailureDetail"
+      ]
+    },
+    "function_boundaries": {
+      "config_loader": [
+        "load_planner_router_package(config_root, frozen_pins)",
+        "load_planner_config(path)",
+        "load_objective_profiles(path)",
+        "load_sleeves(path)",
+        "load_budget_policies(path)",
+        "load_monitor_profiles(path)",
+        "load_executor_profiles(path)",
+        "validate_package_references(package, frozen_pins)"
+      ],
+      "objective_resolver": [
+        "resolve_objective_profile(request, package)"
+      ],
+      "sleeve_selector": [
+        "select_sleeves(objective, sleeves)"
+      ],
+      "budget_binder": [
+        "bind_budgets(request, objective, selected_sleeves, budget_policies)"
+      ],
+      "plan_emitter": [
+        "build_execution_plans(context, created_at_utc)",
+        "emit_plan_batch(plans, request, plan_store)"
+      ],
+      "dispatch_state_machine": [
+        "dispatch_plan_batch(batch, executor_registry, status_sink)",
+        "prepare_batch(batch, executor_registry)",
+        "rollback_prepared_batch(handles, executor_registry, failure, status_sink)",
+        "normalize_status_update(plan, raw_status, source_reason, detail)",
+        "validate_transition(previous, next_status)"
+      ],
+      "planner": [
+        "plan_request(request, config_root, frozen_pins, plan_store, created_at_utc)",
+        "plan_and_dispatch(request, config_root, frozen_pins, plan_store, executor_registry, status_sink, created_at_utc)"
+      ]
+    },
+    "source_faithful_adapters": {
+      "dexter": [
+        "settings.py",
+        "Dexter._settings_snapshot",
+        "Dexter._reserve_buy_spend",
+        "Dexter._release_buy_spend",
+        "Dexter._finalize_buy_spend",
+        "Dexter.set_trust_level",
+        "Dexter.buy",
+        "Dexter.sell",
+        "Dexter.monitor_mint_session",
+        "DexLab/instrumentation.py"
+      ],
+      "mewx": [
+        "config.rs::config",
+        "config.rs::get_snipe_config",
+        "config.rs::get_strats_config",
+        "config.rs::get_tx_settings",
+        "main.rs",
+        "MewSnipe.start_session",
+        "MewSnipe.sim_session",
+        "MewSnipe.trade_session",
+        "MewSnipe.buy",
+        "MewSnipe.sell",
+        "instrumentation.rs"
+      ]
+    },
+    "dispatch_state_machine": {
+      "prepare_all_before_start": true,
+      "rollback_on_prepare_failure": true,
+      "start_failure_stops_started_handles": true,
+      "mid_trade_handoff_forbidden": true,
+      "allowed_transitions": [
+        "planned->starting",
+        "planned->failed",
+        "starting->running",
+        "starting->failed",
+        "running->quarantined",
+        "running->stopping",
+        "running->stopped",
+        "running->failed",
+        "quarantined->stopping",
+        "quarantined->failed",
+        "stopping->stopped",
+        "stopping->failed"
+      ]
+    },
+    "error_surface": {
+      "exception_types": [
+        "PlannerRouterError",
+        "ConfigLoadError",
+        "ConfigValidationError",
+        "UnknownObjectiveProfileError",
+        "SleeveSelectionError",
+        "BudgetBindingError",
+        "PlanEmissionError",
+        "DispatchError",
+        "InvalidStatusTransitionError"
+      ],
+      "planner_failure_codes": [
+        "config_missing",
+        "duplicate_config_id",
+        "unknown_objective_profile",
+        "route_mode_invalid",
+        "sleeve_disabled",
+        "executor_source_mismatch",
+        "pin_mismatch",
+        "unknown_budget_policy",
+        "mewx_cap_required",
+        "budget_share_overflow",
+        "global_halt_active",
+        "prepare_failed",
+        "start_failed",
+        "status_timeout",
+        "shutdown_unconfirmed",
+        "invalid_status_transition",
+        "source_stop_failed"
+      ],
+      "source_reason_passthrough_examples": {
+        "dexter": [
+          "blacklist",
+          "single_lock",
+          "leaderboard_update",
+          "insufficient_balance",
+          "price_too_high",
+          "zero_quote",
+          "creator_vault_unavailable",
+          "buy_confirmation_failed",
+          "buy_confirmation_invalid",
+          "stagnant",
+          "drop-time",
+          "malicious"
+        ],
+        "mewx": [
+          "region_inactive",
+          "concurrency_cap_reached",
+          "session_already_active",
+          "transport_send_failed",
+          "max_loss",
+          "take_profit",
+          "recent_profit_collapse",
+          "creator_sold",
+          "inactivity_timeout"
+        ]
+      }
+    },
+    "deferred_specs": [
+      "monitor_killswitch_spec",
+      "executor_boundary_spec"
+    ],
+    "preferred_next_step": "planner_router_code_implementation"
+  }
+}

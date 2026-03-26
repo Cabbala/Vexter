@@ -1,0 +1,31 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+次タスクID: PLANNER-ROUTER-CODE-IMPLEMENTATION
+
+GitHub-visible Vexter `main` は PR `#36` main commit `8713b9ba8de82accda48526fdff8732531d7b620` まで確認済みで、comparison baseline は `task005-pass-grade-pair-20260325T180027Z` のまま固定です。Dexter は merged PR `#3` commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`、Mew-X は frozen commit `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a` を維持しています。promoted live / replay はどちらも `winner_mode: derived`、stable scored split は Dexter `6`, Mew-X `4`, tie `2`、Dexter / Mew-X の replay coverage / gap はどちらも `100.00% / 0.0000` を維持し、confirmatory residual は Mew-X `candidate_rejected` のみで promoted baseline を overturn しません。
+
+この task では、新証拠収集や source logic 変更は行わず、TASK-007 concrete planner/router implementation spec を code-ready な module / data-model / function boundary に落としました。結論は以下です。
+
+- Key finding: `planner_router_code_spec_ready`
+- Claim boundary: `code_spec_bounded`
+- Decision: `implementation_ready`
+
+fixed code-spec conclusion:
+
+- 実装 root は `vexter/planner_router/` に固定する
+- `models.py`, `errors.py`, `interfaces.py`, `config_loader.py`, `objective_resolver.py`, `sleeve_selector.py`, `budget_binder.py`, `plan_emitter.py`, `dispatch_state_machine.py`, `planner.py` に責務を分ける
+- config loader は `planner`, `objective_profiles`, `sleeves`, `budget_policies`, `monitor_profiles`, `executor_profiles` を deterministic order で読み、pin mismatch や cross-reference mismatch を fail-closed で止める
+- objective resolution は omitted intent を `mixed_default` に寄せるが、explicit unknown profile は reject する
+- sleeve selector と budget binder は Dexter default / explicit Mew-X containment だけを separate-sleeve で扱い、silent fallback や implicit Mew-X allocation を禁止する
+- plan emitter は frozen dataclass ベースの immutable `ExecutionPlan` / `PlanBatch` を atomic に emit する
+- dispatch state machine は `prepare` 全件成功後にのみ `start` し、partial prepare または partial start failure 時は stop-all rollback をかける
+- Dexter adapter は `settings.py`, `Dexter.py`, `DexLab/instrumentation.py` の既存 surface に寄せ、Mew-X adapter は `config.rs`, `main.rs`, `handler.rs`, `instrumentation.rs` の既存 surface に寄せる
+- numeric monitor thresholds は `monitor_killswitch_spec` に、transport/process model は `executor_boundary_spec` に deferred のまま残す
+
+次は `planner_router_code_implementation` を優先してください。module layout、typed object、public function、rollback semantics、test seams がここで固定できたため、まずは `vexter/planner_router/` の loader / resolver / selector / binder / emitter / dispatch skeleton を実装し、`ExecutorAdapter` と `PlanStore` を abstract seam として立てるのが最短です。再実行してはいけないもの:
+
+- promoted-baseline selection
+- 新 live / replay evidence collection
+- validator / source logic changes
+- numeric timeout / heartbeat / retry / cap value の先行確定
+- planner 層への transport / SWQOS / trust logic の持ち込み

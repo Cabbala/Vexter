@@ -243,6 +243,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-IMPLEMENTATION-PLANNING",
         "TASK-007-PLANNER-ROUTER-INTERFACE-SPEC",
         "TASK-007-CONCRETE-PLANNER-ROUTER-IMPLEMENTATION-SPEC",
+        "TASK-007-CONCRETE-PLANNER-ROUTER-CODE-SPEC",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -274,6 +275,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "implementation_plan_ready",
         "planner_router_spec_ready",
         "concrete_planner_router_spec_ready",
+        "planner_router_code_spec_ready",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -308,6 +310,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-007-implementation-planning",
         "codex/task-007-planner-router-interface-spec",
         "codex/task-007-concrete-planner-router-implementation-spec",
+        "codex/task-007-concrete-planner-router-code-spec",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -325,6 +328,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "PLANNER-ROUTER-INTERFACE-SPEC",
         "CONCRETE-PLANNER-ROUTER-IMPLEMENTATION-SPEC",
         "CONCRETE-PLANNER-ROUTER-CODE-SPEC",
+        "TASK-007-PLANNER-ROUTER-CODE-IMPLEMENTATION",
     }
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -354,6 +358,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "ready_for_planner_router_interface_spec",
         "ready_for_concrete_planner_router_implementation_spec",
         "ready_for_concrete_planner_router_code_spec",
+        "ready_for_planner_router_code_implementation",
     }
 
 
@@ -391,6 +396,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "implementation_plan_ready",
         "planner_router_spec_ready",
         "concrete_planner_router_spec_ready",
+        "planner_router_code_spec_ready",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -410,6 +416,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "PLANNER-ROUTER-INTERFACE-SPEC",
         "CONCRETE-PLANNER-ROUTER-IMPLEMENTATION-SPEC",
         "CONCRETE-PLANNER-ROUTER-CODE-SPEC",
+        "TASK-007-PLANNER-ROUTER-CODE-IMPLEMENTATION",
     }
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -438,6 +445,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "ready_for_planner_router_interface_spec",
         "ready_for_concrete_planner_router_implementation_spec",
         "ready_for_concrete_planner_router_code_spec",
+        "ready_for_planner_router_code_implementation",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]

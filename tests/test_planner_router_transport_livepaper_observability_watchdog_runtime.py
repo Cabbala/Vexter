@@ -385,6 +385,9 @@ def test_transport_livepaper_observability_watchdog_runtime_workflow_runs_after_
         "- name: Run transport livepaper observability watchdog regression pack"
     )
     watchdog_ci_gate_index = workflow.index("- name: Run transport livepaper observability watchdog CI gate")
+    handoff_watchdog_regression_pack_index = workflow.index(
+        "- name: Run livepaper observability shift handoff watchdog regression pack"
+    )
     build_bundle_index = workflow.index("- name: Build proof bundle")
     remaining_tests_index = workflow.index("- name: Run remaining tests")
 
@@ -393,6 +396,7 @@ def test_transport_livepaper_observability_watchdog_runtime_workflow_runs_after_
         'pytest -q -m "not livepaper_observability_shift_handoff_ci_check and not '
         'livepaper_observability_shift_handoff_watchdog and not '
         'livepaper_observability_shift_handoff_watchdog_runtime and not '
+        'livepaper_observability_shift_handoff_watchdog_regression_pack and not '
         'transport_livepaper_observability_watchdog_ci_gate and not '
         'transport_livepaper_observability_ci_gate and not '
         'transport_livepaper_observability_watchdog and not '
@@ -405,6 +409,7 @@ def test_transport_livepaper_observability_watchdog_runtime_workflow_runs_after_
         < watchdog_runtime_index
         < watchdog_regression_pack_index
         < watchdog_ci_gate_index
+        < handoff_watchdog_regression_pack_index
         < build_bundle_index
         < remaining_tests_index
     )
@@ -441,6 +446,7 @@ def test_transport_livepaper_observability_watchdog_runtime_manifest_and_context
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-CI-CHECK",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
     }
 
 

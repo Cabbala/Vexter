@@ -131,6 +131,7 @@ def test_transport_livepaper_observability_watchdog_ci_gate_workflow_runs_before
         'pytest -q -m "not livepaper_observability_shift_handoff_ci_check and not '
         'livepaper_observability_shift_handoff_watchdog and not '
         'livepaper_observability_shift_handoff_watchdog_runtime and not '
+        'livepaper_observability_shift_handoff_watchdog_regression_pack and not '
         'transport_livepaper_observability_watchdog_ci_gate and not '
         'transport_livepaper_observability_ci_gate and not '
         'transport_livepaper_observability_watchdog and not '

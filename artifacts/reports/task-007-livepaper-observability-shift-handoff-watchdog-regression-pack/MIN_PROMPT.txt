@@ -1,0 +1,1 @@
+Verify the regression-pack proof and status, then inspect the named broken handoff surface across the baseline, runtime, and regression-pack handoffs before changing CI-gate artifacts.

@@ -367,6 +367,16 @@ def test_transport_livepaper_observability_runtime_preserves_runtime_continuity(
         PlanStatus.STARTING,
         PlanStatus.RUNNING,
     ]
+    assert dispatch_snapshots[0].detail["plan_batch_id"] == dexter_plan.plan_batch_id
+    assert dispatch_snapshots[0].detail["objective_profile_id"] == dexter_plan.objective_profile_id
+    assert dispatch_snapshots[0].detail["monitor_profile_id"] == dexter_plan.monitor_binding.monitor_profile_id
+    assert dispatch_snapshots[0].detail["handle_id"] == dexter_handle.handle_id
+    assert dispatch_snapshots[0].detail["execution_mode"] == "paper_live"
+    assert dispatch_snapshots[2].detail["plan_batch_id"] == mewx_plan.plan_batch_id
+    assert dispatch_snapshots[2].detail["objective_profile_id"] == mewx_plan.objective_profile_id
+    assert dispatch_snapshots[2].detail["monitor_profile_id"] == mewx_plan.monitor_binding.monitor_profile_id
+    assert dispatch_snapshots[2].detail["handle_id"] == mewx_handle.handle_id
+    assert dispatch_snapshots[2].detail["execution_mode"] == "sim_live"
     assert set(sink.latest_by_plan_id) == {dexter_plan.plan_id, mewx_plan.plan_id}
     assert dexter_handle.handle_id == dexter_duplicate_handle.handle_id
     assert mewx_handle.handle_id == mewx_duplicate_handle.handle_id
@@ -398,6 +408,12 @@ def test_transport_livepaper_observability_runtime_preserves_runtime_continuity(
     }
     assert store.detail_sequences[mewx_plan.plan_id][0]["monitor_profile_id"] == mewx_plan.monitor_binding.monitor_profile_id
     assert store.detail_sequences[mewx_plan.plan_id][0]["pinned_commit"] == FROZEN_PINS.mewx
+    assert store.detail_sequences[dexter_plan.plan_id][1]["plan_batch_id"] == dexter_plan.plan_batch_id
+    assert store.detail_sequences[dexter_plan.plan_id][1]["handle_id"] == dexter_handle.handle_id
+    assert store.detail_sequences[dexter_plan.plan_id][1]["execution_mode"] == "paper_live"
+    assert store.detail_sequences[mewx_plan.plan_id][1]["plan_batch_id"] == mewx_plan.plan_batch_id
+    assert store.detail_sequences[mewx_plan.plan_id][1]["handle_id"] == mewx_handle.handle_id
+    assert store.detail_sequences[mewx_plan.plan_id][1]["execution_mode"] == "sim_live"
     assert store.detail_sequences[dexter_plan.plan_id][2]["handle_id"] == dexter_handle.handle_id
     assert store.detail_sequences[mewx_plan.plan_id][2]["handle_id"] == mewx_handle.handle_id
     assert store.detail_sequences[dexter_plan.plan_id][2]["execution_mode"] == "paper_live"
@@ -419,6 +435,15 @@ def test_transport_livepaper_observability_runtime_preserves_runtime_continuity(
     assert mewx_quarantined.detail["quarantine_reason"] == "timeout_guard"
     assert mewx_quarantined.detail["monitor_profile_id"] == mewx_plan.monitor_binding.monitor_profile_id
     assert mewx_quarantined.detail["quarantine_scope"] == mewx_plan.monitor_binding.quarantine_scope
+    assert mewx_quarantined.detail["plan_batch_id"] == mewx_plan.plan_batch_id
+    assert mewx_quarantined.detail["objective_profile_id"] == mewx_plan.objective_profile_id
+    assert mewx_quarantined.detail["execution_mode"] == "sim_live"
+    assert mewx_quarantined.detail["prepare_accepted_once"] is True
+    assert mewx_quarantined.detail["prepare_duplicate_seen"] is True
+    assert mewx_quarantined.detail["start_accepted_once"] is True
+    assert mewx_quarantined.detail["start_duplicate_seen"] is True
+    assert mewx_quarantined.detail["push_detail"]["quarantine_reason"] == "timeout_guard"
+    assert mewx_quarantined.detail["poll_detail"]["execution_mode"] == "sim_live"
     assert mewx_quarantined.detail["reconciliation_decision"] == "push_promoted"
     assert mewx_quarantined.detail["push_status"] == PlanStatus.QUARANTINED.value
     assert [snapshot.status for snapshot in stopping_snapshots] == [PlanStatus.STOPPING, PlanStatus.STOPPING]
@@ -448,8 +473,20 @@ def test_transport_livepaper_observability_runtime_preserves_runtime_continuity(
     assert store.detail_sequences[mewx_plan.plan_id][-1]["halt_mode"] == MANUAL_LATCHED_STOP_ALL
     assert store.detail_sequences[dexter_plan.plan_id][-1]["stop_reason"] == MANUAL_LATCHED_STOP_ALL
     assert store.detail_sequences[mewx_plan.plan_id][-1]["stop_reason"] == MANUAL_LATCHED_STOP_ALL
+    assert store.detail_sequences[dexter_plan.plan_id][-1]["prepare_duplicate_seen"] is True
+    assert store.detail_sequences[mewx_plan.plan_id][-1]["prepare_duplicate_seen"] is True
+    assert store.detail_sequences[dexter_plan.plan_id][-1]["start_duplicate_seen"] is True
+    assert store.detail_sequences[mewx_plan.plan_id][-1]["start_duplicate_seen"] is True
+    assert store.detail_sequences[dexter_plan.plan_id][-1]["stop_accepted_once"] is True
+    assert store.detail_sequences[dexter_plan.plan_id][-1]["stop_duplicate_seen"] is True
+    assert store.detail_sequences[mewx_plan.plan_id][-1]["stop_accepted_once"] is True
+    assert store.detail_sequences[mewx_plan.plan_id][-1]["stop_duplicate_seen"] is True
     assert store.detail_sequences[dexter_plan.plan_id][-1]["adapter_snapshot"]["execution_mode"] == "paper_live"
     assert store.detail_sequences[mewx_plan.plan_id][-1]["adapter_snapshot"]["execution_mode"] == "sim_live"
+    assert store.detail_sequences[dexter_plan.plan_id][-1]["adapter_snapshot"]["plan_batch_id"] == dexter_plan.plan_batch_id
+    assert store.detail_sequences[mewx_plan.plan_id][-1]["adapter_snapshot"]["plan_batch_id"] == mewx_plan.plan_batch_id
+    assert store.detail_sequences[dexter_plan.plan_id][-1]["adapter_snapshot"]["stop_duplicate_seen"] is True
+    assert store.detail_sequences[mewx_plan.plan_id][-1]["adapter_snapshot"]["stop_duplicate_seen"] is True
     assert terminal_snapshots[dexter_plan.plan_id]["stop_reason"] == MANUAL_LATCHED_STOP_ALL
     assert terminal_snapshots[mewx_plan.plan_id]["stop_reason"] == MANUAL_LATCHED_STOP_ALL
     assert sink.latest_by_plan_id[dexter_plan.plan_id].status is PlanStatus.STOPPED
@@ -514,33 +551,39 @@ def test_transport_livepaper_observability_runtime_surfaces_runtime_failure_deta
     assert mewx_failure.source_reason == "status timeout"
     assert mewx_failure.detail["failure_code"] == "status_timeout"
     assert mewx_failure.detail["stage"] == "status"
+    assert mewx_failure.detail["plan_batch_id"] == mewx_plan.plan_batch_id
+    assert mewx_failure.detail["objective_profile_id"] == mewx_plan.objective_profile_id
     assert mewx_failure.detail["rollback_confirmed"] is True
     assert mewx_failure.detail["rollback_confirmation_source"] == "snapshot"
     assert mewx_failure.detail["rollback_snapshot"]["execution_mode"] == "sim_live"
     assert mewx_failure.detail["rollback_snapshot"]["stop_reason"] == "status_timeout"
+    assert dexter_failure.detail["plan_batch_id"] == dexter_plan.plan_batch_id
+    assert dexter_failure.detail["objective_profile_id"] == dexter_plan.objective_profile_id
     assert dexter_failure.detail["rollback_confirmed"] is True
     assert dexter_failure.detail["rollback_confirmation_source"] == "snapshot"
     assert dexter_failure.detail["rollback_snapshot"]["execution_mode"] == "paper_live"
     assert dexter_failure.detail["rollback_snapshot"]["stop_reason"] == "status_timeout"
-    assert status_errors == [
-        {
-            "stage": "status_error",
-            "source": Source.MEWX.value,
-            "plan_id": mewx_plan.plan_id,
-            "handle_id": mewx_handle.handle_id,
-            "failure_code": "status_timeout",
-            "failure_stage": "status",
-            "source_reason": "status timeout",
-            "detail": {
-                "handle_id": mewx_handle.handle_id,
-                "signal": "status_poll",
-                "poll_counter": 1,
-            },
-        }
-    ]
+    assert len(status_errors) == 1
+    assert status_errors[0]["stage"] == "status_error"
+    assert status_errors[0]["source"] == Source.MEWX.value
+    assert status_errors[0]["plan_id"] == mewx_plan.plan_id
+    assert status_errors[0]["handle_id"] == mewx_handle.handle_id
+    assert status_errors[0]["failure_code"] == "status_timeout"
+    assert status_errors[0]["failure_stage"] == "status"
+    assert status_errors[0]["source_reason"] == "status timeout"
+    assert status_errors[0]["detail"]["handle_id"] == mewx_handle.handle_id
+    assert status_errors[0]["detail"]["signal"] == "status_poll"
+    assert status_errors[0]["detail"]["poll_counter"] == 1
+    assert status_errors[0]["detail"]["execution_mode"] == "sim_live"
+    assert status_errors[0]["detail"]["monitor_profile_id"] == mewx_plan.monitor_binding.monitor_profile_id
+    assert status_errors[0]["detail"]["prepare_accepted_once"] is True
     assert [entry["source"] for entry in accepted_stops] == [Source.MEWX.value, Source.DEXTER.value]
     assert [entry["detail"]["execution_mode"] for entry in snapshot_entries] == ["sim_live", "paper_live"]
     assert [entry["detail"]["stop_reason"] for entry in snapshot_entries] == ["status_timeout", "status_timeout"]
+    assert [entry["detail"]["plan_batch_id"] for entry in snapshot_entries] == [
+        mewx_plan.plan_batch_id,
+        dexter_plan.plan_batch_id,
+    ]
     assert sink.latest_by_plan_id[dexter_plan.plan_id].status is PlanStatus.FAILED
     assert sink.latest_by_plan_id[mewx_plan.plan_id].status is PlanStatus.FAILED
 

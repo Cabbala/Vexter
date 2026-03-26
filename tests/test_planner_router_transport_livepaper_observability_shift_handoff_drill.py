@@ -120,15 +120,15 @@ def test_livepaper_observability_shift_handoff_drill_artifacts_are_wired_for_inc
         == "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-CI-CHECK"
     )
     assert manifest["task_id"] == context["current_task"]["id"] == ledger["task_id"] == (
-        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-CI-CHECK"
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG"
     )
     assert (
-        manifest["status"] == ledger["status"] == "livepaper_observability_shift_handoff_ci_check_passed"
+        manifest["status"] == ledger["status"] == "livepaper_observability_shift_handoff_watchdog_passed"
     )
     assert (
         manifest["bundle_path"]
         == ledger["artifact_bundle"]
-        == "artifacts/bundles/task-007-livepaper-observability-shift-handoff-ci-check.tar.gz"
+        == "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog.tar.gz"
     )
     assert (
         proof["task_result"]["key_finding"]
@@ -150,18 +150,18 @@ def test_livepaper_observability_shift_handoff_drill_artifacts_are_wired_for_inc
         manifest["next_task"]["id"]
         == context["next_task"]["id"]
         == ledger["next_task_id"]
-        == "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG"
+        == "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME"
     )
     assert (
         manifest["next_task"]["state"]
         == context["next_task"]["state"]
         == ledger["next_task_state"]
-        == "ready_for_livepaper_observability_shift_handoff_watchdog"
+        == "ready_for_livepaper_observability_shift_handoff_watchdog_runtime"
     )
     assert "livepaper_observability_shift_handoff_ci_check" in summary_text
     assert "livepaper_observability_shift_handoff_drill_passed" in status_text
     assert "livepaper_observability_shift_handoff_ci_check" in report_text
-    assert "task-007-livepaper-observability-shift-handoff-ci-check.tar.gz" in bundle_script
+    assert "task-007-livepaper-observability-shift-handoff-watchdog.tar.gz" in bundle_script
 
 
 def test_livepaper_observability_shift_handoff_drill_doc_and_sample_handoff_capture_required_faces() -> None:

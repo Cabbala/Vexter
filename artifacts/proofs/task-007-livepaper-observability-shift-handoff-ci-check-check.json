@@ -1,15 +1,15 @@
 {
   "task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-CI-CHECK",
-  "generated_at_utc": "2026-03-26T19:29:14Z",
+  "generated_at_utc": "2026-03-26T20:04:20Z",
   "verified_github": {
-    "latest_vexter_pr": 64,
-    "latest_vexter_main_commit": "30652c29570bf34d105befed6a46a60b551d59b7",
-    "latest_vexter_merged_at_utc": "2026-03-26T18:53:07Z",
+    "latest_vexter_pr": 65,
+    "latest_vexter_main_commit": "51cfec8b85b5020ba5f6d0f72dceb5c47c339c06",
+    "latest_vexter_merged_at_utc": "2026-03-26T19:30:46Z",
     "latest_recent_vexter_prs": [
+      65,
       64,
       63,
-      62,
-      61
+      62
     ],
     "open_non_authoritative_vexter_prs": [
       50
@@ -45,7 +45,7 @@
     "runner_script": "scripts/run_livepaper_observability_shift_handoff_ci_check.sh",
     "workflow": ".github/workflows/validate.yml",
     "pytest_command": "pytest -q -m livepaper_observability_shift_handoff_ci_check tests/test_planner_router_transport_livepaper_observability_shift_handoff_template.py tests/test_planner_router_transport_livepaper_observability_shift_handoff_drill.py tests/test_planner_router_transport_livepaper_observability_shift_handoff_ci_check.py",
-    "pytest_result": "29 passed in 0.18s",
+    "pytest_result": "29 passed in 0.06s",
     "gate_status": "passed",
     "grouped_test_files": [
       "tests/test_planner_router_transport_livepaper_observability_shift_handoff_template.py",

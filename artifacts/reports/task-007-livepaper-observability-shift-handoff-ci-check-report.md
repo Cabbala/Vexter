@@ -7,7 +7,7 @@ It does not reopen comparison work, collect new evidence, or change planner/rout
 
 ## Verified GitHub State
 
-- Latest merged Vexter `main`: PR `#64`, main commit `30652c29570bf34d105befed6a46a60b551d59b7`, merged at `2026-03-26T18:53:07Z`
+- Latest merged Vexter `main`: PR `#65`, main commit `51cfec8b85b5020ba5f6d0f72dceb5c47c339c06`, merged at `2026-03-26T19:30:46Z`
 - Open non-authoritative Vexter PR: `#50`, `feat(infra): refresh runtime observability artifacts`
 - Dexter merged `main`: PR `#3`, merge commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`, merged at `2026-03-21T11:31:07Z`
 - Frozen Mew-X commit: `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`, committed at `2026-03-20T16:05:19Z`

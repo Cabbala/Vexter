@@ -391,6 +391,7 @@ def test_transport_livepaper_observability_watchdog_runtime_workflow_runs_after_
     assert "cat artifacts/proofs/task-007-transport-livepaper-observability-watchdog-runtime-summary.md" in workflow
     assert (
         'pytest -q -m "not livepaper_observability_shift_handoff_ci_check and not '
+        'livepaper_observability_shift_handoff_watchdog and not '
         'transport_livepaper_observability_watchdog_ci_gate and not '
         'transport_livepaper_observability_ci_gate and not '
         'transport_livepaper_observability_watchdog and not '
@@ -437,6 +438,7 @@ def test_transport_livepaper_observability_watchdog_runtime_manifest_and_context
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-TEMPLATE",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-DRILL",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-CI-CHECK",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG",
     }
 
 

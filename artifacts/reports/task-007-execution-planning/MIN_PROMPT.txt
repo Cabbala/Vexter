@@ -1,0 +1,29 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+継続タスクID: TASK-007-EXECUTION-PLANNING
+
+GitHub-visible Vexter `main` は PR `#32` merged commit `a214ff04f0662e250b01181551a8963ce8e80dd6` まで確認済みで、comparison baseline は `task005-pass-grade-pair-20260325T180027Z` のまま固定です。Dexter は merged PR `#3` commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`、Mew-X は frozen commit `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a` を維持しています。promoted live / repaired replay はどちらも `winner_mode: derived`、stable scored split は Dexter `6`, Mew-X `4`, tie `2`、Dexter / Mew-X の replay coverage / gap はどちらも `100.00% / 0.0000` を維持し、confirmatory residual は Mew-X `candidate_rejected` のみで promoted baseline を overturn しません。
+
+この task では、新証拠収集や source logic 変更は行わず、TASK-007 strategy planning の結論を execution-level design surface に落としました。結論は以下です。
+
+- Key finding: `execution_plan_ready`
+- Claim boundary: `execution_plan_bounded`
+- Decision: `implementation_planning_ready`
+
+source-faithful execution conclusion:
+
+- default execution anchor は `Dexter`
+- `Mew-X` は containment-first な selective option に限定
+- hybrid は objective-conditioned route selection か portfolio split の範囲に限定
+- in-run source fusion, threshold transplant, path-equivalence claim の拡張は未支持
+
+実務上の意味は、objective が mixed か unspecified なら Dexter を default にし、drawdown containment / fast post-attempt fill / local-peak retention を明示的に最優先する sleeve だけを Mew-X に振る、ということです。Mew-X は source-faithful な selective lane であって、Dexter の一般 default や mid-trade failover ではありません。
+
+次に切る task は `implementation_planning` を推奨します。現時点では `path_sensitive_retention_scope` は不要で、`concrete_execution_design` を別 evidence lane として先に切る必要もありません。再実行してはいけないもの:
+
+- promoted-baseline selection
+- 新 live / replay evidence collection
+- validator / source logic changes
+- source fusion 前提の execution design
+- replay claim の full path equivalence 化
+

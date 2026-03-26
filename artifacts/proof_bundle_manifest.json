@@ -1,8 +1,8 @@
 {
-  "bundle_path": "artifacts/bundles/task-007-livepaper-observability-shift-checklist.tar.gz",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_livepaper_observability_shift_checklist_bundle.tar.gz",
-  "task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-CHECKLIST",
-  "status": "livepaper_observability_shift_checklist_ready",
+  "bundle_path": "artifacts/bundles/task-007-livepaper-observability-shift-handoff-template.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_livepaper_observability_shift_handoff_template_bundle.tar.gz",
+  "task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-TEMPLATE",
+  "status": "livepaper_observability_shift_handoff_template_ready",
   "summary": "artifacts/summary.md",
   "context_pack": "artifacts/context_pack.json",
   "task_ledger": "artifacts/task_ledger.jsonl",
@@ -37,6 +37,7 @@
   ],
   "docs": [
     "docs/evaluation_contract.md",
+    "docs/livepaper_observability_shift_handoff_template.md",
     "docs/livepaper_observability_shift_checklist.md",
     "docs/livepaper_observability_operator_runbook.md",
     "docs/normalized_event_schema.md",
@@ -65,6 +66,8 @@
     "scripts/run_transport_livepaper_observability_watchdog_regression_pack.sh"
   ],
   "proof_files": [
+    "artifacts/proofs/task-007-livepaper-observability-shift-handoff-template-check.json",
+    "artifacts/proofs/task-007-livepaper-observability-shift-handoff-template-summary.md",
     "artifacts/proofs/task-007-livepaper-observability-shift-checklist-check.json",
     "artifacts/proofs/task-007-livepaper-observability-shift-checklist-summary.md",
     "artifacts/proofs/task-007-livepaper-observability-operator-runbook-check.json",
@@ -95,6 +98,9 @@
     "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-regression-pack-summary.md"
   ],
   "reports": [
+    "artifacts/reports/task-007-livepaper-observability-shift-handoff-template-report.md",
+    "artifacts/reports/task-007-livepaper-observability-shift-handoff-template-status.md",
+    "artifacts/reports/task-007-livepaper-observability-shift-handoff-template",
     "artifacts/reports/task-007-livepaper-observability-shift-checklist-report.md",
     "artifacts/reports/task-007-livepaper-observability-shift-checklist-status.md",
     "artifacts/reports/task-007-livepaper-observability-shift-checklist",
@@ -139,15 +145,15 @@
     "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack"
   ],
   "next_task": {
-    "id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-TEMPLATE",
-    "state": "ready_for_livepaper_observability_shift_handoff_template",
+    "id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-DRILL",
+    "state": "ready_for_livepaper_observability_shift_handoff_drill",
     "resume_requirements": [
       "Treat task005-pass-grade-pair-20260325T180027Z as the frozen promoted baseline.",
-      "Carry forward livepaper_observability_shift_checklist_fixed together with livepaper_observability_shift_checklist_bounded as the current evidence conclusion.",
-      "Use docs/livepaper_observability_shift_checklist.md together with docs/livepaper_observability_operator_runbook.md and specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md as the operator-facing source of truth.",
-      "Preserve the current Dexter and Mew-X source pins and keep the CI gate plus watchdog surfaces fixed.",
+      "Carry forward livepaper_observability_shift_handoff_template_fixed together with livepaper_observability_shift_handoff_template_bounded as the current evidence conclusion.",
+      "Use docs/livepaper_observability_shift_handoff_template.md together with docs/livepaper_observability_shift_checklist.md, docs/livepaper_observability_operator_runbook.md, and specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md as the operator-facing source of truth.",
+      "Preserve the current Dexter and Mew-X source pins together with fixed poll_first delivery and manual_latched_stop_all semantics.",
       "Do not reopen comparison work or change source logic in the next lane.",
-      "Standardize the outgoing and incoming operator record without changing the checklist decision boundaries."
+      "Exercise the outgoing and incoming operator workflow against the fixed handoff faces and completeness criteria without changing the checklist decision boundaries."
     ]
   },
   "proofs": {
@@ -202,26 +208,30 @@
     "livepaper_observability_halt_quarantine_continue_mapping_fixed": true,
     "livepaper_observability_shift_end_handoff_fixed": true,
     "livepaper_observability_shift_checklist_proof_emitted": true,
-    "recommended_next_step_is_livepaper_observability_shift_handoff_template": true
+    "livepaper_observability_shift_handoff_template_written": true,
+    "livepaper_observability_shift_handoff_faces_fixed": true,
+    "livepaper_observability_shift_handoff_completeness_fixed": true,
+    "livepaper_observability_shift_handoff_template_proof_emitted": true,
+    "recommended_next_step_is_livepaper_observability_shift_handoff_drill": true
   },
   "task_result": {
     "selected_outcome": "A",
-    "key_finding": "livepaper_observability_shift_checklist_fixed",
-    "claim_boundary": "livepaper_observability_shift_checklist_bounded",
+    "key_finding": "livepaper_observability_shift_handoff_template_fixed",
+    "claim_boundary": "livepaper_observability_shift_handoff_template_bounded",
     "comparison_source_of_truth_state": "comparison_closed_out",
-    "task_state": "livepaper_observability_shift_checklist_ready",
-    "recommended_next_step": "livepaper_observability_shift_handoff_template",
-    "recommended_next_task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-TEMPLATE",
-    "decision": "livepaper_observability_shift_handoff_template_ready",
+    "task_state": "livepaper_observability_shift_handoff_template_ready",
+    "recommended_next_step": "livepaper_observability_shift_handoff_drill",
+    "recommended_next_task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-DRILL",
+    "decision": "livepaper_observability_shift_handoff_drill_ready",
     "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
     "default_execution_anchor": "dexter",
     "selective_option_source": "mewx",
-    "verified_latest_vexter_pr": 60,
-    "verified_latest_vexter_main_commit": "ec46f051b41c3e140db09e808ef54e4d6e3d33ac",
+    "verified_latest_vexter_pr": 62,
+    "verified_latest_vexter_main_commit": "3b595faacf316aca89655b6e1ffcf7568478763e",
     "verified_dexter_pr": 3,
     "verified_dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
-    "recommended_next_lane": "livepaper_observability_shift_handoff_template"
+    "recommended_next_lane": "livepaper_observability_shift_handoff_drill"
   },
   "spec_documents": [
     "specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md"

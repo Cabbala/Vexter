@@ -53,8 +53,25 @@ jobs:
             artifacts/proofs/task-007-transport-livepaper-observability-watchdog-summary.md
             artifacts/proofs/task-007-transport-livepaper-observability-watchdog-pytest.log
 
+      - name: Run transport livepaper observability watchdog runtime
+        run: ./scripts/run_transport_livepaper_observability_watchdog_runtime.sh
+
+      - name: Show transport livepaper observability watchdog runtime summary
+        if: always()
+        run: cat artifacts/proofs/task-007-transport-livepaper-observability-watchdog-runtime-summary.md
+
+      - name: Upload transport livepaper observability watchdog runtime proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: transport-livepaper-observability-watchdog-runtime-proof
+          path: |
+            artifacts/proofs/task-007-transport-livepaper-observability-watchdog-runtime-check.json
+            artifacts/proofs/task-007-transport-livepaper-observability-watchdog-runtime-summary.md
+            artifacts/proofs/task-007-transport-livepaper-observability-watchdog-runtime-pytest.log
+
       - name: Build proof bundle
         run: ./scripts/build_proof_bundle.sh
 
       - name: Run remaining tests
-        run: pytest -q -m "not transport_livepaper_observability_ci_gate and not transport_livepaper_observability_watchdog"
+        run: pytest -q -m "not transport_livepaper_observability_ci_gate and not transport_livepaper_observability_watchdog and not transport_livepaper_observability_watchdog_runtime"

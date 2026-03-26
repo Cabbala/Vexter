@@ -16,3 +16,7 @@ def pytest_configure(config) -> None:
         "markers",
         "transport_livepaper_observability_watchdog: transport live-paper observability watchdog suite for drift and omission detection",
     )
+    config.addinivalue_line(
+        "markers",
+        "transport_livepaper_observability_watchdog_runtime: transport live-paper observability watchdog runtime suite for runtime-oriented follow-up continuity",
+    )

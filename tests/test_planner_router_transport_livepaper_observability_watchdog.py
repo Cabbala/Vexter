@@ -387,39 +387,44 @@ def test_transport_livepaper_observability_watchdog_workflow_runs_after_ci_gate(
 
     gate_index = workflow.index("Run transport livepaper observability CI gate")
     watchdog_index = workflow.index("Run transport livepaper observability watchdog")
+    watchdog_runtime_index = workflow.index("Run transport livepaper observability watchdog runtime")
     build_bundle_index = workflow.index("Build proof bundle")
     remaining_tests_index = workflow.index("Run remaining tests")
 
     assert "./scripts/run_transport_livepaper_observability_watchdog.sh" in workflow
+    assert "./scripts/run_transport_livepaper_observability_watchdog_runtime.sh" in workflow
     assert "transport-livepaper-observability-watchdog-proof" in workflow
     assert "cat artifacts/proofs/task-007-transport-livepaper-observability-watchdog-summary.md" in workflow
-    assert 'pytest -q -m "not transport_livepaper_observability_ci_gate and not transport_livepaper_observability_watchdog"' in workflow
-    assert gate_index < watchdog_index < build_bundle_index < remaining_tests_index
+    assert (
+        'pytest -q -m "not transport_livepaper_observability_ci_gate and not '
+        'transport_livepaper_observability_watchdog and not '
+        'transport_livepaper_observability_watchdog_runtime"'
+    ) in workflow
+    assert gate_index < watchdog_index < watchdog_runtime_index < build_bundle_index < remaining_tests_index
 
 
 def test_transport_livepaper_observability_watchdog_manifest_and_context_point_to_watchdog_bundle() -> None:
     manifest = json.loads((REPO_ROOT / "artifacts" / "proof_bundle_manifest.json").read_text())
     context = json.loads((REPO_ROOT / "artifacts" / "context_pack.json").read_text())
 
-    assert manifest["bundle_path"] == "artifacts/bundles/task-007-transport-livepaper-observability-watchdog.tar.gz"
-    assert manifest["task_id"] == "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG"
-    assert manifest["status"] == "transport_livepaper_observability_watchdog_passed"
     assert "scripts/run_transport_livepaper_observability_watchdog.sh" in manifest["scripts"]
     assert (
         "artifacts/reports/task-007-transport-livepaper-observability-watchdog-report.md"
         in manifest["reports"]
     )
-    assert context["current_task"]["id"] == "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG"
-    assert context["current_contract"]["watchdog_marker"] == "transport_livepaper_observability_watchdog"
     assert (
-        "tests/test_planner_router_transport_livepaper_observability_watchdog.py"
-        in context["current_task"]["deliverables"]
+        "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-check.json"
+        in manifest["proof_files"]
     )
+    assert context["current_contract"]["watchdog_marker"] == "transport_livepaper_observability_watchdog"
     assert (
         "tests/test_planner_router_transport_livepaper_observability_watchdog.py"
         in context["evidence"]["transport_livepaper_observability_watchdog"]["watchdog_test_files"]
     )
-    assert context["next_task"]["id"] == "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-RUNTIME"
+    assert (
+        context["evidence"]["transport_livepaper_observability_watchdog"]["preferred_next_step"]
+        == "transport_livepaper_observability_watchdog_runtime"
+    )
 
 
 def test_transport_livepaper_observability_watchdog_script_targets_current_suite() -> None:

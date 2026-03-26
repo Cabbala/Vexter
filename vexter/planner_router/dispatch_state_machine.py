@@ -42,6 +42,29 @@ def _now_utc() -> datetime:
     return datetime.now(timezone.utc)
 
 
+def _plan_observability_detail(plan: ExecutionPlan) -> Mapping[str, Any]:
+    return freeze_detail(
+        {
+            "plan_batch_id": plan.plan_batch_id,
+            "objective_profile_id": plan.objective_profile_id,
+            "source": plan.route.selected_source.value,
+            "selected_sleeve_id": plan.route.selected_sleeve_id,
+            "monitor_profile_id": plan.monitor_binding.monitor_profile_id,
+            "timeout_envelope_class": plan.monitor_binding.timeout_envelope_class,
+            "quarantine_scope": plan.monitor_binding.quarantine_scope,
+            "global_halt_participation": plan.monitor_binding.global_halt_participation,
+            "executor_profile_id": plan.executor_binding.executor_profile_id,
+            "pinned_commit": plan.executor_binding.pinned_commit,
+        }
+    )
+
+
+def _handle_observability_detail(handle: DispatchHandle) -> Mapping[str, Any]:
+    if not isinstance(handle.native_handle, Mapping):
+        return freeze_detail({})
+    return freeze_detail(dict(handle.native_handle))
+
+
 def _failure(
     code: FailureCode,
     *,
@@ -70,6 +93,7 @@ def _failure_snapshot_with_detail(
     extra_detail: Mapping[str, Any] | None = None,
 ) -> StatusSnapshot:
     merged_detail = {
+        **dict(_plan_observability_detail(plan)),
         "failure_code": failure.code.value,
         "stage": failure.stage,
         **dict(failure.detail),
@@ -385,7 +409,14 @@ async def dispatch_plan_batch(
             status=PlanStatus.STARTING,
             source_reason=None,
             observed_at_utc=_now_utc(),
-            detail=freeze_detail({"stage": "start"}),
+            detail=freeze_detail(
+                {
+                    **dict(_plan_observability_detail(plan)),
+                    **dict(_handle_observability_detail(handle)),
+                    "stage": "start",
+                    "signal": "start_requested",
+                }
+            ),
         )
         validate_transition(plan.status, PlanStatus.STARTING)
         status_sink.record(starting_snapshot)

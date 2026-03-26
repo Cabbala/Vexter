@@ -70,6 +70,10 @@ def test_source_faithful_transport_prepare_returns_idempotent_handle_envelope() 
     assert first_handle.native_handle["entrypoint"] == "monitor_mint_session"
     assert first_handle.native_handle["status_delivery"] == "poll_first"
     assert first_handle.native_handle["pinned_commit"] == FROZEN_PINS.dexter
+    assert first_handle.native_handle["plan_batch_id"] == plan.plan_batch_id
+    assert first_handle.native_handle["objective_profile_id"] == plan.objective_profile_id
+    assert first_handle.native_handle["monitor_profile_id"] == plan.monitor_binding.monitor_profile_id
+    assert first_handle.native_handle["quarantine_scope"] == plan.monitor_binding.quarantine_scope
 
 
 def test_source_faithful_transport_start_stop_are_idempotent_with_snapshot_confirmation() -> None:
@@ -95,10 +99,17 @@ def test_source_faithful_transport_start_stop_are_idempotent_with_snapshot_confi
 
     assert running_snapshot.status is PlanStatus.RUNNING
     assert running_snapshot.detail["ack_state"] == AckState.DUPLICATE.value
+    assert running_snapshot.detail["start_accepted_once"] is True
+    assert running_snapshot.detail["start_duplicate_seen"] is True
     assert stopping_snapshot.status is PlanStatus.STOPPING
     assert stopping_snapshot.detail["ack_state"] == AckState.DUPLICATE.value
+    assert stopping_snapshot.detail["stop_accepted_once"] is True
+    assert stopping_snapshot.detail["stop_duplicate_seen"] is True
     assert terminal_snapshot["executor_status"] == PlanStatus.STOPPED.value
     assert terminal_snapshot["handle_id"] == handle.native_handle["handle_id"]
+    assert terminal_snapshot["start_duplicate_seen"] is True
+    assert terminal_snapshot["stop_duplicate_seen"] is True
+    assert terminal_snapshot["plan_batch_id"] == plan.plan_batch_id
     assert stopped_snapshot.status is PlanStatus.STOPPED
 
 
@@ -116,6 +127,10 @@ def test_source_faithful_transport_prepare_preserves_pin_mismatch_failure_code()
     assert getattr(exc_info.value, "failure", None) is not None
     assert exc_info.value.failure.code is FailureCode.PIN_MISMATCH
     assert exc_info.value.failure.detail["rejection_class"] == "pin_mismatch"
+    assert exc_info.value.failure.detail["execution_mode"] == "paper_live"
+    assert exc_info.value.failure.detail["entrypoint"] == "monitor_mint_session"
+    assert exc_info.value.failure.detail["plan_batch_id"] == plan.plan_batch_id
+    assert exc_info.value.failure.detail["monitor_profile_id"] == plan.monitor_binding.monitor_profile_id
 
 
 def test_transport_registry_and_sink_keep_plan_store_separate_while_poll_reconciliation_advances(
@@ -173,6 +188,12 @@ def test_transport_status_reconciliation_prefers_latest_valid_monotonic_update()
     assert reconciled.detail["reconciliation_decision"] == "push_promoted"
     assert reconciled.detail["push_status"] == PlanStatus.STOPPING.value
     assert reconciled.detail["poll_status"] == PlanStatus.RUNNING.value
+    assert reconciled.detail["poll_detail"]["execution_mode"] == "paper_live"
+    assert reconciled.detail["execution_mode"] == "paper_live"
+    assert reconciled.detail["plan_batch_id"] == plan.plan_batch_id
+    assert reconciled.detail["objective_profile_id"] == plan.objective_profile_id
+    assert reconciled.detail["start_accepted_once"] is True
+    assert reconciled.detail["stop_accepted_once"] is False
 
 
 def test_transport_implementation_proof_tracks_runtime_smoke_as_next_step() -> None:

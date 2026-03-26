@@ -161,6 +161,9 @@ class _TransportSession:
     native_session_id: str
     prepared_at_utc: datetime
     status_delivery: str = STATUS_DELIVERY_POLL
+    prepare_request_count: int = 1
+    start_request_count: int = 0
+    stop_request_count: int = 0
     last_sequence: int = 0
     poll_counter: int = 0
     snapshot_counter: int = 0
@@ -174,6 +177,14 @@ class _TransportSession:
     last_prepare_ack_state: TransportAckState = TransportAckState.ACCEPTED
     last_start_ack_state: TransportAckState = TransportAckState.ACCEPTED
     last_stop_ack_state: TransportAckState | None = None
+    prepare_accepted_once: bool = True
+    prepare_duplicate_seen: bool = False
+    start_accepted_once: bool = False
+    start_duplicate_seen: bool = False
+    start_terminal_seen: bool = False
+    stop_accepted_once: bool = False
+    stop_duplicate_seen: bool = False
+    stop_terminal_seen: bool = False
     queued_push: QueuedPushSnapshot | None = None
 
 
@@ -289,7 +300,7 @@ def reconcile_status_snapshot(
     polled_snapshot: StatusSnapshot,
     pushed_snapshot: StatusSnapshot | None = None,
 ) -> StatusSnapshot:
-    if pushed_snapshot is None or pushed_snapshot.status == polled_snapshot.status:
+    if pushed_snapshot is None:
         return StatusSnapshot(
             plan_id=polled_snapshot.plan_id,
             status=polled_snapshot.status,
@@ -306,6 +317,32 @@ def reconcile_status_snapshot(
 
     polled_valid = is_valid_status_transition(previous_status, polled_snapshot.status)
     pushed_valid = is_valid_status_transition(previous_status, pushed_snapshot.status)
+    if pushed_snapshot.status == polled_snapshot.status:
+        merged_detail = {
+            **dict(polled_snapshot.detail),
+            "reconciliation_mode": STATUS_DELIVERY_POLL,
+            "reconciliation_decision": "poll_confirmed_by_push",
+            "poll_status": polled_snapshot.status.value,
+            "poll_detail": dict(polled_snapshot.detail),
+            "push_status": pushed_snapshot.status.value,
+            "poll_valid": polled_valid,
+            "push_valid": pushed_valid,
+            "push_source_reason": pushed_snapshot.source_reason,
+            "push_detail": dict(pushed_snapshot.detail),
+        }
+        for key, value in dict(pushed_snapshot.detail).items():
+            if key not in merged_detail:
+                merged_detail[key] = value
+        if "signal" not in merged_detail:
+            merged_detail["signal"] = "status_poll"
+        return StatusSnapshot(
+            plan_id=polled_snapshot.plan_id,
+            status=polled_snapshot.status,
+            source_reason=pushed_snapshot.source_reason or polled_snapshot.source_reason,
+            observed_at_utc=polled_snapshot.observed_at_utc,
+            detail=_freeze_payload(merged_detail),
+        )
+
     chosen = polled_snapshot
     decision = "poll_retained"
 
@@ -320,9 +357,11 @@ def reconcile_status_snapshot(
         "reconciliation_mode": STATUS_DELIVERY_POLL,
         "reconciliation_decision": decision,
         "poll_status": polled_snapshot.status.value,
+        "poll_detail": dict(polled_snapshot.detail),
         "push_status": pushed_snapshot.status.value,
         "poll_valid": polled_valid,
         "push_valid": pushed_valid,
+        "push_source_reason": pushed_snapshot.source_reason,
         "push_detail": dict(pushed_snapshot.detail),
     }
     if "signal" not in merged_detail:
@@ -409,6 +448,8 @@ class TransportExecutorAdapter(ExecutorAdapter):
         existing = self._sessions_by_plan_id.get(plan.plan_id)
         if existing is not None:
             existing.last_prepare_ack_state = TransportAckState.DUPLICATE
+            existing.prepare_duplicate_seen = True
+            existing.prepare_request_count += 1
             return self._build_handle(existing, ack_state=TransportAckState.DUPLICATE)
 
         if self.failure_mode.prepare_rejection is not None:
@@ -430,6 +471,7 @@ class TransportExecutorAdapter(ExecutorAdapter):
 
     async def start(self, handle: DispatchHandle) -> None:
         session = self._session_for_handle(handle)
+        session.start_request_count += 1
         build_transport_envelope(
             TransportMessageType.START,
             plan=session.plan,
@@ -439,9 +481,11 @@ class TransportExecutorAdapter(ExecutorAdapter):
 
         if session.executor_status in _TERMINAL_STATUSES or session.stop_confirmed:
             session.last_start_ack_state = TransportAckState.TERMINAL
+            session.start_terminal_seen = True
             return
         if session.started:
             session.last_start_ack_state = TransportAckState.DUPLICATE
+            session.start_duplicate_seen = True
             return
         if self.failure_mode.start_rejection is not None:
             raise self._rejection_error(session.plan, stage="start", rejection_class=self.failure_mode.start_rejection)
@@ -449,6 +493,7 @@ class TransportExecutorAdapter(ExecutorAdapter):
         session.started = True
         session.executor_status = PlanStatus.STARTING
         session.last_start_ack_state = TransportAckState.ACCEPTED
+        session.start_accepted_once = True
 
     async def status(self, handle: DispatchHandle) -> StatusSnapshot:
         session = self._session_for_handle(handle)
@@ -468,11 +513,7 @@ class TransportExecutorAdapter(ExecutorAdapter):
                 ack_state=TransportAckState.ACCEPTED,
                 plan=session.plan,
                 source_reason="status timeout",
-                detail={
-                    "handle_id": session.handle_id,
-                    "signal": "status_poll",
-                    "poll_counter": session.poll_counter,
-                },
+                detail=self._observability_detail(session, signal="status_poll"),
             )
 
         polled_status = self._polled_status_for_session(session)
@@ -484,19 +525,7 @@ class TransportExecutorAdapter(ExecutorAdapter):
             source_reason=None,
             observed_at_utc=observed_at_utc,
             detail=_freeze_payload(
-                {
-                    "handle_id": session.handle_id,
-                    "signal": "status_poll",
-                    "sequence": session.last_sequence,
-                    "entrypoint": session.spec.entrypoint,
-                    "pinned_commit": session.plan.executor_binding.pinned_commit,
-                    "status_delivery": session.status_delivery,
-                    "execution_mode": session.spec.execution_mode,
-                    "executor_profile_id": session.plan.executor_binding.executor_profile_id,
-                    "startup_method": session.spec.startup_method,
-                    "ack_state": self._status_ack_state(session).value,
-                    "duplicate": self._status_ack_state(session) is TransportAckState.DUPLICATE,
-                }
+                self._observability_detail(session, signal="status_poll")
             ),
         )
 
@@ -508,14 +537,11 @@ class TransportExecutorAdapter(ExecutorAdapter):
                 source_reason=session.queued_push.source_reason,
                 observed_at_utc=observed_at_utc,
                 detail=_freeze_payload(
-                    {
-                        "handle_id": session.handle_id,
-                        "signal": "push_event",
-                        "sequence": session.last_sequence,
-                        "entrypoint": session.spec.entrypoint,
-                        "pinned_commit": session.plan.executor_binding.pinned_commit,
-                        **dict(session.queued_push.detail),
-                    }
+                    self._observability_detail(
+                        session,
+                        signal="push_event",
+                        extra_detail=session.queued_push.detail,
+                    )
                 ),
             )
             session.queued_push = None
@@ -530,6 +556,7 @@ class TransportExecutorAdapter(ExecutorAdapter):
     async def stop(self, handle: DispatchHandle, reason: str) -> None:
         session = self._session_for_handle(handle)
         normalized_reason = normalize_stop_reason(reason)
+        session.stop_request_count += 1
         build_transport_envelope(
             TransportMessageType.STOP,
             plan=session.plan,
@@ -545,9 +572,11 @@ class TransportExecutorAdapter(ExecutorAdapter):
         if session.stop_confirmed:
             session.last_stop_ack_state = TransportAckState.TERMINAL
             session.last_stop_reason = normalized_reason
+            session.stop_terminal_seen = True
             return
         if session.stop_requested and session.last_stop_reason == normalized_reason:
             session.last_stop_ack_state = TransportAckState.DUPLICATE
+            session.stop_duplicate_seen = True
             return
         if self.failure_mode.stop_rejection is not None:
             raise self._rejection_error(
@@ -561,6 +590,7 @@ class TransportExecutorAdapter(ExecutorAdapter):
         session.stop_status_polled = False
         session.last_stop_reason = normalized_reason
         session.last_stop_ack_state = TransportAckState.ACCEPTED
+        session.stop_accepted_once = True
         session.executor_status = PlanStatus.STOPPING
 
     async def snapshot(self, handle: DispatchHandle) -> Mapping[str, Any]:
@@ -580,18 +610,14 @@ class TransportExecutorAdapter(ExecutorAdapter):
             session.stop_confirmed = True
 
         return freeze_detail(
-            {
-                "handle_id": session.handle_id,
-                "native_session_id": session.native_session_id,
-                "executor_status": executor_status.value,
-                "last_sequence": session.last_sequence,
-                "entrypoint": session.spec.entrypoint,
-                "pinned_commit": session.plan.executor_binding.pinned_commit,
-                "status_delivery": session.status_delivery,
-                "execution_mode": session.spec.execution_mode,
-                "startup_method": session.spec.startup_method,
-                "stop_reason": session.last_stop_reason,
-            }
+            self._observability_detail(
+                session,
+                signal="snapshot",
+                extra_detail={
+                    "executor_status": executor_status.value,
+                    "stop_reason": session.last_stop_reason,
+                },
+            )
         )
 
     def _build_handle(self, session: _TransportSession, *, ack_state: TransportAckState) -> DispatchHandle:
@@ -610,6 +636,8 @@ class TransportExecutorAdapter(ExecutorAdapter):
                 "native_session_id": session.native_session_id,
                 "execution_mode": session.spec.execution_mode,
                 "startup_method": session.spec.startup_method,
+                **dict(self._plan_observability_detail(session.plan)),
+                **dict(self._ack_visibility_detail(session)),
             },
             plan=session.plan,
         )
@@ -700,6 +728,7 @@ class TransportExecutorAdapter(ExecutorAdapter):
             else:
                 failure_code = FailureCode.STATUS_TIMEOUT
         source_reason = rejection_class.value
+        spec = SourceTransportSpec.for_plan(plan)
         return TransportCommandError(
             f"{stage} rejected for {plan.plan_id}",
             stage=stage,
@@ -710,12 +739,85 @@ class TransportExecutorAdapter(ExecutorAdapter):
             source_reason=source_reason,
             detail={
                 "plan_id": plan.plan_id,
-                "source": plan.route.selected_source.value,
-                "executor_profile_id": plan.executor_binding.executor_profile_id,
-                "pinned_commit": plan.executor_binding.pinned_commit,
+                **dict(self._plan_observability_detail(plan)),
+                "entrypoint": spec.entrypoint,
+                "execution_mode": spec.execution_mode,
+                "startup_method": spec.startup_method,
                 "rejection_class": rejection_class.value,
             },
         )
+
+    def _plan_observability_detail(self, plan: ExecutionPlan) -> Mapping[str, Any]:
+        return freeze_detail(
+            {
+                "plan_batch_id": plan.plan_batch_id,
+                "objective_profile_id": plan.objective_profile_id,
+                "source": plan.route.selected_source.value,
+                "selected_sleeve_id": plan.route.selected_sleeve_id,
+                "monitor_profile_id": plan.monitor_binding.monitor_profile_id,
+                "timeout_envelope_class": plan.monitor_binding.timeout_envelope_class,
+                "quarantine_scope": plan.monitor_binding.quarantine_scope,
+                "global_halt_participation": plan.monitor_binding.global_halt_participation,
+                "executor_profile_id": plan.executor_binding.executor_profile_id,
+                "pinned_commit": plan.executor_binding.pinned_commit,
+            }
+        )
+
+    def _ack_visibility_detail(self, session: _TransportSession) -> Mapping[str, Any]:
+        return freeze_detail(
+            {
+                "prepare_ack_state": session.last_prepare_ack_state.value,
+                "prepare_accepted_once": session.prepare_accepted_once,
+                "prepare_duplicate_seen": session.prepare_duplicate_seen,
+                "prepare_request_count": session.prepare_request_count,
+                "start_ack_state": session.last_start_ack_state.value,
+                "start_accepted_once": session.start_accepted_once,
+                "start_duplicate_seen": session.start_duplicate_seen,
+                "start_terminal_seen": session.start_terminal_seen,
+                "start_request_count": session.start_request_count,
+                "stop_ack_state": session.last_stop_ack_state.value if session.last_stop_ack_state is not None else None,
+                "stop_accepted_once": session.stop_accepted_once,
+                "stop_duplicate_seen": session.stop_duplicate_seen,
+                "stop_terminal_seen": session.stop_terminal_seen,
+                "stop_request_count": session.stop_request_count,
+                "last_reported_status": session.last_reported_status.value,
+            }
+        )
+
+    def _observability_detail(
+        self,
+        session: _TransportSession,
+        *,
+        signal: str,
+        extra_detail: Mapping[str, Any] | None = None,
+    ) -> Mapping[str, Any]:
+        ack_state = self._status_ack_state(session)
+        detail: dict[str, Any] = {
+            "handle_id": session.handle_id,
+            "native_session_id": session.native_session_id,
+            "transport_version": TRANSPORT_VERSION,
+            "signal": signal,
+            "sequence": session.last_sequence,
+            "poll_counter": session.poll_counter,
+            "snapshot_counter": session.snapshot_counter,
+            "prepared_at_utc": ensure_utc(session.prepared_at_utc).isoformat(),
+            "entrypoint": session.spec.entrypoint,
+            "execution_mode": session.spec.execution_mode,
+            "startup_method": session.spec.startup_method,
+            "status_delivery": session.status_delivery,
+            "executor_status": session.executor_status.value,
+            "stop_reason": session.last_stop_reason,
+            "started": session.started,
+            "stop_requested": session.stop_requested,
+            "stop_confirmed": session.stop_confirmed,
+            "ack_state": ack_state.value,
+            "duplicate": ack_state is TransportAckState.DUPLICATE,
+        }
+        detail.update(dict(self._plan_observability_detail(session.plan)))
+        detail.update(dict(self._ack_visibility_detail(session)))
+        if extra_detail is not None:
+            detail.update(dict(extra_detail))
+        return freeze_detail(detail)
 
 
 ReconcilingStatusSink = RecordingStatusSink

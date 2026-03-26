@@ -1,8 +1,8 @@
 {
-  "bundle_path": "artifacts/bundles/task-007-transport-runtime-smoke.tar.gz",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_transport_runtime_smoke_bundle.tar.gz",
-  "task_id": "TASK-007-TRANSPORT-RUNTIME-SMOKE",
-  "status": "transport_runtime_smoke_passed",
+  "bundle_path": "artifacts/bundles/task-007-transport-livepaper-smoke.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_transport_livepaper_smoke_bundle.tar.gz",
+  "task_id": "TASK-007-TRANSPORT-LIVEPAPER-SMOKE",
+  "status": "transport_livepaper_smoke_passed",
   "summary": "artifacts/summary.md",
   "context_pack": "artifacts/context_pack.json",
   "task_ledger": "artifacts/task_ledger.jsonl",
@@ -57,6 +57,8 @@
     "scripts/collect_matched_live_pair.py"
   ],
   "proof_files": [
+    "artifacts/proofs/task-007-transport-livepaper-smoke-check.json",
+    "artifacts/proofs/task-007-transport-livepaper-smoke-summary.md",
     "artifacts/proofs/task-007-transport-runtime-smoke-check.json",
     "artifacts/proofs/task-007-transport-runtime-smoke-summary.md",
     "artifacts/proofs/task-007-planner-router-executor-transport-implementation-check.json",
@@ -81,6 +83,9 @@
     "artifacts/proofs/task-007-planner-router-interface-spec-summary.md"
   ],
   "reports": [
+    "artifacts/reports/task-007-transport-livepaper-smoke-report.md",
+    "artifacts/reports/task-007-transport-livepaper-smoke-status.md",
+    "artifacts/reports/task-007-transport-livepaper-smoke",
     "artifacts/reports/task-007-transport-runtime-smoke-report.md",
     "artifacts/reports/task-007-transport-runtime-smoke-status.md",
     "artifacts/reports/task-007-transport-runtime-smoke",
@@ -113,13 +118,13 @@
     "artifacts/reports/task-007-concrete-planner-router-implementation-spec"
   ],
   "next_task": {
-    "id": "TASK-007-TRANSPORT-LIVEPAPER-SMOKE",
-    "state": "ready_for_transport_livepaper_smoke",
+    "id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-SMOKE",
+    "state": "ready_for_transport_livepaper_observability_smoke",
     "resume_requirements": [
       "Treat task005-pass-grade-pair-20260325T180027Z as the frozen promoted baseline.",
-      "Carry forward executor_transport_runtime_smoke_passed together with transport_runtime_smoke_bounded as the current evidence conclusion.",
+      "Carry forward executor_transport_livepaper_smoke_passed together with transport_livepaper_smoke_bounded as the current evidence conclusion.",
       "Preserve the current Dexter and Mew-X source pins.",
-      "Keep the implemented handle-based idempotency, reconciliation, failure normalization, and rollback semantics intact while proving the live-paper seam.",
+      "Keep immutable plan handoff, handle-based idempotency, reconciliation, stop confirmation, and failure normalization intact while proving observability on the same seam.",
       "Do not reopen comparison work or finalize external wire choice, autoscaling, or numeric timing constants in the next lane."
     ]
   },
@@ -131,31 +136,33 @@
     "comparison_source_of_truth_frozen": true,
     "transport_bridge_implemented": true,
     "transport_runtime_smoked": true,
+    "transport_livepaper_smoked": true,
     "source_faithful_entrypoints_preserved": true,
-    "idempotent_prepare_start_stop_smoked": true,
+    "immutable_plan_handoff_smoked": true,
+    "manual_stop_all_smoked": true,
     "stop_confirmation_smoked": true,
     "poll_first_status_reconciliation_smoked": true,
     "reverse_order_rollback_stop_smoked": true,
     "external_runtime_wire_deferred": true,
-    "recommended_next_step_is_transport_livepaper_smoke": true
+    "recommended_next_step_is_transport_livepaper_observability_smoke": true
   },
   "task_result": {
     "selected_outcome": "A",
-    "key_finding": "executor_transport_runtime_smoke_passed",
-    "claim_boundary": "transport_runtime_smoke_bounded",
+    "key_finding": "executor_transport_livepaper_smoke_passed",
+    "claim_boundary": "transport_livepaper_smoke_bounded",
     "comparison_source_of_truth_state": "comparison_closed_out",
-    "task_state": "transport_runtime_smoke_passed",
-    "recommended_next_step": "transport_livepaper_smoke",
-    "recommended_next_task_id": "TASK-007-TRANSPORT-LIVEPAPER-SMOKE",
-    "decision": "transport_livepaper_smoke_ready",
+    "task_state": "transport_livepaper_smoke_passed",
+    "recommended_next_step": "transport_livepaper_observability_smoke",
+    "recommended_next_task_id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-SMOKE",
+    "decision": "transport_livepaper_observability_smoke_ready",
     "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
     "default_execution_anchor": "dexter",
     "selective_option_source": "mewx",
-    "verified_latest_vexter_pr": 44,
-    "verified_latest_vexter_main_commit": "ae1dd7ddc3ffbae893887baf042ea5e5d53bc5f3",
+    "verified_latest_vexter_pr": 45,
+    "verified_latest_vexter_main_commit": "b43f983848c462757a5b91e018f3200f28ec6b2b",
     "verified_dexter_pr": 3,
     "verified_dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
-    "recommended_next_lane": "transport_livepaper_smoke"
+    "recommended_next_lane": "transport_livepaper_observability_smoke"
   }
 }

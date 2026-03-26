@@ -1,0 +1,5 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+次タスクID: TASK-007-TRANSPORT-LIVEPAPER-SMOKE
+
+GitHub最新状態を確認し、Vexter main / Dexter PR #3 merged main / frozen Mew-X を前提に、executor transport 実装の live-paper smoke を行ってください。comparison baseline は固定のまま、source-faithful な Dexter `paper_live` / Mew-X `sim_live` seam を保ちつつ、handle-based transport が live-paper shaped request から immutable plan handoff、prepare/start/status/stop/snapshot、poll-first reconciliation、snapshot-backed stop confirmation、manual stop-all propagation まで end-to-end で維持されることを検証してください。source logic 変更や新証拠収集は行わず、tests・artifacts・handoff bundle を更新し、次タスクとして `transport_livepaper_observability_smoke` / `livepaper_observability_spec` / `executor_boundary_code_spec` のどれが最短の evidence cut かを示してください。

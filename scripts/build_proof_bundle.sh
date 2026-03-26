@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-BUNDLE_PATH="$ROOT_DIR/artifacts/bundles/task-007-transport-livepaper-observability-regression-pack.tar.gz"
+BUNDLE_PATH="$ROOT_DIR/artifacts/bundles/task-007-transport-livepaper-observability-ci-gate.tar.gz"
 SAMPLE_PACK_DIR="$ROOT_DIR/artifacts/examples/task-004-sample-comparison"
 export COPYFILE_DISABLE=1
 
@@ -31,6 +31,7 @@ tar -czf "$BUNDLE_PATH" \
   --exclude='artifacts/reports/task-005-live-pass-grade-window-comparison' \
   -C "$ROOT_DIR" \
   README.md \
+  pytest.ini \
   docs \
   specs \
   ops \

@@ -1,14 +1,14 @@
 {
   "background": {
-    "previous_task_id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-HARDENING",
-    "previous_key_finding": "executor_transport_livepaper_observability_hardening_passed",
-    "previous_claim_boundary": "transport_livepaper_observability_hardening_bounded",
+    "previous_task_id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-REGRESSION-PACK",
+    "previous_key_finding": "executor_transport_livepaper_observability_regression_pack_passed",
+    "previous_claim_boundary": "transport_livepaper_observability_regression_pack_bounded",
     "promoted_pair": "task005-pass-grade-pair-20260325T180027Z",
     "confirmatory_pair": "task005-pass-grade-pair-20260325T180604Z",
     "comparison_source_of_truth_fixed_before_task": true,
     "prior_lane_completed_before_task": true
   },
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_transport_livepaper_observability_regression_pack_bundle.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_transport_livepaper_observability_ci_gate_bundle.tar.gz",
   "current_contract": {
     "comparison_source_of_truth": "comparison_closed_out",
     "promoted_live_winner_mode": "derived",
@@ -35,6 +35,11 @@
       "failed"
     ],
     "global_halt_mode": "manual_latched_stop_all",
+    "ci_gate_marker": "transport_livepaper_observability_ci_gate",
+    "ci_gate_source_faithful_modes": {
+      "dexter": "paper_live",
+      "mewx": "sim_live"
+    },
     "unsupported_scope": [
       "mid_trade_handoff",
       "threshold_transplant",
@@ -44,30 +49,38 @@
     ]
   },
   "current_task": {
-    "id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-REGRESSION-PACK",
+    "id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-CI-GATE",
     "scope": [
       "Verify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X.",
-      "Treat the merged transport live-paper observability hardening lane as the formal baseline without reopening comparison work.",
-      "Add a dedicated regression-pack lane that locks the hardened observability seam into durable transport coverage without changing planner/router source logic.",
-      "Preserve immutable handoff metadata, handle lifecycle continuity, status sink fan-in, ack-history retention, quarantine reason completeness, reverse-order manual stop-all propagation, snapshot-backed terminal detail, and normalized failure detail.",
-      "Refresh the tests, artifacts, manifest, ledger, and handoff bundle without collecting new evidence."
+      "Treat the merged transport live-paper observability regression-pack lane as the formal baseline without reopening comparison work.",
+      "Promote the fixed observability regression surface into an explicit CI gate and suite grouping.",
+      "Keep immutable handoff metadata, handle lifecycle continuity, status sink fan-in, ack-history retention, quarantine reason completeness, reverse-order manual stop-all propagation, snapshot-backed terminal detail, and normalized failure detail guarded under named failures.",
+      "Refresh the tests, workflow, artifacts, manifest, ledger, and handoff bundle without collecting new evidence."
     ],
     "deliverables": [
+      "pytest.ini",
+      "tests/conftest.py",
+      "tests/test_planner_router_transport_livepaper_observability_smoke.py",
+      "tests/test_planner_router_transport_livepaper_observability_runtime.py",
+      "tests/test_planner_router_transport_livepaper_observability_hardening.py",
       "tests/test_planner_router_transport_livepaper_observability_regression_pack.py",
+      "tests/test_planner_router_transport_livepaper_observability_ci_gate.py",
       "tests/test_bootstrap_layout.py",
+      ".github/workflows/validate.yml",
       "artifacts/summary.md",
       "artifacts/context_pack.json",
       "artifacts/proof_bundle_manifest.json",
       "artifacts/task_ledger.jsonl",
-      "artifacts/reports/task-007-transport-livepaper-observability-regression-pack-report.md",
-      "artifacts/reports/task-007-transport-livepaper-observability-regression-pack-status.md",
-      "artifacts/reports/task-007-transport-livepaper-observability-regression-pack/DETAILS.md",
-      "artifacts/reports/task-007-transport-livepaper-observability-regression-pack/MIN_PROMPT.txt",
-      "artifacts/reports/task-007-transport-livepaper-observability-regression-pack/CONTEXT.json",
-      "artifacts/proofs/task-007-transport-livepaper-observability-regression-pack-check.json",
-      "artifacts/proofs/task-007-transport-livepaper-observability-regression-pack-summary.md",
-      "artifacts/bundles/task-007-transport-livepaper-observability-regression-pack.tar.gz",
-      "scripts/build_proof_bundle.sh"
+      "artifacts/reports/task-007-transport-livepaper-observability-ci-gate-report.md",
+      "artifacts/reports/task-007-transport-livepaper-observability-ci-gate-status.md",
+      "artifacts/reports/task-007-transport-livepaper-observability-ci-gate/DETAILS.md",
+      "artifacts/reports/task-007-transport-livepaper-observability-ci-gate/MIN_PROMPT.txt",
+      "artifacts/reports/task-007-transport-livepaper-observability-ci-gate/CONTEXT.json",
+      "artifacts/proofs/task-007-transport-livepaper-observability-ci-gate-check.json",
+      "artifacts/proofs/task-007-transport-livepaper-observability-ci-gate-summary.md",
+      "artifacts/bundles/task-007-transport-livepaper-observability-ci-gate.tar.gz",
+      "scripts/build_proof_bundle.sh",
+      "scripts/run_transport_livepaper_observability_ci_gate.sh"
     ],
     "frozen_source_commits": {
       "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
@@ -76,31 +89,10 @@
   },
   "evidence": {
     "github_latest": {
-      "vexter_pr_51_merged_at": "2026-03-26T13:16:59Z",
-      "vexter_pr_49_merged_at": "2026-03-26T12:53:16Z",
+      "vexter_pr_52_merged_at": "2026-03-26T13:38:30Z",
+      "vexter_pr_50_open": true,
       "dexter_pr_3_merged_at": "2026-03-21T11:31:07Z",
       "mewx_frozen_commit_date_utc": "2026-03-20T16:05:19Z"
-    },
-    "transport_livepaper_observability_hardening": {
-      "report": "artifacts/reports/task-007-transport-livepaper-observability-hardening-report.md",
-      "status_report": "artifacts/reports/task-007-transport-livepaper-observability-hardening-status.md",
-      "proof": "artifacts/proofs/task-007-transport-livepaper-observability-hardening-check.json",
-      "summary": "artifacts/proofs/task-007-transport-livepaper-observability-hardening-summary.md",
-      "handoff_dir": "artifacts/reports/task-007-transport-livepaper-observability-hardening",
-      "key_finding": "executor_transport_livepaper_observability_hardening_passed",
-      "claim_boundary": "transport_livepaper_observability_hardening_bounded",
-      "task_state": "transport_livepaper_observability_hardening_passed",
-      "hardening_test_files": [
-        "tests/test_planner_router_transport_livepaper_observability_hardening.py"
-      ],
-      "validated_axes": [
-        "prepared_handle_metadata_completeness",
-        "runtime_status_ack_history_retention",
-        "push_promoted_snapshot_completeness",
-        "snapshot_backed_terminal_detail_completeness",
-        "rejection_and_failure_detail_completeness"
-      ],
-      "preferred_next_step": "transport_livepaper_observability_regression_pack"
     },
     "transport_livepaper_observability_regression_pack": {
       "report": "artifacts/reports/task-007-transport-livepaper-observability-regression-pack-report.md",
@@ -125,41 +117,76 @@
         "normalized_failure_detail_passthrough"
       ],
       "preferred_next_step": "transport_livepaper_observability_ci_gate"
+    },
+    "transport_livepaper_observability_ci_gate": {
+      "report": "artifacts/reports/task-007-transport-livepaper-observability-ci-gate-report.md",
+      "status_report": "artifacts/reports/task-007-transport-livepaper-observability-ci-gate-status.md",
+      "proof": "artifacts/proofs/task-007-transport-livepaper-observability-ci-gate-check.json",
+      "summary": "artifacts/proofs/task-007-transport-livepaper-observability-ci-gate-summary.md",
+      "handoff_dir": "artifacts/reports/task-007-transport-livepaper-observability-ci-gate",
+      "key_finding": "executor_transport_livepaper_observability_ci_gate_passed",
+      "claim_boundary": "transport_livepaper_observability_ci_gate_bounded",
+      "task_state": "transport_livepaper_observability_ci_gate_passed",
+      "gate_test_files": [
+        "tests/test_planner_router_transport_livepaper_observability_smoke.py",
+        "tests/test_planner_router_transport_livepaper_observability_runtime.py",
+        "tests/test_planner_router_transport_livepaper_observability_hardening.py",
+        "tests/test_planner_router_transport_livepaper_observability_regression_pack.py"
+      ],
+      "validated_axes": [
+        "immutable_handoff_metadata_continuity",
+        "handle_lifecycle_continuity",
+        "status_sink_fan_in_regression_guard",
+        "ack_history_retention",
+        "quarantine_reason_completeness",
+        "manual_stop_all_reverse_order_propagation",
+        "snapshot_backed_terminal_detail_completeness",
+        "normalized_failure_detail_passthrough"
+      ],
+      "preferred_next_step": "transport_livepaper_observability_watchdog"
     }
   },
   "frozen_source_commits": {
     "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
   },
-  "goal": "Maintain a GitHub-visible planner/router control plane with a source-faithful live-paper transport whose hardened observability surface is locked into durable regression coverage without reopening comparison closeout.",
+  "goal": "Maintain a GitHub-visible planner/router control plane with a source-faithful live-paper transport whose hardened observability surface is locked into a standard CI gate without reopening comparison closeout.",
   "implementation": {
     "source_logic_changed": false,
     "validator_rules_changed": false,
     "minimal_reaggregation_only": true,
     "task_proofs_generated": [
-      "artifacts/proofs/task-007-transport-livepaper-observability-regression-pack-check.json",
-      "artifacts/proofs/task-007-transport-livepaper-observability-regression-pack-summary.md"
+      "artifacts/proofs/task-007-transport-livepaper-observability-ci-gate-check.json",
+      "artifacts/proofs/task-007-transport-livepaper-observability-ci-gate-summary.md"
     ],
     "task_reports_updated": [
-      "artifacts/reports/task-007-transport-livepaper-observability-regression-pack-report.md",
-      "artifacts/reports/task-007-transport-livepaper-observability-regression-pack-status.md",
-      "artifacts/reports/task-007-transport-livepaper-observability-regression-pack/DETAILS.md",
-      "artifacts/reports/task-007-transport-livepaper-observability-regression-pack/MIN_PROMPT.txt",
-      "artifacts/reports/task-007-transport-livepaper-observability-regression-pack/CONTEXT.json"
+      "artifacts/reports/task-007-transport-livepaper-observability-ci-gate-report.md",
+      "artifacts/reports/task-007-transport-livepaper-observability-ci-gate-status.md",
+      "artifacts/reports/task-007-transport-livepaper-observability-ci-gate/DETAILS.md",
+      "artifacts/reports/task-007-transport-livepaper-observability-ci-gate/MIN_PROMPT.txt",
+      "artifacts/reports/task-007-transport-livepaper-observability-ci-gate/CONTEXT.json"
     ],
     "code_paths": [
+      "pytest.ini",
+      "tests/conftest.py",
+      "tests/test_planner_router_transport_livepaper_observability_smoke.py",
+      "tests/test_planner_router_transport_livepaper_observability_runtime.py",
+      "tests/test_planner_router_transport_livepaper_observability_hardening.py",
       "tests/test_planner_router_transport_livepaper_observability_regression_pack.py",
+      "tests/test_planner_router_transport_livepaper_observability_ci_gate.py",
       "tests/test_bootstrap_layout.py",
-      "scripts/build_proof_bundle.sh"
+      ".github/workflows/validate.yml",
+      "scripts/build_proof_bundle.sh",
+      "scripts/run_transport_livepaper_observability_ci_gate.sh"
     ]
   },
   "next_task": {
-    "id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-CI-GATE",
-    "state": "ready_for_transport_livepaper_observability_ci_gate",
+    "id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG",
+    "state": "ready_for_transport_livepaper_observability_watchdog",
     "rationale": [
-      "The regression pack now locks the main observability guarantees into durable transport coverage.",
-      "The next highest-value bounded step is to make this pack a required CI gate for future transport changes.",
-      "Another spec-only or boundary-only pass would reduce less risk than ensuring the regression lane always runs."
+      "The bounded observability surface is now covered by explicit runtime regression tests and a dedicated CI gate.",
+      "The remaining risk shifts from missing checks to maintaining visibility if the gate is skipped, muted, or stops surfacing useful proof output over time.",
+      "A watchdog is higher leverage than another spec pass because the contract and boundary are already fixed, while operational drift remains the next realistic failure mode."
     ]
   }
 }

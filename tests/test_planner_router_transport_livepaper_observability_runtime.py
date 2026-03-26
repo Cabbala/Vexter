@@ -5,6 +5,8 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
+import pytest
+
 from vexter.planner_router.dispatch_state_machine import normalize_status_update, validate_transition
 from vexter.planner_router.models import PlanRequest, PlanStatus, Source, SourcePinRegistry, StatusSnapshot
 from vexter.planner_router.planner import plan_and_dispatch
@@ -25,6 +27,7 @@ FROZEN_PINS = SourcePinRegistry(
 )
 CREATED_AT = datetime(2026, 3, 26, 13, 41, tzinfo=timezone.utc)
 MANUAL_LATCHED_STOP_ALL = "manual_latched_stop_all"
+pytestmark = pytest.mark.transport_livepaper_observability_ci_gate
 
 
 class ObservabilityRuntimePlanStore:

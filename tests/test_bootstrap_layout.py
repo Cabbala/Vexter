@@ -37,8 +37,10 @@ def test_required_paths_exist() -> None:
         "scripts/recover_windows_runtime.sh",
         "scripts/sync_reference_repos.sh",
         "scripts/build_proof_bundle.sh",
+        "scripts/run_transport_livepaper_observability_ci_gate.sh",
         "scripts/comparison_analysis.py",
         "scripts/collect_comparison_package.ps1",
+        "pytest.ini",
         "templates/windows_runtime/dexter.env.example",
         "templates/windows_runtime/mewx.env.example",
         "config/planner_router/planner.json",
@@ -204,6 +206,11 @@ def test_required_paths_exist() -> None:
         "artifacts/reports/task-007-transport-livepaper-observability-regression-pack/DETAILS.md",
         "artifacts/reports/task-007-transport-livepaper-observability-regression-pack/MIN_PROMPT.txt",
         "artifacts/reports/task-007-transport-livepaper-observability-regression-pack/CONTEXT.json",
+        "artifacts/reports/task-007-transport-livepaper-observability-ci-gate-report.md",
+        "artifacts/reports/task-007-transport-livepaper-observability-ci-gate-status.md",
+        "artifacts/reports/task-007-transport-livepaper-observability-ci-gate/DETAILS.md",
+        "artifacts/reports/task-007-transport-livepaper-observability-ci-gate/MIN_PROMPT.txt",
+        "artifacts/reports/task-007-transport-livepaper-observability-ci-gate/CONTEXT.json",
         "artifacts/proofs/task-005-live-collection-check.json",
         "artifacts/proofs/task-005-pass-grade-pair-check.json",
         "artifacts/proofs/task-005-windows-runtime-recovery.json",
@@ -260,6 +267,8 @@ def test_required_paths_exist() -> None:
         "artifacts/proofs/task-007-transport-livepaper-observability-hardening-summary.md",
         "artifacts/proofs/task-007-transport-livepaper-observability-regression-pack-check.json",
         "artifacts/proofs/task-007-transport-livepaper-observability-regression-pack-summary.md",
+        "artifacts/proofs/task-007-transport-livepaper-observability-ci-gate-check.json",
+        "artifacts/proofs/task-007-transport-livepaper-observability-ci-gate-summary.md",
         "artifacts/bundles/task-007-planner-router-code-implementation.tar.gz",
         "artifacts/bundles/task-007-planner-router-integration-smoke.tar.gz",
         "artifacts/bundles/task-007-monitor-killswitch-spec.tar.gz",
@@ -272,10 +281,12 @@ def test_required_paths_exist() -> None:
         "artifacts/bundles/task-007-transport-livepaper-observability-runtime.tar.gz",
         "artifacts/bundles/task-007-transport-livepaper-observability-hardening.tar.gz",
         "artifacts/bundles/task-007-transport-livepaper-observability-regression-pack.tar.gz",
+        "artifacts/bundles/task-007-transport-livepaper-observability-ci-gate.tar.gz",
         "tests/test_planner_router_transport_livepaper_observability_smoke.py",
         "tests/test_planner_router_transport_livepaper_observability_runtime.py",
         "tests/test_planner_router_transport_livepaper_observability_hardening.py",
         "tests/test_planner_router_transport_livepaper_observability_regression_pack.py",
+        "tests/test_planner_router_transport_livepaper_observability_ci_gate.py",
         "artifacts/examples/task-004-sample-comparison/pack_manifest.json",
         ".github/workflows/validate.yml",
     ]
@@ -296,6 +307,19 @@ def test_json_manifests_are_valid() -> None:
         with path.open() as handle:
             payload = json.load(handle)
         assert payload
+
+
+def test_transport_livepaper_observability_ci_gate_is_wired_into_validation() -> None:
+    workflow = (REPO_ROOT / ".github" / "workflows" / "validate.yml").read_text()
+    script = (REPO_ROOT / "scripts" / "run_transport_livepaper_observability_ci_gate.sh").read_text()
+    pytest_ini = (REPO_ROOT / "pytest.ini").read_text()
+
+    assert "./scripts/run_transport_livepaper_observability_ci_gate.sh" in workflow
+    assert "transport-livepaper-observability-ci-gate-proof" in workflow
+    assert "-m \"$SUITE_MARKER\"" in script
+    assert "tests/test_planner_router_transport_livepaper_observability_regression_pack.py" in script
+    assert "tests/test_planner_router_transport_livepaper_observability_ci_gate.py" in script
+    assert "transport_livepaper_observability_ci_gate" in pytest_ini
 
 
 def test_reference_repo_manifest_has_expected_repos() -> None:
@@ -428,6 +452,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "transport_livepaper_observability_runtime_passed",
         "transport_livepaper_observability_hardening_passed",
         "transport_livepaper_observability_regression_pack_passed",
+        "transport_livepaper_observability_ci_gate_passed",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -476,6 +501,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-007-transport-livepaper-observability-runtime",
         "codex/task-007-transport-livepaper-observability-hardening",
         "codex/task-007-transport-livepaper-observability-regression-pack",
+        "codex/task-007-transport-livepaper-observability-ci-gate",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -509,6 +535,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-HARDENING",
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-REGRESSION-PACK",
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-CI-GATE",
+        "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG",
     }
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -554,6 +581,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "ready_for_transport_livepaper_observability_hardening",
         "ready_for_transport_livepaper_observability_regression_pack",
         "ready_for_transport_livepaper_observability_ci_gate",
+        "ready_for_transport_livepaper_observability_watchdog",
     }
 
 
@@ -605,6 +633,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "transport_livepaper_observability_runtime_passed",
         "transport_livepaper_observability_hardening_passed",
         "transport_livepaper_observability_regression_pack_passed",
+        "transport_livepaper_observability_ci_gate_passed",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -640,6 +669,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-HARDENING",
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-REGRESSION-PACK",
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-CI-GATE",
+        "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG",
     }
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -684,6 +714,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "ready_for_transport_livepaper_observability_hardening",
         "ready_for_transport_livepaper_observability_regression_pack",
         "ready_for_transport_livepaper_observability_ci_gate",
+        "ready_for_transport_livepaper_observability_watchdog",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]
@@ -834,6 +865,11 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/reports/task-007-transport-livepaper-observability-regression-pack/DETAILS.md" in names
     assert "artifacts/reports/task-007-transport-livepaper-observability-regression-pack/MIN_PROMPT.txt" in names
     assert "artifacts/reports/task-007-transport-livepaper-observability-regression-pack/CONTEXT.json" in names
+    assert "artifacts/reports/task-007-transport-livepaper-observability-ci-gate-report.md" in names
+    assert "artifacts/reports/task-007-transport-livepaper-observability-ci-gate-status.md" in names
+    assert "artifacts/reports/task-007-transport-livepaper-observability-ci-gate/DETAILS.md" in names
+    assert "artifacts/reports/task-007-transport-livepaper-observability-ci-gate/MIN_PROMPT.txt" in names
+    assert "artifacts/reports/task-007-transport-livepaper-observability-ci-gate/CONTEXT.json" in names
     assert "artifacts/proofs/task-005-live-collection-check.json" in names
     assert "artifacts/proofs/task-005-windows-runtime-recovery.json" in names
     assert "artifacts/proofs/task-006-replay-validation-check.json" in names
@@ -891,11 +927,16 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/proofs/task-007-transport-livepaper-observability-hardening-summary.md" in names
     assert "artifacts/proofs/task-007-transport-livepaper-observability-regression-pack-check.json" in names
     assert "artifacts/proofs/task-007-transport-livepaper-observability-regression-pack-summary.md" in names
+    assert "artifacts/proofs/task-007-transport-livepaper-observability-ci-gate-check.json" in names
+    assert "artifacts/proofs/task-007-transport-livepaper-observability-ci-gate-summary.md" in names
     assert "tests/test_planner_router_transport_livepaper_observability_smoke.py" in names
     assert "tests/test_planner_router_transport_livepaper_observability_runtime.py" in names
     assert "tests/test_planner_router_transport_livepaper_observability_hardening.py" in names
     assert "tests/test_planner_router_transport_livepaper_observability_regression_pack.py" in names
+    assert "tests/test_planner_router_transport_livepaper_observability_ci_gate.py" in names
     assert "tests/test_planner_router_transport_livepaper_smoke.py" in names
+    assert "pytest.ini" in names
+    assert "scripts/run_transport_livepaper_observability_ci_gate.sh" in names
     assert "artifacts/context_pack.json" in names
     assert "artifacts/proof_bundle_manifest.json" in names
     assert "tests/__pycache__/" not in names

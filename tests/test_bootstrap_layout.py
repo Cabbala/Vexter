@@ -23,6 +23,7 @@ def test_required_paths_exist() -> None:
         "docs/mewx_event_mapping.md",
         "specs/FIXED_WORKFLOW.md",
         "specs/ANALYSIS_CONTRACT.md",
+        "specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md",
         "ops/CODEX_MEMORY.md",
         "plans/IMPLEMENTATION_PLAN.md",
         "plans/TASK_000_BOOTSTRAP.md",
@@ -235,6 +236,11 @@ def test_required_paths_exist() -> None:
         "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate/DETAILS.md",
         "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate/MIN_PROMPT.txt",
         "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate/CONTEXT.json",
+        "artifacts/reports/task-007-livepaper-observability-spec-report.md",
+        "artifacts/reports/task-007-livepaper-observability-spec-status.md",
+        "artifacts/reports/task-007-livepaper-observability-spec/DETAILS.md",
+        "artifacts/reports/task-007-livepaper-observability-spec/MIN_PROMPT.txt",
+        "artifacts/reports/task-007-livepaper-observability-spec/CONTEXT.json",
         "artifacts/proofs/task-005-live-collection-check.json",
         "artifacts/proofs/task-005-pass-grade-pair-check.json",
         "artifacts/proofs/task-005-windows-runtime-recovery.json",
@@ -326,7 +332,16 @@ def test_required_paths_exist() -> None:
         "tests/test_planner_router_transport_livepaper_observability_watchdog.py",
         "tests/test_planner_router_transport_livepaper_observability_watchdog_runtime.py",
         "tests/test_planner_router_transport_livepaper_observability_watchdog_ci_gate.py",
+        "tests/test_planner_router_transport_livepaper_observability_spec_contract.py",
         "artifacts/examples/task-004-sample-comparison/pack_manifest.json",
+        "artifacts/reports/task-007-livepaper-observability-spec-report.md",
+        "artifacts/reports/task-007-livepaper-observability-spec-status.md",
+        "artifacts/reports/task-007-livepaper-observability-spec/DETAILS.md",
+        "artifacts/reports/task-007-livepaper-observability-spec/MIN_PROMPT.txt",
+        "artifacts/reports/task-007-livepaper-observability-spec/CONTEXT.json",
+        "artifacts/proofs/task-007-livepaper-observability-spec-check.json",
+        "artifacts/proofs/task-007-livepaper-observability-spec-summary.md",
+        "artifacts/bundles/task-007-livepaper-observability-spec.tar.gz",
         ".github/workflows/validate.yml",
     ]
 
@@ -503,6 +518,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-RUNTIME",
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-REGRESSION-PACK",
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-CI-GATE",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SPEC",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -553,6 +569,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "transport_livepaper_observability_watchdog_runtime_passed",
         "transport_livepaper_observability_watchdog_regression_pack_passed",
         "transport_livepaper_observability_watchdog_ci_gate_passed",
+        "livepaper_observability_spec_ready",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -606,6 +623,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-007-transport-livepaper-observability-watchdog-runtime",
         "codex/task-007-transport-livepaper-observability-watchdog-regression-pack",
         "codex/task-007-transport-livepaper-observability-watchdog-ci-gate",
+        "codex/task-007-livepaper-observability-spec",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -643,6 +661,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-RUNTIME",
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-REGRESSION-PACK",
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-CI-GATE",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-OPERATOR-RUNBOOK",
     }
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -692,6 +711,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "ready_for_transport_livepaper_observability_watchdog_runtime",
         "ready_for_transport_livepaper_observability_watchdog_regression_pack",
         "ready_for_transport_livepaper_observability_watchdog_ci_gate",
+        "ready_for_livepaper_observability_operator_runbook",
     }
 
 
@@ -748,6 +768,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "transport_livepaper_observability_watchdog_runtime_passed",
         "transport_livepaper_observability_watchdog_regression_pack_passed",
         "transport_livepaper_observability_watchdog_ci_gate_passed",
+        "livepaper_observability_spec_ready",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -787,6 +808,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-RUNTIME",
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-REGRESSION-PACK",
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-CI-GATE",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-OPERATOR-RUNBOOK",
     }
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -835,6 +857,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "ready_for_transport_livepaper_observability_watchdog_runtime",
         "ready_for_transport_livepaper_observability_watchdog_regression_pack",
         "ready_for_transport_livepaper_observability_watchdog_ci_gate",
+        "ready_for_livepaper_observability_operator_runbook",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]
@@ -851,6 +874,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "docs/dexter_event_mapping.md" in names
     assert "docs/dexter_paper_mode_design.md" in names
     assert "docs/mewx_event_mapping.md" in names
+    assert "specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md" in names
     assert "scripts/comparison_analysis.py" in names
     assert "scripts/collect_comparison_package.ps1" in names
     assert "scripts/recover_windows_runtime.sh" in names
@@ -1008,6 +1032,11 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate/DETAILS.md" in names
     assert "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate/MIN_PROMPT.txt" in names
     assert "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate/CONTEXT.json" in names
+    assert "artifacts/reports/task-007-livepaper-observability-spec-report.md" in names
+    assert "artifacts/reports/task-007-livepaper-observability-spec-status.md" in names
+    assert "artifacts/reports/task-007-livepaper-observability-spec/DETAILS.md" in names
+    assert "artifacts/reports/task-007-livepaper-observability-spec/MIN_PROMPT.txt" in names
+    assert "artifacts/reports/task-007-livepaper-observability-spec/CONTEXT.json" in names
     assert "artifacts/reports/task-007-transport-livepaper-observability-ci-gate/MIN_PROMPT.txt" in names
     assert "artifacts/reports/task-007-transport-livepaper-observability-ci-gate/CONTEXT.json" in names
     assert "artifacts/proofs/task-005-live-collection-check.json" in names
@@ -1077,6 +1106,8 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-regression-pack-summary.md" in names
     assert "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-ci-gate-check.json" in names
     assert "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-ci-gate-summary.md" in names
+    assert "artifacts/proofs/task-007-livepaper-observability-spec-check.json" in names
+    assert "artifacts/proofs/task-007-livepaper-observability-spec-summary.md" in names
     assert "tests/test_planner_router_transport_livepaper_observability_smoke.py" in names
     assert "tests/test_planner_router_transport_livepaper_observability_runtime.py" in names
     assert "tests/test_planner_router_transport_livepaper_observability_hardening.py" in names

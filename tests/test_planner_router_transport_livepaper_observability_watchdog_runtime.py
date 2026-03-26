@@ -428,7 +428,10 @@ def test_transport_livepaper_observability_watchdog_runtime_manifest_and_context
         context["evidence"]["transport_livepaper_observability_watchdog_runtime"]["preferred_next_step"]
         == "transport_livepaper_observability_watchdog_regression_pack"
     )
-    assert context["current_task"]["id"] == "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-CI-GATE"
+    assert context["current_task"]["id"] in {
+        "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-CI-GATE",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SPEC",
+    }
 
 
 def test_transport_livepaper_observability_watchdog_runtime_proof_tracks_regression_pack_as_next_step() -> None:

@@ -1,0 +1,5 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+次タスクID: TASK-007-LIVEPAPER-OBSERVABILITY-SPEC
+
+GitHub最新状態を確認し、Vexter main / Dexter PR #3 merged main / frozen Mew-X を前提に、executor transport 実装の次段として live-paper observability spec を作成してください。comparison baseline は固定のまま、source-faithful な Dexter `paper_live` / Mew-X `sim_live` seam を保ちつつ、CI gate と watchdog 系で固定済みの observability surface を運用仕様として明文化してください。immutable handoff metadata、handle lifecycle continuity、planned/runtime metadata continuity、status sink fan-in、ack-history retention、quarantine reason completeness、manual stop-all propagation、snapshot-backed terminal detail、normalized failure-detail passthrough を必須観測契約として定義し、required fields、lifecycle semantics、failure reporting、proof/report outputs、operator-facing interpretation を bounded spec に落とし込んでください。source logic 変更や新証拠収集は行わず、tests・artifacts・handoff bundle を更新してください。

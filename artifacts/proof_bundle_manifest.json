@@ -1,8 +1,8 @@
 {
-  "bundle_path": "artifacts/bundles/task-007-transport-livepaper-observability-watchdog-ci-gate.tar.gz",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_transport_livepaper_observability_watchdog_ci_gate_bundle.tar.gz",
-  "task_id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-CI-GATE",
-  "status": "transport_livepaper_observability_watchdog_ci_gate_passed",
+  "bundle_path": "artifacts/bundles/task-007-livepaper-observability-spec.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_livepaper_observability_spec_bundle.tar.gz",
+  "task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SPEC",
+  "status": "livepaper_observability_spec_ready",
   "summary": "artifacts/summary.md",
   "context_pack": "artifacts/context_pack.json",
   "task_ledger": "artifacts/task_ledger.jsonl",
@@ -63,6 +63,8 @@
     "scripts/run_transport_livepaper_observability_watchdog_regression_pack.sh"
   ],
   "proof_files": [
+    "artifacts/proofs/task-007-livepaper-observability-spec-check.json",
+    "artifacts/proofs/task-007-livepaper-observability-spec-summary.md",
     "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-ci-gate-check.json",
     "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-ci-gate-summary.md",
     "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-runtime-summary.md",
@@ -87,6 +89,9 @@
     "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-regression-pack-summary.md"
   ],
   "reports": [
+    "artifacts/reports/task-007-livepaper-observability-spec-report.md",
+    "artifacts/reports/task-007-livepaper-observability-spec-status.md",
+    "artifacts/reports/task-007-livepaper-observability-spec",
     "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate-report.md",
     "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate-status.md",
     "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate",
@@ -122,14 +127,14 @@
     "artifacts/reports/task-007-transport-livepaper-observability-watchdog-regression-pack"
   ],
   "next_task": {
-    "id": "TASK-007-LIVEPAPER-OBSERVABILITY-SPEC",
-    "state": "ready_for_livepaper_observability_spec",
+    "id": "TASK-007-LIVEPAPER-OBSERVABILITY-OPERATOR-RUNBOOK",
+    "state": "ready_for_livepaper_observability_operator_runbook",
     "resume_requirements": [
       "Treat task005-pass-grade-pair-20260325T180027Z as the frozen promoted baseline.",
-      "Carry forward executor_transport_livepaper_observability_watchdog_ci_gate_passed together with transport_livepaper_observability_watchdog_ci_gate_bounded as the current evidence conclusion.",
-      "Preserve the current Dexter and Mew-X source pins.",
-      "Keep the observability CI gate, watchdog CI gate, watchdog, watchdog-runtime, and watchdog-regression-pack coverage visible in standard validation without reopening comparison work.",
-      "Do not modify source trust logic in the next lane."
+      "Carry forward livepaper_observability_contract_fixed together with livepaper_observability_spec_bounded as the current evidence conclusion.",
+      "Use specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md and artifacts/proofs/task-007-livepaper-observability-spec-check.json as the operator-facing source of truth.",
+      "Preserve the current Dexter and Mew-X source pins and keep the CI gate plus watchdog surfaces fixed.",
+      "Do not reopen comparison work or change source logic in the next lane."
     ]
   },
   "proofs": {
@@ -164,40 +169,34 @@
     "ack_history_locked": true,
     "status_sink_fan_in_locked": true,
     "normalized_failure_detail_locked": true,
-    "watchdog_required_field_detection_added": true,
-    "watchdog_status_sink_detection_added": true,
-    "watchdog_ack_history_detection_added": true,
-    "watchdog_terminal_detail_detection_added": true,
-    "watchdog_failure_passthrough_detection_added": true,
-    "watchdog_runtime_follow_up_checked": true,
-    "watchdog_runtime_failure_passthrough_checked": true,
-    "recommended_next_step_is_transport_livepaper_observability_watchdog_regression_pack": true,
-    "transport_livepaper_observability_watchdog_regression_pack_added": true,
-    "watchdog_regression_pack_runner_added": true,
-    "watchdog_regression_pack_proof_emitted": true,
-    "watchdog_regression_pack_runtime_surface_locked": true,
-    "watchdog_ci_gate_groups_component_suites": true,
-    "watchdog_ci_gate_failure_signal_mapping_added": true,
-    "recommended_next_step_is_transport_livepaper_observability_watchdog_ci_gate": true,
-    "recommended_next_step_is_livepaper_observability_spec": true
+    "livepaper_observability_spec_written": true,
+    "livepaper_observability_required_fields_fixed": true,
+    "livepaper_observability_lifecycle_semantics_fixed": true,
+    "livepaper_observability_failure_reporting_fixed": true,
+    "livepaper_observability_operator_interpretation_fixed": true,
+    "livepaper_observability_proof_emitted": true,
+    "recommended_next_step_is_livepaper_observability_operator_runbook": true
   },
   "task_result": {
     "selected_outcome": "A",
-    "key_finding": "executor_transport_livepaper_observability_watchdog_ci_gate_passed",
-    "claim_boundary": "transport_livepaper_observability_watchdog_ci_gate_bounded",
+    "key_finding": "livepaper_observability_contract_fixed",
+    "claim_boundary": "livepaper_observability_spec_bounded",
     "comparison_source_of_truth_state": "comparison_closed_out",
-    "task_state": "transport_livepaper_observability_watchdog_ci_gate_passed",
-    "recommended_next_step": "livepaper_observability_spec",
-    "recommended_next_task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SPEC",
-    "decision": "livepaper_observability_spec_ready",
+    "task_state": "livepaper_observability_spec_ready",
+    "recommended_next_step": "livepaper_observability_operator_runbook",
+    "recommended_next_task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-OPERATOR-RUNBOOK",
+    "decision": "livepaper_observability_operator_runbook_ready",
     "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
     "default_execution_anchor": "dexter",
     "selective_option_source": "mewx",
-    "verified_latest_vexter_pr": 57,
-    "verified_latest_vexter_main_commit": "8368b545c3ef3c32db9843ac7e958528902fe67c",
+    "verified_latest_vexter_pr": 58,
+    "verified_latest_vexter_main_commit": "10e23faa2a2428abae8206df963889392840919c",
     "verified_dexter_pr": 3,
     "verified_dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
-    "recommended_next_lane": "livepaper_observability_spec"
-  }
+    "recommended_next_lane": "livepaper_observability_operator_runbook"
+  },
+  "spec_documents": [
+    "specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md"
+  ]
 }

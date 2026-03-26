@@ -1,5 +1,5 @@
 {
-  "built_at_utc": "2026-03-26T00:20:21Z",
+  "built_at_utc": "2026-03-26T00:37:29Z",
   "comparison_matrix": {
     "candidate_generation": [
       {
@@ -517,7 +517,7 @@
           "total_events": 16
         },
         "issues": [],
-        "package_dir": "/Users/cabbala/Documents/vexter/task007-execution-timing-vs-retention/tests/fixtures/comparison_packages/dexter_fixture",
+        "package_dir": "/Users/cabbala/Documents/Vexter_repo_task007_impl/tests/fixtures/comparison_packages/dexter_fixture",
         "run_id": "dexter-fixture-001",
         "source_system": "dexter"
       },
@@ -601,7 +601,7 @@
           "total_events": 25
         },
         "issues": [],
-        "package_dir": "/Users/cabbala/Documents/vexter/task007-execution-timing-vs-retention/tests/fixtures/comparison_packages/mewx_fixture",
+        "package_dir": "/Users/cabbala/Documents/Vexter_repo_task007_impl/tests/fixtures/comparison_packages/mewx_fixture",
         "run_id": "mewx-fixture-001",
         "source_system": "mewx"
       }
@@ -731,7 +731,7 @@
           "value": 60000.0
         }
       },
-      "package_dir": "/Users/cabbala/Documents/vexter/task007-execution-timing-vs-retention/tests/fixtures/comparison_packages/dexter_fixture",
+      "package_dir": "/Users/cabbala/Documents/Vexter_repo_task007_impl/tests/fixtures/comparison_packages/dexter_fixture",
       "run_id": "dexter-fixture-001",
       "source_system": "dexter"
     },
@@ -858,7 +858,7 @@
           "value": 67500.0
         }
       },
-      "package_dir": "/Users/cabbala/Documents/vexter/task007-execution-timing-vs-retention/tests/fixtures/comparison_packages/mewx_fixture",
+      "package_dir": "/Users/cabbala/Documents/Vexter_repo_task007_impl/tests/fixtures/comparison_packages/mewx_fixture",
       "run_id": "mewx-fixture-001",
       "source_system": "mewx"
     }
@@ -946,7 +946,7 @@
         "total_events": 16
       },
       "issues": [],
-      "package_dir": "/Users/cabbala/Documents/vexter/task007-execution-timing-vs-retention/tests/fixtures/comparison_packages/dexter_fixture",
+      "package_dir": "/Users/cabbala/Documents/Vexter_repo_task007_impl/tests/fixtures/comparison_packages/dexter_fixture",
       "run_id": "dexter-fixture-001",
       "source_system": "dexter"
     },
@@ -1030,7 +1030,7 @@
         "total_events": 25
       },
       "issues": [],
-      "package_dir": "/Users/cabbala/Documents/vexter/task007-execution-timing-vs-retention/tests/fixtures/comparison_packages/mewx_fixture",
+      "package_dir": "/Users/cabbala/Documents/Vexter_repo_task007_impl/tests/fixtures/comparison_packages/mewx_fixture",
       "run_id": "mewx-fixture-001",
       "source_system": "mewx"
     }

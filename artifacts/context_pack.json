@@ -1,14 +1,14 @@
 {
   "background": {
-    "previous_task_id": "TASK-007-STRATEGY-PLANNING",
-    "previous_key_finding": "strategy_plan_ready",
-    "previous_claim_boundary": "strategy_plan_bounded",
+    "previous_task_id": "TASK-007-EXECUTION-PLANNING",
+    "previous_key_finding": "execution_plan_ready",
+    "previous_claim_boundary": "execution_plan_bounded",
     "promoted_pair": "task005-pass-grade-pair-20260325T180027Z",
     "confirmatory_pair": "task005-pass-grade-pair-20260325T180604Z",
     "comparison_source_of_truth_fixed_before_task": true,
     "prior_lane_completed_before_task": true
   },
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_execution_planning_bundle.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_implementation_planning_bundle.tar.gz",
   "current_contract": {
     "conditional_rules": {
       "entry_rejected": "required_only_when_an_entry_attempt_lacks_a_matching_fill",
@@ -34,30 +34,31 @@
     ]
   },
   "current_task": {
-    "id": "TASK-007-EXECUTION-PLANNING",
+    "id": "TASK-007-IMPLEMENTATION-PLANNING",
     "scope": [
       "Verify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X.",
-      "Treat the completed TASK-007 strategy-planning output as the formal baseline instead of reopening comparison work.",
-      "Translate the confirmed source preference into an execution-level design surface with a default anchor, selective option, routing scope, non-goals, and bounded open questions.",
-      "Keep comparison baseline, source pins, and source logic frozen while refreshing only the minimum execution-planning artifacts.",
-      "Recommend the next task based on what is now fixed versus what remains implementation-scoped."
+      "Treat the completed TASK-007 execution-planning output as the formal baseline instead of reopening comparison work.",
+      "Translate the bounded execution conclusion into implementation-ready planner/router, config, sleeve, portfolio, monitoring, and executor boundaries.",
+      "Keep comparison baseline, source pins, and source logic frozen while refreshing only the minimum implementation-planning artifacts.",
+      "Recommend which next implementation-facing spec should be cut first."
     ],
     "deliverables": [
       "artifacts/summary.md",
       "artifacts/context_pack.json",
       "artifacts/proof_bundle_manifest.json",
       "artifacts/task_ledger.jsonl",
-      "artifacts/reports/task-007-execution-planning-report.md",
-      "artifacts/reports/task-007-execution-planning-status.md",
-      "artifacts/reports/task-007-execution-planning/DETAILS.md",
-      "artifacts/reports/task-007-execution-planning/MIN_PROMPT.txt",
-      "artifacts/proofs/task-007-execution-planning-check.json",
-      "artifacts/proofs/task-007-execution-planning-summary.md",
-      "artifacts/bundles/task-007-execution-planning.tar.gz"
+      "artifacts/reports/task-007-implementation-planning-report.md",
+      "artifacts/reports/task-007-implementation-planning-status.md",
+      "artifacts/reports/task-007-implementation-planning/DETAILS.md",
+      "artifacts/reports/task-007-implementation-planning/MIN_PROMPT.txt",
+      "artifacts/proofs/task-007-implementation-planning-check.json",
+      "artifacts/proofs/task-007-implementation-planning-summary.md",
+      "artifacts/bundles/task-007-implementation-planning.tar.gz"
     ]
   },
   "evidence": {
     "github_latest": {
+      "vexter_pr_33_merged_at": "2026-03-26T00:21:56Z",
       "vexter_pr_32_merged_at": "2026-03-25T23:52:42Z",
       "vexter_pr_31_merged_at": "2026-03-25T23:36:30Z",
       "vexter_pr_30_merged_at": "2026-03-25T23:15:40Z",
@@ -236,6 +237,43 @@
       ],
       "preferred_next_step": "implementation_planning"
     },
+    "implementation_planning": {
+      "report": "artifacts/reports/task-007-implementation-planning-report.md",
+      "status_report": "artifacts/reports/task-007-implementation-planning-status.md",
+      "proof": "artifacts/proofs/task-007-implementation-planning-check.json",
+      "summary": "artifacts/proofs/task-007-implementation-planning-summary.md",
+      "handoff_dir": "artifacts/reports/task-007-implementation-planning",
+      "key_finding": "implementation_plan_ready",
+      "claim_boundary": "implementation_plan_bounded",
+      "task_state": "implementation_plan_ready",
+      "decision": "next_spec_ready",
+      "planner_router_route_unit": "objective_profile_bound_sleeve_selected_pre_run",
+      "config_sections": [
+        "planner",
+        "objective_profiles",
+        "sleeves",
+        "executors",
+        "monitor_profiles"
+      ],
+      "portfolio_design": [
+        "single_anchor_default",
+        "selective_overlay",
+        "dedicated_containment_template"
+      ],
+      "fixed_assumptions": [
+        "Dexter remains the default execution anchor whenever objectives are mixed or unspecified.",
+        "Mew-X remains a containment-first selective sleeve rather than a general fallback.",
+        "Any Mew-X allocation must be explicit and sleeve-scoped.",
+        "The first implementation contract must bind routing, budget, monitor profile, and executor profile in one immutable plan object."
+      ],
+      "not_fixed_points": [
+        "exact numeric Mew-X overlay caps",
+        "heartbeat and timeout thresholds inside monitor profiles",
+        "executor transport and process model",
+        "adaptive cross-sleeve rebalance logic"
+      ],
+      "preferred_next_step": "planner_router_interface_spec"
+    },
     "caveat": {
       "replay_scope": "Current zero-gap evidence is scoped to close-summary and position_closed realized-return fidelity rather than full execution-path equivalence.",
       "dexter_path_sensitive_metric_drift": {
@@ -244,60 +282,60 @@
         "replay_value": 25.804157291090654
       },
       "candidate_surface_gap": "Mew-X candidate_precision_proxy remains unavailable because the frozen export surface does not expose a comparable creator_candidate path.",
-      "execution_plan_boundary": "Dexter is the default execution anchor, but Mew-X remains the bounded selective choice for containment-first objectives and not for source fusion."
+      "implementation_plan_boundary": "Dexter is the default execution anchor, Mew-X remains the bounded selective choice for containment-first objectives, and exact split caps plus monitor thresholds remain implementation defaults."
     }
   },
   "frozen_source_commits": {
     "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "mewx": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
   },
-  "goal": "Maintain a GitHub-visible Mac control plane that converts the fixed comparison plus strategy plan into a bounded execution-planning surface without changing frozen source behavior, validator rules, or comparison baselines.",
+  "goal": "Maintain a GitHub-visible Mac control plane that converts the fixed comparison plus bounded execution plan into implementation-ready planner/router, sleeve, monitoring, and executor boundaries without changing frozen source behavior, validator rules, or comparison baselines.",
   "implementation": {
     "source_logic_changed": false,
     "validator_rules_changed": false,
     "minimal_reaggregation_only": true,
     "task_proofs_generated": [
-      "artifacts/proofs/task-007-execution-planning-check.json",
-      "artifacts/proofs/task-007-execution-planning-summary.md"
+      "artifacts/proofs/task-007-implementation-planning-check.json",
+      "artifacts/proofs/task-007-implementation-planning-summary.md"
     ],
     "task_reports_updated": [
-      "artifacts/reports/task-007-execution-planning-report.md",
-      "artifacts/reports/task-007-execution-planning-status.md",
-      "artifacts/reports/task-007-execution-planning/DETAILS.md",
-      "artifacts/reports/task-007-execution-planning/MIN_PROMPT.txt"
+      "artifacts/reports/task-007-implementation-planning-report.md",
+      "artifacts/reports/task-007-implementation-planning-status.md",
+      "artifacts/reports/task-007-implementation-planning/DETAILS.md",
+      "artifacts/reports/task-007-implementation-planning/MIN_PROMPT.txt"
     ]
   },
   "mac_control_plane": "/Users/cabbala/Projects/Vexter",
   "next_task": {
-    "id": "IMPLEMENTATION-PLANNING",
-    "state": "ready_for_implementation_planning",
+    "id": "PLANNER-ROUTER-INTERFACE-SPEC",
+    "state": "ready_for_planner_router_interface_spec",
     "resume_requirements": [
       "Treat task005-pass-grade-pair-20260325T180027Z as the frozen promoted baseline.",
-      "Carry forward execution_plan_ready together with execution_plan_bounded as the current execution-level conclusion.",
+      "Carry forward implementation_plan_ready together with implementation_plan_bounded as the current implementation-level conclusion.",
       "Use Dexter as the default execution anchor unless the target sleeve explicitly prioritizes drawdown containment and local-peak retention above realized exit and stale-risk avoidance.",
       "Treat Mew-X as a containment-first selective sleeve rather than a source-fusion fallback.",
-      "Keep routing ex ante and objective-conditioned rather than mid-trade and compositional.",
-      "Do not reopen comparison, recollection, source logic, or validator rules while producing the implementation plan.",
-      "Only cut path_sensitive_retention_scope later if implementation work explicitly requires a stronger retention-equivalence claim."
+      "Keep routing ex ante and sleeve-scoped rather than mid-trade and compositional.",
+      "Fix one immutable planner/router contract that binds route, budget, monitor profile, and executor profile.",
+      "Do not reopen comparison, recollection, source logic, or validator rules while producing the interface spec."
     ]
   },
-  "phase": "TASK-007-EXECUTION-PLANNING",
+  "phase": "TASK-007-IMPLEMENTATION-PLANNING",
   "project": "Vexter",
   "recommendation": {
-    "decision": "IMPLEMENTATION_PLANNING_READY",
+    "decision": "NEXT_SPEC_READY",
     "outcome": "A",
-    "key_finding": "execution_plan_ready",
-    "claim_boundary": "execution_plan_bounded",
-    "recommended_next_step": "implementation_planning",
-    "execution_plan_ready": true,
-    "implementation_planning_ready": true,
-    "path_sensitive_retention_scope_required": false,
+    "key_finding": "implementation_plan_ready",
+    "claim_boundary": "implementation_plan_bounded",
+    "recommended_next_step": "planner_router_interface_spec",
+    "implementation_plan_ready": true,
+    "next_spec_ready": true,
+    "planner_router_interface_spec_ready": true,
     "new_evidence_collection_required": false,
     "why": [
-      "The current evidence now fixes the default execution anchor, the bounded Mew-X selective role, and the routing surface strongly enough to plan implementation work.",
-      "Dexter remains the default primary choice for the broader operational objective set: upstream opportunity capture, low-slippage entry, realized exit capture, and stale-risk avoidance.",
-      "Mew-X still has a bounded primary role when drawdown containment and local-peak retention are weighted above realized exit and active lifecycle control.",
-      "That is sufficient to start implementation planning without reopening comparison or collecting new evidence."
+      "The current evidence now fixes the route unit, sleeve boundary, config sections, and ownership split strongly enough to write the first interface-level spec.",
+      "Dexter remains the default execution backbone for the broader operational objective set.",
+      "Mew-X still has a bounded primary role only for explicit containment-first sleeves and should not be widened into fusion or fallback semantics.",
+      "That makes planner/router interface work the best next cut before a broader implementation spec or a monitoring-only spec."
     ]
   },
   "repos": {
@@ -306,12 +344,13 @@
     "source_repo_b": "Cabbala/Mew-X"
   },
   "starting_point": {
-    "verified_latest_vexter_pr": 32,
-    "verified_latest_vexter_main": "a214ff04f0662e250b01181551a8963ce8e80dd6",
+    "verified_latest_vexter_pr": 33,
+    "verified_latest_vexter_main": "c6dfaee621e3eea08ceec1cfba7f0fe65a5918fc",
     "verified_dexter_pr": 3,
     "verified_dexter_main": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_mewx_frozen": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
     "verified_prior_supporting_vexter_prs": [
+      32,
       31,
       30,
       29,
@@ -329,8 +368,8 @@
       17,
       16
     ],
-    "work_branch": "codex/task-007-execution-planning"
+    "work_branch": "codex/task-007-implementation-planning"
   },
-  "status": "execution_plan_ready",
+  "status": "implementation_plan_ready",
   "windows_runtime_host": "win-lan"
 }

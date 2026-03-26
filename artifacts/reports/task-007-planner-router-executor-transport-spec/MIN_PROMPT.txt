@@ -1,0 +1,34 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+次タスクID: TASK-007-PLANNER-ROUTER-EXECUTOR-TRANSPORT-IMPLEMENTATION
+
+GitHub-visible Vexter `main` は PR `#42` main commit `23e6f354bf261935639941d541227b0c3f7a8435` まで確認済みで、comparison baseline は `task005-pass-grade-pair-20260325T180027Z` のまま固定です。Dexter は merged PR `#3` commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`、Mew-X は frozen commit `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a` を維持しています。promoted live / replay はどちらも `winner_mode: derived`、stable scored split は Dexter `6`, Mew-X `4`, tie `2`、Dexter / Mew-X の replay coverage / gap はどちらも `100.00% / 0.0000` を維持し、confirmatory residual は Mew-X `candidate_rejected` のみで promoted baseline を overturn しません。
+
+この task では、新証拠収集や source logic 変更は行わず、planner/router control plane と source-faithful executor seam の間にある transport contract を bounded に固定しました。結論は以下です。
+
+- Key finding: `executor_transport_contract_fixed`
+- Claim boundary: `executor_transport_spec_bounded`
+- Decision: `planner_router_executor_transport_implementation_ready`
+
+fixed transport conclusion:
+
+- `PlanStore` は immutable `PlanBatch` の pre-runtime persistence 境界に固定し、native handle や runtime transport state を持たせない
+- `ExecutorRegistry` は in-process の adapter lookup に固定し、transport I/O や cross-source fallback を持たせない
+- `ExecutorAdapter` は source-native runtime への transport bridge に固定し、request serialization、dedupe、handle allocation、native dispatch、source-local lifecycle ownership を持つ
+- `StatusSink` は normalized `StatusSnapshot` の runtime fan-in 境界に固定し、poll / push 両方の landing surface になりうるが command issuance は持たない
+- process boundary は one planner/router process + one long-lived executor runtime per `executor_profile_id` に固定した
+- Dexter safe-mode transport は `monitor_mint_session`、Mew-X safe-mode transport は `start_session` + `sim_session` に anchored した
+- `prepare` だけが full immutable plan を運び、accepted `prepare` は stable `handle_id` を返す
+- `start/status/stop/snapshot` は `handle_id` ベースの runtime phases に固定した
+- idempotency は `prepare/start/stop` で mandatory とし、duplicate は second session / second stop を作らない
+- ack は transport acceptance にすぎず、terminal completion は `status()` または `snapshot()` による確認を要求する
+- status correctness path は poll-first に固定し、push は optional optimization に留めた
+- reverse-order stop fanout、`manual_latched_stop_all` reason preservation、cross-source handoff prohibition を維持した
+
+次は `planner_router_executor_transport_implementation` を優先してください。理由は、ownership / process boundary / envelope / idempotency / stop confirmation がこれで code-ready になったためで、observability や another boundary-only spec より先に real adapter/runtime bridge を実装する方が次の不確実性を減らせるからです。再実行してはいけないもの:
+
+- promoted-baseline selection
+- 新 live / replay evidence collection
+- Dexter / Mew-X / validator changes
+- wire protocol / host placement / auth / numeric timeout-retry-poll constants の先行確定
+- funded-live execution や cross-source handoff の導入

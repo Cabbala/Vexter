@@ -1,0 +1,5 @@
+{
+  "task": "TASK-007-PLANNER-ROUTER-EXECUTOR-TRANSPORT-SPEC",
+  "state": "planner_router_executor_transport_spec_ready",
+  "next": "planner_router_executor_transport_implementation"
+}

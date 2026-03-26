@@ -1,0 +1,168 @@
+{
+  "task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-CI-CHECK",
+  "generated_at_utc": "2026-03-26T19:29:14Z",
+  "verified_github": {
+    "latest_vexter_pr": 64,
+    "latest_vexter_main_commit": "30652c29570bf34d105befed6a46a60b551d59b7",
+    "latest_vexter_merged_at_utc": "2026-03-26T18:53:07Z",
+    "latest_recent_vexter_prs": [
+      64,
+      63,
+      62,
+      61
+    ],
+    "open_non_authoritative_vexter_prs": [
+      50
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "mewx_frozen_commit_date_utc": "2026-03-20T16:05:19Z"
+  },
+  "fixed_input_surface": {
+    "canonical_contract": "specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md",
+    "canonical_runbook": "docs/livepaper_observability_operator_runbook.md",
+    "canonical_checklist": "docs/livepaper_observability_shift_checklist.md",
+    "canonical_handoff_template": "docs/livepaper_observability_shift_handoff_template.md",
+    "canonical_handoff_drill": "docs/livepaper_observability_shift_handoff_drill.md",
+    "sample_handoff": "artifacts/reports/task-007-livepaper-observability-shift-handoff-drill/HANDOFF.md",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "comparison_source_of_truth": "comparison_closed_out",
+    "global_halt_mode": "manual_latched_stop_all",
+    "status_delivery": "poll_first"
+  },
+  "implementation": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "dexter_strategy_changed": false,
+    "mewx_strategy_changed": false,
+    "new_evidence_collection_required": false,
+    "comparison_baseline_reopened": false
+  },
+  "livepaper_observability_shift_handoff_ci_check": {
+    "suite_group": "livepaper_observability_shift_handoff_ci_check",
+    "runner_script": "scripts/run_livepaper_observability_shift_handoff_ci_check.sh",
+    "workflow": ".github/workflows/validate.yml",
+    "pytest_command": "pytest -q -m livepaper_observability_shift_handoff_ci_check tests/test_planner_router_transport_livepaper_observability_shift_handoff_template.py tests/test_planner_router_transport_livepaper_observability_shift_handoff_drill.py tests/test_planner_router_transport_livepaper_observability_shift_handoff_ci_check.py",
+    "pytest_result": "29 passed in 0.18s",
+    "gate_status": "passed",
+    "grouped_test_files": [
+      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_template.py",
+      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_drill.py",
+      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_ci_check.py"
+    ],
+    "supporting_test_files": [
+      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_template.py",
+      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_drill.py",
+      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_ci_check.py"
+    ],
+    "grouped_suite_markers": [
+      "livepaper_observability_shift_handoff_ci_check"
+    ],
+    "required_handoff_faces": [
+      "current_status",
+      "proof_and_report_pointers",
+      "omission_drift_partial_visibility",
+      "manual_stop_all",
+      "quarantine",
+      "terminal_snapshot",
+      "normalized_failure_detail",
+      "open_questions",
+      "next_shift_priority_checks"
+    ],
+    "gate_surface_tests": {
+      "current_status": [
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_ci_check.py::test_livepaper_observability_shift_handoff_ci_check_locks_required_face[current_status]"
+      ],
+      "proof_and_report_pointers": [
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_ci_check.py::test_livepaper_observability_shift_handoff_ci_check_locks_required_face[proof_and_report_pointers]"
+      ],
+      "omission_drift_partial_visibility": [
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_ci_check.py::test_livepaper_observability_shift_handoff_ci_check_locks_required_face[omission_drift_partial_visibility]"
+      ],
+      "manual_stop_all": [
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_ci_check.py::test_livepaper_observability_shift_handoff_ci_check_locks_required_face[manual_stop_all]"
+      ],
+      "quarantine": [
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_ci_check.py::test_livepaper_observability_shift_handoff_ci_check_locks_required_face[quarantine]"
+      ],
+      "terminal_snapshot": [
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_ci_check.py::test_livepaper_observability_shift_handoff_ci_check_locks_required_face[terminal_snapshot]"
+      ],
+      "normalized_failure_detail": [
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_ci_check.py::test_livepaper_observability_shift_handoff_ci_check_locks_required_face[normalized_failure_detail]"
+      ],
+      "open_questions": [
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_ci_check.py::test_livepaper_observability_shift_handoff_ci_check_locks_required_face[open_questions]"
+      ],
+      "next_shift_priority_checks": [
+        "tests/test_planner_router_transport_livepaper_observability_shift_handoff_ci_check.py::test_livepaper_observability_shift_handoff_ci_check_locks_required_face[next_shift_priority_checks]"
+      ]
+    },
+    "proof_outputs": [
+      "artifacts/proofs/task-007-livepaper-observability-shift-handoff-ci-check-check.json",
+      "artifacts/proofs/task-007-livepaper-observability-shift-handoff-ci-check-summary.md"
+    ],
+    "proof_artifact_name": "livepaper-observability-shift-handoff-ci-check-proof",
+    "proof_and_report_pointers": {
+      "status_report": "artifacts/reports/task-007-livepaper-observability-shift-handoff-ci-check-status.md",
+      "report": "artifacts/reports/task-007-livepaper-observability-shift-handoff-ci-check-report.md",
+      "summary": "artifacts/proofs/task-007-livepaper-observability-shift-handoff-ci-check-summary.md",
+      "proof_json": "artifacts/proofs/task-007-livepaper-observability-shift-handoff-ci-check-check.json",
+      "first_deep_proof": "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-ci-gate-check.json"
+    },
+    "normalized_failure_detail": {
+      "failed_faces_or_none": [
+        "none"
+      ],
+      "failed_tests_or_none": [
+        "none"
+      ],
+      "non_surface_failures_or_none": [
+        "none"
+      ],
+      "failure_category_or_none": "none"
+    },
+    "source_faithful_modes": {
+      "dexter": "paper_live",
+      "mewx": "sim_live"
+    }
+  },
+  "next_task_evaluation": {
+    "livepaper_observability_shift_handoff_watchdog": {
+      "recommended": true,
+      "reasons": [
+        "The handoff surface is now CI-gated on change, so the next bounded gap is keeping future handoff drift visible as the operator workflow evolves.",
+        "A handoff watchdog extends the same fixed faces without reopening acceptance scope or planner-to-transport design."
+      ]
+    },
+    "transport_livepaper_observability_acceptance_pack": {
+      "recommended": false,
+      "reasons": [
+        "An acceptance pack would mostly restate the already fixed and now CI-gated handoff surface.",
+        "The higher remaining leverage is ongoing drift detection for the handoff itself."
+      ]
+    },
+    "executor_boundary_code_spec": {
+      "recommended": false,
+      "reasons": [
+        "No new boundary ambiguity surfaced while formalizing the handoff gate.",
+        "The residual risk remains operator handoff drift rather than transport contract uncertainty."
+      ]
+    }
+  },
+  "task_result": {
+    "selected_outcome": "A",
+    "key_finding": "livepaper_observability_shift_handoff_ci_gate_enforced",
+    "claim_boundary": "livepaper_observability_shift_handoff_ci_check_bounded",
+    "comparison_source_of_truth_state": "comparison_closed_out",
+    "task_state": "livepaper_observability_shift_handoff_ci_check_passed",
+    "recommended_next_step": "livepaper_observability_shift_handoff_watchdog",
+    "recommended_next_task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG",
+    "decision": "livepaper_observability_shift_handoff_watchdog_ready",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "default_execution_anchor": "dexter",
+    "selective_option_source": "mewx"
+  }
+}

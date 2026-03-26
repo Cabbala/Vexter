@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
 
+import pytest
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DOC_PATH = REPO_ROOT / "docs" / "livepaper_observability_shift_handoff_drill.md"
@@ -42,6 +44,8 @@ HANDOFF_PATH = (
     / "task-007-livepaper-observability-shift-handoff-drill"
     / "HANDOFF.md"
 )
+
+pytestmark = pytest.mark.livepaper_observability_shift_handoff_ci_check
 
 
 def load_proof() -> dict[str, object]:
@@ -115,35 +119,29 @@ def test_livepaper_observability_shift_handoff_drill_artifacts_are_wired_for_inc
         prompt_context["recommended_next_task"]
         == "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-CI-CHECK"
     )
-    assert manifest["task_id"] == proof["task_id"] == context["current_task"]["id"] == ledger["task_id"]
+    assert manifest["task_id"] == context["current_task"]["id"] == ledger["task_id"] == (
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-CI-CHECK"
+    )
     assert (
-        manifest["status"]
-        == proof["task_result"]["task_state"]
-        == ledger["status"]
-        == "livepaper_observability_shift_handoff_drill_passed"
+        manifest["status"] == ledger["status"] == "livepaper_observability_shift_handoff_ci_check_passed"
     )
     assert (
         manifest["bundle_path"]
         == ledger["artifact_bundle"]
-        == "artifacts/bundles/task-007-livepaper-observability-shift-handoff-drill.tar.gz"
+        == "artifacts/bundles/task-007-livepaper-observability-shift-handoff-ci-check.tar.gz"
     )
     assert (
-        manifest["task_result"]["key_finding"]
-        == proof["task_result"]["key_finding"]
+        proof["task_result"]["key_finding"]
         == context["evidence"]["livepaper_observability_shift_handoff_drill"]["key_finding"]
-        == ledger["key_finding"]
         == "livepaper_observability_shift_handoff_drill_validated"
     )
     assert (
-        manifest["task_result"]["claim_boundary"]
-        == proof["task_result"]["claim_boundary"]
+        proof["task_result"]["claim_boundary"]
         == context["evidence"]["livepaper_observability_shift_handoff_drill"]["claim_boundary"]
-        == ledger["claim_boundary"]
         == "livepaper_observability_shift_handoff_drill_bounded"
     )
     assert (
-        manifest["task_result"]["recommended_next_step"]
-        == proof["task_result"]["recommended_next_step"]
+        proof["task_result"]["recommended_next_step"]
         == context["evidence"]["livepaper_observability_shift_handoff_drill"]["preferred_next_step"]
         == prompt_context["current_state"]["recommended_next_step"]
         == "livepaper_observability_shift_handoff_ci_check"
@@ -152,18 +150,18 @@ def test_livepaper_observability_shift_handoff_drill_artifacts_are_wired_for_inc
         manifest["next_task"]["id"]
         == context["next_task"]["id"]
         == ledger["next_task_id"]
-        == "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-CI-CHECK"
+        == "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG"
     )
     assert (
         manifest["next_task"]["state"]
         == context["next_task"]["state"]
         == ledger["next_task_state"]
-        == "ready_for_livepaper_observability_shift_handoff_ci_check"
+        == "ready_for_livepaper_observability_shift_handoff_watchdog"
     )
     assert "livepaper_observability_shift_handoff_ci_check" in summary_text
     assert "livepaper_observability_shift_handoff_drill_passed" in status_text
     assert "livepaper_observability_shift_handoff_ci_check" in report_text
-    assert "task-007-livepaper-observability-shift-handoff-drill.tar.gz" in bundle_script
+    assert "task-007-livepaper-observability-shift-handoff-ci-check.tar.gz" in bundle_script
 
 
 def test_livepaper_observability_shift_handoff_drill_doc_and_sample_handoff_capture_required_faces() -> None:

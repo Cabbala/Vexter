@@ -4,7 +4,7 @@
 - outgoing_shift_window: 2026-03-27 synthetic drill
 - incoming_shift_window: 2026-03-27 synthetic drill
 - task_state: livepaper_observability_shift_handoff_drill_passed
-- shift_outcome: closed
+- shift_outcome: contained
 - current_action: continue
 - active_broken_surface_or_none: none
 - recommended_next_step: livepaper_observability_shift_handoff_ci_check
@@ -15,6 +15,8 @@
 - mewx_frozen_commit: dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a
 - promoted_baseline: task005-pass-grade-pair-20260325T180027Z
 - comparison_source_of_truth: comparison_closed_out
+- containment_anchor_plan_id: req-transport-livepaper-observability-watchdog-runtime-overlay:batch:1:mewx_containment
+- failure_anchor_plan_id: req-transport-livepaper-observability-regression-pack-timeout:batch:1:mewx_containment
 
 ## Proof and Report Pointers
 - current_status_report: artifacts/reports/task-007-livepaper-observability-shift-handoff-drill-status.md
@@ -34,27 +36,34 @@
 - exact_broken_surface_or_none: none
 
 ## Manual Stop-All and Quarantine
-- manual_stop_all_visible: false
-- halt_mode_or_none: none
-- trigger_plan_id_or_none: none
-- stop_reason_or_none: none
-- peer_plan_propagation_confirmed: false
-- quarantine_active: false
-- quarantine_reason_or_none: none
-- continuity_check: none
+- manual_stop_all_visible: true
+- halt_mode_or_none: manual_latched_stop_all
+- trigger_plan_id_or_none: req-transport-livepaper-observability-watchdog-runtime-overlay:batch:1:mewx_containment
+- stop_reason_or_none: manual_latched_stop_all
+- peer_plan_propagation_confirmed: true
+- quarantine_active: true
+- quarantine_reason_or_none: timeout_guard
+- continuity_check: monitor_profile_id=mewx_timeout_guard, quarantine_scope=sleeve, execution_mode=sim_live, ack_history_visible=true
 
 ## Terminal Snapshot
-- terminal_snapshot_present: false
-- terminal_snapshot_pointer_or_none: none
-- snapshot_signal_visible: false
-- terminal_stop_reason_visible: false
+- terminal_snapshot_present: true
+- terminal_snapshot_pointer_or_none: tests/test_planner_router_transport_livepaper_observability_regression_pack.py
+- snapshot_signal_visible: true
+- terminal_stop_reason_visible: true
+- terminal_anchor_native_session_id: sim_live:req-transport-livepaper-observability-watchdog-runtime-overlay:batch:1:mewx_containment
+- terminal_anchor_handle_id: mewx_frozen_pinned:req-transport-livepaper-observability-watchdog-runtime-overlay:batch:1:mewx_containment
 
 ## Normalized Failure Detail
-- normalized_failure_detail_present: false
-- failure_detail_pointer_or_none: none
+- normalized_failure_detail_present: true
+- failure_detail_pointer_or_none: tests/test_planner_router_transport_livepaper_observability_regression_pack.py
 - normalized_identity_chain_coherent: true
-- source_reason_visible: false
-- rollback_snapshot_required_and_present_or_none: none
+- source_reason_visible: true
+- rollback_snapshot_required_and_present_or_none: present
+- failure_code: status_timeout
+- failure_stage: status
+- failure_source_reason: status timeout
+- rollback_snapshot_signal: snapshot
+- rollback_snapshot_stop_reason: status_timeout
 
 ## Open Questions
 - question_1_or_none: none
@@ -74,5 +83,4 @@
 - containment_and_failure_faces_explicit: true
 - open_questions_and_next_checks_explicit: true
 
-This sample handoff is synthetic and bounded. It reuses the fixed evidence trail, does not collect new evidence, and keeps the comparison baseline closed.
-
+This sample handoff is synthetic and bounded. It reuses the fixed evidence trail, does not collect new evidence, keeps the comparison baseline closed, and carries positive-case containment and failure values only from existing source-backed regression/runtime tests.

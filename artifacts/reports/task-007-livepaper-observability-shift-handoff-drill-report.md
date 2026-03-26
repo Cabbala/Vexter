@@ -39,7 +39,7 @@ The canonical operator handoff template was exercised as a synthetic but bounded
 The drill did not invent new runtime facts.
 Instead, it re-used the fixed proof trail and showed that the handoff can be filled in a way an incoming operator can read without additional inference.
 
-### Sample handoff with explicit absence markers
+### Sample handoff with explicit positive and absent faces
 
 The sample handoff in `artifacts/reports/task-007-livepaper-observability-shift-handoff-drill/HANDOFF.md` records:
 
@@ -55,6 +55,14 @@ The sample handoff in `artifacts/reports/task-007-livepaper-observability-shift-
 
 Absence is explicit in the sample handoff.
 When a face is not active, the record uses `false` or `none` instead of leaving the field implied.
+Where the fixed runtime/regression tests already preserve positive-case values, the drill now records them directly.
+That includes:
+
+- `quarantine_reason=timeout_guard`
+- `halt_mode=manual_latched_stop_all`
+- peer-plan stop propagation confirmed from the reverse-order stop fanout
+- terminal `signal=snapshot`
+- normalized failure detail `code=status_timeout`, `stage=status`, and rollback snapshot presence
 
 ### Incoming-operator readability was the actual check
 
@@ -64,7 +72,9 @@ The drill confirms that the next reader can recover:
 - the pinned seam and commits
 - the fixed comparison baseline
 - the first deep proof to open next
-- the fact that no containment, terminal, or failure surface is active
+- that no active `omission`, `drift`, or `partial_visibility` break is open
+- the current containment state from explicit quarantine and manual stop-all values
+- snapshot-backed terminal and normalized failure detail anchors without adding inference
 
 ## What Did Not Change
 
@@ -77,7 +87,8 @@ The drill confirms that the next reader can recover:
 
 ## Tests
 
-- `pytest -q tests/test_planner_router_transport_livepaper_observability_shift_handoff_drill.py`
+- `pytest -q`
+- `161 passed`
 
 ## Recommendation Among Next Tasks
 
@@ -111,4 +122,3 @@ Not next because:
 - Current task status: `livepaper_observability_shift_handoff_drill_passed`
 - Recommended next step: `livepaper_observability_shift_handoff_ci_check`
 - Decision: `livepaper_observability_shift_handoff_ci_check_ready`
-

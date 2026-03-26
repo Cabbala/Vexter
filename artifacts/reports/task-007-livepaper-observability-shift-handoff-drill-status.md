@@ -19,8 +19,8 @@
 - Drill doc: `docs/livepaper_observability_shift_handoff_drill.md`
 - Sample handoff: `artifacts/reports/task-007-livepaper-observability-shift-handoff-drill/HANDOFF.md`
 - First deep proof remains the watchdog CI gate: `artifacts/proofs/task-007-transport-livepaper-observability-watchdog-ci-gate-check.json`
-- The sample handoff keeps every required face explicit or `none`
-- Validation: `pytest -q tests/test_planner_router_transport_livepaper_observability_shift_handoff_drill.py`
+- The sample handoff keeps every required face explicit, using `none` for true absence and source-backed positive values for containment and failure faces
+- Validation: `pytest -q` -> `161 passed`
 
 ## Decision
 
@@ -31,4 +31,3 @@
 - Decision: `livepaper_observability_shift_handoff_ci_check_ready`
 
 The bounded drill shows the incoming operator can read the current state, proof pointers, and explicit absence markers without extra inference.
-

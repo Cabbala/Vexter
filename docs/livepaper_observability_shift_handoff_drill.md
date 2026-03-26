@@ -44,6 +44,5 @@ Prove that the incoming operator can read the sample handoff without adding infe
 - Every required handoff face is present.
 - No face relies on "same as before" or other unstated carryover.
 - `omission`, `drift`, and `partial_visibility` are each explicit.
-- Manual stop-all, quarantine, terminal snapshot, and normalized failure detail are each explicit, even when absent.
+- Manual stop-all, quarantine, terminal snapshot, and normalized failure detail are each explicit, using source-backed positive-case values where the fixed regression/runtime tests already preserve them.
 - The next recommended step is `livepaper_observability_shift_handoff_ci_check`.
-

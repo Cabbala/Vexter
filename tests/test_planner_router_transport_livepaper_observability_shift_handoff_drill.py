@@ -48,6 +48,11 @@ def load_proof() -> dict[str, object]:
     return json.loads(PROOF_PATH.read_text())
 
 
+def load_last_ledger_entry() -> dict[str, object]:
+    lines = (REPO_ROOT / "artifacts" / "task_ledger.jsonl").read_text().strip().splitlines()
+    return json.loads(lines[-1])
+
+
 def test_livepaper_observability_shift_handoff_drill_proof_tracks_latest_git_state() -> None:
     proof = load_proof()
 
@@ -88,10 +93,14 @@ def test_livepaper_observability_shift_handoff_drill_proof_tracks_latest_git_sta
 
 def test_livepaper_observability_shift_handoff_drill_artifacts_are_wired_for_incoming_readers() -> None:
     proof = load_proof()
+    manifest = json.loads((REPO_ROOT / "artifacts" / "proof_bundle_manifest.json").read_text())
+    context = json.loads((REPO_ROOT / "artifacts" / "context_pack.json").read_text())
     prompt_context = json.loads(PROMPT_CONTEXT_PATH.read_text())
+    ledger = load_last_ledger_entry()
     summary_text = SUMMARY_PATH.read_text()
     status_text = STATUS_PATH.read_text()
     report_text = REPORT_PATH.read_text()
+    bundle_script = (REPO_ROOT / "scripts" / "build_proof_bundle.sh").read_text()
 
     assert prompt_context["visible_main_state"]["latest_vexter_pr"] == 63
     assert (
@@ -106,9 +115,55 @@ def test_livepaper_observability_shift_handoff_drill_artifacts_are_wired_for_inc
         prompt_context["recommended_next_task"]
         == "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-CI-CHECK"
     )
+    assert manifest["task_id"] == proof["task_id"] == context["current_task"]["id"] == ledger["task_id"]
+    assert (
+        manifest["status"]
+        == proof["task_result"]["task_state"]
+        == ledger["status"]
+        == "livepaper_observability_shift_handoff_drill_passed"
+    )
+    assert (
+        manifest["bundle_path"]
+        == ledger["artifact_bundle"]
+        == "artifacts/bundles/task-007-livepaper-observability-shift-handoff-drill.tar.gz"
+    )
+    assert (
+        manifest["task_result"]["key_finding"]
+        == proof["task_result"]["key_finding"]
+        == context["evidence"]["livepaper_observability_shift_handoff_drill"]["key_finding"]
+        == ledger["key_finding"]
+        == "livepaper_observability_shift_handoff_drill_validated"
+    )
+    assert (
+        manifest["task_result"]["claim_boundary"]
+        == proof["task_result"]["claim_boundary"]
+        == context["evidence"]["livepaper_observability_shift_handoff_drill"]["claim_boundary"]
+        == ledger["claim_boundary"]
+        == "livepaper_observability_shift_handoff_drill_bounded"
+    )
+    assert (
+        manifest["task_result"]["recommended_next_step"]
+        == proof["task_result"]["recommended_next_step"]
+        == context["evidence"]["livepaper_observability_shift_handoff_drill"]["preferred_next_step"]
+        == prompt_context["current_state"]["recommended_next_step"]
+        == "livepaper_observability_shift_handoff_ci_check"
+    )
+    assert (
+        manifest["next_task"]["id"]
+        == context["next_task"]["id"]
+        == ledger["next_task_id"]
+        == "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-CI-CHECK"
+    )
+    assert (
+        manifest["next_task"]["state"]
+        == context["next_task"]["state"]
+        == ledger["next_task_state"]
+        == "ready_for_livepaper_observability_shift_handoff_ci_check"
+    )
     assert "livepaper_observability_shift_handoff_ci_check" in summary_text
     assert "livepaper_observability_shift_handoff_drill_passed" in status_text
     assert "livepaper_observability_shift_handoff_ci_check" in report_text
+    assert "task-007-livepaper-observability-shift-handoff-drill.tar.gz" in bundle_script
 
 
 def test_livepaper_observability_shift_handoff_drill_doc_and_sample_handoff_capture_required_faces() -> None:
@@ -156,15 +211,27 @@ def test_livepaper_observability_shift_handoff_drill_doc_and_sample_handoff_capt
     )
     assert proof["livepaper_observability_shift_handoff_drill"]["sample_handoff"] == {
         "task_state": "livepaper_observability_shift_handoff_drill_passed",
+        "shift_outcome": "contained",
         "current_action": "continue",
         "active_broken_surface_or_none": "none",
         "omission_present": False,
         "drift_present": False,
         "partial_visibility_present": False,
-        "manual_stop_all_visible": False,
-        "quarantine_active": False,
-        "terminal_snapshot_present": False,
-        "normalized_failure_detail_present": False,
+        "manual_stop_all_visible": True,
+        "quarantine_active": True,
+        "terminal_snapshot_present": True,
+        "normalized_failure_detail_present": True,
+        "containment_anchor_plan_id": "req-transport-livepaper-observability-watchdog-runtime-overlay:batch:1:mewx_containment",
+        "failure_anchor_plan_id": "req-transport-livepaper-observability-regression-pack-timeout:batch:1:mewx_containment",
+        "halt_mode": "manual_latched_stop_all",
+        "trigger_plan_id": "req-transport-livepaper-observability-watchdog-runtime-overlay:batch:1:mewx_containment",
+        "stop_reason": "manual_latched_stop_all",
+        "quarantine_reason": "timeout_guard",
+        "terminal_signal": "snapshot",
+        "normalized_failure_code": "status_timeout",
+        "normalized_failure_stage": "status",
+        "normalized_failure_source_reason": "status timeout",
+        "rollback_snapshot_present": True,
         "open_questions": ["none"],
         "next_shift_priority_checks": [
             "confirm the current report, proof summary, and proof JSON before changing any task state",
@@ -177,9 +244,14 @@ def test_livepaper_observability_shift_handoff_drill_doc_and_sample_handoff_capt
     assert "omission_present: false" in handoff_text
     assert "drift_present: false" in handoff_text
     assert "partial_visibility_present: false" in handoff_text
-    assert "manual_stop_all_visible: false" in handoff_text
-    assert "terminal_snapshot_present: false" in handoff_text
-    assert "normalized_failure_detail_present: false" in handoff_text
+    assert "manual_stop_all_visible: true" in handoff_text
+    assert "quarantine_active: true" in handoff_text
+    assert "quarantine_reason_or_none: timeout_guard" in handoff_text
+    assert "halt_mode_or_none: manual_latched_stop_all" in handoff_text
+    assert "terminal_snapshot_present: true" in handoff_text
+    assert "snapshot_signal_visible: true" in handoff_text
+    assert "normalized_failure_detail_present: true" in handoff_text
+    assert "failure_code: status_timeout" in handoff_text
+    assert "rollback_snapshot_required_and_present_or_none: present" in handoff_text
     assert "question_1_or_none: none" in handoff_text
     assert "priority_check_1:" in handoff_text
-

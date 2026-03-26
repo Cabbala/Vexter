@@ -73,15 +73,27 @@
     ],
     "sample_handoff": {
       "task_state": "livepaper_observability_shift_handoff_drill_passed",
+      "shift_outcome": "contained",
       "current_action": "continue",
       "active_broken_surface_or_none": "none",
       "omission_present": false,
       "drift_present": false,
       "partial_visibility_present": false,
-      "manual_stop_all_visible": false,
-      "quarantine_active": false,
-      "terminal_snapshot_present": false,
-      "normalized_failure_detail_present": false,
+      "manual_stop_all_visible": true,
+      "quarantine_active": true,
+      "terminal_snapshot_present": true,
+      "normalized_failure_detail_present": true,
+      "containment_anchor_plan_id": "req-transport-livepaper-observability-watchdog-runtime-overlay:batch:1:mewx_containment",
+      "failure_anchor_plan_id": "req-transport-livepaper-observability-regression-pack-timeout:batch:1:mewx_containment",
+      "halt_mode": "manual_latched_stop_all",
+      "trigger_plan_id": "req-transport-livepaper-observability-watchdog-runtime-overlay:batch:1:mewx_containment",
+      "stop_reason": "manual_latched_stop_all",
+      "quarantine_reason": "timeout_guard",
+      "terminal_signal": "snapshot",
+      "normalized_failure_code": "status_timeout",
+      "normalized_failure_stage": "status",
+      "normalized_failure_source_reason": "status timeout",
+      "rollback_snapshot_present": true,
       "open_questions": [
         "none"
       ],
@@ -115,7 +127,8 @@
       "artifacts/reports/task-007-livepaper-observability-shift-handoff-drill/CONTEXT.json",
       "artifacts/reports/task-007-livepaper-observability-shift-handoff-drill/HANDOFF.md",
       "artifacts/proofs/task-007-livepaper-observability-shift-handoff-drill-check.json",
-      "artifacts/proofs/task-007-livepaper-observability-shift-handoff-drill-summary.md"
+      "artifacts/proofs/task-007-livepaper-observability-shift-handoff-drill-summary.md",
+      "artifacts/bundles/task-007-livepaper-observability-shift-handoff-drill.tar.gz"
     ]
   },
   "validation": {
@@ -123,10 +136,11 @@
     "validator_rules_changed": false,
     "new_evidence_collection_required": false,
     "contract_test_files": [
-      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_drill.py"
+      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_drill.py",
+      "tests/test_bootstrap_layout.py"
     ],
-    "pytest_command": "pytest -q tests/test_planner_router_transport_livepaper_observability_shift_handoff_drill.py",
-    "pytest_result": "pending"
+    "pytest_command": "pytest -q",
+    "pytest_result": "161 passed"
   },
   "next_task_evaluation": {
     "livepaper_observability_shift_handoff_ci_check": {
@@ -166,4 +180,3 @@
     "selective_option_source": "mewx"
   }
 }
-

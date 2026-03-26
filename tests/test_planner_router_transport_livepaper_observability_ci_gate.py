@@ -110,11 +110,11 @@ def test_transport_livepaper_observability_ci_gate_workflow_runs_gate_runner_bef
         'transport_livepaper_observability_watchdog_regression_pack"'
     ) in workflow
     assert (
-        watchdog_ci_gate_index
-        < gate_index
+        gate_index
         < watchdog_index
         < watchdog_runtime_index
         < watchdog_regression_pack_index
+        < watchdog_ci_gate_index
         < build_bundle_index
         < remaining_tests_index
     )

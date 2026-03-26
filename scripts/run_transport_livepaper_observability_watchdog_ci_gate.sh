@@ -161,6 +161,9 @@ proof = {
             "tests/test_planner_router_transport_livepaper_observability_regression_pack.py",
             "tests/test_planner_router_transport_livepaper_observability_watchdog_ci_gate.py",
         ],
+        "supporting_test_files": [
+            "tests/test_planner_router_transport_livepaper_observability_watchdog_ci_gate.py",
+        ],
         "grouped_suite_markers": [
             "transport_livepaper_observability_watchdog",
             "transport_livepaper_observability_watchdog_runtime",

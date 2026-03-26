@@ -18,7 +18,7 @@
 
 - The grouped gate preserves the source-faithful Dexter `paper_live` / frozen Mew-X `sim_live` seam.
 - Immutable handoff metadata, handle lifecycle continuity, planned/runtime metadata drift detection, status sink fan-in, ack-history retention, quarantine completeness, manual stop-all propagation, snapshot-backed terminal detail, and normalized failure-detail passthrough remain the mandatory gate faces.
-- Gate run result: `38 passed in 1.02s`.
+- Gate run result: `1 failed, 37 passed in 0.09s`.
 
 ## Recommendation Among Next Tasks
 
@@ -36,8 +36,8 @@
 
 ## Decision
 
-- Outcome: `A`
-- Key finding: `executor_transport_livepaper_observability_watchdog_ci_gate_passed`
+- Outcome: `watchdog_ci_gate_failed`
+- Key finding: `executor_transport_livepaper_observability_watchdog_ci_gate_failed`
 - Claim boundary: `transport_livepaper_observability_watchdog_ci_gate_bounded`
-- Decision: `livepaper_observability_spec_ready`
-- Recommended next step: `livepaper_observability_spec`
+- Decision: `transport_livepaper_observability_watchdog_ci_gate_failed`
+- Recommended next step: `transport_livepaper_observability_watchdog_ci_gate`

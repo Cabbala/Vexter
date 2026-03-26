@@ -3,12 +3,16 @@ from pathlib import Path
 
 import pytest
 
+
+pytestmark = pytest.mark.transport_livepaper_observability_watchdog_ci_gate
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 EXPECTED_GROUPED_TEST_FILES = [
     "tests/test_planner_router_transport_livepaper_observability_watchdog.py",
     "tests/test_planner_router_transport_livepaper_observability_watchdog_runtime.py",
     "tests/test_planner_router_transport_livepaper_observability_regression_pack.py",
+    "tests/test_planner_router_transport_livepaper_observability_watchdog_ci_gate.py",
 ]
 
 EXPECTED_GATE_SURFACE_TESTS = {
@@ -131,11 +135,11 @@ def test_transport_livepaper_observability_watchdog_ci_gate_workflow_runs_before
         'transport_livepaper_observability_watchdog_regression_pack"'
     ) in workflow
     assert (
-        watchdog_ci_gate_index
-        < gate_index
+        gate_index
         < watchdog_index
         < watchdog_runtime_index
         < watchdog_regression_pack_index
+        < watchdog_ci_gate_index
         < build_bundle_index
         < remaining_tests_index
     )

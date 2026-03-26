@@ -7,8 +7,8 @@
     "mewx_frozen": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
   },
   "current_state": {
-    "current_task": "transport_livepaper_observability_watchdog_ci_gate_passed",
-    "recommended_next_step": "livepaper_observability_spec",
+    "current_task": "transport_livepaper_observability_watchdog_ci_gate_failed",
+    "recommended_next_step": "transport_livepaper_observability_watchdog_ci_gate",
     "default_execution_anchor": "Dexter",
     "mewx_role": "containment-first selective option"
   }

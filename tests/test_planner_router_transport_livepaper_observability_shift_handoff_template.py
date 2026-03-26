@@ -94,47 +94,41 @@ def test_livepaper_observability_shift_handoff_template_current_artifacts_are_co
     status_text = STATUS_PATH.read_text()
     report_text = REPORT_PATH.read_text()
 
-    assert manifest["task_id"] == proof["task_id"] == context["current_task"]["id"] == ledger["task_id"]
-    assert (
-        manifest["status"]
-        == proof["task_result"]["task_state"]
-        == ledger["status"]
-        == "livepaper_observability_shift_handoff_template_ready"
+    assert proof["task_id"] == "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-TEMPLATE"
+    assert manifest["task_id"] == context["current_task"]["id"] == ledger["task_id"] == (
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-DRILL"
     )
     assert (
-        manifest["bundle_path"]
-        == ledger["artifact_bundle"]
-        == "artifacts/bundles/task-007-livepaper-observability-shift-handoff-template.tar.gz"
+        manifest["status"] == ledger["status"] == "livepaper_observability_shift_handoff_drill_passed"
+    )
+    assert proof["task_result"]["task_state"] == "livepaper_observability_shift_handoff_template_ready"
+    assert (
+        manifest["bundle_path"] == ledger["artifact_bundle"] == (
+            "artifacts/bundles/task-007-livepaper-observability-shift-handoff-drill.tar.gz"
+        )
     )
     assert (
-        manifest["task_result"]["key_finding"]
-        == proof["task_result"]["key_finding"]
+        proof["task_result"]["key_finding"]
         == context["evidence"]["livepaper_observability_shift_handoff_template"]["key_finding"]
-        == ledger["key_finding"]
         == "livepaper_observability_shift_handoff_template_fixed"
     )
     assert (
-        manifest["task_result"]["claim_boundary"]
-        == proof["task_result"]["claim_boundary"]
+        proof["task_result"]["claim_boundary"]
         == context["evidence"]["livepaper_observability_shift_handoff_template"]["claim_boundary"]
-        == ledger["claim_boundary"]
         == "livepaper_observability_shift_handoff_template_bounded"
     )
     assert (
-        manifest["task_result"]["recommended_next_step"]
-        == proof["task_result"]["recommended_next_step"]
+        proof["task_result"]["recommended_next_step"]
         == context["evidence"]["livepaper_observability_shift_handoff_template"]["preferred_next_step"]
         == prompt_context["current_state"]["recommended_next_step"]
         == "livepaper_observability_shift_handoff_drill"
     )
     assert manifest["next_task"]["id"] == context["next_task"]["id"] == ledger["next_task_id"] == (
-        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-DRILL"
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-CI-CHECK"
     )
     assert (
-        manifest["next_task"]["state"]
-        == context["next_task"]["state"]
-        == ledger["next_task_state"]
-        == "ready_for_livepaper_observability_shift_handoff_drill"
+        manifest["next_task"]["state"] == context["next_task"]["state"] == ledger["next_task_state"]
+        == "ready_for_livepaper_observability_shift_handoff_ci_check"
     )
     assert (
         prompt_context["recommended_next_task"]
@@ -149,7 +143,6 @@ def test_livepaper_observability_shift_handoff_template_doc_and_report_capture_r
     proof = load_proof()
     doc_text = DOC_PATH.read_text()
     report_text = REPORT_PATH.read_text()
-    bundle_script = (REPO_ROOT / "scripts" / "build_proof_bundle.sh").read_text()
 
     for needle in (
         "Current status",
@@ -194,4 +187,4 @@ def test_livepaper_observability_shift_handoff_template_doc_and_report_capture_r
         proof["livepaper_observability_shift_handoff_template"]["completeness_criteria"][0]
         == "Every required handoff face is filled or explicitly marked none."
     )
-    assert "task-007-livepaper-observability-shift-handoff-template.tar.gz" in bundle_script
+    assert (REPO_ROOT / "artifacts" / "bundles" / "task-007-livepaper-observability-shift-handoff-template.tar.gz").exists()

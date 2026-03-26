@@ -1,0 +1,18 @@
+{
+  "recommended_next_task": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-CI-CHECK",
+  "visible_main_state": {
+    "latest_vexter_pr": 63,
+    "latest_vexter_main_commit": "9c00b7917f80bfbc4c7a0334625dddc09d903aca",
+    "latest_checklist_lane_pr": 61,
+    "latest_checklist_lane_commit": "991efd2566dc0a51121c5c36e806fd0a215bcea6",
+    "dexter_main": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "mewx_frozen": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "current_state": {
+    "current_task": "livepaper_observability_shift_handoff_drill_passed",
+    "recommended_next_step": "livepaper_observability_shift_handoff_ci_check",
+    "default_execution_anchor": "Dexter",
+    "mewx_role": "containment-first selective option"
+  }
+}
+

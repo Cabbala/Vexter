@@ -1,0 +1,182 @@
+{
+  "task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-DRILL",
+  "generated_at_utc": "2026-03-27T00:00:00Z",
+  "verified_github": {
+    "latest_vexter_pr": 63,
+    "latest_vexter_main_commit": "9c00b7917f80bfbc4c7a0334625dddc09d903aca",
+    "latest_vexter_merged_at_utc": "2026-03-26T18:26:01Z",
+    "latest_recent_vexter_prs": [
+      63,
+      62,
+      61
+    ],
+    "open_non_authoritative_vexter_prs": [
+      50
+    ],
+    "checklist_lane_pr": 61,
+    "checklist_lane_commit": "991efd2566dc0a51121c5c36e806fd0a215bcea6",
+    "checklist_lane_merged_at_utc": "2026-03-26T17:51:10Z",
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "mewx_frozen_commit_date_utc": "2026-03-20T16:05:19Z"
+  },
+  "fixed_input_surface": {
+    "canonical_contract": "specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md",
+    "canonical_runbook": "docs/livepaper_observability_operator_runbook.md",
+    "canonical_checklist": "docs/livepaper_observability_shift_checklist.md",
+    "handoff_template_doc": "docs/livepaper_observability_shift_handoff_template.md",
+    "drill_doc": "docs/livepaper_observability_shift_handoff_drill.md",
+    "shift_handoff_drill_report": "artifacts/reports/task-007-livepaper-observability-shift-handoff-drill-report.md",
+    "shift_handoff_drill_status_report": "artifacts/reports/task-007-livepaper-observability-shift-handoff-drill-status.md",
+    "shift_handoff_drill_proof": "artifacts/proofs/task-007-livepaper-observability-shift-handoff-drill-check.json",
+    "shift_handoff_drill_summary": "artifacts/proofs/task-007-livepaper-observability-shift-handoff-drill-summary.md",
+    "sample_handoff": "artifacts/reports/task-007-livepaper-observability-shift-handoff-drill/HANDOFF.md",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "comparison_source_of_truth": "comparison_closed_out",
+    "global_halt_mode": "manual_latched_stop_all",
+    "status_delivery": "poll_first"
+  },
+  "implementation": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "dexter_strategy_changed": false,
+    "mewx_strategy_changed": false,
+    "minimal_reaggregation_only": true,
+    "new_evidence_collection_required": false
+  },
+  "livepaper_observability_shift_handoff_drill": {
+    "source_faithful_modes": {
+      "dexter": "paper_live",
+      "mewx": "sim_live"
+    },
+    "artifact_entry_order": [
+      "artifacts/reports/task-007-livepaper-observability-shift-handoff-drill-status.md",
+      "artifacts/reports/task-007-livepaper-observability-shift-handoff-drill-report.md",
+      "artifacts/proofs/task-007-livepaper-observability-shift-handoff-drill-summary.md",
+      "docs/livepaper_observability_shift_handoff_drill.md",
+      "artifacts/proofs/task-007-livepaper-observability-shift-handoff-drill-check.json",
+      "artifacts/reports/task-007-livepaper-observability-shift-handoff-drill/HANDOFF.md"
+    ],
+    "first_deep_proof": "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-ci-gate-check.json",
+    "required_handoff_faces": [
+      "current_status",
+      "proof_and_report_pointers",
+      "observability_classification",
+      "manual_stop_all_and_quarantine_state",
+      "terminal_snapshot_state",
+      "normalized_failure_detail_state",
+      "open_questions",
+      "next_shift_priority_checks",
+      "bounded_completeness_criteria"
+    ],
+    "sample_handoff": {
+      "task_state": "livepaper_observability_shift_handoff_drill_passed",
+      "shift_outcome": "contained",
+      "current_action": "continue",
+      "active_broken_surface_or_none": "none",
+      "omission_present": false,
+      "drift_present": false,
+      "partial_visibility_present": false,
+      "manual_stop_all_visible": true,
+      "quarantine_active": true,
+      "terminal_snapshot_present": true,
+      "normalized_failure_detail_present": true,
+      "containment_anchor_plan_id": "req-transport-livepaper-observability-watchdog-runtime-overlay:batch:1:mewx_containment",
+      "failure_anchor_plan_id": "req-transport-livepaper-observability-regression-pack-timeout:batch:1:mewx_containment",
+      "halt_mode": "manual_latched_stop_all",
+      "trigger_plan_id": "req-transport-livepaper-observability-watchdog-runtime-overlay:batch:1:mewx_containment",
+      "stop_reason": "manual_latched_stop_all",
+      "quarantine_reason": "timeout_guard",
+      "terminal_signal": "snapshot",
+      "normalized_failure_code": "status_timeout",
+      "normalized_failure_stage": "status",
+      "normalized_failure_source_reason": "status timeout",
+      "rollback_snapshot_present": true,
+      "open_questions": [
+        "none"
+      ],
+      "next_shift_priority_checks": [
+        "confirm the current report, proof summary, and proof JSON before changing any task state",
+        "if any face is blank, record `none` explicitly and stop the handoff",
+        "start the next bounded check at the watchdog CI gate if a visibility break appears"
+      ],
+      "every_required_face_filled_or_none": true
+    },
+    "none_explicit_rules": [
+      "If no broken surface is active, record active_broken_surface_or_none as none.",
+      "If omission, drift, or partial_visibility is absent, record present=false and summary=none.",
+      "If manual stop-all, quarantine, terminal snapshot, or normalized failure detail is absent, record that state explicitly as absent with pointer_or_none set to none.",
+      "If no open questions remain, record none rather than leaving the section blank."
+    ],
+    "completeness_criteria": [
+      "Every required handoff face is filled or explicitly marked none.",
+      "Current status agrees with the current sample handoff and proof trail.",
+      "Proof and report pointers are present and openable.",
+      "Omission, drift, and partial_visibility are each recorded explicitly.",
+      "Manual stop-all, quarantine, terminal snapshot, and normalized failure detail are each recorded explicitly, even when absent.",
+      "Open questions and next-shift priority checks are explicit rather than implied."
+    ],
+    "proof_outputs": [
+      "docs/livepaper_observability_shift_handoff_drill.md",
+      "artifacts/reports/task-007-livepaper-observability-shift-handoff-drill-report.md",
+      "artifacts/reports/task-007-livepaper-observability-shift-handoff-drill-status.md",
+      "artifacts/reports/task-007-livepaper-observability-shift-handoff-drill/DETAILS.md",
+      "artifacts/reports/task-007-livepaper-observability-shift-handoff-drill/MIN_PROMPT.txt",
+      "artifacts/reports/task-007-livepaper-observability-shift-handoff-drill/CONTEXT.json",
+      "artifacts/reports/task-007-livepaper-observability-shift-handoff-drill/HANDOFF.md",
+      "artifacts/proofs/task-007-livepaper-observability-shift-handoff-drill-check.json",
+      "artifacts/proofs/task-007-livepaper-observability-shift-handoff-drill-summary.md",
+      "artifacts/bundles/task-007-livepaper-observability-shift-handoff-drill.tar.gz"
+    ]
+  },
+  "validation": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "new_evidence_collection_required": false,
+    "contract_test_files": [
+      "tests/test_planner_router_transport_livepaper_observability_shift_handoff_drill.py",
+      "tests/test_bootstrap_layout.py"
+    ],
+    "pytest_command": "pytest -q",
+    "pytest_result": "161 passed"
+  },
+  "next_task_evaluation": {
+    "livepaper_observability_shift_handoff_ci_check": {
+      "recommended": true,
+      "reasons": [
+        "The drill proved the handoff can be read without inference when every face is explicit or none.",
+        "The next smallest cut is a CI-backed check for bounded handoff completeness.",
+        "It follows directly from the sample handoff shape without reopening comparison scope."
+      ]
+    },
+    "transport_livepaper_observability_acceptance_pack": {
+      "recommended": false,
+      "reasons": [
+        "An acceptance pack would restate the same bounded observability surface before the handoff drill is converted into a check.",
+        "The drill already supplies a complete outgoing/incoming record to build on."
+      ]
+    },
+    "executor_boundary_code_spec": {
+      "recommended": false,
+      "reasons": [
+        "The remaining gap is operator-transfer validation, not code-boundary ambiguity.",
+        "The drill kept the source-faithful seam and frozen pins intact."
+      ]
+    }
+  },
+  "task_result": {
+    "selected_outcome": "A",
+    "key_finding": "livepaper_observability_shift_handoff_drill_validated",
+    "claim_boundary": "livepaper_observability_shift_handoff_drill_bounded",
+    "comparison_source_of_truth_state": "comparison_closed_out",
+    "task_state": "livepaper_observability_shift_handoff_drill_passed",
+    "recommended_next_step": "livepaper_observability_shift_handoff_ci_check",
+    "recommended_next_task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-CI-CHECK",
+    "decision": "livepaper_observability_shift_handoff_ci_check_ready",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "default_execution_anchor": "dexter",
+    "selective_option_source": "mewx"
+  }
+}

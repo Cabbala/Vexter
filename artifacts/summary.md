@@ -19,7 +19,7 @@
 - `plan_request()` now has runtime-side smoke evidence that a stored immutable batch can progress along `planned -> starting -> running -> quarantined -> stopping -> stopped` through source-faithful abstract executor seams.
 - `plan_and_dispatch()` now has runtime-side smoke evidence that an invalid runtime transition triggers typed `invalid_status_transition` failure snapshots and reverse-order stop-all rollback completion.
 - Store writes stay bounded to the pre-runtime batch emission step, while runtime progression and stop signals stay expressed through `StatusSnapshot` detail and adapter stop reasons.
-- Validation result: `pytest -q` -> `51 passed`
+- Validation result: `pytest -q` -> `52 passed`
 
 ## Decision
 

@@ -72,7 +72,7 @@
       "tests/test_planner_router_integration_smoke.py"
     ],
     "pytest_command": "pytest -q",
-    "pytest_result": "51 passed"
+    "pytest_result": "52 passed"
   },
   "planner_router_runtime_smoke": {
     "plan_request_runtime_path": {

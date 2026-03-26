@@ -17,7 +17,7 @@ fixed runtime-smoke conclusion:
 - `plan_and_dispatch()` 側では invalid runtime transition が typed `invalid_status_transition` failure と reverse-order stop-all rollback completion に落ちることを確認した
 - quarantine / stop signaling は `StatusSnapshot.detail` と adapter `stop(reason=...)` の typed seam で表現され、planner 層に transport ownership を持ち込んでいない
 - source-faithful executor seam は `PlanStore` / `ExecutorAdapter` / `ExecutorRegistry` / `StatusSink` のまま維持し、numeric monitor threshold と transport ownership は deferred のままにした
-- validation は `pytest -q` で `51 passed`
+- validation は `pytest -q` で `52 passed`
 
 次は `monitor_killswitch_spec` を優先してください。理由は、runtime wiring と rollback completion は bounded に証明できたため、次の最短リスクは quarantine が sleeve-local のままか、global halt へ escalte するかという monitor/killswitch policy にあるためです。`executor_boundary_spec` は runtime smoke 後には重複度が高く、`planner_router_livepaper_smoke` は killswitch policy を固めてからの方が安全です。再実行してはいけないもの:
 

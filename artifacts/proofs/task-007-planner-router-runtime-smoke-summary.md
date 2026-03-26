@@ -5,4 +5,4 @@
 - Verified a stored immutable batch can progress through `planned -> starting -> running -> quarantined -> stopping -> stopped`.
 - Verified invalid runtime status reports fail closed with typed `invalid_status_transition` snapshots and reverse-order stop-all rollback.
 - Kept quarantine and stop semantics expressed through source-faithful abstract seams while monitor numerics and transport stay deferred.
-- Validation result: `pytest -q` -> `51 passed`
+- Validation result: `pytest -q` -> `52 passed`

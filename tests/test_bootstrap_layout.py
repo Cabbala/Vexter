@@ -281,6 +281,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-CONCRETE-PLANNER-ROUTER-CODE-SPEC",
         "TASK-007-PLANNER-ROUTER-CODE-IMPLEMENTATION",
         "TASK-007-PLANNER-ROUTER-INTEGRATION-SMOKE",
+        "TASK-007-PLANNER-ROUTER-RUNTIME-SMOKE",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -315,6 +316,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "planner_router_code_spec_ready",
         "planner_router_code_implemented",
         "planner_router_integration_smoke_passed",
+        "planner_router_runtime_smoke_passed",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -352,6 +354,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-007-concrete-planner-router-code-spec",
         "codex/task-007-planner-router-code-implementation",
         "codex/task-007-planner-router-integration-smoke",
+        "codex/task-007-planner-router-runtime-smoke",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -372,6 +375,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-PLANNER-ROUTER-CODE-IMPLEMENTATION",
         "TASK-007-PLANNER-ROUTER-INTEGRATION-SMOKE",
         "TASK-007-PLANNER-ROUTER-RUNTIME-SMOKE",
+        "TASK-007-MONITOR-KILLSWITCH-SPEC",
     }
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -404,6 +408,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "ready_for_planner_router_code_implementation",
         "ready_for_planner_router_integration_smoke",
         "ready_for_planner_router_runtime_smoke",
+        "ready_for_monitor_killswitch_spec",
     }
 
 
@@ -444,6 +449,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "planner_router_code_spec_ready",
         "planner_router_code_implemented",
         "planner_router_integration_smoke_passed",
+        "planner_router_runtime_smoke_passed",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -466,6 +472,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "TASK-007-PLANNER-ROUTER-CODE-IMPLEMENTATION",
         "TASK-007-PLANNER-ROUTER-INTEGRATION-SMOKE",
         "TASK-007-PLANNER-ROUTER-RUNTIME-SMOKE",
+        "TASK-007-MONITOR-KILLSWITCH-SPEC",
     }
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -497,6 +504,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "ready_for_planner_router_code_implementation",
         "ready_for_planner_router_integration_smoke",
         "ready_for_planner_router_runtime_smoke",
+        "ready_for_monitor_killswitch_spec",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]

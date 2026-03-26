@@ -14,7 +14,7 @@
 - `plan_request()` runtime smoke proves a stored immutable batch can progress through `planned -> starting -> running -> quarantined -> stopping -> stopped`
 - `plan_and_dispatch()` runtime smoke proves invalid runtime status reports fail closed and complete reverse-order stop-all rollback
 - Quarantine and stop remain typed seam outputs, while monitor numerics and transport stay deferred
-- Validation: `pytest -q` -> `51 passed`
+- Validation: `pytest -q` -> `52 passed`
 
 ## Decision
 

@@ -67,6 +67,7 @@ def test_livepaper_observability_operator_runbook_proof_tracks_latest_git_state(
 
 
 def test_livepaper_observability_operator_runbook_artifacts_remain_wired_after_checklist_lane() -> None:
+    proof = load_proof()
     manifest = json.loads((REPO_ROOT / "artifacts" / "proof_bundle_manifest.json").read_text())
     context = json.loads((REPO_ROOT / "artifacts" / "context_pack.json").read_text())
     prompt_context = json.loads(PROMPT_CONTEXT_PATH.read_text())
@@ -79,12 +80,49 @@ def test_livepaper_observability_operator_runbook_artifacts_remain_wired_after_c
     assert context["current_contract"]["livepaper_observability_operator_runbook_marker"] == (
         "livepaper_observability_operator_runbook"
     )
+    assert context["evidence"]["livepaper_observability_operator_runbook"]["report"] == str(
+        REPORT_PATH.relative_to(REPO_ROOT)
+    )
+    assert context["evidence"]["livepaper_observability_operator_runbook"]["status_report"] == str(
+        STATUS_PATH.relative_to(REPO_ROOT)
+    )
+    assert context["evidence"]["livepaper_observability_operator_runbook"]["proof"] == str(
+        PROOF_PATH.relative_to(REPO_ROOT)
+    )
+    assert context["evidence"]["livepaper_observability_operator_runbook"]["summary"] == str(
+        SUMMARY_PATH.relative_to(REPO_ROOT)
+    )
     assert context["evidence"]["livepaper_observability_operator_runbook"]["key_finding"] == (
         "livepaper_observability_operator_runbook_fixed"
     )
     assert (
+        context["evidence"]["livepaper_observability_operator_runbook"]["claim_boundary"]
+        == proof["task_result"]["claim_boundary"]
+        == "livepaper_observability_operator_runbook_bounded"
+    )
+    assert (
+        context["evidence"]["livepaper_observability_operator_runbook"]["task_state"]
+        == proof["task_result"]["task_state"]
+        == "livepaper_observability_operator_runbook_ready"
+    )
+    assert (
         context["evidence"]["livepaper_observability_operator_runbook"]["preferred_next_step"]
         == "livepaper_observability_shift_checklist"
+    )
+    assert prompt_context["visible_main_state"]["latest_vexter_pr"] == proof["verified_github"][
+        "latest_vexter_pr"
+    ]
+    assert (
+        prompt_context["visible_main_state"]["latest_vexter_main_commit"]
+        == proof["verified_github"]["latest_vexter_main_commit"]
+    )
+    assert (
+        prompt_context["visible_main_state"]["dexter_main"]
+        == proof["verified_github"]["dexter_main_commit"]
+    )
+    assert (
+        prompt_context["visible_main_state"]["mewx_frozen"]
+        == proof["verified_github"]["mewx_frozen_commit"]
     )
     assert (
         prompt_context["recommended_next_task"]

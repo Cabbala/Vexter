@@ -36,6 +36,6 @@
 - Integration smoke report: `artifacts/reports/task-007-planner-router-integration-smoke-report.md`
 - Integration smoke status: `artifacts/reports/task-007-planner-router-integration-smoke-status.md`
 - Integration smoke proof: `artifacts/proofs/task-007-planner-router-integration-smoke-check.json`
-- Integration smoke summary: `artifacts/proofs/task-007-planner-router-integration-smoke-summary.md`
 - Integration smoke prompt pack: `artifacts/reports/task-007-planner-router-integration-smoke`
 - Integration smoke bundle: `artifacts/bundles/task-007-planner-router-integration-smoke.tar.gz`
+

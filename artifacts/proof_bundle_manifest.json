@@ -1,8 +1,8 @@
 {
-  "bundle_path": "artifacts/bundles/task-007-planner-router-code-implementation.tar.gz",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_planner_router_code_implementation_bundle.tar.gz",
-  "task_id": "TASK-007-PLANNER-ROUTER-CODE-IMPLEMENTATION",
-  "status": "planner_router_code_implemented",
+  "bundle_path": "artifacts/bundles/task-007-planner-router-integration-smoke.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_task007_planner_router_integration_smoke_bundle.tar.gz",
+  "task_id": "TASK-007-PLANNER-ROUTER-INTEGRATION-SMOKE",
+  "status": "planner_router_integration_smoke_passed",
   "summary": "artifacts/summary.md",
   "context_pack": "artifacts/context_pack.json",
   "task_ledger": "artifacts/task_ledger.jsonl",
@@ -57,6 +57,8 @@
     "scripts/collect_matched_live_pair.py"
   ],
   "proof_files": [
+    "artifacts/proofs/task-007-planner-router-integration-smoke-check.json",
+    "artifacts/proofs/task-007-planner-router-integration-smoke-summary.md",
     "artifacts/proofs/task-007-planner-router-code-implementation-check.json",
     "artifacts/proofs/task-007-planner-router-code-implementation-summary.md",
     "artifacts/proofs/task-007-concrete-planner-router-code-spec-check.json",
@@ -67,6 +69,9 @@
     "artifacts/proofs/task-007-planner-router-interface-spec-summary.md"
   ],
   "reports": [
+    "artifacts/reports/task-007-planner-router-integration-smoke-report.md",
+    "artifacts/reports/task-007-planner-router-integration-smoke-status.md",
+    "artifacts/reports/task-007-planner-router-integration-smoke",
     "artifacts/reports/task-007-planner-router-code-implementation-report.md",
     "artifacts/reports/task-007-planner-router-code-implementation-status.md",
     "artifacts/reports/task-007-planner-router-code-implementation",
@@ -78,13 +83,13 @@
     "artifacts/reports/task-007-concrete-planner-router-implementation-spec"
   ],
   "next_task": {
-    "id": "TASK-007-PLANNER-ROUTER-INTEGRATION-SMOKE",
-    "state": "ready_for_planner_router_integration_smoke",
+    "id": "TASK-007-PLANNER-ROUTER-RUNTIME-SMOKE",
+    "state": "ready_for_planner_router_runtime_smoke",
     "resume_requirements": [
       "Treat task005-pass-grade-pair-20260325T180027Z as the frozen promoted baseline.",
-      "Carry forward planner_router_code_implemented together with implementation_bounded as the current implementation conclusion.",
-      "Exercise plan_request and plan_and_dispatch end to end with committed config and stubbed adapters.",
-      "Keep monitor numerics and executor transport deferred behind the current seams.",
+      "Carry forward planner_router_integration_smoke_passed together with integration_smoke_bounded as the current evidence conclusion.",
+      "Preserve the current source pins for Dexter and Mew-X.",
+      "Extend from public-entrypoint integration smoke into a bounded runtime smoke over the source-faithful executor seams.",
       "Do not reopen comparison or change frozen Dexter or Mew-X source logic."
     ]
   },
@@ -94,35 +99,34 @@
     "mewx_strategy_changed": false,
     "validator_rules_changed": false,
     "comparison_source_of_truth_frozen": true,
-    "planner_router_code_spec_reused": true,
     "planner_router_code_implemented": true,
-    "implementation_bounded": true,
-    "config_package_committed": true,
-    "unit_tests_added": true,
-    "dispatch_state_machine_implemented": true,
-    "rollback_semantics_implemented": true,
+    "planner_router_integration_smoke_passed": true,
+    "plan_request_smoked": true,
+    "plan_and_dispatch_smoked": true,
+    "fail_closed_semantics_verified": true,
+    "dispatch_rollback_verified": true,
     "source_adapter_seams_preserved": true,
     "monitor_thresholds_deferred": true,
     "executor_transport_deferred": true,
-    "recommended_next_step_is_planner_router_integration_smoke": true
+    "recommended_next_step_is_planner_router_runtime_smoke": true
   },
   "task_result": {
     "selected_outcome": "A",
-    "key_finding": "planner_router_code_implemented",
-    "claim_boundary": "implementation_bounded",
+    "key_finding": "planner_router_integration_smoke_passed",
+    "claim_boundary": "integration_smoke_bounded",
     "comparison_source_of_truth_state": "comparison_closed_out",
-    "task_state": "planner_router_code_implemented",
-    "recommended_next_step": "planner_router_integration_smoke",
-    "recommended_next_task_id": "TASK-007-PLANNER-ROUTER-INTEGRATION-SMOKE",
-    "decision": "integration_smoke_ready",
+    "task_state": "planner_router_integration_smoke_passed",
+    "recommended_next_step": "planner_router_runtime_smoke",
+    "recommended_next_task_id": "TASK-007-PLANNER-ROUTER-RUNTIME-SMOKE",
+    "decision": "runtime_smoke_ready",
     "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
     "default_execution_anchor": "dexter",
     "selective_option_source": "mewx",
-    "verified_latest_vexter_pr": 37,
-    "verified_latest_vexter_main_commit": "786221a664637925f790e89af0448fa04832426e",
+    "verified_latest_vexter_pr": 38,
+    "verified_latest_vexter_main_commit": "b1ceac48af931db0571a25ea197b1e4e5df52543",
     "verified_dexter_pr": 3,
     "verified_dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "verified_mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
-    "recommended_next_lane": "planner_router_integration_smoke"
+    "recommended_next_lane": "planner_router_runtime_smoke"
   }
 }

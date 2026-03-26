@@ -22,6 +22,43 @@ LIVEPAPER_SHIFT_HANDOFF_WATCHDOG_SURFACES = (
 )
 MONITORED_SURFACES = LIVEPAPER_SHIFT_HANDOFF_WATCHDOG_SURFACES
 HANDOFF_PATH = Path("artifacts/reports/task-007-livepaper-observability-shift-handoff-drill/HANDOFF.md")
+HANDOFF_RUNTIME_PATH = Path(
+    "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-runtime/HANDOFF.md"
+)
+DEFAULT_FIRST_DEEP_PROOF_PATH = (
+    "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-ci-gate-check.json"
+)
+DEFAULT_CURRENT_TASK_STATE = "livepaper_observability_shift_handoff_drill_passed"
+DEFAULT_RECOMMENDED_NEXT_STEP = "livepaper_observability_shift_handoff_ci_check"
+DEFAULT_CURRENT_POINTER_PATHS = {
+    "current_status_report": "artifacts/reports/task-007-livepaper-observability-shift-handoff-drill-status.md",
+    "current_report": "artifacts/reports/task-007-livepaper-observability-shift-handoff-drill-report.md",
+    "current_proof_summary": "artifacts/proofs/task-007-livepaper-observability-shift-handoff-drill-summary.md",
+    "current_proof_json": "artifacts/proofs/task-007-livepaper-observability-shift-handoff-drill-check.json",
+}
+DEFAULT_TERMINAL_SNAPSHOT_POINTER = (
+    "tests/test_planner_router_transport_livepaper_observability_regression_pack.py"
+)
+DEFAULT_FAILURE_DETAIL_POINTER = (
+    "tests/test_planner_router_transport_livepaper_observability_regression_pack.py"
+)
+RUNTIME_FIRST_DEEP_PROOF_PATH = (
+    "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-runtime-check.json"
+)
+RUNTIME_CURRENT_TASK_STATE = "livepaper_observability_shift_handoff_watchdog_runtime_passed"
+RUNTIME_RECOMMENDED_NEXT_STEP = "livepaper_observability_shift_handoff_watchdog_regression_pack"
+RUNTIME_CURRENT_POINTER_PATHS = {
+    "current_status_report": "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-runtime-status.md",
+    "current_report": "artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-runtime-report.md",
+    "current_proof_summary": "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-runtime-summary.md",
+    "current_proof_json": "artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-runtime-check.json",
+}
+RUNTIME_TERMINAL_SNAPSHOT_POINTER = (
+    "tests/test_planner_router_transport_livepaper_observability_watchdog_runtime.py"
+)
+RUNTIME_FAILURE_DETAIL_POINTER = (
+    "tests/test_planner_router_transport_livepaper_observability_watchdog_runtime.py"
+)
 
 _IMPLICIT_VALUE_MARKERS = (
     "same as before",
@@ -73,6 +110,12 @@ def evaluate_livepaper_observability_shift_handoff_watchdog(
     markdown: str,
     *,
     repo_root: str | Path | None = None,
+    expected_first_deep_proof_path: str = DEFAULT_FIRST_DEEP_PROOF_PATH,
+    expected_task_state: str = DEFAULT_CURRENT_TASK_STATE,
+    expected_recommended_next_step: str = DEFAULT_RECOMMENDED_NEXT_STEP,
+    expected_current_pointer_paths: Mapping[str, str] = DEFAULT_CURRENT_POINTER_PATHS,
+    expected_terminal_snapshot_pointer: str = DEFAULT_TERMINAL_SNAPSHOT_POINTER,
+    expected_failure_detail_pointer: str = DEFAULT_FAILURE_DETAIL_POINTER,
 ) -> LivepaperShiftHandoffWatchdogReport:
     """Evaluate one handoff markdown body against the bounded shift handoff surface."""
 
@@ -80,13 +123,34 @@ def evaluate_livepaper_observability_shift_handoff_watchdog(
     sections = _parse_handoff_sections(markdown)
     findings: list[LivepaperShiftHandoffWatchdogFinding] = []
 
-    _check_current_status(sections, findings)
-    _check_proof_and_report_pointers(sections, findings, repo_root=repo_path)
+    _check_current_status(
+        sections,
+        findings,
+        expected_task_state=expected_task_state,
+        expected_recommended_next_step=expected_recommended_next_step,
+    )
+    _check_proof_and_report_pointers(
+        sections,
+        findings,
+        repo_root=repo_path,
+        expected_first_deep_proof_path=expected_first_deep_proof_path,
+        expected_current_pointer_paths=expected_current_pointer_paths,
+    )
     _check_observability_classification(sections, findings)
     _check_manual_stop_all(sections, findings)
     _check_quarantine(sections, findings)
-    _check_terminal_snapshot(sections, findings, repo_root=repo_path)
-    _check_normalized_failure_detail(sections, findings, repo_root=repo_path)
+    _check_terminal_snapshot(
+        sections,
+        findings,
+        repo_root=repo_path,
+        expected_terminal_snapshot_pointer=expected_terminal_snapshot_pointer,
+    )
+    _check_normalized_failure_detail(
+        sections,
+        findings,
+        repo_root=repo_path,
+        expected_failure_detail_pointer=expected_failure_detail_pointer,
+    )
     _check_open_questions(sections, findings)
     _check_next_shift_priority_checks(sections, findings)
 
@@ -242,6 +306,9 @@ def _check_no_implicit(
 def _check_current_status(
     sections: Mapping[str, Mapping[str, list[str]]],
     findings: list[LivepaperShiftHandoffWatchdogFinding],
+    *,
+    expected_task_state: str,
+    expected_recommended_next_step: str,
 ) -> None:
     surface = "current_status"
     values = _read_face_fields(
@@ -357,6 +424,24 @@ def _check_current_status(
             "Mew-X frozen pin drifted away from the fixed commit",
             field_name="mewx_frozen_commit",
         )
+    if values.get("task_state") != expected_task_state:
+        _issue(
+            findings,
+            surface,
+            "drift",
+            "task state drifted away from the current handoff lane",
+            field_name="task_state",
+            detail={"expected": expected_task_state},
+        )
+    if values.get("recommended_next_step") != expected_recommended_next_step:
+        _issue(
+            findings,
+            surface,
+            "drift",
+            "recommended next step drifted away from the current handoff lane",
+            field_name="recommended_next_step",
+            detail={"expected": expected_recommended_next_step},
+        )
 
 
 def _check_proof_and_report_pointers(
@@ -364,6 +449,8 @@ def _check_proof_and_report_pointers(
     findings: list[LivepaperShiftHandoffWatchdogFinding],
     *,
     repo_root: Path | None,
+    expected_first_deep_proof_path: str,
+    expected_current_pointer_paths: Mapping[str, str],
 ) -> None:
     surface = "proof_and_report_pointers"
     pointer_fields = (
@@ -423,6 +510,17 @@ def _check_proof_and_report_pointers(
             "pointer set shrank into ambiguous duplicate paths",
             detail={"observed_paths": observed_paths},
         )
+    for field_name, expected_path in expected_current_pointer_paths.items():
+        value = values.get(field_name)
+        if value is not None and value != expected_path:
+            _issue(
+                findings,
+                surface,
+                "drift",
+                "pointer field drifted away from the current handoff lane artifact",
+                field_name=field_name,
+                detail={"expected": expected_path},
+            )
 
     trail = values.get("shortest_proof_trail")
     if trail is not None and ("->" not in trail or _is_none(trail) or _is_implicit(trail)):
@@ -433,15 +531,14 @@ def _check_proof_and_report_pointers(
             "shortest proof trail is no longer explicit",
             field_name="shortest_proof_trail",
         )
-    if values.get("first_deep_proof_to_open_next") != (
-        "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-ci-gate-check.json"
-    ):
+    if values.get("first_deep_proof_to_open_next") != expected_first_deep_proof_path:
         _issue(
             findings,
             surface,
             "drift",
-            "first deep proof drifted away from the fixed watchdog CI-gate entry point",
+            "first deep proof drifted away from the current handoff lane entry point",
             field_name="first_deep_proof_to_open_next",
+            detail={"expected": expected_first_deep_proof_path},
         )
 
 
@@ -644,6 +741,7 @@ def _check_terminal_snapshot(
     findings: list[LivepaperShiftHandoffWatchdogFinding],
     *,
     repo_root: Path | None,
+    expected_terminal_snapshot_pointer: str,
 ) -> None:
     surface = "terminal_snapshot"
     values = _read_face_fields(
@@ -696,6 +794,15 @@ def _check_terminal_snapshot(
             "terminal snapshot pointer drifted away from explicit none while the face is false",
             field_name="terminal_snapshot_pointer_or_none",
         )
+    if pointer is not None and present == "true" and pointer != expected_terminal_snapshot_pointer:
+        _issue(
+            findings,
+            surface,
+            "drift",
+            "terminal snapshot pointer drifted away from the current runtime anchor",
+            field_name="terminal_snapshot_pointer_or_none",
+            detail={"expected": expected_terminal_snapshot_pointer},
+        )
 
 
 def _check_normalized_failure_detail(
@@ -703,6 +810,7 @@ def _check_normalized_failure_detail(
     findings: list[LivepaperShiftHandoffWatchdogFinding],
     *,
     repo_root: Path | None,
+    expected_failure_detail_pointer: str,
 ) -> None:
     surface = "normalized_failure_detail"
     values = _read_face_fields(
@@ -778,6 +886,15 @@ def _check_normalized_failure_detail(
                 "rollback snapshot state drifted away from explicit none while the face is false",
                 field_name="rollback_snapshot_required_and_present_or_none",
             )
+    if pointer is not None and present == "true" and pointer != expected_failure_detail_pointer:
+        _issue(
+            findings,
+            surface,
+            "drift",
+            "failure-detail pointer drifted away from the current runtime anchor",
+            field_name="failure_detail_pointer_or_none",
+            detail={"expected": expected_failure_detail_pointer},
+        )
 
 
 def _check_open_questions(

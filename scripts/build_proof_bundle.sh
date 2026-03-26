@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-BUNDLE_PATH="$ROOT_DIR/artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog.tar.gz"
+BUNDLE_PATH="$ROOT_DIR/artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-runtime.tar.gz"
 export COPYFILE_DISABLE=1
 
 mkdir -p "$ROOT_DIR/artifacts/bundles"

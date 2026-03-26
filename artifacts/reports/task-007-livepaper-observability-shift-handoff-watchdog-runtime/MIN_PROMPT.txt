@@ -1,0 +1,1 @@
+Verify the livepaper observability shift handoff watchdog runtime proof and status, then inspect the named broken handoff surface before changing runtime handoff artifacts.

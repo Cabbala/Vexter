@@ -142,8 +142,27 @@ jobs:
             artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-report.md
             artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-status.md
 
+      - name: Run livepaper observability shift handoff watchdog runtime
+        run: ./scripts/run_livepaper_observability_shift_handoff_watchdog_runtime.sh
+
+      - name: Show livepaper observability shift handoff watchdog runtime summary
+        if: always()
+        run: cat artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-runtime-summary.md
+
+      - name: Upload livepaper observability shift handoff watchdog runtime proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: livepaper-observability-shift-handoff-watchdog-runtime-proof
+          path: |
+            artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-runtime-check.json
+            artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-runtime-summary.md
+            artifacts/proofs/task-007-livepaper-observability-shift-handoff-watchdog-runtime-pytest.log
+            artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-runtime-report.md
+            artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-runtime-status.md
+
       - name: Build proof bundle
         run: ./scripts/build_proof_bundle.sh
 
       - name: Run remaining tests
-        run: pytest -q -m "not livepaper_observability_shift_handoff_ci_check and not livepaper_observability_shift_handoff_watchdog and not transport_livepaper_observability_watchdog_ci_gate and not transport_livepaper_observability_ci_gate and not transport_livepaper_observability_watchdog and not transport_livepaper_observability_watchdog_runtime and not transport_livepaper_observability_watchdog_regression_pack"
+        run: pytest -q -m "not livepaper_observability_shift_handoff_ci_check and not livepaper_observability_shift_handoff_watchdog and not livepaper_observability_shift_handoff_watchdog_runtime and not transport_livepaper_observability_watchdog_ci_gate and not transport_livepaper_observability_ci_gate and not transport_livepaper_observability_watchdog and not transport_livepaper_observability_watchdog_runtime and not transport_livepaper_observability_watchdog_regression_pack"

@@ -65,3 +65,8 @@ Profitability is only considered confirmed when all of the following are availab
 - `comparable`: both sources emit the contract and metrics are directly comparable
 - `profitable_candidate`: one source or component shows repeatable edge on the catalog
 - `integration_ready`: winning component also meets observability, replay, and operational safety requirements
+
+## Fixed Live-Paper Observability Contract
+
+The executor transport live-paper seam has one operator-facing observability contract at `specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md`.
+That contract is fixed against the source-faithful Dexter `paper_live` and frozen Mew-X `sim_live` seam and must remain attributable to the pinned source commits, watchdog suites, and CI gate outputs already visible on GitHub.

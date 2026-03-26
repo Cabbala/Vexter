@@ -71,57 +71,37 @@ def test_livepaper_observability_shift_checklist_proof_tracks_latest_git_state()
     )
 
 
-def test_livepaper_observability_shift_checklist_current_artifacts_are_consistent() -> None:
+def test_livepaper_observability_shift_checklist_artifacts_remain_wired_after_handoff_template_lane() -> None:
     proof = load_proof()
     manifest = json.loads((REPO_ROOT / "artifacts" / "proof_bundle_manifest.json").read_text())
     context = json.loads((REPO_ROOT / "artifacts" / "context_pack.json").read_text())
     prompt_context = json.loads(PROMPT_CONTEXT_PATH.read_text())
-    ledger = load_last_ledger_entry()
     summary_text = SUMMARY_PATH.read_text()
     status_text = STATUS_PATH.read_text()
     report_text = REPORT_PATH.read_text()
 
-    assert manifest["task_id"] == proof["task_id"] == context["current_task"]["id"] == ledger["task_id"]
+    assert "artifacts/reports/task-007-livepaper-observability-shift-checklist-report.md" in manifest["reports"]
+    assert "artifacts/proofs/task-007-livepaper-observability-shift-checklist-check.json" in manifest[
+        "proof_files"
+    ]
     assert (
-        manifest["status"]
-        == proof["task_result"]["task_state"]
-        == ledger["status"]
-        == "livepaper_observability_shift_checklist_ready"
-    )
-    assert (
-        manifest["bundle_path"]
-        == ledger["artifact_bundle"]
-        == "artifacts/bundles/task-007-livepaper-observability-shift-checklist.tar.gz"
-    )
-    assert (
-        manifest["task_result"]["key_finding"]
+        context["evidence"]["livepaper_observability_shift_checklist"]["key_finding"]
         == proof["task_result"]["key_finding"]
-        == context["evidence"]["livepaper_observability_shift_checklist"]["key_finding"]
-        == ledger["key_finding"]
         == "livepaper_observability_shift_checklist_fixed"
     )
     assert (
-        manifest["task_result"]["claim_boundary"]
+        context["evidence"]["livepaper_observability_shift_checklist"]["claim_boundary"]
         == proof["task_result"]["claim_boundary"]
-        == context["evidence"]["livepaper_observability_shift_checklist"]["claim_boundary"]
-        == ledger["claim_boundary"]
         == "livepaper_observability_shift_checklist_bounded"
     )
     assert (
-        manifest["task_result"]["recommended_next_step"]
-        == proof["task_result"]["recommended_next_step"]
-        == context["evidence"]["livepaper_observability_shift_checklist"]["preferred_next_step"]
-        == prompt_context["current_state"]["recommended_next_step"]
+        context["evidence"]["livepaper_observability_shift_checklist"]["preferred_next_step"]
         == "livepaper_observability_shift_handoff_template"
     )
-    assert manifest["next_task"]["id"] == context["next_task"]["id"] == ledger["next_task_id"] == (
-        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-TEMPLATE"
-    )
     assert (
-        manifest["next_task"]["state"]
-        == context["next_task"]["state"]
-        == ledger["next_task_state"]
-        == "ready_for_livepaper_observability_shift_handoff_template"
+        context["evidence"]["livepaper_observability_shift_checklist"]["task_state"]
+        == proof["task_result"]["task_state"]
+        == "livepaper_observability_shift_checklist_ready"
     )
     assert (
         prompt_context["recommended_next_task"]
@@ -136,7 +116,6 @@ def test_livepaper_observability_shift_checklist_doc_and_report_capture_timed_fl
     proof = load_proof()
     doc_text = DOC_PATH.read_text()
     report_text = REPORT_PATH.read_text()
-    bundle_script = (REPO_ROOT / "scripts" / "build_proof_bundle.sh").read_text()
 
     for needle in (
         "Pre-Shift Checklist",
@@ -166,4 +145,6 @@ def test_livepaper_observability_shift_checklist_doc_and_report_capture_timed_fl
     assert proof["livepaper_observability_shift_checklist"]["decision_mapping"]["halt"][0] == (
         "containment surfaces fail"
     )
-    assert "task-007-livepaper-observability-shift-checklist.tar.gz" in bundle_script
+    assert "artifacts/bundles/task-007-livepaper-observability-shift-checklist.tar.gz" in proof[
+        "livepaper_observability_shift_checklist"
+    ]["proof_outputs"]

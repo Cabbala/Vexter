@@ -1,0 +1,5 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+次タスクID: TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-TEMPLATE
+
+GitHub最新状態を確認し、Vexter main / Dexter PR #3 merged main / frozen Mew-X を前提に、live-paper observability shift handoff template を作成してください。comparison baseline は固定のまま、source-faithful な Dexter `paper_live` / Mew-X `sim_live` seam、`specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md`、`docs/livepaper_observability_operator_runbook.md`、`docs/livepaper_observability_shift_checklist.md` を前提に、シフト交代時に operator が何を必ず引き継ぐかを bounded template に落とし込んでください。current status、proof/report pointers、omission / drift / partial_visibility の有無、manual stop-all / quarantine 状態、terminal snapshot の有無、normalized failure detail、open questions、次シフトの優先確認事項を必須 handoff 面として定義してください。source logic 変更や新証拠収集は行わず、tests・artifacts・handoff bundle を更新してください。

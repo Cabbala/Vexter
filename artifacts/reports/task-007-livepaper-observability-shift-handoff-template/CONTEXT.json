@@ -1,0 +1,16 @@
+{
+  "recommended_next_task": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-DRILL",
+  "visible_main_state": {
+    "latest_vexter_pr": 62,
+    "latest_vexter_main_commit": "3b595faacf316aca89655b6e1ffcf7568478763e",
+    "latest_checklist_lane_pr": 61,
+    "dexter_main": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "mewx_frozen": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "current_state": {
+    "current_task": "livepaper_observability_shift_handoff_template_ready",
+    "recommended_next_step": "livepaper_observability_shift_handoff_drill",
+    "default_execution_anchor": "Dexter",
+    "mewx_role": "containment-first selective option"
+  }
+}

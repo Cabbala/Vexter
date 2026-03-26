@@ -1,0 +1,15 @@
+{
+  "recommended_next_task": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-CHECKLIST",
+  "visible_main_state": {
+    "latest_vexter_pr": 59,
+    "latest_vexter_main_commit": "4be21e4e52fbe686e585dea6b573efea759e0933",
+    "dexter_main": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "mewx_frozen": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "current_state": {
+    "current_task": "livepaper_observability_operator_runbook_ready",
+    "recommended_next_step": "livepaper_observability_shift_checklist",
+    "default_execution_anchor": "Dexter",
+    "mewx_role": "containment-first selective option"
+  }
+}

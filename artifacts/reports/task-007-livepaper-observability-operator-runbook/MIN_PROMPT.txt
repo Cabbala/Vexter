@@ -1,0 +1,5 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+次タスクID: TASK-007-LIVEPAPER-OBSERVABILITY-OPERATOR-RUNBOOK
+
+GitHub最新状態を確認し、Vexter main / Dexter PR #3 merged main / frozen Mew-X を前提に、live-paper observability operator runbook を作成してください。comparison baseline は固定のまま、source-faithful な Dexter `paper_live` / Mew-X `sim_live` seam と `specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md` を前提に、operator が omission / drift / partial_visibility をどう読むか、どの proof/report/status をどの順で確認するか、どの failure surface をどの優先度で切り分けるか、manual stop-all / quarantine / terminal snapshot / normalized failure detail をどう運用判断に使うかを bounded runbook に落とし込んでください。source logic 変更や新証拠収集は行わず、tests・artifacts・handoff bundle を更新してください。

@@ -97,22 +97,19 @@ def test_livepaper_observability_spec_artifacts_and_context_are_wired() -> None:
     context = json.loads((REPO_ROOT / "artifacts" / "context_pack.json").read_text())
     prompt_context = json.loads(PROMPT_CONTEXT_PATH.read_text())
 
-    assert manifest["task_id"] == "TASK-007-LIVEPAPER-OBSERVABILITY-SPEC"
-    assert manifest["status"] == "livepaper_observability_spec_ready"
-    assert manifest["bundle_path"] == "artifacts/bundles/task-007-livepaper-observability-spec.tar.gz"
     assert "artifacts/reports/task-007-livepaper-observability-spec-report.md" in manifest["reports"]
     assert "artifacts/proofs/task-007-livepaper-observability-spec-check.json" in manifest["proof_files"]
-    assert context["current_task"]["id"] == "TASK-007-LIVEPAPER-OBSERVABILITY-SPEC"
     assert (
         context["current_contract"]["livepaper_observability_spec_marker"]
         == "livepaper_observability_spec"
     )
+    assert "livepaper_observability_spec" in context["evidence"]
+    assert context["evidence"]["livepaper_observability_spec"]["key_finding"] == (
+        "livepaper_observability_contract_fixed"
+    )
     assert (
         context["evidence"]["livepaper_observability_spec"]["preferred_next_step"]
         == "livepaper_observability_operator_runbook"
-    )
-    assert (
-        context["next_task"]["id"] == "TASK-007-LIVEPAPER-OBSERVABILITY-OPERATOR-RUNBOOK"
     )
     assert (
         prompt_context["recommended_next_task"]

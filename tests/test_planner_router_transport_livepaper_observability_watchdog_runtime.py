@@ -431,6 +431,7 @@ def test_transport_livepaper_observability_watchdog_runtime_manifest_and_context
     assert context["current_task"]["id"] in {
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-CI-GATE",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SPEC",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-OPERATOR-RUNBOOK",
     }
 
 

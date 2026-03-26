@@ -1,0 +1,332 @@
+{
+  "task_id": "TASK-007-CONCRETE-PLANNER-ROUTER-IMPLEMENTATION-SPEC",
+  "generated_at_utc": "2026-03-26T01:13:45Z",
+  "verified_github": {
+    "latest_vexter_pr": 35,
+    "latest_vexter_main_commit": "2bec1badde788ef1c75251af2df17609643720fb",
+    "latest_vexter_merged_at_utc": "2026-03-26T01:03:31Z",
+    "supporting_vexter_prs": [
+      34,
+      33,
+      32,
+      31,
+      30,
+      29,
+      28,
+      27,
+      26,
+      25,
+      24,
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17,
+      16
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "mewx_frozen_commit_date_utc": "2026-03-20T16:05:19Z"
+  },
+  "fixed_input_surface": {
+    "planner_router_interface_report": "artifacts/reports/task-007-planner-router-interface-spec-report.md",
+    "planner_router_interface_proof": "artifacts/proofs/task-007-planner-router-interface-spec-check.json",
+    "implementation_planning_report": "artifacts/reports/task-007-implementation-planning-report.md",
+    "implementation_planning_proof": "artifacts/proofs/task-007-implementation-planning-check.json",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "promoted_live_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison",
+    "promoted_replay_comparison_dir": "artifacts/reports/task006-replay-surface-fix-20260325T180027Z-replay-comparison",
+    "confirmatory_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180604Z-comparison",
+    "promoted_live_winner_mode": "derived",
+    "promoted_replay_winner_mode": "derived",
+    "live_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "replay_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "dexter_replay_coverage_ratio": 1.0,
+    "dexter_live_vs_replay_gap_pct": 0.0,
+    "mewx_replay_coverage_ratio": 1.0,
+    "mewx_live_vs_replay_gap_pct": 0.0,
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false
+  },
+  "implementation": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "dexter_strategy_changed": false,
+    "mewx_strategy_changed": false,
+    "minimal_reaggregation_only": true,
+    "new_evidence_collection_required": false
+  },
+  "concrete_planner_router_implementation_spec": {
+    "config_package": {
+      "root_dir": "config/planner_router",
+      "files": [
+        "planner.json",
+        "objective_profiles.json",
+        "sleeves.json",
+        "budget_policies.json",
+        "monitor_profiles.json",
+        "executor_profiles.json"
+      ],
+      "loading_sequence": [
+        "Load planner.json.",
+        "Load objective_profiles.json, sleeves.json, budget_policies.json, monitor_profiles.json, and executor_profiles.json in that order.",
+        "Materialize the frozen Dexter and Mew-X source-pin registry.",
+        "Apply plan_request_id, optional objective_profile_id, and portfolio_budget_id inputs.",
+        "Cross-validate references and emit one immutable resolved_planning_context."
+      ],
+      "invariants": [
+        "Missing files fail closed.",
+        "Duplicate ids fail closed.",
+        "Pinned commits must match the frozen source registry before planning continues.",
+        "Runtime overrides may not mutate preferred source, sleeve enablement semantics, budget policy, monitor profile, or executor pin after load."
+      ]
+    },
+    "objective_profile_resolution_algorithm": {
+      "default_profile": "mixed_default",
+      "supported_route_modes": [
+        "single_sleeve",
+        "portfolio_split"
+      ],
+      "steps": [
+        "If objective_profile_id is absent, substitute mixed_default.",
+        "Reject unknown explicit objective_profile_id values.",
+        "Require exactly one preferred_source.",
+        "Require single_sleeve or portfolio_split as the route_mode.",
+        "Require Dexter as the preferred source for portfolio_split templates.",
+        "Require containment-first explicitness for any Mew-X-preferred profile."
+      ],
+      "invariants": [
+        "Omitted intent defaults to Dexter.",
+        "Explicit unknown intent is rejected rather than silently coerced.",
+        "Portfolio split is separate-sleeve only.",
+        "No multi-source sleeve or in-run fusion is permitted."
+      ]
+    },
+    "sleeve_selection_algorithm": {
+      "steps": [
+        "Derive ordered candidate sleeves from the resolved objective profile.",
+        "For single_sleeve use only primary_sleeve_id.",
+        "For portfolio_split append overlay_sleeve_ids in declaration order.",
+        "Require every selected sleeve to be enabled and source-matched.",
+        "Reject the full request if any explicitly required sleeve is unavailable."
+      ],
+      "supported_results": {
+        "mixed_default": [
+          "dexter_default"
+        ],
+        "containment_first": [
+          "mewx_containment"
+        ],
+        "portfolio_split_template": [
+          "dexter_default",
+          "mewx_containment"
+        ]
+      },
+      "invariants": [
+        "No silent fallback from explicit Mew-X intent to Dexter.",
+        "One emitted plan binds one sleeve and one source.",
+        "Overlay sleeves remain explicit and separate."
+      ]
+    },
+    "budget_binding_algorithm": {
+      "steps": [
+        "Resolve budget_policy_id.",
+        "Resolve portfolio_budget_id, defaulting to main.",
+        "Derive one sleeve-scoped budget binding per selected sleeve.",
+        "Require explicit cap references for any nonzero Mew-X allocation.",
+        "Reject aggregate sleeve shares above 100%."
+      ],
+      "supported_policies": {
+        "single_anchor_default": {
+          "dexter_share": "100%",
+          "mewx_share": "0%"
+        },
+        "selective_overlay": {
+          "dexter_share": "primary",
+          "mewx_share": "explicit minority cap reference"
+        },
+        "dedicated_containment_template": {
+          "dexter_share": "0%",
+          "mewx_share": "100%"
+        }
+      },
+      "invariants": [
+        "All budget declarations are sleeve-scoped.",
+        "Any Mew-X share is explicit and never implicit.",
+        "Numeric caps remain deferred, but cap references are fixed now.",
+        "No adaptive rebalance is implied after start."
+      ]
+    },
+    "immutable_plan_emission_flow": {
+      "batch_unit": "plan_batch",
+      "plan_unit": "execution_plan",
+      "steps": [
+        "Build selected sleeves and budget bindings from the validated planning context.",
+        "Allocate one plan_batch_id.",
+        "Derive one immutable execution_plan per selected sleeve.",
+        "Populate route, sleeve_binding, budget_binding, monitor_binding, executor_binding, source_pin, and invariants.",
+        "Set initial normalized status to planned.",
+        "Persist or publish the full batch atomically."
+      ],
+      "required_fields": [
+        "plan_id",
+        "plan_batch_id",
+        "created_at_utc",
+        "objective_profile_id",
+        "route",
+        "sleeve_binding",
+        "budget_binding",
+        "monitor_binding",
+        "executor_binding",
+        "source_pin",
+        "invariants"
+      ],
+      "invariants": [
+        "One plan binds one sleeve and one source.",
+        "Route, sleeve, budget, monitor, and executor bindings are immutable after planned.",
+        "Source pins are copied into the plan rather than looked up dynamically later.",
+        "Either every plan in the batch is emitted or none are emitted."
+      ]
+    },
+    "executor_dispatch_flow": {
+      "prepare_then_start": true,
+      "rollback_on_prepare_failure": true,
+      "steps": [
+        "Call prepare(plan) for each plan in emitted order.",
+        "If any prepare fails, stop all prepared handles and fail the batch before start.",
+        "If all prepare calls succeed, transition plans to starting.",
+        "Call start(handle) in emitted order.",
+        "Accept only normalized running, quarantined, stopping, stopped, or failed transitions afterward."
+      ],
+      "invariants": [
+        "Prepare is the all-or-nothing boundary for split batches.",
+        "No planner-side threshold or trust-logic rewriting occurs during dispatch.",
+        "No mid-trade cross-source handoff is allowed.",
+        "Sleeve-local failure does not mutate another plan's source binding."
+      ]
+    },
+    "normalized_plan_status_lifecycle": {
+      "internal_planner_phases": [
+        "config_loaded",
+        "validated",
+        "resolved",
+        "bound",
+        "emitted"
+      ],
+      "normalized_statuses": [
+        "planned",
+        "starting",
+        "running",
+        "quarantined",
+        "stopping",
+        "stopped",
+        "failed"
+      ],
+      "terminal_statuses": [
+        "stopped",
+        "failed"
+      ],
+      "rules": [
+        "Planning-time validation failures occur before planned.",
+        "Failed never triggers automatic reroute to the other source.",
+        "Quarantined remains sleeve-scoped unless global halt escalates.",
+        "Mew-X inactivity_timeout is source-native behavior, not an automatic incident by itself."
+      ]
+    },
+    "validation_and_failure_semantics": {
+      "pre_emit_rejections": [
+        "config_missing",
+        "duplicate_config_id",
+        "unknown_objective_profile",
+        "route_mode_invalid",
+        "sleeve_disabled",
+        "executor_source_mismatch",
+        "pin_mismatch",
+        "unknown_budget_policy",
+        "mewx_cap_required",
+        "budget_share_overflow",
+        "global_halt_active"
+      ],
+      "post_emit_failures": [
+        "prepare_failed",
+        "start_failed",
+        "status_timeout",
+        "shutdown_unconfirmed",
+        "invalid_status_transition",
+        "source_stop_failed"
+      ],
+      "invariants": [
+        "No partial plan batch is emitted if any pre-emit validation fails.",
+        "No silent downgrade from explicit Mew-X intent to Dexter default is allowed.",
+        "No partial batch start occurs after a failed prepare.",
+        "Terminal failure is represented as failed rather than mutable route rebinding."
+      ]
+    },
+    "deferred_boundaries": {
+      "monitor_killswitch_spec": [
+        "numeric timeout durations",
+        "heartbeat cadence",
+        "retry counts",
+        "incident escalation thresholds"
+      ],
+      "executor_boundary_spec": [
+        "subprocess versus service transport",
+        "IPC payload framing",
+        "process supervisor model",
+        "runtime auth or secret injection mechanics"
+      ],
+      "concrete_planner_router_code_spec": {
+        "recommended": true,
+        "why": [
+          "Config loading, validation, route resolution, budget binding, plan emission, and dispatch order are now fixed strongly enough to map directly into modules and functions.",
+          "Monitor thresholds can attach to the fixed plan registry and normalized lifecycle without blocking code-structure design.",
+          "Executor transport remains bounded behind the already fixed prepare/start/status/stop/snapshot surface."
+        ]
+      }
+    }
+  },
+  "residual_and_caveats": {
+    "confirmatory_label": "task005-pass-grade-pair-20260325T180604Z",
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false,
+    "replay_scope": "Current zero-gap evidence is scoped to close-summary and position_closed realized-return fidelity rather than full execution-path equivalence.",
+    "dexter_metric_scope_gap": {
+      "metric": "realized_vs_peak_gap_pct",
+      "live_value": 20.533046470504612,
+      "replay_value": 25.804157291090654,
+      "why_it_matters": "A stronger claim about path-sensitive retention still requires a separate lane."
+    },
+    "candidate_surface_gap": "Mew-X candidate_precision_proxy remains unavailable because the frozen export surface does not expose a comparable creator_candidate path.",
+    "concrete_spec_boundary": "Planner-side config loading, validation, plan emission, and dispatch order are now fixed, while numeric monitor thresholds, retry values, heartbeat values, and executor transport remain later defaults."
+  },
+  "decision": {
+    "selected_outcome": "A",
+    "key_finding": "concrete_planner_router_spec_ready",
+    "claim_boundary": "concrete_spec_bounded",
+    "task_state": "concrete_planner_router_spec_ready",
+    "decision": "next_spec_ready",
+    "recommended_next_step": "concrete_planner_router_code_spec",
+    "recommended_next_task_id": "CONCRETE-PLANNER-ROUTER-CODE-SPEC",
+    "new_evidence_collection_required": false,
+    "concrete_planner_router_implementation_spec_complete": true,
+    "concrete_planner_router_code_spec_ready": true,
+    "blocked": false,
+    "why": [
+      "The fixed interface contract is now concrete enough to freeze deterministic planner-side load, resolve, bind, emit, and dispatch order.",
+      "Dexter remains the default execution backbone while Mew-X remains bounded to explicit containment-first sleeves and overlays only.",
+      "That is sufficient to move directly into a code-level module and function spec without reopening comparison work."
+    ]
+  }
+}

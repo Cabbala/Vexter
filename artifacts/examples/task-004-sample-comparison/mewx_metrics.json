@@ -121,7 +121,7 @@
       "value": 67500.0
     }
   },
-  "package_dir": "/Users/cabbala/Documents/vexter/.repo/tests/fixtures/comparison_packages/mewx_fixture",
+  "package_dir": "/private/tmp/vexter_task007_watchdog/tests/fixtures/comparison_packages/mewx_fixture",
   "run_id": "mewx-fixture-001",
   "source_system": "mewx"
 }

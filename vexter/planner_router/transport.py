@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum
@@ -373,6 +373,787 @@ def reconcile_status_snapshot(
         source_reason=chosen.source_reason,
         observed_at_utc=chosen.observed_at_utc,
         detail=_freeze_payload(merged_detail),
+    )
+
+
+@dataclass(frozen=True, slots=True)
+class LivepaperObservabilityWatchdogFinding:
+    surface: str
+    severity: str
+    message: str
+    plan_id: str | None = None
+    detail: Mapping[str, Any] = field(default_factory=freeze_detail)
+
+
+@dataclass(frozen=True, slots=True)
+class LivepaperObservabilityWatchdogReport:
+    checked_plan_ids: tuple[str, ...]
+    findings: tuple[LivepaperObservabilityWatchdogFinding, ...]
+
+    @property
+    def passed(self) -> bool:
+        return not self.findings
+
+    @property
+    def surface_status(self) -> Mapping[str, bool]:
+        surfaced = {finding.surface for finding in self.findings}
+        return freeze_detail(
+            {surface: surface not in surfaced for surface in _LIVEPAPER_WATCHDOG_SURFACES}
+        )
+
+
+_LIVEPAPER_WATCHDOG_SURFACES = (
+    "required_observability_field_omission",
+    "handle_lifecycle_continuity",
+    "planned_runtime_metadata_drift",
+    "partial_status_sink_fan_in",
+    "ack_history_retention",
+    "quarantine_reason_completeness",
+    "manual_stop_all_propagation",
+    "snapshot_backed_terminal_detail",
+    "normalized_failure_detail_passthrough",
+)
+_WATCHDOG_ACK_DUPLICATE_FLAGS = {
+    "prepare_request_count": ("prepare_duplicate_seen",),
+    "start_request_count": ("start_duplicate_seen", "start_terminal_seen"),
+    "stop_request_count": ("stop_duplicate_seen", "stop_terminal_seen"),
+}
+_WATCHDOG_FAILED_SNAPSHOT_REQUIRED_KEYS = (
+    "failure_code",
+    "stage",
+    "rollback_confirmed",
+    "rollback_confirmation_source",
+    "rollback_snapshot",
+)
+_WATCHDOG_LIFECYCLE_KEYS = (
+    "handle_id",
+    "native_session_id",
+)
+_WATCHDOG_ROLLBACK_REQUIRED_KEYS = (
+    "execution_mode",
+    "monitor_profile_id",
+    "executor_profile_id",
+    "pinned_commit",
+    "stop_reason",
+)
+
+
+_WATCHDOG_HANDLE_REQUIRED_KEYS = (
+    "transport_version",
+    "handle_id",
+    "ack_state",
+    "entrypoint",
+    "executor_profile_id",
+    "pinned_commit",
+    "status_delivery",
+    "prepared_at_utc",
+    "native_session_id",
+    "execution_mode",
+    "startup_method",
+    "plan_batch_id",
+    "objective_profile_id",
+    "source",
+    "selected_sleeve_id",
+    "monitor_profile_id",
+    "timeout_envelope_class",
+    "quarantine_scope",
+    "global_halt_participation",
+    "prepare_ack_state",
+    "prepare_accepted_once",
+    "prepare_duplicate_seen",
+    "prepare_request_count",
+    "start_ack_state",
+    "start_accepted_once",
+    "start_duplicate_seen",
+    "start_terminal_seen",
+    "start_request_count",
+    "stop_ack_state",
+    "stop_accepted_once",
+    "stop_duplicate_seen",
+    "stop_terminal_seen",
+    "stop_request_count",
+    "last_reported_status",
+)
+
+_WATCHDOG_RUNTIME_REQUIRED_KEYS = (
+    "handle_id",
+    "native_session_id",
+    "transport_version",
+    "signal",
+    "prepared_at_utc",
+    "entrypoint",
+    "execution_mode",
+    "startup_method",
+    "status_delivery",
+    "ack_state",
+    "plan_batch_id",
+    "objective_profile_id",
+    "source",
+    "selected_sleeve_id",
+    "monitor_profile_id",
+    "timeout_envelope_class",
+    "quarantine_scope",
+    "global_halt_participation",
+    "executor_profile_id",
+    "pinned_commit",
+    "prepare_ack_state",
+    "prepare_accepted_once",
+    "prepare_duplicate_seen",
+    "prepare_request_count",
+    "start_ack_state",
+    "start_accepted_once",
+    "start_duplicate_seen",
+    "start_terminal_seen",
+    "start_request_count",
+    "stop_ack_state",
+    "stop_accepted_once",
+    "stop_duplicate_seen",
+    "stop_terminal_seen",
+    "stop_request_count",
+    "last_reported_status",
+)
+
+_WATCHDOG_FAILURE_REQUIRED_KEYS = (
+    "code",
+    "stage",
+    "plan_id",
+    "source",
+    "source_reason",
+    "detail",
+)
+
+_WATCHDOG_FAILURE_DETAIL_REQUIRED_KEYS = (
+    "plan_id",
+    "plan_batch_id",
+    "objective_profile_id",
+    "source",
+    "selected_sleeve_id",
+    "monitor_profile_id",
+    "timeout_envelope_class",
+    "quarantine_scope",
+    "global_halt_participation",
+    "executor_profile_id",
+    "pinned_commit",
+    "entrypoint",
+    "execution_mode",
+    "startup_method",
+    "handle_id",
+    "transport_version",
+)
+_WATCHDOG_ACK_RETENTION_KEYS = (
+    "prepare_ack_state",
+    "prepare_accepted_once",
+    "prepare_duplicate_seen",
+    "prepare_request_count",
+    "start_ack_state",
+    "start_accepted_once",
+    "start_duplicate_seen",
+    "start_terminal_seen",
+    "start_request_count",
+    "stop_ack_state",
+    "stop_accepted_once",
+    "stop_duplicate_seen",
+    "stop_terminal_seen",
+    "stop_request_count",
+)
+_WATCHDOG_ACK_COUNT_KEYS = (
+    "prepare_request_count",
+    "start_request_count",
+    "stop_request_count",
+)
+_WATCHDOG_ACK_STICKY_KEYS = (
+    "prepare_accepted_once",
+    "prepare_duplicate_seen",
+    "start_accepted_once",
+    "start_duplicate_seen",
+    "start_terminal_seen",
+    "stop_accepted_once",
+    "stop_duplicate_seen",
+    "stop_terminal_seen",
+)
+
+
+def _watchdog_issue(
+    surface: str,
+    severity: str,
+    message: str,
+    *,
+    plan_id: str | None = None,
+    detail: Mapping[str, Any] | None = None,
+) -> LivepaperObservabilityWatchdogFinding:
+    return LivepaperObservabilityWatchdogFinding(
+        surface=surface,
+        severity=severity,
+        message=message,
+        plan_id=plan_id,
+        detail=_freeze_payload(detail),
+    )
+
+
+def _missing_required_keys(observed: Mapping[str, Any], required_keys: Sequence[str]) -> tuple[str, ...]:
+    return tuple(key for key in required_keys if key not in observed)
+
+
+def _mismatched_required_keys(
+    expected: Mapping[str, Any],
+    observed: Mapping[str, Any],
+    required_keys: Sequence[str],
+) -> dict[str, dict[str, Any]]:
+    mismatched: dict[str, dict[str, Any]] = {}
+    for key in required_keys:
+        if key in expected and key in observed and observed[key] != expected[key]:
+            mismatched[key] = {"expected": expected[key], "observed": observed[key]}
+    return mismatched
+
+
+def _snapshot_detail_matches(
+    plan: ExecutionPlan,
+    snapshot: StatusSnapshot,
+    *,
+    required_runtime_detail_keys: Sequence[str] = _WATCHDOG_RUNTIME_REQUIRED_KEYS,
+) -> tuple[tuple[str, ...], dict[str, dict[str, Any]]]:
+    spec = SourceTransportSpec.for_plan(plan)
+    expected = {
+        **dict(serialize_execution_plan(plan)),
+        "transport_version": TRANSPORT_VERSION,
+        "entrypoint": spec.entrypoint,
+        "execution_mode": spec.execution_mode,
+        "startup_method": spec.startup_method,
+        "status_delivery": STATUS_DELIVERY_POLL,
+    }
+    observed = dict(snapshot.detail)
+    missing = _missing_required_keys(observed, required_runtime_detail_keys)
+    mismatched = _mismatched_required_keys(expected, observed, required_runtime_detail_keys)
+    return missing, mismatched
+
+
+def _ack_detail_sequence(
+    handle: DispatchHandle | None,
+    runtime_snapshots: Sequence[StatusSnapshot],
+    terminal_snapshot: Mapping[str, Any] | None,
+) -> list[Mapping[str, Any]]:
+    details: list[Mapping[str, Any]] = []
+    if handle is not None and isinstance(handle.native_handle, Mapping):
+        details.append(dict(handle.native_handle))
+    details.extend(dict(snapshot.detail) for snapshot in runtime_snapshots)
+    if terminal_snapshot is not None:
+        details.append(dict(terminal_snapshot))
+    return details
+
+
+def _failed_snapshot_detail_missing(detail: Mapping[str, Any]) -> tuple[str, ...]:
+    missing = list(_missing_required_keys(detail, _WATCHDOG_FAILED_SNAPSHOT_REQUIRED_KEYS))
+    rollback_snapshot = detail.get("rollback_snapshot")
+    if not isinstance(rollback_snapshot, Mapping):
+        missing.append("rollback_snapshot")
+    return tuple(dict.fromkeys(missing))
+
+
+def evaluate_livepaper_observability_watchdog(
+    plans: Sequence[ExecutionPlan],
+    handles_by_plan_id: Mapping[str, DispatchHandle],
+    *,
+    runtime_snapshots: Sequence[StatusSnapshot] = (),
+    sink_snapshots: Sequence[StatusSnapshot] = (),
+    terminal_snapshots: Mapping[str, Mapping[str, Any]] | None = None,
+    failure_details_by_plan_id: Mapping[str, Mapping[str, Any]] | None = None,
+) -> LivepaperObservabilityWatchdogReport:
+    findings: list[LivepaperObservabilityWatchdogFinding] = []
+    terminal_snapshots = terminal_snapshots or {}
+    failure_details_by_plan_id = failure_details_by_plan_id or {}
+    runtime_by_plan_id: dict[str, list[StatusSnapshot]] = {}
+    sink_by_plan_id: dict[str, list[StatusSnapshot]] = {}
+    manual_stop_visible_plan_ids: set[str] = set()
+
+    for snapshot in runtime_snapshots:
+        runtime_by_plan_id.setdefault(snapshot.plan_id, []).append(snapshot)
+    for snapshot in sink_snapshots:
+        sink_by_plan_id.setdefault(snapshot.plan_id, []).append(snapshot)
+
+    for plan in plans:
+        plan_id = plan.plan_id
+        handle = handles_by_plan_id.get(plan_id)
+        observed_handle: dict[str, Any] = {}
+        failure_detail = failure_details_by_plan_id.get(plan_id)
+        expected_handle = {
+            **dict(serialize_execution_plan(plan)),
+            "transport_version": TRANSPORT_VERSION,
+            "handle_id": f"{plan.executor_binding.executor_profile_id}:{plan.plan_id}",
+            "ack_state": None,
+            "entrypoint": "monitor_mint_session" if plan.route.selected_source is Source.DEXTER else "sim_session",
+            "startup_method": None if plan.route.selected_source is Source.DEXTER else "start_session",
+            "status_delivery": STATUS_DELIVERY_POLL,
+            "native_session_id": (
+                f"paper_live:{plan.plan_id}" if plan.route.selected_source is Source.DEXTER else f"sim_live:{plan.plan_id}"
+            ),
+        }
+
+        if handle is None:
+            findings.append(
+                _watchdog_issue(
+                    "required_observability_field_omission",
+                    "omission",
+                    "handle missing for planned transport surface",
+                    plan_id=plan_id,
+                    detail={"missing_field": "handle", "source": plan.route.selected_source.value},
+                )
+            )
+            continue
+
+        if not isinstance(handle.native_handle, Mapping):
+            findings.append(
+                _watchdog_issue(
+                    "required_observability_field_omission",
+                    "omission",
+                    "native handle is not mapping-like",
+                    plan_id=plan_id,
+                    detail={"observed_type": type(handle.native_handle).__name__},
+                )
+            )
+        else:
+            observed_handle = dict(handle.native_handle)
+            missing = _missing_required_keys(observed_handle, _WATCHDOG_HANDLE_REQUIRED_KEYS)
+            mismatched = _mismatched_required_keys(
+                expected_handle,
+                observed_handle,
+                (
+                    "transport_version",
+                    "handle_id",
+                    "entrypoint",
+                    "executor_profile_id",
+                    "pinned_commit",
+                    "status_delivery",
+                    "prepared_at_utc",
+                    "native_session_id",
+                    "execution_mode",
+                    "startup_method",
+                    "plan_batch_id",
+                    "objective_profile_id",
+                    "source",
+                    "selected_sleeve_id",
+                    "monitor_profile_id",
+                    "timeout_envelope_class",
+                    "quarantine_scope",
+                    "global_halt_participation",
+                ),
+            )
+            if missing:
+                findings.append(
+                    _watchdog_issue(
+                        "required_observability_field_omission",
+                        "omission",
+                        "handle metadata omitted required observability fields",
+                        plan_id=plan_id,
+                        detail={"missing_fields": missing},
+                    )
+                )
+            if mismatched:
+                findings.append(
+                    _watchdog_issue(
+                        "planned_runtime_metadata_drift",
+                        "drift",
+                        "handle metadata drifted from the planned source-faithful envelope",
+                        plan_id=plan_id,
+                        detail=mismatched,
+                )
+            )
+
+        runtime = runtime_by_plan_id.get(plan_id, [])
+        sink_runtime = sink_by_plan_id.get(plan_id, [])
+        terminal_snapshot = terminal_snapshots.get(plan_id)
+        if not runtime:
+            findings.append(
+                _watchdog_issue(
+                    "partial_status_sink_fan_in",
+                    "partial_visibility",
+                    "no runtime status snapshots were observed for the plan",
+                    plan_id=plan_id,
+                    detail={"observed_runtime_snapshots": 0},
+                )
+            )
+
+        lifecycle_values: dict[str, set[str]] = {key: set() for key in _WATCHDOG_LIFECYCLE_KEYS}
+        lifecycle_sources: dict[str, list[str]] = {key: [] for key in _WATCHDOG_LIFECYCLE_KEYS}
+
+        def record_lifecycle(detail: Mapping[str, Any], label: str) -> None:
+            for key in _WATCHDOG_LIFECYCLE_KEYS:
+                value = detail.get(key)
+                if value is None:
+                    continue
+                lifecycle_values[key].add(str(value))
+                lifecycle_sources[key].append(label)
+
+        if observed_handle:
+            record_lifecycle(observed_handle, "handle")
+        for index, snapshot in enumerate(runtime):
+            record_lifecycle(dict(snapshot.detail), f"runtime[{index}]")
+        for index, snapshot in enumerate(sink_runtime):
+            record_lifecycle(dict(snapshot.detail), f"sink[{index}]")
+        if isinstance(terminal_snapshot, Mapping):
+            record_lifecycle(dict(terminal_snapshot), "terminal_snapshot")
+        if isinstance(failure_detail, Mapping):
+            nested_detail = failure_detail.get("detail", {})
+            if isinstance(nested_detail, Mapping):
+                record_lifecycle(dict(nested_detail), "failure_detail")
+                rollback_snapshot = nested_detail.get("rollback_snapshot", {})
+                if isinstance(rollback_snapshot, Mapping):
+                    record_lifecycle(dict(rollback_snapshot), "rollback_snapshot")
+
+        for key, values in lifecycle_values.items():
+            if len(values) <= 1:
+                continue
+            findings.append(
+                _watchdog_issue(
+                    "handle_lifecycle_continuity",
+                    "drift",
+                    "handle lifecycle identifiers drifted across runtime-visible surfaces",
+                    plan_id=plan_id,
+                    detail={
+                        "field": key,
+                        "observed_values": tuple(sorted(values)),
+                        "detail_sources": tuple(lifecycle_sources[key]),
+                    },
+                )
+            )
+
+        for snapshot in runtime:
+            missing, mismatched = _snapshot_detail_matches(plan, snapshot)
+            if missing:
+                findings.append(
+                    _watchdog_issue(
+                        "required_observability_field_omission",
+                        "omission",
+                        "runtime snapshot omitted required observability fields",
+                        plan_id=plan_id,
+                        detail={"missing_fields": missing, "status": snapshot.status.value},
+                    )
+                )
+            if mismatched:
+                findings.append(
+                    _watchdog_issue(
+                        "planned_runtime_metadata_drift",
+                        "drift",
+                        "runtime snapshot drifted from the planned metadata envelope",
+                        plan_id=plan_id,
+                        detail=mismatched,
+                    )
+                )
+
+            detail = dict(snapshot.detail)
+            if snapshot.status in {PlanStatus.RUNNING, PlanStatus.QUARANTINED, PlanStatus.STOPPING, PlanStatus.STOPPED, PlanStatus.FAILED}:
+                lifecycle_missing = _missing_required_keys(
+                    detail,
+                    (
+                        "sequence",
+                        "poll_counter",
+                        "snapshot_counter",
+                        "executor_status",
+                        "started",
+                        "stop_requested",
+                        "stop_confirmed",
+                        "duplicate",
+                    ),
+                )
+                if lifecycle_missing:
+                    findings.append(
+                        _watchdog_issue(
+                            "required_observability_field_omission",
+                            "omission",
+                            "runtime snapshot omitted lifecycle visibility fields",
+                            plan_id=plan_id,
+                            detail={"missing_fields": lifecycle_missing, "status": snapshot.status.value},
+                        )
+                    )
+
+            push_detail = detail.get("push_detail")
+            push_quarantine_reason = (
+                push_detail.get("quarantine_reason") if isinstance(push_detail, Mapping) else None
+            )
+            if snapshot.status is PlanStatus.QUARANTINED and not (
+                detail.get("quarantine_reason") or push_quarantine_reason
+            ):
+                findings.append(
+                    _watchdog_issue(
+                        "quarantine_reason_completeness",
+                        "omission",
+                        "quarantine snapshot did not retain a visible quarantine reason",
+                        plan_id=plan_id,
+                        detail=detail,
+                    )
+                )
+
+            if snapshot.detail.get("signal") == "halt_latched":
+                manual_stop_visible_plan_ids.add(plan_id)
+                if not detail.get("stop_reason"):
+                    findings.append(
+                        _watchdog_issue(
+                            "manual_stop_all_propagation",
+                            "omission",
+                            "manual stop-all propagation lost the stop reason",
+                            plan_id=plan_id,
+                            detail=detail,
+                        )
+                    )
+                if detail.get("halt_mode") != "manual_latched_stop_all":
+                    findings.append(
+                        _watchdog_issue(
+                            "manual_stop_all_propagation",
+                            "drift",
+                            "manual stop-all propagation drifted from the normalized halt mode",
+                            plan_id=plan_id,
+                            detail={"halt_mode": detail.get("halt_mode")},
+                        )
+                    )
+                if not detail.get("trigger_plan_id"):
+                    findings.append(
+                        _watchdog_issue(
+                            "manual_stop_all_propagation",
+                            "partial_visibility",
+                            "manual stop-all propagation did not surface the trigger plan id",
+                            plan_id=plan_id,
+                            detail=detail,
+                        )
+                    )
+
+            if snapshot.status is PlanStatus.FAILED:
+                missing_failure_detail = _failed_snapshot_detail_missing(detail)
+                if missing_failure_detail:
+                    findings.append(
+                        _watchdog_issue(
+                            "normalized_failure_detail_passthrough",
+                            "omission",
+                            "failed runtime snapshot did not retain normalized failure passthrough detail",
+                            plan_id=plan_id,
+                            detail={"missing_fields": missing_failure_detail},
+                        )
+                    )
+                if not detail.get("stop_confirmed") or not detail.get("stop_requested"):
+                    findings.append(
+                        _watchdog_issue(
+                            "manual_stop_all_propagation",
+                            "partial_visibility",
+                            "manual stop-all propagation did not surface the stop lifecycle flags",
+                            plan_id=plan_id,
+                            detail=detail,
+                        )
+                    )
+
+        terminal_snapshot = terminal_snapshots.get(plan_id)
+        if terminal_snapshot is not None:
+            terminal_snapshot = dict(terminal_snapshot)
+            missing = _missing_required_keys(terminal_snapshot, _WATCHDOG_RUNTIME_REQUIRED_KEYS)
+            if missing:
+                findings.append(
+                    _watchdog_issue(
+                        "snapshot_backed_terminal_detail",
+                        "omission",
+                        "terminal snapshot omitted required observability fields",
+                        plan_id=plan_id,
+                        detail={"missing_fields": missing},
+                    )
+                )
+            if terminal_snapshot.get("signal") != "snapshot":
+                findings.append(
+                    _watchdog_issue(
+                        "snapshot_backed_terminal_detail",
+                        "partial_visibility",
+                        "terminal detail was not backed by a snapshot signal",
+                        plan_id=plan_id,
+                        detail=terminal_snapshot,
+                    )
+                )
+            if not terminal_snapshot.get("stop_reason"):
+                findings.append(
+                    _watchdog_issue(
+                        "snapshot_backed_terminal_detail",
+                        "omission",
+                        "terminal snapshot did not retain the stop reason",
+                        plan_id=plan_id,
+                        detail=terminal_snapshot,
+                    )
+                )
+        elif runtime:
+            findings.append(
+                _watchdog_issue(
+                    "snapshot_backed_terminal_detail",
+                    "partial_visibility",
+                    "terminal snapshot was not provided for a plan with runtime observations",
+                    plan_id=plan_id,
+                    detail={"runtime_snapshot_count": len(runtime)},
+                )
+            )
+
+        failure_detail = failure_details_by_plan_id.get(plan_id)
+        if failure_detail is not None:
+            observed_failure = dict(failure_detail)
+            missing = _missing_required_keys(observed_failure, _WATCHDOG_FAILURE_REQUIRED_KEYS)
+            nested_detail = dict(observed_failure.get("detail", {})) if isinstance(observed_failure.get("detail"), Mapping) else {}
+            nested_missing = _missing_required_keys(nested_detail, _WATCHDOG_FAILURE_DETAIL_REQUIRED_KEYS)
+            if missing or nested_missing:
+                findings.append(
+                    _watchdog_issue(
+                        "normalized_failure_detail_passthrough",
+                        "omission",
+                        "normalized failure detail did not retain the expected passthrough metadata",
+                        plan_id=plan_id,
+                        detail={
+                            "missing_fields": missing,
+                            "nested_missing_fields": nested_missing,
+                        },
+                    )
+                )
+            if nested_detail.get("rollback_confirmed"):
+                rollback_snapshot = nested_detail.get("rollback_snapshot", {})
+                if not isinstance(rollback_snapshot, Mapping):
+                    findings.append(
+                        _watchdog_issue(
+                            "normalized_failure_detail_passthrough",
+                            "partial_visibility",
+                            "rollback-confirmed failure detail did not surface a rollback snapshot",
+                            plan_id=plan_id,
+                            detail=nested_detail,
+                        )
+                    )
+                else:
+                    rollback_missing = _missing_required_keys(dict(rollback_snapshot), _WATCHDOG_ROLLBACK_REQUIRED_KEYS)
+                    if rollback_missing:
+                        findings.append(
+                            _watchdog_issue(
+                                "normalized_failure_detail_passthrough",
+                                "omission",
+                                "rollback snapshot omitted required source-faithful passthrough fields",
+                                plan_id=plan_id,
+                                detail={"missing_fields": rollback_missing},
+                            )
+                        )
+
+        visible_details = _ack_detail_sequence(handle, runtime, terminal_snapshot)
+        if failure_detail is not None and isinstance(failure_detail.get("detail"), Mapping):
+            visible_details.append(dict(failure_detail["detail"]))
+
+        if visible_details:
+            latest_visible_detail = visible_details[-1]
+            missing_ack = _missing_required_keys(latest_visible_detail, _WATCHDOG_ACK_RETENTION_KEYS)
+            if missing_ack:
+                findings.append(
+                    _watchdog_issue(
+                        "ack_history_retention",
+                        "omission",
+                        "latest visible transport detail dropped ack-history metadata",
+                        plan_id=plan_id,
+                        detail={"missing_fields": missing_ack},
+                    )
+                )
+
+            for key in _WATCHDOG_ACK_COUNT_KEYS:
+                previous = None
+                for index, detail in enumerate(visible_details):
+                    if key not in detail:
+                        continue
+                    current = int(detail[key])
+                    if previous is not None and current < previous:
+                        findings.append(
+                            _watchdog_issue(
+                                "ack_history_retention",
+                                "drift",
+                                "ack-history request counts regressed instead of staying monotonic",
+                                plan_id=plan_id,
+                                detail={
+                                    "field": key,
+                                    "previous": previous,
+                                    "observed": current,
+                                    "detail_index": index,
+                                },
+                            )
+                        )
+                        break
+                    previous = current
+
+            for key in _WATCHDOG_ACK_STICKY_KEYS:
+                seen_true = False
+                for index, detail in enumerate(visible_details):
+                    if key not in detail:
+                        continue
+                    current = bool(detail[key])
+                    if seen_true and not current:
+                        findings.append(
+                            _watchdog_issue(
+                                "ack_history_retention",
+                                "partial_visibility",
+                                "ack-history visibility collapsed after the flag was already observed",
+                                plan_id=plan_id,
+                                detail={
+                                    "field": key,
+                                    "detail_index": index,
+                                },
+                            )
+                        )
+                        break
+                    seen_true = seen_true or current
+
+            for count_key, duplicate_flags in _WATCHDOG_ACK_DUPLICATE_FLAGS.items():
+                for index, detail in enumerate(visible_details):
+                    if count_key not in detail:
+                        continue
+                    if int(detail[count_key]) <= 1:
+                        continue
+                    if any(bool(detail.get(flag)) for flag in duplicate_flags):
+                        continue
+                    findings.append(
+                        _watchdog_issue(
+                            "ack_history_retention",
+                            "partial_visibility",
+                            "ack-history request counts increased without retaining duplicate-or-terminal visibility",
+                            plan_id=plan_id,
+                            detail={
+                                "field": count_key,
+                                "detail_index": index,
+                                "required_flags": duplicate_flags,
+                            },
+                        )
+                    )
+                    break
+
+    if runtime_snapshots or sink_snapshots:
+        runtime_sequence = [
+            (snapshot.plan_id, snapshot.status.value, snapshot.source_reason, dict(snapshot.detail).get("signal"))
+            for snapshot in runtime_snapshots
+        ]
+        sink_sequence = [
+            (snapshot.plan_id, snapshot.status.value, snapshot.source_reason, dict(snapshot.detail).get("signal"))
+            for snapshot in sink_snapshots
+        ]
+        if runtime_sequence != sink_sequence:
+            findings.append(
+                _watchdog_issue(
+                    "partial_status_sink_fan_in",
+                    "partial_visibility",
+                    "status sink fan-in diverged from the runtime snapshot stream",
+                    detail={
+                        "runtime_snapshot_count": len(runtime_sequence),
+                        "sink_snapshot_count": len(sink_sequence),
+                        "runtime_sequence": runtime_sequence,
+                        "sink_sequence": sink_sequence,
+                    },
+                )
+            )
+
+    if manual_stop_visible_plan_ids:
+        expected_manual_stop_plan_ids = {plan.plan_id for plan in plans}
+        for missing_plan_id in sorted(expected_manual_stop_plan_ids - manual_stop_visible_plan_ids):
+            findings.append(
+                _watchdog_issue(
+                    "manual_stop_all_propagation",
+                    "partial_visibility",
+                    "manual stop-all became visible for peer plans but not for this plan",
+                    plan_id=missing_plan_id,
+                    detail={"visible_plan_ids": sorted(manual_stop_visible_plan_ids)},
+                )
+            )
+
+    return LivepaperObservabilityWatchdogReport(
+        checked_plan_ids=tuple(plan.plan_id for plan in plans),
+        findings=tuple(findings),
     )
 
 

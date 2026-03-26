@@ -10,6 +10,8 @@ from .sleeve_selector import select_sleeves
 from .transport import (
     AckState,
     InMemoryPlanStore,
+    LivepaperObservabilityWatchdogFinding,
+    LivepaperObservabilityWatchdogReport,
     ReconcilingStatusSink,
     SourceFaithfulTransportAdapter,
     TransportEnvelope,
@@ -17,6 +19,7 @@ from .transport import (
     TransportFailureMode,
     TransportMessageType,
     build_source_faithful_transport_registry,
+    evaluate_livepaper_observability_watchdog,
 )
 
 __all__ = [
@@ -25,7 +28,10 @@ __all__ = [
     "dispatch_plan_batch",
     "emit_plan_batch",
     "AckState",
+    "evaluate_livepaper_observability_watchdog",
     "InMemoryPlanStore",
+    "LivepaperObservabilityWatchdogFinding",
+    "LivepaperObservabilityWatchdogReport",
     "load_planner_router_package",
     "plan_and_dispatch",
     "plan_request",

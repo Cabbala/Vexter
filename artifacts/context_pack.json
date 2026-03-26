@@ -76,6 +76,7 @@
       "tests/test_planner_router_transport_livepaper_observability_spec_contract.py",
       "tests/test_planner_router_transport_livepaper_observability_operator_runbook.py",
       "tests/test_planner_router_transport_livepaper_observability_shift_checklist.py",
+      "tests/test_planner_router_transport_livepaper_observability_watchdog_runtime.py",
       "tests/test_bootstrap_layout.py",
       "scripts/build_proof_bundle.sh",
       "artifacts/summary.md",
@@ -360,6 +361,7 @@
       "tests/test_planner_router_transport_livepaper_observability_spec_contract.py",
       "tests/test_planner_router_transport_livepaper_observability_operator_runbook.py",
       "tests/test_planner_router_transport_livepaper_observability_shift_checklist.py",
+      "tests/test_planner_router_transport_livepaper_observability_watchdog_runtime.py",
       "tests/test_bootstrap_layout.py",
       "scripts/build_proof_bundle.sh"
     ]

@@ -29,11 +29,6 @@ def load_proof() -> dict[str, object]:
     return json.loads(PROOF_PATH.read_text())
 
 
-def load_last_ledger_entry() -> dict[str, object]:
-    lines = (REPO_ROOT / "artifacts" / "task_ledger.jsonl").read_text().strip().splitlines()
-    return json.loads(lines[-1])
-
-
 def test_livepaper_observability_operator_runbook_proof_tracks_latest_git_state() -> None:
     proof = load_proof()
 
@@ -71,59 +66,30 @@ def test_livepaper_observability_operator_runbook_proof_tracks_latest_git_state(
     )
 
 
-def test_livepaper_observability_operator_runbook_current_artifacts_are_consistent() -> None:
-    proof = load_proof()
+def test_livepaper_observability_operator_runbook_artifacts_remain_wired_after_checklist_lane() -> None:
     manifest = json.loads((REPO_ROOT / "artifacts" / "proof_bundle_manifest.json").read_text())
     context = json.loads((REPO_ROOT / "artifacts" / "context_pack.json").read_text())
     prompt_context = json.loads(PROMPT_CONTEXT_PATH.read_text())
-    ledger = load_last_ledger_entry()
     summary_text = SUMMARY_PATH.read_text()
     status_text = STATUS_PATH.read_text()
     report_text = REPORT_PATH.read_text()
 
-    assert manifest["task_id"] == proof["task_id"] == context["current_task"]["id"] == ledger["task_id"]
-    assert (
-        manifest["status"]
-        == proof["task_result"]["task_state"]
-        == ledger["status"]
-        == "livepaper_observability_operator_runbook_ready"
+    assert "artifacts/reports/task-007-livepaper-observability-operator-runbook-report.md" in manifest["reports"]
+    assert "artifacts/proofs/task-007-livepaper-observability-operator-runbook-check.json" in manifest["proof_files"]
+    assert context["current_contract"]["livepaper_observability_operator_runbook_marker"] == (
+        "livepaper_observability_operator_runbook"
+    )
+    assert context["evidence"]["livepaper_observability_operator_runbook"]["key_finding"] == (
+        "livepaper_observability_operator_runbook_fixed"
     )
     assert (
-        manifest["bundle_path"]
-        == ledger["artifact_bundle"]
-        == "artifacts/bundles/task-007-livepaper-observability-operator-runbook.tar.gz"
-    )
-    assert (
-        manifest["task_result"]["key_finding"]
-        == proof["task_result"]["key_finding"]
-        == context["evidence"]["livepaper_observability_operator_runbook"]["key_finding"]
-        == ledger["key_finding"]
-        == "livepaper_observability_operator_runbook_fixed"
-    )
-    assert (
-        manifest["task_result"]["claim_boundary"]
-        == proof["task_result"]["claim_boundary"]
-        == context["evidence"]["livepaper_observability_operator_runbook"]["claim_boundary"]
-        == ledger["claim_boundary"]
-        == "livepaper_observability_operator_runbook_bounded"
-    )
-    assert (
-        manifest["task_result"]["recommended_next_step"]
-        == proof["task_result"]["recommended_next_step"]
-        == context["evidence"]["livepaper_observability_operator_runbook"]["preferred_next_step"]
-        == prompt_context["current_state"]["recommended_next_step"]
+        context["evidence"]["livepaper_observability_operator_runbook"]["preferred_next_step"]
         == "livepaper_observability_shift_checklist"
     )
-    assert manifest["next_task"]["id"] == context["next_task"]["id"] == ledger["next_task_id"] == (
-        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-CHECKLIST"
-    )
     assert (
-        manifest["next_task"]["state"]
-        == context["next_task"]["state"]
-        == ledger["next_task_state"]
-        == "ready_for_livepaper_observability_shift_checklist"
+        prompt_context["recommended_next_task"]
+        == "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-CHECKLIST"
     )
-    assert prompt_context["recommended_next_task"] == "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-CHECKLIST"
     assert "livepaper_observability_shift_checklist" in summary_text
     assert "livepaper_observability_operator_runbook_ready" in status_text
     assert "livepaper_observability_shift_checklist" in report_text
@@ -133,7 +99,6 @@ def test_livepaper_observability_operator_runbook_doc_and_report_capture_lookup_
     proof = load_proof()
     doc_text = DOC_PATH.read_text()
     report_text = REPORT_PATH.read_text()
-    bundle_script = (REPO_ROOT / "scripts" / "build_proof_bundle.sh").read_text()
 
     for needle in (
         "manual_latched_stop_all",
@@ -165,6 +130,6 @@ def test_livepaper_observability_operator_runbook_doc_and_report_capture_lookup_
         proof["livepaper_observability_operator_runbook"]["operator_meanings"]["drift"]
         == "A required field is present but no longer matches the planned source-faithful envelope."
     )
-    assert (
-        "task-007-livepaper-observability-operator-runbook.tar.gz" in bundle_script
-    )
+    assert "artifacts/bundles/task-007-livepaper-observability-operator-runbook.tar.gz" in proof[
+        "livepaper_observability_operator_runbook"
+    ]["proof_outputs"]

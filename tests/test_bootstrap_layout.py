@@ -16,6 +16,7 @@ def test_required_paths_exist() -> None:
         "docs/comparison_matrix_template.md",
         "docs/comparison_collection_runbook.md",
         "docs/livepaper_observability_operator_runbook.md",
+        "docs/livepaper_observability_shift_checklist.md",
         "docs/windows_runtime_recovery.md",
         "docs/dexter_source_assessment.md",
         "docs/dexter_event_mapping.md",
@@ -335,6 +336,7 @@ def test_required_paths_exist() -> None:
         "tests/test_planner_router_transport_livepaper_observability_watchdog_ci_gate.py",
         "tests/test_planner_router_transport_livepaper_observability_spec_contract.py",
         "tests/test_planner_router_transport_livepaper_observability_operator_runbook.py",
+        "tests/test_planner_router_transport_livepaper_observability_shift_checklist.py",
         "artifacts/examples/task-004-sample-comparison/pack_manifest.json",
         "artifacts/reports/task-007-livepaper-observability-spec-report.md",
         "artifacts/reports/task-007-livepaper-observability-spec-status.md",
@@ -346,12 +348,20 @@ def test_required_paths_exist() -> None:
         "artifacts/reports/task-007-livepaper-observability-operator-runbook/DETAILS.md",
         "artifacts/reports/task-007-livepaper-observability-operator-runbook/MIN_PROMPT.txt",
         "artifacts/reports/task-007-livepaper-observability-operator-runbook/CONTEXT.json",
+        "artifacts/reports/task-007-livepaper-observability-shift-checklist-report.md",
+        "artifacts/reports/task-007-livepaper-observability-shift-checklist-status.md",
+        "artifacts/reports/task-007-livepaper-observability-shift-checklist/DETAILS.md",
+        "artifacts/reports/task-007-livepaper-observability-shift-checklist/MIN_PROMPT.txt",
+        "artifacts/reports/task-007-livepaper-observability-shift-checklist/CONTEXT.json",
         "artifacts/proofs/task-007-livepaper-observability-spec-check.json",
         "artifacts/proofs/task-007-livepaper-observability-spec-summary.md",
         "artifacts/proofs/task-007-livepaper-observability-operator-runbook-check.json",
         "artifacts/proofs/task-007-livepaper-observability-operator-runbook-summary.md",
+        "artifacts/proofs/task-007-livepaper-observability-shift-checklist-check.json",
+        "artifacts/proofs/task-007-livepaper-observability-shift-checklist-summary.md",
         "artifacts/bundles/task-007-livepaper-observability-spec.tar.gz",
         "artifacts/bundles/task-007-livepaper-observability-operator-runbook.tar.gz",
+        "artifacts/bundles/task-007-livepaper-observability-shift-checklist.tar.gz",
         ".github/workflows/validate.yml",
     ]
 
@@ -530,6 +540,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-CI-GATE",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SPEC",
         "TASK-007-LIVEPAPER-OBSERVABILITY-OPERATOR-RUNBOOK",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-CHECKLIST",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -582,6 +593,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "transport_livepaper_observability_watchdog_ci_gate_passed",
         "livepaper_observability_spec_ready",
         "livepaper_observability_operator_runbook_ready",
+        "livepaper_observability_shift_checklist_ready",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -637,6 +649,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-007-transport-livepaper-observability-watchdog-ci-gate",
         "codex/task-007-livepaper-observability-spec",
         "codex/task-007-livepaper-observability-operator-runbook",
+        "codex/task-007-livepaper-observability-shift-checklist",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -676,6 +689,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-CI-GATE",
         "TASK-007-LIVEPAPER-OBSERVABILITY-OPERATOR-RUNBOOK",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-CHECKLIST",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-TEMPLATE",
     }
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -727,6 +741,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "ready_for_transport_livepaper_observability_watchdog_ci_gate",
         "ready_for_livepaper_observability_operator_runbook",
         "ready_for_livepaper_observability_shift_checklist",
+        "ready_for_livepaper_observability_shift_handoff_template",
     }
 
 
@@ -785,6 +800,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "transport_livepaper_observability_watchdog_ci_gate_passed",
         "livepaper_observability_spec_ready",
         "livepaper_observability_operator_runbook_ready",
+        "livepaper_observability_shift_checklist_ready",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -826,6 +842,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-CI-GATE",
         "TASK-007-LIVEPAPER-OBSERVABILITY-OPERATOR-RUNBOOK",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-CHECKLIST",
+        "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-TEMPLATE",
     }
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -876,6 +893,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "ready_for_transport_livepaper_observability_watchdog_ci_gate",
         "ready_for_livepaper_observability_operator_runbook",
         "ready_for_livepaper_observability_shift_checklist",
+        "ready_for_livepaper_observability_shift_handoff_template",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]
@@ -889,6 +907,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "docs/normalized_event_schema.md" in names
     assert "docs/comparison_collection_runbook.md" in names
     assert "docs/livepaper_observability_operator_runbook.md" in names
+    assert "docs/livepaper_observability_shift_checklist.md" in names
     assert "docs/windows_runtime_recovery.md" in names
     assert "docs/dexter_event_mapping.md" in names
     assert "docs/dexter_paper_mode_design.md" in names
@@ -1056,6 +1075,11 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/reports/task-007-livepaper-observability-spec/DETAILS.md" in names
     assert "artifacts/reports/task-007-livepaper-observability-spec/MIN_PROMPT.txt" in names
     assert "artifacts/reports/task-007-livepaper-observability-spec/CONTEXT.json" in names
+    assert "artifacts/reports/task-007-livepaper-observability-shift-checklist-report.md" in names
+    assert "artifacts/reports/task-007-livepaper-observability-shift-checklist-status.md" in names
+    assert "artifacts/reports/task-007-livepaper-observability-shift-checklist/DETAILS.md" in names
+    assert "artifacts/reports/task-007-livepaper-observability-shift-checklist/MIN_PROMPT.txt" in names
+    assert "artifacts/reports/task-007-livepaper-observability-shift-checklist/CONTEXT.json" in names
     assert "artifacts/reports/task-007-transport-livepaper-observability-ci-gate/MIN_PROMPT.txt" in names
     assert "artifacts/reports/task-007-transport-livepaper-observability-ci-gate/CONTEXT.json" in names
     assert "artifacts/proofs/task-005-live-collection-check.json" in names
@@ -1127,6 +1151,8 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/proofs/task-007-transport-livepaper-observability-watchdog-ci-gate-summary.md" in names
     assert "artifacts/proofs/task-007-livepaper-observability-spec-check.json" in names
     assert "artifacts/proofs/task-007-livepaper-observability-spec-summary.md" in names
+    assert "artifacts/proofs/task-007-livepaper-observability-shift-checklist-check.json" in names
+    assert "artifacts/proofs/task-007-livepaper-observability-shift-checklist-summary.md" in names
     assert "tests/test_planner_router_transport_livepaper_observability_smoke.py" in names
     assert "tests/test_planner_router_transport_livepaper_observability_runtime.py" in names
     assert "tests/test_planner_router_transport_livepaper_observability_hardening.py" in names
@@ -1135,6 +1161,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "tests/test_planner_router_transport_livepaper_observability_watchdog.py" in names
     assert "tests/test_planner_router_transport_livepaper_observability_watchdog_runtime.py" in names
     assert "tests/test_planner_router_transport_livepaper_observability_watchdog_ci_gate.py" in names
+    assert "tests/test_planner_router_transport_livepaper_observability_shift_checklist.py" in names
     assert "tests/test_planner_router_transport_livepaper_smoke.py" in names
     assert "pytest.ini" in names
     assert "scripts/run_transport_livepaper_observability_ci_gate.sh" in names

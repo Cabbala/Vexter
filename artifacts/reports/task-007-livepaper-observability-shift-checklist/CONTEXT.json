@@ -1,0 +1,15 @@
+{
+  "recommended_next_task": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-TEMPLATE",
+  "visible_main_state": {
+    "latest_vexter_pr": 60,
+    "latest_vexter_main_commit": "ec46f051b41c3e140db09e808ef54e4d6e3d33ac",
+    "dexter_main": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "mewx_frozen": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "current_state": {
+    "current_task": "livepaper_observability_shift_checklist_ready",
+    "recommended_next_step": "livepaper_observability_shift_handoff_template",
+    "default_execution_anchor": "Dexter",
+    "mewx_role": "containment-first selective option"
+  }
+}

@@ -1,0 +1,249 @@
+{
+  "task_id": "TASK-007-EXECUTION-PLANNING",
+  "generated_at_utc": "2026-03-26T00:10:48Z",
+  "verified_github": {
+    "latest_vexter_pr": 32,
+    "latest_vexter_main_commit": "a214ff04f0662e250b01181551a8963ce8e80dd6",
+    "latest_vexter_merged_at_utc": "2026-03-25T23:52:42Z",
+    "supporting_vexter_prs": [
+      31,
+      30,
+      29,
+      28,
+      27,
+      26,
+      25,
+      24,
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17,
+      16
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "mewx_frozen_commit_date_utc": "2026-03-20T16:05:19Z"
+  },
+  "fixed_input_surface": {
+    "strategy_lane_report": "artifacts/reports/task-007-strategy-planning-report.md",
+    "strategy_lane_proof": "artifacts/proofs/task-007-strategy-planning-check.json",
+    "candidate_lane_report": "artifacts/reports/task-007-candidate-generation-vs-quality-report.md",
+    "candidate_lane_proof": "artifacts/proofs/task-007-candidate-generation-vs-quality-check.json",
+    "timing_retention_lane_report": "artifacts/reports/task-007-execution-timing-vs-retention-report.md",
+    "timing_retention_lane_proof": "artifacts/proofs/task-007-execution-timing-vs-retention-check.json",
+    "risk_exit_lane_report": "artifacts/reports/task-007-risk-containment-vs-exit-capture-report.md",
+    "risk_exit_lane_proof": "artifacts/proofs/task-007-risk-containment-vs-exit-capture-check.json",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "promoted_live_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180027Z-comparison",
+    "promoted_replay_comparison_dir": "artifacts/reports/task006-replay-surface-fix-20260325T180027Z-replay-comparison",
+    "confirmatory_comparison_dir": "artifacts/reports/task005-validator-rule-implement-20260325T180604Z-comparison",
+    "promoted_live_winner_mode": "derived",
+    "promoted_replay_winner_mode": "derived",
+    "live_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "replay_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "dexter_replay_coverage_ratio": 1.0,
+    "dexter_live_vs_replay_gap_pct": 0.0,
+    "mewx_replay_coverage_ratio": 1.0,
+    "mewx_live_vs_replay_gap_pct": 0.0,
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false
+  },
+  "implementation": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "dexter_strategy_changed": false,
+    "mewx_strategy_changed": false,
+    "minimal_reaggregation_only": true,
+    "new_evidence_collection_required": false
+  },
+  "execution_planning_surface": {
+    "default_execution_anchor": {
+      "source": "dexter",
+      "objective_support": [
+        "upstream_opportunity_capture",
+        "low_slippage_entry",
+        "realized_exit_capture",
+        "stale_risk_avoidance"
+      ],
+      "why": [
+        "Dexter is the only current source that simultaneously owns upstream opportunity capture, pre-attempt timing, low-slippage entry, realized exit capture, and stale-risk avoidance.",
+        "Dexter remains the broader operational objective winner even after the strategy split is made explicit.",
+        "A default execution backbone should inherit the source with active lifecycle control rather than the source whose observed closes remain timeout-shaped."
+      ],
+      "evidence": {
+        "signal_to_attempt_latency_ms": {
+          "dexter": 0.0,
+          "mewx": 891.0,
+          "winner": "dexter"
+        },
+        "quote_vs_fill_slippage_bps": {
+          "dexter": 0.0,
+          "mewx": 7.706128082620904,
+          "winner": "dexter"
+        },
+        "realized_exit_pct": {
+          "dexter": 7.164077921477945,
+          "mewx": 0.0,
+          "winner": "dexter"
+        },
+        "stale_position_ratio": {
+          "dexter": 0.0,
+          "mewx": 1.0,
+          "winner": "dexter"
+        }
+      },
+      "bound": "Choosing Dexter as default does not erase the Mew-X containment edge; it bounds that edge to selective use."
+    },
+    "selective_mewx_option": {
+      "source": "mewx",
+      "selection_conditions": [
+        "The strategy objective explicitly prioritizes drawdown containment.",
+        "Local-peak retention matters more than realized exit capture.",
+        "Fast post-attempt fill is desirable even with worse observed slippage.",
+        "Timeout-shaped lifecycle behavior is explicitly acceptable.",
+        "The deployment remains a separate execution template, sleeve, or route rather than an in-run fusion layer."
+      ],
+      "evidence": {
+        "attempt_to_fill_latency_ms": {
+          "dexter": 502.5,
+          "mewx": 1.5,
+          "winner": "mewx"
+        },
+        "max_adverse_excursion_pct": {
+          "dexter": -6.05468749267574,
+          "mewx": 0.0,
+          "winner": "mewx"
+        },
+        "time_to_peak_ms": {
+          "dexter": 5299.0,
+          "mewx": 20.5,
+          "winner": "mewx"
+        },
+        "realized_vs_peak_gap_pct": {
+          "dexter_live": 20.533046470504612,
+          "dexter_replay": 25.804157291090654,
+          "mewx_live": 0.0,
+          "mewx_replay": 0.0,
+          "winner": "mewx"
+        }
+      },
+      "not_supported_for": [
+        "Mew-X as the default primary engine.",
+        "Mew-X as an automatic failover inside a Dexter-managed position.",
+        "Mew-X as proof of upstream candidate-quality parity.",
+        "Mew-X as justification for threshold or trust-logic transplant into Dexter."
+      ],
+      "bound": "The Mew-X selective lane is only source-faithful when timeout-shaped lifecycle behavior is an accepted trade for containment-first objectives."
+    },
+    "objective_conditioned_routing": {
+      "supported": [
+        "Pre-run route selection by explicit objective profile.",
+        "A Dexter default lane for opportunity capture, low-slippage entry, realized exit capture, and lifecycle control.",
+        "A separate Mew-X containment lane for drawdown containment, fast post-attempt fill, and local-peak retention.",
+        "Portfolio split across independent sleeves where the objective charter is fixed before execution begins."
+      ],
+      "default_routing_rule": "If objective weights are mixed or unspecified, route to Dexter by default.",
+      "not_supported": [
+        "Mid-trade handoff from Dexter to Mew-X or from Mew-X to Dexter.",
+        "A fused single-engine design that mixes both source logics inside one live position lifecycle.",
+        "Claims that a blended engine is already proven superior to either standalone source.",
+        "Widening replay parity into a full path-equivalence or retention-equivalence proof."
+      ]
+    },
+    "execution_assumptions_fixed_now": [
+      "Dexter should remain the default execution anchor whenever objective weights are mixed or unspecified.",
+      "Mew-X should remain a containment-first selective option rather than a general fallback.",
+      "Hybrid use should stay ex ante and objective-conditioned, not in-run and compositional.",
+      "No new evidence is required to plan bounded execution at this level.",
+      "No validator, Dexter, or Mew-X source logic changes are justified by this planning task.",
+      "The replay claim stays bounded to realized-return fidelity and does not block implementation planning.",
+      "Path-sensitive retention scope is still optional unless later design work tries to claim stronger retention equivalence than current evidence supports."
+    ],
+    "execution_questions_not_fixed_now": [
+      "The exact config surface that declares an objective profile and routes into a Dexter or Mew-X sleeve.",
+      "The portfolio budget or capital split between Dexter-default and Mew-X-selective sleeves.",
+      "The monitoring and kill-switch rules needed around timeout-shaped Mew-X lifecycle behavior.",
+      "The exact abstraction boundary between a planner/router layer and source-specific executors.",
+      "Whether any future hybrid implementation would outperform both standalone sources after build-out."
+    ],
+    "non_goals": [
+      "Do not reopen promoted-baseline selection.",
+      "Do not collect new live or replay evidence.",
+      "Do not change Dexter, Mew-X, or validator rules.",
+      "Do not claim in-run source fusion is now validated.",
+      "Do not transplant thresholds, trust logic, or semantic assumptions across frozen sources.",
+      "Do not widen replay fidelity into full path equivalence.",
+      "Do not move to funded live trading."
+    ],
+    "next_lane_evaluation": {
+      "implementation_planning": {
+        "recommended": true,
+        "why": [
+          "The execution surface is already bounded enough to decompose work into implementation-scoped decisions without another evidence task.",
+          "The critical boundary is now fixed: Dexter default, Mew-X selective containment option, objective-conditioned routing, and explicit non-goals."
+        ]
+      },
+      "concrete_execution_design": {
+        "recommended": false,
+        "why": [
+          "A separate evidence lane is not required first because the current task already fixes the execution anchor and routing bounds.",
+          "Concrete design details can be handled inside implementation planning rather than as another comparison-derived research step."
+        ]
+      },
+      "path_sensitive_retention_scope": {
+        "recommended": false,
+        "why": [
+          "No current execution recommendation depends on a stronger path-equivalence claim.",
+          "This remains optional unless later design work tries to claim stronger retention equivalence than current evidence supports."
+        ]
+      }
+    }
+  },
+  "residual_and_caveats": {
+    "confirmatory_label": "task005-pass-grade-pair-20260325T180604Z",
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false,
+    "replay_scope": "Current zero-gap evidence is scoped to close-summary and position_closed realized-return fidelity rather than full execution-path equivalence.",
+    "dexter_metric_scope_gap": {
+      "metric": "realized_vs_peak_gap_pct",
+      "live_value": 20.533046470504612,
+      "replay_value": 25.804157291090654,
+      "why_it_matters": "A stronger claim about path-sensitive retention still requires a separate lane."
+    },
+    "candidate_surface_gap": "Mew-X candidate_precision_proxy remains unavailable because the frozen export surface does not expose a comparable creator_candidate path.",
+    "execution_plan_boundary": "Dexter is the default execution anchor, but Mew-X remains the bounded selective option only for containment-first objectives and not for source fusion."
+  },
+  "decision": {
+    "selected_outcome": "A",
+    "key_finding": "execution_plan_ready",
+    "claim_boundary": "execution_plan_bounded",
+    "task_state": "execution_plan_ready",
+    "decision": "implementation_planning_ready",
+    "recommended_next_step": "implementation_planning",
+    "recommended_next_task_id": "IMPLEMENTATION-PLANNING",
+    "new_evidence_collection_required": false,
+    "execution_planning_complete": true,
+    "implementation_planning_ready": true,
+    "path_sensitive_retention_scope_required": false,
+    "blocked": false,
+    "why": [
+      "The fixed comparison and strategy layers are now explicit enough to choose a default execution anchor and a bounded selective option.",
+      "Dexter remains the default execution backbone for the broader operational objective set.",
+      "Mew-X still has a real but bounded role for containment-first sleeves without upgrading into a fused or fallback default.",
+      "That is sufficient to move directly into implementation planning without reopening comparison work."
+    ]
+  }
+}

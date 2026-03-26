@@ -14,7 +14,7 @@
 - `tests/test_planner_router_transport_livepaper_observability_smoke.py` now proves immutable handoff metadata remains traceable into prepared handles and the shared status sink
 - handle lifecycle, first-vs-duplicate ack metadata, quarantine reason, manual halt propagation, and snapshot-backed terminal detail remain visible end to end on the source-faithful live-paper seam
 - normalized `status_timeout` failure detail still preserves source reason passthrough plus source-faithful rollback snapshot context for Dexter `paper_live` and Mew-X `sim_live`
-- Validation: `pytest -q` -> `87 passed`
+- Validation: `pytest -q` -> `84 passed`
 
 ## Decision
 

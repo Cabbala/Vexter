@@ -85,7 +85,7 @@
       "tests/test_bootstrap_layout.py"
     ],
     "pytest_command": "pytest -q",
-    "pytest_result": "87 passed",
+    "pytest_result": "84 passed",
     "immutable_plan_handoff": {
       "request_id": "req-transport-livepaper-observability",
       "store_origin_is_traceable": true,

@@ -184,6 +184,11 @@ def test_required_paths_exist() -> None:
         "artifacts/reports/task-007-transport-livepaper-smoke/DETAILS.md",
         "artifacts/reports/task-007-transport-livepaper-smoke/MIN_PROMPT.txt",
         "artifacts/reports/task-007-transport-livepaper-smoke/CONTEXT.json",
+        "artifacts/reports/task-007-transport-livepaper-observability-smoke-report.md",
+        "artifacts/reports/task-007-transport-livepaper-observability-smoke-status.md",
+        "artifacts/reports/task-007-transport-livepaper-observability-smoke/DETAILS.md",
+        "artifacts/reports/task-007-transport-livepaper-observability-smoke/MIN_PROMPT.txt",
+        "artifacts/reports/task-007-transport-livepaper-observability-smoke/CONTEXT.json",
         "artifacts/proofs/task-005-live-collection-check.json",
         "artifacts/proofs/task-005-pass-grade-pair-check.json",
         "artifacts/proofs/task-005-windows-runtime-recovery.json",
@@ -232,6 +237,8 @@ def test_required_paths_exist() -> None:
         "artifacts/proofs/task-007-transport-runtime-smoke-summary.md",
         "artifacts/proofs/task-007-transport-livepaper-smoke-check.json",
         "artifacts/proofs/task-007-transport-livepaper-smoke-summary.md",
+        "artifacts/proofs/task-007-transport-livepaper-observability-smoke-check.json",
+        "artifacts/proofs/task-007-transport-livepaper-observability-smoke-summary.md",
         "artifacts/bundles/task-007-planner-router-code-implementation.tar.gz",
         "artifacts/bundles/task-007-planner-router-integration-smoke.tar.gz",
         "artifacts/bundles/task-007-monitor-killswitch-spec.tar.gz",
@@ -240,6 +247,8 @@ def test_required_paths_exist() -> None:
         "artifacts/bundles/task-007-planner-router-executor-transport-implementation.tar.gz",
         "artifacts/bundles/task-007-transport-runtime-smoke.tar.gz",
         "artifacts/bundles/task-007-transport-livepaper-smoke.tar.gz",
+        "artifacts/bundles/task-007-transport-livepaper-observability-smoke.tar.gz",
+        "tests/test_planner_router_transport_livepaper_observability_smoke.py",
         "artifacts/examples/task-004-sample-comparison/pack_manifest.json",
         ".github/workflows/validate.yml",
     ]
@@ -342,6 +351,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-PLANNER-ROUTER-EXECUTOR-TRANSPORT-IMPLEMENTATION",
         "TASK-007-TRANSPORT-RUNTIME-SMOKE",
         "TASK-007-TRANSPORT-LIVEPAPER-SMOKE",
+        "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-SMOKE",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -383,6 +393,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "planner_router_executor_transport_implemented",
         "transport_runtime_smoke_passed",
         "transport_livepaper_smoke_passed",
+        "transport_livepaper_observability_smoke_passed",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -427,6 +438,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-007-planner-router-executor-transport-implementation",
         "codex/task-007-transport-runtime-smoke",
         "codex/task-007-transport-livepaper-smoke",
+        "codex/task-007-transport-livepaper-observability-smoke",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -456,6 +468,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-TRANSPORT-RUNTIME-SMOKE",
         "TASK-007-TRANSPORT-LIVEPAPER-SMOKE",
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-SMOKE",
+        "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-RUNTIME",
     }
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -497,6 +510,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "ready_for_transport_runtime_smoke",
         "ready_for_transport_livepaper_smoke",
         "ready_for_transport_livepaper_observability_smoke",
+        "ready_for_transport_livepaper_observability_runtime",
     }
 
 
@@ -544,6 +558,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "planner_router_executor_transport_implemented",
         "transport_runtime_smoke_passed",
         "transport_livepaper_smoke_passed",
+        "transport_livepaper_observability_smoke_passed",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -575,6 +590,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "TASK-007-TRANSPORT-RUNTIME-SMOKE",
         "TASK-007-TRANSPORT-LIVEPAPER-SMOKE",
         "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-SMOKE",
+        "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-RUNTIME",
     }
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -615,6 +631,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "ready_for_transport_runtime_smoke",
         "ready_for_transport_livepaper_smoke",
         "ready_for_transport_livepaper_observability_smoke",
+        "ready_for_transport_livepaper_observability_runtime",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]
@@ -745,6 +762,11 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/reports/task-007-transport-livepaper-smoke/DETAILS.md" in names
     assert "artifacts/reports/task-007-transport-livepaper-smoke/MIN_PROMPT.txt" in names
     assert "artifacts/reports/task-007-transport-livepaper-smoke/CONTEXT.json" in names
+    assert "artifacts/reports/task-007-transport-livepaper-observability-smoke-report.md" in names
+    assert "artifacts/reports/task-007-transport-livepaper-observability-smoke-status.md" in names
+    assert "artifacts/reports/task-007-transport-livepaper-observability-smoke/DETAILS.md" in names
+    assert "artifacts/reports/task-007-transport-livepaper-observability-smoke/MIN_PROMPT.txt" in names
+    assert "artifacts/reports/task-007-transport-livepaper-observability-smoke/CONTEXT.json" in names
     assert "artifacts/proofs/task-005-live-collection-check.json" in names
     assert "artifacts/proofs/task-005-windows-runtime-recovery.json" in names
     assert "artifacts/proofs/task-006-replay-validation-check.json" in names
@@ -794,6 +816,9 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/proofs/task-007-transport-runtime-smoke-summary.md" in names
     assert "artifacts/proofs/task-007-transport-livepaper-smoke-check.json" in names
     assert "artifacts/proofs/task-007-transport-livepaper-smoke-summary.md" in names
+    assert "artifacts/proofs/task-007-transport-livepaper-observability-smoke-check.json" in names
+    assert "artifacts/proofs/task-007-transport-livepaper-observability-smoke-summary.md" in names
+    assert "tests/test_planner_router_transport_livepaper_observability_smoke.py" in names
     assert "tests/test_planner_router_transport_livepaper_smoke.py" in names
     assert "artifacts/context_pack.json" in names
     assert "artifacts/proof_bundle_manifest.json" in names

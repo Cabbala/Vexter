@@ -1,10 +1,10 @@
 {
   "task_id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-CI-GATE",
-  "generated_at_utc": "2026-03-26T14:09:11Z",
+  "generated_at_utc": "2026-03-26T14:13:32Z",
   "verified_github": {
     "latest_vexter_pr": 52,
     "latest_vexter_main_commit": "64d0670c328f446d1caddda0e2d9c81534ef8787",
-    "latest_vexter_merged_at_utc": "2026-03-26T13:38:28Z",
+    "latest_vexter_merged_at_utc": "2026-03-26T13:38:30Z",
     "dexter_pr": 3,
     "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
@@ -25,20 +25,20 @@
   "ci_gate_suite": {
     "suite_group": "transport_livepaper_observability_ci_gate",
     "pytest_command": "pytest -q -m transport_livepaper_observability_ci_gate tests/test_planner_router_transport_livepaper_observability_smoke.py tests/test_planner_router_transport_livepaper_observability_runtime.py tests/test_planner_router_transport_livepaper_observability_hardening.py tests/test_planner_router_transport_livepaper_observability_regression_pack.py tests/test_planner_router_transport_livepaper_observability_ci_gate.py",
-    "pytest_result": "30 passed in 0.27s",
+    "pytest_result": "17 passed, 13 deselected in 0.26s",
     "gate_status": "passed",
     "workflow": ".github/workflows/validate.yml",
     "proof_outputs": [
       "artifacts/proofs/task-007-transport-livepaper-observability-ci-gate-check.json",
       "artifacts/proofs/task-007-transport-livepaper-observability-ci-gate-summary.md"
     ],
-    "supporting_test_files": [
+    "gate_test_files": [
       "tests/test_planner_router_transport_livepaper_observability_smoke.py",
       "tests/test_planner_router_transport_livepaper_observability_runtime.py",
       "tests/test_planner_router_transport_livepaper_observability_hardening.py",
+      "tests/test_planner_router_transport_livepaper_observability_regression_pack.py",
       "tests/test_planner_router_transport_livepaper_observability_ci_gate.py"
     ],
-    "regression_pack_test_file": "tests/test_planner_router_transport_livepaper_observability_regression_pack.py",
     "surface_tests": {
       "immutable_handoff_metadata_continuity": [
         "tests/test_planner_router_transport_livepaper_observability_regression_pack.py::test_transport_livepaper_observability_ci_gate_locks_immutable_handoff_metadata_continuity"

@@ -15,6 +15,7 @@ GATE_TEST_FILES=(
   "tests/test_planner_router_transport_livepaper_observability_runtime.py"
   "tests/test_planner_router_transport_livepaper_observability_hardening.py"
   "tests/test_planner_router_transport_livepaper_observability_regression_pack.py"
+  "tests/test_planner_router_transport_livepaper_observability_ci_gate.py"
 )
 
 printf 'Transport livepaper observability CI gate\n'
@@ -133,7 +134,7 @@ proof = {
     },
     "ci_gate_suite": {
         "suite_group": suite_marker,
-        "pytest_command": "pytest -q -m transport_livepaper_observability_ci_gate tests/test_planner_router_transport_livepaper_observability_smoke.py tests/test_planner_router_transport_livepaper_observability_runtime.py tests/test_planner_router_transport_livepaper_observability_hardening.py tests/test_planner_router_transport_livepaper_observability_regression_pack.py",
+        "pytest_command": "pytest -q -m transport_livepaper_observability_ci_gate tests/test_planner_router_transport_livepaper_observability_smoke.py tests/test_planner_router_transport_livepaper_observability_runtime.py tests/test_planner_router_transport_livepaper_observability_hardening.py tests/test_planner_router_transport_livepaper_observability_regression_pack.py tests/test_planner_router_transport_livepaper_observability_ci_gate.py",
         "pytest_result": pytest_result,
         "gate_status": gate_status,
         "workflow": ".github/workflows/validate.yml",
@@ -145,7 +146,8 @@ proof = {
             "tests/test_planner_router_transport_livepaper_observability_smoke.py",
             "tests/test_planner_router_transport_livepaper_observability_runtime.py",
             "tests/test_planner_router_transport_livepaper_observability_hardening.py",
-            "tests/test_planner_router_transport_livepaper_observability_regression_pack.py"
+            "tests/test_planner_router_transport_livepaper_observability_regression_pack.py",
+            "tests/test_planner_router_transport_livepaper_observability_ci_gate.py"
         ],
         "surface_tests": surface_tests,
         "source_faithful_modes": {

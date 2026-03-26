@@ -121,7 +121,7 @@
       "value": 60000.0
     }
   },
-  "package_dir": "/Users/cabbala/Documents/Vexter_repo_task007_impl/tests/fixtures/comparison_packages/dexter_fixture",
+  "package_dir": "/Users/cabbala/Documents/vexter/.repo/tests/fixtures/comparison_packages/dexter_fixture",
   "run_id": "dexter-fixture-001",
   "source_system": "dexter"
 }

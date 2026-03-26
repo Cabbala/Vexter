@@ -1,0 +1,28 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+次タスクID: CONCRETE-PLANNER-ROUTER-IMPLEMENTATION-SPEC
+
+GitHub-visible Vexter `main` は PR `#34` merged commit `981f0977788cffd10de4bf78f14e5b430fbce4c1` まで確認済みで、comparison baseline は `task005-pass-grade-pair-20260325T180027Z` のまま固定です。Dexter は merged PR `#3` commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`、Mew-X は frozen commit `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a` を維持しています。promoted live / repaired replay はどちらも `winner_mode: derived`、stable scored split は Dexter `6`, Mew-X `4`, tie `2`、Dexter / Mew-X の replay coverage / gap はどちらも `100.00% / 0.0000` を維持し、confirmatory residual は Mew-X `candidate_rejected` のみで promoted baseline を overturn しません。
+
+この task では、新証拠収集や source logic 変更は行わず、TASK-007 implementation planning の bounded execution design を最初の planner/router interface contract に落としました。結論は以下です。
+
+- Key finding: `planner_router_spec_ready`
+- Claim boundary: `planner_router_spec_bounded`
+- Decision: `next_spec_ready`
+
+source-faithful interface conclusion:
+
+- immutable `execution_plan` が route / sleeve / budget / monitor / executor / source pin を一体で固定する
+- objective profile は必ず 1 source / 1 sleeve family に解決し、mixed or unspecified は `Dexter` default
+- `Mew-X` allocation は explicit containment-first sleeve に限定され、implicit overlay は不可
+- monitor profile は binding reference まで固定し、数値 threshold はまだ固定しない
+- executor profile は source-matched pinned commit と normalized method/status surface を持つ
+- mid-trade handoff, threshold transplant, trust-logic transplant, fused-engine claim は unsupported
+
+次に切る task は `concrete_planner_router_implementation_spec` を推奨します。interface contract で immutable plan object、route invariants、binding references は固定できたので、次は planner 側の config load / validation / route resolution / plan emission / executor dispatch flow を具体化するのが最短です。`monitor_kill_switch_spec` はこの shared plan surface にぶら下げる方が自然で、`executor_boundary_spec` は source-faithful contract が本 task で十分固定されたため優先度を下げられます。再実行してはいけないもの:
+
+- promoted-baseline selection
+- 新 live / replay evidence collection
+- validator / source logic changes
+- mid-trade source handoff や fused-engine 前提の設計
+- replay claim の full path equivalence 化

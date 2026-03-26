@@ -1,0 +1,189 @@
+{
+  "task_id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-RUNTIME",
+  "generated_at_utc": "2026-03-26T12:51:49Z",
+  "verified_github": {
+    "latest_vexter_pr": 48,
+    "latest_vexter_main_commit": "085f2692bf150431dd39365b6c954cf069e18617",
+    "latest_vexter_merged_at_utc": "2026-03-26T12:29:56Z",
+    "supporting_vexter_prs": [
+      47,
+      46,
+      45,
+      44,
+      43,
+      42,
+      41,
+      40,
+      39,
+      38,
+      37,
+      36,
+      35,
+      34,
+      33,
+      32,
+      31,
+      30,
+      29,
+      28,
+      27,
+      26,
+      25,
+      24,
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "mewx_frozen_commit_date_utc": "2026-03-20T16:05:19Z"
+  },
+  "fixed_input_surface": {
+    "transport_livepaper_observability_smoke_report": "artifacts/reports/task-007-transport-livepaper-observability-smoke-report.md",
+    "transport_livepaper_observability_smoke_proof": "artifacts/proofs/task-007-transport-livepaper-observability-smoke-check.json",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "promoted_live_winner_mode": "derived",
+    "promoted_replay_winner_mode": "derived",
+    "live_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "replay_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "dexter_replay_coverage_ratio": 1.0,
+    "dexter_live_vs_replay_gap_pct": 0.0,
+    "mewx_replay_coverage_ratio": 1.0,
+    "mewx_live_vs_replay_gap_pct": 0.0,
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false
+  },
+  "transport_livepaper_observability_runtime": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "new_evidence_collection_required": false,
+    "runtime_test_files": [
+      "tests/test_planner_router_transport_livepaper_observability_runtime.py"
+    ],
+    "supporting_test_files": [
+      "tests/test_planner_router_transport_livepaper_observability_smoke.py",
+      "tests/test_planner_router_transport_livepaper_smoke.py",
+      "tests/test_planner_router_transport_runtime_smoke.py",
+      "tests/test_planner_router_transport.py",
+      "tests/test_planner_router_executor_transport_implementation.py",
+      "tests/test_planner_router_livepaper_smoke.py",
+      "tests/test_planner_router_runtime_smoke.py",
+      "tests/test_planner_router_integration_smoke.py",
+      "tests/test_planner_router_dispatch_state_machine.py",
+      "tests/test_planner_router_executor_transport_spec_contract.py",
+      "tests/test_bootstrap_layout.py"
+    ],
+    "pytest_command": "pytest -q",
+    "pytest_result": "87 passed",
+    "runtime_path_continuity": {
+      "request_id": "req-transport-livepaper-observability-runtime-overlay",
+      "dispatch_path": "plan_and_dispatch",
+      "store_origin_is_traceable": true,
+      "prepare_first_vs_duplicate_visible": true,
+      "runtime_follow_up_duplicate_ack_visible": true,
+      "status_sink_fan_in": true,
+      "handle_id_stable_across_sink_snapshots": true,
+      "dexter_sequence": [
+        "starting",
+        "running",
+        "running",
+        "stopping",
+        "stopped"
+      ],
+      "mewx_sequence": [
+        "starting",
+        "running",
+        "running",
+        "quarantined",
+        "stopping",
+        "stopped"
+      ],
+      "reverse_order_stop_visibility": [
+        "mewx",
+        "dexter"
+      ],
+      "source_faithful_modes": {
+        "dexter": "paper_live",
+        "mewx": "sim_live"
+      }
+    },
+    "ack_metadata": {
+      "prepare_first_vs_duplicate": true,
+      "runtime_start_first_vs_duplicate": true,
+      "runtime_status_ack_detail_visible": true,
+      "stop_first_vs_duplicate": true,
+      "accepted_and_duplicate_visible": true
+    },
+    "quarantine_and_manual_halt": {
+      "quarantine_source_reason_visible": true,
+      "quarantine_scope_visible": true,
+      "quarantine_monitor_profile_id_visible": true,
+      "manual_latched_stop_all_visible": true,
+      "trigger_plan_id_visible": true,
+      "adapter_snapshot_visible": true
+    },
+    "failure_visibility": {
+      "request_id": "req-transport-livepaper-observability-runtime-timeout",
+      "failure_code": "status_timeout",
+      "failure_stage": "status",
+      "source_reason_passthrough": true,
+      "adapter_status_error_visible": true,
+      "rollback_snapshot_visible": true,
+      "source_faithful_snapshot_modes": {
+        "dexter": "paper_live",
+        "mewx": "sim_live"
+      }
+    }
+  },
+  "next_task_evaluation": {
+    "transport_livepaper_observability_hardening": {
+      "recommended": true,
+      "reasons": [
+        "The runtime-oriented lane now proves that the approved observability surface survives entry through plan_and_dispatch plus later runtime follow-up on the same handles.",
+        "The remaining uncertainty is edge-path hardening around reconciliation variants, rejection modes, and confirmation behavior rather than baseline continuity.",
+        "A hardening lane now reduces more risk than another spec-only restatement."
+      ]
+    },
+    "livepaper_observability_spec": {
+      "recommended": false,
+      "reasons": [
+        "The observability surface is now evidenced on both the seam-focused smoke lane and the runtime-oriented continuation path.",
+        "A spec-only pass would add less confidence than targeted hardening."
+      ]
+    },
+    "executor_boundary_code_spec": {
+      "recommended": false,
+      "reasons": [
+        "The planner-to-transport boundary stayed fixed through spec, implementation, runtime smoke, live-paper smoke, observability smoke, and runtime observability continuity.",
+        "This task surfaced no new boundary ambiguity that warrants another contract-only lane."
+      ]
+    }
+  },
+  "task_result": {
+    "selected_outcome": "A",
+    "key_finding": "executor_transport_livepaper_observability_runtime_passed",
+    "claim_boundary": "transport_livepaper_observability_runtime_bounded",
+    "comparison_source_of_truth_state": "comparison_closed_out",
+    "task_state": "transport_livepaper_observability_runtime_passed",
+    "recommended_next_step": "transport_livepaper_observability_hardening",
+    "recommended_next_task_id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-HARDENING",
+    "decision": "transport_livepaper_observability_hardening_ready",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "default_execution_anchor": "dexter",
+    "selective_option_source": "mewx"
+  }
+}

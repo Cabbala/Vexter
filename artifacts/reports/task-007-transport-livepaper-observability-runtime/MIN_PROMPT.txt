@@ -1,0 +1,16 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+次タスクID: TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-RUNTIME
+
+GitHub最新状態を確認し、Vexter main / Dexter PR #3 merged main / frozen Mew-X を前提に、executor transport 実装の live-paper observability runtime lane を進めてください。comparison baseline は固定のまま、source-faithful な Dexter `paper_live` / Mew-X `sim_live` seam を保ちつつ、immutable handoff metadata・handle lifecycle・status sink fan-in・first-vs-duplicate ack visibility・quarantine reason・manual stop-all propagation・snapshot-backed terminal detail が runtime-oriented path でも連続的に観測できることを検証してください。source logic 変更や新証拠収集は行わず、tests・artifacts・handoff bundle を更新して branch/commit/push/PR（可能なら merge）まで進めてください。
+
+Sub-agent rule:
+- このタスクで parallelizable な分析・探索・実装・レビューがある場合、Codex は積極的にサブエージェントを使うこと。
+- 最低でも以下をサブエージェントに分担させること:
+  1. spec / artifact / 既存コード読解担当
+  2. observability runtime 実装担当
+  3. テスト影響範囲確認 + 自己レビュー担当
+- 完了報告では、使ったサブエージェントごとの担当内容を短く明記すること。
+- 一本道で依存が強い箇所のみ単独実行可。ただし、サブエージェント未使用なら理由を明記すること。
+
+詳細は bundle を参照。

@@ -5,6 +5,6 @@
 - Kept frozen Mew-X at `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`
 - Added bounded live-paper observability smoke in `tests/test_planner_router_transport_livepaper_observability_smoke.py`
 - Proved immutable handoff metadata, shared status sink fan-in, handle lifecycle, first-vs-duplicate ack visibility, quarantine reason, manual stop-all propagation, and normalized failure detail are all observable end to end on the live-paper transport seam
-- Revalidated the full repo with `pytest -q` -> `87 passed`
+- Revalidated the full repo with `pytest -q` -> `84 passed`
 - Preserved frozen source behavior, comparison closeout, and no-cross-source-handoff constraints
 - Recommended next task: `transport_livepaper_observability_runtime`

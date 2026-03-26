@@ -96,7 +96,7 @@ Planner/router transport live-paper observability coverage now includes:
 Validation run on this branch:
 
 - `pytest -q`
-- `87 passed`
+- `84 passed`
 
 ## Recommendation Among Next Tasks
 

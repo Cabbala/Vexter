@@ -75,10 +75,12 @@ class RuntimeScriptedAdapter:
         events: list[str],
         *,
         fail_stop: bool = False,
+        status: PlanStatus = PlanStatus.RUNNING,
     ) -> None:
         self.source = source
         self.events = events
         self.fail_stop = fail_stop
+        self.status_value = status
         self.handles: dict[str, DispatchHandle] = {}
         self.prepared = []
         self.started = []
@@ -104,7 +106,7 @@ class RuntimeScriptedAdapter:
         self.events.append(f"status:{self.source.value}:{handle.plan_id}")
         return StatusSnapshot(
             plan_id=handle.plan_id,
-            status=PlanStatus.RUNNING,
+            status=self.status_value,
             source_reason=None,
             observed_at_utc=datetime.now(timezone.utc),
             detail={"signal": "status_poll", "source": self.source.value},
@@ -149,9 +151,16 @@ def build_registry(
     events: list[str],
     *,
     fail_stop_for_mewx: bool = False,
+    dexter_status: PlanStatus = PlanStatus.RUNNING,
+    mewx_status: PlanStatus = PlanStatus.RUNNING,
 ) -> tuple[ExecutorRegistry, RuntimeScriptedAdapter, RuntimeScriptedAdapter]:
-    dexter_adapter = RuntimeScriptedAdapter(Source.DEXTER, events)
-    mewx_adapter = RuntimeScriptedAdapter(Source.MEWX, events, fail_stop=fail_stop_for_mewx)
+    dexter_adapter = RuntimeScriptedAdapter(Source.DEXTER, events, status=dexter_status)
+    mewx_adapter = RuntimeScriptedAdapter(
+        Source.MEWX,
+        events,
+        fail_stop=fail_stop_for_mewx,
+        status=mewx_status,
+    )
     return ExecutorRegistry(dexter_adapter, mewx_adapter), dexter_adapter, mewx_adapter
 
 
@@ -392,4 +401,53 @@ def test_plan_and_dispatch_runtime_smoke_rolls_back_overlay_batch_on_quarantine_
         f"stop:mewx:{mewx_plan.plan_id}:monitor_quarantine",
         f"stop:dexter:{dexter_plan.plan_id}:monitor_quarantine",
         f"snapshot:dexter:{dexter_plan.plan_id}",
+    ]
+
+
+def test_plan_and_dispatch_runtime_smoke_fails_closed_on_invalid_runtime_transition(
+    tmp_path: Path,
+) -> None:
+    config_root = clone_config_dir(tmp_path)
+    enable_mewx_sleeve(config_root)
+    events: list[str] = []
+    store = RuntimeMirrorPlanStore(events)
+    sink = MirroringStatusSink(store)
+    registry, dexter_adapter, mewx_adapter = build_registry(events, mewx_status=PlanStatus.STOPPED)
+
+    dispatch_snapshots = asyncio.run(
+        plan_and_dispatch(
+            PlanRequest(plan_request_id="req-runtime-invalid", objective_profile_id="dexter_with_mewx_overlay"),
+            config_root,
+            FROZEN_PINS,
+            store,
+            registry,
+            sink,
+            CREATED_AT,
+        )
+    )
+
+    batch = store.batches[0]
+    dexter_plan, mewx_plan = batch.plans
+
+    assert [snapshot.status for snapshot in dispatch_snapshots] == [
+        PlanStatus.STARTING,
+        PlanStatus.RUNNING,
+        PlanStatus.STARTING,
+        PlanStatus.FAILED,
+        PlanStatus.FAILED,
+    ]
+    assert dispatch_snapshots[-2].detail["failure_code"] == FailureCode.INVALID_STATUS_TRANSITION.value
+    assert dispatch_snapshots[-1].detail["failure_code"] == FailureCode.INVALID_STATUS_TRANSITION.value
+    assert dexter_adapter.stopped == [(dexter_plan.plan_id, FailureCode.INVALID_STATUS_TRANSITION.value)]
+    assert mewx_adapter.stopped == [(mewx_plan.plan_id, FailureCode.INVALID_STATUS_TRANSITION.value)]
+    assert events == [
+        "store:req-runtime-invalid:batch",
+        f"prepare:dexter:{dexter_plan.plan_id}",
+        f"prepare:mewx:{mewx_plan.plan_id}",
+        f"start:dexter:{dexter_plan.plan_id}",
+        f"status:dexter:{dexter_plan.plan_id}",
+        f"start:mewx:{mewx_plan.plan_id}",
+        f"status:mewx:{mewx_plan.plan_id}",
+        f"stop:mewx:{mewx_plan.plan_id}:{FailureCode.INVALID_STATUS_TRANSITION.value}",
+        f"stop:dexter:{dexter_plan.plan_id}:{FailureCode.INVALID_STATUS_TRANSITION.value}",
     ]

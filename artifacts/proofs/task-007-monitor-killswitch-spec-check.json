@@ -1,0 +1,216 @@
+{
+  "task_id": "TASK-007-MONITOR-KILLSWITCH-SPEC",
+  "generated_at_utc": "2026-03-26T03:15:00Z",
+  "verified_github": {
+    "latest_vexter_pr": 40,
+    "latest_vexter_main_commit": "a4e7a3c74460dc711c3e2897ac31386272e91c27",
+    "latest_vexter_merged_at_utc": "2026-03-26T02:45:48Z",
+    "supporting_vexter_prs": [
+      39,
+      38,
+      37,
+      36,
+      35,
+      34,
+      33,
+      32,
+      31,
+      30,
+      29,
+      28,
+      27,
+      26,
+      25,
+      24,
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "mewx_frozen_commit_date_utc": "2026-03-20T16:05:19Z"
+  },
+  "fixed_input_surface": {
+    "planner_router_runtime_smoke_report": "artifacts/reports/task-007-planner-router-runtime-smoke-report.md",
+    "planner_router_runtime_smoke_proof": "artifacts/proofs/task-007-planner-router-runtime-smoke-check.json",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "promoted_live_winner_mode": "derived",
+    "promoted_replay_winner_mode": "derived",
+    "live_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "replay_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "dexter_replay_coverage_ratio": 1.0,
+    "dexter_live_vs_replay_gap_pct": 0.0,
+    "mewx_replay_coverage_ratio": 1.0,
+    "mewx_live_vs_replay_gap_pct": 0.0,
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false
+  },
+  "monitor_killswitch_spec": {
+    "runtime_status_surface": [
+      "planned",
+      "starting",
+      "running",
+      "quarantined",
+      "stopping",
+      "stopped",
+      "failed"
+    ],
+    "monitor_profiles": {
+      "dexter_default": {
+        "admission_gate_class": "lifecycle_control",
+        "timeout_envelope_class": "dexter_lifecycle_control",
+        "quarantine_scope": "sleeve",
+        "global_halt_participation": true
+      },
+      "mewx_timeout_guard": {
+        "admission_gate_class": "timeout_aware",
+        "timeout_envelope_class": "mewx_timeout_tolerant",
+        "quarantine_scope": "sleeve",
+        "global_halt_participation": true
+      }
+    },
+    "admission_gate_class": {
+      "mode": "pre_emission_fail_closed",
+      "rejection_codes": [
+        "config_missing",
+        "duplicate_config_id",
+        "unknown_objective_profile",
+        "route_mode_invalid",
+        "sleeve_disabled",
+        "executor_source_mismatch",
+        "pin_mismatch",
+        "unknown_budget_policy",
+        "mewx_cap_required",
+        "budget_share_overflow",
+        "global_halt_active"
+      ]
+    },
+    "timeout_envelope_class": {
+      "dexter_default": {
+        "boundary_shape": "lifecycle_control",
+        "numeric_policy": "deferred_boundary"
+      },
+      "mewx_timeout_guard": {
+        "boundary_shape": "timeout_aware",
+        "source_native_close_reason": "inactivity_timeout",
+        "quarantine_boundary": [
+          "timeout_envelope_breached",
+          "normalized_close_missing",
+          "shutdown_confirmation_missing"
+        ],
+        "numeric_policy": "deferred_boundary"
+      }
+    },
+    "quarantine_scope": {
+      "scope": "sleeve",
+      "new_work": "disabled_for_affected_sleeve",
+      "cross_source_handoff": false,
+      "rollback_order": "reverse_plan_order"
+    },
+    "global_halt_participation": {
+      "planner_mode": "manual_latched_stop_all",
+      "applies_to_profiles": [
+        "dexter_default",
+        "mewx_timeout_guard"
+      ],
+      "planning_effect": "freeze_new_planning",
+      "runtime_effect": "source_native_stop_requests_only",
+      "cross_source_handoff": false
+    },
+    "typed_failure_escalation": {
+      "pre_emission_codes": [
+        "config_missing",
+        "duplicate_config_id",
+        "unknown_objective_profile",
+        "route_mode_invalid",
+        "sleeve_disabled",
+        "executor_source_mismatch",
+        "pin_mismatch",
+        "unknown_budget_policy",
+        "mewx_cap_required",
+        "budget_share_overflow",
+        "global_halt_active"
+      ],
+      "post_emission_codes": [
+        "prepare_failed",
+        "start_failed",
+        "status_timeout",
+        "shutdown_unconfirmed",
+        "invalid_status_transition",
+        "source_stop_failed"
+      ],
+      "failure_detail_fields": [
+        "code",
+        "stage",
+        "plan_id",
+        "source",
+        "source_reason",
+        "detail"
+      ],
+      "source_reason_passthrough": true
+    },
+    "deferred_boundaries": [
+      "heartbeat cadence",
+      "retry counts",
+      "timeout durations",
+      "incident escalation thresholds",
+      "budget exhaustion numeric limits"
+    ]
+  },
+  "validation": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "new_evidence_collection_required": false,
+    "contract_test_files": [
+      "tests/test_monitor_killswitch_spec_contract.py",
+      "tests/test_planner_router_runtime_smoke.py",
+      "tests/test_bootstrap_layout.py"
+    ],
+    "pytest_command": "pytest -q",
+    "pytest_result": "58 passed"
+  },
+  "next_task_evaluation": {
+    "planner_router_livepaper_smoke": {
+      "recommended": true,
+      "reasons": [
+        "Live-paper can now inherit explicit quarantine, stop-all rollback, and global-halt rules instead of guessing them.",
+        "The runtime seam is already proven, so the next bounded question is live-paper behavior under the fixed monitor contract.",
+        "Another boundary-only pass would add less value than source-faithful live-paper validation."
+      ]
+    },
+    "executor_boundary_spec": {
+      "recommended": false,
+      "reasons": [
+        "The abstract adapter, status, and pin surfaces are already fixed and runtime-smoked.",
+        "What remains open is validation of the current contract under live-paper execution, not another executor-boundary restatement."
+      ]
+    }
+  },
+  "task_result": {
+    "selected_outcome": "A",
+    "key_finding": "monitor_killswitch_contract_fixed",
+    "claim_boundary": "monitor_killswitch_spec_bounded",
+    "comparison_source_of_truth_state": "comparison_closed_out",
+    "task_state": "monitor_killswitch_spec_ready",
+    "recommended_next_step": "planner_router_livepaper_smoke",
+    "recommended_next_task_id": "TASK-007-PLANNER-ROUTER-LIVEPAPER-SMOKE",
+    "decision": "planner_router_livepaper_smoke_ready",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "default_execution_anchor": "dexter",
+    "selective_option_source": "mewx"
+  }
+}

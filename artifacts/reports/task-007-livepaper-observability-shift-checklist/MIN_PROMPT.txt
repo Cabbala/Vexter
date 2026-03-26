@@ -1,0 +1,5 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+次タスクID: TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-CHECKLIST
+
+GitHub最新状態を確認し、Vexter main / Dexter PR #3 merged main / frozen Mew-X を前提に、live-paper observability shift checklist を作成してください。comparison baseline は固定のまま、source-faithful な Dexter `paper_live` / Mew-X `sim_live` seam、`specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md`、`docs/livepaper_observability_operator_runbook.md` を前提に、運用シフト開始前・シフト中・シフト終了時に operator が何をどの順で確認し、どの proof/report/status を見て、どの omission / drift / partial_visibility を halt・quarantine・continue に結び付けるかを bounded checklist に落とし込んでください。source logic 変更や新証拠収集は行わず、tests・artifacts・handoff bundle を更新してください。

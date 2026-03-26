@@ -11,7 +11,7 @@
 - Promoted baseline: `task005-pass-grade-pair-20260325T180027Z`
 - Comparison source of truth: `comparison_closed_out`
 - Prior lane source state: `transport_livepaper_observability_ci_gate_passed`
-- The explicit `transport_livepaper_observability_watchdog` suite now detects required field omission, planned runtime metadata drift, partial status-sink fan-in, ack-history retention loss, quarantine-reason omission, manual stop-all propagation loss, terminal snapshot gaps, and normalized failure-detail passthrough loss
+- The explicit `transport_livepaper_observability_watchdog` suite now detects required field omission, handle lifecycle continuity drift, planned runtime metadata drift, partial status-sink fan-in, ack-history retention loss, quarantine-reason omission, manual stop-all propagation loss, terminal snapshot gaps, and normalized failure-detail passthrough loss
 - Workflow proof output and bootstrap validation now keep the watchdog visible alongside the existing CI gate in standard validation and bundle flows
 
 ## Decision

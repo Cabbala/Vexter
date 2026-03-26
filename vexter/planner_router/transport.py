@@ -649,6 +649,36 @@ def _failed_snapshot_detail_missing(detail: Mapping[str, Any]) -> tuple[str, ...
     return tuple(dict.fromkeys(missing))
 
 
+def _sink_expected_detail_keys(snapshot: StatusSnapshot) -> tuple[str, ...]:
+    expected_keys = list(_WATCHDOG_RUNTIME_REQUIRED_KEYS)
+    if snapshot.status in {
+        PlanStatus.RUNNING,
+        PlanStatus.QUARANTINED,
+        PlanStatus.STOPPING,
+        PlanStatus.STOPPED,
+        PlanStatus.FAILED,
+    }:
+        expected_keys.extend(
+            (
+                "sequence",
+                "poll_counter",
+                "snapshot_counter",
+                "executor_status",
+                "started",
+                "stop_requested",
+                "stop_confirmed",
+                "duplicate",
+            )
+        )
+    if snapshot.status is PlanStatus.QUARANTINED:
+        expected_keys.append("quarantine_reason")
+    if dict(snapshot.detail).get("signal") == "halt_latched":
+        expected_keys.extend(("stop_reason", "halt_mode", "trigger_plan_id"))
+    if snapshot.status is PlanStatus.FAILED:
+        expected_keys.extend(_WATCHDOG_FAILED_SNAPSHOT_REQUIRED_KEYS)
+    return tuple(dict.fromkeys(expected_keys))
+
+
 def evaluate_livepaper_observability_watchdog(
     plans: Sequence[ExecutionPlan],
     handles_by_plan_id: Mapping[str, DispatchHandle],
@@ -1029,7 +1059,9 @@ def evaluate_livepaper_observability_watchdog(
 
         visible_details = _ack_detail_sequence(handle, runtime, terminal_snapshot)
         if failure_detail is not None and isinstance(failure_detail.get("detail"), Mapping):
-            visible_details.append(dict(failure_detail["detail"]))
+            failure_visible_detail = dict(failure_detail["detail"])
+            if any(key in failure_visible_detail for key in _WATCHDOG_ACK_RETENTION_KEYS):
+                visible_details.append(failure_visible_detail)
 
         if visible_details:
             latest_visible_detail = visible_details[-1]
@@ -1137,6 +1169,29 @@ def evaluate_livepaper_observability_watchdog(
                     },
                 )
             )
+        else:
+            for index, (runtime_snapshot, sink_snapshot) in enumerate(zip(runtime_snapshots, sink_snapshots)):
+                runtime_detail = dict(runtime_snapshot.detail)
+                sink_detail = dict(sink_snapshot.detail)
+                expected_keys = _sink_expected_detail_keys(runtime_snapshot)
+                comparable_keys = tuple(key for key in expected_keys if key in runtime_detail and key in sink_detail)
+                missing = tuple(key for key in expected_keys if key in runtime_detail and key not in sink_detail)
+                mismatched = _mismatched_required_keys(runtime_detail, sink_detail, comparable_keys)
+                if missing or mismatched:
+                    findings.append(
+                        _watchdog_issue(
+                            "partial_status_sink_fan_in",
+                            "partial_visibility",
+                            "status sink fan-in lost required observability detail from the runtime snapshot stream",
+                            plan_id=runtime_snapshot.plan_id,
+                            detail={
+                                "snapshot_index": index,
+                                "status": runtime_snapshot.status.value,
+                                "missing_fields": missing,
+                                "mismatched_fields": mismatched,
+                            },
+                        )
+                    )
 
     if manual_stop_visible_plan_ids:
         expected_manual_stop_plan_ids = {plan.plan_id for plan in plans}

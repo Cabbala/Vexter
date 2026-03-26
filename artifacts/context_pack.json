@@ -55,7 +55,7 @@
       "Verify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X.",
       "Treat the merged transport live-paper observability CI-gate lane as the formal baseline without reopening comparison work.",
       "Add a bounded live-paper observability watchdog surface on top of the existing transport implementation.",
-      "Detect required field omission, partial status-sink fan-in, ack-history collapse, quarantine and stop reason omission, terminal snapshot gaps, metadata drift, and normalized failure passthrough loss.",
+      "Detect required field omission, handle lifecycle continuity drift, partial status-sink fan-in, ack-history collapse, quarantine and stop reason omission, terminal snapshot gaps, metadata drift, and normalized failure passthrough loss.",
       "Refresh the tests, workflow, artifacts, manifest, ledger, and handoff bundle without collecting new evidence."
     ],
     "deliverables": [
@@ -158,6 +158,7 @@
       ],
       "validated_axes": [
         "required_observability_field_omission",
+        "handle_lifecycle_continuity",
         "partial_status_sink_fan_in",
         "ack_history_retention",
         "quarantine_reason_completeness",

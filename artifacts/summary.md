@@ -11,7 +11,7 @@
 
 - Started from the merged CI-gate lane on PR `#53` and kept the promoted comparison baseline frozen.
 - Added a bounded live-paper observability watchdog evaluator to the executor transport layer so Vexter can detect operational drift, omission, and partial visibility without changing transport execution semantics.
-- Verified watchdog coverage for required observability field omission, partial status-sink fan-in, ack-history retention collapse, quarantine-reason omission, manual stop-all propagation loss, snapshot-backed terminal detail gaps, planned-versus-runtime metadata drift, and normalized failure-detail passthrough loss.
+- Verified watchdog coverage for required observability field omission, handle lifecycle continuity drift, partial status-sink fan-in, ack-history retention collapse, quarantine-reason omission, manual stop-all propagation loss, snapshot-backed terminal detail gaps, planned-versus-runtime metadata drift, and normalized failure-detail passthrough loss.
 - Added a dedicated watchdog runner and workflow proof surfacing so CI emits a focused proof summary for the new watchdog lane alongside the existing CI gate.
 - Refreshed the proof, report, context pack, task ledger, proof bundle manifest, prompt pack, bootstrap checks, and bundle target for the watchdog lane without changing planner/router source logic or collecting new evidence.
 

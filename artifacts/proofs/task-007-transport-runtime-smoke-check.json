@@ -1,0 +1,188 @@
+{
+  "task_id": "TASK-007-TRANSPORT-RUNTIME-SMOKE",
+  "generated_at_utc": "2026-03-26T11:45:00Z",
+  "verified_github": {
+    "latest_vexter_pr": 44,
+    "latest_vexter_main_commit": "ae1dd7ddc3ffbae893887baf042ea5e5d53bc5f3",
+    "latest_vexter_merged_at_utc": "2026-03-26T11:00:22Z",
+    "supporting_vexter_prs": [
+      43,
+      42,
+      41,
+      40,
+      39,
+      38,
+      37,
+      36,
+      35,
+      34,
+      33,
+      32,
+      31,
+      30,
+      29,
+      28,
+      27,
+      26,
+      25,
+      24,
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17
+    ],
+    "dexter_pr": 3,
+    "dexter_main_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_pr_3_merged_at_utc": "2026-03-21T11:31:07Z",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a",
+    "mewx_frozen_commit_date_utc": "2026-03-20T16:05:19Z"
+  },
+  "fixed_input_surface": {
+    "executor_transport_implementation_report": "artifacts/reports/task-007-planner-router-executor-transport-implementation-report.md",
+    "executor_transport_implementation_proof": "artifacts/proofs/task-007-planner-router-executor-transport-implementation-check.json",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "promoted_live_winner_mode": "derived",
+    "promoted_replay_winner_mode": "derived",
+    "live_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "replay_metric_winner_tally": {
+      "dexter": 6,
+      "mewx": 4,
+      "tie": 2
+    },
+    "dexter_replay_coverage_ratio": 1.0,
+    "dexter_live_vs_replay_gap_pct": 0.0,
+    "mewx_replay_coverage_ratio": 1.0,
+    "mewx_live_vs_replay_gap_pct": 0.0,
+    "confirmatory_residual": "Mew-X candidate_rejected",
+    "confirmatory_overturns_promoted_baseline": false
+  },
+  "transport_runtime_smoke": {
+    "source_logic_changed": false,
+    "validator_rules_changed": false,
+    "new_evidence_collection_required": false,
+    "smoke_test_files": [
+      "tests/test_planner_router_transport_runtime_smoke.py"
+    ],
+    "supporting_test_files": [
+      "tests/test_planner_router_transport.py",
+      "tests/test_planner_router_executor_transport_implementation.py",
+      "tests/test_planner_router_livepaper_smoke.py",
+      "tests/test_planner_router_runtime_smoke.py",
+      "tests/test_planner_router_integration_smoke.py",
+      "tests/test_planner_router_dispatch_state_machine.py",
+      "tests/test_planner_router_executor_transport_spec_contract.py"
+    ],
+    "pytest_command": "pytest -q",
+    "pytest_result": "78 passed",
+    "source_faithful_seams": {
+      "dexter": {
+        "execution_mode": "paper_live",
+        "entrypoint": "monitor_mint_session",
+        "startup_method": null
+      },
+      "mewx": {
+        "execution_mode": "sim_live",
+        "entrypoint": "sim_session",
+        "startup_method": "start_session"
+      }
+    },
+    "handle_runtime_progression": {
+      "request_id": "req-transport-runtime-progression",
+      "selected_sources": [
+        "dexter",
+        "mewx"
+      ],
+      "source_faithful_modes": {
+        "dexter": "paper_live",
+        "mewx": "sim_live"
+      },
+      "stable_handle_identity": true,
+      "idempotent_prepare_start_stop": true,
+      "runtime_status_sequence": [
+        "running",
+        "quarantined",
+        "stopping",
+        "stopped"
+      ],
+      "poll_first_reconciliation": true,
+      "snapshot_stop_confirmation": true
+    },
+    "reconciliation_runtime_smoke": {
+      "request_id": "req-transport-runtime-default",
+      "push_promoted_before_stop": true,
+      "poll_first_mode": true,
+      "snapshot_stop_confirmation": true
+    },
+    "failure_normalization": {
+      "request_id": "req-transport-runtime-timeout",
+      "failure_code": "status_timeout",
+      "failure_stage": "status",
+      "source_reason": "status timeout",
+      "rollback_attempted": true,
+      "rollback_confirmed": true,
+      "rollback_confirmation_source": "snapshot"
+    },
+    "rollback_runtime_smoke": {
+      "request_id": "req-transport-runtime-timeout",
+      "objective_profile_id": "dexter_with_mewx_overlay",
+      "failure_code": "status_timeout",
+      "status_sequence": [
+        "starting",
+        "running",
+        "starting",
+        "failed",
+        "failed"
+      ],
+      "reverse_order_stop_all": true,
+      "reverse_order_stop_fanout": true,
+      "stop_event_order": [
+        "mewx",
+        "dexter"
+      ]
+    }
+  },
+  "next_task_evaluation": {
+    "transport_livepaper_smoke": {
+      "recommended": true,
+      "reasons": [
+        "The implemented transport surface is now runtime-smoked and can move to the live-paper seam without reopening transport design.",
+        "Handle lifecycle, reconciliation, failure normalization, and rollback semantics are now proven prerequisites for a bounded livepaper transport smoke.",
+        "Observability should describe a behaviorally smoked livepaper transport path rather than precede it."
+      ]
+    },
+    "livepaper_observability_spec": {
+      "recommended": false,
+      "reasons": [
+        "Telemetry is no longer the sharpest remaining uncertainty; transport behavior across the livepaper seam is.",
+        "Existing handle, ack, reconciliation, and rollback metadata can be specified more sharply after one more behavioral smoke."
+      ]
+    },
+    "executor_boundary_code_spec": {
+      "recommended": false,
+      "reasons": [
+        "The boundary was already fixed in earlier spec lanes and stayed stable through runtime smoke.",
+        "This lane surfaced no new boundary ambiguity that warrants another contract-only pass."
+      ]
+    }
+  },
+  "task_result": {
+    "selected_outcome": "A",
+    "key_finding": "executor_transport_runtime_smoke_passed",
+    "claim_boundary": "transport_runtime_smoke_bounded",
+    "comparison_source_of_truth_state": "comparison_closed_out",
+    "task_state": "transport_runtime_smoke_passed",
+    "recommended_next_step": "transport_livepaper_smoke",
+    "recommended_next_task_id": "TASK-007-TRANSPORT-LIVEPAPER-SMOKE",
+    "decision": "transport_livepaper_smoke_ready",
+    "promoted_label": "task005-pass-grade-pair-20260325T180027Z",
+    "default_execution_anchor": "dexter",
+    "selective_option_source": "mewx"
+  }
+}

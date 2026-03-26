@@ -1,6 +1,6 @@
 {
   "task_id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-RUNTIME",
-  "generated_at_utc": "2026-03-26T15:23:34Z",
+  "generated_at_utc": "2026-03-26T16:23:29Z",
   "verified_github": {
     "latest_vexter_pr": 55,
     "latest_vexter_main_commit": "79a74ee187f222be74d11a30cf7204cd5777f01e",
@@ -25,7 +25,7 @@
   "watchdog_runtime_suite": {
     "suite_group": "transport_livepaper_observability_watchdog_runtime",
     "pytest_command": "pytest -q -m transport_livepaper_observability_watchdog_runtime tests/test_planner_router_transport_livepaper_observability_watchdog_runtime.py",
-    "pytest_result": "6 passed in 0.04s",
+    "pytest_result": "6 passed in 0.63s",
     "watchdog_runtime_status": "passed",
     "workflow": ".github/workflows/validate.yml",
     "proof_outputs": [

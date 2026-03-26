@@ -1,6 +1,6 @@
 {
   "task_id": "TASK-007-TRANSPORT-LIVEPAPER-OBSERVABILITY-WATCHDOG-REGRESSION-PACK",
-  "generated_at_utc": "2026-03-26T15:57:29Z",
+  "generated_at_utc": "2026-03-26T16:23:29Z",
   "verified_github": {
     "latest_vexter_pr": 56,
     "latest_vexter_main_commit": "cc8996e0204b7dd149ebce85f1988d7a3abf90cd",
@@ -31,7 +31,7 @@
   "watchdog_regression_pack_suite": {
     "suite_group": "transport_livepaper_observability_watchdog_regression_pack",
     "pytest_command": "pytest -q -m transport_livepaper_observability_watchdog_regression_pack tests/test_planner_router_transport_livepaper_observability_regression_pack.py",
-    "pytest_result": "9 passed, 2 deselected in 0.04s",
+    "pytest_result": "9 passed, 2 deselected in 0.66s",
     "watchdog_regression_pack_status": "passed",
     "runner_script": "scripts/run_transport_livepaper_observability_watchdog_regression_pack.sh",
     "proof_outputs": [

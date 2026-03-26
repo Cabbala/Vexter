@@ -87,22 +87,37 @@ def test_transport_livepaper_observability_ci_gate_proof_tracks_grouped_suite_an
 def test_transport_livepaper_observability_ci_gate_workflow_runs_gate_runner_before_remaining_suite() -> None:
     workflow = (REPO_ROOT / ".github" / "workflows" / "validate.yml").read_text()
 
-    gate_index = workflow.index("Run transport livepaper observability CI gate")
-    watchdog_index = workflow.index("Run transport livepaper observability watchdog")
-    watchdog_runtime_index = workflow.index("Run transport livepaper observability watchdog runtime")
-    build_bundle_index = workflow.index("Build proof bundle")
-    remaining_tests_index = workflow.index("Run remaining tests")
+    gate_index = workflow.index("- name: Run transport livepaper observability CI gate")
+    watchdog_index = workflow.index("- name: Run transport livepaper observability watchdog")
+    watchdog_runtime_index = workflow.index("- name: Run transport livepaper observability watchdog runtime")
+    watchdog_regression_pack_index = workflow.index(
+        "- name: Run transport livepaper observability watchdog regression pack"
+    )
+    watchdog_ci_gate_index = workflow.index("- name: Run transport livepaper observability watchdog CI gate")
+    build_bundle_index = workflow.index("- name: Build proof bundle")
+    remaining_tests_index = workflow.index("- name: Run remaining tests")
 
+    assert "./scripts/run_transport_livepaper_observability_watchdog_ci_gate.sh" in workflow
     assert "./scripts/run_transport_livepaper_observability_ci_gate.sh" in workflow
     assert "./scripts/run_transport_livepaper_observability_watchdog_runtime.sh" in workflow
     assert "transport-livepaper-observability-ci-gate-proof" in workflow
     assert "cat artifacts/proofs/task-007-transport-livepaper-observability-ci-gate-summary.md" in workflow
     assert (
-        'pytest -q -m "not transport_livepaper_observability_ci_gate and not '
+        'pytest -q -m "not transport_livepaper_observability_watchdog_ci_gate and not '
+        'transport_livepaper_observability_ci_gate and not '
         'transport_livepaper_observability_watchdog and not '
-        'transport_livepaper_observability_watchdog_runtime"'
+        'transport_livepaper_observability_watchdog_runtime and not '
+        'transport_livepaper_observability_watchdog_regression_pack"'
     ) in workflow
-    assert gate_index < watchdog_index < watchdog_runtime_index < build_bundle_index < remaining_tests_index
+    assert (
+        watchdog_ci_gate_index
+        < gate_index
+        < watchdog_index
+        < watchdog_runtime_index
+        < watchdog_regression_pack_index
+        < build_bundle_index
+        < remaining_tests_index
+    )
 
 
 def test_transport_livepaper_observability_ci_gate_manifest_and_context_point_to_gate_bundle() -> None:

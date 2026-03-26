@@ -1,0 +1,5 @@
+対象スレッド: 既存 Vexter Codex スレッド（なければ新規）
+作業系統: Vexter / Infra
+次タスクID: TASK-007-LIVEPAPER-OBSERVABILITY-SPEC
+
+GitHub最新状態を確認し、Vexter main / Dexter PR #3 merged main / frozen Mew-X を前提に、transport live-paper observability spec を整理してください。watchdog CI gate で固定された surface を source of truth とし、comparison baseline は固定のまま、Dexter `paper_live` / frozen Mew-X `sim_live` seam と watchdog CI gate の required surfaces・suite grouping・proof contract・failure triage contract を spec 化してください。source logic 変更や新証拠収集は行わず、docs/specs/tests/artifacts/handoff bundle を更新してください。

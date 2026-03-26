@@ -10,6 +10,10 @@ if str(REPO_ROOT) not in sys.path:
 def pytest_configure(config) -> None:
     config.addinivalue_line(
         "markers",
+        "transport_livepaper_observability_watchdog_ci_gate: grouped watchdog CI gate suite that keeps watchdog, watchdog-runtime, and watchdog-regression-pack surfaces green in CI",
+    )
+    config.addinivalue_line(
+        "markers",
         "transport_livepaper_observability_ci_gate: transport live-paper observability gate suite that must stay green in CI",
     )
     config.addinivalue_line(

@@ -201,6 +201,14 @@ jobs:
             artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate-status.md
             artifacts/reports/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate/HANDOFF.md
 
+      - name: Restore current demo executor bundle metadata
+        run: |
+          git restore --source=HEAD --worktree \
+            artifacts/context_pack.json \
+            artifacts/proof_bundle_manifest.json \
+            artifacts/task_ledger.jsonl \
+            artifacts/summary.md
+
       - name: Build proof bundle
         run: ./scripts/build_proof_bundle.sh
 

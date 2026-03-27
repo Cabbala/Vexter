@@ -133,13 +133,13 @@ PASS_NEXT_TASK_ID = "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE"
 PASS_NEXT_TASK_STATE = "ready_for_supervised_run_retry_gate_recheck"
 PASS_NEXT_TASK_LANE = "supervised_run_retry_gate"
 DECISION = "retry_gate_review_blocked_pending_fresh_attestation_refresh_and_record_pack_regeneration"
-PUBLISHED_BRANCH = "codex/demo-readiness-external-evidence-intake"
+PUBLISHED_BRANCH = "codex/attestation-refresh-repromotion-after-pr89"
 
 VERIFIED_DEXTER_COMMIT = "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938"
 VERIFIED_MEWX_COMMIT = "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
-VERIFIED_VEXTER_PR = 88
-VERIFIED_VEXTER_COMMIT = "1d43904d392eefdcc911f00102cdff62bce9deb2"
-VERIFIED_VEXTER_MERGED_AT = "2026-03-27T20:05:00Z"
+VERIFIED_VEXTER_PR = 89
+VERIFIED_VEXTER_COMMIT = "c3d4086b503e30a9572824d6bbb00fd417d1e406"
+VERIFIED_VEXTER_MERGED_AT = "2026-03-27T20:45:26Z"
 
 REQUIRED_FACE_NAMES = [
     "external_credential_source_face",
@@ -157,7 +157,7 @@ SUB_AGENT_SUMMARIES = (
     {
         "name": "Anscombe",
         "lines": [
-            "Reverified PR `#88` / merge commit `1d43904d392eefdcc911f00102cdff62bce9deb2` as latest merged `main`, then treated the record-pack-regeneration lane as current repo-visible truth rather than reopening older refresh assumptions.",
+            "Reverified PR `#89` / merge commit `c3d4086b503e30a9572824d6bbb00fd417d1e406` as latest merged `main`, then treated the record-pack-regeneration lane as the current repo-visible baseline rather than reopening older refresh assumptions.",
             "The main duplication before this change was that refresh and regeneration re-derived the same outside-repo blocker semantics from each other instead of from one canonical evidence manifest and validator.",
             "Current-pointer risk remains atomic: summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces must all reflect the same fail-closed truth once the canonical gap report is introduced.",
         ],
@@ -175,7 +175,7 @@ SUB_AGENT_SUMMARIES = (
         "lines": [
             "The smallest safe implementation is one canonical manifest + validator + standalone gap report, then wiring refresh and regeneration to consume that shared output while leaving historical lanes intact.",
             "Validation should start with the new gap script plus refresh/regeneration tests, then widen to bundle/export coverage and the full pytest suite.",
-            "Merge readiness depends on exact agreement across summary, context, manifest, ledger, README, refresh bundle metadata, and the new external-evidence paths on branch `codex/demo-readiness-external-evidence-intake`.",
+            "Merge readiness depends on exact agreement across summary, context, manifest, ledger, README, refresh bundle metadata, and the canonical external-evidence paths from the PR `#89` baseline.",
         ],
     },
 )
@@ -317,6 +317,8 @@ def build_refresh_rows(gap_faces: list[dict]) -> list[dict]:
                 "minimum_fresh_evidence_locator_shape": minimum_locator_shape,
                 "stale_condition": stale_condition,
                 "usable_for_retry_gate_review_when": usable_condition,
+                "required_manifest_fields": list(face.get("required_manifest_fields", [])),
+                "proof_paths_to_recheck": list(face.get("proof_paths_to_recheck", [])),
                 "refresh_rule_complete": refresh_rule_complete,
                 "current_fresh_evidence_locator_present": current_fresh_locator_present,
                 "current_evidence_fresh_enough": current_fresh_enough,
@@ -436,6 +438,7 @@ def build_current_report(
 - gap summary: `{GAP_SUMMARY_REL_PATH}`
 - manifest status: `{manifest['status']}`
 - blocked faces from canonical validator: `{", ".join(summary['blocked_faces'])}`
+- canonical face-to-manifest map: `{GAP_REPORT_REL_PATH}` under `Face-To-Manifest Map`
 
 ## Refresh Findings
 - required refresh faces: `{len(rows)}`
@@ -712,6 +715,17 @@ def build_handoff(
 - baseline_report: artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-report.md
 - baseline_proof_json: artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json
 - baseline_handoff: artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md
+
+## Canonical Evidence Intake Handoff
+- bounded_window_fields_to_fill_once: {", ".join(gap_payload['manifest']['window_fields_to_fill'])}
+- per_blocked_face_fields_to_fill: provided, attested_by, evidence_locator, locator_kind, verified_at, fresh_until, reviewable_without_secrets, reviewability_note
+- canonical_face_to_manifest_map: {GAP_REPORT_REL_PATH}
+- canonical_machine_gap_proof: {GAP_PROOF_REL_PATH}
+- proof_surfaces_to_rerun_after_manifest_update: {", ".join(gap_payload['manifest']['proof_paths_to_recheck'])}
+- rerun_gap_and_lane_commands:
+  - {gap_payload['manifest']['rerun_commands'][0]}
+  - {gap_payload['manifest']['rerun_commands'][1]}
+  - {gap_payload['manifest']['rerun_commands'][2]}
 
 ## Guardrails
 - route_mode: single_sleeve
@@ -1173,9 +1187,9 @@ def main() -> None:
         {
             "latest_vexter_pr": VERIFIED_VEXTER_PR,
             "latest_vexter_main_commit": VERIFIED_VEXTER_COMMIT,
-            "latest_recent_vexter_prs": [88, 87, 86, 85, 84],
-            "vexter_pr_88_merged_at": VERIFIED_VEXTER_MERGED_AT,
-            "vexter_pr_88_closed_at": VERIFIED_VEXTER_MERGED_AT,
+            "latest_recent_vexter_prs": [89, 88, 87, 86, 85],
+            "vexter_pr_89_merged_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_89_closed_at": VERIFIED_VEXTER_MERGED_AT,
         }
     )
     context_pack["evidence"]["demo_forward_supervised_run_retry_gate_attestation_refresh"] = {
@@ -1341,7 +1355,7 @@ def main() -> None:
         "source_faithful_modes": {"dexter": "paper_live", "mewx": "sim_live"},
         "status": TASK_STATUS,
         "sub_agents_used": [item["name"] for item in SUB_AGENT_SUMMARIES],
-        "supporting_vexter_prs": [88, 87, 86, 85, 84],
+        "supporting_vexter_prs": [89, 88, 87, 86, 85],
         "task_id": TASK_ID,
         "template_runtime_validation_errors": runtime_errors,
         "external_evidence_manifest_status": gap_payload["manifest"]["status"],
@@ -1349,7 +1363,7 @@ def main() -> None:
         "verified_dexter_main_commit": VERIFIED_DEXTER_COMMIT,
         "verified_dexter_pr": 3,
         "verified_mewx_frozen_commit": VERIFIED_MEWX_COMMIT,
-        "verified_prs": [88, 87, 86],
+        "verified_prs": [89, 88, 87],
         "date": run_timestamp.split("T", 1)[0],
     }
     rewrite_local_ledger(ledger_payload)

@@ -53,6 +53,35 @@ FACE_KEYS = {
     "marker_match_note",
     "operator_input_remaining",
 }
+WINDOW_FIELD_PATHS = [
+    "bounded_supervised_window.label",
+    "bounded_supervised_window.starts_at",
+    "bounded_supervised_window.ends_at",
+]
+FACE_FILL_FIELD_NAMES = [
+    "provided",
+    "attested_by",
+    "evidence_locator",
+    "locator_kind",
+    "verified_at",
+    "fresh_until",
+    "reviewable_without_secrets",
+    "reviewability_note",
+]
+PROOF_PATHS_TO_RECHECK = [
+    GAP_PROOF_REL_PATH,
+    GAP_REPORT_REL_PATH,
+    GAP_SUMMARY_REL_PATH,
+    "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-check.json",
+    "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/HANDOFF.md",
+    "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
+    "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md",
+]
+RERUN_COMMANDS = [
+    "python3.12 scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py",
+    "python3.12 scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
+    "python3.12 scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
+]
 
 
 def _iso_utc_now() -> str:
@@ -86,6 +115,10 @@ def _format_marker(value: Any) -> str:
 
 def _format_bool(value: bool) -> str:
     return "yes" if value else "no"
+
+
+def _required_manifest_fields_for_face(name: str) -> list[str]:
+    return WINDOW_FIELD_PATHS + [f"faces.{name}.{field_name}" for field_name in FACE_FILL_FIELD_NAMES]
 
 
 def _build_runtime_guardrails(runtime_config: Any) -> dict[str, Any]:
@@ -355,6 +388,9 @@ def build_manifest_template(template_env: dict[str, str], runtime_config: Any) -
         "notes": [
             "Replace placeholder values with current non-secret outside-repo evidence locators.",
             "Keep secrets outside repo; this manifest should point to reviewable locators only.",
+            "Fill bounded_supervised_window.label, starts_at, and ends_at before switching manifest_role to evidence.",
+            "For each blocked face, fill provided, attested_by, evidence_locator, locator_kind, verified_at, fresh_until, reviewable_without_secrets, and reviewability_note.",
+            "After updating the manifest, rerun the canonical gap script plus the refresh and regeneration generators to refresh the proof surfaces.",
         ],
         "faces": faces,
     }
@@ -462,6 +498,7 @@ def validate_external_evidence_manifest(
             _normalize_string(entry.get("operator_input_remaining"))
             or expected_face["operator_input_needed"]
         )
+        required_manifest_fields = _required_manifest_fields_for_face(name)
 
         present = provided_flag and bool(attested_by) and bool(evidence_locator) and bool(locator_kind)
         fresh_enough = bool(present and fresh_until and fresh_until >= as_of_value)
@@ -548,6 +585,8 @@ def validate_external_evidence_manifest(
                 else None,
                 "summary": summary,
                 "marker_match_note": marker_match_note,
+                "required_manifest_fields": required_manifest_fields,
+                "proof_paths_to_recheck": PROOF_PATHS_TO_RECHECK,
                 "current_observation": current_observation,
             }
         )
@@ -580,6 +619,9 @@ def validate_external_evidence_manifest(
             "updated_at": updated_at,
             "contract_spec": CONTRACT_SPEC_REL_PATH,
             "notes": notes,
+            "window_fields_to_fill": WINDOW_FIELD_PATHS,
+            "proof_paths_to_recheck": PROOF_PATHS_TO_RECHECK,
+            "rerun_commands": RERUN_COMMANDS,
         },
         "bounded_supervised_window": {
             "label": window["label"],
@@ -598,6 +640,9 @@ def validate_external_evidence_manifest(
             "blocked_faces": blocked_faces,
             "retry_gate_review_reopen_ready": retry_gate_review_reopen_ready,
             "operator_inputs_remaining": operator_inputs_remaining,
+            "window_fields_to_fill": WINDOW_FIELD_PATHS,
+            "proof_paths_to_recheck": PROOF_PATHS_TO_RECHECK,
+            "rerun_commands": RERUN_COMMANDS,
         },
         "validation_errors": validation_errors,
         "faces": face_results,
@@ -617,6 +662,11 @@ def render_gap_summary_markdown(gap_payload: dict[str, Any]) -> str:
             f"- Present/current/reviewable: `{summary['present_face_count']}` / `{summary['current_face_count']}` / `{summary['reviewable_face_count']}`",
             f"- Blocked faces: `{', '.join(summary['blocked_faces']) or 'none'}`",
             f"- Retry-gate review reopen ready: `{_format_bool(summary['retry_gate_review_reopen_ready'])}`",
+            f"- Window fields to fill: `{', '.join(summary['window_fields_to_fill'])}`",
+            f"- Next operator step: `{RERUN_COMMANDS[0]}` after filling the template, then rerun refresh/regeneration surfaces.",
+            "",
+            "## Operator Inputs Remaining",
+            *[f"- `{item}`" for item in summary["operator_inputs_remaining"]],
             "",
         ]
     )
@@ -644,6 +694,12 @@ def render_gap_report_markdown(gap_payload: dict[str, Any]) -> str:
         f"- Stale faces: `{summary['stale_face_count']}`",
         f"- Blocked faces: `{', '.join(summary['blocked_faces']) or 'none'}`",
         "",
+        "## Template-Only Handoff",
+        f"- Fill these bounded-window fields once per supervised window: `{', '.join(manifest['window_fields_to_fill'])}`",
+        "- Leave `manifest_role` at `template` until every blocked face has a current, non-secret, reviewable locator.",
+        f"- Proof/report surfaces to recheck after manifest updates: `{', '.join(manifest['proof_paths_to_recheck'])}`",
+        *[f"- Rerun: `{command}`" for command in manifest["rerun_commands"]],
+        "",
         "## Face Status",
         "",
         "| Face | Repo-visible marker | Present | Current | Fresh enough | Reviewable | Blocked reasons | Operator input still needed |",
@@ -664,6 +720,23 @@ def render_gap_report_markdown(gap_payload: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
+            "## Face-To-Manifest Map",
+            "",
+        ]
+    )
+    for face in gap_payload["faces"]:
+        lines.extend(
+            [
+                f"### `{face['name']}`",
+                f"- Manifest fields to fill: `{', '.join(face['required_manifest_fields'])}`",
+                f"- Repo-visible marker: `{_format_marker(face['repo_visible_marker'])}`",
+                f"- Operator input still needed: {face['operator_input_needed']}",
+                f"- Proof/report surfaces to recheck: `{', '.join(face['proof_paths_to_recheck'])}`",
+                "",
+            ]
+        )
+    lines.extend(
+        [
             "## Validation Errors",
             *(
                 [f"- `{error}`" for error in gap_payload["validation_errors"]]

@@ -13,4 +13,4 @@
 ## Parfit
 - Scoped the smallest safe change set to the refresh generator, refresh report/proof surfaces, README/current-pointer rewiring, targeted shared tests, and the bundle fallback path.
 - Recommended validating generator output and the focused refresh regressions first, then widening to the shared pytest suite because several older task tests pin the repo-level current task and next-task metadata.
-- Merge readiness depends on starting from PR `#82` / merge commit `eebfcd9b03e1e365cc4659996ea2638e6f285bbc`, routing the blocked next step back to record-pack regeneration, and reporting the published branch as `feat/attestation-refresh`.
+- Merge readiness depends on starting from PR `#83` / merge commit `5b78804188e27199e90950f610fd279ad7a133f6`, routing the blocked next step back to record-pack regeneration, and reporting the published branch as `feat/attestation-refresh`.

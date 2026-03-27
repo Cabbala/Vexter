@@ -119,7 +119,7 @@ PROOF_SUMMARY_PATH = (
 BUNDLE_PATH = (
     "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration.tar.gz"
 )
-BUNDLE_SOURCE = "/Users/cabbala/Downloads/vexter_attestation_record_pack_regeneration_bundle (1).tar.gz"
+BUNDLE_SOURCE = "/Users/cabbala/Downloads/vexter_attestation_record_pack_regeneration_bundle_latest.tar.gz"
 
 TASK_ID = "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
 TASK_STATUS = "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked"
@@ -138,9 +138,9 @@ DECISION = "retry_gate_review_blocked_pending_current_attestation_record_pack_re
 
 VERIFIED_DEXTER_COMMIT = "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938"
 VERIFIED_MEWX_COMMIT = "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
-VERIFIED_VEXTER_PR = 81
-VERIFIED_VEXTER_COMMIT = "ff203f4e54009fbd7f84ddc3f94dd37604e04cb0"
-VERIFIED_VEXTER_MERGED_AT = "2026-03-27T13:14:15Z"
+VERIFIED_VEXTER_PR = 83
+VERIFIED_VEXTER_COMMIT = "5b78804188e27199e90950f610fd279ad7a133f6"
+VERIFIED_VEXTER_MERGED_AT = "2026-03-27T13:47:24Z"
 
 REQUIRED_FACE_NAMES = [
     "external_credential_source_face",
@@ -158,9 +158,9 @@ SUB_AGENT_SUMMARIES = (
     {
         "name": "Anscombe",
         "lines": [
-            "Confirmed the regeneration lane already has coherent status, report, proof, handoff, checklist, and decision-surface outputs, and the fail-closed wording stays observational.",
-            "Recommended one atomic repo-level pointer flip so manifest, context, summary, ledger, and bundle metadata all point to the regeneration lane together.",
-            "Flagged stale current-selection markers as the main risk when re-promoting regeneration from current main, especially if refresh-era current flags remain set beside regeneration.",
+            "Confirmed the regeneration lane needs to be re-promoted from the refresh-merged `main` state, not from the older PR `#81` baseline.",
+            "Flagged duplicated regeneration clauses inside refresh-derived rows as the main correctness risk because they make the decision surface non-reviewable even while the task claims to be bounded.",
+            "Recommended one atomic current-pointer flip so manifest, context, summary, ledger, and bundle metadata all point to the regeneration lane together.",
         ],
     },
     {
@@ -168,17 +168,36 @@ SUB_AGENT_SUMMARIES = (
         "lines": [
             "Kept the regeneration boundary inside the same Dexter-only `paper_live`, `single_sleeve`, `dexter_default`, one-plan, one-position, explicit-allowlist, small-lot, bounded-window, funded-live-forbidden envelope.",
             "Confirmed the planner versus adapter split still holds: runtime seams stay inherited, `manual_latched_stop_all` remains planner-owned, Dexter stays the default sleeve, and frozen Mew-X stays unchanged on `sim_live`.",
-            "Recommended routing the blocked next step back to bounded attestation refresh until refreshed locator inputs are current enough to rerun regeneration honestly.",
+            "Recommended normalizing refresh-derived row fields before building regeneration outputs so trigger, locator-shape, stale-rule, and reviewability text stay single-pass and auditable.",
         ],
     },
     {
         "name": "Parfit",
         "lines": [
             "Scoped the lowest-risk update to re-promoting regeneration from current `origin/main`, refreshing the generator baselines, and rewiring the shared current-pointer regressions without touching runtime code.",
-            "Recommended validating the regeneration-specific surfaces first, then widening to the shared manifest and layout coverage because several older tests pin the repo-level current task and bundle path.",
-            "Merge readiness depends on end-to-end pointer agreement across summary, context, proof manifest, ledger, bundle metadata, and the regenerated handoff bundle.",
+            "Recommended validating regeneration-specific surfaces first, then widening to the shared manifest and layout coverage because several older tests pin the repo-level current task and bundle path.",
+            "Merge readiness depends on end-to-end pointer agreement across summary, context, proof manifest, ledger, bundle metadata, the regenerated handoff bundle, and the final exported tarball.",
         ],
     },
+)
+
+REGENERATION_COVERAGE_SUFFIX = (
+    " The regenerated pack must keep that same bounded-window meaning without widening scope or implying "
+    "retry execution success."
+)
+REGENERATION_TRIGGER_MARKER = "; regenerate the current record-pack face again whenever "
+REGENERATION_LOCATOR_SUFFIX = (
+    "; plus regenerated face name, regeneration timestamp, bundle-relative proof pointer, and one "
+    "reviewer-readable locator path that reopens the same bounded-window evidence without exposing secrets"
+)
+REGENERATION_RESET_PREFIX = (
+    "inherit freshness only while the underlying fresh locator remains current, reviewable, and inside "
+    "the same bounded supervised window; reset the regenerated face to FAIL/BLOCKED when "
+)
+REGENERATION_RESET_SUFFIX = " or when the locator cannot be reopened without secrets"
+REGENERATION_REVIEWABLE_SUFFIX = (
+    " and the regenerated face points to the same bounded-window locator plus an explicit regeneration "
+    "timestamp and reviewer-readable proof path"
 )
 
 
@@ -194,6 +213,41 @@ def format_marker(value: object) -> str:
 
 def format_bool(value: bool) -> str:
     return "yes" if value else "no"
+
+
+def strip_repeated_suffix(value: str, suffix: str) -> str:
+    while value.endswith(suffix):
+        value = value[: -len(suffix)].rstrip()
+    return value
+
+
+def extract_refresh_trigger(value: str) -> str:
+    if REGENERATION_TRIGGER_MARKER in value:
+        return value.split(REGENERATION_TRIGGER_MARKER, 1)[0].strip()
+    return value.strip()
+
+
+def extract_refresh_locator_shape(value: str) -> str:
+    if REGENERATION_LOCATOR_SUFFIX in value:
+        return value.split(REGENERATION_LOCATOR_SUFFIX, 1)[0].strip()
+    return value.strip()
+
+
+def extract_refresh_stale_condition(value: str) -> str:
+    value = value.strip()
+    while value.startswith(REGENERATION_RESET_PREFIX):
+        value = value[len(REGENERATION_RESET_PREFIX) :].strip()
+    if REGENERATION_RESET_SUFFIX in value:
+        value = value.split(REGENERATION_RESET_SUFFIX, 1)[0].strip()
+    while value.startswith(REGENERATION_RESET_PREFIX):
+        value = value[len(REGENERATION_RESET_PREFIX) :].strip()
+    return value
+
+
+def extract_refresh_reviewable_condition(value: str) -> str:
+    if REGENERATION_REVIEWABLE_SUFFIX in value:
+        return value.split(REGENERATION_REVIEWABLE_SUFFIX, 1)[0].strip()
+    return value.strip()
 
 
 def rewrite_local_ledger(entry: dict[str, object]) -> None:
@@ -242,23 +296,39 @@ def build_regenerated_reviewable_enough_when(usable_condition: str) -> str:
 def build_regeneration_rows(previous_rows: list[dict]) -> list[dict]:
     rows: list[dict] = []
     for row in previous_rows:
+        refreshed_face_covers = strip_repeated_suffix(
+            row.get("what_refreshed_face_covers", "").strip(),
+            REGENERATION_COVERAGE_SUFFIX,
+        )
+        refresh_trigger = extract_refresh_trigger(row.get("refresh_trigger", ""))
+        minimum_fresh_locator_shape = extract_refresh_locator_shape(
+            row.get("minimum_fresh_evidence_locator_shape", "")
+        )
+        stale_condition = extract_refresh_stale_condition(row.get("stale_condition", ""))
+        usable_condition = extract_refresh_reviewable_condition(
+            row.get("usable_for_retry_gate_review_when", "")
+        )
         regeneration_rule_complete = all(
             bool(value)
             for value in (
                 row.get("refresh_owner"),
-                row.get("what_refreshed_face_covers"),
-                row.get("refresh_trigger"),
-                row.get("minimum_fresh_evidence_locator_shape"),
-                row.get("stale_condition"),
-                row.get("usable_for_retry_gate_review_when"),
+                refreshed_face_covers,
+                refresh_trigger,
+                minimum_fresh_locator_shape,
+                stale_condition,
+                usable_condition,
             )
         )
         current_fresh_locator_present = bool(row.get("current_fresh_evidence_locator_present"))
-        freshness_inherited_cleanly = bool(row.get("current_evidence_fresh_enough")) and bool(
-            row.get("usable_now")
+        freshness_inherited_cleanly = current_fresh_locator_present and bool(
+            row.get("current_evidence_fresh_enough")
         )
+        source_refresh_usable_now = bool(row.get("usable_now"))
         regenerated_face_reviewable_now = (
-            regeneration_rule_complete and current_fresh_locator_present and freshness_inherited_cleanly
+            regeneration_rule_complete
+            and current_fresh_locator_present
+            and freshness_inherited_cleanly
+            and source_refresh_usable_now
         )
         rows.append(
             {
@@ -266,20 +336,20 @@ def build_regeneration_rows(previous_rows: list[dict]) -> list[dict]:
                 "repo_visible_marker": row["repo_visible_marker"],
                 "regeneration_owner": row["refresh_owner"],
                 "what_regenerated_face_covers": (
-                    f"{row['what_refreshed_face_covers']} The regenerated pack must keep that same bounded-window "
+                    f"{refreshed_face_covers} The regenerated pack must keep that same bounded-window "
                     "meaning without widening scope or implying retry execution success."
                 ),
                 "regeneration_trigger": build_regeneration_trigger(
-                    row["refresh_trigger"], row["stale_condition"]
+                    refresh_trigger, stale_condition
                 ),
                 "minimum_regenerated_locator_shape": build_minimum_regenerated_locator_shape(
-                    row["minimum_fresh_evidence_locator_shape"]
+                    minimum_fresh_locator_shape
                 ),
                 "freshness_inheritance_or_reset_rule": build_freshness_inheritance_or_reset_rule(
-                    row["stale_condition"]
+                    stale_condition
                 ),
                 "reviewable_enough_when": build_regenerated_reviewable_enough_when(
-                    row["usable_for_retry_gate_review_when"]
+                    usable_condition
                 ),
                 "regeneration_rule_complete": regeneration_rule_complete,
                 "current_fresh_locator_present": current_fresh_locator_present,
@@ -289,6 +359,11 @@ def build_regeneration_rows(previous_rows: list[dict]) -> list[dict]:
                     "The regeneration rule is explicit for this face, but the repo still does not point to one "
                     "current, fresh-enough bounded-window locator that can seed a reviewable regenerated face "
                     "without secrets. The regenerated pack therefore remains fail-closed for this face."
+                )
+                if not regenerated_face_reviewable_now
+                else (
+                    "A current, fresh-enough bounded-window locator is available for this face, and the "
+                    "regenerated pack can stay reviewable without widening scope."
                 ),
                 "regeneration_status": "PASS" if regenerated_face_reviewable_now else "FAIL/BLOCKED",
             }
@@ -587,7 +662,7 @@ Promote one bounded attestation record-pack regeneration lane that keeps current
 
 def build_min_prompt() -> str:
     return (
-        "GitHub latest state is Vexter main PR #79 merge commit "
+        "GitHub latest state is Vexter main PR #83 merge commit "
         f"{VERIFIED_VEXTER_COMMIT} on {VERIFIED_VEXTER_MERGED_AT}. "
         "Accept attestation refresh as baseline, promote attestation record-pack regeneration as the current "
         "source of truth, keep Dexter-only paper_live and frozen Mew-X sim_live, do not commit secrets, keep "
@@ -1045,9 +1120,9 @@ def main() -> None:
         {
             "latest_vexter_pr": VERIFIED_VEXTER_PR,
             "latest_vexter_main_commit": VERIFIED_VEXTER_COMMIT,
-            "latest_recent_vexter_prs": [81, 80, 79, 78, 77],
-            "vexter_pr_81_merged_at": VERIFIED_VEXTER_MERGED_AT,
-            "vexter_pr_81_closed_at": VERIFIED_VEXTER_MERGED_AT,
+            "latest_recent_vexter_prs": [83, 82, 81, 80, 79],
+            "vexter_pr_83_merged_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_83_closed_at": VERIFIED_VEXTER_MERGED_AT,
         }
     )
     context_pack["evidence"]["demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration"] = {
@@ -1214,13 +1289,13 @@ def main() -> None:
         "source_faithful_modes": {"dexter": "paper_live", "mewx": "sim_live"},
         "status": TASK_STATUS,
         "sub_agents_used": [item["name"] for item in SUB_AGENT_SUMMARIES],
-        "supporting_vexter_prs": [81, 80, 79, 78, 77],
+        "supporting_vexter_prs": [83, 82, 81, 80, 79],
         "task_id": TASK_ID,
         "template_runtime_validation_errors": runtime_errors,
         "verified_dexter_main_commit": VERIFIED_DEXTER_COMMIT,
         "verified_dexter_pr": 3,
         "verified_mewx_frozen_commit": VERIFIED_MEWX_COMMIT,
-        "verified_prs": [81, 80, 79],
+        "verified_prs": [83, 82, 81],
         "date": run_timestamp.split("T", 1)[0],
     }
     rewrite_local_ledger(ledger_payload)

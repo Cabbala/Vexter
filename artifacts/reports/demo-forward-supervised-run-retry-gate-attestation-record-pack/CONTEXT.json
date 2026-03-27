@@ -1,0 +1,29 @@
+{
+  "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK",
+  "task_state": "supervised_run_retry_gate_attestation_record_pack_blocked",
+  "current_lane": "supervised_run_retry_gate_attestation_record_pack",
+  "recommended_next_step": "supervised_run_retry_gate_attestation_refresh",
+  "recommended_next_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH",
+  "candidate_pass_next_step": "supervised_run_retry_gate",
+  "candidate_pass_next_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
+  "verified_vexter_main_pr": 77,
+  "verified_vexter_main_commit": "1a35c468e1d2944e98a2987427d5b7d688cb0cfc",
+  "baseline_task_state": "supervised_run_retry_gate_attestation_audit_blocked",
+  "first_demo_target": "dexter_paper_live",
+  "source_faithful_seam": {
+    "dexter": "paper_live",
+    "mewx": "sim_live"
+  },
+  "blocked_record_faces": [
+    "external_credential_source_face",
+    "venue_ref_face",
+    "account_ref_face",
+    "connectivity_profile_face",
+    "operator_owner_face",
+    "bounded_start_criteria_face",
+    "allowlist_symbol_lot_reconfirmed",
+    "manual_latched_stop_all_visibility_reconfirmed",
+    "terminal_snapshot_readability_reconfirmed"
+  ],
+  "retry_gate_review_reopen_ready": false
+}

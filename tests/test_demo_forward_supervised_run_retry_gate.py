@@ -32,16 +32,16 @@ def test_demo_forward_supervised_run_retry_gate_artifacts_are_current_and_consis
     subagents_text = SUBAGENTS_PATH.read_text()
     decision_surface_text = DECISION_SURFACE_PATH.read_text()
 
-    assert ledger["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT"
+    assert ledger["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK"
     assert manifest["task_id"] == context["current_task"]["id"] == ledger["task_id"]
-    assert manifest["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT"
-    assert manifest["status"] == ledger["status"] == "supervised_run_retry_gate_attestation_audit_blocked"
-    assert manifest["bundle_path"] == "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-audit.tar.gz"
-    assert context["evidence"]["demo_forward_supervised_run_retry_gate_attestation_audit"][
+    assert manifest["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK"
+    assert manifest["status"] == ledger["status"] == "supervised_run_retry_gate_attestation_record_pack_blocked"
+    assert manifest["bundle_path"] == "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-record-pack.tar.gz"
+    assert context["evidence"]["demo_forward_supervised_run_retry_gate_attestation_record_pack"][
         "task_state"
-    ] == "supervised_run_retry_gate_attestation_audit_blocked"
-    assert context["next_task"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT"
-    assert context["next_task"]["state"] == "retry_gate_attestation_audits_pending"
+    ] == "supervised_run_retry_gate_attestation_record_pack_blocked"
+    assert context["next_task"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
+    assert context["next_task"]["state"] == "current_attestation_records_refresh_required"
     assert context["next_task"]["pass_successor"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE"
     assert context["next_task"]["pass_successor"]["lane"] == "supervised_run_retry_gate"
 

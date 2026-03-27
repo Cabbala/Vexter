@@ -123,6 +123,12 @@ def test_livepaper_observability_shift_handoff_template_current_artifacts_are_co
             manifest["bundle_path"]
             == "artifacts/bundles/demo-forward-supervised-run.tar.gz"
         )
+    elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS":
+        assert manifest["status"] == "supervised_run_retry_readiness_blocked"
+        assert (
+            manifest["bundle_path"]
+            == "artifacts/bundles/demo-forward-supervised-run-retry-readiness.tar.gz"
+        )
     else:
         assert current_task_id in {
             "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG",
@@ -180,6 +186,9 @@ def test_livepaper_observability_shift_handoff_template_current_artifacts_are_co
     elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN":
         assert manifest["next_task"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS"
         assert manifest["next_task"]["state"] == "ready_for_supervised_run_retry_readiness"
+    elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS":
+        assert manifest["next_task"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE"
+        assert manifest["next_task"]["state"] == "ready_for_supervised_run_retry_gate"
     else:
         assert manifest["next_task"]["id"] in {
             "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",

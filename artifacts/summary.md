@@ -1,33 +1,35 @@
-# DEMO-FORWARD-SUPERVISED-RUN Summary
+# DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS Summary
 
 ## Verified GitHub State
 
-- `Cabbala/Vexter` latest merged `main` was reverified at PR `#72` merge commit `a6ca623b01dbed4191c4be10c2bfe51534025cac` on `2026-03-27T00:32:14Z`.
+- `Cabbala/Vexter` latest merged `main` was reverified at PR `#73` merge commit `aea530368fc5b59b87dd08a38c2629392ea8d706` on `2026-03-27T00:56:46Z`.
 - `Cabbala/Dexter` `main` stayed pinned at merged PR `#3` commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`.
 - Frozen `Cabbala/Mew-X` stayed pinned at commit `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`.
 
 ## What This Task Did
 
-- Started from the acceptance pack instead of reopening adapter or baseline work.
-- Exercised the bounded `prepare / start / status / stop / snapshot` lane through the source-faithful Dexter demo adapter.
-- Promoted current status, report, summary, proof, handoff, and operator follow-up surfaces for the supervised run lane.
-- Fail-closed the real-demo completion claim because external prerequisites remain outside the repo and unverified.
+- Accepted the blocked supervised run as the baseline current source of truth.
+- Promoted retry readiness to the current operator-visible lane.
+- Added current status, report, summary, proof, handoff, checklist, prerequisite matrix, and sub-agent summary surfaces.
+- Bounded the external prerequisite gap by naming what is missing, who confirms it, and what must be true before retry.
 
 ## Decision
 
 - Outcome: `FAIL/BLOCKED`
-- Key finding: `demo_forward_supervised_run_blocked_on_external_prerequisites`
-- Claim boundary: `demo_forward_supervised_run_fail_closed`
-- Current task status: `demo_forward_supervised_run_blocked`
-- Recommended next step: `supervised_run_retry_readiness`
-- Decision: `supervised_run_retry_readiness_required`
+- Key finding: `supervised_run_retry_readiness_blocked_on_external_prerequisites`
+- Claim boundary: `supervised_run_retry_readiness_bounded`
+- Current task status: `supervised_run_retry_readiness_blocked`
+- Recommended next step: `supervised_run_retry_gate`
+- Decision: `supervised_run_retry_gate_required`
 
 ## Key Paths
 
-- Current spec: `specs/DEMO_FORWARD_SUPERVISED_RUN.md`
-- Current implementation plan: `plans/demo_forward_supervised_run_plan.md`
-- Current operator follow-up: `docs/demo_forward_supervised_run_operator_follow_up.md`
-- Current proof: `artifacts/proofs/demo-forward-supervised-run-check.json`
-- Current report: `artifacts/reports/demo-forward-supervised-run-report.md`
-- Current handoff: `artifacts/reports/demo-forward-supervised-run/HANDOFF.md`
-- Current bundle target: `artifacts/bundles/demo-forward-supervised-run.tar.gz`
+- Current spec: `specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_READINESS.md`
+- Current implementation plan: `plans/demo_forward_supervised_run_retry_readiness_plan.md`
+- Current checklist: `docs/demo_forward_supervised_run_retry_readiness_checklist.md`
+- Current prerequisite matrix: `docs/demo_forward_supervised_run_retry_prerequisite_matrix.md`
+- Current proof: `artifacts/proofs/demo-forward-supervised-run-retry-readiness-check.json`
+- Current report: `artifacts/reports/demo-forward-supervised-run-retry-readiness-report.md`
+- Current handoff: `artifacts/reports/demo-forward-supervised-run-retry-readiness/HANDOFF.md`
+- Current sub-agent summary: `artifacts/reports/demo-forward-supervised-run-retry-readiness/SUBAGENTS.md`
+- Current bundle target: `artifacts/bundles/demo-forward-supervised-run-retry-readiness.tar.gz`

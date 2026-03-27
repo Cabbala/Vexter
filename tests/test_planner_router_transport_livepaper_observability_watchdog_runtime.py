@@ -452,6 +452,7 @@ def test_transport_livepaper_observability_watchdog_runtime_manifest_and_context
         "PATTERN-A-DEMO-EXECUTOR-CUTOVER",
         "DEMO-FORWARD-ACCEPTANCE-PACK",
         "DEMO-FORWARD-SUPERVISED-RUN",
+        "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS",
     }
 
 

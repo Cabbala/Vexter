@@ -22,6 +22,8 @@ def test_required_paths_exist() -> None:
         "docs/demo_forward_operator_checklist.md",
         "docs/demo_forward_abort_rollback_matrix.md",
         "docs/demo_forward_supervised_run_operator_follow_up.md",
+        "docs/demo_forward_supervised_run_retry_readiness_checklist.md",
+        "docs/demo_forward_supervised_run_retry_prerequisite_matrix.md",
         "docs/windows_runtime_recovery.md",
         "docs/dexter_source_assessment.md",
         "docs/dexter_event_mapping.md",
@@ -34,6 +36,7 @@ def test_required_paths_exist() -> None:
         "specs/PATTERN_A_DEMO_EXECUTOR_CUTOVER.md",
         "specs/DEMO_FORWARD_ACCEPTANCE_PACK.md",
         "specs/DEMO_FORWARD_SUPERVISED_RUN.md",
+        "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_READINESS.md",
         "ops/CODEX_MEMORY.md",
         "plans/IMPLEMENTATION_PLAN.md",
         "plans/TASK_000_BOOTSTRAP.md",
@@ -45,6 +48,7 @@ def test_required_paths_exist() -> None:
         "plans/demo_executor_adapter_implementation_plan.md",
         "plans/demo_forward_acceptance_pack_plan.md",
         "plans/demo_forward_supervised_run_plan.md",
+        "plans/demo_forward_supervised_run_retry_readiness_plan.md",
         "manifests/reference_repos.json",
         "manifests/windows_runtime.json",
         "scripts/bootstrap_windows_workspace.sh",
@@ -52,6 +56,7 @@ def test_required_paths_exist() -> None:
         "scripts/sync_reference_repos.sh",
         "scripts/build_proof_bundle.sh",
         "scripts/run_demo_forward_supervised_run.py",
+        "scripts/run_demo_forward_supervised_run_retry_readiness.py",
         "scripts/run_livepaper_observability_shift_handoff_ci_check.sh",
         "scripts/run_livepaper_observability_shift_handoff_watchdog.sh",
         "scripts/run_livepaper_observability_shift_handoff_watchdog_runtime.sh",
@@ -108,6 +113,7 @@ def test_required_paths_exist() -> None:
         "tests/test_pattern_a_demo_executor_cutover.py",
         "tests/test_demo_forward_acceptance_pack.py",
         "tests/test_demo_forward_supervised_run.py",
+        "tests/test_demo_forward_supervised_run_retry_readiness.py",
         "artifacts/context_pack.json",
         "artifacts/summary.md",
         "artifacts/proof_bundle_manifest.json",
@@ -286,6 +292,13 @@ def test_required_paths_exist() -> None:
         "artifacts/reports/demo-forward-supervised-run/MIN_PROMPT.txt",
         "artifacts/reports/demo-forward-supervised-run/CONTEXT.json",
         "artifacts/reports/demo-forward-supervised-run/HANDOFF.md",
+        "artifacts/reports/demo-forward-supervised-run-retry-readiness-report.md",
+        "artifacts/reports/demo-forward-supervised-run-retry-readiness-status.md",
+        "artifacts/reports/demo-forward-supervised-run-retry-readiness/DETAILS.md",
+        "artifacts/reports/demo-forward-supervised-run-retry-readiness/MIN_PROMPT.txt",
+        "artifacts/reports/demo-forward-supervised-run-retry-readiness/CONTEXT.json",
+        "artifacts/reports/demo-forward-supervised-run-retry-readiness/HANDOFF.md",
+        "artifacts/reports/demo-forward-supervised-run-retry-readiness/SUBAGENTS.md",
         "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate-report.md",
         "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate-status.md",
         "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate/DETAILS.md",
@@ -372,6 +385,8 @@ def test_required_paths_exist() -> None:
         "artifacts/proofs/demo-forward-acceptance-pack-summary.md",
         "artifacts/proofs/demo-forward-supervised-run-check.json",
         "artifacts/proofs/demo-forward-supervised-run-summary.md",
+        "artifacts/proofs/demo-forward-supervised-run-retry-readiness-check.json",
+        "artifacts/proofs/demo-forward-supervised-run-retry-readiness-summary.md",
         "artifacts/bundles/task-007-planner-router-code-implementation.tar.gz",
         "artifacts/bundles/task-007-planner-router-integration-smoke.tar.gz",
         "artifacts/bundles/task-007-monitor-killswitch-spec.tar.gz",
@@ -394,6 +409,8 @@ def test_required_paths_exist() -> None:
         "artifacts/bundles/pattern-a-demo-executor-cutover.tar.gz",
         "artifacts/bundles/demo-forward-acceptance-pack.tar.gz",
         "artifacts/bundles/demo-forward-supervised-run.tar.gz",
+        "artifacts/bundles/demo-forward-supervised-run-retry-readiness.tar.gz",
+        "tests/test_demo_forward_supervised_run_retry_readiness.py",
         "tests/test_planner_router_transport_livepaper_observability_smoke.py",
         "tests/test_planner_router_transport_livepaper_observability_runtime.py",
         "tests/test_planner_router_transport_livepaper_observability_hardening.py",
@@ -760,6 +777,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "PATTERN-A-DEMO-EXECUTOR-CUTOVER",
         "DEMO-FORWARD-ACCEPTANCE-PACK",
         "DEMO-FORWARD-SUPERVISED-RUN",
+        "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -824,6 +842,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "pattern_a_demo_executor_cutover_ready",
         "demo_forward_acceptance_pack_ready",
         "demo_forward_supervised_run_blocked",
+        "supervised_run_retry_readiness_blocked",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -890,6 +909,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/pattern-a-demo-executor-cutover",
         "feat/demo-forward-acceptance-pack",
         "feat/demo-forward-supervised-run",
+        "feat/supervised-run-retry-readiness",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -940,6 +960,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "DEMO-EXECUTOR-ADAPTER-IMPLEMENTATION",
         "DEMO-FORWARD-SUPERVISED-RUN",
         "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS",
+        "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
     }
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -1002,6 +1023,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "ready_for_demo_executor_adapter_implementation",
         "ready_for_demo_forward_supervised_run",
         "ready_for_supervised_run_retry_readiness",
+        "ready_for_supervised_run_retry_gate",
     }
 
 
@@ -1072,6 +1094,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "pattern_a_demo_executor_cutover_ready",
         "demo_forward_acceptance_pack_ready",
         "demo_forward_supervised_run_blocked",
+        "supervised_run_retry_readiness_blocked",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -1124,6 +1147,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "DEMO-EXECUTOR-ADAPTER-IMPLEMENTATION",
         "DEMO-FORWARD-SUPERVISED-RUN",
         "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS",
+        "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
     }
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -1185,6 +1209,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "ready_for_demo_executor_adapter_implementation",
         "ready_for_demo_forward_supervised_run",
         "ready_for_supervised_run_retry_readiness",
+        "ready_for_supervised_run_retry_gate",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]
@@ -1204,6 +1229,8 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "docs/demo_forward_operator_checklist.md" in names
     assert "docs/demo_forward_abort_rollback_matrix.md" in names
     assert "docs/demo_forward_supervised_run_operator_follow_up.md" in names
+    assert "docs/demo_forward_supervised_run_retry_readiness_checklist.md" in names
+    assert "docs/demo_forward_supervised_run_retry_prerequisite_matrix.md" in names
     assert "docs/windows_runtime_recovery.md" in names
     assert "docs/dexter_event_mapping.md" in names
     assert "docs/dexter_paper_mode_design.md" in names
@@ -1211,11 +1238,15 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md" in names
     assert "specs/DEMO_FORWARD_ACCEPTANCE_PACK.md" in names
     assert "specs/DEMO_FORWARD_SUPERVISED_RUN.md" in names
+    assert "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_READINESS.md" in names
     assert "plans/demo_forward_acceptance_pack_plan.md" in names
     assert "plans/demo_forward_supervised_run_plan.md" in names
+    assert "plans/demo_forward_supervised_run_retry_readiness_plan.md" in names
     assert "tests/test_demo_forward_acceptance_pack.py" in names
     assert "tests/test_demo_forward_supervised_run.py" in names
+    assert "tests/test_demo_forward_supervised_run_retry_readiness.py" in names
     assert "scripts/run_demo_forward_supervised_run.py" in names
+    assert "scripts/run_demo_forward_supervised_run_retry_readiness.py" in names
     assert "scripts/comparison_analysis.py" in names
     assert "scripts/collect_comparison_package.ps1" in names
     assert "scripts/recover_windows_runtime.sh" in names
@@ -1235,6 +1266,13 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/reports/demo-forward-supervised-run/MIN_PROMPT.txt" in names
     assert "artifacts/reports/demo-forward-supervised-run/CONTEXT.json" in names
     assert "artifacts/reports/demo-forward-supervised-run/HANDOFF.md" in names
+    assert "artifacts/reports/demo-forward-supervised-run-retry-readiness-report.md" in names
+    assert "artifacts/reports/demo-forward-supervised-run-retry-readiness-status.md" in names
+    assert "artifacts/reports/demo-forward-supervised-run-retry-readiness/DETAILS.md" in names
+    assert "artifacts/reports/demo-forward-supervised-run-retry-readiness/MIN_PROMPT.txt" in names
+    assert "artifacts/reports/demo-forward-supervised-run-retry-readiness/CONTEXT.json" in names
+    assert "artifacts/reports/demo-forward-supervised-run-retry-readiness/HANDOFF.md" in names
+    assert "artifacts/reports/demo-forward-supervised-run-retry-readiness/SUBAGENTS.md" in names
     assert "artifacts/reports/dexter-paper-design-handoff/DETAILS.md" in names
     assert "artifacts/reports/dexter-paper-design-handoff/MIN_PROMPT.txt" in names
     assert "artifacts/reports/task-005-paper-validation-handoff/DETAILS.md" in names
@@ -1243,6 +1281,8 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/reports/task-006-replay-validation-status.md" in names
     assert "artifacts/proofs/demo-forward-supervised-run-check.json" in names
     assert "artifacts/proofs/demo-forward-supervised-run-summary.md" in names
+    assert "artifacts/proofs/demo-forward-supervised-run-retry-readiness-check.json" in names
+    assert "artifacts/proofs/demo-forward-supervised-run-retry-readiness-summary.md" in names
     assert "artifacts/reports/task-006-replay-validation-handoff/DETAILS.md" in names
     assert "artifacts/reports/task-006-replay-validation-handoff/MIN_PROMPT.txt" in names
     assert "artifacts/reports/task-006-replay-deepening.md" in names

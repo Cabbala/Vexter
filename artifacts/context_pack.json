@@ -1,13 +1,13 @@
 {
   "background": {
-    "previous_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS",
-    "previous_task_state": "supervised_run_retry_readiness_blocked",
-    "previous_key_finding": "supervised_run_retry_readiness_blocked_on_external_prerequisites",
-    "previous_claim_boundary": "supervised_run_retry_readiness_bounded",
-    "retry_readiness_accepted_as_baseline": true,
-    "retry_gate_promoted_current": true
+    "previous_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
+    "previous_task_state": "supervised_run_retry_gate_blocked",
+    "previous_key_finding": "supervised_run_retry_gate_blocked_on_unresolved_gate_inputs",
+    "previous_claim_boundary": "supervised_run_retry_gate_bounded",
+    "retry_gate_accepted_as_baseline": true,
+    "retry_gate_input_attestation_promoted_current": true
   },
-  "bundle_source": "/Users/cabbala/Downloads/vexter_supervised_run_retry_gate_bundle.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_supervised_run_retry_gate_input_attestation_bundle.tar.gz",
   "current_contract": {
     "comparison_source_of_truth": "comparison_closed_out",
     "promoted_live_winner_mode": "derived",
@@ -104,44 +104,53 @@
     "demo_forward_supervised_run_retry_gate_subagents_path": "artifacts/reports/demo-forward-supervised-run-retry-gate/SUBAGENTS.md",
     "demo_forward_supervised_run_retry_gate_subagent_summary_path": "artifacts/reports/demo-forward-supervised-run-retry-gate/subagent_summary.md",
     "demo_forward_retry_gate_current_lane": "supervised_run_retry_gate",
-    "demo_forward_retry_gate_pass_successor": "supervised_run_retry_execution"
+    "demo_forward_retry_gate_pass_successor": "supervised_run_retry_execution",
+    "demo_forward_supervised_run_retry_gate_input_attestation_marker": "demo_forward_supervised_run_retry_gate_input_attestation",
+    "demo_forward_supervised_run_retry_gate_input_attestation_spec_path": "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_INPUT_ATTESTATION.md",
+    "demo_forward_supervised_run_retry_gate_input_attestation_plan_path": "plans/demo_forward_supervised_run_retry_gate_input_attestation_plan.md",
+    "demo_forward_supervised_run_retry_gate_input_attestation_checklist_path": "docs/demo_forward_supervised_run_retry_gate_input_attestation_checklist.md",
+    "demo_forward_supervised_run_retry_gate_input_attestation_decision_surface_path": "docs/demo_forward_supervised_run_retry_gate_input_attestation_decision_surface.md",
+    "demo_forward_supervised_run_retry_gate_input_attestation_subagents_path": "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation/SUBAGENTS.md",
+    "demo_forward_supervised_run_retry_gate_input_attestation_subagent_summary_path": "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation/subagent_summary.md",
+    "demo_forward_retry_gate_input_attestation_current_lane": "supervised_run_retry_gate_input_attestation",
+    "demo_forward_retry_gate_input_attestation_pass_successor": "supervised_run_retry_execution"
   },
   "current_task": {
-    "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
+    "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-INPUT-ATTESTATION",
     "scope": [
-      "Reverify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X after retry readiness merged.",
-      "Accept retry readiness as baseline current source of truth.",
-      "Promote retry gate status, report, summary, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.",
-      "Bound each required gate input with a repo-visible marker, current observation, confirmer, and pass condition.",
-      "Keep retry execution blocked until every gate input is explicit enough."
+      "Reverify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X after retry gate merged.",
+      "Accept retry gate as baseline current source of truth.",
+      "Promote retry-gate input-attestation status, report, summary, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.",
+      "Bound each required gate face with a repo-visible marker, attester, attestation target, evidence shape, stale boundary, and fail-closed observation.",
+      "Keep retry execution blocked until every attestation face is explicit enough."
     ],
     "deliverables": [
       "README.md",
-      "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE.md",
-      "plans/demo_forward_supervised_run_retry_gate_plan.md",
-      "docs/demo_forward_supervised_run_retry_gate_checklist.md",
-      "docs/demo_forward_supervised_run_retry_gate_decision_surface.md",
+      "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_INPUT_ATTESTATION.md",
+      "plans/demo_forward_supervised_run_retry_gate_input_attestation_plan.md",
+      "docs/demo_forward_supervised_run_retry_gate_input_attestation_checklist.md",
+      "docs/demo_forward_supervised_run_retry_gate_input_attestation_decision_surface.md",
+      "tests/test_demo_forward_supervised_run_retry_gate_input_attestation.py",
       "tests/test_demo_forward_supervised_run_retry_gate.py",
-      "tests/test_demo_forward_supervised_run_retry_readiness.py",
       "tests/test_demo_forward_supervised_run.py",
       "tests/test_bootstrap_layout.py",
-      "scripts/run_demo_forward_supervised_run_retry_gate.py",
+      "scripts/run_demo_forward_supervised_run_retry_gate_input_attestation.py",
       "scripts/build_proof_bundle.sh",
       "artifacts/summary.md",
       "artifacts/context_pack.json",
       "artifacts/proof_bundle_manifest.json",
       "artifacts/task_ledger.jsonl",
-      "artifacts/reports/demo-forward-supervised-run-retry-gate-report.md",
-      "artifacts/reports/demo-forward-supervised-run-retry-gate-status.md",
-      "artifacts/reports/demo-forward-supervised-run-retry-gate/DETAILS.md",
-      "artifacts/reports/demo-forward-supervised-run-retry-gate/MIN_PROMPT.txt",
-      "artifacts/reports/demo-forward-supervised-run-retry-gate/CONTEXT.json",
-      "artifacts/reports/demo-forward-supervised-run-retry-gate/HANDOFF.md",
-      "artifacts/reports/demo-forward-supervised-run-retry-gate/SUBAGENTS.md",
-      "artifacts/reports/demo-forward-supervised-run-retry-gate/subagent_summary.md",
-      "artifacts/proofs/demo-forward-supervised-run-retry-gate-check.json",
-      "artifacts/proofs/demo-forward-supervised-run-retry-gate-summary.md",
-      "artifacts/bundles/demo-forward-supervised-run-retry-gate.tar.gz"
+      "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation-report.md",
+      "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation-status.md",
+      "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation/DETAILS.md",
+      "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation/MIN_PROMPT.txt",
+      "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation/CONTEXT.json",
+      "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation/HANDOFF.md",
+      "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation/SUBAGENTS.md",
+      "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation/subagent_summary.md",
+      "artifacts/proofs/demo-forward-supervised-run-retry-gate-input-attestation-check.json",
+      "artifacts/proofs/demo-forward-supervised-run-retry-gate-input-attestation-summary.md",
+      "artifacts/bundles/demo-forward-supervised-run-retry-gate-input-attestation.tar.gz"
     ],
     "frozen_source_commits": {
       "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
@@ -150,14 +159,14 @@
   },
   "evidence": {
     "github_latest": {
-      "latest_vexter_pr": 74,
-      "latest_vexter_main_commit": "d06856cecf42c336af05902a1d932468c5d280b0",
+      "latest_vexter_pr": 75,
+      "latest_vexter_main_commit": "b9e556ffc57592190fdffbcabf61ab168b8ed467",
       "latest_recent_vexter_prs": [
+        75,
         74,
         73,
         72,
-        71,
-        70
+        71
       ],
       "vexter_pr_65_merged_at": "2026-03-26T19:30:46Z",
       "vexter_pr_64_merged_at": "2026-03-26T18:53:07Z",
@@ -178,7 +187,9 @@
       "vexter_pr_73_merged_at": "2026-03-27T00:56:46Z",
       "vexter_pr_73_closed_at": "2026-03-27T00:56:46Z",
       "vexter_pr_74_merged_at": "2026-03-27T01:20:35Z",
-      "vexter_pr_74_closed_at": "2026-03-27T01:20:35Z"
+      "vexter_pr_74_closed_at": "2026-03-27T01:20:35Z",
+      "vexter_pr_75_merged_at": "2026-03-27T01:50:11Z",
+      "vexter_pr_75_closed_at": "2026-03-27T01:50:11Z"
     },
     "transport_livepaper_observability_ci_gate": {
       "report": "artifacts/reports/task-007-transport-livepaper-observability-ci-gate-report.md",
@@ -929,6 +940,79 @@
           ]
         }
       ]
+    },
+    "demo_forward_supervised_run_retry_gate_input_attestation": {
+      "report": "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation-report.md",
+      "status_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation-status.md",
+      "proof": "artifacts/proofs/demo-forward-supervised-run-retry-gate-input-attestation-check.json",
+      "summary": "artifacts/proofs/demo-forward-supervised-run-retry-gate-input-attestation-summary.md",
+      "handoff_dir": "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation",
+      "checklist": "docs/demo_forward_supervised_run_retry_gate_input_attestation_checklist.md",
+      "decision_surface": "docs/demo_forward_supervised_run_retry_gate_input_attestation_decision_surface.md",
+      "subagent_summary": "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation/SUBAGENTS.md",
+      "key_finding": "supervised_run_retry_gate_input_attestation_blocked_on_missing_attestation_faces",
+      "claim_boundary": "supervised_run_retry_gate_input_attestation_bounded",
+      "task_state": "supervised_run_retry_gate_input_attestation_blocked",
+      "run_outcome": "FAIL/BLOCKED",
+      "operator_visible_attestation_surface_current": true,
+      "preferred_next_step": "supervised_run_retry_gate_input_attestation",
+      "attestation_pass_successor": "supervised_run_retry_execution",
+      "attestation_boundary": {
+        "demo_source": "dexter",
+        "execution_mode": "paper_live",
+        "route_mode": "single_sleeve",
+        "selected_sleeve_id": "dexter_default",
+        "max_active_real_demo_plans": 1,
+        "max_open_positions": 1,
+        "allowlist_required": true,
+        "small_lot_required": true,
+        "bounded_supervised_window_required": true,
+        "external_credential_refs_outside_repo": true,
+        "operator_owner_explicit_required": true,
+        "venue_connectivity_confirmation_required": true,
+        "bounded_start_criteria_explicit_required": true,
+        "manual_latched_stop_all_visibility_reconfirmation_required": true,
+        "terminal_snapshot_readability_reconfirmation_required": true,
+        "mewx_unchanged": true,
+        "funded_live_forbidden": true
+      },
+      "unresolved_attestation_faces": [
+        "external_credential_source_face",
+        "venue_ref_face",
+        "account_ref_face",
+        "connectivity_profile_face",
+        "operator_owner_face",
+        "bounded_start_criteria_face",
+        "allowlist_symbol_lot_reconfirmed",
+        "manual_latched_stop_all_visibility_reconfirmed",
+        "terminal_snapshot_readability_reconfirmed"
+      ],
+      "sub_agents": [
+        {
+          "name": "Anscombe",
+          "lines": [
+            "Confirmed the retry-gate quartet should remain the accepted baseline until a complete input-attestation quartet exists, then switch current report, status, proof, summary, and handoff pointers atomically.",
+            "Recommended that every attestation row carry the same five faces in one place: repo-visible marker, who attests, what is being attested, minimal evidence shape, and stale boundary.",
+            "Recommended fail-closed wording that stays observation-based: the repo may name markers and attestation requirements, but gate recheck remains blocked until each attestation face is explicit enough to reopen review."
+          ]
+        },
+        {
+          "name": "Euler",
+          "lines": [
+            "Kept the attestation boundary identical to the accepted retry-gate boundary: Dexter-only `paper_live`, frozen Mew-X `sim_live`, `single_sleeve`, `dexter_default`, allowlist-only, small-lot, one-plan, one-position, bounded supervision, and funded-live forbidden.",
+            "Recommended the smallest next-step cut: hold the current lane at `supervised_run_retry_gate_input_attestation` while blocked, and expose `supervised_run_retry_execution` only as the attestation-pass successor once gate review can honestly reopen.",
+            "Confirmed there is no need for planner or adapter code drift: `prepare / start / status / stop / snapshot` stays fixed, `manual_latched_stop_all` stays planner-owned, and Mew-X remains unchanged."
+          ]
+        },
+        {
+          "name": "Parfit",
+          "lines": [
+            "Scoped the smallest safe change set to docs, proof-generation script, generated artifacts, manifest/context/ledger updates, and tests; no `vexter/` runtime behavior changes are needed for this lane.",
+            "Recommended validating the generator plus the affected regression surfaces with `python3 scripts/run_demo_forward_supervised_run_retry_gate_input_attestation.py` and focused `pytest` coverage on the supervised-run and bundle-layout tests.",
+            "Merge readiness depends on an atomic current-pointer switch to input attestation, a regenerated tarball at the new bundle path, and a clean blocked decision that does not claim retry execution success or a passed gate review."
+          ]
+        }
+      ]
     }
   },
   "frozen_source_commits": {
@@ -966,12 +1050,12 @@
     ]
   },
   "next_task": {
-    "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
-    "state": "retry_gate_inputs_pending",
+    "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-INPUT-ATTESTATION",
+    "state": "retry_gate_input_attestations_pending",
     "rationale": [
-      "Retry readiness is accepted as baseline and retry gate is now current.",
-      "One or more gate inputs remain unresolved or not explicit enough in repo-visible form.",
-      "Hold retry execution closed until the gate passes."
+      "Retry gate is accepted as baseline and input attestation is now current.",
+      "One or more attestation faces remain unresolved or not explicit enough in repo-visible form.",
+      "Hold retry execution closed until the attestation surface is explicit enough."
     ],
     "pass_successor": {
       "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-EXECUTION",
@@ -1038,6 +1122,13 @@
     "retry_execution_remains_fail_closed": true,
     "demo_forward_retry_gate_subagent_summary_written": true,
     "recommended_next_step_stays_supervised_run_retry_gate_when_blocked": true,
-    "retry_execution_requires_gate_pass": true
+    "retry_execution_requires_gate_pass": true,
+    "demo_forward_supervised_run_retry_gate_input_attestation_added": true,
+    "demo_forward_retry_gate_input_attestation_current_pointers_fixed": true,
+    "demo_forward_retry_gate_input_attestation_checklist_written": true,
+    "demo_forward_retry_gate_input_attestation_decision_surface_written": true,
+    "demo_forward_retry_gate_input_attestation_subagent_summary_written": true,
+    "recommended_next_step_stays_supervised_run_retry_gate_input_attestation_when_blocked": true,
+    "retry_execution_requires_attestation_faces": true
   }
 }

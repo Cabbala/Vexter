@@ -28,6 +28,7 @@ def test_demo_forward_supervised_run_retry_readiness_artifacts_are_current_and_c
     assert manifest["task_id"] in {
         "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS",
         "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
+        "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-INPUT-ATTESTATION",
     }
     assert "artifacts/proofs/demo-forward-supervised-run-retry-readiness-check.json" in manifest[
         "proof_files"
@@ -61,6 +62,9 @@ def test_demo_forward_supervised_run_retry_readiness_artifacts_are_current_and_c
     assert context["evidence"]["demo_forward_supervised_run_retry_gate"]["task_state"] == (
         "supervised_run_retry_gate_blocked"
     )
+    assert context["evidence"]["demo_forward_supervised_run_retry_gate_input_attestation"][
+        "task_state"
+    ] == "supervised_run_retry_gate_input_attestation_blocked"
     assert retry_boundary["demo_source"] == "dexter"
     assert retry_boundary["execution_mode"] == "paper_live"
     assert retry_boundary["route_mode"] == "single_sleeve"

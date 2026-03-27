@@ -1,9 +1,9 @@
 {
   "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION",
   "verified_github": {
-    "latest_vexter_pr": 88,
-    "latest_vexter_main_commit": "1d43904d392eefdcc911f00102cdff62bce9deb2",
-    "latest_vexter_merged_at": "2026-03-27T20:05:00Z",
+    "latest_vexter_pr": 90,
+    "latest_vexter_main_commit": "f79997cc0b619c2542cd6e9f876abcfb7ffca3f8",
+    "latest_vexter_merged_at": "2026-03-27T21:29:43Z",
     "dexter_pr_3_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
   },
@@ -81,6 +81,39 @@
           "minimum_regenerated_locator_shape": "attestor name, reference label only, bounded window, verification timestamp, and a plain-language confirmation that the referenced credential source was resolved outside repo; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets; plus regenerated face name, regeneration timestamp, bundle-relative proof pointer, and one reviewer-readable locator path that reopens the same bounded-window evidence without exposing secrets",
           "freshness_inheritance_or_reset_rule": "inherit freshness only while the underlying fresh locator remains current, reviewable, and inside the same bounded supervised window; reset the regenerated face to FAIL/BLOCKED when the credential reference changes or the bounded supervised window rolls forward or when the locator cannot be reopened without secrets",
           "reviewable_enough_when": "the repo can point to a current attestation record for this face without exposing secret material and the located evidence is still fresh enough for the current bounded supervised window and the regenerated face points to the same bounded-window locator plus an explicit regeneration timestamp and reviewer-readable proof path",
+          "required_manifest_fields": [
+            "bounded_supervised_window.label",
+            "bounded_supervised_window.starts_at",
+            "bounded_supervised_window.ends_at",
+            "faces.external_credential_source_face.provided",
+            "faces.external_credential_source_face.attested_by",
+            "faces.external_credential_source_face.evidence_locator",
+            "faces.external_credential_source_face.locator_kind",
+            "faces.external_credential_source_face.verified_at",
+            "faces.external_credential_source_face.fresh_until",
+            "faces.external_credential_source_face.reviewable_without_secrets",
+            "faces.external_credential_source_face.reviewability_note"
+          ],
+          "proof_paths_to_recheck": [
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/HANDOFF.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md"
+          ],
+          "canonical_blocked_reasons": [
+            "template_only_manifest",
+            "outside_repo_locator_not_supplied",
+            "attestors_missing",
+            "evidence_locator_missing",
+            "locator_kind_missing",
+            "verification_timestamp_missing",
+            "fresh_until_missing",
+            "bounded_window_missing"
+          ],
+          "operator_input_needed": "Provide one current non-secret locator that confirms which Dexter paper-live credential source was resolved for the bounded supervised window.",
           "regeneration_rule_complete": true,
           "current_fresh_locator_present": false,
           "freshness_inherited_cleanly": false,
@@ -97,6 +130,39 @@
           "minimum_regenerated_locator_shape": "attestor names, venue reference label, bounded window, verification timestamp, and explicit match confirmation between the marker and the intended venue; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets; plus regenerated face name, regeneration timestamp, bundle-relative proof pointer, and one reviewer-readable locator path that reopens the same bounded-window evidence without exposing secrets",
           "freshness_inheritance_or_reset_rule": "inherit freshness only while the underlying fresh locator remains current, reviewable, and inside the same bounded supervised window; reset the regenerated face to FAIL/BLOCKED when the venue reference changes, venue routing changes, or the supervised window is rescheduled or when the locator cannot be reopened without secrets",
           "reviewable_enough_when": "the venue attestation is current, explicit, and reviewable without requiring the reviewer to infer the mapping and the located evidence is still fresh enough for the current bounded supervised window and the regenerated face points to the same bounded-window locator plus an explicit regeneration timestamp and reviewer-readable proof path",
+          "required_manifest_fields": [
+            "bounded_supervised_window.label",
+            "bounded_supervised_window.starts_at",
+            "bounded_supervised_window.ends_at",
+            "faces.venue_ref_face.provided",
+            "faces.venue_ref_face.attested_by",
+            "faces.venue_ref_face.evidence_locator",
+            "faces.venue_ref_face.locator_kind",
+            "faces.venue_ref_face.verified_at",
+            "faces.venue_ref_face.fresh_until",
+            "faces.venue_ref_face.reviewable_without_secrets",
+            "faces.venue_ref_face.reviewability_note"
+          ],
+          "proof_paths_to_recheck": [
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/HANDOFF.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md"
+          ],
+          "canonical_blocked_reasons": [
+            "template_only_manifest",
+            "outside_repo_locator_not_supplied",
+            "attestors_missing",
+            "evidence_locator_missing",
+            "locator_kind_missing",
+            "verification_timestamp_missing",
+            "fresh_until_missing",
+            "bounded_window_missing"
+          ],
+          "operator_input_needed": "Provide one current non-secret locator that ties the repo-visible venue marker to the exact Dexter demo venue for the bounded supervised window.",
           "regeneration_rule_complete": true,
           "current_fresh_locator_present": false,
           "freshness_inherited_cleanly": false,
@@ -113,6 +179,39 @@
           "minimum_regenerated_locator_shape": "attestor name, account reference label, bounded window, verification timestamp, and a statement that the external account binding was checked outside repo; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets; plus regenerated face name, regeneration timestamp, bundle-relative proof pointer, and one reviewer-readable locator path that reopens the same bounded-window evidence without exposing secrets",
           "freshness_inheritance_or_reset_rule": "inherit freshness only while the underlying fresh locator remains current, reviewable, and inside the same bounded supervised window; reset the regenerated face to FAIL/BLOCKED when the account reference changes or a different demo account is selected for the window or when the locator cannot be reopened without secrets",
           "reviewable_enough_when": "the account attestation makes the intended demo account explicit enough to reopen gate review and the located evidence is still fresh enough for the current bounded supervised window and the regenerated face points to the same bounded-window locator plus an explicit regeneration timestamp and reviewer-readable proof path",
+          "required_manifest_fields": [
+            "bounded_supervised_window.label",
+            "bounded_supervised_window.starts_at",
+            "bounded_supervised_window.ends_at",
+            "faces.account_ref_face.provided",
+            "faces.account_ref_face.attested_by",
+            "faces.account_ref_face.evidence_locator",
+            "faces.account_ref_face.locator_kind",
+            "faces.account_ref_face.verified_at",
+            "faces.account_ref_face.fresh_until",
+            "faces.account_ref_face.reviewable_without_secrets",
+            "faces.account_ref_face.reviewability_note"
+          ],
+          "proof_paths_to_recheck": [
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/HANDOFF.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md"
+          ],
+          "canonical_blocked_reasons": [
+            "template_only_manifest",
+            "outside_repo_locator_not_supplied",
+            "attestors_missing",
+            "evidence_locator_missing",
+            "locator_kind_missing",
+            "verification_timestamp_missing",
+            "fresh_until_missing",
+            "bounded_window_missing"
+          ],
+          "operator_input_needed": "Provide one current non-secret locator that shows which Dexter paper-live demo account the bounded supervised window is bound to.",
           "regeneration_rule_complete": true,
           "current_fresh_locator_present": false,
           "freshness_inherited_cleanly": false,
@@ -129,6 +228,39 @@
           "minimum_regenerated_locator_shape": "attestor names, connectivity profile label, verification timestamp, bounded window, and a short reachability result; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets; plus regenerated face name, regeneration timestamp, bundle-relative proof pointer, and one reviewer-readable locator path that reopens the same bounded-window evidence without exposing secrets",
           "freshness_inheritance_or_reset_rule": "inherit freshness only while the underlying fresh locator remains current, reviewable, and inside the same bounded supervised window; reset the regenerated face to FAIL/BLOCKED when network routing changes, connectivity profile changes, or the verification timestamp is outside the current window or when the locator cannot be reopened without secrets",
           "reviewable_enough_when": "the connectivity attestation is current enough that a gate reviewer can treat reachability as explicitly checked and the located evidence is still fresh enough for the current bounded supervised window and the regenerated face points to the same bounded-window locator plus an explicit regeneration timestamp and reviewer-readable proof path",
+          "required_manifest_fields": [
+            "bounded_supervised_window.label",
+            "bounded_supervised_window.starts_at",
+            "bounded_supervised_window.ends_at",
+            "faces.connectivity_profile_face.provided",
+            "faces.connectivity_profile_face.attested_by",
+            "faces.connectivity_profile_face.evidence_locator",
+            "faces.connectivity_profile_face.locator_kind",
+            "faces.connectivity_profile_face.verified_at",
+            "faces.connectivity_profile_face.fresh_until",
+            "faces.connectivity_profile_face.reviewable_without_secrets",
+            "faces.connectivity_profile_face.reviewability_note"
+          ],
+          "proof_paths_to_recheck": [
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/HANDOFF.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md"
+          ],
+          "canonical_blocked_reasons": [
+            "template_only_manifest",
+            "outside_repo_locator_not_supplied",
+            "attestors_missing",
+            "evidence_locator_missing",
+            "locator_kind_missing",
+            "verification_timestamp_missing",
+            "fresh_until_missing",
+            "bounded_window_missing"
+          ],
+          "operator_input_needed": "Provide one current non-secret locator that shows the intended connectivity profile was checked for venue/account reachability inside the bounded supervised window.",
           "regeneration_rule_complete": true,
           "current_fresh_locator_present": false,
           "freshness_inherited_cleanly": false,
@@ -145,6 +277,39 @@
           "minimum_regenerated_locator_shape": "owner name or handle, verification timestamp, window label, and explicit ownership statement; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets; plus regenerated face name, regeneration timestamp, bundle-relative proof pointer, and one reviewer-readable locator path that reopens the same bounded-window evidence without exposing secrets",
           "freshness_inheritance_or_reset_rule": "inherit freshness only while the underlying fresh locator remains current, reviewable, and inside the same bounded supervised window; reset the regenerated face to FAIL/BLOCKED when the named owner changes or the supervised window changes or when the locator cannot be reopened without secrets",
           "reviewable_enough_when": "the owner attestation is explicit enough that gate recheck does not rely on unnamed responsibility and the located evidence is still fresh enough for the current bounded supervised window and the regenerated face points to the same bounded-window locator plus an explicit regeneration timestamp and reviewer-readable proof path",
+          "required_manifest_fields": [
+            "bounded_supervised_window.label",
+            "bounded_supervised_window.starts_at",
+            "bounded_supervised_window.ends_at",
+            "faces.operator_owner_face.provided",
+            "faces.operator_owner_face.attested_by",
+            "faces.operator_owner_face.evidence_locator",
+            "faces.operator_owner_face.locator_kind",
+            "faces.operator_owner_face.verified_at",
+            "faces.operator_owner_face.fresh_until",
+            "faces.operator_owner_face.reviewable_without_secrets",
+            "faces.operator_owner_face.reviewability_note"
+          ],
+          "proof_paths_to_recheck": [
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/HANDOFF.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md"
+          ],
+          "canonical_blocked_reasons": [
+            "template_only_manifest",
+            "outside_repo_locator_not_supplied",
+            "attestors_missing",
+            "evidence_locator_missing",
+            "locator_kind_missing",
+            "verification_timestamp_missing",
+            "fresh_until_missing",
+            "bounded_window_missing"
+          ],
+          "operator_input_needed": "Name one explicit operator owner and provide one reviewable non-secret locator that shows ownership for the bounded supervised window.",
           "regeneration_rule_complete": true,
           "current_fresh_locator_present": false,
           "freshness_inherited_cleanly": false,
@@ -165,6 +330,39 @@
           "minimum_regenerated_locator_shape": "planned start window, bounded window minutes, go/no-go owner, abort owner, verification timestamp, and explicit stop condition note; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets; plus regenerated face name, regeneration timestamp, bundle-relative proof pointer, and one reviewer-readable locator path that reopens the same bounded-window evidence without exposing secrets",
           "freshness_inheritance_or_reset_rule": "inherit freshness only while the underlying fresh locator remains current, reviewable, and inside the same bounded supervised window; reset the regenerated face to FAIL/BLOCKED when the scheduled window moves or ownership for go/no-go or abort changes or when the locator cannot be reopened without secrets",
           "reviewable_enough_when": "the bounded-start attestation makes timing and ownership explicit enough to reopen gate review and the located evidence is still fresh enough for the current bounded supervised window and the regenerated face points to the same bounded-window locator plus an explicit regeneration timestamp and reviewer-readable proof path",
+          "required_manifest_fields": [
+            "bounded_supervised_window.label",
+            "bounded_supervised_window.starts_at",
+            "bounded_supervised_window.ends_at",
+            "faces.bounded_start_criteria_face.provided",
+            "faces.bounded_start_criteria_face.attested_by",
+            "faces.bounded_start_criteria_face.evidence_locator",
+            "faces.bounded_start_criteria_face.locator_kind",
+            "faces.bounded_start_criteria_face.verified_at",
+            "faces.bounded_start_criteria_face.fresh_until",
+            "faces.bounded_start_criteria_face.reviewable_without_secrets",
+            "faces.bounded_start_criteria_face.reviewability_note"
+          ],
+          "proof_paths_to_recheck": [
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/HANDOFF.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md"
+          ],
+          "canonical_blocked_reasons": [
+            "template_only_manifest",
+            "outside_repo_locator_not_supplied",
+            "attestors_missing",
+            "evidence_locator_missing",
+            "locator_kind_missing",
+            "verification_timestamp_missing",
+            "fresh_until_missing",
+            "bounded_window_missing"
+          ],
+          "operator_input_needed": "Provide one current non-secret locator that fixes the bounded start window plus the go/no-go and abort owners for the next supervised retry attempt.",
           "regeneration_rule_complete": true,
           "current_fresh_locator_present": false,
           "freshness_inherited_cleanly": false,
@@ -190,6 +388,39 @@
           "minimum_regenerated_locator_shape": "attestor name, verification timestamp, allowlist values, lot-size values, position cap, and a plain-language reconfirmation note; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets; plus regenerated face name, regeneration timestamp, bundle-relative proof pointer, and one reviewer-readable locator path that reopens the same bounded-window evidence without exposing secrets",
           "freshness_inheritance_or_reset_rule": "inherit freshness only while the underlying fresh locator remains current, reviewable, and inside the same bounded supervised window; reset the regenerated face to FAIL/BLOCKED when any guardrail value changes or the supervised window moves or when the locator cannot be reopened without secrets",
           "reviewable_enough_when": "the guardrail attestation is current enough that gate recheck can treat the bounded demo envelope as explicitly reconfirmed and the located evidence is still fresh enough for the current bounded supervised window and the regenerated face points to the same bounded-window locator plus an explicit regeneration timestamp and reviewer-readable proof path",
+          "required_manifest_fields": [
+            "bounded_supervised_window.label",
+            "bounded_supervised_window.starts_at",
+            "bounded_supervised_window.ends_at",
+            "faces.allowlist_symbol_lot_reconfirmed.provided",
+            "faces.allowlist_symbol_lot_reconfirmed.attested_by",
+            "faces.allowlist_symbol_lot_reconfirmed.evidence_locator",
+            "faces.allowlist_symbol_lot_reconfirmed.locator_kind",
+            "faces.allowlist_symbol_lot_reconfirmed.verified_at",
+            "faces.allowlist_symbol_lot_reconfirmed.fresh_until",
+            "faces.allowlist_symbol_lot_reconfirmed.reviewable_without_secrets",
+            "faces.allowlist_symbol_lot_reconfirmed.reviewability_note"
+          ],
+          "proof_paths_to_recheck": [
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/HANDOFF.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md"
+          ],
+          "canonical_blocked_reasons": [
+            "template_only_manifest",
+            "outside_repo_locator_not_supplied",
+            "attestors_missing",
+            "evidence_locator_missing",
+            "locator_kind_missing",
+            "verification_timestamp_missing",
+            "fresh_until_missing",
+            "bounded_window_missing"
+          ],
+          "operator_input_needed": "Provide one current non-secret locator that reconfirms the allowlist, default symbol, lot size, one-position cap, and bounded window guardrails for the next supervised attempt.",
           "regeneration_rule_complete": true,
           "current_fresh_locator_present": false,
           "freshness_inherited_cleanly": false,
@@ -206,6 +437,39 @@
           "minimum_regenerated_locator_shape": "attestor name, verification timestamp, referenced stop-all surface, and a plain-language visibility confirmation; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets; plus regenerated face name, regeneration timestamp, bundle-relative proof pointer, and one reviewer-readable locator path that reopens the same bounded-window evidence without exposing secrets",
           "freshness_inheritance_or_reset_rule": "inherit freshness only while the underlying fresh locator remains current, reviewable, and inside the same bounded supervised window; reset the regenerated face to FAIL/BLOCKED when the stop-all surface changes or the window advances without reconfirmation or when the locator cannot be reopened without secrets",
           "reviewable_enough_when": "the stop-all visibility attestation is current enough to reopen gate review without assuming prior visibility still holds and the located evidence is still fresh enough for the current bounded supervised window and the regenerated face points to the same bounded-window locator plus an explicit regeneration timestamp and reviewer-readable proof path",
+          "required_manifest_fields": [
+            "bounded_supervised_window.label",
+            "bounded_supervised_window.starts_at",
+            "bounded_supervised_window.ends_at",
+            "faces.manual_latched_stop_all_visibility_reconfirmed.provided",
+            "faces.manual_latched_stop_all_visibility_reconfirmed.attested_by",
+            "faces.manual_latched_stop_all_visibility_reconfirmed.evidence_locator",
+            "faces.manual_latched_stop_all_visibility_reconfirmed.locator_kind",
+            "faces.manual_latched_stop_all_visibility_reconfirmed.verified_at",
+            "faces.manual_latched_stop_all_visibility_reconfirmed.fresh_until",
+            "faces.manual_latched_stop_all_visibility_reconfirmed.reviewable_without_secrets",
+            "faces.manual_latched_stop_all_visibility_reconfirmed.reviewability_note"
+          ],
+          "proof_paths_to_recheck": [
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/HANDOFF.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md"
+          ],
+          "canonical_blocked_reasons": [
+            "template_only_manifest",
+            "outside_repo_locator_not_supplied",
+            "attestors_missing",
+            "evidence_locator_missing",
+            "locator_kind_missing",
+            "verification_timestamp_missing",
+            "fresh_until_missing",
+            "bounded_window_missing"
+          ],
+          "operator_input_needed": "Provide one current non-secret locator that freshly reconfirms `manual_latched_stop_all` visibility for the bounded supervised window.",
           "regeneration_rule_complete": true,
           "current_fresh_locator_present": false,
           "freshness_inherited_cleanly": false,
@@ -222,6 +486,39 @@
           "minimum_regenerated_locator_shape": "attestor name, verification timestamp, referenced snapshot surface, and a short readability confirmation; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets; plus regenerated face name, regeneration timestamp, bundle-relative proof pointer, and one reviewer-readable locator path that reopens the same bounded-window evidence without exposing secrets",
           "freshness_inheritance_or_reset_rule": "inherit freshness only while the underlying fresh locator remains current, reviewable, and inside the same bounded supervised window; reset the regenerated face to FAIL/BLOCKED when the snapshot format changes or the supervised window advances without reconfirmation or when the locator cannot be reopened without secrets",
           "reviewable_enough_when": "the snapshot-readability attestation is current enough that a gate reviewer can rely on terminal visibility without inference and the located evidence is still fresh enough for the current bounded supervised window and the regenerated face points to the same bounded-window locator plus an explicit regeneration timestamp and reviewer-readable proof path",
+          "required_manifest_fields": [
+            "bounded_supervised_window.label",
+            "bounded_supervised_window.starts_at",
+            "bounded_supervised_window.ends_at",
+            "faces.terminal_snapshot_readability_reconfirmed.provided",
+            "faces.terminal_snapshot_readability_reconfirmed.attested_by",
+            "faces.terminal_snapshot_readability_reconfirmed.evidence_locator",
+            "faces.terminal_snapshot_readability_reconfirmed.locator_kind",
+            "faces.terminal_snapshot_readability_reconfirmed.verified_at",
+            "faces.terminal_snapshot_readability_reconfirmed.fresh_until",
+            "faces.terminal_snapshot_readability_reconfirmed.reviewable_without_secrets",
+            "faces.terminal_snapshot_readability_reconfirmed.reviewability_note"
+          ],
+          "proof_paths_to_recheck": [
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/HANDOFF.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md"
+          ],
+          "canonical_blocked_reasons": [
+            "template_only_manifest",
+            "outside_repo_locator_not_supplied",
+            "attestors_missing",
+            "evidence_locator_missing",
+            "locator_kind_missing",
+            "verification_timestamp_missing",
+            "fresh_until_missing",
+            "bounded_window_missing"
+          ],
+          "operator_input_needed": "Provide one current non-secret locator that freshly reconfirms terminal snapshot readability for the bounded supervised window.",
           "regeneration_rule_complete": true,
           "current_fresh_locator_present": false,
           "freshness_inherited_cleanly": false,
@@ -249,6 +546,8 @@
         "all_minimum_regenerated_locator_shapes_explicit": true,
         "all_freshness_inheritance_rules_explicit": true,
         "all_regenerated_reviewable_conditions_explicit": true,
+        "all_manifest_field_maps_explicit": true,
+        "all_proof_path_maps_explicit": true,
         "all_current_fresh_locator_inputs_present": false,
         "all_freshness_inherited_cleanly": false,
         "all_regenerated_faces_reviewable_now": false,
@@ -271,9 +570,9 @@
       {
         "name": "Anscombe",
         "lines": [
-          "Reverified PR `#88` / commit `1d43904d392eefdcc911f00102cdff62bce9deb2` as latest merged `main`, then preserved regeneration as the current lane instead of inventing a new pass claim.",
-          "The main duplication before this change was that regeneration rebuilt blocker semantics from refresh text rather than consuming one canonical external-evidence manifest and validator.",
-          "The atomic current-pointer set still matters: summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces must all agree once regeneration starts consuming the shared gap report."
+          "Reverified PR `#90` / commit `f79997cc0b619c2542cd6e9f876abcfb7ffca3f8` as latest merged `main`, then re-promoted regeneration from the current refresh baseline instead of inventing a new pass claim.",
+          "The main duplication before this change was that regeneration handoff text still relied on human interpretation instead of carrying per-face manifest fields, proof paths, and template-only blocker guidance from the canonical external-evidence gap output.",
+          "The atomic current-pointer set still matters: summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces must all agree once regeneration becomes the current lane from the refresh baseline."
         ]
       },
       {
@@ -287,8 +586,8 @@
       {
         "name": "Parfit",
         "lines": [
-          "The lowest-risk change set is one shared manifest + validator + gap report, plus regeneration/refresh rewiring and the tests that pin current task, bundle layout, and export behavior.",
-          "Generator-first validation remains the safe path: write the canonical gap artifacts, rerun refresh, rerun regeneration, then widen to export and full pytest coverage.",
+          "The lowest-risk change set is one regeneration-side metadata refresh, one tighter operator handoff that reuses the canonical gap output directly, one small closeout-bundle expansion, and the tests that pin the repo-level current pointer.",
+          "Generator-first validation remains the safe path: rerun the canonical gap script, rerun regeneration from the refresh baseline, rebuild the proof bundle, then widen to targeted coverage and full pytest.",
           "Merge readiness depends on end-to-end agreement across summary, context, manifest, ledger, bundle metadata, the regenerated handoff bundle, and the final exported tarball without touching runtime code."
         ]
       }

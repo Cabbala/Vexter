@@ -147,9 +147,9 @@ DECISION = "retry_gate_review_blocked_pending_current_attestation_record_pack_re
 
 VERIFIED_DEXTER_COMMIT = "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938"
 VERIFIED_MEWX_COMMIT = "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
-VERIFIED_VEXTER_PR = 88
-VERIFIED_VEXTER_COMMIT = "1d43904d392eefdcc911f00102cdff62bce9deb2"
-VERIFIED_VEXTER_MERGED_AT = "2026-03-27T20:05:00Z"
+VERIFIED_VEXTER_PR = 90
+VERIFIED_VEXTER_COMMIT = "f79997cc0b619c2542cd6e9f876abcfb7ffca3f8"
+VERIFIED_VEXTER_MERGED_AT = "2026-03-27T21:29:43Z"
 
 REQUIRED_FACE_NAMES = [
     "external_credential_source_face",
@@ -167,9 +167,9 @@ SUB_AGENT_SUMMARIES = (
     {
         "name": "Anscombe",
         "lines": [
-            "Reverified PR `#88` / commit `1d43904d392eefdcc911f00102cdff62bce9deb2` as latest merged `main`, then preserved regeneration as the current lane instead of inventing a new pass claim.",
-            "The main duplication before this change was that regeneration rebuilt blocker semantics from refresh text rather than consuming one canonical external-evidence manifest and validator.",
-            "The atomic current-pointer set still matters: summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces must all agree once regeneration starts consuming the shared gap report.",
+            "Reverified PR `#90` / commit `f79997cc0b619c2542cd6e9f876abcfb7ffca3f8` as latest merged `main`, then re-promoted regeneration from the current refresh baseline instead of inventing a new pass claim.",
+            "The main duplication before this change was that regeneration handoff text still relied on human interpretation instead of carrying per-face manifest fields, proof paths, and template-only blocker guidance from the canonical external-evidence gap output.",
+            "The atomic current-pointer set still matters: summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces must all agree once regeneration becomes the current lane from the refresh baseline.",
         ],
     },
     {
@@ -183,8 +183,8 @@ SUB_AGENT_SUMMARIES = (
     {
         "name": "Parfit",
         "lines": [
-            "The lowest-risk change set is one shared manifest + validator + gap report, plus regeneration/refresh rewiring and the tests that pin current task, bundle layout, and export behavior.",
-            "Generator-first validation remains the safe path: write the canonical gap artifacts, rerun refresh, rerun regeneration, then widen to export and full pytest coverage.",
+            "The lowest-risk change set is one regeneration-side metadata refresh, one tighter operator handoff that reuses the canonical gap output directly, one small closeout-bundle expansion, and the tests that pin the repo-level current pointer.",
+            "Generator-first validation remains the safe path: rerun the canonical gap script, rerun regeneration from the refresh baseline, rebuild the proof bundle, then widen to targeted coverage and full pytest.",
             "Merge readiness depends on end-to-end agreement across summary, context, manifest, ledger, bundle metadata, the regenerated handoff bundle, and the final exported tarball without touching runtime code.",
         ],
     },
@@ -380,6 +380,10 @@ def build_regeneration_rows(gap_faces: list[dict]) -> list[dict]:
                 "reviewable_enough_when": build_regenerated_reviewable_enough_when(
                     usable_condition
                 ),
+                "required_manifest_fields": list(face.get("required_manifest_fields", [])),
+                "proof_paths_to_recheck": list(face.get("proof_paths_to_recheck", [])),
+                "canonical_blocked_reasons": list(face.get("blocked_reasons", [])),
+                "operator_input_needed": face.get("operator_input_needed", "").strip(),
                 "regeneration_rule_complete": regeneration_rule_complete,
                 "current_fresh_locator_present": current_fresh_locator_present,
                 "freshness_inherited_cleanly": freshness_inherited_cleanly,
@@ -412,6 +416,8 @@ def build_regeneration_checklist(rows: list[dict], runtime_errors: list[str]) ->
         "all_regenerated_reviewable_conditions_explicit": all(
             bool(row["reviewable_enough_when"]) for row in rows
         ),
+        "all_manifest_field_maps_explicit": all(bool(row["required_manifest_fields"]) for row in rows),
+        "all_proof_path_maps_explicit": all(bool(row["proof_paths_to_recheck"]) for row in rows),
         "all_current_fresh_locator_inputs_present": all(
             row["current_fresh_locator_present"] for row in rows
         ),
@@ -455,6 +461,11 @@ def build_current_report(
     regeneration_rules_explicit_count = sum(row["regeneration_rule_complete"] for row in rows)
     manifest = gap_payload["manifest"]
     summary = gap_payload["summary"]
+    blocked_faces_align_with_gap = sorted(blocked_faces) == sorted(summary["blocked_faces"])
+    reopen_ready_consistent = (
+        summary["retry_gate_review_reopen_ready"] is False
+        and all(row["regenerated_face_reviewable_now"] is False for row in rows)
+    )
     return f"""# Demo Forward Supervised Run Retry Gate Attestation Record Pack Regeneration Report
 
 ## Verified GitHub State
@@ -498,14 +509,19 @@ def build_current_report(
 - gap summary: `{GAP_SUMMARY_REL_PATH}`
 - manifest status: `{manifest['status']}`
 - blocked faces from canonical validator: `{", ".join(summary['blocked_faces'])}`
+- canonical face-to-manifest map: `{GAP_REPORT_REL_PATH}` under `Face-To-Manifest Map`
 
 ## Regeneration Findings
 - required regeneration faces: `{len(rows)}`
 - regeneration rules explicit count: `{regeneration_rules_explicit_count}`
+- per-face manifest field maps explicit count: `{sum(bool(row["required_manifest_fields"]) for row in rows)}`
+- per-face proof path maps explicit count: `{sum(bool(row["proof_paths_to_recheck"]) for row in rows)}`
 - current fresh locator input count: `{sum(row["current_fresh_locator_present"] for row in rows)}`
 - freshness inherited cleanly count: `{sum(row["freshness_inherited_cleanly"] for row in rows)}`
 - regenerated face reviewable count: `{sum(row["regenerated_face_reviewable_now"] for row in rows)}`
 - blocked regenerated faces: `{", ".join(blocked_faces)}`
+- canonical gap blocked faces align with regeneration lane: `{"yes" if blocked_faces_align_with_gap else "no"}`
+- template-only reopen-ready remains false across canonical gap and regeneration lane: `{"yes" if reopen_ready_consistent else "no"}`
 
 ## Honest Regeneration Model
 - `PASS` only if refreshed locator rules produce a current, reviewable regenerated record pack sufficient to reopen retry-gate review honestly.
@@ -602,7 +618,7 @@ def build_plan() -> str:
 
 ## Validation
 - generate the canonical gap surfaces with `python3.12 scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py`
-- generate the lane with `python3 scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py`
+- generate the lane with `python3.12 scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py`
 - rebuild the tarball with `./scripts/build_proof_bundle.sh`
 - verify shared regression expectations with `pytest -q`
 """
@@ -734,6 +750,21 @@ def build_handoff(
         f"regeneration_owner={row['regeneration_owner']}"
         for row in rows
     )
+    face_manifest_map_lines = "\n".join(
+        "- "
+        f"{row['name']}: manifest_fields={', '.join(row['required_manifest_fields'])}; "
+        f"proof_paths_to_recheck={', '.join(row['proof_paths_to_recheck'])}; "
+        f"blocked_reasons={', '.join(row['canonical_blocked_reasons']) or 'none'}; "
+        f"operator_input_remaining={row['operator_input_needed']}"
+        for row in rows
+    )
+    blocked_faces_align_with_gap = sorted(
+        row["name"] for row in rows if row["regeneration_status"] != "PASS"
+    ) == sorted(gap_payload["summary"]["blocked_faces"])
+    reopen_ready_consistent = (
+        gap_payload["summary"]["retry_gate_review_reopen_ready"] is False
+        and all(row["regenerated_face_reviewable_now"] is False for row in rows)
+    )
     return f"""# Demo Forward Supervised Run Retry Gate Attestation Record Pack Regeneration Handoff
 
 ## Current Status
@@ -775,6 +806,21 @@ def build_handoff(
 - baseline_proof_json: artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-check.json
 - baseline_handoff: artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/HANDOFF.md
 
+## Canonical Evidence Intake Handoff
+- bounded_window_fields_to_fill_once: {", ".join(gap_payload['manifest']['window_fields_to_fill'])}
+- per_blocked_face_fields_to_fill: provided, attested_by, evidence_locator, locator_kind, verified_at, fresh_until, reviewable_without_secrets, reviewability_note
+- canonical_face_to_manifest_map: {GAP_REPORT_REL_PATH}
+- canonical_machine_gap_proof: {GAP_PROOF_REL_PATH}
+- proof_surfaces_to_rerun_after_manifest_update: {", ".join(gap_payload['manifest']['proof_paths_to_recheck'])}
+- retry_gate_review_reopen_ready_from_external_evidence: {str(gap_payload['summary']['retry_gate_review_reopen_ready']).lower()}
+- regeneration_lane_reopen_ready_now: {str(all(row['regenerated_face_reviewable_now'] for row in rows)).lower()}
+- canonical_gap_blocked_faces_align_with_regeneration_lane: {str(blocked_faces_align_with_gap).lower()}
+- template_only_reopen_ready_consistency_holds: {str(reopen_ready_consistent).lower()}
+- rerun_gap_and_lane_commands:
+  - {gap_payload['manifest']['rerun_commands'][0]}
+  - {gap_payload['manifest']['rerun_commands'][1]}
+  - {gap_payload['manifest']['rerun_commands'][2]}
+
 ## Guardrails
 - route_mode: single_sleeve
 - selected_sleeve_id: dexter_default
@@ -798,6 +844,9 @@ def build_handoff(
 ## Regeneration Faces
 {face_lines}
 
+## Face-To-Manifest And Proof Map
+{face_manifest_map_lines}
+
 ## Open Questions
 - question_1_or_none: who will replace the template manifest with one current fresh-enough locator per required face so the regenerated pack can stay reviewable without secrets
 - question_2_or_none: which refreshed locator should be recollected first for venue, account, and connectivity faces before rerunning regeneration
@@ -809,6 +858,7 @@ def build_handoff(
 - priority_check_1: keep the current lane blocked unless every face can inherit freshness from one current, reviewable bounded-window locator
 - priority_check_2: recommend `{NEXT_TASK_LANE}` while blocked so additional fresh locators can be collected before rerunning regeneration
 - priority_check_3: preserve Dexter-only `paper_live`, `single_sleeve`, `dexter_default`, small-lot, one-position, `manual_latched_stop_all`, and funded-live-forbidden guardrails
+- priority_check_4: keep `retry_gate_review_reopen_ready` false in both the canonical gap proof and the regeneration lane until the template manifest is replaced with current non-secret evidence
 
 ## Completeness Check
 - every_required_face_filled_or_none: true
@@ -818,6 +868,9 @@ def build_handoff(
 - decision_surface_pointer_checked: true
 - subagent_summary_pointer_checked: true
 - blocked_claim_boundary_explicit: true
+- per_face_manifest_field_maps_checked: true
+- per_face_proof_path_maps_checked: true
+- canonical_gap_alignment_checked: {str(blocked_faces_align_with_gap).lower()}
 
 This handoff promotes the bounded attestation record-pack regeneration lane only. It does not claim retry-gate reopen, completed retry execution, funded live access, or any Mew-X seam expansion.
 """
@@ -1226,9 +1279,9 @@ def main() -> None:
         {
             "latest_vexter_pr": VERIFIED_VEXTER_PR,
             "latest_vexter_main_commit": VERIFIED_VEXTER_COMMIT,
-            "latest_recent_vexter_prs": [88, 87, 86, 85, 84],
-            "vexter_pr_88_merged_at": VERIFIED_VEXTER_MERGED_AT,
-            "vexter_pr_88_closed_at": VERIFIED_VEXTER_MERGED_AT,
+            "latest_recent_vexter_prs": [90, 89, 88, 87, 86],
+            "vexter_pr_90_merged_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_90_closed_at": VERIFIED_VEXTER_MERGED_AT,
         }
     )
     context_pack["evidence"]["demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration"] = {
@@ -1261,6 +1314,14 @@ def main() -> None:
         "retry_gate_review_reopen_ready_from_external_evidence": gap_payload["summary"][
             "retry_gate_review_reopen_ready"
         ],
+        "per_face_manifest_field_maps_explicit": all(
+            bool(row["required_manifest_fields"]) for row in rows
+        ),
+        "per_face_proof_path_maps_explicit": all(bool(row["proof_paths_to_recheck"]) for row in rows),
+        "canonical_gap_blocked_faces_align_with_regeneration_lane": sorted(
+            blocked_regenerated_faces
+        )
+        == sorted(gap_payload["summary"]["blocked_faces"]),
     }
     context_pack["next_task"] = {
         "id": NEXT_TASK_ID,
@@ -1397,6 +1458,8 @@ def main() -> None:
             "demo_forward_retry_gate_attestation_record_pack_regeneration_subagent_summary_written": True,
             "recommended_next_step_returns_to_attestation_refresh_when_regeneration_stays_blocked": True,
             "retry_gate_review_requires_current_reviewable_regenerated_faces": True,
+            "template_only_external_evidence_reopen_ready_remains_false": True,
+            "regeneration_handoff_maps_each_face_to_manifest_and_proof_paths": True,
         }
     )
     MANIFEST_PATH.write_text(format_json(manifest))
@@ -1429,15 +1492,23 @@ def main() -> None:
         "source_faithful_modes": {"dexter": "paper_live", "mewx": "sim_live"},
         "status": TASK_STATUS,
         "sub_agents_used": [item["name"] for item in SUB_AGENT_SUMMARIES],
-        "supporting_vexter_prs": [88, 87, 86, 85, 84],
+        "supporting_vexter_prs": [90, 89, 88, 87, 86],
         "task_id": TASK_ID,
         "template_runtime_validation_errors": runtime_errors,
         "external_evidence_manifest_status": gap_payload["manifest"]["status"],
         "external_evidence_gap_report": GAP_REPORT_REL_PATH,
+        "per_face_manifest_field_maps_explicit": all(
+            bool(row["required_manifest_fields"]) for row in rows
+        ),
+        "per_face_proof_path_maps_explicit": all(bool(row["proof_paths_to_recheck"]) for row in rows),
+        "canonical_gap_blocked_faces_align_with_regeneration_lane": sorted(
+            blocked_regenerated_faces
+        )
+        == sorted(gap_payload["summary"]["blocked_faces"]),
         "verified_dexter_main_commit": VERIFIED_DEXTER_COMMIT,
         "verified_dexter_pr": 3,
         "verified_mewx_frozen_commit": VERIFIED_MEWX_COMMIT,
-        "verified_prs": [88, 87, 86],
+        "verified_prs": [90, 89, 88],
         "date": run_timestamp.split("T", 1)[0],
     }
     rewrite_local_ledger(ledger_payload)

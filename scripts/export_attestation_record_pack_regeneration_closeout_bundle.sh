@@ -49,6 +49,17 @@ handoff_src = (
     root
     / "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md"
 )
+report_src = (
+    root
+    / "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-report.md"
+)
+status_src = (
+    root
+    / "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-status.md"
+)
+baseline_handoff_src = (
+    root / "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/HANDOFF.md"
+)
 subagent_src = (
     root
     / "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/subagent_summary.md"
@@ -108,6 +119,9 @@ else:
     subagent_text = subagent_src.read_text()
 
 shutil.copy2(handoff_src, out_dir / "HANDOFF.md")
+shutil.copy2(report_src, out_dir / report_src.name)
+shutil.copy2(status_src, out_dir / status_src.name)
+shutil.copy2(baseline_handoff_src, out_dir / "baseline-attestation-refresh-HANDOFF.md")
 shutil.copy2(proof_bundle_path, out_dir / proof_bundle_path.name)
 shutil.copy2(external_contract_src, out_dir / external_contract_src.name)
 shutil.copy2(external_manifest_src, out_dir / external_manifest_src.name)
@@ -126,6 +140,9 @@ shutil.copy2(external_gap_summary_src, out_dir / external_gap_summary_src.name)
             "bundle_path": manifest["bundle_path"],
             "bundle_source": manifest.get("bundle_source"),
             "proof_bundle": proof_bundle_path.name,
+            "current_report": report_src.name,
+            "current_status_report": status_src.name,
+            "baseline_refresh_handoff": "baseline-attestation-refresh-HANDOFF.md",
             "external_evidence_contract": external_contract_src.name,
             "external_evidence_template": external_manifest_src.name,
             "external_evidence_gap_report": external_gap_report_src.name,

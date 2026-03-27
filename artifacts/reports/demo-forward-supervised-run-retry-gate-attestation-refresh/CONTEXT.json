@@ -6,8 +6,8 @@
   "recommended_next_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION",
   "candidate_pass_next_step": "supervised_run_retry_gate",
   "candidate_pass_next_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
-  "verified_vexter_main_pr": 83,
-  "verified_vexter_main_commit": "5b78804188e27199e90950f610fd279ad7a133f6",
+  "verified_vexter_main_pr": 84,
+  "verified_vexter_main_commit": "31fbee24beb56eb55338d4529c2c9420a0ac5ea9",
   "baseline_task_state": "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked",
   "first_demo_target": "dexter_paper_live",
   "source_faithful_seam": {

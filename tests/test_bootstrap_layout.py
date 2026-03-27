@@ -1008,6 +1008,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "feat/retry-gate-attestation-audit",
         "feat/attestation-record-pack",
         "feat/attestation-refresh",
+        "feat/attestation-refresh-repromotion-after-pr84",
         "feat/attestation-record-pack-regeneration",
         }
     assert payload["next_task_id"] in {

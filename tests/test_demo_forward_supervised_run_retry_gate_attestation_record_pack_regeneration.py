@@ -1,4 +1,7 @@
 import json
+import os
+import subprocess
+import tarfile
 from pathlib import Path
 
 
@@ -42,6 +45,9 @@ PROMPT_CONTEXT_PATH = (
     REPO_ROOT
     / "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/CONTEXT.json"
 )
+EXPORT_SCRIPT_PATH = (
+    REPO_ROOT / "scripts/export_attestation_record_pack_regeneration_closeout_bundle.sh"
+)
 
 
 def load_last_ledger_entry() -> dict:
@@ -62,20 +68,35 @@ def test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regenera
     decision_surface_text = DECISION_SURFACE_PATH.read_text()
 
     assert manifest["task_id"] == context["current_task"]["id"] == ledger["task_id"]
-    assert manifest["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
-    assert manifest["status"] == ledger["status"] == "supervised_run_retry_gate_attestation_refresh_blocked"
+    assert (
+        manifest["task_id"]
+        == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
+    )
+    assert (
+        manifest["status"]
+        == ledger["status"]
+        == "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked"
+    )
     assert (
         manifest["bundle_path"]
         == ledger["artifact_bundle"]
-        == "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-refresh.tar.gz"
+        == "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration.tar.gz"
+    )
+    assert (
+        manifest["bundle_source"]
+        == context["bundle_source"]
+        == "/Users/cabbala/Downloads/vexter_attestation_record_pack_regeneration_bundle_latest.tar.gz"
     )
     assert manifest["next_task"]["id"] == context["next_task"]["id"] == ledger["next_task_id"]
     assert (
         manifest["next_task"]["id"]
-        == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
+        == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
     )
     assert manifest["next_task"]["state"] == context["next_task"]["state"] == ledger["next_task_state"]
-    assert manifest["next_task"]["state"] == "ready_for_attestation_record_pack_regeneration"
+    assert (
+        manifest["next_task"]["state"]
+        == "additional_attestation_refresh_required_for_record_pack_regeneration"
+    )
     assert manifest["next_task"]["pass_successor"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE"
     assert manifest["next_task"]["pass_successor"]["lane"] == "supervised_run_retry_gate"
 
@@ -83,11 +104,12 @@ def test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regenera
         proof["task_id"]
         == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
     )
-    assert proof["verified_github"]["latest_vexter_pr"] == 81
+    assert proof["verified_github"]["latest_vexter_pr"] == 83
     assert (
         proof["verified_github"]["latest_vexter_main_commit"]
-        == "ff203f4e54009fbd7f84ddc3f94dd37604e04cb0"
+        == "5b78804188e27199e90950f610fd279ad7a133f6"
     )
+    assert proof["verified_github"]["latest_vexter_merged_at"] == "2026-03-27T13:47:24Z"
     assert proof["task_result"]["outcome"] == "FAIL/BLOCKED"
     assert (
         proof["task_result"]["recommended_next_step"] == "supervised_run_retry_gate_attestation_refresh"
@@ -101,6 +123,11 @@ def test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regenera
     regeneration_boundary = context["evidence"][
         "demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration"
     ]["attestation_record_pack_regeneration_boundary"]
+    assert context["evidence"]["github_latest"]["latest_recent_vexter_prs"] == [83, 82, 81, 80, 79]
+    assert (
+        context["evidence"]["github_latest"]["vexter_pr_83_merged_at"]
+        == "2026-03-27T13:47:24Z"
+    )
     assert regeneration_boundary["demo_source"] == "dexter"
     assert regeneration_boundary["execution_mode"] == "paper_live"
     assert regeneration_boundary["route_mode"] == "single_sleeve"
@@ -145,6 +172,27 @@ def test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regenera
     assert first_face["regenerated_face_reviewable_now"] is False
     assert "minimum_regenerated_locator_shape" in first_face
     assert "freshness_inheritance_or_reset_rule" in first_face
+    assert (
+        first_face["regeneration_trigger"].count(
+            "regenerate the current record-pack face again whenever"
+        )
+        == 1
+    )
+    assert (
+        first_face["minimum_regenerated_locator_shape"].count(
+            "plus regenerated face name, regeneration timestamp"
+        )
+        == 1
+    )
+    assert first_face["freshness_inheritance_or_reset_rule"].count(
+        "inherit freshness only while"
+    ) == 1
+    assert (
+        first_face["reviewable_enough_when"].count(
+            "regenerated face points to the same bounded-window locator"
+        )
+        == 1
+    )
 
     assert (
         prompt_context["task_state"]
@@ -221,3 +269,48 @@ def test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regenera
 
     for name in ("Anscombe", "Euler", "Parfit"):
         assert name in subagents_text
+
+
+def test_export_attestation_record_pack_regeneration_closeout_bundle(tmp_path: Path) -> None:
+    output_path = tmp_path / "closeout.tar.gz"
+    env = {
+        "RESULT_BRANCH": "feat/attestation-record-pack-regeneration",
+        "RESULT_COMMIT_SHA": "abc123def456",
+        "RESULT_PR_URL": "https://github.com/Cabbala/Vexter/pull/999",
+        "RESULT_MERGE_COMMIT_SHA": "fedcba654321",
+        "RESULT_MERGED_AT": "2026-03-27T23:59:59Z",
+        "RESULT_TEST_RESULT": "284 passed",
+        "ANSCOMBE_SUMMARY": "Refresh baseline is now independent and fail-closed.",
+        "EULER_SUMMARY": "Regeneration metadata and duplication checks are covered.",
+        "PARFIT_SUMMARY": "Closeout bundle now carries result, handoff, summaries, and proof tarball.",
+    }
+    subprocess.run(
+        [str(EXPORT_SCRIPT_PATH), str(output_path)],
+        check=True,
+        cwd=REPO_ROOT,
+        env={**os.environ, **env},
+    )
+
+    assert output_path.exists()
+    with tarfile.open(output_path, "r:gz") as tar:
+        names = tar.getnames()
+        assert any(name.endswith("/RESULT.md") for name in names)
+        assert any(name.endswith("/HANDOFF.md") for name in names)
+        assert any(name.endswith("/subagent_summary.md") for name in names)
+        assert any(
+            name.endswith(
+                "/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration.tar.gz"
+            )
+            for name in names
+        )
+        result_member = next(name for name in names if name.endswith("/RESULT.md"))
+        subagent_member = next(name for name in names if name.endswith("/subagent_summary.md"))
+        result_text = tar.extractfile(result_member).read().decode("utf-8")
+        subagent_text = tar.extractfile(subagent_member).read().decode("utf-8")
+
+    assert "284 passed" in result_text
+    assert "https://github.com/Cabbala/Vexter/pull/999" in result_text
+    assert "abc123def456" in result_text
+    assert "fedcba654321" in result_text
+    for name in ("Anscombe", "Euler", "Parfit"):
+        assert name in subagent_text

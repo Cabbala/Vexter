@@ -1,7 +1,7 @@
 # Demo Forward Supervised Run Retry Gate Attestation Refresh Plan
 
 ## Implementation Steps
-1. Reverify the latest GitHub-visible Vexter `main` state at PR `#82` merge commit `eebfcd9b03e1e365cc4659996ea2638e6f285bbc`.
+1. Reverify the latest GitHub-visible Vexter `main` state at PR `#83` merge commit `5b78804188e27199e90950f610fd279ad7a133f6`.
 2. Accept attestation record-pack regeneration as the blocked baseline current source of truth.
 3. Generate one bounded attestation refresh lane with current status, report, summary, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.
 4. For each required face, carry forward the repo-visible marker and regeneration owner, then fix refresh trigger, minimum fresh evidence locator shape, stale condition, and retry-gate-usable rule from the regeneration decision surface.

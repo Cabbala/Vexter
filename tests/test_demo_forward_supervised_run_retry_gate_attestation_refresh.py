@@ -43,6 +43,15 @@ GAP_REPORT_REL_PATH = (
 GAP_PROOF_REL_PATH = (
     "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json"
 )
+PREFLIGHT_REPORT_REL_PATH = (
+    "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md"
+)
+PREFLIGHT_PROOF_REL_PATH = (
+    "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json"
+)
+PREFLIGHT_SUMMARY_REL_PATH = (
+    "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md"
+)
 
 
 def load_last_ledger_entry() -> dict:
@@ -96,12 +105,12 @@ def test_demo_forward_supervised_run_retry_gate_attestation_refresh_artifacts_ar
     assert manifest["next_task"]["pass_successor"]["lane"] == "supervised_run_retry_gate"
 
     assert proof["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
-    assert proof["verified_github"]["latest_vexter_pr"] == 89
+    assert proof["verified_github"]["latest_vexter_pr"] == 91
     assert (
         proof["verified_github"]["latest_vexter_main_commit"]
-        == "c3d4086b503e30a9572824d6bbb00fd417d1e406"
+        == "014723587b100fb0046646d40b445537584b44ea"
     )
-    assert proof["verified_github"]["latest_vexter_merged_at"] == "2026-03-27T20:45:26Z"
+    assert proof["verified_github"]["latest_vexter_merged_at"] == "2026-03-27T21:46:22Z"
     assert proof["task_result"]["outcome"] == "FAIL/BLOCKED"
     assert (
         proof["task_result"]["recommended_next_step"]
@@ -118,18 +127,23 @@ def test_demo_forward_supervised_run_retry_gate_attestation_refresh_artifacts_ar
     ]
     assert canonical_external_evidence["contract_spec"] == CONTRACT_SPEC_REL_PATH
     assert canonical_external_evidence["manifest_path"] == EVIDENCE_TEMPLATE_REL_PATH
+    assert canonical_external_evidence["preflight_report"] == PREFLIGHT_REPORT_REL_PATH
+    assert canonical_external_evidence["preflight_proof"] == PREFLIGHT_PROOF_REL_PATH
+    assert canonical_external_evidence["preflight_summary"] == PREFLIGHT_SUMMARY_REL_PATH
+    assert canonical_external_evidence["preflight_status"] == "blocked"
     assert canonical_external_evidence["gap_report"] == GAP_REPORT_REL_PATH
     assert canonical_external_evidence["gap_proof"] == GAP_PROOF_REL_PATH
     assert canonical_external_evidence["manifest_status"] == "template_only"
     assert canonical_external_evidence["retry_gate_review_reopen_ready"] is False
+    assert canonical_external_evidence["aggregated_blocked_reason_counts"]["template_only_manifest"] == 9
 
     refresh_boundary = context["evidence"]["demo_forward_supervised_run_retry_gate_attestation_refresh"][
         "attestation_refresh_boundary"
     ]
-    assert context["evidence"]["github_latest"]["latest_recent_vexter_prs"] == [90, 89, 88, 87, 86]
+    assert context["evidence"]["github_latest"]["latest_recent_vexter_prs"] == [91, 90, 89, 88, 87]
     assert (
-        context["evidence"]["github_latest"]["vexter_pr_90_merged_at"]
-        == "2026-03-27T21:29:43Z"
+        context["evidence"]["github_latest"]["vexter_pr_91_merged_at"]
+        == "2026-03-27T21:46:22Z"
     )
     refresh_evidence = context["evidence"]["demo_forward_supervised_run_retry_gate_attestation_refresh"]
     assert refresh_evidence["attestation_refresh_surface_current"] is False
@@ -159,10 +173,15 @@ def test_demo_forward_supervised_run_retry_gate_attestation_refresh_artifacts_ar
 
     assert refresh_evidence["external_evidence_contract"] == CONTRACT_SPEC_REL_PATH
     assert refresh_evidence["external_evidence_manifest"] == EVIDENCE_TEMPLATE_REL_PATH
+    assert refresh_evidence["external_evidence_preflight_report"] == PREFLIGHT_REPORT_REL_PATH
+    assert refresh_evidence["external_evidence_preflight_proof"] == PREFLIGHT_PROOF_REL_PATH
+    assert refresh_evidence["external_evidence_preflight_summary"] == PREFLIGHT_SUMMARY_REL_PATH
+    assert refresh_evidence["external_evidence_preflight_status"] == "blocked"
     assert refresh_evidence["external_evidence_gap_report"] == GAP_REPORT_REL_PATH
     assert refresh_evidence["external_evidence_gap_proof"] == GAP_PROOF_REL_PATH
     assert refresh_evidence["external_evidence_manifest_status"] == "template_only"
     assert refresh_evidence["retry_gate_review_reopen_ready_from_external_evidence"] is False
+    assert refresh_evidence["aggregated_blocked_reason_counts"]["template_only_manifest"] == 9
 
     refresh_faces = proof["supervised_run_retry_gate_attestation_refresh"]["refresh_faces"]
     assert refresh_faces["record_pack_regeneration_ready"] is True
@@ -228,11 +247,15 @@ def test_demo_forward_supervised_run_retry_gate_attestation_refresh_artifacts_ar
     )
     assert prompt_context["candidate_pass_next_step"] == "supervised_run_retry_gate"
     assert prompt_context["external_evidence_manifest_status"] == "template_only"
+    assert prompt_context["external_evidence_preflight_status"] == "blocked"
+    assert prompt_context["external_evidence_preflight_report"] == PREFLIGHT_REPORT_REL_PATH
     assert prompt_context["external_evidence_gap_report"] == GAP_REPORT_REL_PATH
     assert "FAIL/BLOCKED" in report_text
     assert "supervised_run_retry_gate_attestation_refresh_blocked" in status_text
     assert "manual_latched_stop_all" in handoff_text
     assert "baseline_attestation_record_pack_regeneration_task_state" in handoff_text
+    assert PREFLIGHT_REPORT_REL_PATH in report_text
+    assert PREFLIGHT_REPORT_REL_PATH in handoff_text
     assert GAP_REPORT_REL_PATH in report_text
     assert GAP_REPORT_REL_PATH in handoff_text
     assert "Canonical Evidence Intake Handoff" in handoff_text
@@ -299,7 +322,7 @@ def test_demo_forward_supervised_run_retry_gate_attestation_refresh_spec_plan_an
         "Refresh owner",
         "Refresh trigger",
         "funded live forbidden",
-        "external-evidence-gap-report",
+        "evidence-preflight-report",
     ):
         assert needle in checklist_text or needle in decision_surface_text
 
@@ -339,6 +362,9 @@ def test_export_attestation_refresh_closeout_bundle(tmp_path: Path) -> None:
         assert any(name.endswith(f"/{expected_proof_bundle_name}") for name in names)
         assert any(name.endswith("/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_EXTERNAL_EVIDENCE_CONTRACT.md") for name in names)
         assert any(name.endswith("/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json") for name in names)
+        assert any(name.endswith("/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md") for name in names)
+        assert any(name.endswith("/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json") for name in names)
+        assert any(name.endswith("/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md") for name in names)
         assert any(name.endswith("/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md") for name in names)
         assert any(name.endswith("/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json") for name in names)
         result_member = next(name for name in names if name.endswith("/RESULT.md"))

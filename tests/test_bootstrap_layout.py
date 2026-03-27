@@ -87,6 +87,7 @@ def test_required_paths_exist() -> None:
         "scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack.py",
         "scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
         "scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
+        "scripts/run_demo_forward_supervised_run_retry_gate_evidence_preflight.py",
         "scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py",
         "scripts/run_livepaper_observability_shift_handoff_ci_check.sh",
         "scripts/run_livepaper_observability_shift_handoff_watchdog.sh",
@@ -148,6 +149,7 @@ def test_required_paths_exist() -> None:
         "tests/test_demo_forward_supervised_run.py",
         "tests/test_demo_forward_supervised_run_retry_readiness.py",
         "tests/test_demo_forward_supervised_run_retry_gate.py",
+        "tests/test_demo_forward_supervised_run_retry_gate_evidence_preflight.py",
         "tests/test_demo_forward_supervised_run_retry_gate_external_evidence_gap.py",
         "artifacts/context_pack.json",
         "artifacts/summary.md",
@@ -1020,6 +1022,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/attestation-record-pack-regeneration-repromotion-after-pr85",
         "codex/attestation-record-pack-regeneration-after-pr87",
         "codex/demo-readiness-external-evidence-intake",
+        "codex/demo-readiness-evidence-preflight",
         "codex/attestation-refresh-repromotion-after-pr89",
         "codex/attestation-record-pack-regeneration-after-pr90",
         }
@@ -1415,6 +1418,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "tests/test_demo_forward_supervised_run_retry_gate_attestation_refresh.py" in names
     assert "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py" in names
     assert "tests/test_demo_forward_supervised_run_retry_gate_external_evidence_gap.py" in names
+    assert "tests/test_demo_forward_supervised_run_retry_gate_evidence_preflight.py" in names
     assert "scripts/run_demo_forward_supervised_run.py" in names
     assert "scripts/run_demo_forward_supervised_run_retry_readiness.py" in names
     assert "scripts/run_demo_forward_supervised_run_retry_gate.py" in names
@@ -1424,6 +1428,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py" in names
     assert "scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py" in names
     assert "scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py" in names
+    assert "scripts/run_demo_forward_supervised_run_retry_gate_evidence_preflight.py" in names
     assert "scripts/comparison_analysis.py" in names
     assert "scripts/collect_comparison_package.ps1" in names
     assert "scripts/recover_windows_runtime.sh" in names
@@ -1501,6 +1506,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md" in names
     assert "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/SUBAGENTS.md" in names
     assert "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/subagent_summary.md" in names
+    assert "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md" in names
     assert "artifacts/reports/dexter-paper-design-handoff/DETAILS.md" in names
     assert "artifacts/reports/dexter-paper-design-handoff/MIN_PROMPT.txt" in names
     assert "artifacts/reports/task-005-paper-validation-handoff/DETAILS.md" in names
@@ -1523,6 +1529,8 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-summary.md" in names
     assert "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json" in names
     assert "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-summary.md" in names
+    assert "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json" in names
+    assert "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md" in names
     assert "artifacts/reports/task-006-replay-validation-handoff/DETAILS.md" in names
     assert "artifacts/reports/task-006-replay-validation-handoff/MIN_PROMPT.txt" in names
     assert "artifacts/reports/task-006-replay-deepening.md" in names

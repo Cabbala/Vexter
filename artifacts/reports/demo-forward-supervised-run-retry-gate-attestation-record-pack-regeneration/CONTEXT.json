@@ -6,8 +6,8 @@
   "recommended_next_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH",
   "candidate_pass_next_step": "supervised_run_retry_gate",
   "candidate_pass_next_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
-  "verified_vexter_main_pr": 90,
-  "verified_vexter_main_commit": "f79997cc0b619c2542cd6e9f876abcfb7ffca3f8",
+  "verified_vexter_main_pr": 91,
+  "verified_vexter_main_commit": "014723587b100fb0046646d40b445537584b44ea",
   "baseline_task_state": "supervised_run_retry_gate_attestation_refresh_blocked",
   "first_demo_target": "dexter_paper_live",
   "source_faithful_seam": {
@@ -15,6 +15,8 @@
     "mewx": "sim_live"
   },
   "external_evidence_manifest_status": "template_only",
+  "external_evidence_preflight_status": "blocked",
+  "external_evidence_preflight_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md",
   "external_evidence_gap_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
   "blocked_regenerated_faces": [
     "external_credential_source_face",

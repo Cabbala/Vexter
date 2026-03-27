@@ -1,15 +1,13 @@
-# DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-EXTERNAL-EVIDENCE-GAP Summary
+# DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-EVIDENCE-PREFLIGHT Summary
 
+- Preflight status: `blocked`
 - Manifest status: `template_only`
 - Manifest path: `manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json`
-- Required faces: `9`
-- Present/current/reviewable: `0` / `0` / `0`
-- Blocked faces: `external_credential_source_face, venue_ref_face, account_ref_face, connectivity_profile_face, operator_owner_face, bounded_start_criteria_face, allowlist_symbol_lot_reconfirmed, manual_latched_stop_all_visibility_reconfirmed, terminal_snapshot_readability_reconfirmed`
 - Retry-gate review reopen ready: `no`
-- Window fields to fill: `bounded_supervised_window.label, bounded_supervised_window.starts_at, bounded_supervised_window.ends_at`
+- Blocked faces: `external_credential_source_face, venue_ref_face, account_ref_face, connectivity_profile_face, operator_owner_face, bounded_start_criteria_face, allowlist_symbol_lot_reconfirmed, manual_latched_stop_all_visibility_reconfirmed, terminal_snapshot_readability_reconfirmed`
+- Aggregated blocked reasons: `attestors_missing=9, bounded_window_missing=9, evidence_locator_missing=9, fresh_until_missing=9, locator_kind_missing=9, outside_repo_locator_not_supplied=9, template_only_manifest=9, verification_timestamp_missing=9`
+- Aggregated blocker groups: `missing=63, state=9`
 - Canonical preflight command: `python3.12 scripts/run_demo_forward_supervised_run_retry_gate_evidence_preflight.py`
-- Legacy gap command: `python3.12 scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py`
-- Next operator step: `python3.12 scripts/run_demo_forward_supervised_run_retry_gate_evidence_preflight.py` after filling the template, then rerun refresh/regeneration surfaces.
 
 ## Operator Inputs Remaining
 - `external_credential_source_face: Provide one current non-secret locator that confirms which Dexter paper-live credential source was resolved for the bounded supervised window.`

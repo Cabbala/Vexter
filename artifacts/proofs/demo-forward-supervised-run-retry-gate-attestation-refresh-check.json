@@ -1,9 +1,9 @@
 {
   "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH",
   "verified_github": {
-    "latest_vexter_pr": 89,
-    "latest_vexter_main_commit": "c3d4086b503e30a9572824d6bbb00fd417d1e406",
-    "latest_vexter_merged_at": "2026-03-27T20:45:26Z",
+    "latest_vexter_pr": 91,
+    "latest_vexter_main_commit": "014723587b100fb0046646d40b445537584b44ea",
+    "latest_vexter_merged_at": "2026-03-27T21:46:22Z",
     "dexter_pr_3_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
   },
@@ -56,6 +56,9 @@
       "attestation_refresh_decision_surface": "docs/demo_forward_supervised_run_retry_gate_attestation_refresh_decision_surface.md",
       "external_evidence_contract": "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_EXTERNAL_EVIDENCE_CONTRACT.md",
       "external_evidence_manifest": "manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json",
+      "external_evidence_preflight_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md",
+      "external_evidence_preflight_proof": "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json",
+      "external_evidence_preflight_summary": "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md",
       "external_evidence_gap_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
       "external_evidence_gap_proof": "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
       "external_evidence_gap_summary": "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
@@ -95,6 +98,9 @@
             "faces.external_credential_source_face.reviewability_note"
           ],
           "proof_paths_to_recheck": [
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md",
             "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
             "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
             "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
@@ -133,6 +139,9 @@
             "faces.venue_ref_face.reviewability_note"
           ],
           "proof_paths_to_recheck": [
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md",
             "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
             "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
             "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
@@ -171,6 +180,9 @@
             "faces.account_ref_face.reviewability_note"
           ],
           "proof_paths_to_recheck": [
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md",
             "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
             "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
             "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
@@ -209,6 +221,9 @@
             "faces.connectivity_profile_face.reviewability_note"
           ],
           "proof_paths_to_recheck": [
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md",
             "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
             "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
             "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
@@ -247,6 +262,9 @@
             "faces.operator_owner_face.reviewability_note"
           ],
           "proof_paths_to_recheck": [
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md",
             "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
             "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
             "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
@@ -289,6 +307,9 @@
             "faces.bounded_start_criteria_face.reviewability_note"
           ],
           "proof_paths_to_recheck": [
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md",
             "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
             "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
             "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
@@ -336,6 +357,9 @@
             "faces.allowlist_symbol_lot_reconfirmed.reviewability_note"
           ],
           "proof_paths_to_recheck": [
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md",
             "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
             "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
             "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
@@ -374,6 +398,9 @@
             "faces.manual_latched_stop_all_visibility_reconfirmed.reviewability_note"
           ],
           "proof_paths_to_recheck": [
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md",
             "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
             "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
             "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
@@ -412,6 +439,9 @@
             "faces.terminal_snapshot_readability_reconfirmed.reviewability_note"
           ],
           "proof_paths_to_recheck": [
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json",
+            "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md",
+            "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md",
             "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
             "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
             "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
@@ -459,35 +489,49 @@
     "canonical_external_evidence": {
       "contract_spec": "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_EXTERNAL_EVIDENCE_CONTRACT.md",
       "manifest_path": "manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json",
+      "preflight_proof": "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json",
+      "preflight_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md",
+      "preflight_summary": "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md",
+      "preflight_status": "blocked",
       "gap_proof": "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
       "gap_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
       "gap_summary": "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
       "manifest_status": "template_only",
-      "retry_gate_review_reopen_ready": false
+      "retry_gate_review_reopen_ready": false,
+      "aggregated_blocked_reason_counts": {
+        "attestors_missing": 9,
+        "bounded_window_missing": 9,
+        "evidence_locator_missing": 9,
+        "fresh_until_missing": 9,
+        "locator_kind_missing": 9,
+        "outside_repo_locator_not_supplied": 9,
+        "template_only_manifest": 9,
+        "verification_timestamp_missing": 9
+      }
     },
     "sub_agents": [
       {
         "name": "Anscombe",
         "lines": [
-          "Reverified PR `#89` / merge commit `c3d4086b503e30a9572824d6bbb00fd417d1e406` as latest merged `main`, then treated the record-pack-regeneration lane as the current repo-visible baseline rather than reopening older refresh assumptions.",
-          "The main duplication before this change was that refresh and regeneration re-derived the same outside-repo blocker semantics from each other instead of from one canonical evidence manifest and validator.",
-          "Current-pointer risk remains atomic: summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces must all reflect the same fail-closed truth once the canonical gap report is introduced."
+          "Reverified PR `#91` / merge commit `014723587b100fb0046646d40b445537584b44ea` as latest merged `main`, then treated the record-pack-regeneration lane as the current repo-visible baseline rather than reopening older refresh assumptions.",
+          "The shared evidence-preflight path now owns the reopen-readiness mapping, aggregated blocker reasons, and canonical manifest-to-proof references so refresh and regeneration stop re-deriving them separately.",
+          "Current-pointer risk remains atomic: summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces must all reflect the same fail-closed truth once the canonical preflight and compatibility gap outputs are written together."
         ]
       },
       {
         "name": "Euler",
         "lines": [
           "Confirmed no architecture drift: the planner boundary stays `prepare / start / status / stop / snapshot`, `manual_latched_stop_all` stays planner-owned, Dexter remains `paper_live`, and frozen Mew-X remains `sim_live`.",
-          "Kept the fail-closed split crisp: refresh now consumes the canonical manifest for freshness and usability, while regeneration consumes the same canonical gap output for inheritance and reviewability without widening runtime scope.",
+          "Kept the fail-closed split crisp: refresh now consumes the canonical evidence preflight for freshness and usability, while regeneration consumes the same shared preflight plus compatibility gap output for inheritance and reviewability without widening runtime scope.",
           "The new contract remains non-secret and bounded; it never implies funded-live access, broader venue scope, or Dexter / Mew-X runtime rewrites."
         ]
       },
       {
         "name": "Parfit",
         "lines": [
-          "The smallest safe implementation is one canonical manifest + validator + standalone gap report, then wiring refresh and regeneration to consume that shared output while leaving historical lanes intact.",
-          "Validation should start with the new gap script plus refresh/regeneration tests, then widen to bundle/export coverage and the full pytest suite.",
-          "Merge readiness depends on exact agreement across summary, context, manifest, ledger, README, refresh bundle metadata, and the canonical external-evidence paths from the PR `#89` baseline."
+          "The smallest safe implementation is one canonical manifest validator plus a unified preflight/readiness output, with the legacy gap surfaces preserved as compatibility mirrors while refresh and regeneration consume the same shared data.",
+          "Validation should start with the evidence-preflight script plus refresh/regeneration tests, then widen to bundle/export coverage and the full pytest suite.",
+          "Merge readiness depends on exact agreement across summary, context, manifest, ledger, README, refresh bundle metadata, and the canonical external-evidence paths from the PR `#91` baseline."
         ]
       }
     ],
@@ -502,9 +546,13 @@
       "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_decision_surface.md",
       "docs/demo_forward_supervised_run_retry_gate_attestation_refresh_checklist.md",
       "docs/demo_forward_supervised_run_retry_gate_attestation_refresh_decision_surface.md",
+      "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json",
+      "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md",
+      "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md",
       "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
       "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
       "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
+      "scripts/run_demo_forward_supervised_run_retry_gate_evidence_preflight.py",
       "scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py",
       "scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
       "scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
@@ -515,11 +563,14 @@
       "tests/test_demo_forward_supervised_run_retry_gate.py",
       "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack.py",
       "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
+      "tests/test_demo_forward_supervised_run_retry_gate_evidence_preflight.py",
       "tests/test_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
       "tests/test_demo_forward_supervised_run_retry_gate_external_evidence_gap.py",
       "tests/test_bootstrap_layout.py"
     ],
     "proof_outputs": [
+      "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json",
+      "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md",
       "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
       "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
       "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-check.json",

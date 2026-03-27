@@ -1,16 +1,16 @@
 # Demo Forward Supervised Run Retry Gate Attestation Refresh Report
 
 ## Verified GitHub State
-- Reverified latest GitHub-visible Vexter `main` at merged PR `#89` merge commit `c3d4086b503e30a9572824d6bbb00fd417d1e406` on `2026-03-27T20:45:26Z`.
+- Reverified latest GitHub-visible Vexter `main` at merged PR `#91` merge commit `014723587b100fb0046646d40b445537584b44ea` on `2026-03-27T21:46:22Z`.
 - Dexter stayed pinned at merged PR `#3` commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`.
 - Frozen Mew-X stayed pinned at `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`.
-- Report timestamp: `2026-03-27T21:26:35Z`.
+- Report timestamp: `2026-03-27T22:03:27Z`.
 
 ## Baseline Accepted
 - Accepted `supervised_run_retry_gate_attestation_record_pack_regeneration_blocked` as the bounded baseline current source of truth.
 - Did not claim regenerated record-pack success, retry-gate reopen, retry execution success, funded live access, or any Mew-X seam expansion.
 - Promoted one bounded attestation refresh lane as the new current source of truth for additional freshness ownership, triggers, and locator expectations on top of the regeneration baseline.
-- Replaced duplicated cross-lane blocker parsing with one canonical outside-repo evidence manifest, validator, and gap report shared by refresh and regeneration.
+- Replaced duplicated cross-lane blocker parsing with one canonical outside-repo evidence manifest, validator, and evidence preflight / compatibility gap surface shared by refresh and regeneration.
 
 ## Refresh Boundary
 - Dexter-only real demo slice
@@ -54,12 +54,17 @@
 ## Canonical External Evidence
 - contract spec: `specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_EXTERNAL_EVIDENCE_CONTRACT.md`
 - manifest template: `manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json`
+- preflight proof: `artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json`
+- preflight report: `artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md`
+- preflight summary: `artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md`
 - gap proof: `artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json`
 - gap report: `artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md`
 - gap summary: `artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md`
 - manifest status: `template_only`
+- preflight status: `blocked`
 - blocked faces from canonical validator: `external_credential_source_face, venue_ref_face, account_ref_face, connectivity_profile_face, operator_owner_face, bounded_start_criteria_face, allowlist_symbol_lot_reconfirmed, manual_latched_stop_all_visibility_reconfirmed, terminal_snapshot_readability_reconfirmed`
-- canonical face-to-manifest map: `artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md` under `Face-To-Manifest Map`
+- aggregated blocked reasons: `{"attestors_missing": 9, "bounded_window_missing": 9, "evidence_locator_missing": 9, "fresh_until_missing": 9, "locator_kind_missing": 9, "outside_repo_locator_not_supplied": 9, "template_only_manifest": 9, "verification_timestamp_missing": 9}`
+- canonical face-to-manifest map: `artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md` under `Face-To-Manifest And Proof Map`
 
 ## Refresh Findings
 - required refresh faces: `9`
@@ -72,4 +77,4 @@
 ## Honest Model
 - `PASS` only if every required face has explicit refresh ownership and freshness rules plus one current, fresh-enough regenerated locator sufficient to rerun record-pack regeneration and reopen retry-gate review honestly.
 - `FAIL/BLOCKED` if any face remains missing, stale, ambiguous, non-refreshable, or not usable enough for retry-gate review.
-- Current result remains `FAIL/BLOCKED` because the canonical manifest is `template_only` and the repo still does not point to current, fresh-enough, reviewer-readable regenerated locators for the required faces, so record-pack regeneration cannot yet be rerun honestly.
+- Current result remains `FAIL/BLOCKED` because the canonical manifest is `template_only`, the preflight status remains `blocked`, and the repo still does not point to current, fresh-enough, reviewer-readable regenerated locators for the required faces, so record-pack regeneration cannot yet be rerun honestly.

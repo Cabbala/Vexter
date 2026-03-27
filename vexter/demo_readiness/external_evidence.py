@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections import Counter
 import json
 from datetime import datetime, timezone
 from pathlib import Path
@@ -11,12 +12,26 @@ from typing import Any
 MANIFEST_KIND = "demo_forward_supervised_run_retry_gate_external_evidence_manifest"
 SCHEMA_VERSION = 1
 TASK_ID = "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-EXTERNAL-EVIDENCE-GAP"
+PREFLIGHT_TASK_ID = "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-EVIDENCE-PREFLIGHT"
 
 MANIFEST_REL_PATH = "manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json"
 CONTRACT_SPEC_REL_PATH = "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_EXTERNAL_EVIDENCE_CONTRACT.md"
 GAP_PROOF_REL_PATH = "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json"
 GAP_REPORT_REL_PATH = "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md"
 GAP_SUMMARY_REL_PATH = "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md"
+PREFLIGHT_PROOF_REL_PATH = (
+    "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json"
+)
+PREFLIGHT_REPORT_REL_PATH = (
+    "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md"
+)
+PREFLIGHT_SUMMARY_REL_PATH = (
+    "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md"
+)
+PREFLIGHT_COMMAND = "python3.12 scripts/run_demo_forward_supervised_run_retry_gate_evidence_preflight.py"
+LEGACY_GAP_COMMAND = (
+    "python3.12 scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py"
+)
 
 REQUIRED_FACE_NAMES = [
     "external_credential_source_face",
@@ -69,6 +84,9 @@ FACE_FILL_FIELD_NAMES = [
     "reviewability_note",
 ]
 PROOF_PATHS_TO_RECHECK = [
+    PREFLIGHT_PROOF_REL_PATH,
+    PREFLIGHT_REPORT_REL_PATH,
+    PREFLIGHT_SUMMARY_REL_PATH,
     GAP_PROOF_REL_PATH,
     GAP_REPORT_REL_PATH,
     GAP_SUMMARY_REL_PATH,
@@ -78,10 +96,11 @@ PROOF_PATHS_TO_RECHECK = [
     "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md",
 ]
 RERUN_COMMANDS = [
-    "python3.12 scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py",
+    PREFLIGHT_COMMAND,
     "python3.12 scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
     "python3.12 scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
 ]
+BLOCKED_REASON_GROUP_ORDER = ("state", "missing", "stale", "malformed", "other")
 
 
 def _iso_utc_now() -> str:
@@ -119,6 +138,49 @@ def _format_bool(value: bool) -> str:
 
 def _required_manifest_fields_for_face(name: str) -> list[str]:
     return WINDOW_FIELD_PATHS + [f"faces.{name}.{field_name}" for field_name in FACE_FILL_FIELD_NAMES]
+
+
+def _classify_blocked_reason(reason: str) -> str:
+    if reason in {"template_only_manifest", "manifest_missing"}:
+        return "state"
+    if reason == "evidence_stale_or_window_elapsed":
+        return "stale"
+    if reason in {
+        "face_missing_from_manifest",
+        "outside_repo_locator_not_supplied",
+        "attestors_missing",
+        "evidence_locator_missing",
+        "locator_kind_missing",
+        "verification_timestamp_missing",
+        "fresh_until_missing",
+        "bounded_window_missing",
+        "reviewable_without_secrets_not_confirmed",
+        "reviewability_note_missing",
+    }:
+        return "missing"
+    if (
+        reason in {"bounded_window_not_object", "faces_not_object", "face_entry_not_object", "attested_by_not_list"}
+        or reason.startswith("manifest_invalid_json:")
+        or reason.startswith("manifest_unexpected_keys:")
+        or reason.startswith("bounded_window_unexpected_keys:")
+        or reason.startswith("faces_unexpected_entries:")
+        or reason.startswith("unexpected_face_keys:")
+    ):
+        return "malformed"
+    return "other"
+
+
+def _format_reason_counts(reason_counts: dict[str, int]) -> str:
+    if not reason_counts:
+        return "none"
+    return ", ".join(f"{reason}={count}" for reason, count in sorted(reason_counts.items()))
+
+
+def _group_reason_counts(reasons: list[str]) -> dict[str, list[str]]:
+    grouped: dict[str, list[str]] = {group: [] for group in BLOCKED_REASON_GROUP_ORDER}
+    for reason in reasons:
+        grouped[_classify_blocked_reason(reason)].append(reason)
+    return {group: values for group, values in grouped.items() if values}
 
 
 def _build_runtime_guardrails(runtime_config: Any) -> dict[str, Any]:
@@ -621,6 +683,11 @@ def validate_external_evidence_manifest(
             "notes": notes,
             "window_fields_to_fill": WINDOW_FIELD_PATHS,
             "proof_paths_to_recheck": PROOF_PATHS_TO_RECHECK,
+            "preflight_proof": PREFLIGHT_PROOF_REL_PATH,
+            "preflight_report": PREFLIGHT_REPORT_REL_PATH,
+            "preflight_summary": PREFLIGHT_SUMMARY_REL_PATH,
+            "preflight_command": PREFLIGHT_COMMAND,
+            "legacy_gap_command": LEGACY_GAP_COMMAND,
             "rerun_commands": RERUN_COMMANDS,
         },
         "bounded_supervised_window": {
@@ -649,6 +716,207 @@ def validate_external_evidence_manifest(
     }
 
 
+def build_external_evidence_preflight(gap_payload: dict[str, Any]) -> dict[str, Any]:
+    manifest = gap_payload["manifest"]
+    summary = gap_payload["summary"]
+    validation_errors = list(gap_payload["validation_errors"])
+
+    blocked_reason_counts: Counter[str] = Counter()
+    blocked_reason_group_counts: Counter[str] = Counter()
+    grouped_reason_counts: dict[str, Counter[str]] = {
+        group: Counter() for group in BLOCKED_REASON_GROUP_ORDER
+    }
+    faces: list[dict[str, Any]] = []
+
+    for face in gap_payload["faces"]:
+        blocked_reasons = list(face["blocked_reasons"])
+        reopen_blockers = _group_reason_counts(blocked_reasons)
+        reopen_ready_now = bool(face["current"] and face["reviewable"] and not face["blocked"])
+        for reason in blocked_reasons:
+            blocked_reason_counts[reason] += 1
+            reason_group = _classify_blocked_reason(reason)
+            blocked_reason_group_counts[reason_group] += 1
+            grouped_reason_counts[reason_group][reason] += 1
+        faces.append(
+            {
+                **face,
+                "reopen_ready_now": reopen_ready_now,
+                "reopen_status": "PASS" if reopen_ready_now else "FAIL/BLOCKED",
+                "reopen_blockers": reopen_blockers,
+            }
+        )
+
+    for error in validation_errors:
+        blocked_reason_counts[error] += 1
+        blocked_reason_group_counts["malformed"] += 1
+        grouped_reason_counts["malformed"][error] += 1
+
+    aggregated_reason_groups = {
+        group: dict(sorted(counter.items()))
+        for group, counter in grouped_reason_counts.items()
+        if counter
+    }
+    grouped_reason_totals = {
+        group: blocked_reason_group_counts[group]
+        for group in BLOCKED_REASON_GROUP_ORDER
+        if blocked_reason_group_counts[group]
+    }
+    retry_gate_review_reopen_ready = bool(summary["retry_gate_review_reopen_ready"])
+    preflight_status = "ready" if retry_gate_review_reopen_ready else "blocked"
+
+    return {
+        "task_id": PREFLIGHT_TASK_ID,
+        "generated_at": gap_payload["generated_at"],
+        "manifest": {
+            **manifest,
+            "gap_proof": GAP_PROOF_REL_PATH,
+            "gap_report": GAP_REPORT_REL_PATH,
+            "gap_summary": GAP_SUMMARY_REL_PATH,
+        },
+        "reopen_readiness": {
+            "status": preflight_status,
+            "decision": (
+                "retry_gate_review_reopen_ready"
+                if retry_gate_review_reopen_ready
+                else "retry_gate_review_reopen_blocked"
+            ),
+            "manifest_status": manifest["status"],
+            "retry_gate_review_reopen_ready": retry_gate_review_reopen_ready,
+            "blocked_face_count": summary["blocked_face_count"],
+            "blocked_faces": list(summary["blocked_faces"]),
+            "present_face_count": summary["present_face_count"],
+            "current_face_count": summary["current_face_count"],
+            "reviewable_face_count": summary["reviewable_face_count"],
+            "stale_face_count": summary["stale_face_count"],
+            "operator_inputs_remaining": list(summary["operator_inputs_remaining"]),
+            "blocked_reason_counts": dict(sorted(blocked_reason_counts.items())),
+            "blocked_reason_group_counts": grouped_reason_totals,
+            "blocked_reason_groups": aggregated_reason_groups,
+            "canonical_command": manifest["preflight_command"],
+            "proof_paths_to_recheck": list(manifest["proof_paths_to_recheck"]),
+            "rerun_commands": list(manifest["rerun_commands"]),
+        },
+        "faces": faces,
+        "validation_errors": validation_errors,
+    }
+
+
+def render_preflight_summary_markdown(preflight_payload: dict[str, Any]) -> str:
+    readiness = preflight_payload["reopen_readiness"]
+    manifest = preflight_payload["manifest"]
+    return "\n".join(
+        [
+            f"# {PREFLIGHT_TASK_ID} Summary",
+            "",
+            f"- Preflight status: `{readiness['status']}`",
+            f"- Manifest status: `{readiness['manifest_status']}`",
+            f"- Manifest path: `{manifest['path']}`",
+            f"- Retry-gate review reopen ready: `{_format_bool(readiness['retry_gate_review_reopen_ready'])}`",
+            f"- Blocked faces: `{', '.join(readiness['blocked_faces']) or 'none'}`",
+            f"- Aggregated blocked reasons: `{_format_reason_counts(readiness['blocked_reason_counts'])}`",
+            f"- Aggregated blocker groups: `{_format_reason_counts(readiness['blocked_reason_group_counts'])}`",
+            f"- Canonical preflight command: `{readiness['canonical_command']}`",
+            "",
+            "## Operator Inputs Remaining",
+            *[f"- `{item}`" for item in readiness["operator_inputs_remaining"]],
+            "",
+        ]
+    )
+
+
+def render_preflight_report_markdown(preflight_payload: dict[str, Any]) -> str:
+    manifest = preflight_payload["manifest"]
+    readiness = preflight_payload["reopen_readiness"]
+    lines = [
+        "# Demo Forward Supervised Run Retry Gate Evidence Preflight Report",
+        "",
+        "## Canonical Preflight",
+        f"- Contract spec: `{manifest['contract_spec']}`",
+        f"- Canonical manifest: `{manifest['path']}`",
+        f"- Preflight proof: `{manifest['preflight_proof']}`",
+        f"- Preflight report: `{manifest['preflight_report']}`",
+        f"- Preflight summary: `{manifest['preflight_summary']}`",
+        f"- Legacy gap proof: `{manifest['gap_proof']}`",
+        f"- Legacy gap report: `{manifest['gap_report']}`",
+        f"- Legacy gap summary: `{manifest['gap_summary']}`",
+        f"- Generated at: `{preflight_payload['generated_at']}`",
+        f"- Manifest status: `{readiness['manifest_status']}`",
+        f"- Retry-gate review reopen ready: `{_format_bool(readiness['retry_gate_review_reopen_ready'])}`",
+        "",
+        "## Unified Reopen-Readiness",
+        f"- Decision: `{readiness['decision']}`",
+        f"- Preflight status: `{readiness['status']}`",
+        f"- Blocked faces: `{', '.join(readiness['blocked_faces']) or 'none'}`",
+        f"- Aggregated blocked reasons: `{_format_reason_counts(readiness['blocked_reason_counts'])}`",
+        f"- Aggregated blocker groups: `{_format_reason_counts(readiness['blocked_reason_group_counts'])}`",
+        f"- Single canonical command: `{readiness['canonical_command']}`",
+        "",
+        "## Template-Only Handoff",
+        f"- Fill these bounded-window fields once per supervised window: `{', '.join(manifest['window_fields_to_fill'])}`",
+        "- Leave `manifest_role` at `template` until every blocked face has a current, non-secret, reviewable locator.",
+        f"- Proof/report surfaces to recheck after manifest updates: `{', '.join(readiness['proof_paths_to_recheck'])}`",
+        *[f"- Rerun: `{command}`" for command in readiness["rerun_commands"]],
+        f"- Legacy compatibility rerun: `{manifest['legacy_gap_command']}`",
+        "",
+        "## Face Status",
+        "",
+        "| Face | Present | Current | Reviewable | Reopen ready now | Blocker groups | Operator input still needed |",
+        "| --- | --- | --- | --- | --- | --- | --- |",
+    ]
+    for face in preflight_payload["faces"]:
+        blocker_groups = "; ".join(
+            f"{group}={', '.join(reasons)}" for group, reasons in face["reopen_blockers"].items()
+        )
+        lines.append(
+            "| "
+            f"`{face['name']}` | "
+            f"`{_format_bool(face['present'])}` | "
+            f"`{_format_bool(face['current'])}` | "
+            f"`{_format_bool(face['reviewable'])}` | "
+            f"`{_format_bool(face['reopen_ready_now'])}` | "
+            f"{blocker_groups or 'none'} | "
+            f"{face['operator_input_needed']} |"
+        )
+    lines.extend(
+        [
+            "",
+            "## Face-To-Manifest And Proof Map",
+            "",
+        ]
+    )
+    for face in preflight_payload["faces"]:
+        aggregated_blockers = "; ".join(
+            f"{group}={', '.join(reasons)}" for group, reasons in face["reopen_blockers"].items()
+        )
+        lines.extend(
+            [
+                f"### `{face['name']}`",
+                f"- Manifest fields to fill: `{', '.join(face['required_manifest_fields'])}`",
+                f"- Proof/report surfaces to recheck: `{', '.join(face['proof_paths_to_recheck'])}`",
+                f"- Aggregated reopen blockers: `{aggregated_blockers or 'none'}`",
+                f"- Repo-visible marker: `{_format_marker(face['repo_visible_marker'])}`",
+                f"- Operator input still needed: {face['operator_input_needed']}",
+                "",
+            ]
+        )
+    lines.extend(
+        [
+            "## Validation Errors",
+            *(
+                [f"- `{error}`" for error in preflight_payload["validation_errors"]]
+                if preflight_payload["validation_errors"]
+                else ["- none"]
+            ),
+            "",
+            "The preflight stays fail-closed. It does not claim retry-gate reopen unless the canonical manifest "
+            "is marked `evidence`, every required face is present, current, and reviewable, and the manifest "
+            "remains non-secret by construction.",
+            "",
+        ]
+    )
+    return "\n".join(lines)
+
+
 def render_gap_summary_markdown(gap_payload: dict[str, Any]) -> str:
     summary = gap_payload["summary"]
     manifest = gap_payload["manifest"]
@@ -663,7 +931,9 @@ def render_gap_summary_markdown(gap_payload: dict[str, Any]) -> str:
             f"- Blocked faces: `{', '.join(summary['blocked_faces']) or 'none'}`",
             f"- Retry-gate review reopen ready: `{_format_bool(summary['retry_gate_review_reopen_ready'])}`",
             f"- Window fields to fill: `{', '.join(summary['window_fields_to_fill'])}`",
-            f"- Next operator step: `{RERUN_COMMANDS[0]}` after filling the template, then rerun refresh/regeneration surfaces.",
+            f"- Canonical preflight command: `{manifest['preflight_command']}`",
+            f"- Legacy gap command: `{manifest['legacy_gap_command']}`",
+            f"- Next operator step: `{manifest['preflight_command']}` after filling the template, then rerun refresh/regeneration surfaces.",
             "",
             "## Operator Inputs Remaining",
             *[f"- `{item}`" for item in summary["operator_inputs_remaining"]],
@@ -697,8 +967,11 @@ def render_gap_report_markdown(gap_payload: dict[str, Any]) -> str:
         "## Template-Only Handoff",
         f"- Fill these bounded-window fields once per supervised window: `{', '.join(manifest['window_fields_to_fill'])}`",
         "- Leave `manifest_role` at `template` until every blocked face has a current, non-secret, reviewable locator.",
+        f"- Canonical preflight command: `{manifest['preflight_command']}`",
+        f"- Canonical preflight report: `{manifest['preflight_report']}`",
         f"- Proof/report surfaces to recheck after manifest updates: `{', '.join(manifest['proof_paths_to_recheck'])}`",
         *[f"- Rerun: `{command}`" for command in manifest["rerun_commands"]],
+        f"- Legacy compatibility rerun: `{manifest['legacy_gap_command']}`",
         "",
         "## Face Status",
         "",
@@ -760,18 +1033,57 @@ def write_external_evidence_gap_artifacts(
     *,
     as_of: str | None = None,
 ) -> dict[str, Any]:
+    return write_external_evidence_artifacts(
+        root,
+        template_env,
+        runtime_config,
+        as_of=as_of,
+    )["gap"]
+
+
+def write_external_evidence_preflight_artifacts(
+    root: Path,
+    template_env: dict[str, str],
+    runtime_config: Any,
+    *,
+    as_of: str | None = None,
+) -> dict[str, Any]:
+    return write_external_evidence_artifacts(
+        root,
+        template_env,
+        runtime_config,
+        as_of=as_of,
+    )["preflight"]
+
+
+def write_external_evidence_artifacts(
+    root: Path,
+    template_env: dict[str, str],
+    runtime_config: Any,
+    *,
+    as_of: str | None = None,
+) -> dict[str, Any]:
     gap_payload = validate_external_evidence_manifest(
         root,
         template_env,
         runtime_config,
         as_of=as_of,
     )
+    preflight_payload = build_external_evidence_preflight(gap_payload)
+    preflight_proof_path = root / PREFLIGHT_PROOF_REL_PATH
+    preflight_report_path = root / PREFLIGHT_REPORT_REL_PATH
+    preflight_summary_path = root / PREFLIGHT_SUMMARY_REL_PATH
     proof_path = root / GAP_PROOF_REL_PATH
     report_path = root / GAP_REPORT_REL_PATH
     summary_path = root / GAP_SUMMARY_REL_PATH
+    preflight_proof_path.parent.mkdir(parents=True, exist_ok=True)
+    preflight_report_path.parent.mkdir(parents=True, exist_ok=True)
     proof_path.parent.mkdir(parents=True, exist_ok=True)
     report_path.parent.mkdir(parents=True, exist_ok=True)
+    preflight_proof_path.write_text(json.dumps(preflight_payload, indent=2, sort_keys=False) + "\n")
+    preflight_report_path.write_text(render_preflight_report_markdown(preflight_payload))
+    preflight_summary_path.write_text(render_preflight_summary_markdown(preflight_payload))
     proof_path.write_text(json.dumps(gap_payload, indent=2, sort_keys=False) + "\n")
     report_path.write_text(render_gap_report_markdown(gap_payload))
     summary_path.write_text(render_gap_summary_markdown(gap_payload))
-    return gap_payload
+    return {"gap": gap_payload, "preflight": preflight_payload}

@@ -69,7 +69,12 @@
     "vexter/demo_readiness/external_evidence.py",
     "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
     "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
-    "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md"
+    "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
+    "scripts/run_demo_forward_supervised_run_retry_gate_evidence_preflight.py",
+    "tests/test_demo_forward_supervised_run_retry_gate_evidence_preflight.py",
+    "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json",
+    "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md",
+    "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md"
   ],
   "code": [
     "vexter/comparison/",
@@ -144,7 +149,8 @@
     "scripts/export_attestation_record_pack_regeneration_closeout_bundle.sh",
     "scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py",
     "vexter/demo_readiness/__init__.py",
-    "vexter/demo_readiness/external_evidence.py"
+    "vexter/demo_readiness/external_evidence.py",
+    "scripts/run_demo_forward_supervised_run_retry_gate_evidence_preflight.py"
   ],
   "proof_files": [
     "artifacts/proofs/demo-executor-adapter-implementation-check.json",
@@ -212,7 +218,9 @@
     "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
     "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-summary.md",
     "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
-    "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md"
+    "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
+    "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json",
+    "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md"
   ],
   "reports": [
     "artifacts/reports/demo-executor-adapter-implementation-report.md",
@@ -324,7 +332,8 @@
     "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-status.md",
     "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/SUBAGENTS.md",
     "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/subagent_summary.md",
-    "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md"
+    "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
+    "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md"
   ],
   "next_task": {
     "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH",
@@ -506,7 +515,8 @@
     "retry_gate_review_requires_current_reviewable_regenerated_faces": true,
     "demo_forward_retry_gate_external_evidence_gap_written": true,
     "template_only_external_evidence_reopen_ready_remains_false": true,
-    "regeneration_handoff_maps_each_face_to_manifest_and_proof_paths": true
+    "regeneration_handoff_maps_each_face_to_manifest_and_proof_paths": true,
+    "demo_forward_retry_gate_evidence_preflight_written": true
   },
   "task_result": {
     "outcome": "FAIL/BLOCKED",

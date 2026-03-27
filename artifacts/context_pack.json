@@ -164,7 +164,7 @@
     "scope": [
       "Reverify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X after attestation refresh merged.",
       "Accept attestation refresh as the baseline current source of truth.",
-      "Write one canonical non-secret outside-repo evidence manifest, validator, and gap report for the remaining retry-gate blockers.",
+      "Write one canonical non-secret outside-repo evidence manifest, validator, and evidence preflight / reopen-readiness path for the remaining retry-gate blockers.",
       "Promote attestation record-pack regeneration status, report, summary, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.",
       "Make each required face explicit for regeneration owner, trigger, minimum regenerated locator shape, freshness inheritance or reset, and reviewability from the canonical gap report.",
       "Keep retry-gate review blocked until every required face can regenerate from one current, fresh-enough, reviewable locator."
@@ -217,14 +217,14 @@
   },
   "evidence": {
     "github_latest": {
-      "latest_vexter_pr": 90,
-      "latest_vexter_main_commit": "f79997cc0b619c2542cd6e9f876abcfb7ffca3f8",
+      "latest_vexter_pr": 91,
+      "latest_vexter_main_commit": "014723587b100fb0046646d40b445537584b44ea",
       "latest_recent_vexter_prs": [
+        91,
         90,
         89,
         88,
-        87,
-        86
+        87
       ],
       "vexter_pr_65_merged_at": "2026-03-26T19:30:46Z",
       "vexter_pr_64_merged_at": "2026-03-26T18:53:07Z",
@@ -275,7 +275,9 @@
       "vexter_pr_89_merged_at": "2026-03-27T20:45:26Z",
       "vexter_pr_89_closed_at": "2026-03-27T20:45:26Z",
       "vexter_pr_90_merged_at": "2026-03-27T21:29:43Z",
-      "vexter_pr_90_closed_at": "2026-03-27T21:29:43Z"
+      "vexter_pr_90_closed_at": "2026-03-27T21:29:43Z",
+      "vexter_pr_91_merged_at": "2026-03-27T21:46:22Z",
+      "vexter_pr_91_closed_at": "2026-03-27T21:46:22Z"
     },
     "transport_livepaper_observability_ci_gate": {
       "report": "artifacts/reports/task-007-transport-livepaper-observability-ci-gate-report.md",
@@ -1283,6 +1285,10 @@
       },
       "external_evidence_contract": "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_EXTERNAL_EVIDENCE_CONTRACT.md",
       "external_evidence_manifest": "manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json",
+      "external_evidence_preflight_proof": "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json",
+      "external_evidence_preflight_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md",
+      "external_evidence_preflight_summary": "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md",
+      "external_evidence_preflight_status": "blocked",
       "external_evidence_gap_proof": "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
       "external_evidence_gap_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
       "external_evidence_gap_summary": "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
@@ -1302,29 +1308,39 @@
         {
           "name": "Anscombe",
           "lines": [
-            "Reverified PR `#89` / merge commit `c3d4086b503e30a9572824d6bbb00fd417d1e406` as latest merged `main`, then treated the record-pack-regeneration lane as the current repo-visible baseline rather than reopening older refresh assumptions.",
-            "The main duplication before this change was that refresh and regeneration re-derived the same outside-repo blocker semantics from each other instead of from one canonical evidence manifest and validator.",
-            "Current-pointer risk remains atomic: summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces must all reflect the same fail-closed truth once the canonical gap report is introduced."
+            "Reverified PR `#91` / merge commit `014723587b100fb0046646d40b445537584b44ea` as latest merged `main`, then treated the record-pack-regeneration lane as the current repo-visible baseline rather than reopening older refresh assumptions.",
+            "The shared evidence-preflight path now owns the reopen-readiness mapping, aggregated blocker reasons, and canonical manifest-to-proof references so refresh and regeneration stop re-deriving them separately.",
+            "Current-pointer risk remains atomic: summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces must all reflect the same fail-closed truth once the canonical preflight and compatibility gap outputs are written together."
           ]
         },
         {
           "name": "Euler",
           "lines": [
             "Confirmed no architecture drift: the planner boundary stays `prepare / start / status / stop / snapshot`, `manual_latched_stop_all` stays planner-owned, Dexter remains `paper_live`, and frozen Mew-X remains `sim_live`.",
-            "Kept the fail-closed split crisp: refresh now consumes the canonical manifest for freshness and usability, while regeneration consumes the same canonical gap output for inheritance and reviewability without widening runtime scope.",
+            "Kept the fail-closed split crisp: refresh now consumes the canonical evidence preflight for freshness and usability, while regeneration consumes the same shared preflight plus compatibility gap output for inheritance and reviewability without widening runtime scope.",
             "The new contract remains non-secret and bounded; it never implies funded-live access, broader venue scope, or Dexter / Mew-X runtime rewrites."
           ]
         },
         {
           "name": "Parfit",
           "lines": [
-            "The smallest safe implementation is one canonical manifest + validator + standalone gap report, then wiring refresh and regeneration to consume that shared output while leaving historical lanes intact.",
-            "Validation should start with the new gap script plus refresh/regeneration tests, then widen to bundle/export coverage and the full pytest suite.",
-            "Merge readiness depends on exact agreement across summary, context, manifest, ledger, README, refresh bundle metadata, and the canonical external-evidence paths from the PR `#89` baseline."
+            "The smallest safe implementation is one canonical manifest validator plus a unified preflight/readiness output, with the legacy gap surfaces preserved as compatibility mirrors while refresh and regeneration consume the same shared data.",
+            "Validation should start with the evidence-preflight script plus refresh/regeneration tests, then widen to bundle/export coverage and the full pytest suite.",
+            "Merge readiness depends on exact agreement across summary, context, manifest, ledger, README, refresh bundle metadata, and the canonical external-evidence paths from the PR `#91` baseline."
           ]
         }
       ],
-      "retry_gate_review_reopen_ready_from_external_evidence": false
+      "retry_gate_review_reopen_ready_from_external_evidence": false,
+      "aggregated_blocked_reason_counts": {
+        "attestors_missing": 9,
+        "bounded_window_missing": 9,
+        "evidence_locator_missing": 9,
+        "fresh_until_missing": 9,
+        "locator_kind_missing": 9,
+        "outside_repo_locator_not_supplied": 9,
+        "template_only_manifest": 9,
+        "verification_timestamp_missing": 9
+      }
     },
     "demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration": {
       "report": "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-report.md",
@@ -1363,6 +1379,10 @@
       },
       "external_evidence_contract": "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_EXTERNAL_EVIDENCE_CONTRACT.md",
       "external_evidence_manifest": "manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json",
+      "external_evidence_preflight_proof": "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json",
+      "external_evidence_preflight_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md",
+      "external_evidence_preflight_summary": "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md",
+      "external_evidence_preflight_status": "blocked",
       "external_evidence_gap_proof": "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
       "external_evidence_gap_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
       "external_evidence_gap_summary": "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
@@ -1382,9 +1402,9 @@
         {
           "name": "Anscombe",
           "lines": [
-            "Reverified PR `#90` / commit `f79997cc0b619c2542cd6e9f876abcfb7ffca3f8` as latest merged `main`, then re-promoted regeneration from the current refresh baseline instead of inventing a new pass claim.",
-            "The main duplication before this change was that regeneration handoff text still relied on human interpretation instead of carrying per-face manifest fields, proof paths, and template-only blocker guidance from the canonical external-evidence gap output.",
-            "The atomic current-pointer set still matters: summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces must all agree once regeneration becomes the current lane from the refresh baseline."
+            "Reverified PR `#91` / merge commit `014723587b100fb0046646d40b445537584b44ea` as latest merged `main`, then kept regeneration as the current blocked lane instead of inventing a new pass claim or undoing the already-merged lane flip.",
+            "The main duplication before this change was that regeneration handoff text still relied on human interpretation instead of carrying the shared evidence-preflight reopen mapping, per-face manifest fields, and proof paths in one place.",
+            "The atomic current-pointer set still matters: summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces must all agree once regeneration remains the current lane with the unified preflight path added."
           ]
         },
         {
@@ -1392,19 +1412,29 @@
           "lines": [
             "Confirmed the regeneration lane stays inside the unchanged Dexter-only `paper_live`, `single_sleeve`, `dexter_default`, one-plan, one-position, explicit-allowlist, small-lot, bounded-window, funded-live-forbidden envelope.",
             "Verified the planner/runtime boundary remains intact: `prepare / start / status / stop / snapshot` stay planner-bound, `manual_latched_stop_all` remains planner-owned, Dexter stays the only real-demo seam, and frozen Mew-X remains unchanged on `sim_live`.",
-            "The canonical manifest is non-secret and fail-closed by construction, so regeneration still cannot imply funded-live access or retry execution success without real current evidence."
+            "The canonical manifest plus evidence preflight remain non-secret and fail-closed by construction, so regeneration still cannot imply funded-live access or retry execution success without real current evidence."
           ]
         },
         {
           "name": "Parfit",
           "lines": [
-            "The lowest-risk change set is one regeneration-side metadata refresh, one tighter operator handoff that reuses the canonical gap output directly, one small closeout-bundle expansion, and the tests that pin the repo-level current pointer.",
-            "Generator-first validation remains the safe path: rerun the canonical gap script, rerun regeneration from the refresh baseline, rebuild the proof bundle, then widen to targeted coverage and full pytest.",
+            "The lowest-risk change set is one regeneration-side metadata refresh, one tighter operator handoff that reuses the canonical evidence preflight directly, one small closeout-bundle expansion, and the tests that pin the repo-level current pointer.",
+            "Generator-first validation remains the safe path: rerun the canonical evidence preflight, rerun regeneration from the refresh baseline, rebuild the proof bundle, then widen to targeted coverage and full pytest.",
             "Merge readiness depends on end-to-end agreement across summary, context, manifest, ledger, bundle metadata, the regenerated handoff bundle, and the final exported tarball without touching runtime code."
           ]
         }
       ],
       "retry_gate_review_reopen_ready_from_external_evidence": false,
+      "aggregated_blocked_reason_counts": {
+        "attestors_missing": 9,
+        "bounded_window_missing": 9,
+        "evidence_locator_missing": 9,
+        "fresh_until_missing": 9,
+        "locator_kind_missing": 9,
+        "outside_repo_locator_not_supplied": 9,
+        "template_only_manifest": 9,
+        "verification_timestamp_missing": 9
+      },
       "per_face_manifest_field_maps_explicit": true,
       "per_face_proof_path_maps_explicit": true,
       "canonical_gap_blocked_faces_align_with_regeneration_lane": true
@@ -1554,6 +1584,7 @@
     "demo_forward_retry_gate_attestation_record_pack_regeneration_subagent_summary_written": true,
     "recommended_next_step_returns_to_attestation_refresh_when_regeneration_stays_blocked": true,
     "retry_gate_review_requires_current_reviewable_regenerated_faces": true,
-    "demo_forward_retry_gate_external_evidence_gap_written": true
+    "demo_forward_retry_gate_external_evidence_gap_written": true,
+    "demo_forward_retry_gate_evidence_preflight_written": true
   }
 }

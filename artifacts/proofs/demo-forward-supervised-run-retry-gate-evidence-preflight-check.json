@@ -1,5 +1,5 @@
 {
-  "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-EXTERNAL-EVIDENCE-GAP",
+  "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-EVIDENCE-PREFLIGHT",
   "generated_at": "2026-03-27T22:04:13Z",
   "manifest": {
     "path": "manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json",
@@ -43,19 +43,16 @@
       "python3.12 scripts/run_demo_forward_supervised_run_retry_gate_evidence_preflight.py",
       "python3.12 scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
       "python3.12 scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py"
-    ]
+    ],
+    "gap_proof": "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
+    "gap_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
+    "gap_summary": "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md"
   },
-  "bounded_supervised_window": {
-    "label": "fill_current_bounded_supervised_window",
-    "starts_at": null,
-    "ends_at": null
-  },
-  "summary": {
-    "required_face_count": 9,
-    "present_face_count": 0,
-    "current_face_count": 0,
-    "reviewable_face_count": 0,
-    "stale_face_count": 0,
+  "reopen_readiness": {
+    "status": "blocked",
+    "decision": "retry_gate_review_reopen_blocked",
+    "manifest_status": "template_only",
+    "retry_gate_review_reopen_ready": false,
     "blocked_face_count": 9,
     "blocked_faces": [
       "external_credential_source_face",
@@ -68,7 +65,10 @@
       "manual_latched_stop_all_visibility_reconfirmed",
       "terminal_snapshot_readability_reconfirmed"
     ],
-    "retry_gate_review_reopen_ready": false,
+    "present_face_count": 0,
+    "current_face_count": 0,
+    "reviewable_face_count": 0,
+    "stale_face_count": 0,
     "operator_inputs_remaining": [
       "external_credential_source_face: Provide one current non-secret locator that confirms which Dexter paper-live credential source was resolved for the bounded supervised window.",
       "venue_ref_face: Provide one current non-secret locator that ties the repo-visible venue marker to the exact Dexter demo venue for the bounded supervised window.",
@@ -80,11 +80,35 @@
       "manual_latched_stop_all_visibility_reconfirmed: Provide one current non-secret locator that freshly reconfirms `manual_latched_stop_all` visibility for the bounded supervised window.",
       "terminal_snapshot_readability_reconfirmed: Provide one current non-secret locator that freshly reconfirms terminal snapshot readability for the bounded supervised window."
     ],
-    "window_fields_to_fill": [
-      "bounded_supervised_window.label",
-      "bounded_supervised_window.starts_at",
-      "bounded_supervised_window.ends_at"
-    ],
+    "blocked_reason_counts": {
+      "attestors_missing": 9,
+      "bounded_window_missing": 9,
+      "evidence_locator_missing": 9,
+      "fresh_until_missing": 9,
+      "locator_kind_missing": 9,
+      "outside_repo_locator_not_supplied": 9,
+      "template_only_manifest": 9,
+      "verification_timestamp_missing": 9
+    },
+    "blocked_reason_group_counts": {
+      "state": 9,
+      "missing": 63
+    },
+    "blocked_reason_groups": {
+      "state": {
+        "template_only_manifest": 9
+      },
+      "missing": {
+        "attestors_missing": 9,
+        "bounded_window_missing": 9,
+        "evidence_locator_missing": 9,
+        "fresh_until_missing": 9,
+        "locator_kind_missing": 9,
+        "outside_repo_locator_not_supplied": 9,
+        "verification_timestamp_missing": 9
+      }
+    },
+    "canonical_command": "python3.12 scripts/run_demo_forward_supervised_run_retry_gate_evidence_preflight.py",
     "proof_paths_to_recheck": [
       "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json",
       "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md",
@@ -103,7 +127,6 @@
       "python3.12 scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py"
     ]
   },
-  "validation_errors": [],
   "faces": [
     {
       "name": "external_credential_source_face",
@@ -164,7 +187,23 @@
         "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
         "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md"
       ],
-      "current_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that confirms which Dexter paper-live credential source was resolved for the bounded supervised window."
+      "current_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that confirms which Dexter paper-live credential source was resolved for the bounded supervised window.",
+      "reopen_ready_now": false,
+      "reopen_status": "FAIL/BLOCKED",
+      "reopen_blockers": {
+        "state": [
+          "template_only_manifest"
+        ],
+        "missing": [
+          "outside_repo_locator_not_supplied",
+          "attestors_missing",
+          "evidence_locator_missing",
+          "locator_kind_missing",
+          "verification_timestamp_missing",
+          "fresh_until_missing",
+          "bounded_window_missing"
+        ]
+      }
     },
     {
       "name": "venue_ref_face",
@@ -225,7 +264,23 @@
         "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
         "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md"
       ],
-      "current_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that ties the repo-visible venue marker to the exact Dexter demo venue for the bounded supervised window."
+      "current_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that ties the repo-visible venue marker to the exact Dexter demo venue for the bounded supervised window.",
+      "reopen_ready_now": false,
+      "reopen_status": "FAIL/BLOCKED",
+      "reopen_blockers": {
+        "state": [
+          "template_only_manifest"
+        ],
+        "missing": [
+          "outside_repo_locator_not_supplied",
+          "attestors_missing",
+          "evidence_locator_missing",
+          "locator_kind_missing",
+          "verification_timestamp_missing",
+          "fresh_until_missing",
+          "bounded_window_missing"
+        ]
+      }
     },
     {
       "name": "account_ref_face",
@@ -286,7 +341,23 @@
         "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
         "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md"
       ],
-      "current_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that shows which Dexter paper-live demo account the bounded supervised window is bound to."
+      "current_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that shows which Dexter paper-live demo account the bounded supervised window is bound to.",
+      "reopen_ready_now": false,
+      "reopen_status": "FAIL/BLOCKED",
+      "reopen_blockers": {
+        "state": [
+          "template_only_manifest"
+        ],
+        "missing": [
+          "outside_repo_locator_not_supplied",
+          "attestors_missing",
+          "evidence_locator_missing",
+          "locator_kind_missing",
+          "verification_timestamp_missing",
+          "fresh_until_missing",
+          "bounded_window_missing"
+        ]
+      }
     },
     {
       "name": "connectivity_profile_face",
@@ -347,7 +418,23 @@
         "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
         "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md"
       ],
-      "current_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that shows the intended connectivity profile was checked for venue/account reachability inside the bounded supervised window."
+      "current_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that shows the intended connectivity profile was checked for venue/account reachability inside the bounded supervised window.",
+      "reopen_ready_now": false,
+      "reopen_status": "FAIL/BLOCKED",
+      "reopen_blockers": {
+        "state": [
+          "template_only_manifest"
+        ],
+        "missing": [
+          "outside_repo_locator_not_supplied",
+          "attestors_missing",
+          "evidence_locator_missing",
+          "locator_kind_missing",
+          "verification_timestamp_missing",
+          "fresh_until_missing",
+          "bounded_window_missing"
+        ]
+      }
     },
     {
       "name": "operator_owner_face",
@@ -408,7 +495,23 @@
         "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
         "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md"
       ],
-      "current_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Name one explicit operator owner and provide one reviewable non-secret locator that shows ownership for the bounded supervised window."
+      "current_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Name one explicit operator owner and provide one reviewable non-secret locator that shows ownership for the bounded supervised window.",
+      "reopen_ready_now": false,
+      "reopen_status": "FAIL/BLOCKED",
+      "reopen_blockers": {
+        "state": [
+          "template_only_manifest"
+        ],
+        "missing": [
+          "outside_repo_locator_not_supplied",
+          "attestors_missing",
+          "evidence_locator_missing",
+          "locator_kind_missing",
+          "verification_timestamp_missing",
+          "fresh_until_missing",
+          "bounded_window_missing"
+        ]
+      }
     },
     {
       "name": "bounded_start_criteria_face",
@@ -473,7 +576,23 @@
         "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
         "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md"
       ],
-      "current_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that fixes the bounded start window plus the go/no-go and abort owners for the next supervised retry attempt."
+      "current_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that fixes the bounded start window plus the go/no-go and abort owners for the next supervised retry attempt.",
+      "reopen_ready_now": false,
+      "reopen_status": "FAIL/BLOCKED",
+      "reopen_blockers": {
+        "state": [
+          "template_only_manifest"
+        ],
+        "missing": [
+          "outside_repo_locator_not_supplied",
+          "attestors_missing",
+          "evidence_locator_missing",
+          "locator_kind_missing",
+          "verification_timestamp_missing",
+          "fresh_until_missing",
+          "bounded_window_missing"
+        ]
+      }
     },
     {
       "name": "allowlist_symbol_lot_reconfirmed",
@@ -543,7 +662,23 @@
         "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
         "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md"
       ],
-      "current_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that reconfirms the allowlist, default symbol, lot size, one-position cap, and bounded window guardrails for the next supervised attempt."
+      "current_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that reconfirms the allowlist, default symbol, lot size, one-position cap, and bounded window guardrails for the next supervised attempt.",
+      "reopen_ready_now": false,
+      "reopen_status": "FAIL/BLOCKED",
+      "reopen_blockers": {
+        "state": [
+          "template_only_manifest"
+        ],
+        "missing": [
+          "outside_repo_locator_not_supplied",
+          "attestors_missing",
+          "evidence_locator_missing",
+          "locator_kind_missing",
+          "verification_timestamp_missing",
+          "fresh_until_missing",
+          "bounded_window_missing"
+        ]
+      }
     },
     {
       "name": "manual_latched_stop_all_visibility_reconfirmed",
@@ -604,7 +739,23 @@
         "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
         "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md"
       ],
-      "current_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that freshly reconfirms `manual_latched_stop_all` visibility for the bounded supervised window."
+      "current_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that freshly reconfirms `manual_latched_stop_all` visibility for the bounded supervised window.",
+      "reopen_ready_now": false,
+      "reopen_status": "FAIL/BLOCKED",
+      "reopen_blockers": {
+        "state": [
+          "template_only_manifest"
+        ],
+        "missing": [
+          "outside_repo_locator_not_supplied",
+          "attestors_missing",
+          "evidence_locator_missing",
+          "locator_kind_missing",
+          "verification_timestamp_missing",
+          "fresh_until_missing",
+          "bounded_window_missing"
+        ]
+      }
     },
     {
       "name": "terminal_snapshot_readability_reconfirmed",
@@ -665,7 +816,24 @@
         "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
         "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md"
       ],
-      "current_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that freshly reconfirms terminal snapshot readability for the bounded supervised window."
+      "current_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that freshly reconfirms terminal snapshot readability for the bounded supervised window.",
+      "reopen_ready_now": false,
+      "reopen_status": "FAIL/BLOCKED",
+      "reopen_blockers": {
+        "state": [
+          "template_only_manifest"
+        ],
+        "missing": [
+          "outside_repo_locator_not_supplied",
+          "attestors_missing",
+          "evidence_locator_missing",
+          "locator_kind_missing",
+          "verification_timestamp_missing",
+          "fresh_until_missing",
+          "bounded_window_missing"
+        ]
+      }
     }
-  ]
+  ],
+  "validation_errors": []
 }

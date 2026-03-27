@@ -2,10 +2,27 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-BUNDLE_PATH="$ROOT_DIR/artifacts/bundles/demo-forward-supervised-run.tar.gz"
+BUNDLE_REL_PATH="$(
+  ROOT_DIR="$ROOT_DIR" python3 - <<'PY'
+import json
+import os
+from pathlib import Path
+
+root = Path(os.environ["ROOT_DIR"])
+manifest_path = root / "artifacts" / "proof_bundle_manifest.json"
+default_path = "artifacts/bundles/demo-forward-supervised-run-retry-readiness.tar.gz"
+
+if not manifest_path.exists():
+    print(default_path)
+else:
+    manifest = json.loads(manifest_path.read_text())
+    print(manifest.get("bundle_path", default_path))
+PY
+)"
+BUNDLE_PATH="$ROOT_DIR/$BUNDLE_REL_PATH"
 export COPYFILE_DISABLE=1
 
-mkdir -p "$ROOT_DIR/artifacts/bundles"
+mkdir -p "$(dirname "$BUNDLE_PATH")"
 mkdir -p "$ROOT_DIR/artifacts/examples"
 mkdir -p "$ROOT_DIR/artifacts/reports"
 mkdir -p "$ROOT_DIR/artifacts/proofs"

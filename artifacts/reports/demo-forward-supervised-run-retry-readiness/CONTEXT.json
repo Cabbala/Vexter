@@ -1,0 +1,25 @@
+{
+  "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS",
+  "task_state": "supervised_run_retry_readiness_blocked",
+  "recommended_next_step": "supervised_run_retry_gate",
+  "recommended_next_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
+  "verified_vexter_main_pr": 73,
+  "verified_vexter_main_commit": "aea530368fc5b59b87dd08a38c2629392ea8d706",
+  "baseline_task_state": "demo_forward_supervised_run_blocked",
+  "first_demo_target": "dexter_paper_live",
+  "source_faithful_seam": {
+    "dexter": "paper_live",
+    "mewx": "sim_live"
+  },
+  "unresolved_prerequisites": [
+    "DEXTER_DEMO_CREDENTIAL_SOURCE",
+    "DEXTER_DEMO_VENUE_REF",
+    "DEXTER_DEMO_ACCOUNT_REF",
+    "DEXTER_DEMO_CONNECTIVITY_PROFILE",
+    "operator_owner",
+    "bounded_supervised_window_start_criteria",
+    "allowlist_symbol_lot_reconfirmation",
+    "stop_all_visibility_reconfirmation"
+  ],
+  "real_demo_retry_execution_allowed": false
+}

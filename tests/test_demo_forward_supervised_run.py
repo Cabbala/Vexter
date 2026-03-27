@@ -4,7 +4,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 PROOF_PATH = REPO_ROOT / "artifacts/proofs/demo-forward-supervised-run-check.json"
-SUMMARY_PATH = REPO_ROOT / "artifacts/summary.md"
+SUMMARY_PATH = REPO_ROOT / "artifacts/proofs/demo-forward-supervised-run-summary.md"
 REPORT_PATH = REPO_ROOT / "artifacts/reports/demo-forward-supervised-run-report.md"
 STATUS_PATH = REPO_ROOT / "artifacts/reports/demo-forward-supervised-run-status.md"
 HANDOFF_PATH = REPO_ROOT / "artifacts/reports/demo-forward-supervised-run/HANDOFF.md"
@@ -14,16 +14,10 @@ FOLLOW_UP_PATH = REPO_ROOT / "docs/demo_forward_supervised_run_operator_follow_u
 PROMPT_CONTEXT_PATH = REPO_ROOT / "artifacts/reports/demo-forward-supervised-run/CONTEXT.json"
 
 
-def load_last_ledger_entry() -> dict:
-    lines = (REPO_ROOT / "artifacts/task_ledger.jsonl").read_text().strip().splitlines()
-    return json.loads(lines[-1])
-
-
-def test_demo_forward_supervised_run_artifacts_are_current_and_consistent() -> None:
+def test_demo_forward_supervised_run_artifacts_remain_consistent() -> None:
     proof = json.loads(PROOF_PATH.read_text())
     manifest = json.loads((REPO_ROOT / "artifacts/proof_bundle_manifest.json").read_text())
     context = json.loads((REPO_ROOT / "artifacts/context_pack.json").read_text())
-    ledger = load_last_ledger_entry()
     prompt_context = json.loads(PROMPT_CONTEXT_PATH.read_text())
     summary_text = SUMMARY_PATH.read_text()
     report_text = REPORT_PATH.read_text()
@@ -31,18 +25,21 @@ def test_demo_forward_supervised_run_artifacts_are_current_and_consistent() -> N
     handoff_text = HANDOFF_PATH.read_text()
     follow_up_text = FOLLOW_UP_PATH.read_text()
 
-    assert manifest["task_id"] == context["current_task"]["id"] == ledger["task_id"]
-    assert manifest["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN"
-    assert manifest["status"] == ledger["status"] == "demo_forward_supervised_run_blocked"
-    assert (
-        manifest["bundle_path"]
-        == ledger["artifact_bundle"]
-        == "artifacts/bundles/demo-forward-supervised-run.tar.gz"
+    assert "artifacts/proofs/demo-forward-supervised-run-check.json" in manifest["proof_files"]
+    assert "artifacts/proofs/demo-forward-supervised-run-summary.md" in manifest["proof_files"]
+    assert "artifacts/reports/demo-forward-supervised-run-report.md" in manifest["reports"]
+    assert "artifacts/reports/demo-forward-supervised-run-status.md" in manifest["reports"]
+    assert "docs/demo_forward_supervised_run_operator_follow_up.md" in manifest["docs"]
+    assert "scripts/run_demo_forward_supervised_run.py" in manifest["scripts"]
+    assert context["evidence"]["demo_forward_supervised_run"]["task_state"] == (
+        "demo_forward_supervised_run_blocked"
     )
-    assert manifest["next_task"]["id"] == context["next_task"]["id"] == ledger["next_task_id"]
-    assert manifest["next_task"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS"
-    assert manifest["next_task"]["state"] == context["next_task"]["state"] == ledger["next_task_state"]
-    assert manifest["next_task"]["state"] == "ready_for_supervised_run_retry_readiness"
+    assert context["evidence"]["demo_forward_supervised_run"]["preferred_next_step"] == (
+        "supervised_run_retry_readiness"
+    )
+    assert context["evidence"]["demo_forward_supervised_run_retry_readiness"]["task_state"] == (
+        "supervised_run_retry_readiness_blocked"
+    )
 
     assert proof["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN"
     assert proof["verified_github"]["latest_vexter_pr"] == 72
@@ -86,7 +83,7 @@ def test_demo_forward_supervised_run_artifacts_are_current_and_consistent() -> N
 
     assert prompt_context["task_state"] == "demo_forward_supervised_run_blocked"
     assert prompt_context["recommended_next_task_id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS"
-    assert "demo_forward_supervised_run_blocked" in summary_text
+    assert "supervised_run_retry_readiness" in summary_text
     assert "FAIL/BLOCKED" in report_text
     assert "demo_forward_supervised_run_blocked" in status_text
     assert "manual_latched_stop_all" in handoff_text

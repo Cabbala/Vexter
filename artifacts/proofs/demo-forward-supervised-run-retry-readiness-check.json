@@ -1,0 +1,357 @@
+{
+  "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS",
+  "verified_github": {
+    "latest_vexter_pr": 73,
+    "latest_vexter_main_commit": "aea530368fc5b59b87dd08a38c2629392ea8d706",
+    "latest_vexter_merged_at": "2026-03-27T00:56:46Z",
+    "dexter_pr_3_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "starting_point": {
+    "task_id": "DEMO-FORWARD-SUPERVISED-RUN",
+    "task_state": "demo_forward_supervised_run_blocked",
+    "report": "artifacts/reports/demo-forward-supervised-run-report.md",
+    "status_report": "artifacts/reports/demo-forward-supervised-run-status.md",
+    "proof": "artifacts/proofs/demo-forward-supervised-run-check.json",
+    "summary": "artifacts/proofs/demo-forward-supervised-run-summary.md",
+    "handoff": "artifacts/reports/demo-forward-supervised-run/HANDOFF.md",
+    "operator_follow_up": "docs/demo_forward_supervised_run_operator_follow_up.md"
+  },
+  "supervised_run_retry_readiness": {
+    "planner_boundary": [
+      "prepare",
+      "start",
+      "status",
+      "stop",
+      "snapshot"
+    ],
+    "retry_boundary": {
+      "demo_source": "dexter",
+      "execution_mode": "paper_live",
+      "route_mode": "single_sleeve",
+      "selected_sleeve_id": "dexter_default",
+      "max_active_real_demo_plans": 1,
+      "max_open_positions": 1,
+      "allowlist_required": true,
+      "small_lot_required": true,
+      "bounded_supervised_window_required": true,
+      "external_credential_refs_outside_repo": true,
+      "operator_owner_explicit_required": true,
+      "venue_connectivity_confirmation_required": true,
+      "stop_all_visibility_reconfirmation_required": true,
+      "mewx_unchanged": true,
+      "funded_live_forbidden": true
+    },
+    "required_artifacts": {
+      "current_status_report": "artifacts/reports/demo-forward-supervised-run-retry-readiness-status.md",
+      "current_report": "artifacts/reports/demo-forward-supervised-run-retry-readiness-report.md",
+      "current_summary": "artifacts/proofs/demo-forward-supervised-run-retry-readiness-summary.md",
+      "current_proof_json": "artifacts/proofs/demo-forward-supervised-run-retry-readiness-check.json",
+      "current_handoff": "artifacts/reports/demo-forward-supervised-run-retry-readiness/HANDOFF.md",
+      "retry_readiness_checklist": "docs/demo_forward_supervised_run_retry_readiness_checklist.md",
+      "retry_prerequisite_matrix": "docs/demo_forward_supervised_run_retry_prerequisite_matrix.md",
+      "subagent_summary": "artifacts/reports/demo-forward-supervised-run-retry-readiness/SUBAGENTS.md"
+    },
+    "baseline_blocked_outcome": {
+      "task_id": "DEMO-FORWARD-SUPERVISED-RUN",
+      "task_state": "demo_forward_supervised_run_blocked",
+      "key_finding": "demo_forward_supervised_run_blocked_on_external_prerequisites",
+      "claim_boundary": "demo_forward_supervised_run_fail_closed",
+      "recommended_next_step": "supervised_run_retry_readiness",
+      "supervised_sequence": {
+        "plan_id": "demo-forward-supervised-run:batch:0:dexter_default",
+        "plan_batch_id": "demo-forward-supervised-run:batch",
+        "route_mode": "single_sleeve",
+        "selected_sleeves": [
+          "dexter_default"
+        ],
+        "prepare": {
+          "handle_id": "dexter_main_pinned:demo-forward-supervised-run:batch:0:dexter_default",
+          "status_delivery": "poll_first",
+          "entrypoint": "monitor_mint_session",
+          "execution_mode": "paper_live",
+          "transport_version": "v1",
+          "demo_runtime": "dexter_paper_live_demo",
+          "symbol_allowlist": [
+            "BONK/USDC"
+          ],
+          "demo_symbol": "BONK/USDC",
+          "small_lot_order_size": "0.05",
+          "bounded_window_minutes": 15
+        },
+        "start": {
+          "runtime_status": "running",
+          "signal": "status_poll"
+        },
+        "status": {
+          "runtime_status": "running",
+          "native_order_status": "filled",
+          "fill_count": 1,
+          "orders": [
+            {
+              "native_order_id": "paper_live:demo-forward-supervised-run:batch:0:dexter_default:entry:1",
+              "purpose": "entry",
+              "symbol": "BONK/USDC",
+              "side": "buy",
+              "quantity_lots": "0.05",
+              "state": "filled",
+              "submitted_at_utc": "2026-03-27T00:51:26.238110+00:00",
+              "updated_at_utc": "2026-03-27T00:51:26.238115+00:00",
+              "cancel_reason": null,
+              "fill_ids": [
+                "paper_live:demo-forward-supervised-run:batch:0:dexter_default:fill:1"
+              ]
+            }
+          ],
+          "fills": [
+            {
+              "fill_id": "paper_live:demo-forward-supervised-run:batch:0:dexter_default:fill:1",
+              "native_order_id": "paper_live:demo-forward-supervised-run:batch:0:dexter_default:entry:1",
+              "symbol": "BONK/USDC",
+              "side": "buy",
+              "quantity_lots": "0.05",
+              "venue_reference": "dexter_paper_live_demo_venue",
+              "collected_at_utc": "2026-03-27T00:51:26.238115+00:00"
+            }
+          ],
+          "open_position_lots": "0.05",
+          "reconciliation": {
+            "last_reconciliation": "fill_collection",
+            "mode": "poll_first",
+            "decision": "poll_only"
+          }
+        },
+        "stop": {
+          "runtime_status": "stopping",
+          "stop_all_state": "flatten_requested",
+          "stop_reason": "manual_latched_stop_all"
+        },
+        "snapshot": {
+          "executor_status": "stopped",
+          "stop_all_state": "flatten_confirmed",
+          "fill_count": 2,
+          "orders": [
+            {
+              "native_order_id": "paper_live:demo-forward-supervised-run:batch:0:dexter_default:entry:1",
+              "purpose": "entry",
+              "symbol": "BONK/USDC",
+              "side": "buy",
+              "quantity_lots": "0.05",
+              "state": "filled",
+              "submitted_at_utc": "2026-03-27T00:51:26.238110+00:00",
+              "updated_at_utc": "2026-03-27T00:51:26.238115+00:00",
+              "cancel_reason": null,
+              "fill_ids": [
+                "paper_live:demo-forward-supervised-run:batch:0:dexter_default:fill:1"
+              ]
+            },
+            {
+              "native_order_id": "paper_live:demo-forward-supervised-run:batch:0:dexter_default:flatten:2",
+              "purpose": "flatten",
+              "symbol": "BONK/USDC",
+              "side": "sell",
+              "quantity_lots": "0.05",
+              "state": "filled",
+              "submitted_at_utc": "2026-03-27T00:51:26.238198+00:00",
+              "updated_at_utc": "2026-03-27T00:51:26.238252+00:00",
+              "cancel_reason": null,
+              "fill_ids": [
+                "paper_live:demo-forward-supervised-run:batch:0:dexter_default:fill:2"
+              ]
+            }
+          ],
+          "fills": [
+            {
+              "fill_id": "paper_live:demo-forward-supervised-run:batch:0:dexter_default:fill:1",
+              "native_order_id": "paper_live:demo-forward-supervised-run:batch:0:dexter_default:entry:1",
+              "symbol": "BONK/USDC",
+              "side": "buy",
+              "quantity_lots": "0.05",
+              "venue_reference": "dexter_paper_live_demo_venue",
+              "collected_at_utc": "2026-03-27T00:51:26.238115+00:00"
+            },
+            {
+              "fill_id": "paper_live:demo-forward-supervised-run:batch:0:dexter_default:fill:2",
+              "native_order_id": "paper_live:demo-forward-supervised-run:batch:0:dexter_default:flatten:2",
+              "symbol": "BONK/USDC",
+              "side": "sell",
+              "quantity_lots": "0.05",
+              "venue_reference": "dexter_paper_live_demo_venue",
+              "collected_at_utc": "2026-03-27T00:51:26.238252+00:00"
+            }
+          ],
+          "open_position_lots": "0"
+        }
+      }
+    },
+    "external_prerequisites": {
+      "required_ref_variables": [
+        "DEXTER_DEMO_CREDENTIAL_SOURCE",
+        "DEXTER_DEMO_VENUE_REF",
+        "DEXTER_DEMO_ACCOUNT_REF",
+        "DEXTER_DEMO_CONNECTIVITY_PROFILE"
+      ],
+      "bounded_runtime_variables": [
+        "DEXTER_DEMO_ALLOWED_SYMBOLS",
+        "DEXTER_DEMO_DEFAULT_SYMBOL",
+        "DEXTER_DEMO_ORDER_SIZE_LOTS",
+        "DEXTER_DEMO_MAX_ORDER_SIZE_LOTS",
+        "DEXTER_DEMO_WINDOW_MINUTES",
+        "DEXTER_DEMO_MAX_OPEN_POSITIONS"
+      ],
+      "repo_visible_reference_markers": {
+        "DEXTER_DEMO_CREDENTIAL_SOURCE": "external_reference",
+        "DEXTER_DEMO_VENUE_REF": "dexter_paper_live_demo_venue",
+        "DEXTER_DEMO_ACCOUNT_REF": "dexter_paper_live_demo_account",
+        "DEXTER_DEMO_CONNECTIVITY_PROFILE": "dexter_paper_live_demo_connectivity"
+      },
+      "runtime_guardrails": {
+        "allowed_symbols": [
+          "BONK/USDC"
+        ],
+        "default_symbol": "BONK/USDC",
+        "order_size_lots": "0.05",
+        "max_order_size_lots": "0.05",
+        "bounded_window_minutes": 15,
+        "max_open_positions": 1
+      },
+      "runtime_validation_errors": [],
+      "retry_prerequisite_matrix": [
+        {
+          "name": "DEXTER_DEMO_CREDENTIAL_SOURCE",
+          "repo_visible_marker": "external_reference",
+          "repo_visible_marker_present": true,
+          "resolved_outside_repo": false,
+          "who_confirms": "named_operator_owner_outside_repo",
+          "retry_ready_when": "the external credential source for Dexter paper_live is explicitly named outside the repo and confirmed against the pinned source seam"
+        },
+        {
+          "name": "DEXTER_DEMO_VENUE_REF",
+          "repo_visible_marker": "dexter_paper_live_demo_venue",
+          "repo_visible_marker_present": true,
+          "resolved_outside_repo": false,
+          "who_confirms": "named_operator_owner_outside_repo",
+          "retry_ready_when": "the demo venue reference is explicitly mapped to a reachable Dexter paper_live venue"
+        },
+        {
+          "name": "DEXTER_DEMO_ACCOUNT_REF",
+          "repo_visible_marker": "dexter_paper_live_demo_account",
+          "repo_visible_marker_present": true,
+          "resolved_outside_repo": false,
+          "who_confirms": "named_operator_owner_outside_repo",
+          "retry_ready_when": "the demo account reference is explicitly mapped to the same venue / mode pair"
+        },
+        {
+          "name": "DEXTER_DEMO_CONNECTIVITY_PROFILE",
+          "repo_visible_marker": "dexter_paper_live_demo_connectivity",
+          "repo_visible_marker_present": true,
+          "resolved_outside_repo": false,
+          "who_confirms": "named_operator_owner_outside_repo",
+          "retry_ready_when": "the connectivity profile is explicitly confirmed for the retry window and poll / stop-all visibility remains available"
+        },
+        {
+          "name": "operator_owner",
+          "repo_visible_marker": "unconfirmed_outside_repo",
+          "repo_visible_marker_present": false,
+          "resolved_outside_repo": false,
+          "who_confirms": "project_side_retry_owner_outside_repo",
+          "retry_ready_when": "one operator owner is explicitly named for the full supervised window"
+        },
+        {
+          "name": "bounded_supervised_window_start_criteria",
+          "repo_visible_marker": "bounded_window_minutes=15",
+          "repo_visible_marker_present": true,
+          "resolved_outside_repo": false,
+          "who_confirms": "named_operator_owner_outside_repo",
+          "retry_ready_when": "the start time, abort owner, and halt path are explicitly named before retry"
+        },
+        {
+          "name": "allowlist_symbol_lot_reconfirmation",
+          "repo_visible_marker": {
+            "allowed_symbols": [
+              "BONK/USDC"
+            ],
+            "default_symbol": "BONK/USDC",
+            "order_size_lots": "0.05",
+            "max_order_size_lots": "0.05",
+            "max_open_positions": 1
+          },
+          "repo_visible_marker_present": true,
+          "resolved_outside_repo": false,
+          "who_confirms": "named_operator_owner_outside_repo",
+          "retry_ready_when": "the operator reconfirms allowlist, symbol, lot size, and max-position guardrails for the bounded retry window"
+        },
+        {
+          "name": "stop_all_visibility_reconfirmation",
+          "repo_visible_marker": "baseline_stop_all_state=flatten_confirmed",
+          "repo_visible_marker_present": true,
+          "resolved_outside_repo": false,
+          "who_confirms": "named_operator_owner_outside_repo",
+          "retry_ready_when": "cancel / stop-all and terminal snapshot visibility are reconfirmed before the retry gate opens"
+        }
+      ],
+      "unresolved_prerequisites": [
+        "DEXTER_DEMO_CREDENTIAL_SOURCE",
+        "DEXTER_DEMO_VENUE_REF",
+        "DEXTER_DEMO_ACCOUNT_REF",
+        "DEXTER_DEMO_CONNECTIVITY_PROFILE",
+        "operator_owner",
+        "bounded_supervised_window_start_criteria",
+        "allowlist_symbol_lot_reconfirmation",
+        "stop_all_visibility_reconfirmation"
+      ],
+      "checklist_gate": {
+        "external_reference_markers_present_in_repo": true,
+        "runtime_guardrails_parse_cleanly": true,
+        "operator_owner_named_outside_repo": false,
+        "bounded_supervised_window_named_outside_repo": false,
+        "venue_connectivity_confirmed_outside_repo": false,
+        "allowlist_symbol_lot_reconfirmed_outside_repo": false,
+        "stop_all_visibility_reconfirmed_before_retry": false,
+        "real_demo_retry_execution_allowed": false
+      }
+    },
+    "sub_agents": [
+      {
+        "name": "Anscombe",
+        "summary": "Validated that the current proof / report / handoff / status pointers can move to retry-readiness without losing the blocked supervised-run baseline, and that the remaining prerequisite language stays observation-based."
+      },
+      {
+        "name": "Euler",
+        "summary": "Confirmed the retry-readiness boundary should stay Dexter-only, `single_sleeve`, `dexter_default`, explicit allowlist, small lot, bounded supervised window, and planner `prepare / start / status / stop / snapshot`, with the next smallest lane framed as a retry gate rather than wider execution."
+      },
+      {
+        "name": "Parfit",
+        "summary": "Reviewed the change as a minimal source-of-truth promotion, scoped regression impact to artifact-generation and contract tests, and recommended validating the new generator, bundle output, and affected artifact-layout tests before merge."
+      }
+    ],
+    "supporting_files": [
+      "specs/DEMO_FORWARD_SUPERVISED_RUN.md",
+      "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_READINESS.md",
+      "plans/demo_forward_supervised_run_plan.md",
+      "plans/demo_forward_supervised_run_retry_readiness_plan.md",
+      "docs/demo_forward_supervised_run_operator_follow_up.md",
+      "docs/demo_forward_supervised_run_retry_readiness_checklist.md",
+      "docs/demo_forward_supervised_run_retry_prerequisite_matrix.md",
+      "scripts/run_demo_forward_supervised_run.py",
+      "scripts/run_demo_forward_supervised_run_retry_readiness.py",
+      "scripts/build_proof_bundle.sh",
+      "tests/test_demo_forward_supervised_run.py",
+      "tests/test_demo_forward_supervised_run_retry_readiness.py"
+    ],
+    "proof_outputs": [
+      "artifacts/proofs/demo-forward-supervised-run-retry-readiness-check.json",
+      "artifacts/proofs/demo-forward-supervised-run-retry-readiness-summary.md",
+      "artifacts/bundles/demo-forward-supervised-run-retry-readiness.tar.gz"
+    ]
+  },
+  "task_result": {
+    "outcome": "FAIL/BLOCKED",
+    "key_finding": "supervised_run_retry_readiness_blocked_on_external_prerequisites",
+    "claim_boundary": "supervised_run_retry_readiness_bounded",
+    "task_state": "supervised_run_retry_readiness_blocked",
+    "recommended_next_step": "supervised_run_retry_gate",
+    "recommended_next_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
+    "decision": "supervised_run_retry_gate_required"
+  }
+}

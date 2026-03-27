@@ -1,14 +1,13 @@
 {
   "background": {
-    "previous_task_id": "DEMO-FORWARD-ACCEPTANCE-PACK",
-    "previous_key_finding": "demo_forward_acceptance_pack_fixed",
-    "previous_claim_boundary": "demo_forward_acceptance_pack_bounded",
-    "promoted_pair": "task005-pass-grade-pair-20260325T180027Z",
-    "confirmatory_pair": "task005-pass-grade-pair-20260325T180604Z",
+    "previous_task_id": "DEMO-FORWARD-SUPERVISED-RUN",
+    "previous_task_state": "demo_forward_supervised_run_blocked",
+    "previous_key_finding": "demo_forward_supervised_run_blocked_on_external_prerequisites",
+    "previous_claim_boundary": "demo_forward_supervised_run_fail_closed",
     "comparison_source_of_truth_fixed_before_task": true,
-    "prior_lane_completed_before_task": true
+    "blocked_supervised_baseline_accepted": true
   },
-  "bundle_source": "/Users/cabbala/Downloads/vexter_demo_forward_supervised_run_bundle.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_supervised_run_retry_readiness_bundle.tar.gz",
   "current_contract": {
     "comparison_source_of_truth": "comparison_closed_out",
     "promoted_live_winner_mode": "derived",
@@ -81,41 +80,49 @@
     "demo_forward_supervised_run_marker": "demo_forward_supervised_run",
     "demo_forward_supervised_spec_path": "specs/DEMO_FORWARD_SUPERVISED_RUN.md",
     "demo_forward_supervised_plan_path": "plans/demo_forward_supervised_run_plan.md",
-    "demo_forward_supervised_operator_follow_up_path": "docs/demo_forward_supervised_run_operator_follow_up.md"
+    "demo_forward_supervised_operator_follow_up_path": "docs/demo_forward_supervised_run_operator_follow_up.md",
+    "demo_forward_supervised_retry_readiness_marker": "demo_forward_supervised_run_retry_readiness",
+    "demo_forward_supervised_retry_readiness_spec_path": "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_READINESS.md",
+    "demo_forward_supervised_retry_readiness_plan_path": "plans/demo_forward_supervised_run_retry_readiness_plan.md",
+    "demo_forward_supervised_retry_readiness_checklist_path": "docs/demo_forward_supervised_run_retry_readiness_checklist.md",
+    "demo_forward_supervised_retry_prerequisite_matrix_path": "docs/demo_forward_supervised_run_retry_prerequisite_matrix.md",
+    "demo_forward_supervised_retry_readiness_subagents_path": "artifacts/reports/demo-forward-supervised-run-retry-readiness/SUBAGENTS.md",
+    "demo_forward_retry_readiness_next_step": "supervised_run_retry_gate"
   },
   "current_task": {
-    "id": "DEMO-FORWARD-SUPERVISED-RUN",
+    "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS",
     "scope": [
-      "Reverify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X after the acceptance pack.",
-      "Exercise the bounded source-faithful supervised run sequence at prepare / start / status / stop / snapshot.",
-      "Preserve poll_first, manual_latched_stop_all, and the Dexter-only / Mew-X-frozen seam.",
-      "Promote the current status, report, summary, proof, handoff, and operator follow-up surfaces.",
-      "Fail closed if the repo cannot honestly claim a completed real-demo supervised window."
+      "Reverify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X after the blocked supervised run merged.",
+      "Accept the blocked supervised run as baseline current source of truth.",
+      "Promote retry readiness status, report, summary, proof, handoff, checklist, matrix, and sub-agent summary surfaces.",
+      "Bound each external prerequisite with a missing-state, confirmer, and retry-ready condition.",
+      "Advance the next recommended lane to a retry gate unless explicit retry-readiness pass conditions are satisfied."
     ],
     "deliverables": [
       "README.md",
-      "specs/DEMO_FORWARD_SUPERVISED_RUN.md",
-      "plans/demo_forward_supervised_run_plan.md",
-      "docs/demo_forward_supervised_run_operator_follow_up.md",
+      "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_READINESS.md",
+      "plans/demo_forward_supervised_run_retry_readiness_plan.md",
+      "docs/demo_forward_supervised_run_retry_readiness_checklist.md",
+      "docs/demo_forward_supervised_run_retry_prerequisite_matrix.md",
+      "tests/test_demo_forward_supervised_run_retry_readiness.py",
       "tests/test_demo_forward_supervised_run.py",
-      "tests/test_demo_forward_acceptance_pack.py",
-      "tests/test_pattern_a_demo_executor_cutover.py",
       "tests/test_bootstrap_layout.py",
-      "scripts/run_demo_forward_supervised_run.py",
+      "scripts/run_demo_forward_supervised_run_retry_readiness.py",
       "scripts/build_proof_bundle.sh",
       "artifacts/summary.md",
       "artifacts/context_pack.json",
       "artifacts/proof_bundle_manifest.json",
       "artifacts/task_ledger.jsonl",
-      "artifacts/reports/demo-forward-supervised-run-report.md",
-      "artifacts/reports/demo-forward-supervised-run-status.md",
-      "artifacts/reports/demo-forward-supervised-run/DETAILS.md",
-      "artifacts/reports/demo-forward-supervised-run/MIN_PROMPT.txt",
-      "artifacts/reports/demo-forward-supervised-run/CONTEXT.json",
-      "artifacts/reports/demo-forward-supervised-run/HANDOFF.md",
-      "artifacts/proofs/demo-forward-supervised-run-check.json",
-      "artifacts/proofs/demo-forward-supervised-run-summary.md",
-      "artifacts/bundles/demo-forward-supervised-run.tar.gz"
+      "artifacts/reports/demo-forward-supervised-run-retry-readiness-report.md",
+      "artifacts/reports/demo-forward-supervised-run-retry-readiness-status.md",
+      "artifacts/reports/demo-forward-supervised-run-retry-readiness/DETAILS.md",
+      "artifacts/reports/demo-forward-supervised-run-retry-readiness/MIN_PROMPT.txt",
+      "artifacts/reports/demo-forward-supervised-run-retry-readiness/CONTEXT.json",
+      "artifacts/reports/demo-forward-supervised-run-retry-readiness/HANDOFF.md",
+      "artifacts/reports/demo-forward-supervised-run-retry-readiness/SUBAGENTS.md",
+      "artifacts/proofs/demo-forward-supervised-run-retry-readiness-check.json",
+      "artifacts/proofs/demo-forward-supervised-run-retry-readiness-summary.md",
+      "artifacts/bundles/demo-forward-supervised-run-retry-readiness.tar.gz"
     ],
     "frozen_source_commits": {
       "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
@@ -124,14 +131,14 @@
   },
   "evidence": {
     "github_latest": {
-      "latest_vexter_pr": 72,
-      "latest_vexter_main_commit": "a6ca623b01dbed4191c4be10c2bfe51534025cac",
+      "latest_vexter_pr": 73,
+      "latest_vexter_main_commit": "aea530368fc5b59b87dd08a38c2629392ea8d706",
       "latest_recent_vexter_prs": [
+        73,
         72,
         71,
         70,
-        69,
-        68
+        69
       ],
       "vexter_pr_65_merged_at": "2026-03-26T19:30:46Z",
       "vexter_pr_64_merged_at": "2026-03-26T18:53:07Z",
@@ -148,7 +155,9 @@
       "vexter_pr_71_merged_at": "2026-03-27T00:09:27Z",
       "vexter_pr_71_closed_at": "2026-03-27T00:09:27Z",
       "vexter_pr_72_merged_at": "2026-03-27T00:32:14Z",
-      "vexter_pr_72_closed_at": "2026-03-27T00:32:14Z"
+      "vexter_pr_72_closed_at": "2026-03-27T00:32:14Z",
+      "vexter_pr_73_merged_at": "2026-03-27T00:56:46Z",
+      "vexter_pr_73_closed_at": "2026-03-27T00:56:46Z"
     },
     "transport_livepaper_observability_ci_gate": {
       "report": "artifacts/reports/task-007-transport-livepaper-observability-ci-gate-report.md",
@@ -769,6 +778,63 @@
         "normalized_failure_detail_and_handoff_continuity",
         "supervised_window_outcome"
       ]
+    },
+    "demo_forward_supervised_run_retry_readiness": {
+      "report": "artifacts/reports/demo-forward-supervised-run-retry-readiness-report.md",
+      "status_report": "artifacts/reports/demo-forward-supervised-run-retry-readiness-status.md",
+      "proof": "artifacts/proofs/demo-forward-supervised-run-retry-readiness-check.json",
+      "summary": "artifacts/proofs/demo-forward-supervised-run-retry-readiness-summary.md",
+      "handoff_dir": "artifacts/reports/demo-forward-supervised-run-retry-readiness",
+      "checklist": "docs/demo_forward_supervised_run_retry_readiness_checklist.md",
+      "prerequisite_matrix": "docs/demo_forward_supervised_run_retry_prerequisite_matrix.md",
+      "subagent_summary": "artifacts/reports/demo-forward-supervised-run-retry-readiness/SUBAGENTS.md",
+      "key_finding": "supervised_run_retry_readiness_blocked_on_external_prerequisites",
+      "claim_boundary": "supervised_run_retry_readiness_bounded",
+      "task_state": "supervised_run_retry_readiness_blocked",
+      "run_outcome": "FAIL/BLOCKED",
+      "operator_visible_readiness_surface_current": true,
+      "preferred_next_step": "supervised_run_retry_gate",
+      "retry_boundary": {
+        "demo_source": "dexter",
+        "execution_mode": "paper_live",
+        "route_mode": "single_sleeve",
+        "selected_sleeve_id": "dexter_default",
+        "max_active_real_demo_plans": 1,
+        "max_open_positions": 1,
+        "allowlist_required": true,
+        "small_lot_required": true,
+        "bounded_supervised_window_required": true,
+        "external_credential_refs_outside_repo": true,
+        "operator_owner_explicit_required": true,
+        "venue_connectivity_confirmation_required": true,
+        "stop_all_visibility_reconfirmation_required": true,
+        "mewx_unchanged": true,
+        "funded_live_forbidden": true
+      },
+      "unresolved_prerequisites": [
+        "DEXTER_DEMO_CREDENTIAL_SOURCE",
+        "DEXTER_DEMO_VENUE_REF",
+        "DEXTER_DEMO_ACCOUNT_REF",
+        "DEXTER_DEMO_CONNECTIVITY_PROFILE",
+        "operator_owner",
+        "bounded_supervised_window_start_criteria",
+        "allowlist_symbol_lot_reconfirmation",
+        "stop_all_visibility_reconfirmation"
+      ],
+      "sub_agents": [
+        {
+          "name": "Anscombe",
+          "summary": "Validated that the current proof / report / handoff / status pointers can move to retry-readiness without losing the blocked supervised-run baseline, and that the remaining prerequisite language stays observation-based."
+        },
+        {
+          "name": "Euler",
+          "summary": "Confirmed the retry-readiness boundary should stay Dexter-only, `single_sleeve`, `dexter_default`, explicit allowlist, small lot, bounded supervised window, and planner `prepare / start / status / stop / snapshot`, with the next smallest lane framed as a retry gate rather than wider execution."
+        },
+        {
+          "name": "Parfit",
+          "summary": "Reviewed the change as a minimal source-of-truth promotion, scoped regression impact to artifact-generation and contract tests, and recommended validating the new generator, bundle output, and affected artifact-layout tests before merge."
+        }
+      ]
     }
   },
   "frozen_source_commits": {
@@ -806,12 +872,12 @@
     ]
   },
   "next_task": {
-    "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS",
-    "state": "ready_for_supervised_run_retry_readiness",
+    "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
+    "state": "ready_for_supervised_run_retry_gate",
     "rationale": [
-      "The bounded supervised sequence is now current source of truth.",
-      "The real-demo completion claim remains blocked until external prerequisites are resolved outside the repo.",
-      "The shortest next cut is retry readiness rather than widening scope or reopening baseline work."
+      "The blocked supervised-run baseline is still current and preserved.",
+      "The retry-readiness lane now makes the missing prerequisite set explicit and current.",
+      "The smallest honest next cut is a retry gate until the named external prerequisites are explicitly satisfied."
     ]
   },
   "proofs": {
@@ -858,6 +924,12 @@
     "demo_forward_supervised_current_pointers_fixed": true,
     "demo_forward_supervised_operator_follow_up_written": true,
     "demo_forward_real_window_claim_blocked": true,
-    "recommended_next_step_is_supervised_run_retry_readiness": true
+    "recommended_next_step_is_supervised_run_retry_readiness": true,
+    "demo_forward_supervised_run_retry_readiness_added": true,
+    "demo_forward_retry_current_pointers_fixed": true,
+    "demo_forward_retry_checklist_written": true,
+    "demo_forward_retry_prerequisite_matrix_written": true,
+    "demo_forward_retry_subagent_summary_written": true,
+    "recommended_next_step_is_supervised_run_retry_gate": true
   }
 }

@@ -1,0 +1,5 @@
+GitHub最新状態を確認し、Vexter `main` PR #73 merge 後の retry-readiness surface を current source of truth として扱ってください。
+出発点は `demo_forward_supervised_run_blocked` で、Dexter `paper_live` のみ・frozen Mew-X `sim_live` のみ・`single_sleeve`・`dexter_default`・explicit allowlist・small lot・max open positions=1・bounded supervised window を維持してください。
+planner の public boundary は `prepare / start / status / stop / snapshot` のまま、`manual_latched_stop_all` は planner-owned のまま保ってください。
+external credential refs は repo 外に残し、operator owner / venue connectivity / supervised-window start criteria / stop-all reconfirmation を repo 内で捏造しないでください。
+current status / report / proof / handoff / checklist / prerequisite matrix / sub-agent summary を更新し、次は `supervised_run_retry_gate` を最小 cut として示してください.

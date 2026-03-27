@@ -1,9 +1,9 @@
 {
   "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION",
   "verified_github": {
-    "latest_vexter_pr": 83,
-    "latest_vexter_main_commit": "5b78804188e27199e90950f610fd279ad7a133f6",
-    "latest_vexter_merged_at": "2026-03-27T13:47:24Z",
+    "latest_vexter_pr": 85,
+    "latest_vexter_main_commit": "aee3216c3c5091135f6bb50236883e1bdff8e2e1",
+    "latest_vexter_merged_at": "2026-03-27T19:00:58Z",
     "dexter_pr_3_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
   },
@@ -72,7 +72,7 @@
           "repo_visible_marker": "external_reference",
           "regeneration_owner": "named_operator_owner_outside_repo",
           "what_regenerated_face_covers": "The external credential reference resolves to the intended Dexter paper-live demo credential source for the bounded supervised window. The regenerated pack must keep that same bounded-window meaning without widening scope or implying retry execution success.",
-          "regeneration_trigger": "refresh before the credential reference changes or the bounded supervised window rolls forward; otherwise keep the face blocked for record-pack regeneration; regenerate the current record-pack face again whenever the credential reference changes or the bounded supervised window rolls forward or when the bounded supervised window moves.",
+          "regeneration_trigger": "refresh before the credential reference changes or the bounded supervised window rolls forward; otherwise keep the face blocked for record-pack regeneration; regenerate the current record-pack face again whenever the credential reference changes or the bounded supervised window rolls forward.",
           "minimum_regenerated_locator_shape": "attestor name, reference label only, bounded window, verification timestamp, and a plain-language confirmation that the referenced credential source was resolved outside repo; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets; plus regenerated face name, regeneration timestamp, bundle-relative proof pointer, and one reviewer-readable locator path that reopens the same bounded-window evidence without exposing secrets",
           "freshness_inheritance_or_reset_rule": "inherit freshness only while the underlying fresh locator remains current, reviewable, and inside the same bounded supervised window; reset the regenerated face to FAIL/BLOCKED when the credential reference changes or the bounded supervised window rolls forward or when the locator cannot be reopened without secrets",
           "reviewable_enough_when": "the repo can point to a current attestation record for this face without exposing secret material and the located evidence is still fresh enough for the current bounded supervised window and the regenerated face points to the same bounded-window locator plus an explicit regeneration timestamp and reviewer-readable proof path",
@@ -88,7 +88,7 @@
           "repo_visible_marker": "dexter_paper_live_demo_venue",
           "regeneration_owner": "named_operator_owner_plus_venue_owner_outside_repo",
           "what_regenerated_face_covers": "The repo-visible venue reference points to the intended Dexter demo venue for the bounded supervised retry window. The regenerated pack must keep that same bounded-window meaning without widening scope or implying retry execution success.",
-          "regeneration_trigger": "refresh before the venue reference changes, venue routing changes, or the supervised window is rescheduled; otherwise keep the face blocked for record-pack regeneration; regenerate the current record-pack face again whenever the venue reference changes, venue routing changes, or the supervised window is rescheduled or when the bounded supervised window moves.",
+          "regeneration_trigger": "refresh before the venue reference changes, venue routing changes, or the supervised window is rescheduled; otherwise keep the face blocked for record-pack regeneration; regenerate the current record-pack face again whenever the venue reference changes, venue routing changes, or the supervised window is rescheduled.",
           "minimum_regenerated_locator_shape": "attestor names, venue reference label, bounded window, verification timestamp, and explicit match confirmation between the marker and the intended venue; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets; plus regenerated face name, regeneration timestamp, bundle-relative proof pointer, and one reviewer-readable locator path that reopens the same bounded-window evidence without exposing secrets",
           "freshness_inheritance_or_reset_rule": "inherit freshness only while the underlying fresh locator remains current, reviewable, and inside the same bounded supervised window; reset the regenerated face to FAIL/BLOCKED when the venue reference changes, venue routing changes, or the supervised window is rescheduled or when the locator cannot be reopened without secrets",
           "reviewable_enough_when": "the venue attestation is current, explicit, and reviewable without requiring the reviewer to infer the mapping and the located evidence is still fresh enough for the current bounded supervised window and the regenerated face points to the same bounded-window locator plus an explicit regeneration timestamp and reviewer-readable proof path",
@@ -136,7 +136,7 @@
           "repo_visible_marker": "unconfirmed_outside_repo",
           "regeneration_owner": "demo_operator_lead_outside_repo",
           "what_regenerated_face_covers": "One explicit operator owner is responsible for the full retry-gate review and bounded supervised window. The regenerated pack must keep that same bounded-window meaning without widening scope or implying retry execution success.",
-          "regeneration_trigger": "refresh before the named owner changes or the supervised window changes; otherwise keep the face blocked for record-pack regeneration; regenerate the current record-pack face again whenever the named owner changes or the supervised window changes or when the bounded supervised window moves.",
+          "regeneration_trigger": "refresh before the named owner changes or the supervised window changes; otherwise keep the face blocked for record-pack regeneration; regenerate the current record-pack face again whenever the named owner changes or the supervised window changes.",
           "minimum_regenerated_locator_shape": "owner name or handle, verification timestamp, window label, and explicit ownership statement; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets; plus regenerated face name, regeneration timestamp, bundle-relative proof pointer, and one reviewer-readable locator path that reopens the same bounded-window evidence without exposing secrets",
           "freshness_inheritance_or_reset_rule": "inherit freshness only while the underlying fresh locator remains current, reviewable, and inside the same bounded supervised window; reset the regenerated face to FAIL/BLOCKED when the named owner changes or the supervised window changes or when the locator cannot be reopened without secrets",
           "reviewable_enough_when": "the owner attestation is explicit enough that gate recheck does not rely on unnamed responsibility and the located evidence is still fresh enough for the current bounded supervised window and the regenerated face points to the same bounded-window locator plus an explicit regeneration timestamp and reviewer-readable proof path",
@@ -156,7 +156,7 @@
           },
           "regeneration_owner": "named_operator_owner_outside_repo",
           "what_regenerated_face_covers": "The intended supervised start window, go/no-go owner, and abort owner are explicit and bounded for the next reviewable retry attempt. The regenerated pack must keep that same bounded-window meaning without widening scope or implying retry execution success.",
-          "regeneration_trigger": "refresh before the scheduled window moves or ownership for go/no-go or abort changes; otherwise keep the face blocked for record-pack regeneration; regenerate the current record-pack face again whenever the scheduled window moves or ownership for go/no-go or abort changes or when the bounded supervised window moves.",
+          "regeneration_trigger": "refresh before the scheduled window moves or ownership for go/no-go or abort changes; otherwise keep the face blocked for record-pack regeneration; regenerate the current record-pack face again whenever the scheduled window moves or ownership for go/no-go or abort changes.",
           "minimum_regenerated_locator_shape": "planned start window, bounded window minutes, go/no-go owner, abort owner, verification timestamp, and explicit stop condition note; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets; plus regenerated face name, regeneration timestamp, bundle-relative proof pointer, and one reviewer-readable locator path that reopens the same bounded-window evidence without exposing secrets",
           "freshness_inheritance_or_reset_rule": "inherit freshness only while the underlying fresh locator remains current, reviewable, and inside the same bounded supervised window; reset the regenerated face to FAIL/BLOCKED when the scheduled window moves or ownership for go/no-go or abort changes or when the locator cannot be reopened without secrets",
           "reviewable_enough_when": "the bounded-start attestation makes timing and ownership explicit enough to reopen gate review and the located evidence is still fresh enough for the current bounded supervised window and the regenerated face points to the same bounded-window locator plus an explicit regeneration timestamp and reviewer-readable proof path",
@@ -181,7 +181,7 @@
           },
           "regeneration_owner": "named_operator_owner_outside_repo",
           "what_regenerated_face_covers": "The explicit allowlist, default symbol, lot size, bounded window, and one-position cap were reconfirmed for the upcoming supervised window. The regenerated pack must keep that same bounded-window meaning without widening scope or implying retry execution success.",
-          "regeneration_trigger": "refresh before any guardrail value changes or the supervised window moves; otherwise keep the face blocked for record-pack regeneration; regenerate the current record-pack face again whenever any guardrail value changes or the supervised window moves or when the bounded supervised window moves.",
+          "regeneration_trigger": "refresh before any guardrail value changes or the supervised window moves; otherwise keep the face blocked for record-pack regeneration; regenerate the current record-pack face again whenever any guardrail value changes or the supervised window moves.",
           "minimum_regenerated_locator_shape": "attestor name, verification timestamp, allowlist values, lot-size values, position cap, and a plain-language reconfirmation note; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets; plus regenerated face name, regeneration timestamp, bundle-relative proof pointer, and one reviewer-readable locator path that reopens the same bounded-window evidence without exposing secrets",
           "freshness_inheritance_or_reset_rule": "inherit freshness only while the underlying fresh locator remains current, reviewable, and inside the same bounded supervised window; reset the regenerated face to FAIL/BLOCKED when any guardrail value changes or the supervised window moves or when the locator cannot be reopened without secrets",
           "reviewable_enough_when": "the guardrail attestation is current enough that gate recheck can treat the bounded demo envelope as explicitly reconfirmed and the located evidence is still fresh enough for the current bounded supervised window and the regenerated face points to the same bounded-window locator plus an explicit regeneration timestamp and reviewer-readable proof path",
@@ -197,7 +197,7 @@
           "repo_visible_marker": "baseline_stop_all_state=flatten_confirmed",
           "regeneration_owner": "named_operator_owner_outside_repo",
           "what_regenerated_face_covers": "`manual_latched_stop_all` remains visibly reachable on the bounded retry path for the next supervised window. The regenerated pack must keep that same bounded-window meaning without widening scope or implying retry execution success.",
-          "regeneration_trigger": "refresh before the stop-all surface changes or the window advances without reconfirmation; otherwise keep the face blocked for record-pack regeneration; regenerate the current record-pack face again whenever the stop-all surface changes or the window advances without reconfirmation or when the bounded supervised window moves.",
+          "regeneration_trigger": "refresh before the stop-all surface changes or the window advances without reconfirmation; otherwise keep the face blocked for record-pack regeneration; regenerate the current record-pack face again whenever the stop-all surface changes or the window advances without reconfirmation.",
           "minimum_regenerated_locator_shape": "attestor name, verification timestamp, referenced stop-all surface, and a plain-language visibility confirmation; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets; plus regenerated face name, regeneration timestamp, bundle-relative proof pointer, and one reviewer-readable locator path that reopens the same bounded-window evidence without exposing secrets",
           "freshness_inheritance_or_reset_rule": "inherit freshness only while the underlying fresh locator remains current, reviewable, and inside the same bounded supervised window; reset the regenerated face to FAIL/BLOCKED when the stop-all surface changes or the window advances without reconfirmation or when the locator cannot be reopened without secrets",
           "reviewable_enough_when": "the stop-all visibility attestation is current enough to reopen gate review without assuming prior visibility still holds and the located evidence is still fresh enough for the current bounded supervised window and the regenerated face points to the same bounded-window locator plus an explicit regeneration timestamp and reviewer-readable proof path",
@@ -213,7 +213,7 @@
           "repo_visible_marker": "baseline_terminal_snapshot_readable=true",
           "regeneration_owner": "named_operator_owner_outside_repo",
           "what_regenerated_face_covers": "Terminal snapshot detail remains readable enough for the upcoming supervised retry window. The regenerated pack must keep that same bounded-window meaning without widening scope or implying retry execution success.",
-          "regeneration_trigger": "refresh before the snapshot format changes or the supervised window advances without reconfirmation; otherwise keep the face blocked for record-pack regeneration; regenerate the current record-pack face again whenever the snapshot format changes or the supervised window advances without reconfirmation or when the bounded supervised window moves.",
+          "regeneration_trigger": "refresh before the snapshot format changes or the supervised window advances without reconfirmation; otherwise keep the face blocked for record-pack regeneration; regenerate the current record-pack face again whenever the snapshot format changes or the supervised window advances without reconfirmation.",
           "minimum_regenerated_locator_shape": "attestor name, verification timestamp, referenced snapshot surface, and a short readability confirmation; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets; plus regenerated face name, regeneration timestamp, bundle-relative proof pointer, and one reviewer-readable locator path that reopens the same bounded-window evidence without exposing secrets",
           "freshness_inheritance_or_reset_rule": "inherit freshness only while the underlying fresh locator remains current, reviewable, and inside the same bounded supervised window; reset the regenerated face to FAIL/BLOCKED when the snapshot format changes or the supervised window advances without reconfirmation or when the locator cannot be reopened without secrets",
           "reviewable_enough_when": "the snapshot-readability attestation is current enough that a gate reviewer can rely on terminal visibility without inference and the located evidence is still fresh enough for the current bounded supervised window and the regenerated face points to the same bounded-window locator plus an explicit regeneration timestamp and reviewer-readable proof path",
@@ -257,25 +257,25 @@
       {
         "name": "Anscombe",
         "lines": [
-          "Confirmed the regeneration lane needs to be re-promoted from the refresh-merged `main` state, not from the older PR `#81` baseline.",
-          "Flagged duplicated regeneration clauses inside refresh-derived rows as the main correctness risk because they make the decision surface non-reviewable even while the task claims to be bounded.",
-          "Recommended one atomic current-pointer flip so manifest, context, summary, ledger, and bundle metadata all point to the regeneration lane together."
+          "Confirmed merged PR `#85` / commit `aee3216c3c5091135f6bb50236883e1bdff8e2e1` is the current refresh baseline, so regeneration has to be re-promoted from that newer source of truth rather than the older PR `#83` state.",
+          "Flagged two correctness risks to keep atomic: stale refresh-side repo pointers and repeated regeneration suffixes inside refresh-derived rows that would make the decision surface contradictory or non-reviewable.",
+          "Recommended one atomic current-pointer flip across summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces so regeneration becomes current everywhere together."
         ]
       },
       {
         "name": "Euler",
         "lines": [
-          "Kept the regeneration boundary inside the same Dexter-only `paper_live`, `single_sleeve`, `dexter_default`, one-plan, one-position, explicit-allowlist, small-lot, bounded-window, funded-live-forbidden envelope.",
-          "Confirmed the planner versus adapter split still holds: runtime seams stay inherited, `manual_latched_stop_all` remains planner-owned, Dexter stays the default sleeve, and frozen Mew-X stays unchanged on `sim_live`.",
-          "Recommended normalizing refresh-derived row fields before building regeneration outputs so trigger, locator-shape, stale-rule, and reviewability text stay single-pass and auditable."
+          "Confirmed the regeneration lane stays inside the unchanged Dexter-only `paper_live`, `single_sleeve`, `dexter_default`, one-plan, one-position, explicit-allowlist, small-lot, bounded-window, funded-live-forbidden envelope.",
+          "Verified the planner/runtime boundary remains intact: `prepare / start / status / stop / snapshot` stay planner-bound, `manual_latched_stop_all` remains planner-owned, Dexter stays the only real-demo seam, and frozen Mew-X remains unchanged on `sim_live`.",
+          "Recommended keeping regeneration logic purely surface-level by normalizing refresh-derived row text before emission instead of rewriting Dexter or Mew-X runtime/source behavior."
         ]
       },
       {
         "name": "Parfit",
         "lines": [
-          "Scoped the lowest-risk update to re-promoting regeneration from current `origin/main`, refreshing the generator baselines, and rewiring the shared current-pointer regressions without touching runtime code.",
-          "Recommended validating regeneration-specific surfaces first, then widening to the shared manifest and layout coverage because several older tests pin the repo-level current task and bundle path.",
-          "Merge readiness depends on end-to-end pointer agreement across summary, context, proof manifest, ledger, bundle metadata, the regenerated handoff bundle, and the final exported tarball."
+          "Scoped the lowest-risk change set to the regeneration generator, the proof-bundle fallback path, the regenerated artifacts, and the shared regression expectations that pin the repo-level current task and bundle layout.",
+          "Recommended validating the regeneration generator and proof-bundle/export path first, then widening to the shared current-pointer and full pytest coverage once the regenerated artifacts are in place.",
+          "Merge readiness depends on end-to-end agreement across summary, context, manifest, ledger, bundle metadata, the regenerated handoff bundle, and the final exported tarball without touching runtime code."
         ]
       }
     ],

@@ -138,9 +138,9 @@ DECISION = "retry_gate_review_blocked_pending_current_attestation_record_pack_re
 
 VERIFIED_DEXTER_COMMIT = "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938"
 VERIFIED_MEWX_COMMIT = "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
-VERIFIED_VEXTER_PR = 83
-VERIFIED_VEXTER_COMMIT = "5b78804188e27199e90950f610fd279ad7a133f6"
-VERIFIED_VEXTER_MERGED_AT = "2026-03-27T13:47:24Z"
+VERIFIED_VEXTER_PR = 85
+VERIFIED_VEXTER_COMMIT = "aee3216c3c5091135f6bb50236883e1bdff8e2e1"
+VERIFIED_VEXTER_MERGED_AT = "2026-03-27T19:00:58Z"
 
 REQUIRED_FACE_NAMES = [
     "external_credential_source_face",
@@ -158,25 +158,25 @@ SUB_AGENT_SUMMARIES = (
     {
         "name": "Anscombe",
         "lines": [
-            "Confirmed the regeneration lane needs to be re-promoted from the refresh-merged `main` state, not from the older PR `#81` baseline.",
-            "Flagged duplicated regeneration clauses inside refresh-derived rows as the main correctness risk because they make the decision surface non-reviewable even while the task claims to be bounded.",
-            "Recommended one atomic current-pointer flip so manifest, context, summary, ledger, and bundle metadata all point to the regeneration lane together.",
+            "Confirmed merged PR `#85` / commit `aee3216c3c5091135f6bb50236883e1bdff8e2e1` is the current refresh baseline, so regeneration has to be re-promoted from that newer source of truth rather than the older PR `#83` state.",
+            "Flagged two correctness risks to keep atomic: stale refresh-side repo pointers and repeated regeneration suffixes inside refresh-derived rows that would make the decision surface contradictory or non-reviewable.",
+            "Recommended one atomic current-pointer flip across summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces so regeneration becomes current everywhere together.",
         ],
     },
     {
         "name": "Euler",
         "lines": [
-            "Kept the regeneration boundary inside the same Dexter-only `paper_live`, `single_sleeve`, `dexter_default`, one-plan, one-position, explicit-allowlist, small-lot, bounded-window, funded-live-forbidden envelope.",
-            "Confirmed the planner versus adapter split still holds: runtime seams stay inherited, `manual_latched_stop_all` remains planner-owned, Dexter stays the default sleeve, and frozen Mew-X stays unchanged on `sim_live`.",
-            "Recommended normalizing refresh-derived row fields before building regeneration outputs so trigger, locator-shape, stale-rule, and reviewability text stay single-pass and auditable.",
+            "Confirmed the regeneration lane stays inside the unchanged Dexter-only `paper_live`, `single_sleeve`, `dexter_default`, one-plan, one-position, explicit-allowlist, small-lot, bounded-window, funded-live-forbidden envelope.",
+            "Verified the planner/runtime boundary remains intact: `prepare / start / status / stop / snapshot` stay planner-bound, `manual_latched_stop_all` remains planner-owned, Dexter stays the only real-demo seam, and frozen Mew-X remains unchanged on `sim_live`.",
+            "Recommended keeping regeneration logic purely surface-level by normalizing refresh-derived row text before emission instead of rewriting Dexter or Mew-X runtime/source behavior.",
         ],
     },
     {
         "name": "Parfit",
         "lines": [
-            "Scoped the lowest-risk update to re-promoting regeneration from current `origin/main`, refreshing the generator baselines, and rewiring the shared current-pointer regressions without touching runtime code.",
-            "Recommended validating regeneration-specific surfaces first, then widening to the shared manifest and layout coverage because several older tests pin the repo-level current task and bundle path.",
-            "Merge readiness depends on end-to-end pointer agreement across summary, context, proof manifest, ledger, bundle metadata, the regenerated handoff bundle, and the final exported tarball.",
+            "Scoped the lowest-risk change set to the regeneration generator, the proof-bundle fallback path, the regenerated artifacts, and the shared regression expectations that pin the repo-level current task and bundle layout.",
+            "Recommended validating the regeneration generator and proof-bundle/export path first, then widening to the shared current-pointer and full pytest coverage once the regenerated artifacts are in place.",
+            "Merge readiness depends on end-to-end agreement across summary, context, manifest, ledger, bundle metadata, the regenerated handoff bundle, and the final exported tarball without touching runtime code.",
         ],
     },
 )
@@ -250,6 +250,23 @@ def extract_refresh_reviewable_condition(value: str) -> str:
     return value.strip()
 
 
+def mentions_window_move(value: str) -> bool:
+    lowered = value.lower()
+    return any(
+        needle in lowered
+        for needle in (
+            "window moves",
+            "window changes",
+            "window rolls forward",
+            "window is rescheduled",
+            "window advances",
+            "scheduled window moves",
+            "supervised window moves",
+            "bounded supervised window moves",
+        )
+    )
+
+
 def rewrite_local_ledger(entry: dict[str, object]) -> None:
     retained: list[str] = []
     if LEDGER_PATH.exists():
@@ -265,9 +282,11 @@ def rewrite_local_ledger(entry: dict[str, object]) -> None:
 
 
 def build_regeneration_trigger(refresh_trigger: str, stale_condition: str) -> str:
+    trigger_tail = stale_condition
+    if not mentions_window_move(refresh_trigger) and not mentions_window_move(stale_condition):
+        trigger_tail = f"{trigger_tail} or when the bounded supervised window moves"
     return (
-        f"{refresh_trigger}; regenerate the current record-pack face again whenever {stale_condition} "
-        "or when the bounded supervised window moves."
+        f"{refresh_trigger}; regenerate the current record-pack face again whenever {trigger_tail}."
     )
 
 
@@ -662,7 +681,7 @@ Promote one bounded attestation record-pack regeneration lane that keeps current
 
 def build_min_prompt() -> str:
     return (
-        "GitHub latest state is Vexter main PR #83 merge commit "
+        f"GitHub latest state is Vexter main PR #{VERIFIED_VEXTER_PR} merge commit "
         f"{VERIFIED_VEXTER_COMMIT} on {VERIFIED_VEXTER_MERGED_AT}. "
         "Accept attestation refresh as baseline, promote attestation record-pack regeneration as the current "
         "source of truth, keep Dexter-only paper_live and frozen Mew-X sim_live, do not commit secrets, keep "
@@ -1120,9 +1139,9 @@ def main() -> None:
         {
             "latest_vexter_pr": VERIFIED_VEXTER_PR,
             "latest_vexter_main_commit": VERIFIED_VEXTER_COMMIT,
-            "latest_recent_vexter_prs": [83, 82, 81, 80, 79],
-            "vexter_pr_83_merged_at": VERIFIED_VEXTER_MERGED_AT,
-            "vexter_pr_83_closed_at": VERIFIED_VEXTER_MERGED_AT,
+            "latest_recent_vexter_prs": [85, 84, 83, 82, 81],
+            "vexter_pr_85_merged_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_85_closed_at": VERIFIED_VEXTER_MERGED_AT,
         }
     )
     context_pack["evidence"]["demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration"] = {
@@ -1289,13 +1308,13 @@ def main() -> None:
         "source_faithful_modes": {"dexter": "paper_live", "mewx": "sim_live"},
         "status": TASK_STATUS,
         "sub_agents_used": [item["name"] for item in SUB_AGENT_SUMMARIES],
-        "supporting_vexter_prs": [83, 82, 81, 80, 79],
+        "supporting_vexter_prs": [85, 84, 83, 82, 81],
         "task_id": TASK_ID,
         "template_runtime_validation_errors": runtime_errors,
         "verified_dexter_main_commit": VERIFIED_DEXTER_COMMIT,
         "verified_dexter_pr": 3,
         "verified_mewx_frozen_commit": VERIFIED_MEWX_COMMIT,
-        "verified_prs": [83, 82, 81],
+        "verified_prs": [85, 84, 83],
         "date": run_timestamp.split("T", 1)[0],
     }
     rewrite_local_ledger(ledger_payload)

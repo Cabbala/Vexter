@@ -62,20 +62,27 @@ def test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regenera
     decision_surface_text = DECISION_SURFACE_PATH.read_text()
 
     assert manifest["task_id"] == context["current_task"]["id"] == ledger["task_id"]
-    assert manifest["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
-    assert manifest["status"] == ledger["status"] == "supervised_run_retry_gate_attestation_refresh_blocked"
+    assert (
+        manifest["task_id"]
+        == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
+    )
+    assert (
+        manifest["status"]
+        == ledger["status"]
+        == "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked"
+    )
     assert (
         manifest["bundle_path"]
         == ledger["artifact_bundle"]
-        == "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-refresh.tar.gz"
+        == "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration.tar.gz"
     )
     assert manifest["next_task"]["id"] == context["next_task"]["id"] == ledger["next_task_id"]
-    assert (
-        manifest["next_task"]["id"]
-        == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
-    )
+    assert manifest["next_task"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
     assert manifest["next_task"]["state"] == context["next_task"]["state"] == ledger["next_task_state"]
-    assert manifest["next_task"]["state"] == "ready_for_attestation_record_pack_regeneration"
+    assert (
+        manifest["next_task"]["state"]
+        == "additional_attestation_refresh_required_for_record_pack_regeneration"
+    )
     assert manifest["next_task"]["pass_successor"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE"
     assert manifest["next_task"]["pass_successor"]["lane"] == "supervised_run_retry_gate"
 
@@ -83,10 +90,10 @@ def test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regenera
         proof["task_id"]
         == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
     )
-    assert proof["verified_github"]["latest_vexter_pr"] == 79
+    assert proof["verified_github"]["latest_vexter_pr"] == 81
     assert (
         proof["verified_github"]["latest_vexter_main_commit"]
-        == "0c26ca948339e26224b569cb621dde3c008bb88f"
+        == "ff203f4e54009fbd7f84ddc3f94dd37604e04cb0"
     )
     assert proof["task_result"]["outcome"] == "FAIL/BLOCKED"
     assert (

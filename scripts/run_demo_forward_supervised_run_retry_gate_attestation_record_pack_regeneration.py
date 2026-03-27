@@ -119,7 +119,7 @@ PROOF_SUMMARY_PATH = (
 BUNDLE_PATH = (
     "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration.tar.gz"
 )
-BUNDLE_SOURCE = "/Users/cabbala/Downloads/vexter_attestation_record_pack_regeneration_bundle.tar.gz"
+BUNDLE_SOURCE = "/Users/cabbala/Downloads/vexter_attestation_record_pack_regeneration_bundle (1).tar.gz"
 
 TASK_ID = "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
 TASK_STATUS = "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked"
@@ -138,9 +138,9 @@ DECISION = "retry_gate_review_blocked_pending_current_attestation_record_pack_re
 
 VERIFIED_DEXTER_COMMIT = "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938"
 VERIFIED_MEWX_COMMIT = "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
-VERIFIED_VEXTER_PR = 79
-VERIFIED_VEXTER_COMMIT = "0c26ca948339e26224b569cb621dde3c008bb88f"
-VERIFIED_VEXTER_MERGED_AT = "2026-03-27T08:53:26Z"
+VERIFIED_VEXTER_PR = 81
+VERIFIED_VEXTER_COMMIT = "ff203f4e54009fbd7f84ddc3f94dd37604e04cb0"
+VERIFIED_VEXTER_MERGED_AT = "2026-03-27T13:14:15Z"
 
 REQUIRED_FACE_NAMES = [
     "external_credential_source_face",
@@ -158,25 +158,25 @@ SUB_AGENT_SUMMARIES = (
     {
         "name": "Anscombe",
         "lines": [
-            "Confirmed the attestation regeneration lane needs its own current status, report, proof, handoff, checklist, and decision-surface pointers instead of borrowing the transport pack.",
-            "Recommended keeping the wording observation-based and fail-closed so PASS/BLOCKED depends on locator freshness and face completeness rather than retry success claims.",
-            "Flagged split-pointer drift and implicit carry-forward language as the main consistency risks for the regenerated current pack.",
+            "Confirmed the regeneration lane already has coherent status, report, proof, handoff, checklist, and decision-surface outputs, and the fail-closed wording stays observational.",
+            "Recommended one atomic repo-level pointer flip so manifest, context, summary, ledger, and bundle metadata all point to the regeneration lane together.",
+            "Flagged stale current-selection markers as the main risk when re-promoting regeneration from current main, especially if refresh-era current flags remain set beside regeneration.",
         ],
     },
     {
         "name": "Euler",
         "lines": [
-            "Kept the regeneration boundary inside the same Dexter-only `paper_live`, `single_sleeve`, `dexter_default`, one-plan, one-position, explicit-allowlist, small-lot, funded-live-forbidden envelope.",
-            "Confirmed the planner/adapter split still holds: Dexter remains the default sleeve, Mew-X remains frozen and unchanged, and no funded-live or seam drift surfaced in the planner config.",
-            "Recommended routing the blocked next step back to bounded attestation refresh until the refreshed locator shapes are reviewable enough to reopen retry-gate review honestly.",
+            "Kept the regeneration boundary inside the same Dexter-only `paper_live`, `single_sleeve`, `dexter_default`, one-plan, one-position, explicit-allowlist, small-lot, bounded-window, funded-live-forbidden envelope.",
+            "Confirmed the planner versus adapter split still holds: runtime seams stay inherited, `manual_latched_stop_all` remains planner-owned, Dexter stays the default sleeve, and frozen Mew-X stays unchanged on `sim_live`.",
+            "Recommended routing the blocked next step back to bounded attestation refresh until refreshed locator inputs are current enough to rerun regeneration honestly.",
         ],
     },
     {
         "name": "Parfit",
         "lines": [
-            "Scoped the lowest-risk change to one new regeneration generator, one focused regeneration regression, current-pointer updates, and the manifest/bundle wiring needed to make the lane current.",
-            "Recommended validating the regeneration-specific regression pack and CI-gate paths first, then widening to the shared manifest and layout coverage if path constants changed.",
-            "Merge readiness depends on end-to-end pointer agreement across summary, context, proof manifest, ledger, and the new regeneration handoff bundle.",
+            "Scoped the lowest-risk update to re-promoting regeneration from current `origin/main`, refreshing the generator baselines, and rewiring the shared current-pointer regressions without touching runtime code.",
+            "Recommended validating the regeneration-specific surfaces first, then widening to the shared manifest and layout coverage because several older tests pin the repo-level current task and bundle path.",
+            "Merge readiness depends on end-to-end pointer agreement across summary, context, proof manifest, ledger, bundle metadata, and the regenerated handoff bundle.",
         ],
     },
 )
@@ -451,6 +451,7 @@ Each regeneration face must make explicit:
 - `status`
 - `stop`
 - `snapshot`
+- `manual_latched_stop_all` remains planner-owned
 
 ## Out Of Scope
 - no funded live trading
@@ -708,7 +709,8 @@ def build_subagents() -> str:
 def update_readme() -> None:
     marker = (
         "`DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION` starts from latest "
-        "GitHub-visible Vexter `main`"
+        f"GitHub-visible Vexter `main` at merged PR `#{VERIFIED_VEXTER_PR}` merge commit "
+        f"`{VERIFIED_VEXTER_COMMIT}` on `{VERIFIED_VEXTER_MERGED_AT}`"
     )
     readme_text = README_PATH.read_text()
     if marker in readme_text:
@@ -1011,13 +1013,41 @@ def main() -> None:
             "mewx": VERIFIED_MEWX_COMMIT,
         },
     }
+    for evidence_key, current_flags in (
+        (
+            "demo_forward_supervised_run_retry_readiness",
+            {"operator_visible_readiness_surface_current": False},
+        ),
+        (
+            "demo_forward_supervised_run_retry_gate",
+            {"operator_visible_gate_surface_current": False},
+        ),
+        (
+            "demo_forward_supervised_run_retry_gate_input_attestation",
+            {"operator_visible_attestation_surface_current": False},
+        ),
+        (
+            "demo_forward_supervised_run_retry_gate_attestation_audit",
+            {"operator_visible_attestation_audit_surface_current": False},
+        ),
+        (
+            "demo_forward_supervised_run_retry_gate_attestation_record_pack",
+            {"operator_visible_attestation_record_pack_surface_current": False},
+        ),
+        (
+            "demo_forward_supervised_run_retry_gate_attestation_refresh",
+            {"attestation_refresh_surface_current": False},
+        ),
+    ):
+        if evidence_key in context_pack["evidence"]:
+            context_pack["evidence"][evidence_key].update(current_flags)
     context_pack["evidence"]["github_latest"].update(
         {
             "latest_vexter_pr": VERIFIED_VEXTER_PR,
             "latest_vexter_main_commit": VERIFIED_VEXTER_COMMIT,
-            "latest_recent_vexter_prs": [79, 78, 77, 76, 75],
-            "vexter_pr_79_merged_at": VERIFIED_VEXTER_MERGED_AT,
-            "vexter_pr_79_closed_at": VERIFIED_VEXTER_MERGED_AT,
+            "latest_recent_vexter_prs": [81, 80, 79, 78, 77],
+            "vexter_pr_81_merged_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_81_closed_at": VERIFIED_VEXTER_MERGED_AT,
         }
     )
     context_pack["evidence"]["demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration"] = {
@@ -1184,13 +1214,13 @@ def main() -> None:
         "source_faithful_modes": {"dexter": "paper_live", "mewx": "sim_live"},
         "status": TASK_STATUS,
         "sub_agents_used": [item["name"] for item in SUB_AGENT_SUMMARIES],
-        "supporting_vexter_prs": [79, 78, 77, 76, 75],
+        "supporting_vexter_prs": [81, 80, 79, 78, 77],
         "task_id": TASK_ID,
         "template_runtime_validation_errors": runtime_errors,
         "verified_dexter_main_commit": VERIFIED_DEXTER_COMMIT,
         "verified_dexter_pr": 3,
         "verified_mewx_frozen_commit": VERIFIED_MEWX_COMMIT,
-        "verified_prs": [79, 78, 77],
+        "verified_prs": [81, 80, 79],
         "date": run_timestamp.split("T", 1)[0],
     }
     rewrite_local_ledger(ledger_payload)

@@ -52,6 +52,7 @@ Each regeneration face must make explicit:
 - `status`
 - `stop`
 - `snapshot`
+- `manual_latched_stop_all` remains planner-owned
 
 ## Out Of Scope
 - no funded live trading

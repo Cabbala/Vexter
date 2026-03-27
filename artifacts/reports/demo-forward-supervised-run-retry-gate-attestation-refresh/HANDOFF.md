@@ -1,7 +1,7 @@
 # Demo Forward Supervised Run Retry Gate Attestation Refresh Handoff
 
 ## Current Status
-- outgoing_shift_window: 2026-03-27T14:08:18Z attestation-refresh lane
+- outgoing_shift_window: 2026-03-27T14:11:03Z attestation-refresh lane
 - incoming_shift_window: fresh locator collection and record-pack regeneration
 - task_state: supervised_run_retry_gate_attestation_refresh_blocked
 - shift_outcome: blocked

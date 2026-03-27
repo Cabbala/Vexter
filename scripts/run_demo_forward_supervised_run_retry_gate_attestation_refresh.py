@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Emit bounded retry-gate attestation-refresh surfaces from the record-pack baseline."""
+"""Emit bounded retry-gate attestation-refresh surfaces from the regeneration baseline."""
 
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -18,7 +19,6 @@ from scripts.run_demo_forward_supervised_run_retry_gate_attestation_record_pack 
 )
 from scripts.run_demo_forward_supervised_run_retry_readiness import (
     format_json,
-    git_output,
     iso_utc_now,
     parse_template_env,
     patched_demo_env,
@@ -43,31 +43,51 @@ SPEC_PATH = ROOT / "specs" / "DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_ATTESTATION
 PLAN_PATH = ROOT / "plans" / "demo_forward_supervised_run_retry_gate_attestation_refresh_plan.md"
 
 PREVIOUS_REPORT_PATH = (
-    ROOT / "artifacts" / "reports" / "demo-forward-supervised-run-retry-gate-attestation-record-pack-report.md"
+    ROOT
+    / "artifacts"
+    / "reports"
+    / "demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-report.md"
 )
 PREVIOUS_STATUS_PATH = (
-    ROOT / "artifacts" / "reports" / "demo-forward-supervised-run-retry-gate-attestation-record-pack-status.md"
+    ROOT
+    / "artifacts"
+    / "reports"
+    / "demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-status.md"
 )
 PREVIOUS_PROOF_PATH = (
-    ROOT / "artifacts" / "proofs" / "demo-forward-supervised-run-retry-gate-attestation-record-pack-check.json"
+    ROOT
+    / "artifacts"
+    / "proofs"
+    / "demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json"
 )
 PREVIOUS_SUMMARY_PATH = (
-    ROOT / "artifacts" / "proofs" / "demo-forward-supervised-run-retry-gate-attestation-record-pack-summary.md"
+    ROOT
+    / "artifacts"
+    / "proofs"
+    / "demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-summary.md"
 )
 PREVIOUS_HANDOFF_PATH = (
-    ROOT / "artifacts" / "reports" / "demo-forward-supervised-run-retry-gate-attestation-record-pack" / "HANDOFF.md"
+    ROOT
+    / "artifacts"
+    / "reports"
+    / "demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration"
+    / "HANDOFF.md"
 )
 PREVIOUS_CHECKLIST_PATH = (
-    ROOT / "docs" / "demo_forward_supervised_run_retry_gate_attestation_record_pack_checklist.md"
+    ROOT
+    / "docs"
+    / "demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_checklist.md"
 )
 PREVIOUS_DECISION_SURFACE_PATH = (
-    ROOT / "docs" / "demo_forward_supervised_run_retry_gate_attestation_record_pack_decision_surface.md"
+    ROOT
+    / "docs"
+    / "demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_decision_surface.md"
 )
 PREVIOUS_SUBAGENTS_PATH = (
     ROOT
     / "artifacts"
     / "reports"
-    / "demo-forward-supervised-run-retry-gate-attestation-record-pack"
+    / "demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration"
     / "SUBAGENTS.md"
 )
 
@@ -90,26 +110,27 @@ PROOF_SUMMARY_PATH = (
 )
 
 BUNDLE_PATH = "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-refresh.tar.gz"
-BUNDLE_SOURCE = "/Users/cabbala/Downloads/vexter_attestation_refresh_bundle.tar.gz"
+BUNDLE_SOURCE = "/Users/cabbala/Downloads/vexter_attestation_refresh_bundle_fresh.tar.gz"
 
 TASK_ID = "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
 TASK_STATUS = "supervised_run_retry_gate_attestation_refresh_blocked"
 KEY_FINDING = "supervised_run_retry_gate_attestation_refresh_blocked_on_missing_or_stale_fresh_evidence_locators"
 CLAIM_BOUNDARY = "supervised_run_retry_gate_attestation_refresh_bounded"
 CURRENT_LANE = "supervised_run_retry_gate_attestation_refresh"
-NEXT_TASK_ID = "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK"
+NEXT_TASK_ID = "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
 NEXT_TASK_STATE = "ready_for_attestation_record_pack_regeneration"
-NEXT_TASK_LANE = "supervised_run_retry_gate_attestation_record_pack"
+NEXT_TASK_LANE = "supervised_run_retry_gate_attestation_record_pack_regeneration"
 PASS_NEXT_TASK_ID = "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE"
 PASS_NEXT_TASK_STATE = "ready_for_supervised_run_retry_gate_recheck"
 PASS_NEXT_TASK_LANE = "supervised_run_retry_gate"
 DECISION = "retry_gate_review_blocked_pending_fresh_attestation_refresh_and_record_pack_regeneration"
+PUBLISHED_BRANCH = "feat/attestation-refresh"
 
 VERIFIED_DEXTER_COMMIT = "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938"
 VERIFIED_MEWX_COMMIT = "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
-VERIFIED_VEXTER_PR = 78
-VERIFIED_VEXTER_COMMIT = "c8b586232c07ddf374d62f2817caeddb23581bd9"
-VERIFIED_VEXTER_MERGED_AT = "2026-03-27T08:15:08Z"
+VERIFIED_VEXTER_PR = 80
+VERIFIED_VEXTER_COMMIT = "abf5a5659a1a6a1918af18c57978ec10ef2d33d6"
+VERIFIED_VEXTER_MERGED_AT = "2026-03-27T09:10:03Z"
 
 REQUIRED_FACE_NAMES = [
     "external_credential_source_face",
@@ -127,25 +148,25 @@ SUB_AGENT_SUMMARIES = (
     {
         "name": "Anscombe",
         "lines": [
-            "Confirmed that refresh must become the single current surface atomically across status, report, summary, proof, handoff, checklist, and decision-surface pointers, with record-pack retained only as baseline evidence.",
-            "Recommended keeping the lane observational and fail-closed: the repo may define refresh ownership and freshness rules, but retry-gate review stays blocked until each face points to one current, fresh-enough locator.",
-            "Flagged split-pointer drift as the main risk, so the generator switches repo-level current-task metadata, bundle metadata, and handoff/report pointers together.",
+            "Confirmed that refresh has to be re-promoted atomically after the regeneration merge so status, report, summary, proof, handoff, checklist, decision-surface, manifest, context-pack, and bundle pointers agree again on one current lane.",
+            "Recommended treating regeneration as baseline evidence rather than the current source of truth: refresh stays observational and fail-closed until every regenerated face points to one current, fresh-enough, reviewer-readable locator.",
+            "Flagged stale pointer drift as the main risk, especially when README, task ledger, and bundle metadata still inherit the regeneration lane by default.",
         ],
     },
     {
         "name": "Euler",
         "lines": [
-            "Kept the refresh boundary identical to the current bounded envelope: Dexter-only `paper_live`, frozen Mew-X `sim_live`, `single_sleeve`, `dexter_default`, explicit allowlist, small lot, one-plan, one-position, bounded supervision, and funded-live forbidden.",
-            "Confirmed the refresh lane should baseline from attestation record pack rather than attestation audit, and that the row schema should shift to refresh owner, refresh trigger, minimum fresh evidence locator shape, stale condition, and retry-gate usability.",
-            "Found no planner or adapter seam drift: refresh remains docs/proofs/report/script only, with `prepare / start / status / stop / snapshot` and `manual_latched_stop_all` unchanged.",
+            "Kept the bounded runtime envelope unchanged: Dexter-only `paper_live`, frozen Mew-X `sim_live`, `single_sleeve`, `dexter_default`, explicit allowlist, small lot, one-plan, one-position, bounded supervision, and funded-live forbidden.",
+            "Confirmed the refreshed row schema still belongs to refresh owner, refresh trigger, minimum fresh evidence locator shape, stale condition, and retry-gate usability, but it now has to be derived from the regeneration decision surface rather than the older record-pack surface.",
+            "Found no planner or adapter seam drift: the lane stays docs/proofs/report/script only, with `prepare / start / status / stop / snapshot` and `manual_latched_stop_all` unchanged, while `build_proof_bundle.sh` fallback now needs to follow refresh again.",
         ],
     },
     {
         "name": "Parfit",
         "lines": [
-            "Scoped the smallest safe change set to one new refresh generator, one focused refresh regression, synchronized current-task assertions in shared tests, and a bundle default-path update.",
-            "Recommended validating the new generator and bundle output first, then running the full pytest suite because many tests pin the repo-level current task, next task, and bundle path.",
-            "Merge readiness depends on an honest blocked result, regenerated refresh artifacts, and a next-step pointer that advances to record-pack regeneration instead of claiming retry-gate reopen.",
+            "Scoped the smallest safe change set to the refresh generator, refresh report/proof surfaces, README/current-pointer rewiring, targeted shared tests, and the bundle fallback path.",
+            "Recommended validating generator output and the focused refresh regressions first, then widening to the shared pytest suite because several older task tests pin the repo-level current task and next-task metadata.",
+            "Merge readiness depends on starting from PR `#80` / merge commit `abf5a5659a1a6a1918af18c57978ec10ef2d33d6`, routing the blocked next step back to record-pack regeneration, and reporting the published branch as `feat/attestation-refresh`.",
         ],
     },
 )
@@ -200,44 +221,46 @@ def build_usable_condition(reviewable_enough_when: str) -> str:
 def build_refresh_rows(previous_rows: list[dict]) -> list[dict]:
     rows: list[dict] = []
     for row in previous_rows:
+        refresh_owner = row.get("regeneration_owner", "")
+        refresh_trigger = row.get("regeneration_trigger", "")
+        minimum_locator_shape = row.get("minimum_regenerated_locator_shape", "")
+        stale_condition = row.get("freshness_inheritance_or_reset_rule", "")
+        usable_condition = row.get("reviewable_enough_when", "")
         refresh_rule_complete = all(
             bool(value)
             for value in (
-                row.get("record_owner"),
-                row.get("what_record_covers"),
-                row.get("minimum_evidence_locator_shape"),
-                row.get("stale_condition"),
-                row.get("reviewable_enough_when"),
+                refresh_owner,
+                row.get("what_regenerated_face_covers"),
+                refresh_trigger,
+                minimum_locator_shape,
+                stale_condition,
+                usable_condition,
             )
         )
-        current_fresh_locator_present = bool(row.get("current_record_locator_present"))
-        current_fresh_enough = bool(row.get("current_record_fresh"))
+        current_fresh_locator_present = bool(row.get("current_fresh_locator_present"))
+        current_fresh_enough = bool(row.get("freshness_inherited_cleanly"))
         usable_now = refresh_rule_complete and current_fresh_locator_present and current_fresh_enough and bool(
-            row.get("reviewable_now")
+            row.get("regenerated_face_reviewable_now")
         )
         rows.append(
             {
                 "name": row["name"],
                 "repo_visible_marker": row["repo_visible_marker"],
-                "refresh_owner": row["record_owner"],
-                "what_refreshed_face_covers": row["what_record_covers"],
-                "refresh_trigger": build_refresh_trigger(row["stale_condition"]),
-                "minimum_fresh_evidence_locator_shape": build_minimum_fresh_locator_shape(
-                    row["minimum_evidence_locator_shape"]
-                ),
-                "stale_condition": row["stale_condition"],
-                "usable_for_retry_gate_review_when": build_usable_condition(
-                    row["reviewable_enough_when"]
-                ),
+                "refresh_owner": refresh_owner,
+                "what_refreshed_face_covers": row["what_regenerated_face_covers"],
+                "refresh_trigger": refresh_trigger,
+                "minimum_fresh_evidence_locator_shape": minimum_locator_shape,
+                "stale_condition": stale_condition,
+                "usable_for_retry_gate_review_when": usable_condition,
                 "refresh_rule_complete": refresh_rule_complete,
                 "current_fresh_evidence_locator_present": current_fresh_locator_present,
                 "current_evidence_fresh_enough": current_fresh_enough,
                 "usable_now": usable_now,
                 "current_refresh_observation": (
-                    "The repo-visible marker and bounded refresh rule are explicit for this face, but the repo "
-                    "still does not point to one current, fresh-enough bounded-window locator that a reviewer "
-                    "can reopen without secrets. The refresh lane therefore keeps this face fail-closed until "
-                    "record-pack regeneration can rely on one current, timestamped, reviewable locator."
+                    "The regenerated face is explicit for this row, but the repo still does not point to one "
+                    "current, fresh-enough regenerated locator that a reviewer can reopen without secrets. "
+                    "The refresh lane therefore keeps this face fail-closed until record-pack regeneration can "
+                    "be rerun from one current, timestamped, reviewable locator."
                 ),
                 "refresh_status": "PASS" if usable_now else "FAIL/BLOCKED",
             }
@@ -291,8 +314,8 @@ def build_status() -> str:
 - verified_vexter_main_commit: `{VERIFIED_VEXTER_COMMIT}`
 - verified_dexter_main_commit: `{VERIFIED_DEXTER_COMMIT}`
 - verified_mewx_frozen_commit: `{VERIFIED_MEWX_COMMIT}`
-- baseline_task: `DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK`
-- baseline_task_state: `supervised_run_retry_gate_attestation_record_pack_blocked`
+- baseline_task: `DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION`
+- baseline_task_state: `supervised_run_retry_gate_attestation_record_pack_regeneration_blocked`
 - planner_boundary: `prepare/start/status/stop/snapshot`
 - current_attestation_refresh_lane: `{CURRENT_LANE}`
 - recommended_next_step: `{NEXT_TASK_LANE}`
@@ -316,9 +339,9 @@ def build_current_report(
 - Report timestamp: `{run_timestamp}`.
 
 ## Baseline Accepted
-- Accepted `supervised_run_retry_gate_attestation_record_pack_blocked` as the bounded baseline current source of truth.
-- Did not claim regenerated record pack, retry-gate reopen, retry execution success, funded live access, or any Mew-X seam expansion.
-- Promoted one bounded attestation refresh lane as the new current source of truth for freshness ownership, triggers, and locator expectations.
+- Accepted `supervised_run_retry_gate_attestation_record_pack_regeneration_blocked` as the bounded baseline current source of truth.
+- Did not claim regenerated record-pack success, retry-gate reopen, retry execution success, funded live access, or any Mew-X seam expansion.
+- Promoted one bounded attestation refresh lane as the new current source of truth for additional freshness ownership, triggers, and locator expectations on top of the regeneration baseline.
 
 ## Refresh Boundary
 {chr(10).join(f"- {line}" for line in boundary_lines())}
@@ -350,9 +373,9 @@ def build_current_report(
 - blocked refresh faces: `{", ".join(blocked_faces)}`
 
 ## Honest Model
-- `PASS` only if every required face has explicit refresh ownership and freshness rules plus one current, fresh-enough locator sufficient to regenerate record pack and reopen retry-gate review honestly.
+- `PASS` only if every required face has explicit refresh ownership and freshness rules plus one current, fresh-enough regenerated locator sufficient to rerun record-pack regeneration and reopen retry-gate review honestly.
 - `FAIL/BLOCKED` if any face remains missing, stale, ambiguous, non-refreshable, or not usable enough for retry-gate review.
-- Current result remains `FAIL/BLOCKED` because the repo still does not point to current, fresh-enough bounded-window locators for the required faces, so record-pack regeneration cannot yet become current honestly.
+- Current result remains `FAIL/BLOCKED` because the repo still does not point to current, fresh-enough, reviewer-readable regenerated locators for the required faces, so record-pack regeneration cannot yet be rerun honestly.
 """
 
 
@@ -360,9 +383,9 @@ def build_proof_summary() -> str:
     return f"""# {TASK_ID} Proof Summary
 
 - Verified latest GitHub-visible Vexter `main` at PR `#{VERIFIED_VEXTER_PR}` merge commit `{VERIFIED_VEXTER_COMMIT}`.
-- Accepted attestation record pack as the bounded baseline current source of truth.
-- Promoted attestation refresh as the current operator-visible lane for refresh ownership, triggers, fresh locator shape, stale rules, and retry-gate usability.
-- Held the result at `FAIL/BLOCKED` because current fresh-enough locators are still missing or stale.
+- Accepted attestation record-pack regeneration as the bounded baseline current source of truth.
+- Re-promoted attestation refresh as the current operator-visible lane for additional freshness ownership, triggers, fresh locator shape, stale rules, and retry-gate usability.
+- Held the result at `FAIL/BLOCKED` because current fresh-enough regenerated locators are still missing or stale.
 - Recommended next step: `{NEXT_TASK_LANE}`.
 - Retry-gate pass successor: `{PASS_NEXT_TASK_LANE}`.
 """
@@ -373,7 +396,7 @@ def build_spec() -> str:
     return f"""# DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_ATTESTATION_REFRESH
 
 ## Goal
-Promote a bounded `attestation_refresh` lane as the current source of truth after attestation record pack, without fabricating regenerated current records, retry-gate reopen, or retry execution success.
+Promote a bounded `attestation_refresh` lane as the current source of truth after attestation record-pack regeneration, without fabricating regenerated current records, retry-gate reopen, or retry execution success.
 
 ## Boundary
 {boundary}
@@ -389,7 +412,7 @@ Promote a bounded `attestation_refresh` lane as the current source of truth afte
 - next recommended step
 
 ## Honest Refresh Model
-- `PASS`: every required record face has explicit refresh rules plus one current, fresh-enough locator sufficient to regenerate record pack and reopen retry-gate review honestly
+- `PASS`: every required record face has explicit refresh rules plus one current, fresh-enough regenerated locator sufficient to rerun record-pack regeneration and reopen retry-gate review honestly
 - `FAIL/BLOCKED`: one or more record faces remain missing, stale, ambiguous, non-refreshable, or not usable enough for retry-gate review
 
 ## Required Refresh Face Detail
@@ -416,7 +439,7 @@ Each refresh face must make explicit:
 - no secret material committed to repo
 
 ## Result Model
-The promoted lane remains fail-closed until fresh-enough current locators exist for every required face and the current attestation record pack can be regenerated honestly for retry-gate review.
+The promoted lane remains fail-closed until fresh-enough current regenerated locators exist for every required face and the current attestation record-pack regeneration can be rerun honestly for retry-gate review.
 """
 
 
@@ -425,10 +448,10 @@ def build_plan() -> str:
 
 ## Implementation Steps
 1. Reverify the latest GitHub-visible Vexter `main` state at PR `#{VERIFIED_VEXTER_PR}` merge commit `{VERIFIED_VEXTER_COMMIT}`.
-2. Accept attestation record pack as the blocked baseline current source of truth.
+2. Accept attestation record-pack regeneration as the blocked baseline current source of truth.
 3. Generate one bounded attestation refresh lane with current status, report, summary, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.
-4. For each required face, carry forward the repo-visible marker and record owner, then fix refresh trigger, minimum fresh evidence locator shape, stale condition, and retry-gate-usable rule.
-5. Keep `FAIL/BLOCKED` unless every face points to a current, fresh-enough, reviewable locator.
+4. For each required face, carry forward the repo-visible marker and regeneration owner, then fix refresh trigger, minimum fresh evidence locator shape, stale condition, and retry-gate-usable rule from the regeneration decision surface.
+5. Keep `FAIL/BLOCKED` unless every face points to a current, fresh-enough, reviewable regenerated locator.
 6. Recommend `{NEXT_TASK_LANE}` while blocked and expose `{PASS_NEXT_TASK_LANE}` only as the pass successor.
 
 ## Guardrails
@@ -479,7 +502,7 @@ def build_checklist(rows: list[dict]) -> str:
 6. Keep one refresh row per required face: credential source, venue ref, account ref, connectivity profile, operator owner, bounded start criteria, allowlist / symbol / lot reconfirmation, `manual_latched_stop_all` visibility, and terminal snapshot readability.
 7. For every row, confirm refresh owner, refresh trigger, minimum fresh evidence locator shape, stale condition, and what makes the refreshed face usable for retry-gate review are explicit.
 8. For every row, record whether a current fresh-enough bounded-window locator is present without embedding secret material.
-9. Hold the lane at `FAIL/BLOCKED` until every required face is current, fresh enough, and usable enough to regenerate the current record pack honestly.
+9. Hold the lane at `FAIL/BLOCKED` until every required face is current, fresh enough, and usable enough to rerun the current record-pack regeneration honestly.
 
 ## Refresh Faces
 | Refresh face | Refresh owner | Refresh trigger | Minimum fresh evidence locator shape | Stale condition | Usable for retry-gate review when |
@@ -518,8 +541,8 @@ def build_decision_surface(rows: list[dict]) -> str:
     lines.extend(
         [
             "",
-            "Retry-gate review does not reopen unless every record face points to a current, fresh-enough, reviewable locator.",
-            f"While blocked, the next recommended step is `{NEXT_TASK_LANE}` so the record pack can be regenerated from fresh evidence, and the pass successor remains `{PASS_NEXT_TASK_LANE}`.",
+            "Retry-gate review does not reopen unless every record face points to a current, fresh-enough, reviewable regenerated locator.",
+            f"While blocked, the next recommended step is `{NEXT_TASK_LANE}` so the record-pack regeneration can be rerun from refreshed evidence, and the pass successor remains `{PASS_NEXT_TASK_LANE}`.",
         ]
     )
     return "\n".join(lines)
@@ -532,20 +555,20 @@ def build_details() -> str:
 - Latest Vexter `main`: PR `#{VERIFIED_VEXTER_PR}` merge commit `{VERIFIED_VEXTER_COMMIT}` on `{VERIFIED_VEXTER_MERGED_AT}`
 - Dexter pinned commit: `{VERIFIED_DEXTER_COMMIT}`
 - Frozen Mew-X commit: `{VERIFIED_MEWX_COMMIT}`
-- Accepted baseline: `supervised_run_retry_gate_attestation_record_pack_blocked`
+- Accepted baseline: `supervised_run_retry_gate_attestation_record_pack_regeneration_blocked`
 
 ## Deliverable
-Promote one bounded attestation refresh lane that keeps current status, report, summary, proof, handoff, checklist, and decision-surface pointers coherent while fail-closing retry-gate review until every required face has a current, fresh-enough, reviewable locator and the current record pack can be regenerated honestly.
+Promote one bounded attestation refresh lane that keeps current status, report, summary, proof, handoff, checklist, and decision-surface pointers coherent while fail-closing retry-gate review until every required face has a current, fresh-enough, reviewable regenerated locator and the current record-pack regeneration can be rerun honestly.
 """
 
 
 def build_min_prompt() -> str:
     return (
-        "GitHub latest state is Vexter main PR #78 merge commit "
+        "GitHub latest state is Vexter main PR #80 merge commit "
         f"{VERIFIED_VEXTER_COMMIT} on {VERIFIED_VEXTER_MERGED_AT}. "
-        "Accept attestation record pack as baseline, promote attestation refresh as the current source of truth, "
+        "Accept attestation record-pack regeneration as baseline, promote attestation refresh as the current source of truth, "
         "keep Dexter-only paper_live and frozen Mew-X sim_live, do not commit secrets, keep the lane FAIL/BLOCKED "
-        "until every face has a current fresh-enough locator, and recommend "
+        "until every face has a current fresh-enough regenerated locator, and recommend "
         f"{NEXT_TASK_LANE} before any retry-gate reopen."
     )
 
@@ -584,7 +607,7 @@ def build_handoff(
 - vexter_main_commit: {VERIFIED_VEXTER_COMMIT}
 - dexter_main_commit: {VERIFIED_DEXTER_COMMIT}
 - mewx_frozen_commit: {VERIFIED_MEWX_COMMIT}
-- baseline_attestation_record_pack_task_state: supervised_run_retry_gate_attestation_record_pack_blocked
+- baseline_attestation_record_pack_regeneration_task_state: supervised_run_retry_gate_attestation_record_pack_regeneration_blocked
 
 ## Proof And Report Pointers
 - current_status_report: artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh-status.md
@@ -594,10 +617,10 @@ def build_handoff(
 - current_attestation_refresh_checklist: docs/demo_forward_supervised_run_retry_gate_attestation_refresh_checklist.md
 - current_attestation_refresh_decision_surface: docs/demo_forward_supervised_run_retry_gate_attestation_refresh_decision_surface.md
 - current_subagent_summary: artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/SUBAGENTS.md
-- baseline_status_report: artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-status.md
-- baseline_report: artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-report.md
-- baseline_proof_json: artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-check.json
-- baseline_handoff: artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack/HANDOFF.md
+- baseline_status_report: artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-status.md
+- baseline_report: artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-report.md
+- baseline_proof_json: artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json
+- baseline_handoff: artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md
 
 ## Guardrails
 - route_mode: single_sleeve
@@ -624,14 +647,14 @@ def build_handoff(
 
 ## Open Questions
 - question_1_or_none: who will publish one current bounded-window locator for each required face without exposing secrets
-- question_2_or_none: which refreshed locator should seed record-pack regeneration for venue, account, and connectivity faces
+- question_2_or_none: which refreshed regenerated locator should seed the next record-pack regeneration rerun for venue, account, and connectivity faces
 - question_3_or_none: who timestamps the bounded start window and operator owner for the next retry-gate recheck
 - question_4_or_none: has `manual_latched_stop_all` visibility been freshly reconfirmed for the current bounded window
 - question_5_or_none: has terminal snapshot readability been freshly reconfirmed for the current bounded window
 
 ## Next-Shift Priority Checks
 - priority_check_1: keep the current lane blocked unless every face has a current, fresh-enough bounded-window locator and freshness check
-- priority_check_2: recommend `{NEXT_TASK_LANE}` while blocked so the current record pack can be regenerated, and expose `{PASS_NEXT_TASK_LANE}` only as the pass successor
+- priority_check_2: recommend `{NEXT_TASK_LANE}` while blocked so the current record-pack regeneration can be rerun, and expose `{PASS_NEXT_TASK_LANE}` only as the pass successor
 - priority_check_3: preserve Dexter-only `paper_live`, `single_sleeve`, `dexter_default`, small-lot, one-position, `manual_latched_stop_all`, and funded-live-forbidden guardrails
 
 ## Completeness Check
@@ -643,7 +666,7 @@ def build_handoff(
 - subagent_summary_pointer_checked: true
 - blocked_claim_boundary_explicit: true
 
-This handoff promotes the bounded attestation refresh lane only. It does not claim regenerated record pack, reopened retry gate, completed retry execution, funded live access, or any Mew-X seam expansion.
+This handoff promotes the bounded attestation refresh lane only. It does not claim regenerated record-pack success, reopened retry gate, completed retry execution, funded live access, or any Mew-X seam expansion.
 """
 
 
@@ -662,25 +685,35 @@ def update_readme() -> None:
         "`DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH` starts from latest "
         "GitHub-visible Vexter `main`"
     )
+    regeneration_marker = (
+        "`DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION` starts from latest "
+        "GitHub-visible Vexter `main`"
+    )
     readme_text = README_PATH.read_text()
-    if marker in readme_text:
-        return
     entry = (
-        "\n\n`DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH` starts from latest "
+        "`DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH` starts from latest "
         f"GitHub-visible Vexter `main` at merged PR `#{VERIFIED_VEXTER_PR}` merge commit "
         f"`{VERIFIED_VEXTER_COMMIT}` on `{VERIFIED_VEXTER_MERGED_AT}`, keeps Dexter pinned at merged PR "
         f"`#3` commit `{VERIFIED_DEXTER_COMMIT}`, and keeps frozen Mew-X at `{VERIFIED_MEWX_COMMIT}`. "
-        "It accepts the bounded attestation-record-pack lane as baseline and promotes one fail-closed "
+        "It accepts the bounded attestation-record-pack-regeneration lane as baseline and promotes one fail-closed "
         "attestation-refresh lane instead: the repo now fixes the current status/report/proof/handoff/"
         "checklist/decision-surface surfaces for refresh owner, refresh trigger, minimum fresh evidence "
-        "locator shape, stale condition, and what makes each face usable for retry-gate review, while "
+        "locator shape, stale condition, and what makes each regenerated face usable for retry-gate review, while "
         "keeping the Dexter-only `paper_live` seam, leaving Mew-X unchanged on `sim_live`, and keeping "
         "funded live forbidden. The resulting status is "
         f"`{TASK_STATUS}` with `{CLAIM_BOUNDARY}`, the current lane is `{CURRENT_LANE}`, the blocked next "
-        f"recommended step is `{NEXT_TASK_LANE}` so the record pack can be regenerated from fresh inputs, "
+        f"recommended step is `{NEXT_TASK_LANE}` so the record-pack regeneration can be rerun from refreshed inputs, "
         f"and the pass successor is `{PASS_NEXT_TASK_LANE}`."
     )
-    README_PATH.write_text(readme_text + entry + "\n")
+    paragraph_re = re.compile(re.escape(marker) + r".*?(?:\n\n|$)", re.DOTALL)
+    updated = paragraph_re.sub("", readme_text, count=1)
+    regeneration_re = re.compile(re.escape(regeneration_marker) + r".*?(?:\n\n|$)", re.DOTALL)
+    match = regeneration_re.search(updated)
+    if match:
+        updated = updated[: match.end()] + "\n" + entry + "\n\n" + updated[match.end() :].lstrip("\n")
+    else:
+        updated = updated.rstrip() + "\n\n" + entry + "\n"
+    README_PATH.write_text(updated)
 
 
 def main() -> None:
@@ -692,9 +725,9 @@ def main() -> None:
         runtime_config = DexterDemoRuntimeConfig.from_env()
         runtime_errors = list(runtime_config.validation_errors())
 
-    previous_rows = previous_proof["supervised_run_retry_gate_attestation_record_pack"]["record_faces"][
-        "attestation_record_pack_decision_surface"
-    ]
+    previous_rows = previous_proof[
+        "supervised_run_retry_gate_attestation_record_pack_regeneration"
+    ]["regeneration_faces"]["attestation_record_pack_regeneration_decision_surface"]
     rows = build_refresh_rows(previous_rows)
     blocked_refresh_faces = [row["name"] for row in rows if row["refresh_status"] != "PASS"]
     checklist_attestation = build_refresh_checklist(rows, runtime_errors)
@@ -709,8 +742,8 @@ def main() -> None:
             "mewx_frozen_commit": VERIFIED_MEWX_COMMIT,
         },
         "starting_point": {
-            "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK",
-            "task_state": "supervised_run_retry_gate_attestation_record_pack_blocked",
+            "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION",
+            "task_state": "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked",
             "report": str(PREVIOUS_REPORT_PATH.relative_to(ROOT)),
             "status_report": str(PREVIOUS_STATUS_PATH.relative_to(ROOT)),
             "proof": str(PREVIOUS_PROOF_PATH.relative_to(ROOT)),
@@ -752,7 +785,7 @@ def main() -> None:
                 "next_recommended_step": NEXT_TASK_LANE,
                 "subagent_summary": "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/SUBAGENTS.md",
             },
-            "baseline_attestation_record_pack_outcome": {
+            "baseline_attestation_record_pack_regeneration_outcome": {
                 "task_id": previous_proof["task_id"],
                 "task_state": previous_proof["task_result"]["task_state"],
                 "key_finding": previous_proof["task_result"]["key_finding"],
@@ -771,19 +804,20 @@ def main() -> None:
             },
             "sub_agents": list(SUB_AGENT_SUMMARIES),
             "supporting_files": [
-                "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_ATTESTATION_RECORD_PACK.md",
+                "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_ATTESTATION_RECORD_PACK_REGENERATION.md",
                 "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_ATTESTATION_REFRESH.md",
-                "plans/demo_forward_supervised_run_retry_gate_attestation_record_pack_plan.md",
+                "plans/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_plan.md",
                 "plans/demo_forward_supervised_run_retry_gate_attestation_refresh_plan.md",
-                "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_checklist.md",
-                "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_decision_surface.md",
+                "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_checklist.md",
+                "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_decision_surface.md",
                 "docs/demo_forward_supervised_run_retry_gate_attestation_refresh_checklist.md",
                 "docs/demo_forward_supervised_run_retry_gate_attestation_refresh_decision_surface.md",
-                "scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack.py",
+                "scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
                 "scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
                 "scripts/build_proof_bundle.sh",
                 "tests/test_demo_forward_supervised_run_retry_gate.py",
                 "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack.py",
+                "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
                 "tests/test_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
                 "tests/test_bootstrap_layout.py",
             ],
@@ -819,10 +853,10 @@ def main() -> None:
 
 ## What This Task Did
 
-- Accepted attestation record pack as the baseline current source of truth.
-- Promoted attestation refresh to the current operator-visible lane.
+- Accepted attestation record-pack regeneration as the baseline current source of truth.
+- Re-promoted attestation refresh to the current operator-visible lane.
 - Added current status, report, summary, proof, handoff, checklist, decision surface, and sub-agent summary surfaces for refresh ownership, freshness triggers, locator shape, and retry-gate usability.
-- Fixed one fail-closed refresh model that blocks retry-gate review until every required face has a current, fresh-enough, reviewable locator.
+- Fixed one fail-closed refresh model that blocks retry-gate review until every required face has a current, fresh-enough, reviewable regenerated locator.
 
 ## Decision
 
@@ -858,7 +892,7 @@ def main() -> None:
         "candidate_pass_next_task_id": PASS_NEXT_TASK_ID,
         "verified_vexter_main_pr": VERIFIED_VEXTER_PR,
         "verified_vexter_main_commit": VERIFIED_VEXTER_COMMIT,
-        "baseline_task_state": "supervised_run_retry_gate_attestation_record_pack_blocked",
+        "baseline_task_state": "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked",
         "first_demo_target": "dexter_paper_live",
         "source_faithful_seam": {"dexter": "paper_live", "mewx": "sim_live"},
         "blocked_refresh_faces": blocked_refresh_faces,
@@ -896,12 +930,12 @@ def main() -> None:
 
     context_pack = read_json(CONTEXT_PATH)
     context_pack["background"] = {
-        "previous_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK",
-        "previous_task_state": "supervised_run_retry_gate_attestation_record_pack_blocked",
-        "previous_key_finding": "supervised_run_retry_gate_attestation_record_pack_blocked_on_missing_or_stale_current_records",
-        "previous_claim_boundary": "supervised_run_retry_gate_attestation_record_pack_bounded",
-        "retry_gate_attestation_record_pack_accepted_as_baseline": True,
-        "retry_gate_attestation_refresh_promoted_current": True,
+        "previous_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION",
+        "previous_task_state": "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked",
+        "previous_key_finding": "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked_on_missing_or_stale_regenerated_faces",
+        "previous_claim_boundary": "supervised_run_retry_gate_attestation_record_pack_regeneration_bounded",
+        "retry_gate_attestation_record_pack_regeneration_accepted_as_baseline": True,
+        "retry_gate_attestation_refresh_repromoted_current": True,
     }
     context_pack["bundle_source"] = BUNDLE_SOURCE
     context_pack["current_contract"].update(
@@ -921,11 +955,11 @@ def main() -> None:
     context_pack["current_task"] = {
         "id": TASK_ID,
         "scope": [
-            "Reverify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X after attestation record pack merged.",
-            "Accept attestation record pack as the baseline current source of truth.",
-            "Promote attestation refresh status, report, summary, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.",
-            "Make each required face explicit for refresh owner, refresh trigger, fresh locator shape, stale logic, and retry-gate usability.",
-            "Keep retry-gate review blocked until every required face has a current, fresh-enough, reviewable locator.",
+            "Reverify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X after attestation record-pack regeneration merged.",
+            "Accept attestation record-pack regeneration as the baseline current source of truth.",
+            "Re-promote attestation refresh status, report, summary, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.",
+            "Make each required face explicit for refresh owner, refresh trigger, fresh locator shape, stale logic, and retry-gate usability from the regeneration baseline.",
+            "Keep retry-gate review blocked until every required face has a current, fresh-enough, reviewable regenerated locator.",
         ],
         "deliverables": [
             "README.md",
@@ -935,6 +969,7 @@ def main() -> None:
             "docs/demo_forward_supervised_run_retry_gate_attestation_refresh_decision_surface.md",
             "tests/test_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
             "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack.py",
+            "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
             "tests/test_demo_forward_supervised_run_retry_gate.py",
             "tests/test_demo_forward_supervised_run_retry_gate_input_attestation.py",
             "tests/test_demo_forward_supervised_run_retry_gate_attestation_audit.py",
@@ -967,9 +1002,9 @@ def main() -> None:
         {
             "latest_vexter_pr": VERIFIED_VEXTER_PR,
             "latest_vexter_main_commit": VERIFIED_VEXTER_COMMIT,
-            "latest_recent_vexter_prs": [78, 77, 76, 75, 74],
-            "vexter_pr_78_merged_at": VERIFIED_VEXTER_MERGED_AT,
-            "vexter_pr_78_closed_at": VERIFIED_VEXTER_MERGED_AT,
+            "latest_recent_vexter_prs": [80, 79, 78, 77, 76],
+            "vexter_pr_80_merged_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_80_closed_at": VERIFIED_VEXTER_MERGED_AT,
         }
     )
     context_pack["evidence"]["demo_forward_supervised_run_retry_gate_attestation_refresh"] = {
@@ -998,9 +1033,9 @@ def main() -> None:
         "id": NEXT_TASK_ID,
         "state": NEXT_TASK_STATE,
         "rationale": [
-            "Attestation refresh is now the current source of truth for freshness ownership, triggers, and locator requirements.",
-            "One or more required faces still lack a current, fresh-enough, reviewable locator.",
-            "Regenerate the current attestation record pack from fresh inputs before any retry-gate recheck is considered.",
+            "Attestation refresh is now the current source of truth for additional freshness ownership, triggers, and regenerated-locator requirements.",
+            "One or more required faces still lack a current, fresh-enough, reviewable regenerated locator.",
+            "Rerun the current attestation record-pack regeneration from refreshed inputs before any retry-gate recheck is considered.",
         ],
         "pass_successor": {
             "id": PASS_NEXT_TASK_ID,
@@ -1055,7 +1090,7 @@ def main() -> None:
         "resume_requirements": [
             f"Keep Dexter pinned at {VERIFIED_DEXTER_COMMIT} and Mew-X frozen at {VERIFIED_MEWX_COMMIT}.",
             "Start from the current attestation refresh status, report, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.",
-            "Collect one current, fresh-enough, reviewable locator for every required face before regenerating the current record pack.",
+            "Collect one current, fresh-enough, reviewable regenerated locator for every required face before rerunning the current record-pack regeneration.",
             "Keep the planner boundary at prepare / start / status / stop / snapshot and preserve poll_first plus manual_latched_stop_all.",
             "Do not introduce funded live or a Mew-X real-demo path.",
         ],
@@ -1081,9 +1116,9 @@ def main() -> None:
     ledger_payload = {
         "artifact_bundle": BUNDLE_PATH,
         "base_main": VERIFIED_VEXTER_COMMIT,
-        "baseline_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK",
-        "baseline_task_state": "supervised_run_retry_gate_attestation_record_pack_blocked",
-        "branch": git_output("branch", "--show-current"),
+        "baseline_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION",
+        "baseline_task_state": "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked",
+        "branch": PUBLISHED_BRANCH,
         "claim_boundary": CLAIM_BOUNDARY,
         "current_lane": CURRENT_LANE,
         "decision": DECISION,
@@ -1104,13 +1139,13 @@ def main() -> None:
         "source_faithful_modes": {"dexter": "paper_live", "mewx": "sim_live"},
         "status": TASK_STATUS,
         "sub_agents_used": [item["name"] for item in SUB_AGENT_SUMMARIES],
-        "supporting_vexter_prs": [78, 77, 76, 75, 74],
+        "supporting_vexter_prs": [80, 79, 78, 77, 76],
         "task_id": TASK_ID,
         "template_runtime_validation_errors": runtime_errors,
         "verified_dexter_main_commit": VERIFIED_DEXTER_COMMIT,
         "verified_dexter_pr": 3,
         "verified_mewx_frozen_commit": VERIFIED_MEWX_COMMIT,
-        "verified_prs": [78, 77, 76],
+        "verified_prs": [80, 79, 78],
         "date": run_timestamp.split("T", 1)[0],
     }
     rewrite_local_ledger(ledger_payload)

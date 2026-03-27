@@ -1,7 +1,7 @@
 # DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_ATTESTATION_REFRESH
 
 ## Goal
-Promote a bounded `attestation_refresh` lane as the current source of truth after attestation record pack, without fabricating regenerated current records, retry-gate reopen, or retry execution success.
+Promote a bounded `attestation_refresh` lane as the current source of truth after attestation record-pack regeneration, without fabricating regenerated current records, retry-gate reopen, or retry execution success.
 
 ## Boundary
 - Dexter-only real demo slice
@@ -35,7 +35,7 @@ Promote a bounded `attestation_refresh` lane as the current source of truth afte
 - next recommended step
 
 ## Honest Refresh Model
-- `PASS`: every required record face has explicit refresh rules plus one current, fresh-enough locator sufficient to regenerate record pack and reopen retry-gate review honestly
+- `PASS`: every required record face has explicit refresh rules plus one current, fresh-enough regenerated locator sufficient to rerun record-pack regeneration and reopen retry-gate review honestly
 - `FAIL/BLOCKED`: one or more record faces remain missing, stale, ambiguous, non-refreshable, or not usable enough for retry-gate review
 
 ## Required Refresh Face Detail
@@ -62,4 +62,4 @@ Each refresh face must make explicit:
 - no secret material committed to repo
 
 ## Result Model
-The promoted lane remains fail-closed until fresh-enough current locators exist for every required face and the current attestation record pack can be regenerated honestly for retry-gate review.
+The promoted lane remains fail-closed until fresh-enough current regenerated locators exist for every required face and the current attestation record-pack regeneration can be rerun honestly for retry-gate review.

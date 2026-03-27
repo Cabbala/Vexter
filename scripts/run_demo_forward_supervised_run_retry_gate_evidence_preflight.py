@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Write the canonical retry-gate external-evidence gap surfaces."""
+"""Write the canonical retry-gate evidence preflight / reopen-readiness surfaces."""
 
 from __future__ import annotations
 
@@ -28,18 +28,19 @@ def main() -> None:
     with patched_demo_env(template_env):
         runtime_config = DexterDemoRuntimeConfig.from_env()
     payloads = write_external_evidence_artifacts(ROOT, template_env, runtime_config)
-    payload = payloads["gap"]
     preflight = payloads["preflight"]
+    readiness = preflight["reopen_readiness"]
     print(
         json.dumps(
             {
-                "manifest_status": payload["manifest"]["status"],
-                "preflight_status": preflight["reopen_readiness"]["status"],
-                "blocked_faces": payload["summary"]["blocked_faces"],
-                "blocked_reason_counts": preflight["reopen_readiness"]["blocked_reason_counts"],
-                "retry_gate_review_reopen_ready": payload["summary"][
+                "preflight_status": readiness["status"],
+                "manifest_status": readiness["manifest_status"],
+                "blocked_faces": readiness["blocked_faces"],
+                "blocked_reason_counts": readiness["blocked_reason_counts"],
+                "retry_gate_review_reopen_ready": readiness[
                     "retry_gate_review_reopen_ready"
                 ],
+                "canonical_command": readiness["canonical_command"],
             },
             indent=2,
             sort_keys=False,

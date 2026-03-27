@@ -34,6 +34,7 @@ Promote a bounded `attestation_record_pack_regeneration` lane as the current sou
 - record-pack regeneration decision surface
 - canonical external evidence contract
 - canonical external evidence manifest
+- canonical evidence preflight proof / report / summary
 - canonical external evidence gap proof / gap report / gap summary
 - next recommended step
 

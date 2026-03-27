@@ -34,6 +34,7 @@ Promote a bounded `attestation_refresh` lane as the current source of truth afte
 - attestation refresh decision surface
 - canonical external evidence contract
 - canonical external evidence manifest
+- canonical evidence preflight proof / report / summary
 - canonical external evidence gap proof / gap report / gap summary
 - next recommended step
 

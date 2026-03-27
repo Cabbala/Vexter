@@ -72,7 +72,9 @@ def test_demo_forward_supervised_run_retry_gate_external_evidence_gap_script_rep
     payload = json.loads(completed.stdout)
 
     assert payload["manifest_status"] == "template_only"
+    assert payload["preflight_status"] == "blocked"
     assert len(payload["blocked_faces"]) == 9
+    assert payload["blocked_reason_counts"]["template_only_manifest"] == 9
     assert "external_credential_source_face" in payload["blocked_faces"]
     assert "terminal_snapshot_readability_reconfirmed" in payload["blocked_faces"]
     assert payload["retry_gate_review_reopen_ready"] is False

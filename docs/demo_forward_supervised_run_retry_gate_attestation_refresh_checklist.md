@@ -20,7 +20,7 @@
 2. Review `artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh-report.md`.
 3. Review `artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-check.json`.
 4. Review the canonical manifest template at `manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json`.
-5. Review the canonical gap report at `artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md`.
+5. Review the canonical evidence preflight report at `artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md`.
 6. Carry continuity from `artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/HANDOFF.md`.
 7. Use `docs/demo_forward_supervised_run_retry_gate_attestation_refresh_decision_surface.md` as the single attestation refresh decision surface.
 8. Keep one refresh row per required face: credential source, venue ref, account ref, connectivity profile, operator owner, bounded start criteria, allowlist / symbol / lot reconfirmation, `manual_latched_stop_all` visibility, and terminal snapshot readability.

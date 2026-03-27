@@ -18,7 +18,10 @@ from vexter.demo_readiness.external_evidence import (
     GAP_REPORT_REL_PATH,
     GAP_SUMMARY_REL_PATH,
     MANIFEST_REL_PATH as EXTERNAL_EVIDENCE_MANIFEST_REL_PATH,
-    write_external_evidence_gap_artifacts,
+    PREFLIGHT_PROOF_REL_PATH,
+    PREFLIGHT_REPORT_REL_PATH,
+    PREFLIGHT_SUMMARY_REL_PATH,
+    write_external_evidence_artifacts,
 )
 from vexter.planner_router.transport import DexterDemoRuntimeConfig
 
@@ -147,9 +150,9 @@ DECISION = "retry_gate_review_blocked_pending_current_attestation_record_pack_re
 
 VERIFIED_DEXTER_COMMIT = "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938"
 VERIFIED_MEWX_COMMIT = "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
-VERIFIED_VEXTER_PR = 90
-VERIFIED_VEXTER_COMMIT = "f79997cc0b619c2542cd6e9f876abcfb7ffca3f8"
-VERIFIED_VEXTER_MERGED_AT = "2026-03-27T21:29:43Z"
+VERIFIED_VEXTER_PR = 91
+VERIFIED_VEXTER_COMMIT = "014723587b100fb0046646d40b445537584b44ea"
+VERIFIED_VEXTER_MERGED_AT = "2026-03-27T21:46:22Z"
 
 REQUIRED_FACE_NAMES = [
     "external_credential_source_face",
@@ -167,9 +170,9 @@ SUB_AGENT_SUMMARIES = (
     {
         "name": "Anscombe",
         "lines": [
-            "Reverified PR `#90` / commit `f79997cc0b619c2542cd6e9f876abcfb7ffca3f8` as latest merged `main`, then re-promoted regeneration from the current refresh baseline instead of inventing a new pass claim.",
-            "The main duplication before this change was that regeneration handoff text still relied on human interpretation instead of carrying per-face manifest fields, proof paths, and template-only blocker guidance from the canonical external-evidence gap output.",
-            "The atomic current-pointer set still matters: summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces must all agree once regeneration becomes the current lane from the refresh baseline.",
+            "Reverified PR `#91` / merge commit `014723587b100fb0046646d40b445537584b44ea` as latest merged `main`, then kept regeneration as the current blocked lane instead of inventing a new pass claim or undoing the already-merged lane flip.",
+            "The main duplication before this change was that regeneration handoff text still relied on human interpretation instead of carrying the shared evidence-preflight reopen mapping, per-face manifest fields, and proof paths in one place.",
+            "The atomic current-pointer set still matters: summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces must all agree once regeneration remains the current lane with the unified preflight path added.",
         ],
     },
     {
@@ -177,14 +180,14 @@ SUB_AGENT_SUMMARIES = (
         "lines": [
             "Confirmed the regeneration lane stays inside the unchanged Dexter-only `paper_live`, `single_sleeve`, `dexter_default`, one-plan, one-position, explicit-allowlist, small-lot, bounded-window, funded-live-forbidden envelope.",
             "Verified the planner/runtime boundary remains intact: `prepare / start / status / stop / snapshot` stay planner-bound, `manual_latched_stop_all` remains planner-owned, Dexter stays the only real-demo seam, and frozen Mew-X remains unchanged on `sim_live`.",
-            "The canonical manifest is non-secret and fail-closed by construction, so regeneration still cannot imply funded-live access or retry execution success without real current evidence.",
+            "The canonical manifest plus evidence preflight remain non-secret and fail-closed by construction, so regeneration still cannot imply funded-live access or retry execution success without real current evidence.",
         ],
     },
     {
         "name": "Parfit",
         "lines": [
-            "The lowest-risk change set is one regeneration-side metadata refresh, one tighter operator handoff that reuses the canonical gap output directly, one small closeout-bundle expansion, and the tests that pin the repo-level current pointer.",
-            "Generator-first validation remains the safe path: rerun the canonical gap script, rerun regeneration from the refresh baseline, rebuild the proof bundle, then widen to targeted coverage and full pytest.",
+            "The lowest-risk change set is one regeneration-side metadata refresh, one tighter operator handoff that reuses the canonical evidence preflight directly, one small closeout-bundle expansion, and the tests that pin the repo-level current pointer.",
+            "Generator-first validation remains the safe path: rerun the canonical evidence preflight, rerun regeneration from the refresh baseline, rebuild the proof bundle, then widen to targeted coverage and full pytest.",
             "Merge readiness depends on end-to-end agreement across summary, context, manifest, ledger, bundle metadata, the regenerated handoff bundle, and the final exported tarball without touching runtime code.",
         ],
     },
@@ -456,14 +459,16 @@ def build_current_report(
     runtime_config: DexterDemoRuntimeConfig,
     rows: list[dict],
     gap_payload: dict[str, object],
+    preflight_payload: dict[str, object],
 ) -> str:
     blocked_faces = [row["name"] for row in rows if row["regeneration_status"] != "PASS"]
     regeneration_rules_explicit_count = sum(row["regeneration_rule_complete"] for row in rows)
     manifest = gap_payload["manifest"]
     summary = gap_payload["summary"]
+    readiness = preflight_payload["reopen_readiness"]
     blocked_faces_align_with_gap = sorted(blocked_faces) == sorted(summary["blocked_faces"])
     reopen_ready_consistent = (
-        summary["retry_gate_review_reopen_ready"] is False
+        readiness["retry_gate_review_reopen_ready"] is False
         and all(row["regenerated_face_reviewable_now"] is False for row in rows)
     )
     return f"""# Demo Forward Supervised Run Retry Gate Attestation Record Pack Regeneration Report
@@ -478,7 +483,7 @@ def build_current_report(
 - Accepted `supervised_run_retry_gate_attestation_refresh_blocked` as the bounded baseline current source of truth.
 - Did not claim retry-gate reopen, retry execution success, funded live access, new external evidence collection success, or any Mew-X seam expansion.
 - Promoted one bounded attestation record-pack regeneration lane as the new current source of truth for regenerated face ownership, triggers, inheritance rules, and reviewer-readable pack pointers.
-- Replaced duplicated cross-lane blocker parsing with one canonical outside-repo evidence manifest, validator, and gap report shared by regeneration and refresh.
+- Replaced duplicated cross-lane blocker parsing with one canonical outside-repo evidence manifest, validator, and evidence preflight / compatibility gap surface shared by regeneration and refresh.
 
 ## Regeneration Boundary
 {chr(10).join(f"- {line}" for line in boundary_lines())}
@@ -504,12 +509,17 @@ def build_current_report(
 ## Canonical External Evidence
 - contract spec: `{CONTRACT_SPEC_REL_PATH}`
 - manifest template: `{EXTERNAL_EVIDENCE_MANIFEST_REL_PATH}`
+- preflight proof: `{PREFLIGHT_PROOF_REL_PATH}`
+- preflight report: `{PREFLIGHT_REPORT_REL_PATH}`
+- preflight summary: `{PREFLIGHT_SUMMARY_REL_PATH}`
 - gap proof: `{GAP_PROOF_REL_PATH}`
 - gap report: `{GAP_REPORT_REL_PATH}`
 - gap summary: `{GAP_SUMMARY_REL_PATH}`
 - manifest status: `{manifest['status']}`
-- blocked faces from canonical validator: `{", ".join(summary['blocked_faces'])}`
-- canonical face-to-manifest map: `{GAP_REPORT_REL_PATH}` under `Face-To-Manifest Map`
+- preflight status: `{readiness['status']}`
+- blocked faces from canonical validator: `{", ".join(readiness['blocked_faces'])}`
+- aggregated blocked reasons: `{json.dumps(readiness['blocked_reason_counts'], sort_keys=True)}`
+- canonical face-to-manifest map: `{PREFLIGHT_REPORT_REL_PATH}` under `Face-To-Manifest And Proof Map`
 
 ## Regeneration Findings
 - required regeneration faces: `{len(rows)}`
@@ -521,23 +531,23 @@ def build_current_report(
 - regenerated face reviewable count: `{sum(row["regenerated_face_reviewable_now"] for row in rows)}`
 - blocked regenerated faces: `{", ".join(blocked_faces)}`
 - canonical gap blocked faces align with regeneration lane: `{"yes" if blocked_faces_align_with_gap else "no"}`
-- template-only reopen-ready remains false across canonical gap and regeneration lane: `{"yes" if reopen_ready_consistent else "no"}`
+- template-only reopen-ready remains false across canonical preflight and regeneration lane: `{"yes" if reopen_ready_consistent else "no"}`
 
 ## Honest Regeneration Model
 - `PASS` only if refreshed locator rules produce a current, reviewable regenerated record pack sufficient to reopen retry-gate review honestly.
 - `FAIL/BLOCKED` if one or more regenerated faces remain missing, stale, ambiguous, or non-reviewable.
-- Current result remains `FAIL/BLOCKED` because the canonical manifest is `{manifest['status']}` and the repo still does not point to one current, fresh-enough, reviewable locator per required face, so the regenerated current pack cannot reopen retry-gate review honestly.
+- Current result remains `FAIL/BLOCKED` because the canonical manifest is `{manifest['status']}`, the preflight status remains `{readiness['status']}`, and the repo still does not point to one current, fresh-enough, reviewable locator per required face, so the regenerated current pack cannot reopen retry-gate review honestly.
 """
 
 
-def build_proof_summary(gap_payload: dict[str, object]) -> str:
+def build_proof_summary(gap_payload: dict[str, object], preflight_payload: dict[str, object]) -> str:
     return f"""# {TASK_ID} Proof Summary
 
 - Verified latest GitHub-visible Vexter `main` at PR `#{VERIFIED_VEXTER_PR}` merge commit `{VERIFIED_VEXTER_COMMIT}`.
 - Accepted attestation refresh as the bounded baseline current source of truth.
 - Promoted attestation record-pack regeneration as the current operator-visible lane for regeneration owner, trigger, regenerated locator shape, freshness inheritance, and reviewability.
-- Wired regeneration to the canonical external-evidence contract at `{CONTRACT_SPEC_REL_PATH}` and gap report `{GAP_REPORT_REL_PATH}`.
-- Held the result at `FAIL/BLOCKED` because the manifest status is `{gap_payload['manifest']['status']}` and current regenerated faces are still missing or non-reviewable.
+- Wired regeneration to the canonical external-evidence contract at `{CONTRACT_SPEC_REL_PATH}`, preflight report `{PREFLIGHT_REPORT_REL_PATH}`, and legacy gap report `{GAP_REPORT_REL_PATH}`.
+- Held the result at `FAIL/BLOCKED` because the manifest status is `{gap_payload['manifest']['status']}`, the preflight status is `{preflight_payload['reopen_readiness']['status']}`, and current regenerated faces are still missing or non-reviewable.
 - Recommended next step: `{NEXT_TASK_LANE}`.
 - Retry-gate pass successor: `{PASS_NEXT_TASK_LANE}`.
 """
@@ -563,6 +573,7 @@ Promote a bounded `attestation_record_pack_regeneration` lane as the current sou
 - record-pack regeneration decision surface
 - canonical external evidence contract
 - canonical external evidence manifest
+- canonical evidence preflight proof / report / summary
 - canonical external evidence gap proof / gap report / gap summary
 - next recommended step
 
@@ -607,7 +618,7 @@ def build_plan() -> str:
 ## Implementation Steps
 1. Reverify the latest GitHub-visible Vexter `main` state at PR `#{VERIFIED_VEXTER_PR}` merge commit `{VERIFIED_VEXTER_COMMIT}`.
 2. Accept attestation refresh as the blocked baseline current source of truth.
-3. Write one canonical outside-repo evidence manifest template, contract, validator, and gap report for the remaining retry-gate blockers.
+3. Write one canonical outside-repo evidence manifest template, contract, validator, and unified evidence preflight / reopen-readiness surface for the remaining retry-gate blockers.
 4. Generate one bounded attestation record-pack regeneration lane with current status, report, summary, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.
 5. For each required face, carry forward the bounded refresh locator rule, then fix regeneration owner, regeneration trigger, minimum regenerated locator shape, freshness inheritance or reset rule, and reviewable-enough rule from the canonical gap output.
 6. Keep `FAIL/BLOCKED` unless every face can regenerate from one current, fresh-enough, reviewable locator.
@@ -617,7 +628,7 @@ def build_plan() -> str:
 {chr(10).join(f"- {line}" for line in boundary_lines())}
 
 ## Validation
-- generate the canonical gap surfaces with `python3.12 scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py`
+- generate the canonical evidence preflight with `python3.12 scripts/run_demo_forward_supervised_run_retry_gate_evidence_preflight.py`
 - generate the lane with `python3.12 scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py`
 - rebuild the tarball with `./scripts/build_proof_bundle.sh`
 - verify shared regression expectations with `pytest -q`
@@ -658,7 +669,7 @@ def build_checklist(rows: list[dict]) -> str:
 2. Review `artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-report.md`.
 3. Review `artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json`.
 4. Review the canonical manifest template at `manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json`.
-5. Review the canonical gap report at `artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md`.
+5. Review the canonical evidence preflight report at `artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md`.
 6. Carry continuity from `artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md`.
 7. Use `docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_decision_surface.md` as the single record-pack regeneration decision surface.
 8. Keep one regeneration row per required face: credential source, venue ref, account ref, connectivity profile, operator owner, bounded start criteria, allowlist / symbol / lot reconfirmation, `manual_latched_stop_all` visibility, and terminal snapshot readability.
@@ -710,7 +721,7 @@ def build_decision_surface(rows: list[dict]) -> str:
     return "\n".join(lines)
 
 
-def build_details(manifest_status: str) -> str:
+def build_details(manifest_status: str, preflight_status: str) -> str:
     return f"""# ATTESTATION-RECORD-PACK-REGENERATION Details
 
 ## Verified Starting Point
@@ -720,16 +731,16 @@ def build_details(manifest_status: str) -> str:
 - Accepted baseline: `supervised_run_retry_gate_attestation_refresh_blocked`
 
 ## Deliverable
-Promote one bounded attestation record-pack regeneration lane that keeps current status, report, summary, proof, handoff, checklist, and decision-surface pointers coherent while fail-closing retry-gate review until every required regenerated face is current and reviewable. The canonical external-evidence manifest currently sits at status `{manifest_status}` and therefore remains blocker-facing rather than pass-claiming.
+Promote one bounded attestation record-pack regeneration lane that keeps current status, report, summary, proof, handoff, checklist, and decision-surface pointers coherent while fail-closing retry-gate review until every required regenerated face is current and reviewable. The canonical external-evidence manifest currently sits at status `{manifest_status}`, the evidence preflight remains `{preflight_status}`, and the repo therefore stays blocker-facing rather than pass-claiming.
 """
 
 
-def build_min_prompt(manifest_status: str) -> str:
+def build_min_prompt(manifest_status: str, preflight_status: str) -> str:
     return (
         f"GitHub latest state is Vexter main PR #{VERIFIED_VEXTER_PR} merge commit "
         f"{VERIFIED_VEXTER_COMMIT} on {VERIFIED_VEXTER_MERGED_AT}. "
         "Accept attestation refresh as baseline, promote attestation record-pack regeneration as the current "
-        f"source of truth, keep Dexter-only paper_live and frozen Mew-X sim_live, consume the canonical external-evidence gap report with manifest status {manifest_status}, "
+        f"source of truth, keep Dexter-only paper_live and frozen Mew-X sim_live, consume the canonical evidence preflight and compatibility gap surfaces with manifest status {manifest_status} and preflight status {preflight_status}, "
         "do not commit secrets, keep the lane FAIL/BLOCKED until every regenerated face is reviewable, and recommend "
         f"{NEXT_TASK_LANE} before any retry-gate reopen."
     )
@@ -740,6 +751,7 @@ def build_handoff(
     runtime_config: DexterDemoRuntimeConfig,
     rows: list[dict],
     gap_payload: dict[str, object],
+    preflight_payload: dict[str, object],
 ) -> str:
     face_lines = "\n".join(
         "- "
@@ -762,7 +774,7 @@ def build_handoff(
         row["name"] for row in rows if row["regeneration_status"] != "PASS"
     ) == sorted(gap_payload["summary"]["blocked_faces"])
     reopen_ready_consistent = (
-        gap_payload["summary"]["retry_gate_review_reopen_ready"] is False
+        preflight_payload["reopen_readiness"]["retry_gate_review_reopen_ready"] is False
         and all(row["regenerated_face_reviewable_now"] is False for row in rows)
     )
     return f"""# Demo Forward Supervised Run Retry Gate Attestation Record Pack Regeneration Handoff
@@ -797,6 +809,9 @@ def build_handoff(
 - current_subagent_summary: artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/SUBAGENTS.md
 - canonical_external_evidence_contract: {CONTRACT_SPEC_REL_PATH}
 - canonical_external_evidence_manifest: {EXTERNAL_EVIDENCE_MANIFEST_REL_PATH}
+- canonical_external_evidence_preflight_report: {PREFLIGHT_REPORT_REL_PATH}
+- canonical_external_evidence_preflight_proof: {PREFLIGHT_PROOF_REL_PATH}
+- canonical_external_evidence_preflight_summary: {PREFLIGHT_SUMMARY_REL_PATH}
 - canonical_external_evidence_gap_report: {GAP_REPORT_REL_PATH}
 - canonical_external_evidence_gap_proof: {GAP_PROOF_REL_PATH}
 - canonical_external_evidence_gap_summary: {GAP_SUMMARY_REL_PATH}
@@ -809,10 +824,13 @@ def build_handoff(
 ## Canonical Evidence Intake Handoff
 - bounded_window_fields_to_fill_once: {", ".join(gap_payload['manifest']['window_fields_to_fill'])}
 - per_blocked_face_fields_to_fill: provided, attested_by, evidence_locator, locator_kind, verified_at, fresh_until, reviewable_without_secrets, reviewability_note
-- canonical_face_to_manifest_map: {GAP_REPORT_REL_PATH}
-- canonical_machine_gap_proof: {GAP_PROOF_REL_PATH}
+- canonical_face_to_manifest_map: {PREFLIGHT_REPORT_REL_PATH}
+- canonical_machine_preflight_proof: {PREFLIGHT_PROOF_REL_PATH}
+- canonical_legacy_gap_report: {GAP_REPORT_REL_PATH}
 - proof_surfaces_to_rerun_after_manifest_update: {", ".join(gap_payload['manifest']['proof_paths_to_recheck'])}
-- retry_gate_review_reopen_ready_from_external_evidence: {str(gap_payload['summary']['retry_gate_review_reopen_ready']).lower()}
+- retry_gate_review_reopen_ready_from_external_evidence: {str(preflight_payload['reopen_readiness']['retry_gate_review_reopen_ready']).lower()}
+- evidence_preflight_status: {preflight_payload['reopen_readiness']['status']}
+- evidence_preflight_aggregated_blocked_reasons: {json.dumps(preflight_payload['reopen_readiness']['blocked_reason_counts'], sort_keys=True)}
 - regeneration_lane_reopen_ready_now: {str(all(row['regenerated_face_reviewable_now'] for row in rows)).lower()}
 - canonical_gap_blocked_faces_align_with_regeneration_lane: {str(blocked_faces_align_with_gap).lower()}
 - template_only_reopen_ready_consistency_holds: {str(reopen_ready_consistent).lower()}
@@ -904,8 +922,8 @@ def update_readme() -> None:
         "record-pack-regeneration lane instead: the repo now fixes the current status/report/proof/handoff/"
         "checklist/decision-surface surfaces for regeneration owner, regeneration trigger, minimum regenerated "
         "locator shape, freshness inheritance or reset, and what makes each regenerated face reviewable "
-        "enough, and it adds one canonical non-secret external-evidence manifest, validator, and gap report "
-        "that refresh and regeneration now consume together, "
+        "enough, and it adds one canonical non-secret external-evidence manifest, validator, and evidence "
+        "preflight / compatibility gap path that refresh and regeneration now consume together, "
         "while keeping the Dexter-only `paper_live` seam, leaving Mew-X unchanged on `sim_live`, "
         "and keeping funded live forbidden. The resulting status is "
         f"`{TASK_STATUS}` with `{CLAIM_BOUNDARY}`, the current lane is `{CURRENT_LANE}`, the blocked next "
@@ -926,8 +944,10 @@ def main() -> None:
         runtime_config = DexterDemoRuntimeConfig.from_env()
         runtime_errors = list(runtime_config.validation_errors())
 
-    gap_payload = write_external_evidence_gap_artifacts(ROOT, template_env, runtime_config)
-    rows = build_regeneration_rows(gap_payload["faces"])
+    external_evidence = write_external_evidence_artifacts(ROOT, template_env, runtime_config)
+    gap_payload = external_evidence["gap"]
+    preflight_payload = external_evidence["preflight"]
+    rows = build_regeneration_rows(preflight_payload["faces"])
     blocked_regenerated_faces = [row["name"] for row in rows if row["regeneration_status"] != "PASS"]
     checklist_attestation = build_regeneration_checklist(rows, runtime_errors)
 
@@ -983,6 +1003,9 @@ def main() -> None:
                 "attestation_record_pack_regeneration_decision_surface": "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_decision_surface.md",
                 "external_evidence_contract": CONTRACT_SPEC_REL_PATH,
                 "external_evidence_manifest": EXTERNAL_EVIDENCE_MANIFEST_REL_PATH,
+                "external_evidence_preflight_report": PREFLIGHT_REPORT_REL_PATH,
+                "external_evidence_preflight_proof": PREFLIGHT_PROOF_REL_PATH,
+                "external_evidence_preflight_summary": PREFLIGHT_SUMMARY_REL_PATH,
                 "external_evidence_gap_report": GAP_REPORT_REL_PATH,
                 "external_evidence_gap_proof": GAP_PROOF_REL_PATH,
                 "external_evidence_gap_summary": GAP_SUMMARY_REL_PATH,
@@ -1009,12 +1032,19 @@ def main() -> None:
             "canonical_external_evidence": {
                 "contract_spec": CONTRACT_SPEC_REL_PATH,
                 "manifest_path": EXTERNAL_EVIDENCE_MANIFEST_REL_PATH,
+                "preflight_proof": PREFLIGHT_PROOF_REL_PATH,
+                "preflight_report": PREFLIGHT_REPORT_REL_PATH,
+                "preflight_summary": PREFLIGHT_SUMMARY_REL_PATH,
+                "preflight_status": preflight_payload["reopen_readiness"]["status"],
                 "gap_proof": GAP_PROOF_REL_PATH,
                 "gap_report": GAP_REPORT_REL_PATH,
                 "gap_summary": GAP_SUMMARY_REL_PATH,
                 "manifest_status": gap_payload["manifest"]["status"],
-                "retry_gate_review_reopen_ready": gap_payload["summary"][
+                "retry_gate_review_reopen_ready": preflight_payload["reopen_readiness"][
                     "retry_gate_review_reopen_ready"
+                ],
+                "aggregated_blocked_reason_counts": preflight_payload["reopen_readiness"][
+                    "blocked_reason_counts"
                 ],
             },
             "sub_agents": list(SUB_AGENT_SUMMARIES),
@@ -1029,9 +1059,13 @@ def main() -> None:
                 "docs/demo_forward_supervised_run_retry_gate_attestation_refresh_decision_surface.md",
                 "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_checklist.md",
                 "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_decision_surface.md",
+                PREFLIGHT_PROOF_REL_PATH,
+                PREFLIGHT_REPORT_REL_PATH,
+                PREFLIGHT_SUMMARY_REL_PATH,
                 GAP_PROOF_REL_PATH,
                 GAP_REPORT_REL_PATH,
                 GAP_SUMMARY_REL_PATH,
+                "scripts/run_demo_forward_supervised_run_retry_gate_evidence_preflight.py",
                 "scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py",
                 "scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
                 "scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
@@ -1043,10 +1077,13 @@ def main() -> None:
                 "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack.py",
                 "tests/test_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
                 "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
+                "tests/test_demo_forward_supervised_run_retry_gate_evidence_preflight.py",
                 "tests/test_demo_forward_supervised_run_retry_gate_external_evidence_gap.py",
                 "tests/test_bootstrap_layout.py",
             ],
             "proof_outputs": [
+                PREFLIGHT_PROOF_REL_PATH,
+                PREFLIGHT_SUMMARY_REL_PATH,
                 GAP_PROOF_REL_PATH,
                 GAP_SUMMARY_REL_PATH,
                 "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
@@ -1067,9 +1104,15 @@ def main() -> None:
         },
     }
 
-    report_text = build_current_report(run_timestamp, runtime_config, rows, gap_payload)
+    report_text = build_current_report(
+        run_timestamp,
+        runtime_config,
+        rows,
+        gap_payload,
+        preflight_payload,
+    )
     status_text = build_status()
-    proof_summary_text = build_proof_summary(gap_payload)
+    proof_summary_text = build_proof_summary(gap_payload, preflight_payload)
     summary_text = f"""# {TASK_ID} Summary
 
 ## Verified GitHub State
@@ -1082,7 +1125,7 @@ def main() -> None:
 
 - Accepted attestation refresh as the baseline current source of truth.
 - Promoted attestation record-pack regeneration to the current operator-visible lane.
-- Added one canonical external-evidence contract, manifest template, validator, and gap report that now feed both regeneration and refresh.
+- Added one canonical external-evidence contract, manifest template, validator, and evidence preflight / reopen-readiness path that now feed both regeneration and refresh.
 - Added current status, report, summary, proof, handoff, checklist, decision surface, and sub-agent summary surfaces for regeneration owner, trigger, regenerated locator shape, freshness inheritance, and reviewability.
 - Fixed one fail-closed regeneration model that blocks retry-gate review until every required face can be regenerated from one current, reviewable bounded-window locator.
 
@@ -1097,6 +1140,7 @@ def main() -> None:
 - Regeneration pass successor: `{PASS_NEXT_TASK_LANE}`
 - Decision: `{DECISION}`
 - Canonical external evidence manifest status: `{gap_payload["manifest"]["status"]}`
+- Canonical evidence preflight status: `{preflight_payload["reopen_readiness"]["status"]}`
 
 ## Key Paths
 
@@ -1110,6 +1154,7 @@ def main() -> None:
 - Current sub-agent summary: `artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/SUBAGENTS.md`
 - Canonical contract: `{CONTRACT_SPEC_REL_PATH}`
 - Evidence template: `{EXTERNAL_EVIDENCE_MANIFEST_REL_PATH}`
+- Preflight report: `{PREFLIGHT_REPORT_REL_PATH}`
 - Gap report: `{GAP_REPORT_REL_PATH}`
 - Current bundle target: `artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration.tar.gz`
 """
@@ -1128,15 +1173,29 @@ def main() -> None:
         "first_demo_target": "dexter_paper_live",
         "source_faithful_seam": {"dexter": "paper_live", "mewx": "sim_live"},
         "external_evidence_manifest_status": gap_payload["manifest"]["status"],
+        "external_evidence_preflight_status": preflight_payload["reopen_readiness"]["status"],
+        "external_evidence_preflight_report": PREFLIGHT_REPORT_REL_PATH,
         "external_evidence_gap_report": GAP_REPORT_REL_PATH,
         "blocked_regenerated_faces": blocked_regenerated_faces,
         "record_pack_reviewable_now": checklist_attestation["record_pack_reviewable_now"],
         "retry_gate_review_reopen_ready": checklist_attestation["retry_gate_review_reopen_ready"],
     }
 
-    details_text = build_details(gap_payload["manifest"]["status"])
-    min_prompt_text = build_min_prompt(gap_payload["manifest"]["status"])
-    handoff_text = build_handoff(run_timestamp, runtime_config, rows, gap_payload)
+    details_text = build_details(
+        gap_payload["manifest"]["status"],
+        preflight_payload["reopen_readiness"]["status"],
+    )
+    min_prompt_text = build_min_prompt(
+        gap_payload["manifest"]["status"],
+        preflight_payload["reopen_readiness"]["status"],
+    )
+    handoff_text = build_handoff(
+        run_timestamp,
+        runtime_config,
+        rows,
+        gap_payload,
+        preflight_payload,
+    )
     subagents_text = build_subagents()
     spec_text = build_spec()
     plan_text = build_plan()
@@ -1196,7 +1255,7 @@ def main() -> None:
         "scope": [
             "Reverify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X after attestation refresh merged.",
             "Accept attestation refresh as the baseline current source of truth.",
-            "Write one canonical non-secret outside-repo evidence manifest, validator, and gap report for the remaining retry-gate blockers.",
+            "Write one canonical non-secret outside-repo evidence manifest, validator, and evidence preflight / reopen-readiness path for the remaining retry-gate blockers.",
             "Promote attestation record-pack regeneration status, report, summary, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.",
             "Make each required face explicit for regeneration owner, trigger, minimum regenerated locator shape, freshness inheritance or reset, and reviewability from the canonical gap report.",
             "Keep retry-gate review blocked until every required face can regenerate from one current, fresh-enough, reviewable locator.",
@@ -1279,9 +1338,9 @@ def main() -> None:
         {
             "latest_vexter_pr": VERIFIED_VEXTER_PR,
             "latest_vexter_main_commit": VERIFIED_VEXTER_COMMIT,
-            "latest_recent_vexter_prs": [90, 89, 88, 87, 86],
-            "vexter_pr_90_merged_at": VERIFIED_VEXTER_MERGED_AT,
-            "vexter_pr_90_closed_at": VERIFIED_VEXTER_MERGED_AT,
+            "latest_recent_vexter_prs": [91, 90, 89, 88, 87],
+            "vexter_pr_91_merged_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_91_closed_at": VERIFIED_VEXTER_MERGED_AT,
         }
     )
     context_pack["evidence"]["demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration"] = {
@@ -1305,14 +1364,21 @@ def main() -> None:
         ]["attestation_record_pack_regeneration_boundary"],
         "external_evidence_contract": CONTRACT_SPEC_REL_PATH,
         "external_evidence_manifest": EXTERNAL_EVIDENCE_MANIFEST_REL_PATH,
+        "external_evidence_preflight_proof": PREFLIGHT_PROOF_REL_PATH,
+        "external_evidence_preflight_report": PREFLIGHT_REPORT_REL_PATH,
+        "external_evidence_preflight_summary": PREFLIGHT_SUMMARY_REL_PATH,
+        "external_evidence_preflight_status": preflight_payload["reopen_readiness"]["status"],
         "external_evidence_gap_proof": GAP_PROOF_REL_PATH,
         "external_evidence_gap_report": GAP_REPORT_REL_PATH,
         "external_evidence_gap_summary": GAP_SUMMARY_REL_PATH,
         "external_evidence_manifest_status": gap_payload["manifest"]["status"],
         "blocked_regenerated_faces": blocked_regenerated_faces,
         "sub_agents": list(SUB_AGENT_SUMMARIES),
-        "retry_gate_review_reopen_ready_from_external_evidence": gap_payload["summary"][
+        "retry_gate_review_reopen_ready_from_external_evidence": preflight_payload["reopen_readiness"][
             "retry_gate_review_reopen_ready"
+        ],
+        "aggregated_blocked_reason_counts": preflight_payload["reopen_readiness"][
+            "blocked_reason_counts"
         ],
         "per_face_manifest_field_maps_explicit": all(
             bool(row["required_manifest_fields"]) for row in rows
@@ -1321,7 +1387,7 @@ def main() -> None:
         "canonical_gap_blocked_faces_align_with_regeneration_lane": sorted(
             blocked_regenerated_faces
         )
-        == sorted(gap_payload["summary"]["blocked_faces"]),
+        == sorted(preflight_payload["reopen_readiness"]["blocked_faces"]),
     }
     context_pack["next_task"] = {
         "id": NEXT_TASK_ID,
@@ -1341,6 +1407,7 @@ def main() -> None:
         {
             "demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_added": True,
             "demo_forward_retry_gate_attestation_record_pack_regeneration_current_pointers_fixed": True,
+            "demo_forward_retry_gate_evidence_preflight_written": True,
             "demo_forward_retry_gate_external_evidence_gap_written": True,
             "demo_forward_retry_gate_attestation_record_pack_regeneration_checklist_written": True,
             "demo_forward_retry_gate_attestation_record_pack_regeneration_decision_surface_written": True,
@@ -1368,10 +1435,12 @@ def main() -> None:
         ),
         ("docs", CONTRACT_SPEC_REL_PATH),
         ("docs", EXTERNAL_EVIDENCE_MANIFEST_REL_PATH),
+        ("reports", PREFLIGHT_REPORT_REL_PATH),
         (
             "scripts",
             "scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
         ),
+        ("scripts", "scripts/run_demo_forward_supervised_run_retry_gate_evidence_preflight.py"),
         ("scripts", "scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py"),
         (
             "scripts",
@@ -1379,6 +1448,8 @@ def main() -> None:
         ),
         ("scripts", "vexter/demo_readiness/__init__.py"),
         ("scripts", "vexter/demo_readiness/external_evidence.py"),
+        ("proof_files", PREFLIGHT_PROOF_REL_PATH),
+        ("proof_files", PREFLIGHT_SUMMARY_REL_PATH),
         ("proof_files", GAP_PROOF_REL_PATH),
         ("proof_files", GAP_SUMMARY_REL_PATH),
         ("reports", GAP_REPORT_REL_PATH),
@@ -1418,11 +1489,16 @@ def main() -> None:
         CONTRACT_SPEC_REL_PATH,
         "plans/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_plan.md",
         EXTERNAL_EVIDENCE_MANIFEST_REL_PATH,
+        "scripts/run_demo_forward_supervised_run_retry_gate_evidence_preflight.py",
         "scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py",
         "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
+        "tests/test_demo_forward_supervised_run_retry_gate_evidence_preflight.py",
         "tests/test_demo_forward_supervised_run_retry_gate_external_evidence_gap.py",
         "vexter/demo_readiness/__init__.py",
         "vexter/demo_readiness/external_evidence.py",
+        PREFLIGHT_PROOF_REL_PATH,
+        PREFLIGHT_REPORT_REL_PATH,
+        PREFLIGHT_SUMMARY_REL_PATH,
         GAP_PROOF_REL_PATH,
         GAP_REPORT_REL_PATH,
         GAP_SUMMARY_REL_PATH,
@@ -1452,6 +1528,7 @@ def main() -> None:
         {
             "demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_added": True,
             "demo_forward_retry_gate_attestation_record_pack_regeneration_current_pointers_fixed": True,
+            "demo_forward_retry_gate_evidence_preflight_written": True,
             "demo_forward_retry_gate_external_evidence_gap_written": True,
             "demo_forward_retry_gate_attestation_record_pack_regeneration_checklist_written": True,
             "demo_forward_retry_gate_attestation_record_pack_regeneration_decision_surface_written": True,
@@ -1492,10 +1569,12 @@ def main() -> None:
         "source_faithful_modes": {"dexter": "paper_live", "mewx": "sim_live"},
         "status": TASK_STATUS,
         "sub_agents_used": [item["name"] for item in SUB_AGENT_SUMMARIES],
-        "supporting_vexter_prs": [90, 89, 88, 87, 86],
+        "supporting_vexter_prs": [91, 90, 89, 88, 87],
         "task_id": TASK_ID,
         "template_runtime_validation_errors": runtime_errors,
         "external_evidence_manifest_status": gap_payload["manifest"]["status"],
+        "external_evidence_preflight_status": preflight_payload["reopen_readiness"]["status"],
+        "external_evidence_preflight_report": PREFLIGHT_REPORT_REL_PATH,
         "external_evidence_gap_report": GAP_REPORT_REL_PATH,
         "per_face_manifest_field_maps_explicit": all(
             bool(row["required_manifest_fields"]) for row in rows
@@ -1504,11 +1583,11 @@ def main() -> None:
         "canonical_gap_blocked_faces_align_with_regeneration_lane": sorted(
             blocked_regenerated_faces
         )
-        == sorted(gap_payload["summary"]["blocked_faces"]),
+        == sorted(preflight_payload["reopen_readiness"]["blocked_faces"]),
         "verified_dexter_main_commit": VERIFIED_DEXTER_COMMIT,
         "verified_dexter_pr": 3,
         "verified_mewx_frozen_commit": VERIFIED_MEWX_COMMIT,
-        "verified_prs": [90, 89, 88],
+        "verified_prs": [91, 90, 89],
         "date": run_timestamp.split("T", 1)[0],
     }
     rewrite_local_ledger(ledger_payload)

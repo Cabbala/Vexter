@@ -1,0 +1,316 @@
+{
+  "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH",
+  "verified_github": {
+    "latest_vexter_pr": 78,
+    "latest_vexter_main_commit": "c8b586232c07ddf374d62f2817caeddb23581bd9",
+    "latest_vexter_merged_at": "2026-03-27T08:15:08Z",
+    "dexter_pr_3_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "starting_point": {
+    "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK",
+    "task_state": "supervised_run_retry_gate_attestation_record_pack_blocked",
+    "report": "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-report.md",
+    "status_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-status.md",
+    "proof": "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-check.json",
+    "summary": "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-summary.md",
+    "handoff": "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack/HANDOFF.md",
+    "checklist": "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_checklist.md",
+    "decision_surface": "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_decision_surface.md",
+    "subagent_summary": "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack/SUBAGENTS.md"
+  },
+  "supervised_run_retry_gate_attestation_refresh": {
+    "planner_boundary": [
+      "prepare",
+      "start",
+      "status",
+      "stop",
+      "snapshot"
+    ],
+    "attestation_refresh_boundary": {
+      "demo_source": "dexter",
+      "execution_mode": "paper_live",
+      "route_mode": "single_sleeve",
+      "selected_sleeve_id": "dexter_default",
+      "max_active_real_demo_plans": 1,
+      "max_open_positions": 1,
+      "allowlist_required": true,
+      "small_lot_required": true,
+      "bounded_supervised_window_required": true,
+      "external_credential_refs_outside_repo": true,
+      "operator_owner_explicit_required": true,
+      "venue_connectivity_confirmation_required": true,
+      "bounded_start_criteria_explicit_required": true,
+      "manual_latched_stop_all_visibility_reconfirmation_required": true,
+      "terminal_snapshot_readability_reconfirmation_required": true,
+      "mewx_unchanged": true,
+      "funded_live_forbidden": true
+    },
+    "required_artifacts": {
+      "current_status_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh-status.md",
+      "current_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh-report.md",
+      "current_summary": "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-summary.md",
+      "current_proof_json": "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-check.json",
+      "current_handoff": "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/HANDOFF.md",
+      "attestation_refresh_checklist": "docs/demo_forward_supervised_run_retry_gate_attestation_refresh_checklist.md",
+      "attestation_refresh_decision_surface": "docs/demo_forward_supervised_run_retry_gate_attestation_refresh_decision_surface.md",
+      "next_recommended_step": "supervised_run_retry_gate_attestation_record_pack",
+      "subagent_summary": "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/SUBAGENTS.md"
+    },
+    "baseline_attestation_record_pack_outcome": {
+      "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK",
+      "task_state": "supervised_run_retry_gate_attestation_record_pack_blocked",
+      "key_finding": "supervised_run_retry_gate_attestation_record_pack_blocked_on_missing_or_stale_current_records",
+      "claim_boundary": "supervised_run_retry_gate_attestation_record_pack_bounded",
+      "recommended_next_step": "supervised_run_retry_gate_attestation_refresh",
+      "gate_pass_successor": "supervised_run_retry_gate"
+    },
+    "refresh_faces": {
+      "attestation_refresh_decision_surface": [
+        {
+          "name": "external_credential_source_face",
+          "repo_visible_marker": "external_reference",
+          "refresh_owner": "named_operator_owner_outside_repo",
+          "what_refreshed_face_covers": "The external credential reference resolves to the intended Dexter paper-live demo credential source for the bounded supervised window.",
+          "refresh_trigger": "refresh before the credential reference changes or the bounded supervised window rolls forward; otherwise keep the face blocked for record-pack regeneration",
+          "minimum_fresh_evidence_locator_shape": "attestor name, reference label only, bounded window, verification timestamp, and a plain-language confirmation that the referenced credential source was resolved outside repo; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets",
+          "stale_condition": "the credential reference changes or the bounded supervised window rolls forward",
+          "usable_for_retry_gate_review_when": "the repo can point to a current attestation record for this face without exposing secret material and the located evidence is still fresh enough for the current bounded supervised window",
+          "refresh_rule_complete": true,
+          "current_fresh_evidence_locator_present": false,
+          "current_evidence_fresh_enough": false,
+          "usable_now": false,
+          "current_refresh_observation": "The repo-visible marker and bounded refresh rule are explicit for this face, but the repo still does not point to one current, fresh-enough bounded-window locator that a reviewer can reopen without secrets. The refresh lane therefore keeps this face fail-closed until record-pack regeneration can rely on one current, timestamped, reviewable locator.",
+          "refresh_status": "FAIL/BLOCKED"
+        },
+        {
+          "name": "venue_ref_face",
+          "repo_visible_marker": "dexter_paper_live_demo_venue",
+          "refresh_owner": "named_operator_owner_plus_venue_owner_outside_repo",
+          "what_refreshed_face_covers": "The repo-visible venue reference points to the intended Dexter demo venue for the bounded supervised retry window.",
+          "refresh_trigger": "refresh before the venue reference changes, venue routing changes, or the supervised window is rescheduled; otherwise keep the face blocked for record-pack regeneration",
+          "minimum_fresh_evidence_locator_shape": "attestor names, venue reference label, bounded window, verification timestamp, and explicit match confirmation between the marker and the intended venue; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets",
+          "stale_condition": "the venue reference changes, venue routing changes, or the supervised window is rescheduled",
+          "usable_for_retry_gate_review_when": "the venue attestation is current, explicit, and reviewable without requiring the reviewer to infer the mapping and the located evidence is still fresh enough for the current bounded supervised window",
+          "refresh_rule_complete": true,
+          "current_fresh_evidence_locator_present": false,
+          "current_evidence_fresh_enough": false,
+          "usable_now": false,
+          "current_refresh_observation": "The repo-visible marker and bounded refresh rule are explicit for this face, but the repo still does not point to one current, fresh-enough bounded-window locator that a reviewer can reopen without secrets. The refresh lane therefore keeps this face fail-closed until record-pack regeneration can rely on one current, timestamped, reviewable locator.",
+          "refresh_status": "FAIL/BLOCKED"
+        },
+        {
+          "name": "account_ref_face",
+          "repo_visible_marker": "dexter_paper_live_demo_account",
+          "refresh_owner": "named_operator_owner_outside_repo",
+          "what_refreshed_face_covers": "The repo-visible account reference points to the intended Dexter paper-live demo account for the bounded supervised window.",
+          "refresh_trigger": "refresh before the account reference changes or a different demo account is selected for the window; otherwise keep the face blocked for record-pack regeneration",
+          "minimum_fresh_evidence_locator_shape": "attestor name, account reference label, bounded window, verification timestamp, and a statement that the external account binding was checked outside repo; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets",
+          "stale_condition": "the account reference changes or a different demo account is selected for the window",
+          "usable_for_retry_gate_review_when": "the account attestation makes the intended demo account explicit enough to reopen gate review and the located evidence is still fresh enough for the current bounded supervised window",
+          "refresh_rule_complete": true,
+          "current_fresh_evidence_locator_present": false,
+          "current_evidence_fresh_enough": false,
+          "usable_now": false,
+          "current_refresh_observation": "The repo-visible marker and bounded refresh rule are explicit for this face, but the repo still does not point to one current, fresh-enough bounded-window locator that a reviewer can reopen without secrets. The refresh lane therefore keeps this face fail-closed until record-pack regeneration can rely on one current, timestamped, reviewable locator.",
+          "refresh_status": "FAIL/BLOCKED"
+        },
+        {
+          "name": "connectivity_profile_face",
+          "repo_visible_marker": "dexter_paper_live_demo_connectivity",
+          "refresh_owner": "named_operator_owner_plus_connectivity_owner_outside_repo",
+          "what_refreshed_face_covers": "The intended connectivity profile can reach the intended Dexter demo venue and account during the bounded supervised window.",
+          "refresh_trigger": "refresh before network routing changes, connectivity profile changes, or the verification timestamp is outside the current window; otherwise keep the face blocked for record-pack regeneration",
+          "minimum_fresh_evidence_locator_shape": "attestor names, connectivity profile label, verification timestamp, bounded window, and a short reachability result; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets",
+          "stale_condition": "network routing changes, connectivity profile changes, or the verification timestamp is outside the current window",
+          "usable_for_retry_gate_review_when": "the connectivity attestation is current enough that a gate reviewer can treat reachability as explicitly checked and the located evidence is still fresh enough for the current bounded supervised window",
+          "refresh_rule_complete": true,
+          "current_fresh_evidence_locator_present": false,
+          "current_evidence_fresh_enough": false,
+          "usable_now": false,
+          "current_refresh_observation": "The repo-visible marker and bounded refresh rule are explicit for this face, but the repo still does not point to one current, fresh-enough bounded-window locator that a reviewer can reopen without secrets. The refresh lane therefore keeps this face fail-closed until record-pack regeneration can rely on one current, timestamped, reviewable locator.",
+          "refresh_status": "FAIL/BLOCKED"
+        },
+        {
+          "name": "operator_owner_face",
+          "repo_visible_marker": "unconfirmed_outside_repo",
+          "refresh_owner": "demo_operator_lead_outside_repo",
+          "what_refreshed_face_covers": "One explicit operator owner is responsible for the full retry-gate review and bounded supervised window.",
+          "refresh_trigger": "refresh before the named owner changes or the supervised window changes; otherwise keep the face blocked for record-pack regeneration",
+          "minimum_fresh_evidence_locator_shape": "owner name or handle, verification timestamp, window label, and explicit ownership statement; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets",
+          "stale_condition": "the named owner changes or the supervised window changes",
+          "usable_for_retry_gate_review_when": "the owner attestation is explicit enough that gate recheck does not rely on unnamed responsibility and the located evidence is still fresh enough for the current bounded supervised window",
+          "refresh_rule_complete": true,
+          "current_fresh_evidence_locator_present": false,
+          "current_evidence_fresh_enough": false,
+          "usable_now": false,
+          "current_refresh_observation": "The repo-visible marker and bounded refresh rule are explicit for this face, but the repo still does not point to one current, fresh-enough bounded-window locator that a reviewer can reopen without secrets. The refresh lane therefore keeps this face fail-closed until record-pack regeneration can rely on one current, timestamped, reviewable locator.",
+          "refresh_status": "FAIL/BLOCKED"
+        },
+        {
+          "name": "bounded_start_criteria_face",
+          "repo_visible_marker": {
+            "bounded_window_minutes": 15,
+            "status_delivery": "poll_first",
+            "halt_mode": "manual_latched_stop_all"
+          },
+          "refresh_owner": "named_operator_owner_outside_repo",
+          "what_refreshed_face_covers": "The intended supervised start window, go/no-go owner, and abort owner are explicit and bounded for the next reviewable retry attempt.",
+          "refresh_trigger": "refresh before the scheduled window moves or ownership for go/no-go or abort changes; otherwise keep the face blocked for record-pack regeneration",
+          "minimum_fresh_evidence_locator_shape": "planned start window, bounded window minutes, go/no-go owner, abort owner, verification timestamp, and explicit stop condition note; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets",
+          "stale_condition": "the scheduled window moves or ownership for go/no-go or abort changes",
+          "usable_for_retry_gate_review_when": "the bounded-start attestation makes timing and ownership explicit enough to reopen gate review and the located evidence is still fresh enough for the current bounded supervised window",
+          "refresh_rule_complete": true,
+          "current_fresh_evidence_locator_present": false,
+          "current_evidence_fresh_enough": false,
+          "usable_now": false,
+          "current_refresh_observation": "The repo-visible marker and bounded refresh rule are explicit for this face, but the repo still does not point to one current, fresh-enough bounded-window locator that a reviewer can reopen without secrets. The refresh lane therefore keeps this face fail-closed until record-pack regeneration can rely on one current, timestamped, reviewable locator.",
+          "refresh_status": "FAIL/BLOCKED"
+        },
+        {
+          "name": "allowlist_symbol_lot_reconfirmed",
+          "repo_visible_marker": {
+            "allowed_symbols": [
+              "BONK/USDC"
+            ],
+            "default_symbol": "BONK/USDC",
+            "order_size_lots": "0.05",
+            "max_order_size_lots": "0.05",
+            "bounded_window_minutes": 15,
+            "max_open_positions": 1
+          },
+          "refresh_owner": "named_operator_owner_outside_repo",
+          "what_refreshed_face_covers": "The explicit allowlist, default symbol, lot size, bounded window, and one-position cap were reconfirmed for the upcoming supervised window.",
+          "refresh_trigger": "refresh before any guardrail value changes or the supervised window moves; otherwise keep the face blocked for record-pack regeneration",
+          "minimum_fresh_evidence_locator_shape": "attestor name, verification timestamp, allowlist values, lot-size values, position cap, and a plain-language reconfirmation note; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets",
+          "stale_condition": "any guardrail value changes or the supervised window moves",
+          "usable_for_retry_gate_review_when": "the guardrail attestation is current enough that gate recheck can treat the bounded demo envelope as explicitly reconfirmed and the located evidence is still fresh enough for the current bounded supervised window",
+          "refresh_rule_complete": true,
+          "current_fresh_evidence_locator_present": false,
+          "current_evidence_fresh_enough": false,
+          "usable_now": false,
+          "current_refresh_observation": "The repo-visible marker and bounded refresh rule are explicit for this face, but the repo still does not point to one current, fresh-enough bounded-window locator that a reviewer can reopen without secrets. The refresh lane therefore keeps this face fail-closed until record-pack regeneration can rely on one current, timestamped, reviewable locator.",
+          "refresh_status": "FAIL/BLOCKED"
+        },
+        {
+          "name": "manual_latched_stop_all_visibility_reconfirmed",
+          "repo_visible_marker": "baseline_stop_all_state=flatten_confirmed",
+          "refresh_owner": "named_operator_owner_outside_repo",
+          "what_refreshed_face_covers": "`manual_latched_stop_all` remains visibly reachable on the bounded retry path for the next supervised window.",
+          "refresh_trigger": "refresh before the stop-all surface changes or the window advances without reconfirmation; otherwise keep the face blocked for record-pack regeneration",
+          "minimum_fresh_evidence_locator_shape": "attestor name, verification timestamp, referenced stop-all surface, and a plain-language visibility confirmation; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets",
+          "stale_condition": "the stop-all surface changes or the window advances without reconfirmation",
+          "usable_for_retry_gate_review_when": "the stop-all visibility attestation is current enough to reopen gate review without assuming prior visibility still holds and the located evidence is still fresh enough for the current bounded supervised window",
+          "refresh_rule_complete": true,
+          "current_fresh_evidence_locator_present": false,
+          "current_evidence_fresh_enough": false,
+          "usable_now": false,
+          "current_refresh_observation": "The repo-visible marker and bounded refresh rule are explicit for this face, but the repo still does not point to one current, fresh-enough bounded-window locator that a reviewer can reopen without secrets. The refresh lane therefore keeps this face fail-closed until record-pack regeneration can rely on one current, timestamped, reviewable locator.",
+          "refresh_status": "FAIL/BLOCKED"
+        },
+        {
+          "name": "terminal_snapshot_readability_reconfirmed",
+          "repo_visible_marker": "baseline_terminal_snapshot_readable=true",
+          "refresh_owner": "named_operator_owner_outside_repo",
+          "what_refreshed_face_covers": "Terminal snapshot detail remains readable enough for the upcoming supervised retry window.",
+          "refresh_trigger": "refresh before the snapshot format changes or the supervised window advances without reconfirmation; otherwise keep the face blocked for record-pack regeneration",
+          "minimum_fresh_evidence_locator_shape": "attestor name, verification timestamp, referenced snapshot surface, and a short readability confirmation; plus one repo-visible fresh-enough verification timestamp inside the current bounded supervised window and a locator that can be reopened without exposing secrets",
+          "stale_condition": "the snapshot format changes or the supervised window advances without reconfirmation",
+          "usable_for_retry_gate_review_when": "the snapshot-readability attestation is current enough that a gate reviewer can rely on terminal visibility without inference and the located evidence is still fresh enough for the current bounded supervised window",
+          "refresh_rule_complete": true,
+          "current_fresh_evidence_locator_present": false,
+          "current_evidence_fresh_enough": false,
+          "usable_now": false,
+          "current_refresh_observation": "The repo-visible marker and bounded refresh rule are explicit for this face, but the repo still does not point to one current, fresh-enough bounded-window locator that a reviewer can reopen without secrets. The refresh lane therefore keeps this face fail-closed until record-pack regeneration can rely on one current, timestamped, reviewable locator.",
+          "refresh_status": "FAIL/BLOCKED"
+        }
+      ],
+      "blocked_refresh_faces": [
+        "external_credential_source_face",
+        "venue_ref_face",
+        "account_ref_face",
+        "connectivity_profile_face",
+        "operator_owner_face",
+        "bounded_start_criteria_face",
+        "allowlist_symbol_lot_reconfirmed",
+        "manual_latched_stop_all_visibility_reconfirmed",
+        "terminal_snapshot_readability_reconfirmed"
+      ],
+      "checklist_attestation_refresh": {
+        "runtime_guardrails_parse_cleanly": true,
+        "all_required_faces_present": true,
+        "all_refresh_owners_explicit": true,
+        "all_refresh_triggers_explicit": true,
+        "all_minimum_fresh_locator_shapes_explicit": true,
+        "all_stale_conditions_explicit": true,
+        "all_retry_gate_usable_conditions_explicit": true,
+        "all_current_fresh_evidence_locators_present": false,
+        "all_current_evidence_fresh_enough": false,
+        "all_faces_usable_now": false,
+        "record_pack_regeneration_ready": true,
+        "retry_gate_review_reopen_ready": false
+      },
+      "record_pack_regeneration_ready": true,
+      "retry_gate_review_reopen_ready": false
+    },
+    "sub_agents": [
+      {
+        "name": "Anscombe",
+        "lines": [
+          "Confirmed that refresh must become the single current surface atomically across status, report, summary, proof, handoff, checklist, and decision-surface pointers, with record-pack retained only as baseline evidence.",
+          "Recommended keeping the lane observational and fail-closed: the repo may define refresh ownership and freshness rules, but retry-gate review stays blocked until each face points to one current, fresh-enough locator.",
+          "Flagged split-pointer drift as the main risk, so the generator switches repo-level current-task metadata, bundle metadata, and handoff/report pointers together."
+        ]
+      },
+      {
+        "name": "Euler",
+        "lines": [
+          "Kept the refresh boundary identical to the current bounded envelope: Dexter-only `paper_live`, frozen Mew-X `sim_live`, `single_sleeve`, `dexter_default`, explicit allowlist, small lot, one-plan, one-position, bounded supervision, and funded-live forbidden.",
+          "Confirmed the refresh lane should baseline from attestation record pack rather than attestation audit, and that the row schema should shift to refresh owner, refresh trigger, minimum fresh evidence locator shape, stale condition, and retry-gate usability.",
+          "Found no planner or adapter seam drift: refresh remains docs/proofs/report/script only, with `prepare / start / status / stop / snapshot` and `manual_latched_stop_all` unchanged."
+        ]
+      },
+      {
+        "name": "Parfit",
+        "lines": [
+          "Scoped the smallest safe change set to one new refresh generator, one focused refresh regression, synchronized current-task assertions in shared tests, and a bundle default-path update.",
+          "Recommended validating the new generator and bundle output first, then running the full pytest suite because many tests pin the repo-level current task, next task, and bundle path.",
+          "Merge readiness depends on an honest blocked result, regenerated refresh artifacts, and a next-step pointer that advances to record-pack regeneration instead of claiming retry-gate reopen."
+        ]
+      }
+    ],
+    "supporting_files": [
+      "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_ATTESTATION_RECORD_PACK.md",
+      "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_ATTESTATION_REFRESH.md",
+      "plans/demo_forward_supervised_run_retry_gate_attestation_record_pack_plan.md",
+      "plans/demo_forward_supervised_run_retry_gate_attestation_refresh_plan.md",
+      "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_checklist.md",
+      "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_decision_surface.md",
+      "docs/demo_forward_supervised_run_retry_gate_attestation_refresh_checklist.md",
+      "docs/demo_forward_supervised_run_retry_gate_attestation_refresh_decision_surface.md",
+      "scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack.py",
+      "scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
+      "scripts/build_proof_bundle.sh",
+      "tests/test_demo_forward_supervised_run_retry_gate.py",
+      "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack.py",
+      "tests/test_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
+      "tests/test_bootstrap_layout.py"
+    ],
+    "proof_outputs": [
+      "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-check.json",
+      "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-summary.md",
+      "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-refresh.tar.gz"
+    ]
+  },
+  "task_result": {
+    "outcome": "FAIL/BLOCKED",
+    "key_finding": "supervised_run_retry_gate_attestation_refresh_blocked_on_missing_or_stale_fresh_evidence_locators",
+    "claim_boundary": "supervised_run_retry_gate_attestation_refresh_bounded",
+    "task_state": "supervised_run_retry_gate_attestation_refresh_blocked",
+    "recommended_next_step": "supervised_run_retry_gate_attestation_record_pack",
+    "recommended_next_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK",
+    "gate_pass_successor": "supervised_run_retry_gate",
+    "gate_pass_successor_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
+    "decision": "retry_gate_review_blocked_pending_fresh_attestation_refresh_and_record_pack_regeneration"
+  }
+}

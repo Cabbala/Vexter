@@ -40,6 +40,9 @@ def test_demo_forward_supervised_run_artifacts_remain_consistent() -> None:
     assert context["evidence"]["demo_forward_supervised_run_retry_readiness"]["task_state"] == (
         "supervised_run_retry_readiness_blocked"
     )
+    assert context["evidence"]["demo_forward_supervised_run_retry_gate"]["task_state"] == (
+        "supervised_run_retry_gate_blocked"
+    )
 
     assert proof["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN"
     assert proof["verified_github"]["latest_vexter_pr"] == 72

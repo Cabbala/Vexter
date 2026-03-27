@@ -445,6 +445,20 @@ def test_livepaper_observability_shift_handoff_watchdog_ci_gate_manifest_and_con
         )
         assert "livepaper_observability_shift_handoff_watchdog_ci_gate" in status_text
         assert "demo-forward-supervised-run-retry-readiness.tar.gz" in bundle_script
+    elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE":
+        assert context["current_task"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE"
+        assert ledger["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE"
+        assert manifest["status"] == "supervised_run_retry_gate_blocked"
+        assert (
+            manifest["bundle_path"]
+            == "artifacts/bundles/demo-forward-supervised-run-retry-gate.tar.gz"
+        )
+        assert (
+            "transport_livepaper_observability_acceptance_pack" in summary_text
+            or "transport_livepaper_observability_acceptance_pack" in report_text
+        )
+        assert "livepaper_observability_shift_handoff_watchdog_ci_gate" in status_text
+        assert "demo-forward-supervised-run-retry-gate.tar.gz" in bundle_script
     else:
         assert manifest["task_id"] == "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE"
         assert context["current_task"]["id"] in {
@@ -499,6 +513,8 @@ def test_livepaper_observability_shift_handoff_watchdog_ci_gate_manifest_and_con
     elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN":
         assert "livepaper_observability_shift_handoff_watchdog_ci_gate" in status_text
     elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS":
+        assert "livepaper_observability_shift_handoff_watchdog_ci_gate" in status_text
+    elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE":
         assert "livepaper_observability_shift_handoff_watchdog_ci_gate" in status_text
     else:
         assert manifest["status"] in status_text

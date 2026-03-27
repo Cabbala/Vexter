@@ -1,0 +1,240 @@
+{
+  "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
+  "verified_github": {
+    "latest_vexter_pr": 74,
+    "latest_vexter_main_commit": "d06856cecf42c336af05902a1d932468c5d280b0",
+    "latest_vexter_merged_at": "2026-03-27T01:20:35Z",
+    "dexter_pr_3_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "starting_point": {
+    "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS",
+    "task_state": "supervised_run_retry_readiness_blocked",
+    "report": "artifacts/reports/demo-forward-supervised-run-retry-readiness-report.md",
+    "status_report": "artifacts/reports/demo-forward-supervised-run-retry-readiness-status.md",
+    "proof": "artifacts/proofs/demo-forward-supervised-run-retry-readiness-check.json",
+    "summary": "artifacts/proofs/demo-forward-supervised-run-retry-readiness-summary.md",
+    "handoff": "artifacts/reports/demo-forward-supervised-run-retry-readiness/HANDOFF.md",
+    "checklist": "docs/demo_forward_supervised_run_retry_readiness_checklist.md",
+    "prerequisite_matrix": "docs/demo_forward_supervised_run_retry_prerequisite_matrix.md",
+    "subagent_summary": "artifacts/reports/demo-forward-supervised-run-retry-readiness/SUBAGENTS.md"
+  },
+  "supervised_run_retry_gate": {
+    "planner_boundary": [
+      "prepare",
+      "start",
+      "status",
+      "stop",
+      "snapshot"
+    ],
+    "retry_gate_boundary": {
+      "demo_source": "dexter",
+      "execution_mode": "paper_live",
+      "route_mode": "single_sleeve",
+      "selected_sleeve_id": "dexter_default",
+      "max_active_real_demo_plans": 1,
+      "max_open_positions": 1,
+      "allowlist_required": true,
+      "small_lot_required": true,
+      "bounded_supervised_window_required": true,
+      "external_credential_refs_outside_repo": true,
+      "operator_owner_explicit_required": true,
+      "venue_connectivity_confirmation_required": true,
+      "bounded_start_criteria_explicit_required": true,
+      "manual_latched_stop_all_visibility_reconfirmation_required": true,
+      "terminal_snapshot_readability_reconfirmation_required": true,
+      "mewx_unchanged": true,
+      "funded_live_forbidden": true
+    },
+    "required_artifacts": {
+      "current_status_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-status.md",
+      "current_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-report.md",
+      "current_summary": "artifacts/proofs/demo-forward-supervised-run-retry-gate-summary.md",
+      "current_proof_json": "artifacts/proofs/demo-forward-supervised-run-retry-gate-check.json",
+      "current_handoff": "artifacts/reports/demo-forward-supervised-run-retry-gate/HANDOFF.md",
+      "retry_gate_checklist": "docs/demo_forward_supervised_run_retry_gate_checklist.md",
+      "retry_gate_decision_surface": "docs/demo_forward_supervised_run_retry_gate_decision_surface.md",
+      "subagent_summary": "artifacts/reports/demo-forward-supervised-run-retry-gate/SUBAGENTS.md"
+    },
+    "baseline_retry_readiness_outcome": {
+      "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS",
+      "task_state": "supervised_run_retry_readiness_blocked",
+      "key_finding": "supervised_run_retry_readiness_blocked_on_external_prerequisites",
+      "claim_boundary": "supervised_run_retry_readiness_bounded",
+      "recommended_next_step": "supervised_run_retry_gate"
+    },
+    "gate_inputs": {
+      "retry_gate_decision_surface": [
+        {
+          "name": "external_credential_source_face",
+          "repo_visible_marker": "external_reference",
+          "current_observation": "A reference name is visible in repo, but the external credential resolution is not observed in repo.",
+          "who_confirms": "named_operator_owner_outside_repo",
+          "explicit_enough_for_retry_execution": false,
+          "pass_when": "the named operator explicitly attests that the reference resolves to the intended Dexter paper-live credential source for the bounded retry window"
+        },
+        {
+          "name": "venue_ref_face",
+          "repo_visible_marker": "dexter_paper_live_demo_venue",
+          "current_observation": "A venue reference is visible in repo, but the active venue mapping for the retry window is not observed in repo.",
+          "who_confirms": "named_operator_owner_plus_venue_owner_outside_repo",
+          "explicit_enough_for_retry_execution": false,
+          "pass_when": "the venue reference is explicitly matched to the intended Dexter demo venue for the bounded retry window"
+        },
+        {
+          "name": "account_ref_face",
+          "repo_visible_marker": "dexter_paper_live_demo_account",
+          "current_observation": "An account reference is visible in repo, but the retry-window account binding is not observed in repo.",
+          "who_confirms": "named_operator_owner_outside_repo",
+          "explicit_enough_for_retry_execution": false,
+          "pass_when": "the account reference is explicitly matched to the intended Dexter paper-live account for the retry window"
+        },
+        {
+          "name": "connectivity_profile_face",
+          "repo_visible_marker": "dexter_paper_live_demo_connectivity",
+          "current_observation": "A connectivity profile marker is visible in repo, but the live retry-path reachability is not observed in repo.",
+          "who_confirms": "named_operator_owner_plus_connectivity_owner_outside_repo",
+          "explicit_enough_for_retry_execution": false,
+          "pass_when": "the connectivity profile is explicitly confirmed to reach the intended venue and account during the bounded retry window"
+        },
+        {
+          "name": "operator_owner_face",
+          "repo_visible_marker": "unconfirmed_outside_repo",
+          "current_observation": "The repo does not identify one retry owner for the full supervised window.",
+          "who_confirms": "demo_operator_lead_outside_repo",
+          "explicit_enough_for_retry_execution": false,
+          "pass_when": "one explicit operator owner is named for the full retry gate and supervised window"
+        },
+        {
+          "name": "bounded_start_criteria_face",
+          "repo_visible_marker": {
+            "bounded_window_minutes": 15,
+            "status_delivery": "poll_first",
+            "halt_mode": "manual_latched_stop_all"
+          },
+          "current_observation": "The bounded window and stop model are fixed in repo, but the actual retry start time, go/no-go owner, and abort owner are not observed in repo.",
+          "who_confirms": "named_operator_owner_outside_repo",
+          "explicit_enough_for_retry_execution": false,
+          "pass_when": "the retry start time, bounded window, abort owner, and go/no-go criteria are explicitly agreed before entry"
+        },
+        {
+          "name": "allowlist_symbol_lot_reconfirmed",
+          "repo_visible_marker": {
+            "allowed_symbols": [
+              "BONK/USDC"
+            ],
+            "default_symbol": "BONK/USDC",
+            "order_size_lots": "0.05",
+            "max_order_size_lots": "0.05",
+            "bounded_window_minutes": 15,
+            "max_open_positions": 1
+          },
+          "current_observation": "The bounded symbol, lot-size, window, and one-position guardrails parse cleanly from repo, but retry-time reconfirmation is not observed in repo.",
+          "who_confirms": "named_operator_owner_outside_repo",
+          "explicit_enough_for_retry_execution": false,
+          "pass_when": "the operator explicitly reconfirms allowlist, default symbol, lot size, bounded window, and one-position cap immediately before retry"
+        },
+        {
+          "name": "manual_latched_stop_all_visibility_reconfirmed",
+          "repo_visible_marker": "baseline_stop_all_state=flatten_confirmed",
+          "current_observation": "The blocked supervised baseline preserved `manual_latched_stop_all`, but retry-path visibility is not yet re-observed for the next gate window.",
+          "who_confirms": "named_operator_owner_outside_repo",
+          "explicit_enough_for_retry_execution": false,
+          "pass_when": "`manual_latched_stop_all` visibility is explicitly reconfirmed on the bounded retry path before entry"
+        },
+        {
+          "name": "terminal_snapshot_readability_reconfirmed",
+          "repo_visible_marker": "baseline_terminal_snapshot_readable=true",
+          "current_observation": "The baseline handoff shows terminal snapshot detail, but retry-path terminal snapshot readability is not yet re-observed for the next gate window.",
+          "who_confirms": "named_operator_owner_outside_repo",
+          "explicit_enough_for_retry_execution": false,
+          "pass_when": "terminal snapshot readability is explicitly reconfirmed on the retry path before entry"
+        }
+      ],
+      "unresolved_gate_inputs": [
+        "external_credential_source_face",
+        "venue_ref_face",
+        "account_ref_face",
+        "connectivity_profile_face",
+        "operator_owner_face",
+        "bounded_start_criteria_face",
+        "allowlist_symbol_lot_reconfirmed",
+        "manual_latched_stop_all_visibility_reconfirmed",
+        "terminal_snapshot_readability_reconfirmed"
+      ],
+      "checklist_gate": {
+        "runtime_guardrails_parse_cleanly": true,
+        "external_credential_source_face_explicit": false,
+        "venue_ref_face_explicit": false,
+        "account_ref_face_explicit": false,
+        "connectivity_profile_face_explicit": false,
+        "operator_owner_face_explicit": false,
+        "bounded_start_criteria_face_explicit": false,
+        "allowlist_symbol_lot_reconfirmed": false,
+        "manual_latched_stop_all_visibility_reconfirmed": false,
+        "terminal_snapshot_readability_reconfirmed": false,
+        "all_gate_inputs_explicit_enough": false,
+        "real_demo_retry_execution_allowed": false
+      },
+      "retry_execution_entry_allowed": false
+    },
+    "sub_agents": [
+      {
+        "name": "Anscombe",
+        "lines": [
+          "Confirmed the retry-readiness quartet should remain current until a complete retry-gate quartet exists, then switch atomically to the new gate report, status, proof, summary, and handoff surfaces.",
+          "Flagged the readiness-era prerequisite-count drift as a reason to keep the retry-gate decision surface on one explicit, stable list of gate inputs.",
+          "Recommended keeping fail-closed wording observation-based: repo-visible markers may be named, but retry execution stays blocked until external confirmations are explicitly observed enough for the gate to pass."
+        ]
+      },
+      {
+        "name": "Euler",
+        "lines": [
+          "Kept the retry-gate boundary identical to the accepted retry-readiness boundary: Dexter-only `paper_live`, frozen Mew-X `sim_live`, `single_sleeve`, `dexter_default`, allowlist-only, small-lot, one-plan, one-position, bounded supervision, and funded-live forbidden.",
+          "Recommended the smallest next-step cut: hold the current lane at `supervised_run_retry_gate` while blocked, and expose `supervised_run_retry_execution` only as the gate-pass successor once every required input is explicit.",
+          "Confirmed there is no need for planner or adapter code drift: `prepare / start / status / stop / snapshot` stays fixed, `manual_latched_stop_all` stays planner-owned, and Mew-X remains unchanged."
+        ]
+      },
+      {
+        "name": "Parfit",
+        "lines": [
+          "Scoped the smallest safe change set to docs, proof-generation script, generated artifacts, manifest/context/ledger updates, and tests; no `vexter/` runtime behavior changes are needed for this lane.",
+          "Recommended validating the generator plus the affected regression surfaces with `python3 scripts/run_demo_forward_supervised_run_retry_gate.py` and focused `pytest` coverage on the supervised-run and bundle-layout tests.",
+          "Merge readiness depends on an atomic current-pointer switch to retry-gate, a regenerated tarball at the new bundle path, and a clean blocked decision that does not claim retry execution success."
+        ]
+      }
+    ],
+    "supporting_files": [
+      "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_READINESS.md",
+      "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE.md",
+      "plans/demo_forward_supervised_run_retry_readiness_plan.md",
+      "plans/demo_forward_supervised_run_retry_gate_plan.md",
+      "docs/demo_forward_supervised_run_retry_readiness_checklist.md",
+      "docs/demo_forward_supervised_run_retry_prerequisite_matrix.md",
+      "docs/demo_forward_supervised_run_retry_gate_checklist.md",
+      "docs/demo_forward_supervised_run_retry_gate_decision_surface.md",
+      "scripts/run_demo_forward_supervised_run_retry_readiness.py",
+      "scripts/run_demo_forward_supervised_run_retry_gate.py",
+      "scripts/build_proof_bundle.sh",
+      "tests/test_demo_forward_supervised_run.py",
+      "tests/test_demo_forward_supervised_run_retry_readiness.py",
+      "tests/test_demo_forward_supervised_run_retry_gate.py"
+    ],
+    "proof_outputs": [
+      "artifacts/proofs/demo-forward-supervised-run-retry-gate-check.json",
+      "artifacts/proofs/demo-forward-supervised-run-retry-gate-summary.md",
+      "artifacts/bundles/demo-forward-supervised-run-retry-gate.tar.gz"
+    ]
+  },
+  "task_result": {
+    "outcome": "FAIL/BLOCKED",
+    "key_finding": "supervised_run_retry_gate_blocked_on_unresolved_gate_inputs",
+    "claim_boundary": "supervised_run_retry_gate_bounded",
+    "task_state": "supervised_run_retry_gate_blocked",
+    "recommended_next_step": "supervised_run_retry_gate",
+    "recommended_next_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
+    "gate_pass_successor": "supervised_run_retry_execution",
+    "gate_pass_successor_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-EXECUTION",
+    "decision": "retry_execution_blocked_pending_gate_inputs"
+  }
+}

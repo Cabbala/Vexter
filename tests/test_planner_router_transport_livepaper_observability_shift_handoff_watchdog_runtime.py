@@ -276,11 +276,11 @@ def test_livepaper_observability_shift_handoff_watchdog_runtime_manifest_and_con
             manifest["bundle_path"]
             == "artifacts/bundles/demo-forward-supervised-run-retry-gate.tar.gz"
         )
-    elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-INPUT-ATTESTATION":
-        assert manifest["status"] == "supervised_run_retry_gate_input_attestation_blocked"
+    elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT":
+        assert manifest["status"] == "supervised_run_retry_gate_attestation_audit_blocked"
         assert (
             manifest["bundle_path"]
-            == "artifacts/bundles/demo-forward-supervised-run-retry-gate-input-attestation.tar.gz"
+            == "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-audit.tar.gz"
         )
     else:
         assert manifest["task_id"] in {

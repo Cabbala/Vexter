@@ -154,11 +154,11 @@ def test_livepaper_observability_shift_handoff_drill_artifacts_are_wired_for_inc
             manifest["bundle_path"]
             == "artifacts/bundles/demo-forward-supervised-run-retry-gate.tar.gz"
         )
-    elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-INPUT-ATTESTATION":
-        assert manifest["status"] == "supervised_run_retry_gate_input_attestation_blocked"
+    elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT":
+        assert manifest["status"] == "supervised_run_retry_gate_attestation_audit_blocked"
         assert (
             manifest["bundle_path"]
-            == "artifacts/bundles/demo-forward-supervised-run-retry-gate-input-attestation.tar.gz"
+            == "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-audit.tar.gz"
         )
     else:
         assert current_task_id in {
@@ -224,13 +224,13 @@ def test_livepaper_observability_shift_handoff_drill_artifacts_are_wired_for_inc
         assert manifest["next_task"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE"
         assert manifest["next_task"]["state"] == "retry_gate_inputs_pending"
         assert "demo-forward-supervised-run-retry-gate.tar.gz" in bundle_script
-    elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-INPUT-ATTESTATION":
+    elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT":
         assert (
             manifest["next_task"]["id"]
-            == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-INPUT-ATTESTATION"
+            == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT"
         )
-        assert manifest["next_task"]["state"] == "retry_gate_input_attestations_pending"
-        assert "demo-forward-supervised-run-retry-gate-input-attestation.tar.gz" in bundle_script
+        assert manifest["next_task"]["state"] == "retry_gate_attestation_audits_pending"
+        assert "demo-forward-supervised-run-retry-gate-attestation-audit.tar.gz" in bundle_script
     else:
         assert manifest["next_task"]["id"] in {
             "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",

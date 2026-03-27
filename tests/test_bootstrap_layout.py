@@ -28,6 +28,8 @@ def test_required_paths_exist() -> None:
         "docs/demo_forward_supervised_run_retry_gate_decision_surface.md",
         "docs/demo_forward_supervised_run_retry_gate_input_attestation_checklist.md",
         "docs/demo_forward_supervised_run_retry_gate_input_attestation_decision_surface.md",
+        "docs/demo_forward_supervised_run_retry_gate_attestation_audit_checklist.md",
+        "docs/demo_forward_supervised_run_retry_gate_attestation_audit_decision_surface.md",
         "docs/windows_runtime_recovery.md",
         "docs/dexter_source_assessment.md",
         "docs/dexter_event_mapping.md",
@@ -57,6 +59,7 @@ def test_required_paths_exist() -> None:
         "plans/demo_forward_supervised_run_retry_readiness_plan.md",
         "plans/demo_forward_supervised_run_retry_gate_plan.md",
         "plans/demo_forward_supervised_run_retry_gate_input_attestation_plan.md",
+        "plans/demo_forward_supervised_run_retry_gate_attestation_audit_plan.md",
         "manifests/reference_repos.json",
         "manifests/windows_runtime.json",
         "scripts/bootstrap_windows_workspace.sh",
@@ -67,6 +70,7 @@ def test_required_paths_exist() -> None:
         "scripts/run_demo_forward_supervised_run_retry_readiness.py",
         "scripts/run_demo_forward_supervised_run_retry_gate.py",
         "scripts/run_demo_forward_supervised_run_retry_gate_input_attestation.py",
+        "scripts/run_demo_forward_supervised_run_retry_gate_attestation_audit.py",
         "scripts/run_livepaper_observability_shift_handoff_ci_check.sh",
         "scripts/run_livepaper_observability_shift_handoff_watchdog.sh",
         "scripts/run_livepaper_observability_shift_handoff_watchdog_runtime.sh",
@@ -326,6 +330,14 @@ def test_required_paths_exist() -> None:
         "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation/HANDOFF.md",
         "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation/SUBAGENTS.md",
         "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation/subagent_summary.md",
+        "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit-report.md",
+        "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit-status.md",
+        "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit/DETAILS.md",
+        "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit/MIN_PROMPT.txt",
+        "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit/CONTEXT.json",
+        "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit/HANDOFF.md",
+        "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit/SUBAGENTS.md",
+        "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit/subagent_summary.md",
         "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate-report.md",
         "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate-status.md",
         "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate/DETAILS.md",
@@ -418,6 +430,8 @@ def test_required_paths_exist() -> None:
         "artifacts/proofs/demo-forward-supervised-run-retry-gate-summary.md",
         "artifacts/proofs/demo-forward-supervised-run-retry-gate-input-attestation-check.json",
         "artifacts/proofs/demo-forward-supervised-run-retry-gate-input-attestation-summary.md",
+        "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-audit-check.json",
+        "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-audit-summary.md",
         "artifacts/bundles/task-007-planner-router-code-implementation.tar.gz",
         "artifacts/bundles/task-007-planner-router-integration-smoke.tar.gz",
         "artifacts/bundles/task-007-monitor-killswitch-spec.tar.gz",
@@ -443,9 +457,11 @@ def test_required_paths_exist() -> None:
         "artifacts/bundles/demo-forward-supervised-run-retry-readiness.tar.gz",
         "artifacts/bundles/demo-forward-supervised-run-retry-gate.tar.gz",
         "artifacts/bundles/demo-forward-supervised-run-retry-gate-input-attestation.tar.gz",
+        "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-audit.tar.gz",
         "tests/test_demo_forward_supervised_run_retry_gate.py",
         "tests/test_demo_forward_supervised_run_retry_readiness.py",
         "tests/test_demo_forward_supervised_run_retry_gate_input_attestation.py",
+        "tests/test_demo_forward_supervised_run_retry_gate_attestation_audit.py",
         "tests/test_planner_router_transport_livepaper_observability_smoke.py",
         "tests/test_planner_router_transport_livepaper_observability_runtime.py",
         "tests/test_planner_router_transport_livepaper_observability_hardening.py",
@@ -815,6 +831,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS",
         "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
         "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-INPUT-ATTESTATION",
+        "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -882,6 +899,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "supervised_run_retry_readiness_blocked",
         "supervised_run_retry_gate_blocked",
         "supervised_run_retry_gate_input_attestation_blocked",
+        "supervised_run_retry_gate_attestation_audit_blocked",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -951,6 +969,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
             "feat/supervised-run-retry-readiness",
             "feat/supervised-run-retry-gate",
             "feat/supervised-run-retry-gate-input-attestation",
+            "feat/retry-gate-attestation-audit",
         }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -1003,6 +1022,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS",
         "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
         "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-INPUT-ATTESTATION",
+        "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT",
     }
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -1068,6 +1088,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "ready_for_supervised_run_retry_gate",
         "retry_gate_inputs_pending",
         "retry_gate_input_attestations_pending",
+        "retry_gate_attestation_audits_pending",
     }
 
 
@@ -1141,6 +1162,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "supervised_run_retry_readiness_blocked",
         "supervised_run_retry_gate_blocked",
         "supervised_run_retry_gate_input_attestation_blocked",
+        "supervised_run_retry_gate_attestation_audit_blocked",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -1195,6 +1217,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
             "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS",
             "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
             "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-INPUT-ATTESTATION",
+            "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT",
         }
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -1259,6 +1282,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "ready_for_supervised_run_retry_gate",
         "retry_gate_inputs_pending",
         "retry_gate_input_attestations_pending",
+        "retry_gate_attestation_audits_pending",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]
@@ -1284,6 +1308,8 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "docs/demo_forward_supervised_run_retry_gate_decision_surface.md" in names
     assert "docs/demo_forward_supervised_run_retry_gate_input_attestation_checklist.md" in names
     assert "docs/demo_forward_supervised_run_retry_gate_input_attestation_decision_surface.md" in names
+    assert "docs/demo_forward_supervised_run_retry_gate_attestation_audit_checklist.md" in names
+    assert "docs/demo_forward_supervised_run_retry_gate_attestation_audit_decision_surface.md" in names
     assert "docs/windows_runtime_recovery.md" in names
     assert "docs/dexter_event_mapping.md" in names
     assert "docs/dexter_paper_mode_design.md" in names
@@ -1299,15 +1325,18 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "plans/demo_forward_supervised_run_retry_readiness_plan.md" in names
     assert "plans/demo_forward_supervised_run_retry_gate_plan.md" in names
     assert "plans/demo_forward_supervised_run_retry_gate_input_attestation_plan.md" in names
+    assert "plans/demo_forward_supervised_run_retry_gate_attestation_audit_plan.md" in names
     assert "tests/test_demo_forward_acceptance_pack.py" in names
     assert "tests/test_demo_forward_supervised_run.py" in names
     assert "tests/test_demo_forward_supervised_run_retry_readiness.py" in names
     assert "tests/test_demo_forward_supervised_run_retry_gate.py" in names
     assert "tests/test_demo_forward_supervised_run_retry_gate_input_attestation.py" in names
+    assert "tests/test_demo_forward_supervised_run_retry_gate_attestation_audit.py" in names
     assert "scripts/run_demo_forward_supervised_run.py" in names
     assert "scripts/run_demo_forward_supervised_run_retry_readiness.py" in names
     assert "scripts/run_demo_forward_supervised_run_retry_gate.py" in names
     assert "scripts/run_demo_forward_supervised_run_retry_gate_input_attestation.py" in names
+    assert "scripts/run_demo_forward_supervised_run_retry_gate_attestation_audit.py" in names
     assert "scripts/comparison_analysis.py" in names
     assert "scripts/collect_comparison_package.ps1" in names
     assert "scripts/recover_windows_runtime.sh" in names
@@ -1350,6 +1379,14 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation/HANDOFF.md" in names
     assert "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation/SUBAGENTS.md" in names
     assert "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation/subagent_summary.md" in names
+    assert "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit-report.md" in names
+    assert "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit-status.md" in names
+    assert "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit/DETAILS.md" in names
+    assert "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit/MIN_PROMPT.txt" in names
+    assert "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit/CONTEXT.json" in names
+    assert "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit/HANDOFF.md" in names
+    assert "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit/SUBAGENTS.md" in names
+    assert "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit/subagent_summary.md" in names
     assert "artifacts/reports/dexter-paper-design-handoff/DETAILS.md" in names
     assert "artifacts/reports/dexter-paper-design-handoff/MIN_PROMPT.txt" in names
     assert "artifacts/reports/task-005-paper-validation-handoff/DETAILS.md" in names
@@ -1364,6 +1401,8 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/proofs/demo-forward-supervised-run-retry-gate-summary.md" in names
     assert "artifacts/proofs/demo-forward-supervised-run-retry-gate-input-attestation-check.json" in names
     assert "artifacts/proofs/demo-forward-supervised-run-retry-gate-input-attestation-summary.md" in names
+    assert "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-audit-check.json" in names
+    assert "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-audit-summary.md" in names
     assert "artifacts/reports/task-006-replay-validation-handoff/DETAILS.md" in names
     assert "artifacts/reports/task-006-replay-validation-handoff/MIN_PROMPT.txt" in names
     assert "artifacts/reports/task-006-replay-deepening.md" in names

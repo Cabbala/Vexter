@@ -1,0 +1,320 @@
+{
+  "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT",
+  "verified_github": {
+    "latest_vexter_pr": 76,
+    "latest_vexter_main_commit": "56dedfe86bf9f6252d1099775fa9506d7259e0da",
+    "latest_vexter_merged_at": "2026-03-27T07:27:42Z",
+    "dexter_pr_3_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "starting_point": {
+    "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-INPUT-ATTESTATION",
+    "task_state": "supervised_run_retry_gate_input_attestation_blocked",
+    "report": "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation-report.md",
+    "status_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation-status.md",
+    "proof": "artifacts/proofs/demo-forward-supervised-run-retry-gate-input-attestation-check.json",
+    "summary": "artifacts/proofs/demo-forward-supervised-run-retry-gate-input-attestation-summary.md",
+    "handoff": "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation/HANDOFF.md",
+    "checklist": "docs/demo_forward_supervised_run_retry_gate_input_attestation_checklist.md",
+    "decision_surface": "docs/demo_forward_supervised_run_retry_gate_input_attestation_decision_surface.md",
+    "subagent_summary": "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation/SUBAGENTS.md"
+  },
+  "supervised_run_retry_gate_attestation_audit": {
+    "planner_boundary": [
+      "prepare",
+      "start",
+      "status",
+      "stop",
+      "snapshot"
+    ],
+    "attestation_audit_boundary": {
+      "demo_source": "dexter",
+      "execution_mode": "paper_live",
+      "route_mode": "single_sleeve",
+      "selected_sleeve_id": "dexter_default",
+      "max_active_real_demo_plans": 1,
+      "max_open_positions": 1,
+      "allowlist_required": true,
+      "small_lot_required": true,
+      "bounded_supervised_window_required": true,
+      "external_credential_refs_outside_repo": true,
+      "operator_owner_explicit_required": true,
+      "venue_connectivity_confirmation_required": true,
+      "bounded_start_criteria_explicit_required": true,
+      "manual_latched_stop_all_visibility_reconfirmation_required": true,
+      "terminal_snapshot_readability_reconfirmation_required": true,
+      "mewx_unchanged": true,
+      "funded_live_forbidden": true
+    },
+    "required_artifacts": {
+      "current_status_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit-status.md",
+      "current_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit-report.md",
+      "current_summary": "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-audit-summary.md",
+      "current_proof_json": "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-audit-check.json",
+      "current_handoff": "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit/HANDOFF.md",
+      "attestation_audit_checklist": "docs/demo_forward_supervised_run_retry_gate_attestation_audit_checklist.md",
+      "attestation_audit_decision_surface": "docs/demo_forward_supervised_run_retry_gate_attestation_audit_decision_surface.md",
+      "subagent_summary": "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit/SUBAGENTS.md"
+    },
+    "baseline_input_attestation_outcome": {
+      "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-INPUT-ATTESTATION",
+      "task_state": "supervised_run_retry_gate_input_attestation_blocked",
+      "key_finding": "supervised_run_retry_gate_input_attestation_blocked_on_missing_attestation_faces",
+      "claim_boundary": "supervised_run_retry_gate_input_attestation_bounded",
+      "recommended_next_step": "supervised_run_retry_gate_input_attestation",
+      "gate_pass_successor": "supervised_run_retry_execution"
+    },
+    "audit_faces": {
+      "attestation_audit_decision_surface": [
+        {
+          "name": "external_credential_source_face",
+          "repo_visible_marker": "external_reference",
+          "who_attests": "named_operator_owner_outside_repo",
+          "what_is_being_attested": "The external credential reference resolves to the intended Dexter paper-live demo credential source for the bounded supervised window.",
+          "minimal_evidence_shape": "attestor name, reference label only, bounded window, verification timestamp, and a plain-language confirmation that the referenced credential source was resolved outside repo",
+          "stale_when": "the credential reference changes or the bounded supervised window rolls forward",
+          "auditable_enough_when": "the repo can point to a current attestation record for this face without exposing secret material",
+          "definition_complete": true,
+          "stale_rule_explicit": true,
+          "auditable_enough_rule_explicit": true,
+          "current_attestation_ref_present": false,
+          "current_attestation_non_stale": false,
+          "auditable_now": false,
+          "current_audit_observation": "A credential-source marker is visible in repo, but no current attestation names who resolved it, how it was checked, or when the check expires. The current input-attestation surface defines the face, but the repo still does not point to a current bounded-window attestation record or timestamped stale check for this face.",
+          "audit_status": "FAIL/BLOCKED"
+        },
+        {
+          "name": "venue_ref_face",
+          "repo_visible_marker": "dexter_paper_live_demo_venue",
+          "who_attests": "named_operator_owner_plus_venue_owner_outside_repo",
+          "what_is_being_attested": "The repo-visible venue reference points to the intended Dexter demo venue for the bounded supervised retry window.",
+          "minimal_evidence_shape": "attestor names, venue reference label, bounded window, verification timestamp, and explicit match confirmation between the marker and the intended venue",
+          "stale_when": "the venue reference changes, venue routing changes, or the supervised window is rescheduled",
+          "auditable_enough_when": "the venue attestation is current, explicit, and reviewable without requiring the reviewer to infer the mapping",
+          "definition_complete": true,
+          "stale_rule_explicit": true,
+          "auditable_enough_rule_explicit": true,
+          "current_attestation_ref_present": false,
+          "current_attestation_non_stale": false,
+          "auditable_now": false,
+          "current_audit_observation": "A venue marker is visible in repo, but no current attestation records which venue the upcoming supervised window is meant to hit. The current input-attestation surface defines the face, but the repo still does not point to a current bounded-window attestation record or timestamped stale check for this face.",
+          "audit_status": "FAIL/BLOCKED"
+        },
+        {
+          "name": "account_ref_face",
+          "repo_visible_marker": "dexter_paper_live_demo_account",
+          "who_attests": "named_operator_owner_outside_repo",
+          "what_is_being_attested": "The repo-visible account reference points to the intended Dexter paper-live demo account for the bounded supervised window.",
+          "minimal_evidence_shape": "attestor name, account reference label, bounded window, verification timestamp, and a statement that the external account binding was checked outside repo",
+          "stale_when": "the account reference changes or a different demo account is selected for the window",
+          "auditable_enough_when": "the account attestation makes the intended demo account explicit enough to reopen gate review",
+          "definition_complete": true,
+          "stale_rule_explicit": true,
+          "auditable_enough_rule_explicit": true,
+          "current_attestation_ref_present": false,
+          "current_attestation_non_stale": false,
+          "auditable_now": false,
+          "current_audit_observation": "An account marker is visible in repo, but no current attestation ties it to the intended demo account for the next supervised window. The current input-attestation surface defines the face, but the repo still does not point to a current bounded-window attestation record or timestamped stale check for this face.",
+          "audit_status": "FAIL/BLOCKED"
+        },
+        {
+          "name": "connectivity_profile_face",
+          "repo_visible_marker": "dexter_paper_live_demo_connectivity",
+          "who_attests": "named_operator_owner_plus_connectivity_owner_outside_repo",
+          "what_is_being_attested": "The intended connectivity profile can reach the intended Dexter demo venue and account during the bounded supervised window.",
+          "minimal_evidence_shape": "attestor names, connectivity profile label, verification timestamp, bounded window, and a short reachability result",
+          "stale_when": "network routing changes, connectivity profile changes, or the verification timestamp is outside the current window",
+          "auditable_enough_when": "the connectivity attestation is current enough that a gate reviewer can treat reachability as explicitly checked",
+          "definition_complete": true,
+          "stale_rule_explicit": true,
+          "auditable_enough_rule_explicit": true,
+          "current_attestation_ref_present": false,
+          "current_attestation_non_stale": false,
+          "auditable_now": false,
+          "current_audit_observation": "A connectivity-profile marker is visible in repo, but no current attestation records that the intended venue and account path was checked for the target window. The current input-attestation surface defines the face, but the repo still does not point to a current bounded-window attestation record or timestamped stale check for this face.",
+          "audit_status": "FAIL/BLOCKED"
+        },
+        {
+          "name": "operator_owner_face",
+          "repo_visible_marker": "unconfirmed_outside_repo",
+          "who_attests": "demo_operator_lead_outside_repo",
+          "what_is_being_attested": "One explicit operator owner is responsible for the full retry-gate review and bounded supervised window.",
+          "minimal_evidence_shape": "owner name or handle, verification timestamp, window label, and explicit ownership statement",
+          "stale_when": "the named owner changes or the supervised window changes",
+          "auditable_enough_when": "the owner attestation is explicit enough that gate recheck does not rely on unnamed responsibility",
+          "definition_complete": true,
+          "stale_rule_explicit": true,
+          "auditable_enough_rule_explicit": true,
+          "current_attestation_ref_present": false,
+          "current_attestation_non_stale": false,
+          "auditable_now": false,
+          "current_audit_observation": "The repo still does not point to one named operator owner for the full supervised window. The current input-attestation surface defines the face, but the repo still does not point to a current bounded-window attestation record or timestamped stale check for this face.",
+          "audit_status": "FAIL/BLOCKED"
+        },
+        {
+          "name": "bounded_start_criteria_face",
+          "repo_visible_marker": {
+            "bounded_window_minutes": 15,
+            "status_delivery": "poll_first",
+            "halt_mode": "manual_latched_stop_all"
+          },
+          "who_attests": "named_operator_owner_outside_repo",
+          "what_is_being_attested": "The intended supervised start window, go/no-go owner, and abort owner are explicit and bounded for the next reviewable retry attempt.",
+          "minimal_evidence_shape": "planned start window, bounded window minutes, go/no-go owner, abort owner, verification timestamp, and explicit stop condition note",
+          "stale_when": "the scheduled window moves or ownership for go/no-go or abort changes",
+          "auditable_enough_when": "the bounded-start attestation makes timing and ownership explicit enough to reopen gate review",
+          "definition_complete": true,
+          "stale_rule_explicit": true,
+          "auditable_enough_rule_explicit": true,
+          "current_attestation_ref_present": false,
+          "current_attestation_non_stale": false,
+          "auditable_now": false,
+          "current_audit_observation": "The bounded window and stop model are fixed in repo, but no current attestation records start time, go/no-go owner, or abort ownership for the target window. The current input-attestation surface defines the face, but the repo still does not point to a current bounded-window attestation record or timestamped stale check for this face.",
+          "audit_status": "FAIL/BLOCKED"
+        },
+        {
+          "name": "allowlist_symbol_lot_reconfirmed",
+          "repo_visible_marker": {
+            "allowed_symbols": [
+              "BONK/USDC"
+            ],
+            "default_symbol": "BONK/USDC",
+            "order_size_lots": "0.05",
+            "max_order_size_lots": "0.05",
+            "bounded_window_minutes": 15,
+            "max_open_positions": 1
+          },
+          "who_attests": "named_operator_owner_outside_repo",
+          "what_is_being_attested": "The explicit allowlist, default symbol, lot size, bounded window, and one-position cap were reconfirmed for the upcoming supervised window.",
+          "minimal_evidence_shape": "attestor name, verification timestamp, allowlist values, lot-size values, position cap, and a plain-language reconfirmation note",
+          "stale_when": "any guardrail value changes or the supervised window moves",
+          "auditable_enough_when": "the guardrail attestation is current enough that gate recheck can treat the bounded demo envelope as explicitly reconfirmed",
+          "definition_complete": true,
+          "stale_rule_explicit": true,
+          "auditable_enough_rule_explicit": true,
+          "current_attestation_ref_present": false,
+          "current_attestation_non_stale": false,
+          "auditable_now": false,
+          "current_audit_observation": "The bounded symbol, lot-size, window, and one-position guardrails parse cleanly from repo, but no current attestation confirms they were rechecked for the upcoming supervised window. The current input-attestation surface defines the face, but the repo still does not point to a current bounded-window attestation record or timestamped stale check for this face.",
+          "audit_status": "FAIL/BLOCKED"
+        },
+        {
+          "name": "manual_latched_stop_all_visibility_reconfirmed",
+          "repo_visible_marker": "baseline_stop_all_state=flatten_confirmed",
+          "who_attests": "named_operator_owner_outside_repo",
+          "what_is_being_attested": "`manual_latched_stop_all` remains visibly reachable on the bounded retry path for the next supervised window.",
+          "minimal_evidence_shape": "attestor name, verification timestamp, referenced stop-all surface, and a plain-language visibility confirmation",
+          "stale_when": "the stop-all surface changes or the window advances without reconfirmation",
+          "auditable_enough_when": "the stop-all visibility attestation is current enough to reopen gate review without assuming prior visibility still holds",
+          "definition_complete": true,
+          "stale_rule_explicit": true,
+          "auditable_enough_rule_explicit": true,
+          "current_attestation_ref_present": false,
+          "current_attestation_non_stale": false,
+          "auditable_now": false,
+          "current_audit_observation": "The blocked supervised baseline preserved `manual_latched_stop_all`, but no current attestation records who reconfirmed visibility for the next review window. The current input-attestation surface defines the face, but the repo still does not point to a current bounded-window attestation record or timestamped stale check for this face.",
+          "audit_status": "FAIL/BLOCKED"
+        },
+        {
+          "name": "terminal_snapshot_readability_reconfirmed",
+          "repo_visible_marker": "baseline_terminal_snapshot_readable=true",
+          "who_attests": "named_operator_owner_outside_repo",
+          "what_is_being_attested": "Terminal snapshot detail remains readable enough for the upcoming supervised retry window.",
+          "minimal_evidence_shape": "attestor name, verification timestamp, referenced snapshot surface, and a short readability confirmation",
+          "stale_when": "the snapshot format changes or the supervised window advances without reconfirmation",
+          "auditable_enough_when": "the snapshot-readability attestation is current enough that a gate reviewer can rely on terminal visibility without inference",
+          "definition_complete": true,
+          "stale_rule_explicit": true,
+          "auditable_enough_rule_explicit": true,
+          "current_attestation_ref_present": false,
+          "current_attestation_non_stale": false,
+          "auditable_now": false,
+          "current_audit_observation": "The baseline handoff shows terminal snapshot detail, but no current attestation records who rechecked readability for the next review window. The current input-attestation surface defines the face, but the repo still does not point to a current bounded-window attestation record or timestamped stale check for this face.",
+          "audit_status": "FAIL/BLOCKED"
+        }
+      ],
+      "blocked_audit_faces": [
+        "external_credential_source_face",
+        "venue_ref_face",
+        "account_ref_face",
+        "connectivity_profile_face",
+        "operator_owner_face",
+        "bounded_start_criteria_face",
+        "allowlist_symbol_lot_reconfirmed",
+        "manual_latched_stop_all_visibility_reconfirmed",
+        "terminal_snapshot_readability_reconfirmed"
+      ],
+      "checklist_attestation": {
+        "runtime_guardrails_parse_cleanly": true,
+        "all_required_faces_present": true,
+        "all_definition_fields_explicit": true,
+        "all_stale_conditions_explicit": true,
+        "all_auditable_enough_conditions_explicit": true,
+        "all_current_attestation_refs_present": false,
+        "all_faces_non_stale_now": false,
+        "all_faces_auditable_now": false,
+        "retry_gate_review_reopen_ready": false
+      },
+      "retry_gate_review_reopen_ready": false
+    },
+    "sub_agents": [
+      {
+        "name": "Anscombe",
+        "lines": [
+          "Confirmed the input-attestation quartet should remain the accepted baseline until a complete attestation-audit quartet exists, then switch current report, status, proof, summary, and handoff pointers atomically.",
+          "Recommended that the audit surface carry the same attestation facts per row in one place: who attests, what is being attested, the minimum evidence shape, the stale rule, and what makes the face auditable enough.",
+          "Recommended fail-closed wording that stays observation-based: the repo may name the required face definitions, but retry-gate review remains blocked until each face points to a current bounded-window attestation record and stale check."
+        ]
+      },
+      {
+        "name": "Euler",
+        "lines": [
+          "Kept the attestation-audit boundary identical to the accepted input-attestation boundary: Dexter-only `paper_live`, frozen Mew-X `sim_live`, `single_sleeve`, `dexter_default`, allowlist-only, small-lot, one-plan, one-position, bounded supervision, and funded-live forbidden.",
+          "Recommended the smallest next-step cut: hold the current lane at `supervised_run_retry_gate_attestation_audit` while blocked, and expose `supervised_run_retry_gate` only as the audit-pass successor once retry-gate review can honestly reopen.",
+          "Confirmed there is no planner or adapter drift: `prepare / start / status / stop / snapshot` stays fixed, `manual_latched_stop_all` stays planner-owned, funded live stays forbidden, and Mew-X remains unchanged."
+        ]
+      },
+      {
+        "name": "Parfit",
+        "lines": [
+          "Scoped the smallest safe change set to docs, proof-generation script, generated artifacts, manifest/context/ledger updates, and tests; no `vexter/` runtime behavior changes are needed for this lane.",
+          "Recommended validating the generator plus the affected regression surfaces with `python3 scripts/run_demo_forward_supervised_run_retry_gate_attestation_audit.py` and focused `pytest` coverage on the supervised-run and bundle-layout tests.",
+          "Merge readiness depends on an atomic current-pointer switch to attestation audit, a regenerated tarball at the new bundle path, and a clean blocked decision that does not claim retry execution success or a reopened retry gate."
+        ]
+      }
+    ],
+    "supporting_files": [
+      "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_INPUT_ATTESTATION.md",
+      "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_ATTESTATION_AUDIT.md",
+      "plans/demo_forward_supervised_run_retry_gate_input_attestation_plan.md",
+      "plans/demo_forward_supervised_run_retry_gate_attestation_audit_plan.md",
+      "docs/demo_forward_supervised_run_retry_gate_input_attestation_checklist.md",
+      "docs/demo_forward_supervised_run_retry_gate_input_attestation_decision_surface.md",
+      "docs/demo_forward_supervised_run_retry_gate_attestation_audit_checklist.md",
+      "docs/demo_forward_supervised_run_retry_gate_attestation_audit_decision_surface.md",
+      "scripts/run_demo_forward_supervised_run_retry_gate_input_attestation.py",
+      "scripts/run_demo_forward_supervised_run_retry_gate_attestation_audit.py",
+      "scripts/build_proof_bundle.sh",
+      "tests/test_demo_forward_supervised_run.py",
+      "tests/test_demo_forward_supervised_run_retry_gate.py",
+      "tests/test_demo_forward_supervised_run_retry_gate_input_attestation.py",
+      "tests/test_demo_forward_supervised_run_retry_gate_attestation_audit.py"
+    ],
+    "proof_outputs": [
+      "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-audit-check.json",
+      "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-audit-summary.md",
+      "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-audit.tar.gz"
+    ]
+  },
+  "task_result": {
+    "outcome": "FAIL/BLOCKED",
+    "key_finding": "supervised_run_retry_gate_attestation_audit_blocked_on_missing_current_attestation_records",
+    "claim_boundary": "supervised_run_retry_gate_attestation_audit_bounded",
+    "task_state": "supervised_run_retry_gate_attestation_audit_blocked",
+    "recommended_next_step": "supervised_run_retry_gate_attestation_audit",
+    "recommended_next_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT",
+    "gate_pass_successor": "supervised_run_retry_gate",
+    "gate_pass_successor_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
+    "decision": "retry_gate_review_blocked_pending_auditable_attestation_records"
+  }
+}

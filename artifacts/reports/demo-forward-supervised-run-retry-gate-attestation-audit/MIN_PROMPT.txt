@@ -1,0 +1,5 @@
+GitHub最新状態を確認し、Vexter `main` PR #76 merge 後の retry-gate attestation-audit surface を current source of truth として扱ってください。
+出発点は `supervised_run_retry_gate_input_attestation_blocked` で、Dexter `paper_live` のみ・frozen Mew-X `sim_live` のみ・`single_sleeve`・`dexter_default`・explicit allowlist・small lot・max open positions=1・bounded supervised window を維持してください。
+planner の public boundary は `prepare / start / status / stop / snapshot` のまま、`manual_latched_stop_all` は planner-owned のまま保ってください。
+external credential refs は repo 外に残し、各 face について who / what / minimal evidence shape / stale rule / auditable enough rule を current source of truth として監査し、current attestation ref や stale check が欠ける限り `FAIL/BLOCKED` を維持してください。
+current status / report / proof / handoff / checklist / decision surface / sub-agent summary を更新し、必要 face が explicit・non-stale・auditable enough の場合にのみ次を `supervised_run_retry_gate` と示してください。

@@ -454,6 +454,7 @@ def test_transport_livepaper_observability_watchdog_runtime_manifest_and_context
         "DEMO-FORWARD-SUPERVISED-RUN",
         "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS",
         "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
+        "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-INPUT-ATTESTATION",
     }
 
 

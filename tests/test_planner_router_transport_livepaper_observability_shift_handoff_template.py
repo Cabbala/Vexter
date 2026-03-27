@@ -135,6 +135,12 @@ def test_livepaper_observability_shift_handoff_template_current_artifacts_are_co
             manifest["bundle_path"]
             == "artifacts/bundles/demo-forward-supervised-run-retry-gate.tar.gz"
         )
+    elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-INPUT-ATTESTATION":
+        assert manifest["status"] == "supervised_run_retry_gate_input_attestation_blocked"
+        assert (
+            manifest["bundle_path"]
+            == "artifacts/bundles/demo-forward-supervised-run-retry-gate-input-attestation.tar.gz"
+        )
     else:
         assert current_task_id in {
             "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG",
@@ -198,6 +204,12 @@ def test_livepaper_observability_shift_handoff_template_current_artifacts_are_co
     elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE":
         assert manifest["next_task"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE"
         assert manifest["next_task"]["state"] == "retry_gate_inputs_pending"
+    elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-INPUT-ATTESTATION":
+        assert (
+            manifest["next_task"]["id"]
+            == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-INPUT-ATTESTATION"
+        )
+        assert manifest["next_task"]["state"] == "retry_gate_input_attestations_pending"
     else:
         assert manifest["next_task"]["id"] in {
             "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",

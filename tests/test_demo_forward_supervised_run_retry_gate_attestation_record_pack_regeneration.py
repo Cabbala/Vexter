@@ -76,6 +76,11 @@ def test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regenera
         == ledger["artifact_bundle"]
         == "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration.tar.gz"
     )
+    assert (
+        manifest["bundle_source"]
+        == context["bundle_source"]
+        == "/Users/cabbala/Downloads/vexter_attestation_record_pack_regeneration_bundle_latest.tar.gz"
+    )
     assert manifest["next_task"]["id"] == context["next_task"]["id"] == ledger["next_task_id"]
     assert (
         manifest["next_task"]["id"]
@@ -98,6 +103,7 @@ def test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regenera
         proof["verified_github"]["latest_vexter_main_commit"]
         == "5b78804188e27199e90950f610fd279ad7a133f6"
     )
+    assert proof["verified_github"]["latest_vexter_merged_at"] == "2026-03-27T13:47:24Z"
     assert proof["task_result"]["outcome"] == "FAIL/BLOCKED"
     assert (
         proof["task_result"]["recommended_next_step"] == "supervised_run_retry_gate_attestation_refresh"
@@ -111,6 +117,11 @@ def test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regenera
     regeneration_boundary = context["evidence"][
         "demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration"
     ]["attestation_record_pack_regeneration_boundary"]
+    assert context["evidence"]["github_latest"]["latest_recent_vexter_prs"] == [83, 82, 81, 80, 79]
+    assert (
+        context["evidence"]["github_latest"]["vexter_pr_83_merged_at"]
+        == "2026-03-27T13:47:24Z"
+    )
     assert regeneration_boundary["demo_source"] == "dexter"
     assert regeneration_boundary["execution_mode"] == "paper_live"
     assert regeneration_boundary["route_mode"] == "single_sleeve"
@@ -156,6 +167,12 @@ def test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regenera
     assert "minimum_regenerated_locator_shape" in first_face
     assert "freshness_inheritance_or_reset_rule" in first_face
     assert (
+        first_face["regeneration_trigger"].count(
+            "regenerate the current record-pack face again whenever"
+        )
+        == 1
+    )
+    assert (
         first_face["minimum_regenerated_locator_shape"].count(
             "plus regenerated face name, regeneration timestamp"
         )
@@ -164,6 +181,12 @@ def test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regenera
     assert first_face["freshness_inheritance_or_reset_rule"].count(
         "inherit freshness only while"
     ) == 1
+    assert (
+        first_face["reviewable_enough_when"].count(
+            "regenerated face points to the same bounded-window locator"
+        )
+        == 1
+    )
 
     assert (
         prompt_context["task_state"]

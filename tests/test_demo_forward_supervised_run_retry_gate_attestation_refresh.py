@@ -146,13 +146,21 @@ def test_demo_forward_supervised_run_retry_gate_attestation_refresh_artifacts_ar
     assert first_face["usable_now"] is False
     assert "refresh_trigger" in first_face
     assert "minimum_fresh_evidence_locator_shape" in first_face
-    assert first_face["stale_condition"].count("inherit freshness only while") == 1
+    assert first_face["stale_condition"].count("inherit freshness only while") == 0
     assert (
         first_face["minimum_fresh_evidence_locator_shape"].count(
             "plus one repo-visible fresh-enough verification timestamp"
         )
         == 1
     )
+    assert (
+        first_face["minimum_fresh_evidence_locator_shape"].count(
+            "plus regenerated face name, regeneration timestamp"
+        )
+        == 0
+    )
+    assert "reviewable evidence locator" in first_face["current_refresh_observation"]
+    assert "regenerated locator" not in first_face["current_refresh_observation"]
 
     assert prompt_context["task_state"] == "supervised_run_retry_gate_attestation_refresh_blocked"
     assert prompt_context["recommended_next_step"] == "supervised_run_retry_gate_attestation_record_pack_regeneration"

@@ -1,9 +1,9 @@
 {
   "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH",
   "verified_github": {
-    "latest_vexter_pr": 84,
-    "latest_vexter_main_commit": "31fbee24beb56eb55338d4529c2c9420a0ac5ea9",
-    "latest_vexter_merged_at": "2026-03-27T14:23:43Z",
+    "latest_vexter_pr": 86,
+    "latest_vexter_main_commit": "2be10c663f8d5f441defeea5f506108d1aae25c3",
+    "latest_vexter_merged_at": "2026-03-27T19:19:40Z",
     "dexter_pr_3_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
   },
@@ -257,9 +257,9 @@
       {
         "name": "Anscombe",
         "lines": [
-          "Confirmed PR `#84` / merge commit `31fbee24beb56eb55338d4529c2c9420a0ac5ea9` advanced latest merged `main` while repo-level current pointers still point at regeneration, so refresh has to be re-promoted atomically from that newer baseline.",
-          "Flagged summary, context, manifest, ledger, README, and bundle path/source drift as the minimum pointer set that must move together so refresh becomes current and regeneration returns to the blocked next step.",
-          "Called out partial flips as the main correctness risk because stale PR `#83` metadata or regeneration bundle pointers would make the handoff internally inconsistent."
+          "Confirmed PR `#86` / merge commit `2be10c663f8d5f441defeea5f506108d1aae25c3` is latest merged `main`, while repo-level current pointers still point at regeneration, so refresh has to be re-promoted atomically from that newer baseline.",
+          "Flagged summary, context, manifest, ledger, README, bundle path/source, and handoff continuity as the minimum pointer set that must move together so refresh becomes current and regeneration returns to the blocked next step.",
+          "Called out partial flips as the main correctness risk because stale pre-PR `#86` refresh metadata, duplicated refresh clauses, or lingering regeneration-current flags would make the handoff internally inconsistent."
         ]
       },
       {
@@ -275,7 +275,7 @@
         "lines": [
           "Scoped the minimal file set to the refresh generator, current-pointer tests, `build_proof_bundle.sh`, and a refresh-side closeout exporter so the final tarball can be generated reproducibly.",
           "Recommended regenerating refresh artifacts from the generator first, then validating focused current-pointer regressions before widening to the shared pytest suite.",
-          "Merge readiness depends on exact agreement across summary, context, manifest, ledger, README, refresh bundle path/source, and PR `#84` metadata on branch `feat/attestation-refresh-repromotion-after-pr84`."
+          "Merge readiness depends on exact agreement across summary, context, manifest, ledger, README, refresh bundle path/source, and PR `#86` metadata on branch `codex/attestation-refresh-repromotion-after-pr86`."
         ]
       }
     ],

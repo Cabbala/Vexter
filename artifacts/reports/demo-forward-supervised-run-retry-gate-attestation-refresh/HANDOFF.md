@@ -1,7 +1,7 @@
 # Demo Forward Supervised Run Retry Gate Attestation Refresh Handoff
 
 ## Current Status
-- outgoing_shift_window: 2026-03-27T18:57:59Z attestation-refresh lane
+- outgoing_shift_window: 2026-03-27T19:43:59Z attestation-refresh lane
 - incoming_shift_window: fresh locator collection and record-pack regeneration
 - task_state: supervised_run_retry_gate_attestation_refresh_blocked
 - shift_outcome: blocked
@@ -15,7 +15,7 @@
 - first_demo_target: Dexter `paper_live`
 - real_execution_leg: Dexter only
 - simulated_leg_or_none: Mew-X `sim_live`
-- vexter_main_commit: 31fbee24beb56eb55338d4529c2c9420a0ac5ea9
+- vexter_main_commit: 2be10c663f8d5f441defeea5f506108d1aae25c3
 - dexter_main_commit: ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938
 - mewx_frozen_commit: dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a
 - baseline_attestation_record_pack_regeneration_task_state: supervised_run_retry_gate_attestation_record_pack_regeneration_blocked

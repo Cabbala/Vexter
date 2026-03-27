@@ -111,6 +111,12 @@ def test_livepaper_observability_shift_handoff_template_current_artifacts_are_co
             manifest["bundle_path"]
             == "artifacts/bundles/pattern-a-demo-executor-cutover.tar.gz"
         )
+    elif current_task_id == "DEMO-FORWARD-ACCEPTANCE-PACK":
+        assert manifest["status"] == "demo_forward_acceptance_pack_ready"
+        assert (
+            manifest["bundle_path"]
+            == "artifacts/bundles/demo-forward-acceptance-pack.tar.gz"
+        )
     else:
         assert current_task_id in {
             "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG",
@@ -162,6 +168,9 @@ def test_livepaper_observability_shift_handoff_template_current_artifacts_are_co
             manifest["next_task"]["state"]
             == "ready_for_demo_executor_adapter_implementation"
         )
+    elif current_task_id == "DEMO-FORWARD-ACCEPTANCE-PACK":
+        assert manifest["next_task"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN"
+        assert manifest["next_task"]["state"] == "ready_for_demo_forward_supervised_run"
     else:
         assert manifest["next_task"]["id"] in {
             "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",

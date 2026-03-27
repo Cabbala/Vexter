@@ -450,6 +450,7 @@ def test_transport_livepaper_observability_watchdog_runtime_manifest_and_context
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
         "PATTERN-A-DEMO-EXECUTOR-CUTOVER",
+        "DEMO-FORWARD-ACCEPTANCE-PACK",
     }
 
 

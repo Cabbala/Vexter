@@ -1,0 +1,100 @@
+{
+  "task_id": "DEMO-FORWARD-ACCEPTANCE-PACK",
+  "verified_github": {
+    "latest_vexter_pr": 71,
+    "latest_vexter_main_commit": "5c1feb2561da7b16a17c5d03b71ff2bf895e20e4",
+    "latest_vexter_merged_at": "2026-03-27T00:09:27Z",
+    "dexter_pr_3_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "starting_point": {
+    "task_id": "DEMO-EXECUTOR-ADAPTER-IMPLEMENTATION",
+    "task_state": "demo_executor_adapter_implemented",
+    "report": "artifacts/reports/demo-executor-adapter-implementation-report.md",
+    "status_report": "artifacts/reports/demo-executor-adapter-implementation-status.md",
+    "proof": "artifacts/proofs/demo-executor-adapter-implementation-check.json",
+    "summary": "artifacts/proofs/demo-executor-adapter-implementation-summary.md"
+  },
+  "demo_forward_acceptance_pack": {
+    "planner_boundary": [
+      "prepare",
+      "start",
+      "status",
+      "stop",
+      "snapshot"
+    ],
+    "acceptance_boundary": {
+      "demo_source": "dexter",
+      "execution_mode": "paper_live",
+      "route_mode": "single_sleeve",
+      "selected_sleeve_id": "dexter_default",
+      "max_active_real_demo_plans": 1,
+      "max_open_positions": 1,
+      "allowlist_required": true,
+      "small_lot_required": true,
+      "operator_supervised_window_required": true,
+      "mewx_overlay_enabled": false,
+      "funded_live_forbidden": true
+    },
+    "required_artifacts": {
+      "current_status_report": "artifacts/reports/demo-forward-acceptance-pack-status.md",
+      "current_report": "artifacts/reports/demo-forward-acceptance-pack-report.md",
+      "current_summary": "artifacts/proofs/demo-forward-acceptance-pack-summary.md",
+      "current_proof_json": "artifacts/proofs/demo-forward-acceptance-pack-check.json",
+      "current_handoff": "artifacts/reports/demo-forward-acceptance-pack/HANDOFF.md",
+      "operator_checklist": "docs/demo_forward_operator_checklist.md",
+      "abort_rollback_matrix": "docs/demo_forward_abort_rollback_matrix.md"
+    },
+    "acceptance_sequence": [
+      "prepare",
+      "start",
+      "entry_visibility",
+      "order_status_and_fill_reconciliation",
+      "cancel_or_stop_all_visibility",
+      "terminal_snapshot",
+      "normalized_failure_detail_and_handoff_continuity"
+    ],
+    "abort_conditions": [
+      "pin_mismatch",
+      "mode_mismatch",
+      "status_or_fill_reconciliation_gap",
+      "duplicate_or_ambiguous_handle",
+      "unexpected_funded_live_path",
+      "cancel_or_stop_all_unconfirmed",
+      "quarantine_or_manual_halt_triggered",
+      "terminal_snapshot_visibility_lost"
+    ],
+    "out_of_scope": [
+      "funded_live_trading",
+      "mewx_real_demo_expansion",
+      "cross_source_handoff",
+      "portfolio_split",
+      "comparison_investigation_reopen",
+      "dexter_or_mewx_source_logic_rewrite"
+    ],
+    "supporting_files": [
+      "specs/DEMO_FORWARD_ACCEPTANCE_PACK.md",
+      "plans/demo_forward_acceptance_pack_plan.md",
+      "docs/demo_forward_operator_checklist.md",
+      "docs/demo_forward_abort_rollback_matrix.md",
+      "vexter/planner_router/transport.py",
+      "tests/test_planner_router_executor_transport_implementation.py",
+      "artifacts/reports/demo-executor-adapter-implementation-report.md",
+      "artifacts/proofs/demo-executor-adapter-implementation-check.json"
+    ],
+    "proof_outputs": [
+      "artifacts/proofs/demo-forward-acceptance-pack-check.json",
+      "artifacts/proofs/demo-forward-acceptance-pack-summary.md",
+      "artifacts/bundles/demo-forward-acceptance-pack.tar.gz"
+    ]
+  },
+  "task_result": {
+    "outcome": "A",
+    "key_finding": "demo_forward_acceptance_pack_fixed",
+    "claim_boundary": "demo_forward_acceptance_pack_bounded",
+    "task_state": "demo_forward_acceptance_pack_ready",
+    "recommended_next_step": "demo_forward_supervised_run",
+    "recommended_next_task_id": "DEMO-FORWARD-SUPERVISED-RUN",
+    "decision": "demo_forward_supervised_run_ready"
+  }
+}

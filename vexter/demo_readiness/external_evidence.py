@@ -183,6 +183,68 @@ def _group_reason_counts(reasons: list[str]) -> dict[str, list[str]]:
     return {group: values for group, values in grouped.items() if values}
 
 
+def _face_only_manifest_fields(face_name: str, required_manifest_fields: list[str]) -> list[str]:
+    prefix = f"faces.{face_name}."
+    return [field.removeprefix(prefix) for field in required_manifest_fields if field.startswith(prefix)]
+
+
+def _build_template_only_false_path(
+    manifest_status: str,
+    preflight_status: str,
+    retry_gate_review_reopen_ready: bool,
+) -> str:
+    if manifest_status == "template_only":
+        return (
+            "Manifest remains template_only, so retry-gate reopen stays blocked until the bounded "
+            "supervised window fields are filled once, every blocked face carries a current non-secret "
+            "reviewable locator, and the canonical preflight returns ready."
+        )
+    if manifest_status == "missing":
+        return (
+            "Manifest is missing, so retry-gate reopen stays blocked until the canonical manifest exists, "
+            "is filled honestly, and the canonical preflight returns ready."
+        )
+    if manifest_status == "invalid":
+        return (
+            "Manifest is invalid, so retry-gate reopen stays blocked until the canonical manifest validates "
+            "cleanly and the canonical preflight returns ready."
+        )
+    if preflight_status != "ready" or not retry_gate_review_reopen_ready:
+        return (
+            "Retry-gate reopen stays blocked until every canonical face is present, current, reviewable, "
+            "and the canonical preflight returns ready."
+        )
+    return "Canonical manifest and preflight are aligned for retry-gate reopen."
+
+
+def _render_consistency_check_lines(consistency_checks: dict[str, bool]) -> list[str]:
+    return [f"- `{name}`: `{_format_bool(value)}`" for name, value in consistency_checks.items()]
+
+
+def _render_next_human_pass_lines(next_human_pass: dict[str, Any]) -> list[str]:
+    lines = [
+        f"- Hold rule: {next_human_pass['hold_manifest_role_until_ready']}",
+        f"- Reopen false-path: {next_human_pass['template_only_false_path']}",
+        f"- Fill bounded-window fields once: `{', '.join(next_human_pass['bounded_window_fields_once'])}`",
+    ]
+    for face in next_human_pass["faces"]:
+        blocker_groups = "; ".join(
+            f"{group}={', '.join(reasons)}" for group, reasons in face["blocked_reason_groups"].items()
+        )
+        lines.append(
+            "- "
+            f"`{face['face']}` -> fill `{', '.join(face['manifest_fields_to_fill'])}`; "
+            f"blockers `{blocker_groups or 'none'}`; operator input: {face['operator_input_needed']}"
+        )
+    lines.extend(
+        [f"- Rerun in order: `{command}`" for command in next_human_pass["rerun_sequence"]]
+    )
+    lines.append(
+        f"- Optional legacy compatibility rerun: `{next_human_pass['legacy_compatibility_command']}`"
+    )
+    return lines
+
+
 def _build_runtime_guardrails(runtime_config: Any) -> dict[str, Any]:
     return {
         "allowed_symbols": list(runtime_config.allowed_symbols),
@@ -450,9 +512,11 @@ def build_manifest_template(template_env: dict[str, str], runtime_config: Any) -
         "notes": [
             "Replace placeholder values with current non-secret outside-repo evidence locators.",
             "Keep secrets outside repo; this manifest should point to reviewable locators only.",
-            "Fill bounded_supervised_window.label, starts_at, and ends_at before switching manifest_role to evidence.",
+            "Fill bounded_supervised_window.label, starts_at, and ends_at once for the current supervised window before editing face entries.",
             "For each blocked face, fill provided, attested_by, evidence_locator, locator_kind, verified_at, fresh_until, reviewable_without_secrets, and reviewability_note.",
-            "After updating the manifest, rerun the canonical gap script plus the refresh and regeneration generators to refresh the proof surfaces.",
+            "Treat the canonical evidence preflight report as the face-to-manifest and proof map plus next-human-pass checklist; treat the legacy gap report as the compatibility mirror.",
+            "Keep manifest_role at template until the canonical preflight can honestly return ready for the same manifest.",
+            "After updating the manifest, rerun the canonical preflight first, then rerun the refresh and regeneration generators to refresh the proof surfaces; the legacy gap script remains compatibility-only.",
         ],
         "faces": faces,
     }
@@ -763,6 +827,64 @@ def build_external_evidence_preflight(gap_payload: dict[str, Any]) -> dict[str, 
     }
     retry_gate_review_reopen_ready = bool(summary["retry_gate_review_reopen_ready"])
     preflight_status = "ready" if retry_gate_review_reopen_ready else "blocked"
+    face_blocked_names = [face["name"] for face in faces if face["blocked"]]
+    face_operator_inputs = [
+        f"{face['name']}: {face['operator_input_needed']}" for face in faces if face["blocked"]
+    ]
+    face_reason_counts: Counter[str] = Counter()
+    for face in faces:
+        for reason in face["blocked_reasons"]:
+            face_reason_counts[reason] += 1
+    for error in validation_errors:
+        face_reason_counts[error] += 1
+    next_human_pass_faces = [
+        {
+            "face": face["name"],
+            "manifest_fields_to_fill": _face_only_manifest_fields(
+                face["name"],
+                face["required_manifest_fields"],
+            ),
+            "blocked_reason_groups": face["reopen_blockers"],
+            "operator_input_needed": face["operator_input_needed"],
+        }
+        for face in faces
+        if face["blocked"]
+    ]
+    template_only_false_path = _build_template_only_false_path(
+        manifest["status"],
+        preflight_status,
+        retry_gate_review_reopen_ready,
+    )
+    consistency_checks = {
+        "blocked_face_count_matches_face_rows": summary["blocked_face_count"] == len(face_blocked_names),
+        "blocked_face_names_match_face_rows": list(summary["blocked_faces"]) == face_blocked_names,
+        "blocked_reason_counts_match_face_rows": dict(sorted(face_reason_counts.items()))
+        == dict(sorted(blocked_reason_counts.items())),
+        "operator_inputs_remaining_match_blocked_faces": (
+            list(summary["operator_inputs_remaining"]) == face_operator_inputs
+        ),
+        "blocked_faces_have_manifest_fields_and_operator_input": all(
+            bool(item["manifest_fields_to_fill"]) and bool(item["operator_input_needed"])
+            for item in next_human_pass_faces
+        ),
+        "template_only_false_path_holds": manifest["status"] != "template_only"
+        or (
+            preflight_status == "blocked"
+            and not retry_gate_review_reopen_ready
+            and all(not face["reopen_ready_now"] for face in faces)
+        ),
+    }
+    next_human_pass = {
+        "bounded_window_fields_once": list(manifest["window_fields_to_fill"]),
+        "hold_manifest_role_until_ready": (
+            "Keep manifest_role at template while any bounded-window field or blocked face field is still "
+            "missing, stale, non-reviewable, or otherwise preflight-blocked."
+        ),
+        "template_only_false_path": template_only_false_path,
+        "faces": next_human_pass_faces,
+        "rerun_sequence": list(manifest["rerun_commands"]),
+        "legacy_compatibility_command": manifest["legacy_gap_command"],
+    }
 
     return {
         "task_id": PREFLIGHT_TASK_ID,
@@ -795,6 +917,9 @@ def build_external_evidence_preflight(gap_payload: dict[str, Any]) -> dict[str, 
             "canonical_command": manifest["preflight_command"],
             "proof_paths_to_recheck": list(manifest["proof_paths_to_recheck"]),
             "rerun_commands": list(manifest["rerun_commands"]),
+            "template_only_false_path": template_only_false_path,
+            "consistency_checks": consistency_checks,
+            "next_human_pass": next_human_pass,
         },
         "faces": faces,
         "validation_errors": validation_errors,
@@ -804,6 +929,7 @@ def build_external_evidence_preflight(gap_payload: dict[str, Any]) -> dict[str, 
 def render_preflight_summary_markdown(preflight_payload: dict[str, Any]) -> str:
     readiness = preflight_payload["reopen_readiness"]
     manifest = preflight_payload["manifest"]
+    next_human_pass = readiness["next_human_pass"]
     return "\n".join(
         [
             f"# {PREFLIGHT_TASK_ID} Summary",
@@ -816,6 +942,26 @@ def render_preflight_summary_markdown(preflight_payload: dict[str, Any]) -> str:
             f"- Aggregated blocked reasons: `{_format_reason_counts(readiness['blocked_reason_counts'])}`",
             f"- Aggregated blocker groups: `{_format_reason_counts(readiness['blocked_reason_group_counts'])}`",
             f"- Canonical preflight command: `{readiness['canonical_command']}`",
+            f"- Template-only false path: `{readiness['template_only_false_path']}`",
+            "",
+            "## Next Human Pass Checklist",
+            f"- Hold rule: {next_human_pass['hold_manifest_role_until_ready']}",
+            f"- Fill bounded-window fields once: `{', '.join(next_human_pass['bounded_window_fields_once'])}`",
+            *[
+                (
+                    "- "
+                    f"`{face['face']}` -> fill `{', '.join(face['manifest_fields_to_fill'])}`; "
+                    f"operator input: {face['operator_input_needed']}"
+                )
+                for face in next_human_pass["faces"]
+            ],
+            *[f"- Rerun in order: `{command}`" for command in next_human_pass["rerun_sequence"]],
+            "",
+            "## Consistency Checks",
+            *[
+                f"- {name}: `{_format_bool(value)}`"
+                for name, value in readiness["consistency_checks"].items()
+            ],
             "",
             "## Operator Inputs Remaining",
             *[f"- `{item}`" for item in readiness["operator_inputs_remaining"]],
@@ -827,6 +973,7 @@ def render_preflight_summary_markdown(preflight_payload: dict[str, Any]) -> str:
 def render_preflight_report_markdown(preflight_payload: dict[str, Any]) -> str:
     manifest = preflight_payload["manifest"]
     readiness = preflight_payload["reopen_readiness"]
+    next_human_pass = readiness["next_human_pass"]
     lines = [
         "# Demo Forward Supervised Run Retry Gate Evidence Preflight Report",
         "",
@@ -850,19 +997,50 @@ def render_preflight_report_markdown(preflight_payload: dict[str, Any]) -> str:
         f"- Aggregated blocked reasons: `{_format_reason_counts(readiness['blocked_reason_counts'])}`",
         f"- Aggregated blocker groups: `{_format_reason_counts(readiness['blocked_reason_group_counts'])}`",
         f"- Single canonical command: `{readiness['canonical_command']}`",
+        f"- Template-only false path: `{readiness['template_only_false_path']}`",
         "",
         "## Template-Only Handoff",
         f"- Fill these bounded-window fields once per supervised window: `{', '.join(manifest['window_fields_to_fill'])}`",
         "- Leave `manifest_role` at `template` until every blocked face has a current, non-secret, reviewable locator.",
+        f"- Canonical face-to-manifest and proof map: `{manifest['preflight_report']}`.",
+        f"- Compatibility mirror for older consumers: `{manifest['gap_report']}`.",
         f"- Proof/report surfaces to recheck after manifest updates: `{', '.join(readiness['proof_paths_to_recheck'])}`",
         *[f"- Rerun: `{command}`" for command in readiness["rerun_commands"]],
         f"- Legacy compatibility rerun: `{manifest['legacy_gap_command']}`",
         "",
+        "## Next Human Pass Checklist",
+        f"- Hold rule: {next_human_pass['hold_manifest_role_until_ready']}",
+        f"- Template-only false path: {next_human_pass['template_only_false_path']}",
+        f"- Fill bounded-window fields once: `{', '.join(next_human_pass['bounded_window_fields_once'])}`",
+    ]
+    for face in next_human_pass["faces"]:
+        blocker_groups = "; ".join(
+            f"{group}={', '.join(reasons)}" for group, reasons in face["blocked_reason_groups"].items()
+        )
+        lines.append(
+            "- "
+            f"`{face['face']}` -> fill `{', '.join(face['manifest_fields_to_fill'])}`; "
+            f"blockers `{blocker_groups or 'none'}`; operator input: {face['operator_input_needed']}"
+        )
+    lines.extend(
+        [
+            *[f"- Rerun in order: `{command}`" for command in next_human_pass["rerun_sequence"]],
+            f"- Optional legacy compatibility rerun: `{next_human_pass['legacy_compatibility_command']}`",
+            "",
+            "## Consistency Checks",
+        ]
+    )
+    for name, value in readiness["consistency_checks"].items():
+        lines.append(f"- {name}: `{_format_bool(value)}`")
+    lines.extend(
+        [
+            "",
         "## Face Status",
         "",
         "| Face | Present | Current | Reviewable | Reopen ready now | Blocker groups | Operator input still needed |",
         "| --- | --- | --- | --- | --- | --- | --- |",
-    ]
+        ]
+    )
     for face in preflight_payload["faces"]:
         blocker_groups = "; ".join(
             f"{group}={', '.join(reasons)}" for group, reasons in face["reopen_blockers"].items()
@@ -920,6 +1098,7 @@ def render_preflight_report_markdown(preflight_payload: dict[str, Any]) -> str:
 def render_gap_summary_markdown(gap_payload: dict[str, Any]) -> str:
     summary = gap_payload["summary"]
     manifest = gap_payload["manifest"]
+    next_human_pass = summary["next_human_pass"]
     return "\n".join(
         [
             f"# {TASK_ID} Summary",
@@ -933,7 +1112,16 @@ def render_gap_summary_markdown(gap_payload: dict[str, Any]) -> str:
             f"- Window fields to fill: `{', '.join(summary['window_fields_to_fill'])}`",
             f"- Canonical preflight command: `{manifest['preflight_command']}`",
             f"- Legacy gap command: `{manifest['legacy_gap_command']}`",
-            f"- Next operator step: `{manifest['preflight_command']}` after filling the template, then rerun refresh/regeneration surfaces.",
+            f"- Canonical face-to-manifest and proof map: `{manifest['preflight_report']}`",
+            "- Next operator step: fill the bounded window once, fill each blocked face honestly, keep manifest_role "
+            "at `template` until the canonical preflight returns `ready`, then rerun the canonical preflight and the "
+            "refresh/regeneration surfaces.",
+            "",
+            "## Next Human Pass Checklist",
+            *_render_next_human_pass_lines(next_human_pass),
+            "",
+            "## Consistency Checks",
+            *_render_consistency_check_lines(summary["preflight_consistency_checks"]),
             "",
             "## Operator Inputs Remaining",
             *[f"- `{item}`" for item in summary["operator_inputs_remaining"]],
@@ -945,6 +1133,7 @@ def render_gap_summary_markdown(gap_payload: dict[str, Any]) -> str:
 def render_gap_report_markdown(gap_payload: dict[str, Any]) -> str:
     manifest = gap_payload["manifest"]
     summary = gap_payload["summary"]
+    next_human_pass = summary["next_human_pass"]
     lines = [
         "# Demo Forward Supervised Run Retry Gate External Evidence Gap Report",
         "",
@@ -969,9 +1158,20 @@ def render_gap_report_markdown(gap_payload: dict[str, Any]) -> str:
         "- Leave `manifest_role` at `template` until every blocked face has a current, non-secret, reviewable locator.",
         f"- Canonical preflight command: `{manifest['preflight_command']}`",
         f"- Canonical preflight report: `{manifest['preflight_report']}`",
+        f"- Canonical face-to-manifest and proof map: `{manifest['preflight_report']}`",
+        f"- Compatibility mirror for older consumers: `{GAP_REPORT_REL_PATH}`",
         f"- Proof/report surfaces to recheck after manifest updates: `{', '.join(manifest['proof_paths_to_recheck'])}`",
         *[f"- Rerun: `{command}`" for command in manifest["rerun_commands"]],
         f"- Legacy compatibility rerun: `{manifest['legacy_gap_command']}`",
+        "",
+        "## Consistency Checks",
+        *_render_consistency_check_lines(summary["preflight_consistency_checks"]),
+        "",
+        "## Next Human Pass Checklist",
+        *_render_next_human_pass_lines(next_human_pass),
+        "",
+        "## Reopen False Path",
+        f"- {summary['reopen_false_path']}",
         "",
         "## Face Status",
         "",
@@ -1070,6 +1270,13 @@ def write_external_evidence_artifacts(
         as_of=as_of,
     )
     preflight_payload = build_external_evidence_preflight(gap_payload)
+    gap_payload["summary"]["next_human_pass"] = preflight_payload["reopen_readiness"]["next_human_pass"]
+    gap_payload["summary"]["preflight_consistency_checks"] = preflight_payload["reopen_readiness"][
+        "consistency_checks"
+    ]
+    gap_payload["summary"]["reopen_false_path"] = preflight_payload["reopen_readiness"][
+        "template_only_false_path"
+    ]
     preflight_proof_path = root / PREFLIGHT_PROOF_REL_PATH
     preflight_report_path = root / PREFLIGHT_REPORT_REL_PATH
     preflight_summary_path = root / PREFLIGHT_SUMMARY_REL_PATH

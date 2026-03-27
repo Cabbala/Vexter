@@ -40,6 +40,9 @@ def main() -> None:
                 "retry_gate_review_reopen_ready": payload["summary"][
                     "retry_gate_review_reopen_ready"
                 ],
+                "template_only_false_path": preflight["reopen_readiness"]["template_only_false_path"],
+                "consistency_checks": preflight["reopen_readiness"]["consistency_checks"],
+                "next_human_pass": preflight["reopen_readiness"]["next_human_pass"],
             },
             indent=2,
             sort_keys=False,

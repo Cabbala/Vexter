@@ -41,6 +41,9 @@ def main() -> None:
                     "retry_gate_review_reopen_ready"
                 ],
                 "canonical_command": readiness["canonical_command"],
+                "template_only_false_path": readiness["template_only_false_path"],
+                "consistency_checks": readiness["consistency_checks"],
+                "next_human_pass": readiness["next_human_pass"],
             },
             indent=2,
             sort_keys=False,

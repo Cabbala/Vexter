@@ -44,6 +44,9 @@ proof = json.loads(
     (root / "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-check.json").read_text()
 )
 manifest = json.loads((root / "artifacts/proof_bundle_manifest.json").read_text())
+preflight = json.loads(
+    (root / "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json").read_text()
+)
 
 handoff_src = (
     root / "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/HANDOFF.md"
@@ -82,6 +85,8 @@ recommended_next_step = (
     os.environ["RESULT_CURRENT_RECOMMENDED_STEP"] or proof["task_result"]["recommended_next_step"]
 )
 pass_successor = os.environ["RESULT_PASS_SUCCESSOR"] or proof["task_result"]["gate_pass_successor"]
+readiness = preflight["reopen_readiness"]
+next_human_pass = readiness["next_human_pass"]
 
 result_text = "\n".join(
     [
@@ -96,8 +101,47 @@ result_text = "\n".join(
         f"- Merged at: `{os.environ['RESULT_MERGED_AT']}`",
         f"- Current recommended step: `{recommended_next_step}`",
         f"- Gate-pass successor: `{pass_successor}`",
+        "- Next human pass: `NEXT_HUMAN_PASS.md`",
     ]
 ) + "\n"
+
+next_human_pass_lines = [
+    "# ATTESTATION-REFRESH Next Human Pass",
+    "",
+    f"- Reopen false-path: {readiness['template_only_false_path']}",
+    f"- Canonical preflight report: `{external_preflight_report_src.name}`",
+    f"- Canonical preflight proof: `{external_preflight_proof_src.name}`",
+    f"- Compatibility gap report: `{external_gap_report_src.name}`",
+    "",
+    "## Checklist",
+    f"- Keep manifest_role at template: {next_human_pass['hold_manifest_role_until_ready']}",
+    f"- Fill bounded-window fields once: `{', '.join(next_human_pass['bounded_window_fields_once'])}`",
+]
+for face in next_human_pass["faces"]:
+    blocker_groups = "; ".join(
+        f"{group}={', '.join(reasons)}" for group, reasons in face["blocked_reason_groups"].items()
+    )
+    next_human_pass_lines.append(
+        "- "
+        f"`{face['face']}` -> fill `{', '.join(face['manifest_fields_to_fill'])}`; "
+        f"blockers `{blocker_groups or 'none'}`; operator input: {face['operator_input_needed']}"
+    )
+next_human_pass_lines.extend(
+    [
+        "",
+        "## Rerun Order",
+        *[f"- `{command}`" for command in next_human_pass["rerun_sequence"]],
+        f"- Optional legacy compatibility rerun: `{next_human_pass['legacy_compatibility_command']}`",
+        "",
+        "## Consistency Checks",
+        *[
+            f"- `{name}`: `{str(value).lower()}`"
+            for name, value in readiness["consistency_checks"].items()
+        ],
+        "",
+    ]
+)
+next_human_pass_text = "\n".join(next_human_pass_lines)
 
 named_summaries = {
     "Anscombe": os.environ["ANSCOMBE_SUMMARY"].strip(),
@@ -126,6 +170,7 @@ shutil.copy2(external_gap_report_src, out_dir / external_gap_report_src.name)
 shutil.copy2(external_gap_proof_src, out_dir / external_gap_proof_src.name)
 shutil.copy2(external_gap_summary_src, out_dir / external_gap_summary_src.name)
 (out_dir / "RESULT.md").write_text(result_text)
+(out_dir / "NEXT_HUMAN_PASS.md").write_text(next_human_pass_text)
 (out_dir / "subagent_summary.md").write_text(subagent_text)
 
 (out_dir / "manifest.json").write_text(
@@ -144,6 +189,9 @@ shutil.copy2(external_gap_summary_src, out_dir / external_gap_summary_src.name)
             "external_evidence_gap_report": external_gap_report_src.name,
             "external_evidence_gap_proof": external_gap_proof_src.name,
             "external_evidence_gap_summary": external_gap_summary_src.name,
+            "next_human_pass": "NEXT_HUMAN_PASS.md",
+            "template_only_false_path": readiness["template_only_false_path"],
+            "consistency_checks": readiness["consistency_checks"],
         },
         indent=2,
         sort_keys=False,

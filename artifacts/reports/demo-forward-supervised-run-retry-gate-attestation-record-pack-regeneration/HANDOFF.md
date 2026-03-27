@@ -1,7 +1,7 @@
 # Demo Forward Supervised Run Retry Gate Attestation Record Pack Regeneration Handoff
 
 ## Current Status
-- outgoing_shift_window: 2026-03-27T22:03:30Z attestation-record-pack-regeneration lane
+- outgoing_shift_window: 2026-03-27T22:23:19Z attestation-record-pack-regeneration lane
 - incoming_shift_window: bounded additional refresh and possible regeneration rerun
 - task_state: supervised_run_retry_gate_attestation_record_pack_regeneration_blocked
 - shift_outcome: blocked
@@ -15,7 +15,7 @@
 - first_demo_target: Dexter `paper_live`
 - real_execution_leg: Dexter only
 - simulated_leg_or_none: Mew-X `sim_live`
-- vexter_main_commit: 014723587b100fb0046646d40b445537584b44ea
+- vexter_main_commit: 6252cef32c652d33f4c7374e61913f34d879854c
 - dexter_main_commit: ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938
 - mewx_frozen_commit: dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a
 - baseline_attestation_refresh_task_state: supervised_run_retry_gate_attestation_refresh_blocked
@@ -52,6 +52,8 @@
 - retry_gate_review_reopen_ready_from_external_evidence: false
 - evidence_preflight_status: blocked
 - evidence_preflight_aggregated_blocked_reasons: {"attestors_missing": 9, "bounded_window_missing": 9, "evidence_locator_missing": 9, "fresh_until_missing": 9, "locator_kind_missing": 9, "outside_repo_locator_not_supplied": 9, "template_only_manifest": 9, "verification_timestamp_missing": 9}
+- template_only_false_path: Manifest remains template_only, so retry-gate reopen stays blocked until the bounded supervised window fields are filled once, every blocked face carries a current non-secret reviewable locator, and the canonical preflight returns ready.
+- evidence_preflight_consistency_checks: {"blocked_face_count_matches_face_rows": true, "blocked_face_names_match_face_rows": true, "blocked_faces_have_manifest_fields_and_operator_input": true, "blocked_reason_counts_match_face_rows": true, "operator_inputs_remaining_match_blocked_faces": true, "template_only_false_path_holds": true}
 - regeneration_lane_reopen_ready_now: false
 - canonical_gap_blocked_faces_align_with_regeneration_lane: true
 - template_only_reopen_ready_consistency_holds: true
@@ -59,6 +61,22 @@
   - python3.12 scripts/run_demo_forward_supervised_run_retry_gate_evidence_preflight.py
   - python3.12 scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py
   - python3.12 scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py
+
+## Next Human Pass Checklist
+- Keep manifest_role at template: Keep manifest_role at template while any bounded-window field or blocked face field is still missing, stale, non-reviewable, or otherwise preflight-blocked.
+- Template-only false path: Manifest remains template_only, so retry-gate reopen stays blocked until the bounded supervised window fields are filled once, every blocked face carries a current non-secret reviewable locator, and the canonical preflight returns ready.
+- Fill bounded window once: bounded_supervised_window.label, bounded_supervised_window.starts_at, bounded_supervised_window.ends_at
+- external_credential_source_face: fill provided, attested_by, evidence_locator, locator_kind, verified_at, fresh_until, reviewable_without_secrets, reviewability_note; blockers state=template_only_manifest; missing=outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing; operator input Provide one current non-secret locator that confirms which Dexter paper-live credential source was resolved for the bounded supervised window.
+- venue_ref_face: fill provided, attested_by, evidence_locator, locator_kind, verified_at, fresh_until, reviewable_without_secrets, reviewability_note; blockers state=template_only_manifest; missing=outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing; operator input Provide one current non-secret locator that ties the repo-visible venue marker to the exact Dexter demo venue for the bounded supervised window.
+- account_ref_face: fill provided, attested_by, evidence_locator, locator_kind, verified_at, fresh_until, reviewable_without_secrets, reviewability_note; blockers state=template_only_manifest; missing=outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing; operator input Provide one current non-secret locator that shows which Dexter paper-live demo account the bounded supervised window is bound to.
+- connectivity_profile_face: fill provided, attested_by, evidence_locator, locator_kind, verified_at, fresh_until, reviewable_without_secrets, reviewability_note; blockers state=template_only_manifest; missing=outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing; operator input Provide one current non-secret locator that shows the intended connectivity profile was checked for venue/account reachability inside the bounded supervised window.
+- operator_owner_face: fill provided, attested_by, evidence_locator, locator_kind, verified_at, fresh_until, reviewable_without_secrets, reviewability_note; blockers state=template_only_manifest; missing=outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing; operator input Name one explicit operator owner and provide one reviewable non-secret locator that shows ownership for the bounded supervised window.
+- bounded_start_criteria_face: fill provided, attested_by, evidence_locator, locator_kind, verified_at, fresh_until, reviewable_without_secrets, reviewability_note; blockers state=template_only_manifest; missing=outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing; operator input Provide one current non-secret locator that fixes the bounded start window plus the go/no-go and abort owners for the next supervised retry attempt.
+- allowlist_symbol_lot_reconfirmed: fill provided, attested_by, evidence_locator, locator_kind, verified_at, fresh_until, reviewable_without_secrets, reviewability_note; blockers state=template_only_manifest; missing=outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing; operator input Provide one current non-secret locator that reconfirms the allowlist, default symbol, lot size, one-position cap, and bounded window guardrails for the next supervised attempt.
+- manual_latched_stop_all_visibility_reconfirmed: fill provided, attested_by, evidence_locator, locator_kind, verified_at, fresh_until, reviewable_without_secrets, reviewability_note; blockers state=template_only_manifest; missing=outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing; operator input Provide one current non-secret locator that freshly reconfirms `manual_latched_stop_all` visibility for the bounded supervised window.
+- terminal_snapshot_readability_reconfirmed: fill provided, attested_by, evidence_locator, locator_kind, verified_at, fresh_until, reviewable_without_secrets, reviewability_note; blockers state=template_only_manifest; missing=outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing; operator input Provide one current non-secret locator that freshly reconfirms terminal snapshot readability for the bounded supervised window.
+- Rerun in order: python3.12 scripts/run_demo_forward_supervised_run_retry_gate_evidence_preflight.py -> python3.12 scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py -> python3.12 scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py
+- Optional legacy compatibility rerun: python3.12 scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py
 
 ## Guardrails
 - route_mode: single_sleeve

@@ -53,6 +53,14 @@ def test_demo_forward_supervised_run_retry_gate_evidence_preflight_surfaces_are_
     assert "python3.12 scripts/run_demo_forward_supervised_run_retry_gate_evidence_preflight.py" in (
         readiness["canonical_command"]
     )
+    assert "Manifest remains template_only" in readiness["template_only_false_path"]
+    assert readiness["consistency_checks"]["blocked_reason_counts_match_face_rows"] is True
+    assert readiness["next_human_pass"]["bounded_window_fields_once"] == [
+        "bounded_supervised_window.label",
+        "bounded_supervised_window.starts_at",
+        "bounded_supervised_window.ends_at",
+    ]
+    assert readiness["next_human_pass"]["faces"][0]["face"] == "external_credential_source_face"
 
     first_face = proof["faces"][0]
     assert first_face["reopen_ready_now"] is False
@@ -63,6 +71,8 @@ def test_demo_forward_supervised_run_retry_gate_evidence_preflight_surfaces_are_
     assert "## Unified Reopen-Readiness" in report_text
     assert "Aggregated blocked reasons" in report_text
     assert "Face-To-Manifest And Proof Map" in report_text
+    assert "## Consistency Checks" in report_text
+    assert "## Next Human Pass Checklist" in report_text
     assert "Preflight status: `blocked`" in summary_text
     assert "Canonical preflight command" in summary_text
 
@@ -86,3 +96,6 @@ def test_demo_forward_supervised_run_retry_gate_evidence_preflight_script_report
         payload["canonical_command"]
         == "python3.12 scripts/run_demo_forward_supervised_run_retry_gate_evidence_preflight.py"
     )
+    assert "Manifest remains template_only" in payload["template_only_false_path"]
+    assert payload["consistency_checks"]["template_only_false_path_holds"] is True
+    assert payload["next_human_pass"]["faces"][0]["face"] == "external_credential_source_face"

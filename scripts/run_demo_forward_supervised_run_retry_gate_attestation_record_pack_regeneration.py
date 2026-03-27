@@ -150,9 +150,9 @@ DECISION = "retry_gate_review_blocked_pending_current_attestation_record_pack_re
 
 VERIFIED_DEXTER_COMMIT = "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938"
 VERIFIED_MEWX_COMMIT = "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
-VERIFIED_VEXTER_PR = 91
-VERIFIED_VEXTER_COMMIT = "014723587b100fb0046646d40b445537584b44ea"
-VERIFIED_VEXTER_MERGED_AT = "2026-03-27T21:46:22Z"
+VERIFIED_VEXTER_PR = 92
+VERIFIED_VEXTER_COMMIT = "6252cef32c652d33f4c7374e61913f34d879854c"
+VERIFIED_VEXTER_MERGED_AT = "2026-03-27T22:07:42Z"
 
 REQUIRED_FACE_NAMES = [
     "external_credential_source_face",
@@ -454,6 +454,32 @@ def build_status() -> str:
 """
 
 
+def build_next_human_pass_lines(readiness: dict[str, object]) -> list[str]:
+    next_human_pass = readiness["next_human_pass"]
+    lines = [
+        f"Keep manifest_role at template: {next_human_pass['hold_manifest_role_until_ready']}",
+        f"Template-only false path: {next_human_pass['template_only_false_path']}",
+        "Fill bounded window once: "
+        + ", ".join(next_human_pass["bounded_window_fields_once"]),
+    ]
+    for face in next_human_pass["faces"]:
+        blocker_groups = "; ".join(
+            f"{group}={', '.join(reasons)}"
+            for group, reasons in face["blocked_reason_groups"].items()
+        )
+        lines.append(
+            f"{face['face']}: fill {', '.join(face['manifest_fields_to_fill'])}; "
+            f"blockers {blocker_groups or 'none'}; operator input {face['operator_input_needed']}"
+        )
+    lines.extend(
+        [
+            "Rerun in order: " + " -> ".join(next_human_pass["rerun_sequence"]),
+            f"Optional legacy compatibility rerun: {next_human_pass['legacy_compatibility_command']}",
+        ]
+    )
+    return lines
+
+
 def build_current_report(
     run_timestamp: str,
     runtime_config: DexterDemoRuntimeConfig,
@@ -471,6 +497,7 @@ def build_current_report(
         readiness["retry_gate_review_reopen_ready"] is False
         and all(row["regenerated_face_reviewable_now"] is False for row in rows)
     )
+    next_human_pass_lines = build_next_human_pass_lines(readiness)
     return f"""# Demo Forward Supervised Run Retry Gate Attestation Record Pack Regeneration Report
 
 ## Verified GitHub State
@@ -520,6 +547,11 @@ def build_current_report(
 - blocked faces from canonical validator: `{", ".join(readiness['blocked_faces'])}`
 - aggregated blocked reasons: `{json.dumps(readiness['blocked_reason_counts'], sort_keys=True)}`
 - canonical face-to-manifest map: `{PREFLIGHT_REPORT_REL_PATH}` under `Face-To-Manifest And Proof Map`
+- template-only false path: `{readiness['template_only_false_path']}`
+- consistency checks: `{json.dumps(readiness['consistency_checks'], sort_keys=True)}`
+
+## Next Human Pass
+{chr(10).join(f"- {line}" for line in next_human_pass_lines)}
 
 ## Regeneration Findings
 - required regeneration faces: `{len(rows)}`
@@ -547,7 +579,7 @@ def build_proof_summary(gap_payload: dict[str, object], preflight_payload: dict[
 - Accepted attestation refresh as the bounded baseline current source of truth.
 - Promoted attestation record-pack regeneration as the current operator-visible lane for regeneration owner, trigger, regenerated locator shape, freshness inheritance, and reviewability.
 - Wired regeneration to the canonical external-evidence contract at `{CONTRACT_SPEC_REL_PATH}`, preflight report `{PREFLIGHT_REPORT_REL_PATH}`, and legacy gap report `{GAP_REPORT_REL_PATH}`.
-- Held the result at `FAIL/BLOCKED` because the manifest status is `{gap_payload['manifest']['status']}`, the preflight status is `{preflight_payload['reopen_readiness']['status']}`, and current regenerated faces are still missing or non-reviewable.
+- Held the result at `FAIL/BLOCKED` because the manifest status is `{gap_payload['manifest']['status']}`, the preflight status is `{preflight_payload['reopen_readiness']['status']}`, the template-only false path remains `{preflight_payload['reopen_readiness']['template_only_false_path']}`, and current regenerated faces are still missing or non-reviewable.
 - Recommended next step: `{NEXT_TASK_LANE}`.
 - Retry-gate pass successor: `{PASS_NEXT_TASK_LANE}`.
 """
@@ -777,6 +809,9 @@ def build_handoff(
         preflight_payload["reopen_readiness"]["retry_gate_review_reopen_ready"] is False
         and all(row["regenerated_face_reviewable_now"] is False for row in rows)
     )
+    next_human_pass_lines = "\n".join(
+        f"- {line}" for line in build_next_human_pass_lines(preflight_payload["reopen_readiness"])
+    )
     return f"""# Demo Forward Supervised Run Retry Gate Attestation Record Pack Regeneration Handoff
 
 ## Current Status
@@ -831,6 +866,8 @@ def build_handoff(
 - retry_gate_review_reopen_ready_from_external_evidence: {str(preflight_payload['reopen_readiness']['retry_gate_review_reopen_ready']).lower()}
 - evidence_preflight_status: {preflight_payload['reopen_readiness']['status']}
 - evidence_preflight_aggregated_blocked_reasons: {json.dumps(preflight_payload['reopen_readiness']['blocked_reason_counts'], sort_keys=True)}
+- template_only_false_path: {preflight_payload['reopen_readiness']['template_only_false_path']}
+- evidence_preflight_consistency_checks: {json.dumps(preflight_payload['reopen_readiness']['consistency_checks'], sort_keys=True)}
 - regeneration_lane_reopen_ready_now: {str(all(row['regenerated_face_reviewable_now'] for row in rows)).lower()}
 - canonical_gap_blocked_faces_align_with_regeneration_lane: {str(blocked_faces_align_with_gap).lower()}
 - template_only_reopen_ready_consistency_holds: {str(reopen_ready_consistent).lower()}
@@ -838,6 +875,9 @@ def build_handoff(
   - {gap_payload['manifest']['rerun_commands'][0]}
   - {gap_payload['manifest']['rerun_commands'][1]}
   - {gap_payload['manifest']['rerun_commands'][2]}
+
+## Next Human Pass Checklist
+{next_human_pass_lines}
 
 ## Guardrails
 - route_mode: single_sleeve
@@ -1046,6 +1086,13 @@ def main() -> None:
                 "aggregated_blocked_reason_counts": preflight_payload["reopen_readiness"][
                     "blocked_reason_counts"
                 ],
+                "template_only_false_path": preflight_payload["reopen_readiness"][
+                    "template_only_false_path"
+                ],
+                "consistency_checks": preflight_payload["reopen_readiness"][
+                    "consistency_checks"
+                ],
+                "next_human_pass": preflight_payload["reopen_readiness"]["next_human_pass"],
             },
             "sub_agents": list(SUB_AGENT_SUMMARIES),
             "supporting_files": [
@@ -1176,6 +1223,12 @@ def main() -> None:
         "external_evidence_preflight_status": preflight_payload["reopen_readiness"]["status"],
         "external_evidence_preflight_report": PREFLIGHT_REPORT_REL_PATH,
         "external_evidence_gap_report": GAP_REPORT_REL_PATH,
+        "external_evidence_template_only_false_path": preflight_payload["reopen_readiness"][
+            "template_only_false_path"
+        ],
+        "external_evidence_consistency_checks": preflight_payload["reopen_readiness"][
+            "consistency_checks"
+        ],
         "blocked_regenerated_faces": blocked_regenerated_faces,
         "record_pack_reviewable_now": checklist_attestation["record_pack_reviewable_now"],
         "retry_gate_review_reopen_ready": checklist_attestation["retry_gate_review_reopen_ready"],
@@ -1338,9 +1391,9 @@ def main() -> None:
         {
             "latest_vexter_pr": VERIFIED_VEXTER_PR,
             "latest_vexter_main_commit": VERIFIED_VEXTER_COMMIT,
-            "latest_recent_vexter_prs": [91, 90, 89, 88, 87],
-            "vexter_pr_91_merged_at": VERIFIED_VEXTER_MERGED_AT,
-            "vexter_pr_91_closed_at": VERIFIED_VEXTER_MERGED_AT,
+            "latest_recent_vexter_prs": [92, 91, 90, 89, 88],
+            "vexter_pr_92_merged_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_92_closed_at": VERIFIED_VEXTER_MERGED_AT,
         }
     )
     context_pack["evidence"]["demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration"] = {
@@ -1380,6 +1433,9 @@ def main() -> None:
         "aggregated_blocked_reason_counts": preflight_payload["reopen_readiness"][
             "blocked_reason_counts"
         ],
+        "template_only_false_path": preflight_payload["reopen_readiness"]["template_only_false_path"],
+        "consistency_checks": preflight_payload["reopen_readiness"]["consistency_checks"],
+        "next_human_pass": preflight_payload["reopen_readiness"]["next_human_pass"],
         "per_face_manifest_field_maps_explicit": all(
             bool(row["required_manifest_fields"]) for row in rows
         ),
@@ -1569,13 +1625,16 @@ def main() -> None:
         "source_faithful_modes": {"dexter": "paper_live", "mewx": "sim_live"},
         "status": TASK_STATUS,
         "sub_agents_used": [item["name"] for item in SUB_AGENT_SUMMARIES],
-        "supporting_vexter_prs": [91, 90, 89, 88, 87],
+        "supporting_vexter_prs": [92, 91, 90, 89, 88],
         "task_id": TASK_ID,
         "template_runtime_validation_errors": runtime_errors,
         "external_evidence_manifest_status": gap_payload["manifest"]["status"],
         "external_evidence_preflight_status": preflight_payload["reopen_readiness"]["status"],
         "external_evidence_preflight_report": PREFLIGHT_REPORT_REL_PATH,
         "external_evidence_gap_report": GAP_REPORT_REL_PATH,
+        "external_evidence_template_only_false_path": preflight_payload["reopen_readiness"][
+            "template_only_false_path"
+        ],
         "per_face_manifest_field_maps_explicit": all(
             bool(row["required_manifest_fields"]) for row in rows
         ),
@@ -1587,7 +1646,7 @@ def main() -> None:
         "verified_dexter_main_commit": VERIFIED_DEXTER_COMMIT,
         "verified_dexter_pr": 3,
         "verified_mewx_frozen_commit": VERIFIED_MEWX_COMMIT,
-        "verified_prs": [91, 90, 89],
+        "verified_prs": [92, 91, 90],
         "date": run_timestamp.split("T", 1)[0],
     }
     rewrite_local_ledger(ledger_payload)

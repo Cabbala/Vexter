@@ -1,9 +1,9 @@
 {
   "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION",
   "verified_github": {
-    "latest_vexter_pr": 91,
-    "latest_vexter_main_commit": "014723587b100fb0046646d40b445537584b44ea",
-    "latest_vexter_merged_at": "2026-03-27T21:46:22Z",
+    "latest_vexter_pr": 92,
+    "latest_vexter_main_commit": "6252cef32c652d33f4c7374e61913f34d879854c",
+    "latest_vexter_merged_at": "2026-03-27T22:07:42Z",
     "dexter_pr_3_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
   },
@@ -608,6 +608,284 @@
         "outside_repo_locator_not_supplied": 9,
         "template_only_manifest": 9,
         "verification_timestamp_missing": 9
+      },
+      "template_only_false_path": "Manifest remains template_only, so retry-gate reopen stays blocked until the bounded supervised window fields are filled once, every blocked face carries a current non-secret reviewable locator, and the canonical preflight returns ready.",
+      "consistency_checks": {
+        "blocked_face_count_matches_face_rows": true,
+        "blocked_face_names_match_face_rows": true,
+        "blocked_reason_counts_match_face_rows": true,
+        "operator_inputs_remaining_match_blocked_faces": true,
+        "blocked_faces_have_manifest_fields_and_operator_input": true,
+        "template_only_false_path_holds": true
+      },
+      "next_human_pass": {
+        "bounded_window_fields_once": [
+          "bounded_supervised_window.label",
+          "bounded_supervised_window.starts_at",
+          "bounded_supervised_window.ends_at"
+        ],
+        "hold_manifest_role_until_ready": "Keep manifest_role at template while any bounded-window field or blocked face field is still missing, stale, non-reviewable, or otherwise preflight-blocked.",
+        "template_only_false_path": "Manifest remains template_only, so retry-gate reopen stays blocked until the bounded supervised window fields are filled once, every blocked face carries a current non-secret reviewable locator, and the canonical preflight returns ready.",
+        "faces": [
+          {
+            "face": "external_credential_source_face",
+            "manifest_fields_to_fill": [
+              "provided",
+              "attested_by",
+              "evidence_locator",
+              "locator_kind",
+              "verified_at",
+              "fresh_until",
+              "reviewable_without_secrets",
+              "reviewability_note"
+            ],
+            "blocked_reason_groups": {
+              "state": [
+                "template_only_manifest"
+              ],
+              "missing": [
+                "outside_repo_locator_not_supplied",
+                "attestors_missing",
+                "evidence_locator_missing",
+                "locator_kind_missing",
+                "verification_timestamp_missing",
+                "fresh_until_missing",
+                "bounded_window_missing"
+              ]
+            },
+            "operator_input_needed": "Provide one current non-secret locator that confirms which Dexter paper-live credential source was resolved for the bounded supervised window."
+          },
+          {
+            "face": "venue_ref_face",
+            "manifest_fields_to_fill": [
+              "provided",
+              "attested_by",
+              "evidence_locator",
+              "locator_kind",
+              "verified_at",
+              "fresh_until",
+              "reviewable_without_secrets",
+              "reviewability_note"
+            ],
+            "blocked_reason_groups": {
+              "state": [
+                "template_only_manifest"
+              ],
+              "missing": [
+                "outside_repo_locator_not_supplied",
+                "attestors_missing",
+                "evidence_locator_missing",
+                "locator_kind_missing",
+                "verification_timestamp_missing",
+                "fresh_until_missing",
+                "bounded_window_missing"
+              ]
+            },
+            "operator_input_needed": "Provide one current non-secret locator that ties the repo-visible venue marker to the exact Dexter demo venue for the bounded supervised window."
+          },
+          {
+            "face": "account_ref_face",
+            "manifest_fields_to_fill": [
+              "provided",
+              "attested_by",
+              "evidence_locator",
+              "locator_kind",
+              "verified_at",
+              "fresh_until",
+              "reviewable_without_secrets",
+              "reviewability_note"
+            ],
+            "blocked_reason_groups": {
+              "state": [
+                "template_only_manifest"
+              ],
+              "missing": [
+                "outside_repo_locator_not_supplied",
+                "attestors_missing",
+                "evidence_locator_missing",
+                "locator_kind_missing",
+                "verification_timestamp_missing",
+                "fresh_until_missing",
+                "bounded_window_missing"
+              ]
+            },
+            "operator_input_needed": "Provide one current non-secret locator that shows which Dexter paper-live demo account the bounded supervised window is bound to."
+          },
+          {
+            "face": "connectivity_profile_face",
+            "manifest_fields_to_fill": [
+              "provided",
+              "attested_by",
+              "evidence_locator",
+              "locator_kind",
+              "verified_at",
+              "fresh_until",
+              "reviewable_without_secrets",
+              "reviewability_note"
+            ],
+            "blocked_reason_groups": {
+              "state": [
+                "template_only_manifest"
+              ],
+              "missing": [
+                "outside_repo_locator_not_supplied",
+                "attestors_missing",
+                "evidence_locator_missing",
+                "locator_kind_missing",
+                "verification_timestamp_missing",
+                "fresh_until_missing",
+                "bounded_window_missing"
+              ]
+            },
+            "operator_input_needed": "Provide one current non-secret locator that shows the intended connectivity profile was checked for venue/account reachability inside the bounded supervised window."
+          },
+          {
+            "face": "operator_owner_face",
+            "manifest_fields_to_fill": [
+              "provided",
+              "attested_by",
+              "evidence_locator",
+              "locator_kind",
+              "verified_at",
+              "fresh_until",
+              "reviewable_without_secrets",
+              "reviewability_note"
+            ],
+            "blocked_reason_groups": {
+              "state": [
+                "template_only_manifest"
+              ],
+              "missing": [
+                "outside_repo_locator_not_supplied",
+                "attestors_missing",
+                "evidence_locator_missing",
+                "locator_kind_missing",
+                "verification_timestamp_missing",
+                "fresh_until_missing",
+                "bounded_window_missing"
+              ]
+            },
+            "operator_input_needed": "Name one explicit operator owner and provide one reviewable non-secret locator that shows ownership for the bounded supervised window."
+          },
+          {
+            "face": "bounded_start_criteria_face",
+            "manifest_fields_to_fill": [
+              "provided",
+              "attested_by",
+              "evidence_locator",
+              "locator_kind",
+              "verified_at",
+              "fresh_until",
+              "reviewable_without_secrets",
+              "reviewability_note"
+            ],
+            "blocked_reason_groups": {
+              "state": [
+                "template_only_manifest"
+              ],
+              "missing": [
+                "outside_repo_locator_not_supplied",
+                "attestors_missing",
+                "evidence_locator_missing",
+                "locator_kind_missing",
+                "verification_timestamp_missing",
+                "fresh_until_missing",
+                "bounded_window_missing"
+              ]
+            },
+            "operator_input_needed": "Provide one current non-secret locator that fixes the bounded start window plus the go/no-go and abort owners for the next supervised retry attempt."
+          },
+          {
+            "face": "allowlist_symbol_lot_reconfirmed",
+            "manifest_fields_to_fill": [
+              "provided",
+              "attested_by",
+              "evidence_locator",
+              "locator_kind",
+              "verified_at",
+              "fresh_until",
+              "reviewable_without_secrets",
+              "reviewability_note"
+            ],
+            "blocked_reason_groups": {
+              "state": [
+                "template_only_manifest"
+              ],
+              "missing": [
+                "outside_repo_locator_not_supplied",
+                "attestors_missing",
+                "evidence_locator_missing",
+                "locator_kind_missing",
+                "verification_timestamp_missing",
+                "fresh_until_missing",
+                "bounded_window_missing"
+              ]
+            },
+            "operator_input_needed": "Provide one current non-secret locator that reconfirms the allowlist, default symbol, lot size, one-position cap, and bounded window guardrails for the next supervised attempt."
+          },
+          {
+            "face": "manual_latched_stop_all_visibility_reconfirmed",
+            "manifest_fields_to_fill": [
+              "provided",
+              "attested_by",
+              "evidence_locator",
+              "locator_kind",
+              "verified_at",
+              "fresh_until",
+              "reviewable_without_secrets",
+              "reviewability_note"
+            ],
+            "blocked_reason_groups": {
+              "state": [
+                "template_only_manifest"
+              ],
+              "missing": [
+                "outside_repo_locator_not_supplied",
+                "attestors_missing",
+                "evidence_locator_missing",
+                "locator_kind_missing",
+                "verification_timestamp_missing",
+                "fresh_until_missing",
+                "bounded_window_missing"
+              ]
+            },
+            "operator_input_needed": "Provide one current non-secret locator that freshly reconfirms `manual_latched_stop_all` visibility for the bounded supervised window."
+          },
+          {
+            "face": "terminal_snapshot_readability_reconfirmed",
+            "manifest_fields_to_fill": [
+              "provided",
+              "attested_by",
+              "evidence_locator",
+              "locator_kind",
+              "verified_at",
+              "fresh_until",
+              "reviewable_without_secrets",
+              "reviewability_note"
+            ],
+            "blocked_reason_groups": {
+              "state": [
+                "template_only_manifest"
+              ],
+              "missing": [
+                "outside_repo_locator_not_supplied",
+                "attestors_missing",
+                "evidence_locator_missing",
+                "locator_kind_missing",
+                "verification_timestamp_missing",
+                "fresh_until_missing",
+                "bounded_window_missing"
+              ]
+            },
+            "operator_input_needed": "Provide one current non-secret locator that freshly reconfirms terminal snapshot readability for the bounded supervised window."
+          }
+        ],
+        "rerun_sequence": [
+          "python3.12 scripts/run_demo_forward_supervised_run_retry_gate_evidence_preflight.py",
+          "python3.12 scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
+          "python3.12 scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py"
+        ],
+        "legacy_compatibility_command": "python3.12 scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py"
       }
     },
     "sub_agents": [

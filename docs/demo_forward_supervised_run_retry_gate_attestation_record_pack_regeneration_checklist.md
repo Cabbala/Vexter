@@ -19,12 +19,14 @@
 1. Start at `artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-status.md`.
 2. Review `artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-report.md`.
 3. Review `artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json`.
-4. Carry continuity from `artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md`.
-5. Use `docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_decision_surface.md` as the single record-pack regeneration decision surface.
-6. Keep one regeneration row per required face: credential source, venue ref, account ref, connectivity profile, operator owner, bounded start criteria, allowlist / symbol / lot reconfirmation, `manual_latched_stop_all` visibility, and terminal snapshot readability.
-7. For every row, confirm regeneration owner, regeneration trigger, minimum regenerated locator shape, freshness inheritance or reset rule, and what makes the regenerated face reviewable enough are explicit.
-8. For every row, record whether a current fresh-enough bounded-window locator is present and can seed the regenerated face without embedding secret material.
-9. Hold the lane at `FAIL/BLOCKED` until every required face is regenerated, current, and reviewable enough to reopen retry-gate review honestly.
+4. Review the canonical manifest template at `manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json`.
+5. Review the canonical gap report at `artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md`.
+6. Carry continuity from `artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md`.
+7. Use `docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_decision_surface.md` as the single record-pack regeneration decision surface.
+8. Keep one regeneration row per required face: credential source, venue ref, account ref, connectivity profile, operator owner, bounded start criteria, allowlist / symbol / lot reconfirmation, `manual_latched_stop_all` visibility, and terminal snapshot readability.
+9. For every row, confirm regeneration owner, regeneration trigger, minimum regenerated locator shape, freshness inheritance or reset rule, and what makes the regenerated face reviewable enough are explicit.
+10. For every row, record whether a current fresh-enough bounded-window locator is present and can seed the regenerated face without embedding secret material.
+11. Hold the lane at `FAIL/BLOCKED` until every required face is regenerated, current, and reviewable enough to reopen retry-gate review honestly.
 
 ## Regeneration Faces
 | Regeneration face | Regeneration owner | Regeneration trigger | Minimum regenerated locator shape | Freshness inheritance or reset rule | Reviewable enough when |

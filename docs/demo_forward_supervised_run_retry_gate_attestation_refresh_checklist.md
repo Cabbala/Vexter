@@ -19,12 +19,14 @@
 1. Start at `artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh-status.md`.
 2. Review `artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh-report.md`.
 3. Review `artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-check.json`.
-4. Carry continuity from `artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/HANDOFF.md`.
-5. Use `docs/demo_forward_supervised_run_retry_gate_attestation_refresh_decision_surface.md` as the single attestation refresh decision surface.
-6. Keep one refresh row per required face: credential source, venue ref, account ref, connectivity profile, operator owner, bounded start criteria, allowlist / symbol / lot reconfirmation, `manual_latched_stop_all` visibility, and terminal snapshot readability.
-7. For every row, confirm refresh owner, refresh trigger, minimum fresh evidence locator shape, stale condition, and what makes the refreshed face usable for retry-gate review are explicit.
-8. For every row, record whether a current fresh-enough bounded-window locator is present without embedding secret material.
-9. Hold the lane at `FAIL/BLOCKED` until every required face is current, fresh enough, and usable enough to rerun the current record-pack regeneration honestly.
+4. Review the canonical manifest template at `manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json`.
+5. Review the canonical gap report at `artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md`.
+6. Carry continuity from `artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/HANDOFF.md`.
+7. Use `docs/demo_forward_supervised_run_retry_gate_attestation_refresh_decision_surface.md` as the single attestation refresh decision surface.
+8. Keep one refresh row per required face: credential source, venue ref, account ref, connectivity profile, operator owner, bounded start criteria, allowlist / symbol / lot reconfirmation, `manual_latched_stop_all` visibility, and terminal snapshot readability.
+9. For every row, confirm refresh owner, refresh trigger, minimum fresh evidence locator shape, stale condition, and what makes the refreshed face usable for retry-gate review are explicit.
+10. For every row, record whether a current fresh-enough bounded-window locator is present without embedding secret material.
+11. Hold the lane at `FAIL/BLOCKED` until every required face is current, fresh enough, and usable enough to rerun the current record-pack regeneration honestly.
 
 ## Refresh Faces
 | Refresh face | Refresh owner | Refresh trigger | Minimum fresh evidence locator shape | Stale condition | Usable for retry-gate review when |

@@ -32,6 +32,9 @@ Promote a bounded `attestation_record_pack_regeneration` lane as the current sou
 - current handoff
 - record-pack regeneration checklist
 - record-pack regeneration decision surface
+- canonical external evidence contract
+- canonical external evidence manifest
+- canonical external evidence gap proof / gap report / gap summary
 - next recommended step
 
 ## Honest Regeneration Model
@@ -45,6 +48,8 @@ Each regeneration face must make explicit:
 - minimum regenerated locator shape
 - freshness inheritance or reset rule
 - what makes the regenerated face reviewable enough
+
+The lane must derive those fields from the canonical external-evidence validator instead of re-parsing older lane prose.
 
 ## Planner Boundary
 - `prepare`

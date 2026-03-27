@@ -60,7 +60,16 @@
     "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
     "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration.tar.gz",
     "scripts/export_attestation_refresh_closeout_bundle.sh",
-    "scripts/export_attestation_record_pack_regeneration_closeout_bundle.sh"
+    "scripts/export_attestation_record_pack_regeneration_closeout_bundle.sh",
+    "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_EXTERNAL_EVIDENCE_CONTRACT.md",
+    "manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json",
+    "scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py",
+    "tests/test_demo_forward_supervised_run_retry_gate_external_evidence_gap.py",
+    "vexter/demo_readiness/__init__.py",
+    "vexter/demo_readiness/external_evidence.py",
+    "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
+    "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
+    "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md"
   ],
   "code": [
     "vexter/comparison/",
@@ -101,7 +110,9 @@
     "docs/demo_forward_supervised_run_retry_gate_attestation_refresh_checklist.md",
     "docs/demo_forward_supervised_run_retry_gate_attestation_refresh_decision_surface.md",
     "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_checklist.md",
-    "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_decision_surface.md"
+    "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_decision_surface.md",
+    "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_EXTERNAL_EVIDENCE_CONTRACT.md",
+    "manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json"
   ],
   "scripts": [
     "scripts/bootstrap_windows_workspace.sh",
@@ -130,7 +141,10 @@
     "scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
     "scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
     "scripts/export_attestation_refresh_closeout_bundle.sh",
-    "scripts/export_attestation_record_pack_regeneration_closeout_bundle.sh"
+    "scripts/export_attestation_record_pack_regeneration_closeout_bundle.sh",
+    "scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py",
+    "vexter/demo_readiness/__init__.py",
+    "vexter/demo_readiness/external_evidence.py"
   ],
   "proof_files": [
     "artifacts/proofs/demo-executor-adapter-implementation-check.json",
@@ -196,7 +210,9 @@
     "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-check.json",
     "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-summary.md",
     "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
-    "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-summary.md"
+    "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-summary.md",
+    "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
+    "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md"
   ],
   "reports": [
     "artifacts/reports/demo-executor-adapter-implementation-report.md",
@@ -307,7 +323,8 @@
     "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-report.md",
     "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-status.md",
     "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/SUBAGENTS.md",
-    "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/subagent_summary.md"
+    "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/subagent_summary.md",
+    "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md"
   ],
   "next_task": {
     "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH",
@@ -315,6 +332,7 @@
     "resume_requirements": [
       "Keep Dexter pinned at ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938 and Mew-X frozen at dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a.",
       "Start from the current attestation record-pack regeneration status, report, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.",
+      "Replace the template-only canonical external-evidence manifest with current non-secret evidence locators for every required face before rerunning regeneration or reopening retry-gate review.",
       "Collect one current, fresh-enough, reviewable locator for every required face before rerunning regeneration or reopening retry-gate review.",
       "Keep the planner boundary at prepare / start / status / stop / snapshot and preserve poll_first plus manual_latched_stop_all.",
       "Do not introduce funded live or a Mew-X real-demo path."
@@ -485,7 +503,8 @@
     "demo_forward_retry_gate_attestation_record_pack_regeneration_decision_surface_written": true,
     "demo_forward_retry_gate_attestation_record_pack_regeneration_subagent_summary_written": true,
     "recommended_next_step_returns_to_attestation_refresh_when_regeneration_stays_blocked": true,
-    "retry_gate_review_requires_current_reviewable_regenerated_faces": true
+    "retry_gate_review_requires_current_reviewable_regenerated_faces": true,
+    "demo_forward_retry_gate_external_evidence_gap_written": true
   },
   "task_result": {
     "outcome": "FAIL/BLOCKED",

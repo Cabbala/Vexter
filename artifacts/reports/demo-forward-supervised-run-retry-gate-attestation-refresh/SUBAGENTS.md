@@ -1,16 +1,16 @@
 # Demo Forward Supervised Run Retry Gate Attestation Refresh Sub-agent Summaries
 
 ## Anscombe
-- Confirmed PR `#86` / merge commit `2be10c663f8d5f441defeea5f506108d1aae25c3` is latest merged `main`, while repo-level current pointers still point at regeneration, so refresh has to be re-promoted atomically from that newer baseline.
-- Flagged summary, context, manifest, ledger, README, bundle path/source, and handoff continuity as the minimum pointer set that must move together so refresh becomes current and regeneration returns to the blocked next step.
-- Called out partial flips as the main correctness risk because stale pre-PR `#86` refresh metadata, duplicated refresh clauses, or lingering regeneration-current flags would make the handoff internally inconsistent.
+- Reverified PR `#88` / merge commit `1d43904d392eefdcc911f00102cdff62bce9deb2` as latest merged `main`, then treated the record-pack-regeneration lane as current repo-visible truth rather than reopening older refresh assumptions.
+- The main duplication before this change was that refresh and regeneration re-derived the same outside-repo blocker semantics from each other instead of from one canonical evidence manifest and validator.
+- Current-pointer risk remains atomic: summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces must all reflect the same fail-closed truth once the canonical gap report is introduced.
 
 ## Euler
 - Confirmed no architecture drift: the planner boundary stays `prepare / start / status / stop / snapshot`, `manual_latched_stop_all` stays planner-owned, Dexter remains `paper_live`, and frozen Mew-X remains `sim_live`.
-- Kept the fail-closed split crisp: refresh owns freshness, owner, trigger, locator-shape, and staleness while regeneration owns regenerated-face derivation and reviewability, and both keep `supervised_run_retry_gate` as pass successor only.
-- Recommended only light wording normalization so refresh remains auditable without widening scope or implying retry execution success.
+- Kept the fail-closed split crisp: refresh now consumes the canonical manifest for freshness and usability, while regeneration consumes the same canonical gap output for inheritance and reviewability without widening runtime scope.
+- The new contract remains non-secret and bounded; it never implies funded-live access, broader venue scope, or Dexter / Mew-X runtime rewrites.
 
 ## Parfit
-- Scoped the minimal file set to the refresh generator, current-pointer tests, `build_proof_bundle.sh`, and a refresh-side closeout exporter so the final tarball can be generated reproducibly.
-- Recommended regenerating refresh artifacts from the generator first, then validating focused current-pointer regressions before widening to the shared pytest suite.
-- Merge readiness depends on exact agreement across summary, context, manifest, ledger, README, refresh bundle path/source, and PR `#86` metadata on branch `codex/attestation-refresh-repromotion-after-pr86`.
+- The smallest safe implementation is one canonical manifest + validator + standalone gap report, then wiring refresh and regeneration to consume that shared output while leaving historical lanes intact.
+- Validation should start with the new gap script plus refresh/regeneration tests, then widen to bundle/export coverage and the full pytest suite.
+- Merge readiness depends on exact agreement across summary, context, manifest, ledger, README, refresh bundle metadata, and the new external-evidence paths on branch `codex/demo-readiness-external-evidence-intake`.

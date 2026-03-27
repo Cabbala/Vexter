@@ -124,13 +124,13 @@ PASS_NEXT_TASK_ID = "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE"
 PASS_NEXT_TASK_STATE = "ready_for_supervised_run_retry_gate_recheck"
 PASS_NEXT_TASK_LANE = "supervised_run_retry_gate"
 DECISION = "retry_gate_review_blocked_pending_fresh_attestation_refresh_and_record_pack_regeneration"
-PUBLISHED_BRANCH = "feat/attestation-refresh"
+PUBLISHED_BRANCH = "feat/attestation-refresh-repromotion-after-pr84"
 
 VERIFIED_DEXTER_COMMIT = "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938"
 VERIFIED_MEWX_COMMIT = "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
-VERIFIED_VEXTER_PR = 83
-VERIFIED_VEXTER_COMMIT = "5b78804188e27199e90950f610fd279ad7a133f6"
-VERIFIED_VEXTER_MERGED_AT = "2026-03-27T13:47:24Z"
+VERIFIED_VEXTER_PR = 84
+VERIFIED_VEXTER_COMMIT = "31fbee24beb56eb55338d4529c2c9420a0ac5ea9"
+VERIFIED_VEXTER_MERGED_AT = "2026-03-27T14:23:43Z"
 
 REQUIRED_FACE_NAMES = [
     "external_credential_source_face",
@@ -148,25 +148,25 @@ SUB_AGENT_SUMMARIES = (
     {
         "name": "Anscombe",
         "lines": [
-            "Confirmed that refresh has to be re-promoted atomically after the regeneration merge so status, report, summary, proof, handoff, checklist, decision-surface, manifest, context-pack, and bundle pointers agree again on one current lane.",
-            "Recommended treating regeneration as baseline evidence rather than the current source of truth: refresh stays observational and fail-closed until every regenerated face points to one current, fresh-enough, reviewer-readable locator.",
-            "Flagged stale pointer drift as the main risk, especially when README, task ledger, and bundle metadata still inherit the regeneration lane by default.",
+            "Confirmed PR `#84` / merge commit `31fbee24beb56eb55338d4529c2c9420a0ac5ea9` advanced latest merged `main` while repo-level current pointers still point at regeneration, so refresh has to be re-promoted atomically from that newer baseline.",
+            "Flagged summary, context, manifest, ledger, README, and bundle path/source drift as the minimum pointer set that must move together so refresh becomes current and regeneration returns to the blocked next step.",
+            "Called out partial flips as the main correctness risk because stale PR `#83` metadata or regeneration bundle pointers would make the handoff internally inconsistent.",
         ],
     },
     {
         "name": "Euler",
         "lines": [
-            "Kept the bounded runtime envelope unchanged: Dexter-only `paper_live`, frozen Mew-X `sim_live`, `single_sleeve`, `dexter_default`, explicit allowlist, small lot, one-plan, one-position, bounded supervision, and funded-live forbidden.",
-            "Confirmed the refreshed row schema still belongs to refresh owner, refresh trigger, minimum fresh evidence locator shape, stale condition, and retry-gate usability, but it now has to be derived from the regeneration decision surface rather than the older record-pack surface.",
-            "Found no planner or adapter seam drift: the lane stays docs/proofs/report/script only, with `prepare / start / status / stop / snapshot` and `manual_latched_stop_all` unchanged, while `build_proof_bundle.sh` fallback now needs to follow refresh again.",
+            "Confirmed no architecture drift: the planner boundary stays `prepare / start / status / stop / snapshot`, `manual_latched_stop_all` stays planner-owned, Dexter remains `paper_live`, and frozen Mew-X remains `sim_live`.",
+            "Kept the fail-closed split crisp: refresh owns freshness, owner, trigger, locator-shape, and staleness while regeneration owns regenerated-face derivation and reviewability, and both keep `supervised_run_retry_gate` as pass successor only.",
+            "Recommended only light wording normalization so refresh remains auditable without widening scope or implying retry execution success.",
         ],
     },
     {
         "name": "Parfit",
         "lines": [
-            "Scoped the smallest safe change set to the refresh generator, refresh report/proof surfaces, README/current-pointer rewiring, targeted shared tests, and the bundle fallback path.",
-            "Recommended validating generator output and the focused refresh regressions first, then widening to the shared pytest suite because several older task tests pin the repo-level current task and next-task metadata.",
-            "Merge readiness depends on starting from PR `#83` / merge commit `5b78804188e27199e90950f610fd279ad7a133f6`, routing the blocked next step back to record-pack regeneration, and reporting the published branch as `feat/attestation-refresh`.",
+            "Scoped the minimal file set to the refresh generator, current-pointer tests, `build_proof_bundle.sh`, and a refresh-side closeout exporter so the final tarball can be generated reproducibly.",
+            "Recommended regenerating refresh artifacts from the generator first, then validating focused current-pointer regressions before widening to the shared pytest suite.",
+            "Merge readiness depends on exact agreement across summary, context, manifest, ledger, README, refresh bundle path/source, and PR `#84` metadata on branch `feat/attestation-refresh-repromotion-after-pr84`.",
         ],
     },
 )
@@ -490,6 +490,7 @@ Each refresh face must make explicit:
 - `status`
 - `stop`
 - `snapshot`
+- `manual_latched_stop_all` remains planner-owned
 
 ## Out Of Scope
 - no funded live trading
@@ -625,7 +626,7 @@ Promote one bounded attestation refresh lane that keeps current status, report, 
 
 def build_min_prompt() -> str:
     return (
-        "GitHub latest state is Vexter main PR #83 merge commit "
+        f"GitHub latest state is Vexter main PR #{VERIFIED_VEXTER_PR} merge commit "
         f"{VERIFIED_VEXTER_COMMIT} on {VERIFIED_VEXTER_MERGED_AT}. "
         "Accept attestation record-pack regeneration as baseline, promote attestation refresh as the current source of truth, "
         "keep Dexter-only paper_live and frozen Mew-X sim_live, do not commit secrets, keep the lane FAIL/BLOCKED "
@@ -875,6 +876,7 @@ def main() -> None:
                 "docs/demo_forward_supervised_run_retry_gate_attestation_refresh_decision_surface.md",
                 "scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
                 "scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
+                "scripts/export_attestation_refresh_closeout_bundle.sh",
                 "scripts/build_proof_bundle.sh",
                 "tests/test_demo_forward_supervised_run_retry_gate.py",
                 "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack.py",
@@ -1037,6 +1039,7 @@ def main() -> None:
             "tests/test_demo_forward_supervised_run_retry_readiness.py",
             "tests/test_bootstrap_layout.py",
             "scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
+            "scripts/export_attestation_refresh_closeout_bundle.sh",
             "scripts/build_proof_bundle.sh",
             "artifacts/summary.md",
             "artifacts/context_pack.json",
@@ -1063,9 +1066,9 @@ def main() -> None:
         {
             "latest_vexter_pr": VERIFIED_VEXTER_PR,
             "latest_vexter_main_commit": VERIFIED_VEXTER_COMMIT,
-            "latest_recent_vexter_prs": [83, 82, 81, 80, 79],
-            "vexter_pr_83_merged_at": VERIFIED_VEXTER_MERGED_AT,
-            "vexter_pr_83_closed_at": VERIFIED_VEXTER_MERGED_AT,
+            "latest_recent_vexter_prs": [84, 83, 82, 81, 80],
+            "vexter_pr_84_merged_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_84_closed_at": VERIFIED_VEXTER_MERGED_AT,
         }
     )
     context_pack["evidence"]["demo_forward_supervised_run_retry_gate_attestation_refresh"] = {
@@ -1127,6 +1130,7 @@ def main() -> None:
         ("docs", "docs/demo_forward_supervised_run_retry_gate_attestation_refresh_checklist.md"),
         ("docs", "docs/demo_forward_supervised_run_retry_gate_attestation_refresh_decision_surface.md"),
         ("scripts", "scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py"),
+        ("scripts", "scripts/export_attestation_refresh_closeout_bundle.sh"),
         ("proof_files", "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-check.json"),
         ("proof_files", "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-summary.md"),
         ("reports", "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh"),
@@ -1141,6 +1145,7 @@ def main() -> None:
         "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_ATTESTATION_REFRESH.md",
         "plans/demo_forward_supervised_run_retry_gate_attestation_refresh_plan.md",
         "tests/test_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
+        "scripts/export_attestation_refresh_closeout_bundle.sh",
         "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-refresh.tar.gz",
     ):
         if path not in manifest["included_paths"]:
@@ -1200,13 +1205,13 @@ def main() -> None:
         "source_faithful_modes": {"dexter": "paper_live", "mewx": "sim_live"},
         "status": TASK_STATUS,
         "sub_agents_used": [item["name"] for item in SUB_AGENT_SUMMARIES],
-        "supporting_vexter_prs": [83, 82, 81, 80, 79],
+        "supporting_vexter_prs": [84, 83, 82, 81, 80],
         "task_id": TASK_ID,
         "template_runtime_validation_errors": runtime_errors,
         "verified_dexter_main_commit": VERIFIED_DEXTER_COMMIT,
         "verified_dexter_pr": 3,
         "verified_mewx_frozen_commit": VERIFIED_MEWX_COMMIT,
-        "verified_prs": [83, 82, 81],
+        "verified_prs": [84, 83, 82],
         "date": run_timestamp.split("T", 1)[0],
     }
     rewrite_local_ledger(ledger_payload)

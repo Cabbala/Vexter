@@ -1009,6 +1009,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "feat/attestation-record-pack",
         "feat/attestation-refresh",
         "feat/attestation-refresh-repromotion-after-pr84",
+        "codex/attestation-refresh-repromotion-after-pr86",
         "feat/attestation-record-pack-regeneration",
         "codex/attestation-record-pack-regeneration-repromotion-after-pr85",
         }

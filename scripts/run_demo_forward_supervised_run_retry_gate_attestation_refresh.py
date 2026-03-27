@@ -124,13 +124,13 @@ PASS_NEXT_TASK_ID = "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE"
 PASS_NEXT_TASK_STATE = "ready_for_supervised_run_retry_gate_recheck"
 PASS_NEXT_TASK_LANE = "supervised_run_retry_gate"
 DECISION = "retry_gate_review_blocked_pending_fresh_attestation_refresh_and_record_pack_regeneration"
-PUBLISHED_BRANCH = "feat/attestation-refresh-repromotion-after-pr84"
+PUBLISHED_BRANCH = "codex/attestation-refresh-repromotion-after-pr86"
 
 VERIFIED_DEXTER_COMMIT = "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938"
 VERIFIED_MEWX_COMMIT = "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
-VERIFIED_VEXTER_PR = 84
-VERIFIED_VEXTER_COMMIT = "31fbee24beb56eb55338d4529c2c9420a0ac5ea9"
-VERIFIED_VEXTER_MERGED_AT = "2026-03-27T14:23:43Z"
+VERIFIED_VEXTER_PR = 86
+VERIFIED_VEXTER_COMMIT = "2be10c663f8d5f441defeea5f506108d1aae25c3"
+VERIFIED_VEXTER_MERGED_AT = "2026-03-27T19:19:40Z"
 
 REQUIRED_FACE_NAMES = [
     "external_credential_source_face",
@@ -148,9 +148,9 @@ SUB_AGENT_SUMMARIES = (
     {
         "name": "Anscombe",
         "lines": [
-            "Confirmed PR `#84` / merge commit `31fbee24beb56eb55338d4529c2c9420a0ac5ea9` advanced latest merged `main` while repo-level current pointers still point at regeneration, so refresh has to be re-promoted atomically from that newer baseline.",
-            "Flagged summary, context, manifest, ledger, README, and bundle path/source drift as the minimum pointer set that must move together so refresh becomes current and regeneration returns to the blocked next step.",
-            "Called out partial flips as the main correctness risk because stale PR `#83` metadata or regeneration bundle pointers would make the handoff internally inconsistent.",
+            "Confirmed PR `#86` / merge commit `2be10c663f8d5f441defeea5f506108d1aae25c3` is latest merged `main`, while repo-level current pointers still point at regeneration, so refresh has to be re-promoted atomically from that newer baseline.",
+            "Flagged summary, context, manifest, ledger, README, bundle path/source, and handoff continuity as the minimum pointer set that must move together so refresh becomes current and regeneration returns to the blocked next step.",
+            "Called out partial flips as the main correctness risk because stale pre-PR `#86` refresh metadata, duplicated refresh clauses, or lingering regeneration-current flags would make the handoff internally inconsistent.",
         ],
     },
     {
@@ -166,7 +166,7 @@ SUB_AGENT_SUMMARIES = (
         "lines": [
             "Scoped the minimal file set to the refresh generator, current-pointer tests, `build_proof_bundle.sh`, and a refresh-side closeout exporter so the final tarball can be generated reproducibly.",
             "Recommended regenerating refresh artifacts from the generator first, then validating focused current-pointer regressions before widening to the shared pytest suite.",
-            "Merge readiness depends on exact agreement across summary, context, manifest, ledger, README, refresh bundle path/source, and PR `#84` metadata on branch `feat/attestation-refresh-repromotion-after-pr84`.",
+            "Merge readiness depends on exact agreement across summary, context, manifest, ledger, README, refresh bundle path/source, and PR `#86` metadata on branch `codex/attestation-refresh-repromotion-after-pr86`.",
         ],
     },
 )
@@ -770,7 +770,8 @@ def update_readme() -> None:
     paragraph_re = re.compile(re.escape(marker) + r".*?(?:\n\n|$)", re.DOTALL)
     updated = paragraph_re.sub("", readme_text, count=1)
     regeneration_re = re.compile(re.escape(regeneration_marker) + r".*?(?:\n\n|$)", re.DOTALL)
-    match = regeneration_re.search(updated)
+    matches = list(regeneration_re.finditer(updated))
+    match = matches[-1] if matches else None
     if match:
         updated = updated[: match.end()] + "\n" + entry + "\n\n" + updated[match.end() :].lstrip("\n")
     else:
@@ -1062,13 +1063,41 @@ def main() -> None:
             "mewx": VERIFIED_MEWX_COMMIT,
         },
     }
+    for evidence_key, current_flags in (
+        (
+            "demo_forward_supervised_run_retry_readiness",
+            {"operator_visible_readiness_surface_current": False},
+        ),
+        (
+            "demo_forward_supervised_run_retry_gate",
+            {"operator_visible_gate_surface_current": False},
+        ),
+        (
+            "demo_forward_supervised_run_retry_gate_input_attestation",
+            {"operator_visible_attestation_surface_current": False},
+        ),
+        (
+            "demo_forward_supervised_run_retry_gate_attestation_audit",
+            {"operator_visible_attestation_audit_surface_current": False},
+        ),
+        (
+            "demo_forward_supervised_run_retry_gate_attestation_record_pack",
+            {"operator_visible_attestation_record_pack_surface_current": False},
+        ),
+        (
+            "demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration",
+            {"attestation_record_pack_regeneration_surface_current": False},
+        ),
+    ):
+        if evidence_key in context_pack["evidence"]:
+            context_pack["evidence"][evidence_key].update(current_flags)
     context_pack["evidence"]["github_latest"].update(
         {
             "latest_vexter_pr": VERIFIED_VEXTER_PR,
             "latest_vexter_main_commit": VERIFIED_VEXTER_COMMIT,
-            "latest_recent_vexter_prs": [84, 83, 82, 81, 80],
-            "vexter_pr_84_merged_at": VERIFIED_VEXTER_MERGED_AT,
-            "vexter_pr_84_closed_at": VERIFIED_VEXTER_MERGED_AT,
+            "latest_recent_vexter_prs": [86, 85, 84, 83, 82],
+            "vexter_pr_86_merged_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_86_closed_at": VERIFIED_VEXTER_MERGED_AT,
         }
     )
     context_pack["evidence"]["demo_forward_supervised_run_retry_gate_attestation_refresh"] = {
@@ -1205,13 +1234,13 @@ def main() -> None:
         "source_faithful_modes": {"dexter": "paper_live", "mewx": "sim_live"},
         "status": TASK_STATUS,
         "sub_agents_used": [item["name"] for item in SUB_AGENT_SUMMARIES],
-        "supporting_vexter_prs": [84, 83, 82, 81, 80],
+        "supporting_vexter_prs": [86, 85, 84, 83, 82],
         "task_id": TASK_ID,
         "template_runtime_validation_errors": runtime_errors,
         "verified_dexter_main_commit": VERIFIED_DEXTER_COMMIT,
         "verified_dexter_pr": 3,
         "verified_mewx_frozen_commit": VERIFIED_MEWX_COMMIT,
-        "verified_prs": [84, 83, 82],
+        "verified_prs": [86, 85, 84],
         "date": run_timestamp.split("T", 1)[0],
     }
     rewrite_local_ledger(ledger_payload)

@@ -5,8 +5,8 @@
 - run_outcome: `FAIL/BLOCKED`
 - key_finding: `supervised_run_retry_gate_attestation_refresh_blocked_on_missing_or_stale_fresh_evidence_locators`
 - claim_boundary: `supervised_run_retry_gate_attestation_refresh_bounded`
-- verified_vexter_main_pr: `84`
-- verified_vexter_main_commit: `31fbee24beb56eb55338d4529c2c9420a0ac5ea9`
+- verified_vexter_main_pr: `86`
+- verified_vexter_main_commit: `2be10c663f8d5f441defeea5f506108d1aae25c3`
 - verified_dexter_main_commit: `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`
 - verified_mewx_frozen_commit: `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`
 - baseline_task: `DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION`

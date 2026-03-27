@@ -1,10 +1,10 @@
 # Demo Forward Supervised Run Retry Gate Attestation Record Pack Regeneration Report
 
 ## Verified GitHub State
-- Reverified latest GitHub-visible Vexter `main` at merged PR `#88` merge commit `1d43904d392eefdcc911f00102cdff62bce9deb2` on `2026-03-27T20:05:00Z`.
+- Reverified latest GitHub-visible Vexter `main` at merged PR `#90` merge commit `f79997cc0b619c2542cd6e9f876abcfb7ffca3f8` on `2026-03-27T21:29:43Z`.
 - Dexter stayed pinned at merged PR `#3` commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`.
 - Frozen Mew-X stayed pinned at `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`.
-- Report timestamp: `2026-03-27T20:42:56Z`.
+- Report timestamp: `2026-03-27T21:42:54Z`.
 
 ## Baseline Accepted
 - Accepted `supervised_run_retry_gate_attestation_refresh_blocked` as the bounded baseline current source of truth.
@@ -59,14 +59,19 @@
 - gap summary: `artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md`
 - manifest status: `template_only`
 - blocked faces from canonical validator: `external_credential_source_face, venue_ref_face, account_ref_face, connectivity_profile_face, operator_owner_face, bounded_start_criteria_face, allowlist_symbol_lot_reconfirmed, manual_latched_stop_all_visibility_reconfirmed, terminal_snapshot_readability_reconfirmed`
+- canonical face-to-manifest map: `artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md` under `Face-To-Manifest Map`
 
 ## Regeneration Findings
 - required regeneration faces: `9`
 - regeneration rules explicit count: `9`
+- per-face manifest field maps explicit count: `9`
+- per-face proof path maps explicit count: `9`
 - current fresh locator input count: `0`
 - freshness inherited cleanly count: `0`
 - regenerated face reviewable count: `0`
 - blocked regenerated faces: `external_credential_source_face, venue_ref_face, account_ref_face, connectivity_profile_face, operator_owner_face, bounded_start_criteria_face, allowlist_symbol_lot_reconfirmed, manual_latched_stop_all_visibility_reconfirmed, terminal_snapshot_readability_reconfirmed`
+- canonical gap blocked faces align with regeneration lane: `yes`
+- template-only reopen-ready remains false across canonical gap and regeneration lane: `yes`
 
 ## Honest Regeneration Model
 - `PASS` only if refreshed locator rules produce a current, reviewable regenerated record pack sufficient to reopen retry-gate review honestly.

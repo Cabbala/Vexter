@@ -1,7 +1,7 @@
 # Demo Forward Supervised Run Retry Gate Attestation Record Pack Regeneration Plan
 
 ## Implementation Steps
-1. Reverify the latest GitHub-visible Vexter `main` state at PR `#88` merge commit `1d43904d392eefdcc911f00102cdff62bce9deb2`.
+1. Reverify the latest GitHub-visible Vexter `main` state at PR `#90` merge commit `f79997cc0b619c2542cd6e9f876abcfb7ffca3f8`.
 2. Accept attestation refresh as the blocked baseline current source of truth.
 3. Write one canonical outside-repo evidence manifest template, contract, validator, and gap report for the remaining retry-gate blockers.
 4. Generate one bounded attestation record-pack regeneration lane with current status, report, summary, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.
@@ -32,6 +32,6 @@
 
 ## Validation
 - generate the canonical gap surfaces with `python3.12 scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py`
-- generate the lane with `python3 scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py`
+- generate the lane with `python3.12 scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py`
 - rebuild the tarball with `./scripts/build_proof_bundle.sh`
 - verify shared regression expectations with `pytest -q`

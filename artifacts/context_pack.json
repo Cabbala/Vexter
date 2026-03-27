@@ -1,14 +1,14 @@
 {
   "background": {
-    "previous_task_id": "DEMO-EXECUTOR-ADAPTER-IMPLEMENTATION",
-    "previous_key_finding": "demo_executor_adapter_implemented",
-    "previous_claim_boundary": "demo_executor_adapter_implementation_bounded",
+    "previous_task_id": "DEMO-FORWARD-ACCEPTANCE-PACK",
+    "previous_key_finding": "demo_forward_acceptance_pack_fixed",
+    "previous_claim_boundary": "demo_forward_acceptance_pack_bounded",
     "promoted_pair": "task005-pass-grade-pair-20260325T180027Z",
     "confirmatory_pair": "task005-pass-grade-pair-20260325T180604Z",
     "comparison_source_of_truth_fixed_before_task": true,
     "prior_lane_completed_before_task": true
   },
-  "bundle_source": "/Users/cabbala/Downloads/vexter_demo_forward_acceptance_bundle.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_demo_forward_supervised_run_bundle.tar.gz",
   "current_contract": {
     "comparison_source_of_truth": "comparison_closed_out",
     "promoted_live_winner_mode": "derived",
@@ -77,40 +77,45 @@
     "demo_forward_acceptance_plan_path": "plans/demo_forward_acceptance_pack_plan.md",
     "demo_forward_operator_checklist_path": "docs/demo_forward_operator_checklist.md",
     "demo_forward_abort_rollback_matrix_path": "docs/demo_forward_abort_rollback_matrix.md",
-    "demo_forward_next_step": "demo_forward_supervised_run"
+    "demo_forward_next_step": "supervised_run_retry_readiness",
+    "demo_forward_supervised_run_marker": "demo_forward_supervised_run",
+    "demo_forward_supervised_spec_path": "specs/DEMO_FORWARD_SUPERVISED_RUN.md",
+    "demo_forward_supervised_plan_path": "plans/demo_forward_supervised_run_plan.md",
+    "demo_forward_supervised_operator_follow_up_path": "docs/demo_forward_supervised_run_operator_follow_up.md"
   },
   "current_task": {
-    "id": "DEMO-FORWARD-ACCEPTANCE-PACK",
+    "id": "DEMO-FORWARD-SUPERVISED-RUN",
     "scope": [
-      "Verify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X after the Dexter demo adapter merge.",
-      "Fix the bounded forward acceptance boundary for the first Dexter-only supervised demo slice.",
-      "Keep the public planner boundary at prepare / start / status / stop / snapshot while preserving poll_first and manual_latched_stop_all.",
-      "Add or update the current spec, plan, report, status, proof, handoff, operator checklist, and abort / rollback matrix surfaces.",
-      "Advance the next recommended lane to demo_forward_supervised_run without executing the run itself."
+      "Reverify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X after the acceptance pack.",
+      "Exercise the bounded source-faithful supervised run sequence at prepare / start / status / stop / snapshot.",
+      "Preserve poll_first, manual_latched_stop_all, and the Dexter-only / Mew-X-frozen seam.",
+      "Promote the current status, report, summary, proof, handoff, and operator follow-up surfaces.",
+      "Fail closed if the repo cannot honestly claim a completed real-demo supervised window."
     ],
     "deliverables": [
       "README.md",
-      "specs/DEMO_FORWARD_ACCEPTANCE_PACK.md",
-      "plans/demo_forward_acceptance_pack_plan.md",
-      "docs/demo_forward_operator_checklist.md",
-      "docs/demo_forward_abort_rollback_matrix.md",
+      "specs/DEMO_FORWARD_SUPERVISED_RUN.md",
+      "plans/demo_forward_supervised_run_plan.md",
+      "docs/demo_forward_supervised_run_operator_follow_up.md",
+      "tests/test_demo_forward_supervised_run.py",
       "tests/test_demo_forward_acceptance_pack.py",
       "tests/test_pattern_a_demo_executor_cutover.py",
       "tests/test_bootstrap_layout.py",
+      "scripts/run_demo_forward_supervised_run.py",
       "scripts/build_proof_bundle.sh",
       "artifacts/summary.md",
       "artifacts/context_pack.json",
       "artifacts/proof_bundle_manifest.json",
       "artifacts/task_ledger.jsonl",
-      "artifacts/reports/demo-forward-acceptance-pack-report.md",
-      "artifacts/reports/demo-forward-acceptance-pack-status.md",
-      "artifacts/reports/demo-forward-acceptance-pack/DETAILS.md",
-      "artifacts/reports/demo-forward-acceptance-pack/MIN_PROMPT.txt",
-      "artifacts/reports/demo-forward-acceptance-pack/CONTEXT.json",
-      "artifacts/reports/demo-forward-acceptance-pack/HANDOFF.md",
-      "artifacts/proofs/demo-forward-acceptance-pack-check.json",
-      "artifacts/proofs/demo-forward-acceptance-pack-summary.md",
-      "artifacts/bundles/demo-forward-acceptance-pack.tar.gz"
+      "artifacts/reports/demo-forward-supervised-run-report.md",
+      "artifacts/reports/demo-forward-supervised-run-status.md",
+      "artifacts/reports/demo-forward-supervised-run/DETAILS.md",
+      "artifacts/reports/demo-forward-supervised-run/MIN_PROMPT.txt",
+      "artifacts/reports/demo-forward-supervised-run/CONTEXT.json",
+      "artifacts/reports/demo-forward-supervised-run/HANDOFF.md",
+      "artifacts/proofs/demo-forward-supervised-run-check.json",
+      "artifacts/proofs/demo-forward-supervised-run-summary.md",
+      "artifacts/bundles/demo-forward-supervised-run.tar.gz"
     ],
     "frozen_source_commits": {
       "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
@@ -119,14 +124,14 @@
   },
   "evidence": {
     "github_latest": {
-      "latest_vexter_pr": 71,
-      "latest_vexter_main_commit": "5c1feb2561da7b16a17c5d03b71ff2bf895e20e4",
+      "latest_vexter_pr": 72,
+      "latest_vexter_main_commit": "a6ca623b01dbed4191c4be10c2bfe51534025cac",
       "latest_recent_vexter_prs": [
+        72,
         71,
         70,
         69,
-        68,
-        67
+        68
       ],
       "vexter_pr_65_merged_at": "2026-03-26T19:30:46Z",
       "vexter_pr_64_merged_at": "2026-03-26T18:53:07Z",
@@ -141,7 +146,9 @@
       "vexter_pr_69_merged_at": "2026-03-26T23:03:14Z",
       "vexter_pr_70_merged_at": "2026-03-26T23:42:15Z",
       "vexter_pr_71_merged_at": "2026-03-27T00:09:27Z",
-      "vexter_pr_71_closed_at": "2026-03-27T00:09:27Z"
+      "vexter_pr_71_closed_at": "2026-03-27T00:09:27Z",
+      "vexter_pr_72_merged_at": "2026-03-27T00:32:14Z",
+      "vexter_pr_72_closed_at": "2026-03-27T00:32:14Z"
     },
     "transport_livepaper_observability_ci_gate": {
       "report": "artifacts/reports/task-007-transport-livepaper-observability-ci-gate-report.md",
@@ -725,6 +732,43 @@
         "normalized_failure_detail_and_handoff_continuity"
       ],
       "preferred_next_step": "demo_forward_supervised_run"
+    },
+    "demo_forward_supervised_run": {
+      "report": "artifacts/reports/demo-forward-supervised-run-report.md",
+      "status_report": "artifacts/reports/demo-forward-supervised-run-status.md",
+      "proof": "artifacts/proofs/demo-forward-supervised-run-check.json",
+      "summary": "artifacts/proofs/demo-forward-supervised-run-summary.md",
+      "handoff_dir": "artifacts/reports/demo-forward-supervised-run",
+      "operator_follow_up": "docs/demo_forward_supervised_run_operator_follow_up.md",
+      "key_finding": "demo_forward_supervised_run_blocked_on_external_prerequisites",
+      "claim_boundary": "demo_forward_supervised_run_fail_closed",
+      "task_state": "demo_forward_supervised_run_blocked",
+      "run_outcome": "FAIL/BLOCKED",
+      "real_demo_completion_claim_allowed": false,
+      "preferred_next_step": "supervised_run_retry_readiness",
+      "supervised_boundary": {
+        "demo_source": "dexter",
+        "execution_mode": "paper_live",
+        "route_mode": "single_sleeve",
+        "selected_sleeve_id": "dexter_default",
+        "max_active_real_demo_plans": 1,
+        "max_open_positions": 1,
+        "allowlist_required": true,
+        "small_lot_required": true,
+        "operator_supervised_window_required": true,
+        "mewx_overlay_enabled": false,
+        "funded_live_forbidden": true
+      },
+      "supervised_sequence": [
+        "prepare",
+        "start",
+        "entry_visibility",
+        "order_status_and_fill_reconciliation",
+        "stop_or_stop_all_visibility",
+        "terminal_snapshot",
+        "normalized_failure_detail_and_handoff_continuity",
+        "supervised_window_outcome"
+      ]
     }
   },
   "frozen_source_commits": {
@@ -762,12 +806,12 @@
     ]
   },
   "next_task": {
-    "id": "DEMO-FORWARD-SUPERVISED-RUN",
-    "state": "ready_for_demo_forward_supervised_run",
+    "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS",
+    "state": "ready_for_supervised_run_retry_readiness",
     "rationale": [
-      "The concrete Dexter demo adapter is already implemented and the acceptance pack is now fixed as current source of truth.",
-      "The operator checklist and abort / rollback matrix are explicit enough to support a bounded supervised forward window.",
-      "Further packaging would duplicate the acceptance pack instead of advancing the supervised run lane."
+      "The bounded supervised sequence is now current source of truth.",
+      "The real-demo completion claim remains blocked until external prerequisites are resolved outside the repo.",
+      "The shortest next cut is retry readiness rather than widening scope or reopening baseline work."
     ]
   },
   "proofs": {
@@ -808,6 +852,12 @@
     "demo_forward_abort_rollback_matrix_written": true,
     "demo_forward_current_pointers_fixed": true,
     "demo_forward_handoff_written": true,
-    "recommended_next_step_is_demo_forward_supervised_run": true
+    "recommended_next_step_is_demo_forward_supervised_run": true,
+    "demo_forward_supervised_run_lane_added": true,
+    "demo_forward_supervised_sequence_exercised": true,
+    "demo_forward_supervised_current_pointers_fixed": true,
+    "demo_forward_supervised_operator_follow_up_written": true,
+    "demo_forward_real_window_claim_blocked": true,
+    "recommended_next_step_is_supervised_run_retry_readiness": true
   }
 }

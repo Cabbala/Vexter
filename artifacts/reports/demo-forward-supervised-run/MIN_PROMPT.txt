@@ -1,0 +1,5 @@
+GitHub最新状態を確認し、Vexter `main` PR #72 merge 後の bounded supervised run を current source of truth として扱ってください。
+Dexter `paper_live` のみを real demo leg に使い、frozen Mew-X `sim_live` は unchanged のまま維持してください。
+planner の public boundary は `prepare / start / status / stop / snapshot` のまま、allowlist・small lot・poll_first・manual_latched_stop_all・terminal snapshot visibility を崩さないでください。
+real-demo completion は捏造せず、external refs / credentials / operator ownership / venue connectivity が repo 外で未確認なら fail-closed で止めてください。
+current status / report / proof / handoff / operator follow-up を更新し、次は `supervised_run_retry_readiness` を最小 cut として示してください.

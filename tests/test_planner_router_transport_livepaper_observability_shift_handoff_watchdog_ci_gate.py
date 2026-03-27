@@ -417,6 +417,20 @@ def test_livepaper_observability_shift_handoff_watchdog_ci_gate_manifest_and_con
         )
         assert "livepaper_observability_shift_handoff_watchdog_ci_gate" in status_text
         assert "demo-forward-acceptance-pack.tar.gz" in bundle_script
+    elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN":
+        assert context["current_task"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN"
+        assert ledger["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN"
+        assert manifest["status"] == "demo_forward_supervised_run_blocked"
+        assert (
+            manifest["bundle_path"]
+            == "artifacts/bundles/demo-forward-supervised-run.tar.gz"
+        )
+        assert (
+            "transport_livepaper_observability_acceptance_pack" in summary_text
+            or "transport_livepaper_observability_acceptance_pack" in report_text
+        )
+        assert "livepaper_observability_shift_handoff_watchdog_ci_gate" in status_text
+        assert "demo-forward-supervised-run.tar.gz" in bundle_script
     else:
         assert manifest["task_id"] == "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE"
         assert context["current_task"]["id"] in {
@@ -467,6 +481,8 @@ def test_livepaper_observability_shift_handoff_watchdog_ci_gate_manifest_and_con
     if current_task_id == "PATTERN-A-DEMO-EXECUTOR-CUTOVER":
         assert "livepaper_observability_shift_handoff_watchdog_ci_gate" in status_text
     elif current_task_id == "DEMO-FORWARD-ACCEPTANCE-PACK":
+        assert "livepaper_observability_shift_handoff_watchdog_ci_gate" in status_text
+    elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN":
         assert "livepaper_observability_shift_handoff_watchdog_ci_gate" in status_text
     else:
         assert manifest["status"] in status_text

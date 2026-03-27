@@ -258,6 +258,12 @@ def test_livepaper_observability_shift_handoff_watchdog_runtime_manifest_and_con
             manifest["bundle_path"]
             == "artifacts/bundles/demo-forward-acceptance-pack.tar.gz"
         )
+    elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN":
+        assert manifest["status"] == "demo_forward_supervised_run_blocked"
+        assert (
+            manifest["bundle_path"]
+            == "artifacts/bundles/demo-forward-supervised-run.tar.gz"
+        )
     else:
         assert manifest["task_id"] in {
             "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",

@@ -1,0 +1,244 @@
+{
+  "task_id": "DEMO-FORWARD-SUPERVISED-RUN",
+  "verified_github": {
+    "latest_vexter_pr": 72,
+    "latest_vexter_main_commit": "a6ca623b01dbed4191c4be10c2bfe51534025cac",
+    "latest_vexter_merged_at": "2026-03-27T00:32:14Z",
+    "dexter_pr_3_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "starting_point": {
+    "task_id": "DEMO-FORWARD-ACCEPTANCE-PACK",
+    "task_state": "demo_forward_acceptance_pack_ready",
+    "report": "artifacts/reports/demo-forward-acceptance-pack-report.md",
+    "status_report": "artifacts/reports/demo-forward-acceptance-pack-status.md",
+    "proof": "artifacts/proofs/demo-forward-acceptance-pack-check.json",
+    "summary": "artifacts/proofs/demo-forward-acceptance-pack-summary.md",
+    "handoff": "artifacts/reports/demo-forward-acceptance-pack/HANDOFF.md"
+  },
+  "demo_forward_supervised_run": {
+    "planner_boundary": [
+      "prepare",
+      "start",
+      "status",
+      "stop",
+      "snapshot"
+    ],
+    "supervised_boundary": {
+      "demo_source": "dexter",
+      "execution_mode": "paper_live",
+      "route_mode": "single_sleeve",
+      "selected_sleeve_id": "dexter_default",
+      "max_active_real_demo_plans": 1,
+      "max_open_positions": 1,
+      "allowlist_required": true,
+      "small_lot_required": true,
+      "operator_supervised_window_required": true,
+      "mewx_overlay_enabled": false,
+      "funded_live_forbidden": true
+    },
+    "required_artifacts": {
+      "current_status_report": "artifacts/reports/demo-forward-supervised-run-status.md",
+      "current_report": "artifacts/reports/demo-forward-supervised-run-report.md",
+      "current_summary": "artifacts/proofs/demo-forward-supervised-run-summary.md",
+      "current_proof_json": "artifacts/proofs/demo-forward-supervised-run-check.json",
+      "current_handoff": "artifacts/reports/demo-forward-supervised-run/HANDOFF.md",
+      "operator_follow_up": "docs/demo_forward_supervised_run_operator_follow_up.md",
+      "operator_checklist": "docs/demo_forward_operator_checklist.md",
+      "abort_rollback_matrix": "docs/demo_forward_abort_rollback_matrix.md"
+    },
+    "supervised_sequence": {
+      "plan_id": "demo-forward-supervised-run:batch:0:dexter_default",
+      "plan_batch_id": "demo-forward-supervised-run:batch",
+      "route_mode": "single_sleeve",
+      "selected_sleeves": [
+        "dexter_default"
+      ],
+      "prepare": {
+        "handle_id": "dexter_main_pinned:demo-forward-supervised-run:batch:0:dexter_default",
+        "status_delivery": "poll_first",
+        "entrypoint": "monitor_mint_session",
+        "execution_mode": "paper_live",
+        "transport_version": "v1",
+        "demo_runtime": "dexter_paper_live_demo",
+        "symbol_allowlist": [
+          "BONK/USDC"
+        ],
+        "demo_symbol": "BONK/USDC",
+        "small_lot_order_size": "0.05",
+        "bounded_window_minutes": 15
+      },
+      "start": {
+        "runtime_status": "running",
+        "signal": "status_poll"
+      },
+      "status": {
+        "runtime_status": "running",
+        "native_order_status": "filled",
+        "fill_count": 1,
+        "orders": [
+          {
+            "native_order_id": "paper_live:demo-forward-supervised-run:batch:0:dexter_default:entry:1",
+            "purpose": "entry",
+            "symbol": "BONK/USDC",
+            "side": "buy",
+            "quantity_lots": "0.05",
+            "state": "filled",
+            "submitted_at_utc": "2026-03-27T00:51:26.238110+00:00",
+            "updated_at_utc": "2026-03-27T00:51:26.238115+00:00",
+            "cancel_reason": null,
+            "fill_ids": [
+              "paper_live:demo-forward-supervised-run:batch:0:dexter_default:fill:1"
+            ]
+          }
+        ],
+        "fills": [
+          {
+            "fill_id": "paper_live:demo-forward-supervised-run:batch:0:dexter_default:fill:1",
+            "native_order_id": "paper_live:demo-forward-supervised-run:batch:0:dexter_default:entry:1",
+            "symbol": "BONK/USDC",
+            "side": "buy",
+            "quantity_lots": "0.05",
+            "venue_reference": "dexter_paper_live_demo_venue",
+            "collected_at_utc": "2026-03-27T00:51:26.238115+00:00"
+          }
+        ],
+        "open_position_lots": "0.05",
+        "reconciliation": {
+          "last_reconciliation": "fill_collection",
+          "mode": "poll_first",
+          "decision": "poll_only"
+        }
+      },
+      "stop": {
+        "runtime_status": "stopping",
+        "stop_all_state": "flatten_requested",
+        "stop_reason": "manual_latched_stop_all"
+      },
+      "snapshot": {
+        "executor_status": "stopped",
+        "stop_all_state": "flatten_confirmed",
+        "fill_count": 2,
+        "orders": [
+          {
+            "native_order_id": "paper_live:demo-forward-supervised-run:batch:0:dexter_default:entry:1",
+            "purpose": "entry",
+            "symbol": "BONK/USDC",
+            "side": "buy",
+            "quantity_lots": "0.05",
+            "state": "filled",
+            "submitted_at_utc": "2026-03-27T00:51:26.238110+00:00",
+            "updated_at_utc": "2026-03-27T00:51:26.238115+00:00",
+            "cancel_reason": null,
+            "fill_ids": [
+              "paper_live:demo-forward-supervised-run:batch:0:dexter_default:fill:1"
+            ]
+          },
+          {
+            "native_order_id": "paper_live:demo-forward-supervised-run:batch:0:dexter_default:flatten:2",
+            "purpose": "flatten",
+            "symbol": "BONK/USDC",
+            "side": "sell",
+            "quantity_lots": "0.05",
+            "state": "filled",
+            "submitted_at_utc": "2026-03-27T00:51:26.238198+00:00",
+            "updated_at_utc": "2026-03-27T00:51:26.238252+00:00",
+            "cancel_reason": null,
+            "fill_ids": [
+              "paper_live:demo-forward-supervised-run:batch:0:dexter_default:fill:2"
+            ]
+          }
+        ],
+        "fills": [
+          {
+            "fill_id": "paper_live:demo-forward-supervised-run:batch:0:dexter_default:fill:1",
+            "native_order_id": "paper_live:demo-forward-supervised-run:batch:0:dexter_default:entry:1",
+            "symbol": "BONK/USDC",
+            "side": "buy",
+            "quantity_lots": "0.05",
+            "venue_reference": "dexter_paper_live_demo_venue",
+            "collected_at_utc": "2026-03-27T00:51:26.238115+00:00"
+          },
+          {
+            "fill_id": "paper_live:demo-forward-supervised-run:batch:0:dexter_default:fill:2",
+            "native_order_id": "paper_live:demo-forward-supervised-run:batch:0:dexter_default:flatten:2",
+            "symbol": "BONK/USDC",
+            "side": "sell",
+            "quantity_lots": "0.05",
+            "venue_reference": "dexter_paper_live_demo_venue",
+            "collected_at_utc": "2026-03-27T00:51:26.238252+00:00"
+          }
+        ],
+        "open_position_lots": "0"
+      }
+    },
+    "external_prerequisites": {
+      "required_ref_variables": [
+        "DEXTER_DEMO_CREDENTIAL_SOURCE",
+        "DEXTER_DEMO_VENUE_REF",
+        "DEXTER_DEMO_ACCOUNT_REF",
+        "DEXTER_DEMO_CONNECTIVITY_PROFILE"
+      ],
+      "bounded_runtime_variables": [
+        "DEXTER_DEMO_ALLOWED_SYMBOLS",
+        "DEXTER_DEMO_DEFAULT_SYMBOL",
+        "DEXTER_DEMO_ORDER_SIZE_LOTS",
+        "DEXTER_DEMO_MAX_ORDER_SIZE_LOTS",
+        "DEXTER_DEMO_WINDOW_MINUTES",
+        "DEXTER_DEMO_MAX_OPEN_POSITIONS"
+      ],
+      "repo_visible_binding_presence": {
+        "DEXTER_DEMO_CREDENTIAL_SOURCE": false,
+        "DEXTER_DEMO_VENUE_REF": false,
+        "DEXTER_DEMO_ACCOUNT_REF": false,
+        "DEXTER_DEMO_CONNECTIVITY_PROFILE": false
+      },
+      "runtime_validation_errors": [],
+      "operator_attestation_available": false,
+      "venue_connectivity_confirmed": false,
+      "real_demo_completion_claim_allowed": false
+    },
+    "normalized_failure_detail": {
+      "failure_code": "external_prerequisites_unresolved",
+      "failure_reason": "repo-visible supervised sequence is current, but a real-demo completion claim remains blocked until operator ownership, external reference resolution, and venue connectivity are confirmed outside the repo",
+      "missing_prerequisites": [
+        "operator_owner_unconfirmed",
+        "supervised_window_start_unconfirmed",
+        "venue_connectivity_unconfirmed",
+        "external_reference_resolution_unconfirmed"
+      ],
+      "external_binding_presence": {
+        "DEXTER_DEMO_CREDENTIAL_SOURCE": false,
+        "DEXTER_DEMO_VENUE_REF": false,
+        "DEXTER_DEMO_ACCOUNT_REF": false,
+        "DEXTER_DEMO_CONNECTIVITY_PROFILE": false
+      }
+    },
+    "supporting_files": [
+      "specs/DEMO_FORWARD_SUPERVISED_RUN.md",
+      "plans/demo_forward_supervised_run_plan.md",
+      "docs/demo_forward_supervised_run_operator_follow_up.md",
+      "docs/demo_forward_operator_checklist.md",
+      "docs/demo_forward_abort_rollback_matrix.md",
+      "scripts/run_demo_forward_supervised_run.py",
+      "scripts/build_proof_bundle.sh",
+      "vexter/planner_router/transport.py",
+      "tests/test_planner_router_executor_transport_implementation.py",
+      "tests/test_demo_forward_supervised_run.py"
+    ],
+    "proof_outputs": [
+      "artifacts/proofs/demo-forward-supervised-run-check.json",
+      "artifacts/proofs/demo-forward-supervised-run-summary.md",
+      "artifacts/bundles/demo-forward-supervised-run.tar.gz"
+    ]
+  },
+  "task_result": {
+    "outcome": "FAIL/BLOCKED",
+    "key_finding": "demo_forward_supervised_run_blocked_on_external_prerequisites",
+    "claim_boundary": "demo_forward_supervised_run_fail_closed",
+    "task_state": "demo_forward_supervised_run_blocked",
+    "recommended_next_step": "supervised_run_retry_readiness",
+    "recommended_next_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS",
+    "decision": "supervised_run_retry_readiness_required"
+  }
+}

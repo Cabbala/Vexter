@@ -1,0 +1,14 @@
+{
+  "task_id": "DEMO-FORWARD-SUPERVISED-RUN",
+  "task_state": "demo_forward_supervised_run_blocked",
+  "recommended_next_step": "supervised_run_retry_readiness",
+  "recommended_next_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS",
+  "verified_vexter_main_pr": 72,
+  "verified_vexter_main_commit": "a6ca623b01dbed4191c4be10c2bfe51534025cac",
+  "first_demo_target": "dexter_paper_live",
+  "source_faithful_seam": {
+    "dexter": "paper_live",
+    "mewx": "sim_live"
+  },
+  "real_demo_completion_claim_allowed": false
+}

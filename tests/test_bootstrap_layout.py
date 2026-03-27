@@ -21,6 +21,7 @@ def test_required_paths_exist() -> None:
         "docs/livepaper_observability_shift_handoff_drill.md",
         "docs/demo_forward_operator_checklist.md",
         "docs/demo_forward_abort_rollback_matrix.md",
+        "docs/demo_forward_supervised_run_operator_follow_up.md",
         "docs/windows_runtime_recovery.md",
         "docs/dexter_source_assessment.md",
         "docs/dexter_event_mapping.md",
@@ -32,6 +33,7 @@ def test_required_paths_exist() -> None:
         "specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md",
         "specs/PATTERN_A_DEMO_EXECUTOR_CUTOVER.md",
         "specs/DEMO_FORWARD_ACCEPTANCE_PACK.md",
+        "specs/DEMO_FORWARD_SUPERVISED_RUN.md",
         "ops/CODEX_MEMORY.md",
         "plans/IMPLEMENTATION_PLAN.md",
         "plans/TASK_000_BOOTSTRAP.md",
@@ -42,12 +44,14 @@ def test_required_paths_exist() -> None:
         "plans/integration_readiness_plan.md",
         "plans/demo_executor_adapter_implementation_plan.md",
         "plans/demo_forward_acceptance_pack_plan.md",
+        "plans/demo_forward_supervised_run_plan.md",
         "manifests/reference_repos.json",
         "manifests/windows_runtime.json",
         "scripts/bootstrap_windows_workspace.sh",
         "scripts/recover_windows_runtime.sh",
         "scripts/sync_reference_repos.sh",
         "scripts/build_proof_bundle.sh",
+        "scripts/run_demo_forward_supervised_run.py",
         "scripts/run_livepaper_observability_shift_handoff_ci_check.sh",
         "scripts/run_livepaper_observability_shift_handoff_watchdog.sh",
         "scripts/run_livepaper_observability_shift_handoff_watchdog_runtime.sh",
@@ -103,6 +107,7 @@ def test_required_paths_exist() -> None:
         "tests/test_planner_router_transport.py",
         "tests/test_pattern_a_demo_executor_cutover.py",
         "tests/test_demo_forward_acceptance_pack.py",
+        "tests/test_demo_forward_supervised_run.py",
         "artifacts/context_pack.json",
         "artifacts/summary.md",
         "artifacts/proof_bundle_manifest.json",
@@ -275,6 +280,12 @@ def test_required_paths_exist() -> None:
         "artifacts/reports/demo-forward-acceptance-pack/MIN_PROMPT.txt",
         "artifacts/reports/demo-forward-acceptance-pack/CONTEXT.json",
         "artifacts/reports/demo-forward-acceptance-pack/HANDOFF.md",
+        "artifacts/reports/demo-forward-supervised-run-report.md",
+        "artifacts/reports/demo-forward-supervised-run-status.md",
+        "artifacts/reports/demo-forward-supervised-run/DETAILS.md",
+        "artifacts/reports/demo-forward-supervised-run/MIN_PROMPT.txt",
+        "artifacts/reports/demo-forward-supervised-run/CONTEXT.json",
+        "artifacts/reports/demo-forward-supervised-run/HANDOFF.md",
         "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate-report.md",
         "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate-status.md",
         "artifacts/reports/task-007-transport-livepaper-observability-watchdog-ci-gate/DETAILS.md",
@@ -359,6 +370,8 @@ def test_required_paths_exist() -> None:
         "artifacts/proofs/demo-executor-adapter-implementation-summary.md",
         "artifacts/proofs/demo-forward-acceptance-pack-check.json",
         "artifacts/proofs/demo-forward-acceptance-pack-summary.md",
+        "artifacts/proofs/demo-forward-supervised-run-check.json",
+        "artifacts/proofs/demo-forward-supervised-run-summary.md",
         "artifacts/bundles/task-007-planner-router-code-implementation.tar.gz",
         "artifacts/bundles/task-007-planner-router-integration-smoke.tar.gz",
         "artifacts/bundles/task-007-monitor-killswitch-spec.tar.gz",
@@ -380,6 +393,7 @@ def test_required_paths_exist() -> None:
         "artifacts/bundles/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate.tar.gz",
         "artifacts/bundles/pattern-a-demo-executor-cutover.tar.gz",
         "artifacts/bundles/demo-forward-acceptance-pack.tar.gz",
+        "artifacts/bundles/demo-forward-supervised-run.tar.gz",
         "tests/test_planner_router_transport_livepaper_observability_smoke.py",
         "tests/test_planner_router_transport_livepaper_observability_runtime.py",
         "tests/test_planner_router_transport_livepaper_observability_hardening.py",
@@ -745,6 +759,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
         "PATTERN-A-DEMO-EXECUTOR-CUTOVER",
         "DEMO-FORWARD-ACCEPTANCE-PACK",
+        "DEMO-FORWARD-SUPERVISED-RUN",
     }
     assert payload["status"] in {
         "partial_live_comparison_blocker",
@@ -808,6 +823,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "livepaper_observability_shift_handoff_watchdog_ci_gate_failed",
         "pattern_a_demo_executor_cutover_ready",
         "demo_forward_acceptance_pack_ready",
+        "demo_forward_supervised_run_blocked",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -873,6 +889,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/task-007-livepaper-observability-shift-handoff-watchdog-ci-gate",
         "codex/pattern-a-demo-executor-cutover",
         "feat/demo-forward-acceptance-pack",
+        "feat/demo-forward-supervised-run",
     }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -922,6 +939,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
         "DEMO-EXECUTOR-ADAPTER-IMPLEMENTATION",
         "DEMO-FORWARD-SUPERVISED-RUN",
+        "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS",
     }
     assert payload["next_task_state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -983,6 +1001,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "ready_for_livepaper_observability_shift_handoff_watchdog_ci_gate",
         "ready_for_demo_executor_adapter_implementation",
         "ready_for_demo_forward_supervised_run",
+        "ready_for_supervised_run_retry_readiness",
     }
 
 
@@ -1052,6 +1071,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "livepaper_observability_shift_handoff_watchdog_ci_gate_failed",
         "pattern_a_demo_executor_cutover_ready",
         "demo_forward_acceptance_pack_ready",
+        "demo_forward_supervised_run_blocked",
         "handoff_blocked",
         "intake_blocked",
     }
@@ -1103,6 +1123,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
         "DEMO-EXECUTOR-ADAPTER-IMPLEMENTATION",
         "DEMO-FORWARD-SUPERVISED-RUN",
+        "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS",
     }
     assert manifest["next_task"]["state"] in {
         "awaiting_matched_live_window_with_full_event_coverage",
@@ -1163,6 +1184,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
         "ready_for_livepaper_observability_shift_handoff_watchdog_ci_gate",
         "ready_for_demo_executor_adapter_implementation",
         "ready_for_demo_forward_supervised_run",
+        "ready_for_supervised_run_retry_readiness",
     }
 
     bundle_path = REPO_ROOT / manifest["bundle_path"]
@@ -1181,14 +1203,19 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "docs/livepaper_observability_shift_handoff_drill.md" in names
     assert "docs/demo_forward_operator_checklist.md" in names
     assert "docs/demo_forward_abort_rollback_matrix.md" in names
+    assert "docs/demo_forward_supervised_run_operator_follow_up.md" in names
     assert "docs/windows_runtime_recovery.md" in names
     assert "docs/dexter_event_mapping.md" in names
     assert "docs/dexter_paper_mode_design.md" in names
     assert "docs/mewx_event_mapping.md" in names
     assert "specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md" in names
     assert "specs/DEMO_FORWARD_ACCEPTANCE_PACK.md" in names
+    assert "specs/DEMO_FORWARD_SUPERVISED_RUN.md" in names
     assert "plans/demo_forward_acceptance_pack_plan.md" in names
+    assert "plans/demo_forward_supervised_run_plan.md" in names
     assert "tests/test_demo_forward_acceptance_pack.py" in names
+    assert "tests/test_demo_forward_supervised_run.py" in names
+    assert "scripts/run_demo_forward_supervised_run.py" in names
     assert "scripts/comparison_analysis.py" in names
     assert "scripts/collect_comparison_package.ps1" in names
     assert "scripts/recover_windows_runtime.sh" in names
@@ -1202,12 +1229,20 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "artifacts/examples/task-004-sample-comparison/summary.md" in names
     assert "artifacts/reports/task-005-live-collection-blocker.md" in names
     assert "artifacts/reports/task-005-windows-runtime-recovery.md" in names
+    assert "artifacts/reports/demo-forward-supervised-run-report.md" in names
+    assert "artifacts/reports/demo-forward-supervised-run-status.md" in names
+    assert "artifacts/reports/demo-forward-supervised-run/DETAILS.md" in names
+    assert "artifacts/reports/demo-forward-supervised-run/MIN_PROMPT.txt" in names
+    assert "artifacts/reports/demo-forward-supervised-run/CONTEXT.json" in names
+    assert "artifacts/reports/demo-forward-supervised-run/HANDOFF.md" in names
     assert "artifacts/reports/dexter-paper-design-handoff/DETAILS.md" in names
     assert "artifacts/reports/dexter-paper-design-handoff/MIN_PROMPT.txt" in names
     assert "artifacts/reports/task-005-paper-validation-handoff/DETAILS.md" in names
     assert "artifacts/reports/task-005-paper-validation-handoff/MIN_PROMPT.txt" in names
     assert "artifacts/reports/task-006-replay-validation.md" in names
     assert "artifacts/reports/task-006-replay-validation-status.md" in names
+    assert "artifacts/proofs/demo-forward-supervised-run-check.json" in names
+    assert "artifacts/proofs/demo-forward-supervised-run-summary.md" in names
     assert "artifacts/reports/task-006-replay-validation-handoff/DETAILS.md" in names
     assert "artifacts/reports/task-006-replay-validation-handoff/MIN_PROMPT.txt" in names
     assert "artifacts/reports/task-006-replay-deepening.md" in names

@@ -4,7 +4,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 PROOF_PATH = REPO_ROOT / "artifacts/proofs/demo-forward-acceptance-pack-check.json"
-SUMMARY_PATH = REPO_ROOT / "artifacts/summary.md"
+SUMMARY_PATH = REPO_ROOT / "artifacts/proofs/demo-forward-acceptance-pack-summary.md"
 REPORT_PATH = REPO_ROOT / "artifacts/reports/demo-forward-acceptance-pack-report.md"
 STATUS_PATH = REPO_ROOT / "artifacts/reports/demo-forward-acceptance-pack-status.md"
 HANDOFF_PATH = REPO_ROOT / "artifacts/reports/demo-forward-acceptance-pack/HANDOFF.md"
@@ -14,35 +14,31 @@ CHECKLIST_PATH = REPO_ROOT / "docs/demo_forward_operator_checklist.md"
 ABORT_MATRIX_PATH = REPO_ROOT / "docs/demo_forward_abort_rollback_matrix.md"
 PROMPT_CONTEXT_PATH = REPO_ROOT / "artifacts/reports/demo-forward-acceptance-pack/CONTEXT.json"
 
-
-def load_last_ledger_entry() -> dict:
-    lines = (REPO_ROOT / "artifacts/task_ledger.jsonl").read_text().strip().splitlines()
-    return json.loads(lines[-1])
-
-
-def test_demo_forward_acceptance_pack_artifacts_are_current_and_consistent() -> None:
+def test_demo_forward_acceptance_pack_artifacts_remain_consistent() -> None:
     proof = json.loads(PROOF_PATH.read_text())
     manifest = json.loads((REPO_ROOT / "artifacts/proof_bundle_manifest.json").read_text())
     context = json.loads((REPO_ROOT / "artifacts/context_pack.json").read_text())
-    ledger = load_last_ledger_entry()
     prompt_context = json.loads(PROMPT_CONTEXT_PATH.read_text())
     summary_text = SUMMARY_PATH.read_text()
     report_text = REPORT_PATH.read_text()
     status_text = STATUS_PATH.read_text()
     handoff_text = HANDOFF_PATH.read_text()
 
-    assert manifest["task_id"] == context["current_task"]["id"] == ledger["task_id"]
-    assert manifest["task_id"] == "DEMO-FORWARD-ACCEPTANCE-PACK"
-    assert manifest["status"] == ledger["status"] == "demo_forward_acceptance_pack_ready"
-    assert (
-        manifest["bundle_path"]
-        == ledger["artifact_bundle"]
-        == "artifacts/bundles/demo-forward-acceptance-pack.tar.gz"
+    assert "artifacts/proofs/demo-forward-acceptance-pack-check.json" in manifest["proof_files"]
+    assert "artifacts/proofs/demo-forward-acceptance-pack-summary.md" in manifest["proof_files"]
+    assert "artifacts/reports/demo-forward-acceptance-pack-report.md" in manifest["reports"]
+    assert "artifacts/reports/demo-forward-acceptance-pack-status.md" in manifest["reports"]
+    assert "docs/demo_forward_operator_checklist.md" in manifest["docs"]
+    assert "docs/demo_forward_abort_rollback_matrix.md" in manifest["docs"]
+    assert context["evidence"]["demo_forward_acceptance_pack"]["task_state"] == (
+        "demo_forward_acceptance_pack_ready"
     )
-    assert manifest["next_task"]["id"] == context["next_task"]["id"] == ledger["next_task_id"]
-    assert manifest["next_task"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN"
-    assert manifest["next_task"]["state"] == context["next_task"]["state"] == ledger["next_task_state"]
-    assert manifest["next_task"]["state"] == "ready_for_demo_forward_supervised_run"
+    assert context["evidence"]["demo_forward_acceptance_pack"]["preferred_next_step"] == (
+        "demo_forward_supervised_run"
+    )
+    assert context["evidence"]["demo_forward_supervised_run"]["task_state"] == (
+        "demo_forward_supervised_run_blocked"
+    )
 
     assert proof["task_id"] == "DEMO-FORWARD-ACCEPTANCE-PACK"
     assert proof["verified_github"]["latest_vexter_pr"] == 71

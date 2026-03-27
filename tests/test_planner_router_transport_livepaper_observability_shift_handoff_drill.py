@@ -136,6 +136,12 @@ def test_livepaper_observability_shift_handoff_drill_artifacts_are_wired_for_inc
             manifest["bundle_path"]
             == "artifacts/bundles/demo-forward-acceptance-pack.tar.gz"
         )
+    elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN":
+        assert manifest["status"] == "demo_forward_supervised_run_blocked"
+        assert (
+            manifest["bundle_path"]
+            == "artifacts/bundles/demo-forward-supervised-run.tar.gz"
+        )
     else:
         assert current_task_id in {
             "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG",
@@ -188,6 +194,10 @@ def test_livepaper_observability_shift_handoff_drill_artifacts_are_wired_for_inc
         assert manifest["next_task"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN"
         assert manifest["next_task"]["state"] == "ready_for_demo_forward_supervised_run"
         assert "demo-forward-acceptance-pack.tar.gz" in bundle_script
+    elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN":
+        assert manifest["next_task"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS"
+        assert manifest["next_task"]["state"] == "ready_for_supervised_run_retry_readiness"
+        assert "demo-forward-supervised-run.tar.gz" in bundle_script
     else:
         assert manifest["next_task"]["id"] in {
             "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",

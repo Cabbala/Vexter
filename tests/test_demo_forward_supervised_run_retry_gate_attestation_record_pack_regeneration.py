@@ -70,32 +70,32 @@ def test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regenera
     assert manifest["task_id"] == context["current_task"]["id"] == ledger["task_id"]
     assert (
         manifest["task_id"]
-        == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
+        == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
     )
     assert (
         manifest["status"]
         == ledger["status"]
-        == "supervised_run_retry_gate_attestation_refresh_blocked"
+        == "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked"
     )
     assert (
         manifest["bundle_path"]
         == ledger["artifact_bundle"]
-        == "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-refresh.tar.gz"
+        == "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration.tar.gz"
     )
     assert (
         manifest["bundle_source"]
         == context["bundle_source"]
-        == "/Users/cabbala/Downloads/vexter_attestation_refresh_bundle_latest.tar.gz"
+        == "/Users/cabbala/Downloads/vexter_attestation_record_pack_regeneration_bundle_latest.tar.gz"
     )
     assert manifest["next_task"]["id"] == context["next_task"]["id"] == ledger["next_task_id"]
     assert (
         manifest["next_task"]["id"]
-        == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
+        == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
     )
     assert manifest["next_task"]["state"] == context["next_task"]["state"] == ledger["next_task_state"]
     assert (
         manifest["next_task"]["state"]
-        == "ready_for_attestation_record_pack_regeneration"
+        == "additional_attestation_refresh_required_for_record_pack_regeneration"
     )
     assert manifest["next_task"]["pass_successor"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE"
     assert manifest["next_task"]["pass_successor"]["lane"] == "supervised_run_retry_gate"
@@ -104,12 +104,12 @@ def test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regenera
         proof["task_id"]
         == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
     )
-    assert proof["verified_github"]["latest_vexter_pr"] == 85
+    assert proof["verified_github"]["latest_vexter_pr"] == 87
     assert (
         proof["verified_github"]["latest_vexter_main_commit"]
-        == "aee3216c3c5091135f6bb50236883e1bdff8e2e1"
+        == "857f62c78129fecd71793744864ce12653d62141"
     )
-    assert proof["verified_github"]["latest_vexter_merged_at"] == "2026-03-27T19:00:58Z"
+    assert proof["verified_github"]["latest_vexter_merged_at"] == "2026-03-27T19:45:03Z"
     assert proof["task_result"]["outcome"] == "FAIL/BLOCKED"
     assert (
         proof["task_result"]["recommended_next_step"] == "supervised_run_retry_gate_attestation_refresh"
@@ -123,10 +123,10 @@ def test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regenera
     regeneration_boundary = context["evidence"][
         "demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration"
     ]["attestation_record_pack_regeneration_boundary"]
-    assert context["evidence"]["github_latest"]["latest_recent_vexter_prs"] == [86, 85, 84, 83, 82]
+    assert context["evidence"]["github_latest"]["latest_recent_vexter_prs"] == [87, 86, 85, 84, 83]
     assert (
-        context["evidence"]["github_latest"]["vexter_pr_86_merged_at"]
-        == "2026-03-27T19:19:40Z"
+        context["evidence"]["github_latest"]["vexter_pr_87_merged_at"]
+        == "2026-03-27T19:45:03Z"
     )
     assert regeneration_boundary["demo_source"] == "dexter"
     assert regeneration_boundary["execution_mode"] == "paper_live"
@@ -277,15 +277,15 @@ def test_export_attestation_record_pack_regeneration_closeout_bundle(tmp_path: P
         json.loads((REPO_ROOT / "artifacts/proof_bundle_manifest.json").read_text())["bundle_path"]
     ).name
     env = {
-        "RESULT_BRANCH": "feat/attestation-record-pack-regeneration",
+        "RESULT_BRANCH": "codex/attestation-record-pack-regeneration-after-pr87",
         "RESULT_COMMIT_SHA": "abc123def456",
         "RESULT_PR_URL": "https://github.com/Cabbala/Vexter/pull/999",
         "RESULT_MERGE_COMMIT_SHA": "fedcba654321",
-        "RESULT_MERGED_AT": "2026-03-27T23:59:59Z",
+        "RESULT_MERGED_AT": "2026-03-28T04:45:03Z",
         "RESULT_TEST_RESULT": "284 passed",
-        "ANSCOMBE_SUMMARY": "Refresh baseline is now independent and fail-closed.",
-        "EULER_SUMMARY": "Regeneration metadata and duplication checks are covered.",
-        "PARFIT_SUMMARY": "Closeout bundle now carries result, handoff, summaries, and proof tarball.",
+        "ANSCOMBE_SUMMARY": "Current pointers move atomically from refresh to regeneration off merged PR #87.",
+        "EULER_SUMMARY": "Planner boundary and fail-closed runtime guardrails stayed unchanged.",
+        "PARFIT_SUMMARY": "Closeout bundle now carries the regeneration result, handoff, summaries, and proof tarball.",
     }
     subprocess.run(
         [str(EXPORT_SCRIPT_PATH), str(output_path)],

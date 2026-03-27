@@ -1,8 +1,8 @@
 {
-  "bundle_path": "artifacts/bundles/demo-forward-supervised-run-retry-gate-input-attestation.tar.gz",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_supervised_run_retry_gate_input_attestation_bundle.tar.gz",
-  "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-INPUT-ATTESTATION",
-  "status": "supervised_run_retry_gate_input_attestation_blocked",
+  "bundle_path": "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-audit.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_retry_gate_attestation_audit_bundle.tar.gz",
+  "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT",
+  "status": "supervised_run_retry_gate_attestation_audit_blocked",
   "summary": "artifacts/summary.md",
   "context_pack": "artifacts/context_pack.json",
   "task_ledger": "artifacts/task_ledger.jsonl",
@@ -42,7 +42,11 @@
     "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_INPUT_ATTESTATION.md",
     "plans/demo_forward_supervised_run_retry_gate_input_attestation_plan.md",
     "tests/test_demo_forward_supervised_run_retry_gate_input_attestation.py",
-    "artifacts/bundles/demo-forward-supervised-run-retry-gate-input-attestation.tar.gz"
+    "artifacts/bundles/demo-forward-supervised-run-retry-gate-input-attestation.tar.gz",
+    "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_ATTESTATION_AUDIT.md",
+    "plans/demo_forward_supervised_run_retry_gate_attestation_audit_plan.md",
+    "tests/test_demo_forward_supervised_run_retry_gate_attestation_audit.py",
+    "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-audit.tar.gz"
   ],
   "code": [
     "vexter/comparison/",
@@ -75,7 +79,9 @@
     "docs/demo_forward_supervised_run_retry_gate_checklist.md",
     "docs/demo_forward_supervised_run_retry_gate_decision_surface.md",
     "docs/demo_forward_supervised_run_retry_gate_input_attestation_checklist.md",
-    "docs/demo_forward_supervised_run_retry_gate_input_attestation_decision_surface.md"
+    "docs/demo_forward_supervised_run_retry_gate_input_attestation_decision_surface.md",
+    "docs/demo_forward_supervised_run_retry_gate_attestation_audit_checklist.md",
+    "docs/demo_forward_supervised_run_retry_gate_attestation_audit_decision_surface.md"
   ],
   "scripts": [
     "scripts/bootstrap_windows_workspace.sh",
@@ -98,7 +104,8 @@
     "scripts/run_demo_forward_supervised_run.py",
     "scripts/run_demo_forward_supervised_run_retry_readiness.py",
     "scripts/run_demo_forward_supervised_run_retry_gate.py",
-    "scripts/run_demo_forward_supervised_run_retry_gate_input_attestation.py"
+    "scripts/run_demo_forward_supervised_run_retry_gate_input_attestation.py",
+    "scripts/run_demo_forward_supervised_run_retry_gate_attestation_audit.py"
   ],
   "proof_files": [
     "artifacts/proofs/demo-executor-adapter-implementation-check.json",
@@ -156,7 +163,9 @@
     "artifacts/proofs/demo-forward-supervised-run-retry-gate-check.json",
     "artifacts/proofs/demo-forward-supervised-run-retry-gate-summary.md",
     "artifacts/proofs/demo-forward-supervised-run-retry-gate-input-attestation-check.json",
-    "artifacts/proofs/demo-forward-supervised-run-retry-gate-input-attestation-summary.md"
+    "artifacts/proofs/demo-forward-supervised-run-retry-gate-input-attestation-summary.md",
+    "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-audit-check.json",
+    "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-audit-summary.md"
   ],
   "reports": [
     "artifacts/reports/demo-executor-adapter-implementation-report.md",
@@ -247,22 +256,27 @@
     "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation-report.md",
     "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation-status.md",
     "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation/SUBAGENTS.md",
-    "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation/subagent_summary.md"
+    "artifacts/reports/demo-forward-supervised-run-retry-gate-input-attestation/subagent_summary.md",
+    "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit",
+    "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit-report.md",
+    "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit-status.md",
+    "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit/SUBAGENTS.md",
+    "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-audit/subagent_summary.md"
   ],
   "next_task": {
-    "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-INPUT-ATTESTATION",
-    "state": "retry_gate_input_attestations_pending",
+    "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT",
+    "state": "retry_gate_attestation_audits_pending",
     "resume_requirements": [
       "Keep Dexter pinned at ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938 and Mew-X frozen at dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a.",
-      "Start from the current input-attestation status, report, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.",
-      "Do not enter retry execution until every attestation face is explicit enough.",
+      "Start from the current attestation-audit status, report, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.",
+      "Do not reopen retry-gate review until every face is explicit, non-stale, and auditable enough.",
       "Keep the planner boundary at prepare / start / status / stop / snapshot and preserve poll_first plus manual_latched_stop_all.",
       "Do not introduce funded live or a Mew-X real-demo path."
     ],
     "pass_successor": {
-      "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-EXECUTION",
-      "state": "ready_for_supervised_run_retry_execution",
-      "lane": "supervised_run_retry_execution"
+      "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
+      "state": "ready_for_supervised_run_retry_gate_recheck",
+      "lane": "supervised_run_retry_gate"
     }
   },
   "proofs": {
@@ -396,18 +410,26 @@
     "demo_forward_retry_gate_input_attestation_decision_surface_written": true,
     "demo_forward_retry_gate_input_attestation_subagent_summary_written": true,
     "recommended_next_step_stays_supervised_run_retry_gate_input_attestation_when_blocked": true,
-    "retry_execution_requires_attestation_faces": true
+    "retry_execution_requires_attestation_faces": true,
+    "demo_forward_supervised_run_retry_gate_attestation_audit_added": true,
+    "demo_forward_retry_gate_attestation_audit_current_pointers_fixed": true,
+    "demo_forward_retry_gate_attestation_audit_checklist_written": true,
+    "demo_forward_retry_gate_attestation_audit_decision_surface_written": true,
+    "demo_forward_retry_gate_attestation_audit_subagent_summary_written": true,
+    "recommended_next_step_stays_supervised_run_retry_gate_attestation_audit_when_blocked": true,
+    "retry_gate_recheck_requires_attestation_audit_pass": true,
+    "retry_gate_review_requires_current_auditable_attestation_faces": true
   },
   "task_result": {
     "outcome": "FAIL/BLOCKED",
-    "key_finding": "supervised_run_retry_gate_input_attestation_blocked_on_missing_attestation_faces",
-    "claim_boundary": "supervised_run_retry_gate_input_attestation_bounded",
-    "task_state": "supervised_run_retry_gate_input_attestation_blocked",
-    "recommended_next_step": "supervised_run_retry_gate_input_attestation",
-    "recommended_next_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-INPUT-ATTESTATION",
-    "gate_pass_successor": "supervised_run_retry_execution",
-    "gate_pass_successor_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-EXECUTION",
-    "decision": "retry_execution_blocked_pending_attestation_faces"
+    "key_finding": "supervised_run_retry_gate_attestation_audit_blocked_on_missing_current_attestation_records",
+    "claim_boundary": "supervised_run_retry_gate_attestation_audit_bounded",
+    "task_state": "supervised_run_retry_gate_attestation_audit_blocked",
+    "recommended_next_step": "supervised_run_retry_gate_attestation_audit",
+    "recommended_next_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT",
+    "gate_pass_successor": "supervised_run_retry_gate",
+    "gate_pass_successor_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
+    "decision": "retry_gate_review_blocked_pending_auditable_attestation_records"
   },
   "spec_documents": [
     "specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md"

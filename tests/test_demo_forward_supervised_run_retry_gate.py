@@ -32,18 +32,18 @@ def test_demo_forward_supervised_run_retry_gate_artifacts_are_current_and_consis
     subagents_text = SUBAGENTS_PATH.read_text()
     decision_surface_text = DECISION_SURFACE_PATH.read_text()
 
-    assert ledger["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-INPUT-ATTESTATION"
+    assert ledger["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT"
     assert manifest["task_id"] == context["current_task"]["id"] == ledger["task_id"]
-    assert manifest["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-INPUT-ATTESTATION"
-    assert manifest["status"] == ledger["status"] == "supervised_run_retry_gate_input_attestation_blocked"
-    assert manifest["bundle_path"] == "artifacts/bundles/demo-forward-supervised-run-retry-gate-input-attestation.tar.gz"
-    assert context["evidence"]["demo_forward_supervised_run_retry_gate_input_attestation"][
+    assert manifest["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT"
+    assert manifest["status"] == ledger["status"] == "supervised_run_retry_gate_attestation_audit_blocked"
+    assert manifest["bundle_path"] == "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-audit.tar.gz"
+    assert context["evidence"]["demo_forward_supervised_run_retry_gate_attestation_audit"][
         "task_state"
-    ] == "supervised_run_retry_gate_input_attestation_blocked"
-    assert context["next_task"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-INPUT-ATTESTATION"
-    assert context["next_task"]["state"] == "retry_gate_input_attestations_pending"
-    assert context["next_task"]["pass_successor"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-EXECUTION"
-    assert context["next_task"]["pass_successor"]["lane"] == "supervised_run_retry_execution"
+    ] == "supervised_run_retry_gate_attestation_audit_blocked"
+    assert context["next_task"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT"
+    assert context["next_task"]["state"] == "retry_gate_attestation_audits_pending"
+    assert context["next_task"]["pass_successor"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE"
+    assert context["next_task"]["pass_successor"]["lane"] == "supervised_run_retry_gate"
 
     assert proof["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE"
     assert proof["verified_github"]["latest_vexter_pr"] == 74

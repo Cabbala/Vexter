@@ -519,6 +519,14 @@ def test_livepaper_observability_shift_handoff_watchdog_regression_pack_manifest
             manifest["bundle_path"]
             == "artifacts/bundles/demo-forward-supervised-run-retry-readiness.tar.gz"
         )
+    elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE":
+        assert context["current_task"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE"
+        assert ledger["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE"
+        assert manifest["status"] == "supervised_run_retry_gate_blocked"
+        assert (
+            manifest["bundle_path"]
+            == "artifacts/bundles/demo-forward-supervised-run-retry-gate.tar.gz"
+        )
     else:
         assert manifest["task_id"] in {
             "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
@@ -586,6 +594,8 @@ def test_livepaper_observability_shift_handoff_watchdog_regression_pack_manifest
         assert "demo-forward-supervised-run.tar.gz" in bundle_script
     elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS":
         assert "demo-forward-supervised-run-retry-readiness.tar.gz" in bundle_script
+    elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE":
+        assert "demo-forward-supervised-run-retry-gate.tar.gz" in bundle_script
     else:
         assert "task-007-livepaper-observability-shift-handoff-watchdog-ci-gate.tar.gz" in bundle_script
     assert (

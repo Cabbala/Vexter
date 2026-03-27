@@ -1,8 +1,8 @@
 {
-  "bundle_path": "artifacts/bundles/demo-forward-supervised-run-retry-readiness.tar.gz",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_supervised_run_retry_readiness_bundle.tar.gz",
-  "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS",
-  "status": "supervised_run_retry_readiness_blocked",
+  "bundle_path": "artifacts/bundles/demo-forward-supervised-run-retry-gate.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_supervised_run_retry_gate_bundle.tar.gz",
+  "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
+  "status": "supervised_run_retry_gate_blocked",
   "summary": "artifacts/summary.md",
   "context_pack": "artifacts/context_pack.json",
   "task_ledger": "artifacts/task_ledger.jsonl",
@@ -34,7 +34,11 @@
     "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_READINESS.md",
     "plans/demo_forward_supervised_run_retry_readiness_plan.md",
     "tests/test_demo_forward_supervised_run_retry_readiness.py",
-    "artifacts/bundles/demo-forward-supervised-run-retry-readiness.tar.gz"
+    "artifacts/bundles/demo-forward-supervised-run-retry-readiness.tar.gz",
+    "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE.md",
+    "plans/demo_forward_supervised_run_retry_gate_plan.md",
+    "tests/test_demo_forward_supervised_run_retry_gate.py",
+    "artifacts/bundles/demo-forward-supervised-run-retry-gate.tar.gz"
   ],
   "code": [
     "vexter/comparison/",
@@ -63,7 +67,9 @@
     "docs/windows_runtime_recovery.md",
     "docs/demo_forward_supervised_run_operator_follow_up.md",
     "docs/demo_forward_supervised_run_retry_readiness_checklist.md",
-    "docs/demo_forward_supervised_run_retry_prerequisite_matrix.md"
+    "docs/demo_forward_supervised_run_retry_prerequisite_matrix.md",
+    "docs/demo_forward_supervised_run_retry_gate_checklist.md",
+    "docs/demo_forward_supervised_run_retry_gate_decision_surface.md"
   ],
   "scripts": [
     "scripts/bootstrap_windows_workspace.sh",
@@ -84,7 +90,8 @@
     "scripts/run_livepaper_observability_shift_handoff_watchdog_regression_pack.sh",
     "scripts/run_livepaper_observability_shift_handoff_watchdog_ci_gate.sh",
     "scripts/run_demo_forward_supervised_run.py",
-    "scripts/run_demo_forward_supervised_run_retry_readiness.py"
+    "scripts/run_demo_forward_supervised_run_retry_readiness.py",
+    "scripts/run_demo_forward_supervised_run_retry_gate.py"
   ],
   "proof_files": [
     "artifacts/proofs/demo-executor-adapter-implementation-check.json",
@@ -138,7 +145,9 @@
     "artifacts/proofs/demo-forward-supervised-run-check.json",
     "artifacts/proofs/demo-forward-supervised-run-summary.md",
     "artifacts/proofs/demo-forward-supervised-run-retry-readiness-check.json",
-    "artifacts/proofs/demo-forward-supervised-run-retry-readiness-summary.md"
+    "artifacts/proofs/demo-forward-supervised-run-retry-readiness-summary.md",
+    "artifacts/proofs/demo-forward-supervised-run-retry-gate-check.json",
+    "artifacts/proofs/demo-forward-supervised-run-retry-gate-summary.md"
   ],
   "reports": [
     "artifacts/reports/demo-executor-adapter-implementation-report.md",
@@ -218,18 +227,29 @@
     "artifacts/reports/demo-forward-supervised-run-retry-readiness",
     "artifacts/reports/demo-forward-supervised-run-retry-readiness-report.md",
     "artifacts/reports/demo-forward-supervised-run-retry-readiness-status.md",
-    "artifacts/reports/demo-forward-supervised-run-retry-readiness/SUBAGENTS.md"
+    "artifacts/reports/demo-forward-supervised-run-retry-readiness/SUBAGENTS.md",
+    "artifacts/reports/demo-forward-supervised-run-retry-gate",
+    "artifacts/reports/demo-forward-supervised-run-retry-gate-report.md",
+    "artifacts/reports/demo-forward-supervised-run-retry-gate-status.md",
+    "artifacts/reports/demo-forward-supervised-run-retry-gate/DECISION.md",
+    "artifacts/reports/demo-forward-supervised-run-retry-gate/SUBAGENTS.md",
+    "artifacts/reports/demo-forward-supervised-run-retry-gate/subagent_summary.md"
   ],
   "next_task": {
     "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
-    "state": "ready_for_supervised_run_retry_gate",
+    "state": "retry_gate_inputs_pending",
     "resume_requirements": [
       "Keep Dexter pinned at ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938 and Mew-X frozen at dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a.",
-      "Start from the current retry-readiness status, report, proof, handoff, checklist, prerequisite matrix, and sub-agent summary surfaces.",
-      "Resolve the named external refs, operator owner, supervised-window start criteria, and stop-all reconfirmation outside the repo before retry execution.",
+      "Start from the current retry-gate status, report, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.",
+      "Do not enter retry execution until every gate input is explicit enough.",
       "Keep the planner boundary at prepare / start / status / stop / snapshot and preserve poll_first plus manual_latched_stop_all.",
       "Do not introduce funded live or a Mew-X real-demo path."
-    ]
+    ],
+    "pass_successor": {
+      "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-EXECUTION",
+      "state": "ready_for_supervised_run_retry_execution",
+      "lane": "supervised_run_retry_execution"
+    }
   },
   "proofs": {
     "source_logic_changed": false,
@@ -346,16 +366,27 @@
     "demo_forward_retry_checklist_written": true,
     "demo_forward_retry_prerequisite_matrix_written": true,
     "demo_forward_retry_subagent_summary_written": true,
-    "recommended_next_step_is_supervised_run_retry_gate": true
+    "recommended_next_step_is_supervised_run_retry_gate": true,
+    "demo_forward_supervised_run_retry_gate_added": true,
+    "demo_forward_retry_gate_current_pointers_fixed": true,
+    "demo_forward_retry_gate_checklist_written": true,
+    "demo_forward_retry_gate_decision_surface_written": true,
+    "recommended_next_step_holds_supervised_run_retry_gate": true,
+    "retry_execution_remains_fail_closed": true,
+    "demo_forward_retry_gate_subagent_summary_written": true,
+    "recommended_next_step_stays_supervised_run_retry_gate_when_blocked": true,
+    "retry_execution_requires_gate_pass": true
   },
   "task_result": {
     "outcome": "FAIL/BLOCKED",
-    "key_finding": "supervised_run_retry_readiness_blocked_on_external_prerequisites",
-    "claim_boundary": "supervised_run_retry_readiness_bounded",
-    "task_state": "supervised_run_retry_readiness_blocked",
+    "key_finding": "supervised_run_retry_gate_blocked_on_unresolved_gate_inputs",
+    "claim_boundary": "supervised_run_retry_gate_bounded",
+    "task_state": "supervised_run_retry_gate_blocked",
     "recommended_next_step": "supervised_run_retry_gate",
     "recommended_next_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
-    "decision": "supervised_run_retry_gate_required"
+    "gate_pass_successor": "supervised_run_retry_execution",
+    "gate_pass_successor_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-EXECUTION",
+    "decision": "retry_execution_blocked_pending_gate_inputs"
   },
   "spec_documents": [
     "specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md"

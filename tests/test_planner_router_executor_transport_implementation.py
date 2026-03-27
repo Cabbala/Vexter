@@ -4,14 +4,18 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
-from vexter.planner_router.models import PlanRequest, PlanStatus, SourcePinRegistry
+import pytest
+
+from vexter.planner_router.models import FailureCode, PlanRequest, PlanStatus, SourcePinRegistry
 from vexter.planner_router.planner import plan_and_dispatch, plan_request
 from vexter.planner_router.transport import (
     AckState,
+    DexterDemoExecutorAdapter,
     InMemoryPlanStore,
     ReconcilingStatusSink,
     TransportFailureMode,
     TransportRejectionClass,
+    build_demo_executor_transport_registry,
     build_source_faithful_transport_registry,
 )
 
@@ -111,6 +115,130 @@ def test_transport_status_reconciliation_promotes_valid_push_over_poll() -> None
     assert snapshot.detail["poll_status"] == PlanStatus.RUNNING.value
     assert snapshot.detail["push_status"] == PlanStatus.QUARANTINED.value
     assert snapshot.detail["entrypoint"] == "monitor_mint_session"
+
+
+def test_dexter_demo_adapter_maps_submit_fill_and_stop_all_runtime() -> None:
+    store = InMemoryPlanStore()
+    batch = plan_request(
+        PlanRequest(plan_request_id="req-demo-adapter-runtime"),
+        CONFIG_ROOT,
+        FROZEN_PINS,
+        store,
+        CREATED_AT,
+    )
+    plan = batch.plans[0]
+    registry = build_demo_executor_transport_registry(FROZEN_PINS)
+    adapter = registry.adapter_for(plan)
+
+    assert isinstance(adapter, DexterDemoExecutorAdapter)
+
+    handle = adapter.prepare(plan)
+    assert handle.native_handle["demo_runtime"] == "dexter_paper_live_demo"
+    assert handle.native_handle["symbol_allowlist"] == ["BONK/USDC"]
+    assert handle.native_handle["demo_symbol"] == "BONK/USDC"
+
+    asyncio.run(adapter.start(handle))
+    running_snapshot = asyncio.run(adapter.status(handle))
+
+    assert running_snapshot.detail["native_order_status"] == "filled"
+    assert running_snapshot.detail["fill_count"] == 1
+    assert running_snapshot.detail["orders"][0]["purpose"] == "entry"
+    assert running_snapshot.detail["orders"][0]["state"] == "filled"
+    assert running_snapshot.detail["fills"][0]["side"] == "buy"
+    assert running_snapshot.detail["open_position_lots"] == "0.05"
+
+    asyncio.run(adapter.stop(handle, reason="manual_latched_stop_all"))
+    stopping_snapshot = asyncio.run(adapter.status(handle))
+    confirmed_snapshot = asyncio.run(adapter.snapshot(handle))
+
+    assert stopping_snapshot.detail["stop_all_state"] == "flatten_requested"
+    assert confirmed_snapshot["stop_all_state"] == "flatten_confirmed"
+    assert confirmed_snapshot["fill_count"] == 2
+    assert confirmed_snapshot["orders"][1]["purpose"] == "flatten"
+    assert confirmed_snapshot["orders"][1]["state"] == "filled"
+    assert confirmed_snapshot["open_position_lots"] == "0"
+
+
+def test_dexter_demo_adapter_cancels_unfilled_entry_before_terminal_snapshot() -> None:
+    store = InMemoryPlanStore()
+    batch = plan_request(
+        PlanRequest(plan_request_id="req-demo-adapter-cancel"),
+        CONFIG_ROOT,
+        FROZEN_PINS,
+        store,
+        CREATED_AT,
+    )
+    plan = batch.plans[0]
+    adapter = DexterDemoExecutorAdapter(
+        executor_profile_id="dexter_main_pinned",
+        pinned_commit=FROZEN_PINS.dexter,
+    )
+
+    handle = adapter.prepare(plan)
+    asyncio.run(adapter.start(handle))
+    asyncio.run(adapter.stop(handle, reason="manual_latched_stop_all"))
+    snapshot = asyncio.run(adapter.snapshot(handle))
+
+    assert snapshot["stop_all_state"] == "cancel_confirmed"
+    assert snapshot["fill_count"] == 0
+    assert snapshot["orders"][0]["purpose"] == "entry"
+    assert snapshot["orders"][0]["state"] == "canceled"
+    assert snapshot["orders"][0]["cancel_reason"] == "manual_latched_stop_all"
+
+
+def test_dexter_demo_adapter_rejects_portfolio_split_route_for_first_demo_slice(tmp_path: Path) -> None:
+    config_root = clone_config_dir(tmp_path)
+    enable_mewx_sleeve(config_root)
+    store = InMemoryPlanStore()
+    batch = plan_request(
+        PlanRequest(
+            plan_request_id="req-demo-adapter-route-guardrail",
+            objective_profile_id="dexter_with_mewx_overlay",
+        ),
+        config_root,
+        FROZEN_PINS,
+        store,
+        CREATED_AT,
+    )
+    dexter_plan = batch.plans[0]
+    adapter = DexterDemoExecutorAdapter(
+        executor_profile_id="dexter_main_pinned",
+        pinned_commit=FROZEN_PINS.dexter,
+    )
+
+    with pytest.raises(Exception) as exc_info:
+        adapter.prepare(dexter_plan)
+
+    assert exc_info.value.failure.code is FailureCode.PREPARE_FAILED
+    assert exc_info.value.failure.source_reason == "single_sleeve_only"
+    assert exc_info.value.failure.detail["route_mode"] == "portfolio_split"
+
+
+def test_dexter_demo_adapter_surfaces_fill_reconciliation_gap_abort() -> None:
+    store = InMemoryPlanStore()
+    batch = plan_request(
+        PlanRequest(plan_request_id="req-demo-adapter-reconciliation-gap"),
+        CONFIG_ROOT,
+        FROZEN_PINS,
+        store,
+        CREATED_AT,
+    )
+    plan = batch.plans[0]
+    adapter = DexterDemoExecutorAdapter(
+        executor_profile_id="dexter_main_pinned",
+        pinned_commit=FROZEN_PINS.dexter,
+        failure_mode=TransportFailureMode(fill_reconciliation_gap=True),
+    )
+
+    handle = adapter.prepare(plan)
+    asyncio.run(adapter.start(handle))
+
+    with pytest.raises(Exception) as exc_info:
+        asyncio.run(adapter.status(handle))
+
+    assert exc_info.value.failure.code is FailureCode.RECONCILIATION_GAP
+    assert exc_info.value.failure.detail["abort_condition"] == "status_or_fill_reconciliation_gap"
+    assert exc_info.value.failure.detail["demo_runtime"] == "dexter_paper_live_demo"
 
 
 def test_dispatch_failure_propagates_transport_failure_and_confirms_reverse_stop(tmp_path: Path) -> None:

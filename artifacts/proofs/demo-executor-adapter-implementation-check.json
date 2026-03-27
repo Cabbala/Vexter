@@ -1,0 +1,66 @@
+{
+  "task_id": "DEMO-EXECUTOR-ADAPTER-IMPLEMENTATION",
+  "verified_github": {
+    "latest_vexter_pr": 70,
+    "latest_vexter_main_commit": "ccea54002189eaa8f6885284c7ef63506bb470be",
+    "latest_vexter_merged_at": "2026-03-26T23:42:15Z",
+    "dexter_pr_3_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
+  },
+  "adapter_implementation": {
+    "planner_boundary_unchanged": [
+      "prepare",
+      "start",
+      "status",
+      "stop",
+      "snapshot"
+    ],
+    "demo_builder": "build_demo_executor_transport_registry",
+    "dexter_adapter_class": "DexterDemoExecutorAdapter",
+    "mewx_path_unchanged": true,
+    "adapter_owned_operations": [
+      "submit_order",
+      "cancel_order",
+      "order_status",
+      "fill_collection",
+      "stop_all"
+    ],
+    "guardrails": {
+      "single_sleeve_only": true,
+      "dexter_default_only": true,
+      "allowlist_required": true,
+      "small_lot_only": true,
+      "bounded_window_required": true,
+      "max_open_positions": 1,
+      "max_active_real_demo_plans": 1
+    },
+    "abort_conditions": [
+      "pin_or_mode_mismatch",
+      "status_or_fill_reconciliation_gap",
+      "cancel_or_stop_all_unconfirmed"
+    ],
+    "external_references": [
+      "DEXTER_DEMO_CREDENTIAL_SOURCE",
+      "DEXTER_DEMO_VENUE_REF",
+      "DEXTER_DEMO_ACCOUNT_REF",
+      "DEXTER_DEMO_CONNECTIVITY_PROFILE",
+      "DEXTER_DEMO_ALLOWED_SYMBOLS",
+      "DEXTER_DEMO_DEFAULT_SYMBOL",
+      "DEXTER_DEMO_ORDER_SIZE_LOTS",
+      "DEXTER_DEMO_MAX_ORDER_SIZE_LOTS",
+      "DEXTER_DEMO_WINDOW_MINUTES",
+      "DEXTER_DEMO_MAX_OPEN_POSITIONS"
+    ]
+  },
+  "tests": {
+    "targeted_demo_adapter_tests": [
+      "tests/test_planner_router_executor_transport_implementation.py"
+    ],
+    "transport_regression_suites_green": true
+  },
+  "task_result": {
+    "task_state": "demo_executor_adapter_implemented",
+    "recommended_next_step": "DEMO-FORWARD-ACCEPTANCE-PACK",
+    "decision": "demo_executor_adapter_implemented"
+  }
+}

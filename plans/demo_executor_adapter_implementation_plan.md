@@ -20,6 +20,22 @@ Implement the smallest concrete adapter needed to let Vexter start bounded forwa
 6. Implement `stop(handle, reason)` so `manual_latched_stop_all` cancels or flattens the demo session without rewriting planner stop reasons.
 7. Keep Mew-X `sim_live` unchanged; do not introduce `trade_live` or funded paths.
 
+## Concrete Bounded Path
+
+- `build_demo_executor_transport_registry(...)` installs `DexterDemoExecutorAdapter` on the existing `ExecutorAdapter` seam for the Dexter-first demo slice.
+- `build_source_faithful_transport_registry(...)` stays available for the broader transport and observability suites so existing planner-owned regression lanes remain unchanged.
+- `DexterDemoExecutorAdapter.prepare(...)` validates:
+  - pinned Dexter commit
+  - `single_sleeve` route only
+  - `dexter_default` sleeve only
+  - explicit allowlist and small-lot config
+  - bounded demo window
+  - external credential references via `DEXTER_DEMO_*`
+- `DexterDemoExecutorAdapter.start(...)` owns bounded `submit_order`.
+- `DexterDemoExecutorAdapter.status(...)` owns `order_status` polling plus `fill_collection`.
+- `DexterDemoExecutorAdapter.stop(...)` owns `cancel_order` or `stop_all` flatten request without rewriting planner stop reasons.
+- `DexterDemoExecutorAdapter.snapshot(...)` confirms terminal stop-all visibility for rollback and operator handoff.
+
 ## First Acceptance Target
 
 - one active `dexter_default` sleeve

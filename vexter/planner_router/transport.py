@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import os
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
+from decimal import Decimal, InvalidOperation
 from enum import Enum
 from typing import Any
 from uuid import uuid4
@@ -18,6 +20,7 @@ from .models import (
     FailureDetail,
     PlanBatch,
     PlanStatus,
+    RouteMode,
     Source,
     SourcePinRegistry,
     StatusSnapshot,
@@ -149,8 +152,144 @@ class TransportFailureMode:
     start_rejection: TransportRejectionClass | None = None
     stop_rejection: TransportRejectionClass | None = None
     status_timeout: bool = False
+    fill_reconciliation_gap: bool = False
     stop_requires_snapshot_confirmation: bool = True
     stop_confirmation_suppressed: bool = False
+
+
+def _parse_decimal(raw_value: str, *, fallback: str) -> Decimal:
+    try:
+        return Decimal(raw_value)
+    except InvalidOperation:
+        return Decimal(fallback)
+
+
+def _serialize_decimal(value: Decimal) -> str:
+    normalized = value.normalize()
+    return format(normalized, "f").rstrip("0").rstrip(".") or "0"
+
+
+def _csv_tuple(raw_value: str | None, *, fallback: Sequence[str]) -> tuple[str, ...]:
+    if raw_value is None:
+        return tuple(fallback)
+    parsed = tuple(item.strip() for item in raw_value.split(",") if item.strip())
+    return parsed or tuple(fallback)
+
+
+@dataclass(frozen=True, slots=True)
+class DexterDemoRuntimeConfig:
+    venue_reference: str
+    account_reference: str
+    connectivity_profile: str
+    allowed_symbols: tuple[str, ...]
+    default_symbol: str
+    order_size_lots: Decimal
+    max_order_size_lots: Decimal
+    bounded_window_minutes: int
+    credential_source: str = "external_reference"
+    max_open_positions: int = 1
+
+    @classmethod
+    def from_env(cls) -> "DexterDemoRuntimeConfig":
+        allowed_symbols = _csv_tuple(
+            os.environ.get("DEXTER_DEMO_ALLOWED_SYMBOLS"),
+            fallback=("BONK/USDC",),
+        )
+        default_symbol = os.environ.get("DEXTER_DEMO_DEFAULT_SYMBOL", allowed_symbols[0])
+        return cls(
+            venue_reference=os.environ.get("DEXTER_DEMO_VENUE_REF", "dexter_paper_live_demo_venue"),
+            account_reference=os.environ.get("DEXTER_DEMO_ACCOUNT_REF", "dexter_paper_live_demo_account"),
+            connectivity_profile=os.environ.get(
+                "DEXTER_DEMO_CONNECTIVITY_PROFILE",
+                "dexter_paper_live_demo_connectivity",
+            ),
+            allowed_symbols=allowed_symbols,
+            default_symbol=default_symbol,
+            order_size_lots=_parse_decimal(
+                os.environ.get("DEXTER_DEMO_ORDER_SIZE_LOTS", "0.05"),
+                fallback="0.05",
+            ),
+            max_order_size_lots=_parse_decimal(
+                os.environ.get("DEXTER_DEMO_MAX_ORDER_SIZE_LOTS", "0.05"),
+                fallback="0.05",
+            ),
+            bounded_window_minutes=int(os.environ.get("DEXTER_DEMO_WINDOW_MINUTES", "15")),
+            credential_source=os.environ.get("DEXTER_DEMO_CREDENTIAL_SOURCE", "external_reference"),
+            max_open_positions=int(os.environ.get("DEXTER_DEMO_MAX_OPEN_POSITIONS", "1")),
+        )
+
+    def validation_errors(self) -> tuple[str, ...]:
+        errors: list[str] = []
+        if not self.venue_reference.strip():
+            errors.append("venue_reference_missing")
+        if not self.account_reference.strip():
+            errors.append("account_reference_missing")
+        if not self.connectivity_profile.strip():
+            errors.append("connectivity_profile_missing")
+        if not self.allowed_symbols:
+            errors.append("symbol_allowlist_empty")
+        if self.default_symbol not in self.allowed_symbols:
+            errors.append("default_symbol_not_allowlisted")
+        if self.order_size_lots <= Decimal("0"):
+            errors.append("order_size_non_positive")
+        if self.max_order_size_lots <= Decimal("0"):
+            errors.append("max_order_size_non_positive")
+        if self.order_size_lots > self.max_order_size_lots:
+            errors.append("order_size_exceeds_cap")
+        if self.bounded_window_minutes <= 0:
+            errors.append("bounded_window_non_positive")
+        if self.max_open_positions != 1:
+            errors.append("max_open_positions_must_be_one")
+        return tuple(errors)
+
+
+class DexterDemoOrderState(str, Enum):
+    SUBMITTED = "submitted"
+    FILLED = "filled"
+    CANCELED = "canceled"
+
+
+@dataclass(slots=True)
+class _DexterDemoFill:
+    fill_id: str
+    native_order_id: str
+    symbol: str
+    side: str
+    quantity_lots: Decimal
+    venue_reference: str
+    collected_at_utc: datetime
+
+
+@dataclass(slots=True)
+class _DexterDemoOrder:
+    native_order_id: str
+    purpose: str
+    symbol: str
+    side: str
+    quantity_lots: Decimal
+    state: DexterDemoOrderState
+    submitted_at_utc: datetime
+    updated_at_utc: datetime
+    cancel_reason: str | None = None
+    fills: list[_DexterDemoFill] = field(default_factory=list)
+
+
+@dataclass(slots=True)
+class _DexterDemoRuntime:
+    config: DexterDemoRuntimeConfig
+    native_session_id: str
+    bounded_window_started_at_utc: datetime
+    bounded_window_expires_at_utc: datetime
+    order_sequence: int = 0
+    fill_sequence: int = 0
+    entry_order: _DexterDemoOrder | None = None
+    flatten_order: _DexterDemoOrder | None = None
+    collected_fills: list[_DexterDemoFill] = field(default_factory=list)
+    last_order_status: str = "idle"
+    last_reconciliation: str = "not_started"
+    stop_all_state: str = "idle"
+    open_position_lots: Decimal = field(default_factory=lambda: Decimal("0"))
+    abort_condition: str | None = None
 
 
 @dataclass(slots=True)
@@ -1656,6 +1795,356 @@ class TransportExecutorAdapter(ExecutorAdapter):
         return freeze_detail(detail)
 
 
+class DexterDemoExecutorAdapter(TransportExecutorAdapter):
+    """Concrete bounded Dexter demo adapter behind the existing transport lifecycle."""
+
+    def __init__(
+        self,
+        *,
+        executor_profile_id: str,
+        pinned_commit: str,
+        runtime_config: DexterDemoRuntimeConfig | None = None,
+        failure_mode: TransportFailureMode | None = None,
+    ) -> None:
+        super().__init__(
+            source=Source.DEXTER,
+            executor_profile_id=executor_profile_id,
+            pinned_commit=pinned_commit,
+            failure_mode=failure_mode,
+        )
+        self.runtime_config = runtime_config or DexterDemoRuntimeConfig.from_env()
+        self._runtime_by_handle_id: dict[str, _DexterDemoRuntime] = {}
+
+    def prepare(self, plan: ExecutionPlan) -> DispatchHandle:
+        handle = super().prepare(plan)
+        session = self._session_for_handle(handle)
+        runtime = self._runtime_by_handle_id.setdefault(
+            session.handle_id,
+            _DexterDemoRuntime(
+                config=self.runtime_config,
+                native_session_id=session.native_session_id,
+                bounded_window_started_at_utc=ensure_utc(session.prepared_at_utc),
+                bounded_window_expires_at_utc=ensure_utc(session.prepared_at_utc)
+                + timedelta(minutes=self.runtime_config.bounded_window_minutes),
+            ),
+        )
+        merged_handle = dict(handle.native_handle) if isinstance(handle.native_handle, Mapping) else {}
+        merged_handle.update(dict(self._demo_handle_detail(runtime)))
+        return DispatchHandle(
+            plan_id=handle.plan_id,
+            source=handle.source,
+            native_handle=freeze_detail(merged_handle),
+            plan=handle.plan,
+        )
+
+    async def start(self, handle: DispatchHandle) -> None:
+        await super().start(handle)
+        session = self._session_for_handle(handle)
+        runtime = self._runtime_for_session(session)
+        if session.last_start_ack_state is not TransportAckState.ACCEPTED:
+            return
+        if runtime.entry_order is not None:
+            return
+        now = _now_utc()
+        runtime.order_sequence += 1
+        runtime.entry_order = _DexterDemoOrder(
+            native_order_id=f"{session.native_session_id}:entry:{runtime.order_sequence}",
+            purpose="entry",
+            symbol=runtime.config.default_symbol,
+            side="buy",
+            quantity_lots=runtime.config.order_size_lots,
+            state=DexterDemoOrderState.SUBMITTED,
+            submitted_at_utc=now,
+            updated_at_utc=now,
+        )
+        runtime.last_order_status = runtime.entry_order.state.value
+        runtime.last_reconciliation = "submit_order"
+        runtime.stop_all_state = "active"
+
+    async def status(self, handle: DispatchHandle) -> StatusSnapshot:
+        session = self._session_for_handle(handle)
+        runtime = self._runtime_for_session(session)
+        next_poll_counter = session.poll_counter + 1
+        if self.failure_mode.fill_reconciliation_gap and session.started and not session.stop_requested:
+            runtime.abort_condition = "status_or_fill_reconciliation_gap"
+            raise TransportCommandError(
+                f"fill reconciliation gap for {session.plan.plan_id}",
+                stage="status",
+                failure_code=FailureCode.RECONCILIATION_GAP,
+                ack_state=TransportAckState.ACCEPTED,
+                plan=session.plan,
+                source_reason="fill_reconciliation_gap",
+                detail=self._observability_detail(
+                    session,
+                    signal="status_poll",
+                    extra_detail={
+                        "abort_condition": runtime.abort_condition,
+                        "reconciliation_gap": True,
+                    },
+                ),
+            )
+        self._advance_runtime_for_poll(session, runtime, next_poll_counter=next_poll_counter)
+        return await super().status(handle)
+
+    async def stop(self, handle: DispatchHandle, reason: str) -> None:
+        await super().stop(handle, reason)
+        session = self._session_for_handle(handle)
+        runtime = self._runtime_for_session(session)
+        if session.last_stop_ack_state is not TransportAckState.ACCEPTED:
+            return
+        now = _now_utc()
+        normalized_reason = normalize_stop_reason(reason)
+        if runtime.entry_order is not None and runtime.entry_order.state is DexterDemoOrderState.SUBMITTED:
+            runtime.entry_order.state = DexterDemoOrderState.CANCELED
+            runtime.entry_order.cancel_reason = normalized_reason
+            runtime.entry_order.updated_at_utc = now
+            runtime.last_order_status = runtime.entry_order.state.value
+            runtime.last_reconciliation = "cancel_order"
+            runtime.stop_all_state = "cancel_confirmed"
+            return
+
+        if runtime.open_position_lots > Decimal("0") and runtime.flatten_order is None:
+            runtime.order_sequence += 1
+            runtime.flatten_order = _DexterDemoOrder(
+                native_order_id=f"{session.native_session_id}:flatten:{runtime.order_sequence}",
+                purpose="flatten",
+                symbol=runtime.config.default_symbol,
+                side="sell",
+                quantity_lots=runtime.open_position_lots,
+                state=DexterDemoOrderState.SUBMITTED,
+                submitted_at_utc=now,
+                updated_at_utc=now,
+            )
+            runtime.last_order_status = "flatten_submitted"
+            runtime.last_reconciliation = "stop_all_requested"
+            runtime.stop_all_state = "flatten_requested"
+
+    async def snapshot(self, handle: DispatchHandle) -> Mapping[str, Any]:
+        session = self._session_for_handle(handle)
+        runtime = self._runtime_for_session(session)
+        if session.stop_requested:
+            if self.failure_mode.stop_confirmation_suppressed:
+                runtime.abort_condition = "cancel_or_stop_all_unconfirmed"
+                runtime.stop_all_state = "awaiting_confirmation"
+                runtime.last_reconciliation = "stop_all_unconfirmed"
+            else:
+                self._confirm_stop_all(runtime)
+        return await super().snapshot(handle)
+
+    def _validate_plan(self, plan: ExecutionPlan) -> None:
+        super()._validate_plan(plan)
+        config_errors = self.runtime_config.validation_errors()
+        if config_errors:
+            raise self._demo_prepare_error(
+                plan,
+                guardrail="demo_runtime_config_invalid",
+                detail={"validation_errors": config_errors},
+            )
+        if plan.route.mode is not RouteMode.SINGLE_SLEEVE:
+            raise self._demo_prepare_error(
+                plan,
+                guardrail="single_sleeve_only",
+                detail={"route_mode": plan.route.mode.value},
+            )
+        if plan.route.selected_sleeve_id != "dexter_default":
+            raise self._demo_prepare_error(
+                plan,
+                guardrail="dexter_default_only",
+                detail={"selected_sleeve_id": plan.route.selected_sleeve_id},
+            )
+        if any(
+            session.plan.plan_id != plan.plan_id and session.executor_status not in _TERMINAL_STATUSES
+            for session in self._sessions_by_plan_id.values()
+        ):
+            raise self._demo_prepare_error(
+                plan,
+                guardrail="one_active_real_demo_plan",
+                detail={"active_plan_ids": sorted(self._sessions_by_plan_id)},
+            )
+
+    def _demo_prepare_error(
+        self,
+        plan: ExecutionPlan,
+        *,
+        guardrail: str,
+        detail: Mapping[str, Any] | None = None,
+    ) -> TransportCommandError:
+        spec = SourceTransportSpec.for_plan(plan)
+        merged_detail = {
+            "plan_id": plan.plan_id,
+            **dict(self._plan_observability_detail(plan)),
+            "entrypoint": spec.entrypoint,
+            "execution_mode": spec.execution_mode,
+            "startup_method": spec.startup_method,
+            "guardrail": guardrail,
+            "symbol_allowlist": list(self.runtime_config.allowed_symbols),
+            "demo_symbol": self.runtime_config.default_symbol,
+            "small_lot_order_size": _serialize_decimal(self.runtime_config.order_size_lots),
+            "max_order_size": _serialize_decimal(self.runtime_config.max_order_size_lots),
+            "bounded_window_minutes": self.runtime_config.bounded_window_minutes,
+        }
+        if detail is not None:
+            merged_detail.update(dict(detail))
+        return TransportCommandError(
+            f"prepare rejected for {plan.plan_id}",
+            stage="prepare",
+            failure_code=FailureCode.PREPARE_FAILED,
+            ack_state=TransportAckState.REJECTED,
+            plan=plan,
+            rejection_class=TransportRejectionClass.INVALID_PLAN_STATE,
+            source_reason=guardrail,
+            detail=merged_detail,
+        )
+
+    def _runtime_for_session(self, session: _TransportSession) -> _DexterDemoRuntime:
+        runtime = self._runtime_by_handle_id.get(session.handle_id)
+        if runtime is None:
+            runtime = _DexterDemoRuntime(
+                config=self.runtime_config,
+                native_session_id=session.native_session_id,
+                bounded_window_started_at_utc=ensure_utc(session.prepared_at_utc),
+                bounded_window_expires_at_utc=ensure_utc(session.prepared_at_utc)
+                + timedelta(minutes=self.runtime_config.bounded_window_minutes),
+            )
+            self._runtime_by_handle_id[session.handle_id] = runtime
+        return runtime
+
+    def _advance_runtime_for_poll(
+        self,
+        session: _TransportSession,
+        runtime: _DexterDemoRuntime,
+        *,
+        next_poll_counter: int,
+    ) -> None:
+        if session.stop_requested:
+            if runtime.stop_all_state == "flatten_requested":
+                runtime.last_reconciliation = "stop_all_waiting_snapshot"
+            return
+        if runtime.entry_order is None or runtime.entry_order.state is not DexterDemoOrderState.SUBMITTED:
+            return
+        if next_poll_counter != 1:
+            return
+        runtime.fill_sequence += 1
+        fill = _DexterDemoFill(
+            fill_id=f"{runtime.native_session_id}:fill:{runtime.fill_sequence}",
+            native_order_id=runtime.entry_order.native_order_id,
+            symbol=runtime.entry_order.symbol,
+            side=runtime.entry_order.side,
+            quantity_lots=runtime.entry_order.quantity_lots,
+            venue_reference=runtime.config.venue_reference,
+            collected_at_utc=_now_utc(),
+        )
+        runtime.entry_order.fills.append(fill)
+        runtime.entry_order.state = DexterDemoOrderState.FILLED
+        runtime.entry_order.updated_at_utc = fill.collected_at_utc
+        runtime.collected_fills.append(fill)
+        runtime.open_position_lots += fill.quantity_lots
+        runtime.last_order_status = runtime.entry_order.state.value
+        runtime.last_reconciliation = "fill_collection"
+
+    def _confirm_stop_all(self, runtime: _DexterDemoRuntime) -> None:
+        if runtime.flatten_order is not None and runtime.flatten_order.state is DexterDemoOrderState.SUBMITTED:
+            runtime.fill_sequence += 1
+            fill = _DexterDemoFill(
+                fill_id=f"{runtime.native_session_id}:fill:{runtime.fill_sequence}",
+                native_order_id=runtime.flatten_order.native_order_id,
+                symbol=runtime.flatten_order.symbol,
+                side=runtime.flatten_order.side,
+                quantity_lots=runtime.flatten_order.quantity_lots,
+                venue_reference=runtime.config.venue_reference,
+                collected_at_utc=_now_utc(),
+            )
+            runtime.flatten_order.fills.append(fill)
+            runtime.flatten_order.state = DexterDemoOrderState.FILLED
+            runtime.flatten_order.updated_at_utc = fill.collected_at_utc
+            runtime.collected_fills.append(fill)
+            runtime.open_position_lots = Decimal("0")
+            runtime.last_order_status = "flattened"
+            runtime.last_reconciliation = "stop_all_confirmed"
+            runtime.stop_all_state = "flatten_confirmed"
+            return
+        if runtime.stop_all_state == "cancel_confirmed":
+            runtime.last_reconciliation = "stop_all_confirmed"
+            return
+        runtime.stop_all_state = "confirmed_noop"
+        runtime.last_reconciliation = "stop_all_confirmed"
+
+    def _serialize_fill(self, fill: _DexterDemoFill) -> Mapping[str, Any]:
+        return freeze_detail(
+            {
+                "fill_id": fill.fill_id,
+                "native_order_id": fill.native_order_id,
+                "symbol": fill.symbol,
+                "side": fill.side,
+                "quantity_lots": _serialize_decimal(fill.quantity_lots),
+                "venue_reference": fill.venue_reference,
+                "collected_at_utc": ensure_utc(fill.collected_at_utc).isoformat(),
+            }
+        )
+
+    def _serialize_order(self, order: _DexterDemoOrder) -> Mapping[str, Any]:
+        return freeze_detail(
+            {
+                "native_order_id": order.native_order_id,
+                "purpose": order.purpose,
+                "symbol": order.symbol,
+                "side": order.side,
+                "quantity_lots": _serialize_decimal(order.quantity_lots),
+                "state": order.state.value,
+                "submitted_at_utc": ensure_utc(order.submitted_at_utc).isoformat(),
+                "updated_at_utc": ensure_utc(order.updated_at_utc).isoformat(),
+                "cancel_reason": order.cancel_reason,
+                "fill_ids": [fill.fill_id for fill in order.fills],
+            }
+        )
+
+    def _demo_handle_detail(self, runtime: _DexterDemoRuntime) -> Mapping[str, Any]:
+        return freeze_detail(
+            {
+                "demo_runtime": "dexter_paper_live_demo",
+                "demo_credentials_source": runtime.config.credential_source,
+                "demo_account_reference": runtime.config.account_reference,
+                "demo_venue_reference": runtime.config.venue_reference,
+                "demo_connectivity_profile": runtime.config.connectivity_profile,
+                "symbol_allowlist": list(runtime.config.allowed_symbols),
+                "demo_symbol": runtime.config.default_symbol,
+                "small_lot_order_size": _serialize_decimal(runtime.config.order_size_lots),
+                "max_order_size": _serialize_decimal(runtime.config.max_order_size_lots),
+                "bounded_window_minutes": runtime.config.bounded_window_minutes,
+                "bounded_window_started_at_utc": ensure_utc(runtime.bounded_window_started_at_utc).isoformat(),
+                "bounded_window_expires_at_utc": ensure_utc(runtime.bounded_window_expires_at_utc).isoformat(),
+                "native_order_status": runtime.last_order_status,
+                "stop_all_state": runtime.stop_all_state,
+                "last_reconciliation": runtime.last_reconciliation,
+                "fill_count": len(runtime.collected_fills),
+                "open_position_lots": _serialize_decimal(runtime.open_position_lots),
+            }
+        )
+
+    def _observability_detail(
+        self,
+        session: _TransportSession,
+        *,
+        signal: str,
+        extra_detail: Mapping[str, Any] | None = None,
+    ) -> Mapping[str, Any]:
+        detail = dict(super()._observability_detail(session, signal=signal, extra_detail=extra_detail))
+        runtime = self._runtime_for_session(session)
+        native_orders = [order for order in (runtime.entry_order, runtime.flatten_order) if order is not None]
+        detail.update(dict(self._demo_handle_detail(runtime)))
+        detail.update(
+            {
+                "native_order_ids": [order.native_order_id for order in native_orders],
+                "entry_order_id": runtime.entry_order.native_order_id if runtime.entry_order is not None else None,
+                "flatten_order_id": runtime.flatten_order.native_order_id if runtime.flatten_order is not None else None,
+                "fills": [dict(self._serialize_fill(fill)) for fill in runtime.collected_fills],
+                "orders": [dict(self._serialize_order(order)) for order in native_orders],
+                "abort_condition": runtime.abort_condition,
+            }
+        )
+        return freeze_detail(detail)
+
+
 ReconcilingStatusSink = RecordingStatusSink
 TransportExecutorRegistry = HandleExecutorRegistry
 SourceFaithfulTransportAdapter = TransportExecutorAdapter
@@ -1676,6 +2165,33 @@ def build_source_faithful_transport_registry(
                 source=Source.DEXTER,
                 executor_profile_id=dexter_executor_profile_id,
                 pinned_commit=frozen_pins.dexter,
+                failure_mode=dexter_failure_mode,
+            ),
+            mewx_executor_profile_id: SourceFaithfulTransportAdapter(
+                source=Source.MEWX,
+                executor_profile_id=mewx_executor_profile_id,
+                pinned_commit=frozen_pins.mewx,
+                failure_mode=mewx_failure_mode,
+            ),
+        }
+    )
+
+
+def build_demo_executor_transport_registry(
+    frozen_pins: SourcePinRegistry,
+    *,
+    dexter_executor_profile_id: str = "dexter_main_pinned",
+    mewx_executor_profile_id: str = "mewx_frozen_pinned",
+    dexter_runtime_config: DexterDemoRuntimeConfig | None = None,
+    dexter_failure_mode: TransportFailureMode | None = None,
+    mewx_failure_mode: TransportFailureMode | None = None,
+) -> TransportExecutorRegistry:
+    return TransportExecutorRegistry(
+        {
+            dexter_executor_profile_id: DexterDemoExecutorAdapter(
+                executor_profile_id=dexter_executor_profile_id,
+                pinned_commit=frozen_pins.dexter,
+                runtime_config=dexter_runtime_config,
                 failure_mode=dexter_failure_mode,
             ),
             mewx_executor_profile_id: SourceFaithfulTransportAdapter(

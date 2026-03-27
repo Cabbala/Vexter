@@ -57,6 +57,7 @@ class FailureCode(str, Enum):
     PREPARE_FAILED = "prepare_failed"
     START_FAILED = "start_failed"
     STATUS_TIMEOUT = "status_timeout"
+    RECONCILIATION_GAP = "reconciliation_gap"
     SHUTDOWN_UNCONFIRMED = "shutdown_unconfirmed"
     INVALID_STATUS_TRANSITION = "invalid_status_transition"
     SOURCE_STOP_FAILED = "source_stop_failed"

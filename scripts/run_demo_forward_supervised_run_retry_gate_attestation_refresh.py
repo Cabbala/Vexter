@@ -110,7 +110,7 @@ PROOF_SUMMARY_PATH = (
 )
 
 BUNDLE_PATH = "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-refresh.tar.gz"
-BUNDLE_SOURCE = "/Users/cabbala/Downloads/vexter_attestation_refresh_bundle_fresh.tar.gz"
+BUNDLE_SOURCE = "/Users/cabbala/Downloads/vexter_attestation_refresh_bundle_latest.tar.gz"
 
 TASK_ID = "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
 TASK_STATUS = "supervised_run_retry_gate_attestation_refresh_blocked"
@@ -128,9 +128,9 @@ PUBLISHED_BRANCH = "feat/attestation-refresh"
 
 VERIFIED_DEXTER_COMMIT = "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938"
 VERIFIED_MEWX_COMMIT = "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
-VERIFIED_VEXTER_PR = 80
-VERIFIED_VEXTER_COMMIT = "abf5a5659a1a6a1918af18c57978ec10ef2d33d6"
-VERIFIED_VEXTER_MERGED_AT = "2026-03-27T09:10:03Z"
+VERIFIED_VEXTER_PR = 82
+VERIFIED_VEXTER_COMMIT = "eebfcd9b03e1e365cc4659996ea2638e6f285bbc"
+VERIFIED_VEXTER_MERGED_AT = "2026-03-27T13:34:44Z"
 
 REQUIRED_FACE_NAMES = [
     "external_credential_source_face",
@@ -166,7 +166,7 @@ SUB_AGENT_SUMMARIES = (
         "lines": [
             "Scoped the smallest safe change set to the refresh generator, refresh report/proof surfaces, README/current-pointer rewiring, targeted shared tests, and the bundle fallback path.",
             "Recommended validating generator output and the focused refresh regressions first, then widening to the shared pytest suite because several older task tests pin the repo-level current task and next-task metadata.",
-            "Merge readiness depends on starting from PR `#80` / merge commit `abf5a5659a1a6a1918af18c57978ec10ef2d33d6`, routing the blocked next step back to record-pack regeneration, and reporting the published branch as `feat/attestation-refresh`.",
+            "Merge readiness depends on starting from PR `#82` / merge commit `eebfcd9b03e1e365cc4659996ea2638e6f285bbc`, routing the blocked next step back to record-pack regeneration, and reporting the published branch as `feat/attestation-refresh`.",
         ],
     },
 )
@@ -564,7 +564,7 @@ Promote one bounded attestation refresh lane that keeps current status, report, 
 
 def build_min_prompt() -> str:
     return (
-        "GitHub latest state is Vexter main PR #80 merge commit "
+        "GitHub latest state is Vexter main PR #82 merge commit "
         f"{VERIFIED_VEXTER_COMMIT} on {VERIFIED_VEXTER_MERGED_AT}. "
         "Accept attestation record-pack regeneration as baseline, promote attestation refresh as the current source of truth, "
         "keep Dexter-only paper_live and frozen Mew-X sim_live, do not commit secrets, keep the lane FAIL/BLOCKED "
@@ -1002,9 +1002,9 @@ def main() -> None:
         {
             "latest_vexter_pr": VERIFIED_VEXTER_PR,
             "latest_vexter_main_commit": VERIFIED_VEXTER_COMMIT,
-            "latest_recent_vexter_prs": [80, 79, 78, 77, 76],
-            "vexter_pr_80_merged_at": VERIFIED_VEXTER_MERGED_AT,
-            "vexter_pr_80_closed_at": VERIFIED_VEXTER_MERGED_AT,
+            "latest_recent_vexter_prs": [82, 81, 80, 79, 78],
+            "vexter_pr_82_merged_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_82_closed_at": VERIFIED_VEXTER_MERGED_AT,
         }
     )
     context_pack["evidence"]["demo_forward_supervised_run_retry_gate_attestation_refresh"] = {
@@ -1139,13 +1139,13 @@ def main() -> None:
         "source_faithful_modes": {"dexter": "paper_live", "mewx": "sim_live"},
         "status": TASK_STATUS,
         "sub_agents_used": [item["name"] for item in SUB_AGENT_SUMMARIES],
-        "supporting_vexter_prs": [80, 79, 78, 77, 76],
+        "supporting_vexter_prs": [82, 81, 80, 79, 78],
         "task_id": TASK_ID,
         "template_runtime_validation_errors": runtime_errors,
         "verified_dexter_main_commit": VERIFIED_DEXTER_COMMIT,
         "verified_dexter_pr": 3,
         "verified_mewx_frozen_commit": VERIFIED_MEWX_COMMIT,
-        "verified_prs": [80, 79, 78],
+        "verified_prs": [82, 81, 80],
         "date": run_timestamp.split("T", 1)[0],
     }
     rewrite_local_ledger(ledger_payload)

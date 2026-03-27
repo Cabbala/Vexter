@@ -1,0 +1,5 @@
+GitHub最新状態を確認し、Vexter `main` PR #71 merge 後の forward acceptance pack を current source of truth として扱ってください。
+Dexter `paper_live` のみを real demo leg に使い、frozen Mew-X `sim_live` は unchanged のまま維持してください。
+planner の public boundary は `prepare / start / status / stop / snapshot` のまま、operator-supervised window・allowlist・small lot・stop-all visibility・terminal snapshot visibility を崩さないでください。
+current status / report / proof / handoff / operator checklist / abort matrix を起点に supervised forward run を進めてください。
+funded live や source logic rewrite は行わず、必要なら current handoff を更新してください。

@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-BUNDLE_PATH="$ROOT_DIR/artifacts/bundles/pattern-a-demo-executor-cutover.tar.gz"
+BUNDLE_PATH="$ROOT_DIR/artifacts/bundles/demo-forward-acceptance-pack.tar.gz"
 export COPYFILE_DISABLE=1
 
 mkdir -p "$ROOT_DIR/artifacts/bundles"

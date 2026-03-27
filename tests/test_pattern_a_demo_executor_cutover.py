@@ -4,37 +4,38 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 PROOF_PATH = REPO_ROOT / "artifacts/proofs/pattern-a-demo-executor-cutover-check.json"
-SUMMARY_PATH = REPO_ROOT / "artifacts/summary.md"
+SUMMARY_PATH = REPO_ROOT / "artifacts/proofs/pattern-a-demo-executor-cutover-summary.md"
 REPORT_PATH = REPO_ROOT / "artifacts/reports/pattern-a-demo-executor-cutover-report.md"
 STATUS_PATH = REPO_ROOT / "artifacts/reports/pattern-a-demo-executor-cutover-status.md"
 HANDOFF_PATH = REPO_ROOT / "artifacts/reports/pattern-a-demo-executor-cutover/HANDOFF.md"
 SPEC_PATH = REPO_ROOT / "specs/PATTERN_A_DEMO_EXECUTOR_CUTOVER.md"
 PLAN_PATH = REPO_ROOT / "plans/demo_executor_adapter_implementation_plan.md"
 
-
-def load_last_ledger_entry() -> dict:
-    lines = (REPO_ROOT / "artifacts/task_ledger.jsonl").read_text().strip().splitlines()
-    return json.loads(lines[-1])
-
-
 def test_pattern_a_demo_executor_cutover_artifacts_are_consistent() -> None:
     proof = json.loads(PROOF_PATH.read_text())
     manifest = json.loads((REPO_ROOT / "artifacts/proof_bundle_manifest.json").read_text())
     context = json.loads((REPO_ROOT / "artifacts/context_pack.json").read_text())
-    ledger = load_last_ledger_entry()
     summary_text = SUMMARY_PATH.read_text()
     report_text = REPORT_PATH.read_text()
     status_text = STATUS_PATH.read_text()
     handoff_text = HANDOFF_PATH.read_text()
 
-    assert manifest["task_id"] == context["current_task"]["id"] == ledger["task_id"]
-    assert manifest["task_id"] == "PATTERN-A-DEMO-EXECUTOR-CUTOVER"
-    assert manifest["status"] == ledger["status"] == "pattern_a_demo_executor_cutover_ready"
-    assert manifest["bundle_path"] == ledger["artifact_bundle"] == "artifacts/bundles/pattern-a-demo-executor-cutover.tar.gz"
-    assert manifest["next_task"]["id"] == context["next_task"]["id"] == ledger["next_task_id"]
-    assert manifest["next_task"]["id"] == "DEMO-EXECUTOR-ADAPTER-IMPLEMENTATION"
-    assert manifest["next_task"]["state"] == context["next_task"]["state"] == ledger["next_task_state"]
-    assert manifest["next_task"]["state"] == "ready_for_demo_executor_adapter_implementation"
+    assert "artifacts/proofs/pattern-a-demo-executor-cutover-check.json" in manifest["proof_files"]
+    assert "artifacts/proofs/pattern-a-demo-executor-cutover-summary.md" in manifest["proof_files"]
+    assert "artifacts/reports/pattern-a-demo-executor-cutover-report.md" in manifest["reports"]
+    assert "artifacts/reports/pattern-a-demo-executor-cutover-status.md" in manifest["reports"]
+    assert context["evidence"]["pattern_a_demo_executor_cutover"]["task_state"] == (
+        "pattern_a_demo_executor_cutover_ready"
+    )
+    assert context["evidence"]["pattern_a_demo_executor_cutover"]["preferred_next_step"] == (
+        "demo_executor_adapter_implementation"
+    )
+    assert context["evidence"]["demo_executor_adapter_implementation"]["task_state"] == (
+        "demo_executor_adapter_implemented"
+    )
+    assert context["evidence"]["demo_executor_adapter_implementation"]["preferred_next_step"] == (
+        "demo_forward_acceptance_pack"
+    )
 
     assert proof["task_id"] == "PATTERN-A-DEMO-EXECUTOR-CUTOVER"
     assert proof["verified_github"]["latest_vexter_pr"] == 69

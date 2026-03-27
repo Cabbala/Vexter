@@ -1,14 +1,14 @@
 {
   "background": {
-    "previous_task_id": "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-CI-GATE",
-    "previous_key_finding": "livepaper_observability_shift_handoff_watchdog_ci_gate_enforced",
-    "previous_claim_boundary": "livepaper_observability_shift_handoff_watchdog_ci_gate_bounded",
+    "previous_task_id": "DEMO-EXECUTOR-ADAPTER-IMPLEMENTATION",
+    "previous_key_finding": "demo_executor_adapter_implemented",
+    "previous_claim_boundary": "demo_executor_adapter_implementation_bounded",
     "promoted_pair": "task005-pass-grade-pair-20260325T180027Z",
     "confirmatory_pair": "task005-pass-grade-pair-20260325T180604Z",
     "comparison_source_of_truth_fixed_before_task": true,
     "prior_lane_completed_before_task": true
   },
-  "bundle_source": "/Users/cabbala/Downloads/vexter_patternA_demo_executor_cutover_bundle.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_demo_forward_acceptance_bundle.tar.gz",
   "current_contract": {
     "comparison_source_of_truth": "comparison_closed_out",
     "promoted_live_winner_mode": "derived",
@@ -71,22 +71,30 @@
     "pattern_a_cutover_plan_path": "plans/demo_executor_adapter_implementation_plan.md",
     "first_demo_real_source": "dexter",
     "first_demo_execution_mode": "paper_live",
-    "simulated_shadow_source": "mewx_sim_live"
+    "simulated_shadow_source": "mewx_sim_live",
+    "demo_forward_acceptance_pack_marker": "demo_forward_acceptance_pack",
+    "demo_forward_acceptance_spec_path": "specs/DEMO_FORWARD_ACCEPTANCE_PACK.md",
+    "demo_forward_acceptance_plan_path": "plans/demo_forward_acceptance_pack_plan.md",
+    "demo_forward_operator_checklist_path": "docs/demo_forward_operator_checklist.md",
+    "demo_forward_abort_rollback_matrix_path": "docs/demo_forward_abort_rollback_matrix.md",
+    "demo_forward_next_step": "demo_forward_supervised_run"
   },
   "current_task": {
-    "id": "PATTERN-A-DEMO-EXECUTOR-CUTOVER",
+    "id": "DEMO-FORWARD-ACCEPTANCE-PACK",
     "scope": [
-      "Verify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X.",
-      "Freeze the existing transport and handoff observability CI gates as sufficient stop conditions for Pattern A.",
-      "Fix the shortest real demo path while preserving the source-faithful Dexter `paper_live` / frozen Mew-X `sim_live` seam.",
-      "Choose the first demo target, the minimal executor boundary, the adapter-owned order surfaces, and the real-versus-simulated split.",
-      "Define guardrails, rollback and abort conditions, and the first demo-forward acceptance slice without changing source logic or collecting new evidence.",
-      "Refresh specs, plans, tests, summary, context pack, proof manifest, task ledger, report, proof output, and handoff bundle."
+      "Verify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X after the Dexter demo adapter merge.",
+      "Fix the bounded forward acceptance boundary for the first Dexter-only supervised demo slice.",
+      "Keep the public planner boundary at prepare / start / status / stop / snapshot while preserving poll_first and manual_latched_stop_all.",
+      "Add or update the current spec, plan, report, status, proof, handoff, operator checklist, and abort / rollback matrix surfaces.",
+      "Advance the next recommended lane to demo_forward_supervised_run without executing the run itself."
     ],
     "deliverables": [
       "README.md",
-      "specs/PATTERN_A_DEMO_EXECUTOR_CUTOVER.md",
-      "plans/demo_executor_adapter_implementation_plan.md",
+      "specs/DEMO_FORWARD_ACCEPTANCE_PACK.md",
+      "plans/demo_forward_acceptance_pack_plan.md",
+      "docs/demo_forward_operator_checklist.md",
+      "docs/demo_forward_abort_rollback_matrix.md",
+      "tests/test_demo_forward_acceptance_pack.py",
       "tests/test_pattern_a_demo_executor_cutover.py",
       "tests/test_bootstrap_layout.py",
       "scripts/build_proof_bundle.sh",
@@ -94,15 +102,15 @@
       "artifacts/context_pack.json",
       "artifacts/proof_bundle_manifest.json",
       "artifacts/task_ledger.jsonl",
-      "artifacts/reports/pattern-a-demo-executor-cutover-report.md",
-      "artifacts/reports/pattern-a-demo-executor-cutover-status.md",
-      "artifacts/reports/pattern-a-demo-executor-cutover/DETAILS.md",
-      "artifacts/reports/pattern-a-demo-executor-cutover/MIN_PROMPT.txt",
-      "artifacts/reports/pattern-a-demo-executor-cutover/CONTEXT.json",
-      "artifacts/reports/pattern-a-demo-executor-cutover/HANDOFF.md",
-      "artifacts/proofs/pattern-a-demo-executor-cutover-check.json",
-      "artifacts/proofs/pattern-a-demo-executor-cutover-summary.md",
-      "artifacts/bundles/pattern-a-demo-executor-cutover.tar.gz"
+      "artifacts/reports/demo-forward-acceptance-pack-report.md",
+      "artifacts/reports/demo-forward-acceptance-pack-status.md",
+      "artifacts/reports/demo-forward-acceptance-pack/DETAILS.md",
+      "artifacts/reports/demo-forward-acceptance-pack/MIN_PROMPT.txt",
+      "artifacts/reports/demo-forward-acceptance-pack/CONTEXT.json",
+      "artifacts/reports/demo-forward-acceptance-pack/HANDOFF.md",
+      "artifacts/proofs/demo-forward-acceptance-pack-check.json",
+      "artifacts/proofs/demo-forward-acceptance-pack-summary.md",
+      "artifacts/bundles/demo-forward-acceptance-pack.tar.gz"
     ],
     "frozen_source_commits": {
       "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
@@ -111,14 +119,14 @@
   },
   "evidence": {
     "github_latest": {
-      "latest_vexter_pr": 69,
-      "latest_vexter_main_commit": "289eb1bc87a8db9a9801b9b0583a8dbc6b17a5b3",
+      "latest_vexter_pr": 71,
+      "latest_vexter_main_commit": "5c1feb2561da7b16a17c5d03b71ff2bf895e20e4",
       "latest_recent_vexter_prs": [
+        71,
+        70,
         69,
         68,
-        67,
-        66,
-        65
+        67
       ],
       "vexter_pr_65_merged_at": "2026-03-26T19:30:46Z",
       "vexter_pr_64_merged_at": "2026-03-26T18:53:07Z",
@@ -130,7 +138,10 @@
       "vexter_pr_66_merged_at": "2026-03-26T20:06:25Z",
       "vexter_pr_67_merged_at": "2026-03-26T21:34:46Z",
       "vexter_pr_68_merged_at": "2026-03-26T22:13:43Z",
-      "vexter_pr_69_merged_at": "2026-03-26T23:03:14Z"
+      "vexter_pr_69_merged_at": "2026-03-26T23:03:14Z",
+      "vexter_pr_70_merged_at": "2026-03-26T23:42:15Z",
+      "vexter_pr_71_merged_at": "2026-03-27T00:09:27Z",
+      "vexter_pr_71_closed_at": "2026-03-27T00:09:27Z"
     },
     "transport_livepaper_observability_ci_gate": {
       "report": "artifacts/reports/task-007-transport-livepaper-observability-ci-gate-report.md",
@@ -669,6 +680,51 @@
         "quarantine_or_manual_halt_triggered"
       ],
       "preferred_next_step": "demo_executor_adapter_implementation"
+    },
+    "demo_executor_adapter_implementation": {
+      "report": "artifacts/reports/demo-executor-adapter-implementation-report.md",
+      "status_report": "artifacts/reports/demo-executor-adapter-implementation-status.md",
+      "proof": "artifacts/proofs/demo-executor-adapter-implementation-check.json",
+      "summary": "artifacts/proofs/demo-executor-adapter-implementation-summary.md",
+      "key_finding": "demo_executor_adapter_implemented",
+      "claim_boundary": "demo_executor_adapter_implementation_bounded",
+      "task_state": "demo_executor_adapter_implemented",
+      "preferred_next_step": "demo_forward_acceptance_pack"
+    },
+    "demo_forward_acceptance_pack": {
+      "report": "artifacts/reports/demo-forward-acceptance-pack-report.md",
+      "status_report": "artifacts/reports/demo-forward-acceptance-pack-status.md",
+      "proof": "artifacts/proofs/demo-forward-acceptance-pack-check.json",
+      "summary": "artifacts/proofs/demo-forward-acceptance-pack-summary.md",
+      "handoff_dir": "artifacts/reports/demo-forward-acceptance-pack",
+      "operator_checklist": "docs/demo_forward_operator_checklist.md",
+      "abort_rollback_matrix": "docs/demo_forward_abort_rollback_matrix.md",
+      "key_finding": "demo_forward_acceptance_pack_fixed",
+      "claim_boundary": "demo_forward_acceptance_pack_bounded",
+      "task_state": "demo_forward_acceptance_pack_ready",
+      "acceptance_boundary": {
+        "demo_source": "dexter",
+        "execution_mode": "paper_live",
+        "route_mode": "single_sleeve",
+        "selected_sleeve_id": "dexter_default",
+        "max_active_real_demo_plans": 1,
+        "max_open_positions": 1,
+        "allowlist_required": true,
+        "small_lot_required": true,
+        "operator_supervised_window_required": true,
+        "mewx_overlay_enabled": false,
+        "funded_live_forbidden": true
+      },
+      "acceptance_sequence": [
+        "prepare",
+        "start",
+        "entry_visibility",
+        "order_status_and_fill_reconciliation",
+        "cancel_or_stop_all_visibility",
+        "terminal_snapshot",
+        "normalized_failure_detail_and_handoff_continuity"
+      ],
+      "preferred_next_step": "demo_forward_supervised_run"
     }
   },
   "frozen_source_commits": {
@@ -706,12 +762,12 @@
     ]
   },
   "next_task": {
-    "id": "DEMO-EXECUTOR-ADAPTER-IMPLEMENTATION",
-    "state": "ready_for_demo_executor_adapter_implementation",
+    "id": "DEMO-FORWARD-SUPERVISED-RUN",
+    "state": "ready_for_demo_forward_supervised_run",
     "rationale": [
-      "The executor transport boundary is already fixed, so another code-spec restatement would duplicate existing work.",
-      "A concrete Dexter demo adapter is now the shortest path to forward testing on a demo account.",
-      "An acceptance pack becomes sharp only after the demo adapter exists and can be validated against the current CI-gated observability surface."
+      "The concrete Dexter demo adapter is already implemented and the acceptance pack is now fixed as current source of truth.",
+      "The operator checklist and abort / rollback matrix are explicit enough to support a bounded supervised forward window.",
+      "Further packaging would duplicate the acceptance pack instead of advancing the supervised run lane."
     ]
   },
   "proofs": {
@@ -745,6 +801,13 @@
     "pattern_a_real_vs_simulated_split_fixed": true,
     "pattern_a_guardrails_fixed": true,
     "pattern_a_acceptance_slice_fixed": true,
-    "pattern_a_next_step_narrowed_to_demo_executor_adapter_implementation": true
+    "pattern_a_next_step_narrowed_to_demo_executor_adapter_implementation": true,
+    "demo_executor_adapter_implementation_fixed": true,
+    "demo_forward_acceptance_pack_written": true,
+    "demo_forward_operator_checklist_written": true,
+    "demo_forward_abort_rollback_matrix_written": true,
+    "demo_forward_current_pointers_fixed": true,
+    "demo_forward_handoff_written": true,
+    "recommended_next_step_is_demo_forward_supervised_run": true
   }
 }

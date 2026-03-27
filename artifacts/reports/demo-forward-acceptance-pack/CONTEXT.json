@@ -1,0 +1,13 @@
+{
+  "task_id": "DEMO-FORWARD-ACCEPTANCE-PACK",
+  "task_state": "demo_forward_acceptance_pack_ready",
+  "recommended_next_step": "demo_forward_supervised_run",
+  "recommended_next_task_id": "DEMO-FORWARD-SUPERVISED-RUN",
+  "verified_vexter_main_pr": 71,
+  "verified_vexter_main_commit": "5c1feb2561da7b16a17c5d03b71ff2bf895e20e4",
+  "first_demo_target": "dexter_paper_live",
+  "source_faithful_seam": {
+    "dexter": "paper_live",
+    "mewx": "sim_live"
+  }
+}

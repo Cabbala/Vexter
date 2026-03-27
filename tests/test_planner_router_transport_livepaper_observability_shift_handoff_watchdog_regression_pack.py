@@ -495,6 +495,14 @@ def test_livepaper_observability_shift_handoff_watchdog_regression_pack_manifest
             manifest["bundle_path"]
             == "artifacts/bundles/pattern-a-demo-executor-cutover.tar.gz"
         )
+    elif current_task_id == "DEMO-FORWARD-ACCEPTANCE-PACK":
+        assert context["current_task"]["id"] == "DEMO-FORWARD-ACCEPTANCE-PACK"
+        assert ledger["task_id"] == "DEMO-FORWARD-ACCEPTANCE-PACK"
+        assert manifest["status"] == "demo_forward_acceptance_pack_ready"
+        assert (
+            manifest["bundle_path"]
+            == "artifacts/bundles/demo-forward-acceptance-pack.tar.gz"
+        )
     else:
         assert manifest["task_id"] in {
             "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-REGRESSION-PACK",
@@ -556,6 +564,8 @@ def test_livepaper_observability_shift_handoff_watchdog_regression_pack_manifest
     assert "livepaper_observability_shift_handoff_watchdog_regression_pack" in status_text
     if current_task_id == "PATTERN-A-DEMO-EXECUTOR-CUTOVER":
         assert "pattern-a-demo-executor-cutover.tar.gz" in bundle_script
+    elif current_task_id == "DEMO-FORWARD-ACCEPTANCE-PACK":
+        assert "demo-forward-acceptance-pack.tar.gz" in bundle_script
     else:
         assert "task-007-livepaper-observability-shift-handoff-watchdog-ci-gate.tar.gz" in bundle_script
     assert (

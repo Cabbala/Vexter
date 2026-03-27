@@ -252,6 +252,12 @@ def test_livepaper_observability_shift_handoff_watchdog_runtime_manifest_and_con
             manifest["bundle_path"]
             == "artifacts/bundles/pattern-a-demo-executor-cutover.tar.gz"
         )
+    elif current_task_id == "DEMO-FORWARD-ACCEPTANCE-PACK":
+        assert manifest["status"] == "demo_forward_acceptance_pack_ready"
+        assert (
+            manifest["bundle_path"]
+            == "artifacts/bundles/demo-forward-acceptance-pack.tar.gz"
+        )
     else:
         assert manifest["task_id"] in {
             "TASK-007-LIVEPAPER-OBSERVABILITY-SHIFT-HANDOFF-WATCHDOG-RUNTIME",

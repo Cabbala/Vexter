@@ -152,33 +152,48 @@
     "demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_subagent_summary_path": "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/subagent_summary.md",
     "demo_forward_retry_gate_attestation_record_pack_regeneration_current_lane": "supervised_run_retry_gate_attestation_record_pack_regeneration",
     "demo_forward_retry_gate_attestation_record_pack_regeneration_next_step": "supervised_run_retry_gate_attestation_refresh",
-    "demo_forward_retry_gate_attestation_record_pack_regeneration_pass_successor": "supervised_run_retry_gate"
+    "demo_forward_retry_gate_attestation_record_pack_regeneration_pass_successor": "supervised_run_retry_gate",
+    "demo_forward_retry_gate_external_evidence_contract_spec_path": "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_EXTERNAL_EVIDENCE_CONTRACT.md",
+    "demo_forward_retry_gate_external_evidence_manifest_path": "manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json",
+    "demo_forward_retry_gate_external_evidence_gap_report_path": "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
+    "demo_forward_retry_gate_external_evidence_gap_proof_path": "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
+    "demo_forward_retry_gate_external_evidence_gap_summary_path": "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md"
   },
   "current_task": {
     "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION",
     "scope": [
       "Reverify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X after attestation refresh merged.",
       "Accept attestation refresh as the baseline current source of truth.",
+      "Write one canonical non-secret outside-repo evidence manifest, validator, and gap report for the remaining retry-gate blockers.",
       "Promote attestation record-pack regeneration status, report, summary, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.",
-      "Make each required face explicit for regeneration owner, trigger, minimum regenerated locator shape, freshness inheritance or reset, and reviewability.",
+      "Make each required face explicit for regeneration owner, trigger, minimum regenerated locator shape, freshness inheritance or reset, and reviewability from the canonical gap report.",
       "Keep retry-gate review blocked until every required face can regenerate from one current, fresh-enough, reviewable locator."
     ],
     "deliverables": [
       "README.md",
+      "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_EXTERNAL_EVIDENCE_CONTRACT.md",
+      "manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json",
       "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_ATTESTATION_RECORD_PACK_REGENERATION.md",
       "plans/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_plan.md",
       "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_checklist.md",
       "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_decision_surface.md",
+      "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
+      "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
+      "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
       "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
       "tests/test_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
       "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack.py",
       "tests/test_demo_forward_supervised_run_retry_gate.py",
       "tests/test_demo_forward_supervised_run_retry_gate_attestation_audit.py",
       "tests/test_demo_forward_supervised_run_retry_readiness.py",
+      "tests/test_demo_forward_supervised_run_retry_gate_external_evidence_gap.py",
       "tests/test_bootstrap_layout.py",
+      "scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py",
       "scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
       "scripts/export_attestation_record_pack_regeneration_closeout_bundle.sh",
       "scripts/build_proof_bundle.sh",
+      "vexter/demo_readiness/__init__.py",
+      "vexter/demo_readiness/external_evidence.py",
       "artifacts/summary.md",
       "artifacts/context_pack.json",
       "artifacts/proof_bundle_manifest.json",
@@ -202,14 +217,14 @@
   },
   "evidence": {
     "github_latest": {
-      "latest_vexter_pr": 87,
-      "latest_vexter_main_commit": "857f62c78129fecd71793744864ce12653d62141",
+      "latest_vexter_pr": 88,
+      "latest_vexter_main_commit": "1d43904d392eefdcc911f00102cdff62bce9deb2",
       "latest_recent_vexter_prs": [
+        88,
         87,
         86,
         85,
-        84,
-        83
+        84
       ],
       "vexter_pr_65_merged_at": "2026-03-26T19:30:46Z",
       "vexter_pr_64_merged_at": "2026-03-26T18:53:07Z",
@@ -254,7 +269,9 @@
       "vexter_pr_86_merged_at": "2026-03-27T19:19:40Z",
       "vexter_pr_86_closed_at": "2026-03-27T19:19:40Z",
       "vexter_pr_87_merged_at": "2026-03-27T19:45:03Z",
-      "vexter_pr_87_closed_at": "2026-03-27T19:45:03Z"
+      "vexter_pr_87_closed_at": "2026-03-27T19:45:03Z",
+      "vexter_pr_88_merged_at": "2026-03-27T20:05:00Z",
+      "vexter_pr_88_closed_at": "2026-03-27T20:05:00Z"
     },
     "transport_livepaper_observability_ci_gate": {
       "report": "artifacts/reports/task-007-transport-livepaper-observability-ci-gate-report.md",
@@ -1260,6 +1277,12 @@
         "mewx_unchanged": true,
         "funded_live_forbidden": true
       },
+      "external_evidence_contract": "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_EXTERNAL_EVIDENCE_CONTRACT.md",
+      "external_evidence_manifest": "manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json",
+      "external_evidence_gap_proof": "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
+      "external_evidence_gap_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
+      "external_evidence_gap_summary": "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
+      "external_evidence_manifest_status": "template_only",
       "blocked_refresh_faces": [
         "external_credential_source_face",
         "venue_ref_face",
@@ -1275,28 +1298,29 @@
         {
           "name": "Anscombe",
           "lines": [
-            "Confirmed PR `#86` / merge commit `2be10c663f8d5f441defeea5f506108d1aae25c3` is latest merged `main`, while repo-level current pointers still point at regeneration, so refresh has to be re-promoted atomically from that newer baseline.",
-            "Flagged summary, context, manifest, ledger, README, bundle path/source, and handoff continuity as the minimum pointer set that must move together so refresh becomes current and regeneration returns to the blocked next step.",
-            "Called out partial flips as the main correctness risk because stale pre-PR `#86` refresh metadata, duplicated refresh clauses, or lingering regeneration-current flags would make the handoff internally inconsistent."
+            "Reverified PR `#88` / merge commit `1d43904d392eefdcc911f00102cdff62bce9deb2` as latest merged `main`, then treated the record-pack-regeneration lane as current repo-visible truth rather than reopening older refresh assumptions.",
+            "The main duplication before this change was that refresh and regeneration re-derived the same outside-repo blocker semantics from each other instead of from one canonical evidence manifest and validator.",
+            "Current-pointer risk remains atomic: summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces must all reflect the same fail-closed truth once the canonical gap report is introduced."
           ]
         },
         {
           "name": "Euler",
           "lines": [
             "Confirmed no architecture drift: the planner boundary stays `prepare / start / status / stop / snapshot`, `manual_latched_stop_all` stays planner-owned, Dexter remains `paper_live`, and frozen Mew-X remains `sim_live`.",
-            "Kept the fail-closed split crisp: refresh owns freshness, owner, trigger, locator-shape, and staleness while regeneration owns regenerated-face derivation and reviewability, and both keep `supervised_run_retry_gate` as pass successor only.",
-            "Recommended only light wording normalization so refresh remains auditable without widening scope or implying retry execution success."
+            "Kept the fail-closed split crisp: refresh now consumes the canonical manifest for freshness and usability, while regeneration consumes the same canonical gap output for inheritance and reviewability without widening runtime scope.",
+            "The new contract remains non-secret and bounded; it never implies funded-live access, broader venue scope, or Dexter / Mew-X runtime rewrites."
           ]
         },
         {
           "name": "Parfit",
           "lines": [
-            "Scoped the minimal file set to the refresh generator, current-pointer tests, `build_proof_bundle.sh`, and a refresh-side closeout exporter so the final tarball can be generated reproducibly.",
-            "Recommended regenerating refresh artifacts from the generator first, then validating focused current-pointer regressions before widening to the shared pytest suite.",
-            "Merge readiness depends on exact agreement across summary, context, manifest, ledger, README, refresh bundle path/source, and PR `#86` metadata on branch `codex/attestation-refresh-repromotion-after-pr86`."
+            "The smallest safe implementation is one canonical manifest + validator + standalone gap report, then wiring refresh and regeneration to consume that shared output while leaving historical lanes intact.",
+            "Validation should start with the new gap script plus refresh/regeneration tests, then widen to bundle/export coverage and the full pytest suite.",
+            "Merge readiness depends on exact agreement across summary, context, manifest, ledger, README, refresh bundle metadata, and the new external-evidence paths on branch `codex/demo-readiness-external-evidence-intake`."
           ]
         }
-      ]
+      ],
+      "retry_gate_review_reopen_ready_from_external_evidence": false
     },
     "demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration": {
       "report": "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-report.md",
@@ -1333,6 +1357,12 @@
         "mewx_unchanged": true,
         "funded_live_forbidden": true
       },
+      "external_evidence_contract": "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_EXTERNAL_EVIDENCE_CONTRACT.md",
+      "external_evidence_manifest": "manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json",
+      "external_evidence_gap_proof": "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
+      "external_evidence_gap_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
+      "external_evidence_gap_summary": "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
+      "external_evidence_manifest_status": "template_only",
       "blocked_regenerated_faces": [
         "external_credential_source_face",
         "venue_ref_face",
@@ -1348,9 +1378,9 @@
         {
           "name": "Anscombe",
           "lines": [
-            "Confirmed merged PR `#87` / commit `857f62c78129fecd71793744864ce12653d62141` is the exact current refresh baseline on `origin/main`, so regeneration has to be re-promoted from that merged source of truth rather than the older PR `#85` branch state.",
-            "Flagged the atomic current-pointer set as summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces, and called out stale refresh metadata plus duplicate historical regeneration clauses in `README.md` as the main contradiction risk.",
-            "Recommended keeping the refresh proof/history intact as baseline while flipping only the repo-level current pointers and regenerated-lane surfaces together."
+            "Reverified PR `#88` / commit `1d43904d392eefdcc911f00102cdff62bce9deb2` as latest merged `main`, then preserved regeneration as the current lane instead of inventing a new pass claim.",
+            "The main duplication before this change was that regeneration rebuilt blocker semantics from refresh text rather than consuming one canonical external-evidence manifest and validator.",
+            "The atomic current-pointer set still matters: summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces must all agree once regeneration starts consuming the shared gap report."
           ]
         },
         {
@@ -1358,18 +1388,19 @@
           "lines": [
             "Confirmed the regeneration lane stays inside the unchanged Dexter-only `paper_live`, `single_sleeve`, `dexter_default`, one-plan, one-position, explicit-allowlist, small-lot, bounded-window, funded-live-forbidden envelope.",
             "Verified the planner/runtime boundary remains intact: `prepare / start / status / stop / snapshot` stay planner-bound, `manual_latched_stop_all` remains planner-owned, Dexter stays the only real-demo seam, and frozen Mew-X remains unchanged on `sim_live`.",
-            "Focused guardrail verification passed without findings, so regeneration stays a surface-only change that must not rewrite Dexter or Mew-X runtime/source behavior."
+            "The canonical manifest is non-secret and fail-closed by construction, so regeneration still cannot imply funded-live access or retry execution success without real current evidence."
           ]
         },
         {
           "name": "Parfit",
           "lines": [
-            "Scoped the lowest-risk change set to the regeneration generator, the proof-bundle fallback path, the regenerated artifacts, and the shared regression expectations that pin the repo-level current task and bundle layout.",
-            "Confirmed the minimal safe path is generator-only plus current-pointer tests: do not rewrite the baseline refresh lane, just re-promote regeneration from merged PR `#87` and validate the exporter/proof-bundle flow.",
+            "The lowest-risk change set is one shared manifest + validator + gap report, plus regeneration/refresh rewiring and the tests that pin current task, bundle layout, and export behavior.",
+            "Generator-first validation remains the safe path: write the canonical gap artifacts, rerun refresh, rerun regeneration, then widen to export and full pytest coverage.",
             "Merge readiness depends on end-to-end agreement across summary, context, manifest, ledger, bundle metadata, the regenerated handoff bundle, and the final exported tarball without touching runtime code."
           ]
         }
-      ]
+      ],
+      "retry_gate_review_reopen_ready_from_external_evidence": false
     }
   },
   "frozen_source_commits": {
@@ -1411,7 +1442,7 @@
     "state": "additional_attestation_refresh_required_for_record_pack_regeneration",
     "rationale": [
       "Attestation record-pack regeneration is now the current source of truth for regenerated locator inheritance and reviewable pack surfaces.",
-      "One or more required faces still lack a current, fresh-enough, reviewable locator that can seed the regenerated pack.",
+      "The canonical external-evidence manifest now makes every remaining retry-gate blocker explicit, but one or more faces still remain template-only, incomplete, stale, or non-reviewable.",
       "Collect additional fresh bounded-window locators in attestation refresh before any retry-gate recheck is considered."
     ],
     "pass_successor": {
@@ -1515,6 +1546,7 @@
     "demo_forward_retry_gate_attestation_record_pack_regeneration_decision_surface_written": true,
     "demo_forward_retry_gate_attestation_record_pack_regeneration_subagent_summary_written": true,
     "recommended_next_step_returns_to_attestation_refresh_when_regeneration_stays_blocked": true,
-    "retry_gate_review_requires_current_reviewable_regenerated_faces": true
+    "retry_gate_review_requires_current_reviewable_regenerated_faces": true,
+    "demo_forward_retry_gate_external_evidence_gap_written": true
   }
 }

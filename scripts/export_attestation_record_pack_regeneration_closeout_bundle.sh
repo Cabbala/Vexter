@@ -53,6 +53,21 @@ subagent_src = (
     root
     / "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/subagent_summary.md"
 )
+external_contract_src = (
+    root / "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_EXTERNAL_EVIDENCE_CONTRACT.md"
+)
+external_manifest_src = (
+    root / "manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json"
+)
+external_gap_report_src = (
+    root / "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md"
+)
+external_gap_proof_src = (
+    root / "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json"
+)
+external_gap_summary_src = (
+    root / "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md"
+)
 
 outcome = os.environ["RESULT_OUTCOME"] or proof["task_result"]["outcome"]
 recommended_next_step = (
@@ -94,6 +109,11 @@ else:
 
 shutil.copy2(handoff_src, out_dir / "HANDOFF.md")
 shutil.copy2(proof_bundle_path, out_dir / proof_bundle_path.name)
+shutil.copy2(external_contract_src, out_dir / external_contract_src.name)
+shutil.copy2(external_manifest_src, out_dir / external_manifest_src.name)
+shutil.copy2(external_gap_report_src, out_dir / external_gap_report_src.name)
+shutil.copy2(external_gap_proof_src, out_dir / external_gap_proof_src.name)
+shutil.copy2(external_gap_summary_src, out_dir / external_gap_summary_src.name)
 (out_dir / "RESULT.md").write_text(result_text)
 (out_dir / "subagent_summary.md").write_text(subagent_text)
 
@@ -106,6 +126,11 @@ shutil.copy2(proof_bundle_path, out_dir / proof_bundle_path.name)
             "bundle_path": manifest["bundle_path"],
             "bundle_source": manifest.get("bundle_source"),
             "proof_bundle": proof_bundle_path.name,
+            "external_evidence_contract": external_contract_src.name,
+            "external_evidence_template": external_manifest_src.name,
+            "external_evidence_gap_report": external_gap_report_src.name,
+            "external_evidence_gap_proof": external_gap_proof_src.name,
+            "external_evidence_gap_summary": external_gap_summary_src.name,
         },
         indent=2,
         sort_keys=False,

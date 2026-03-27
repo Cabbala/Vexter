@@ -32,6 +32,9 @@ Promote a bounded `attestation_refresh` lane as the current source of truth afte
 - current handoff
 - attestation refresh checklist
 - attestation refresh decision surface
+- canonical external evidence contract
+- canonical external evidence manifest
+- canonical external evidence gap proof / gap report / gap summary
 - next recommended step
 
 ## Honest Refresh Model
@@ -45,6 +48,8 @@ Each refresh face must make explicit:
 - minimum fresh evidence locator shape
 - stale condition
 - what makes the refreshed face usable for retry-gate review
+
+The lane must derive those fields from the canonical external-evidence validator instead of re-parsing older lane prose.
 
 ## Planner Boundary
 - `prepare`

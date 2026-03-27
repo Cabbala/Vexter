@@ -53,6 +53,7 @@ def test_required_paths_exist() -> None:
         "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_ATTESTATION_RECORD_PACK.md",
         "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_ATTESTATION_REFRESH.md",
         "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_ATTESTATION_RECORD_PACK_REGENERATION.md",
+        "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_EXTERNAL_EVIDENCE_CONTRACT.md",
         "ops/CODEX_MEMORY.md",
         "plans/IMPLEMENTATION_PLAN.md",
         "plans/TASK_000_BOOTSTRAP.md",
@@ -73,6 +74,7 @@ def test_required_paths_exist() -> None:
         "plans/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_plan.md",
         "manifests/reference_repos.json",
         "manifests/windows_runtime.json",
+        "manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json",
         "scripts/bootstrap_windows_workspace.sh",
         "scripts/recover_windows_runtime.sh",
         "scripts/sync_reference_repos.sh",
@@ -85,6 +87,7 @@ def test_required_paths_exist() -> None:
         "scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack.py",
         "scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
         "scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
+        "scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py",
         "scripts/run_livepaper_observability_shift_handoff_ci_check.sh",
         "scripts/run_livepaper_observability_shift_handoff_watchdog.sh",
         "scripts/run_livepaper_observability_shift_handoff_watchdog_runtime.sh",
@@ -107,6 +110,8 @@ def test_required_paths_exist() -> None:
         "config/planner_router/monitor_profiles.json",
         "config/planner_router/executor_profiles.json",
         "vexter/__init__.py",
+        "vexter/demo_readiness/__init__.py",
+        "vexter/demo_readiness/external_evidence.py",
         "vexter/comparison/__init__.py",
         "vexter/comparison/constants.py",
         "vexter/comparison/packages.py",
@@ -143,6 +148,7 @@ def test_required_paths_exist() -> None:
         "tests/test_demo_forward_supervised_run.py",
         "tests/test_demo_forward_supervised_run_retry_readiness.py",
         "tests/test_demo_forward_supervised_run_retry_gate.py",
+        "tests/test_demo_forward_supervised_run_retry_gate_external_evidence_gap.py",
         "artifacts/context_pack.json",
         "artifacts/summary.md",
         "artifacts/proof_bundle_manifest.json",
@@ -1013,6 +1019,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "feat/attestation-record-pack-regeneration",
         "codex/attestation-record-pack-regeneration-repromotion-after-pr85",
         "codex/attestation-record-pack-regeneration-after-pr87",
+        "codex/demo-readiness-external-evidence-intake",
         }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
@@ -1386,6 +1393,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_ATTESTATION_RECORD_PACK.md" in names
     assert "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_ATTESTATION_REFRESH.md" in names
     assert "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_ATTESTATION_RECORD_PACK_REGENERATION.md" in names
+    assert "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_EXTERNAL_EVIDENCE_CONTRACT.md" in names
     assert "plans/demo_forward_acceptance_pack_plan.md" in names
     assert "plans/demo_forward_supervised_run_plan.md" in names
     assert "plans/demo_forward_supervised_run_retry_readiness_plan.md" in names
@@ -1404,6 +1412,7 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack.py" in names
     assert "tests/test_demo_forward_supervised_run_retry_gate_attestation_refresh.py" in names
     assert "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py" in names
+    assert "tests/test_demo_forward_supervised_run_retry_gate_external_evidence_gap.py" in names
     assert "scripts/run_demo_forward_supervised_run.py" in names
     assert "scripts/run_demo_forward_supervised_run_retry_readiness.py" in names
     assert "scripts/run_demo_forward_supervised_run_retry_gate.py" in names
@@ -1412,11 +1421,15 @@ def test_proof_bundle_exists_and_contains_required_files() -> None:
     assert "scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack.py" in names
     assert "scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py" in names
     assert "scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py" in names
+    assert "scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py" in names
     assert "scripts/comparison_analysis.py" in names
     assert "scripts/collect_comparison_package.ps1" in names
     assert "scripts/recover_windows_runtime.sh" in names
     assert "templates/windows_runtime/dexter.env.example" in names
     assert "templates/windows_runtime/mewx.env.example" in names
+    assert "manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json" in names
+    assert "vexter/demo_readiness/__init__.py" in names
+    assert "vexter/demo_readiness/external_evidence.py" in names
     assert "vexter/comparison/validator.py" in names
     assert "vexter/comparison/replay_deepening.py" in names
     assert "vexter/comparison/replay_surface_fix.py" in names

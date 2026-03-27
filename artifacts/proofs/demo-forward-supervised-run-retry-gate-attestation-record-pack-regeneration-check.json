@@ -1,9 +1,9 @@
 {
   "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION",
   "verified_github": {
-    "latest_vexter_pr": 87,
-    "latest_vexter_main_commit": "857f62c78129fecd71793744864ce12653d62141",
-    "latest_vexter_merged_at": "2026-03-27T19:45:03Z",
+    "latest_vexter_pr": 88,
+    "latest_vexter_main_commit": "1d43904d392eefdcc911f00102cdff62bce9deb2",
+    "latest_vexter_merged_at": "2026-03-27T20:05:00Z",
     "dexter_pr_3_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
     "mewx_frozen_commit": "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
   },
@@ -54,6 +54,11 @@
       "current_handoff": "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md",
       "attestation_record_pack_regeneration_checklist": "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_checklist.md",
       "attestation_record_pack_regeneration_decision_surface": "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_decision_surface.md",
+      "external_evidence_contract": "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_EXTERNAL_EVIDENCE_CONTRACT.md",
+      "external_evidence_manifest": "manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json",
+      "external_evidence_gap_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
+      "external_evidence_gap_proof": "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
+      "external_evidence_gap_summary": "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
       "next_recommended_step": "supervised_run_retry_gate_attestation_refresh",
       "subagent_summary": "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/SUBAGENTS.md"
     },
@@ -80,7 +85,7 @@
           "current_fresh_locator_present": false,
           "freshness_inherited_cleanly": false,
           "regenerated_face_reviewable_now": false,
-          "current_regeneration_observation": "The regeneration rule is explicit for this face, but the repo still does not point to one current, fresh-enough bounded-window locator that can seed a reviewable regenerated face without secrets. The regenerated pack therefore remains fail-closed for this face.",
+          "current_regeneration_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that confirms which Dexter paper-live credential source was resolved for the bounded supervised window.",
           "regeneration_status": "FAIL/BLOCKED"
         },
         {
@@ -96,7 +101,7 @@
           "current_fresh_locator_present": false,
           "freshness_inherited_cleanly": false,
           "regenerated_face_reviewable_now": false,
-          "current_regeneration_observation": "The regeneration rule is explicit for this face, but the repo still does not point to one current, fresh-enough bounded-window locator that can seed a reviewable regenerated face without secrets. The regenerated pack therefore remains fail-closed for this face.",
+          "current_regeneration_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that ties the repo-visible venue marker to the exact Dexter demo venue for the bounded supervised window.",
           "regeneration_status": "FAIL/BLOCKED"
         },
         {
@@ -112,7 +117,7 @@
           "current_fresh_locator_present": false,
           "freshness_inherited_cleanly": false,
           "regenerated_face_reviewable_now": false,
-          "current_regeneration_observation": "The regeneration rule is explicit for this face, but the repo still does not point to one current, fresh-enough bounded-window locator that can seed a reviewable regenerated face without secrets. The regenerated pack therefore remains fail-closed for this face.",
+          "current_regeneration_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that shows which Dexter paper-live demo account the bounded supervised window is bound to.",
           "regeneration_status": "FAIL/BLOCKED"
         },
         {
@@ -128,7 +133,7 @@
           "current_fresh_locator_present": false,
           "freshness_inherited_cleanly": false,
           "regenerated_face_reviewable_now": false,
-          "current_regeneration_observation": "The regeneration rule is explicit for this face, but the repo still does not point to one current, fresh-enough bounded-window locator that can seed a reviewable regenerated face without secrets. The regenerated pack therefore remains fail-closed for this face.",
+          "current_regeneration_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that shows the intended connectivity profile was checked for venue/account reachability inside the bounded supervised window.",
           "regeneration_status": "FAIL/BLOCKED"
         },
         {
@@ -144,7 +149,7 @@
           "current_fresh_locator_present": false,
           "freshness_inherited_cleanly": false,
           "regenerated_face_reviewable_now": false,
-          "current_regeneration_observation": "The regeneration rule is explicit for this face, but the repo still does not point to one current, fresh-enough bounded-window locator that can seed a reviewable regenerated face without secrets. The regenerated pack therefore remains fail-closed for this face.",
+          "current_regeneration_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Name one explicit operator owner and provide one reviewable non-secret locator that shows ownership for the bounded supervised window.",
           "regeneration_status": "FAIL/BLOCKED"
         },
         {
@@ -164,7 +169,7 @@
           "current_fresh_locator_present": false,
           "freshness_inherited_cleanly": false,
           "regenerated_face_reviewable_now": false,
-          "current_regeneration_observation": "The regeneration rule is explicit for this face, but the repo still does not point to one current, fresh-enough bounded-window locator that can seed a reviewable regenerated face without secrets. The regenerated pack therefore remains fail-closed for this face.",
+          "current_regeneration_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that fixes the bounded start window plus the go/no-go and abort owners for the next supervised retry attempt.",
           "regeneration_status": "FAIL/BLOCKED"
         },
         {
@@ -189,7 +194,7 @@
           "current_fresh_locator_present": false,
           "freshness_inherited_cleanly": false,
           "regenerated_face_reviewable_now": false,
-          "current_regeneration_observation": "The regeneration rule is explicit for this face, but the repo still does not point to one current, fresh-enough bounded-window locator that can seed a reviewable regenerated face without secrets. The regenerated pack therefore remains fail-closed for this face.",
+          "current_regeneration_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that reconfirms the allowlist, default symbol, lot size, one-position cap, and bounded window guardrails for the next supervised attempt.",
           "regeneration_status": "FAIL/BLOCKED"
         },
         {
@@ -205,7 +210,7 @@
           "current_fresh_locator_present": false,
           "freshness_inherited_cleanly": false,
           "regenerated_face_reviewable_now": false,
-          "current_regeneration_observation": "The regeneration rule is explicit for this face, but the repo still does not point to one current, fresh-enough bounded-window locator that can seed a reviewable regenerated face without secrets. The regenerated pack therefore remains fail-closed for this face.",
+          "current_regeneration_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that freshly reconfirms `manual_latched_stop_all` visibility for the bounded supervised window.",
           "regeneration_status": "FAIL/BLOCKED"
         },
         {
@@ -221,7 +226,7 @@
           "current_fresh_locator_present": false,
           "freshness_inherited_cleanly": false,
           "regenerated_face_reviewable_now": false,
-          "current_regeneration_observation": "The regeneration rule is explicit for this face, but the repo still does not point to one current, fresh-enough bounded-window locator that can seed a reviewable regenerated face without secrets. The regenerated pack therefore remains fail-closed for this face.",
+          "current_regeneration_observation": "Blocked because template_only_manifest, outside_repo_locator_not_supplied, attestors_missing, evidence_locator_missing, locator_kind_missing, verification_timestamp_missing, fresh_until_missing, bounded_window_missing. Operator input still needed: Provide one current non-secret locator that freshly reconfirms terminal snapshot readability for the bounded supervised window.",
           "regeneration_status": "FAIL/BLOCKED"
         }
       ],
@@ -253,13 +258,22 @@
       "record_pack_reviewable_now": false,
       "retry_gate_review_reopen_ready": false
     },
+    "canonical_external_evidence": {
+      "contract_spec": "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_EXTERNAL_EVIDENCE_CONTRACT.md",
+      "manifest_path": "manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json",
+      "gap_proof": "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
+      "gap_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
+      "gap_summary": "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
+      "manifest_status": "template_only",
+      "retry_gate_review_reopen_ready": false
+    },
     "sub_agents": [
       {
         "name": "Anscombe",
         "lines": [
-          "Confirmed merged PR `#87` / commit `857f62c78129fecd71793744864ce12653d62141` is the exact current refresh baseline on `origin/main`, so regeneration has to be re-promoted from that merged source of truth rather than the older PR `#85` branch state.",
-          "Flagged the atomic current-pointer set as summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces, and called out stale refresh metadata plus duplicate historical regeneration clauses in `README.md` as the main contradiction risk.",
-          "Recommended keeping the refresh proof/history intact as baseline while flipping only the repo-level current pointers and regenerated-lane surfaces together."
+          "Reverified PR `#88` / commit `1d43904d392eefdcc911f00102cdff62bce9deb2` as latest merged `main`, then preserved regeneration as the current lane instead of inventing a new pass claim.",
+          "The main duplication before this change was that regeneration rebuilt blocker semantics from refresh text rather than consuming one canonical external-evidence manifest and validator.",
+          "The atomic current-pointer set still matters: summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces must all agree once regeneration starts consuming the shared gap report."
         ]
       },
       {
@@ -267,19 +281,21 @@
         "lines": [
           "Confirmed the regeneration lane stays inside the unchanged Dexter-only `paper_live`, `single_sleeve`, `dexter_default`, one-plan, one-position, explicit-allowlist, small-lot, bounded-window, funded-live-forbidden envelope.",
           "Verified the planner/runtime boundary remains intact: `prepare / start / status / stop / snapshot` stay planner-bound, `manual_latched_stop_all` remains planner-owned, Dexter stays the only real-demo seam, and frozen Mew-X remains unchanged on `sim_live`.",
-          "Focused guardrail verification passed without findings, so regeneration stays a surface-only change that must not rewrite Dexter or Mew-X runtime/source behavior."
+          "The canonical manifest is non-secret and fail-closed by construction, so regeneration still cannot imply funded-live access or retry execution success without real current evidence."
         ]
       },
       {
         "name": "Parfit",
         "lines": [
-          "Scoped the lowest-risk change set to the regeneration generator, the proof-bundle fallback path, the regenerated artifacts, and the shared regression expectations that pin the repo-level current task and bundle layout.",
-          "Confirmed the minimal safe path is generator-only plus current-pointer tests: do not rewrite the baseline refresh lane, just re-promote regeneration from merged PR `#87` and validate the exporter/proof-bundle flow.",
+          "The lowest-risk change set is one shared manifest + validator + gap report, plus regeneration/refresh rewiring and the tests that pin current task, bundle layout, and export behavior.",
+          "Generator-first validation remains the safe path: write the canonical gap artifacts, rerun refresh, rerun regeneration, then widen to export and full pytest coverage.",
           "Merge readiness depends on end-to-end agreement across summary, context, manifest, ledger, bundle metadata, the regenerated handoff bundle, and the final exported tarball without touching runtime code."
         ]
       }
     ],
     "supporting_files": [
+      "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_EXTERNAL_EVIDENCE_CONTRACT.md",
+      "manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json",
       "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_ATTESTATION_REFRESH.md",
       "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_ATTESTATION_RECORD_PACK_REGENERATION.md",
       "plans/demo_forward_supervised_run_retry_gate_attestation_refresh_plan.md",
@@ -288,17 +304,26 @@
       "docs/demo_forward_supervised_run_retry_gate_attestation_refresh_decision_surface.md",
       "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_checklist.md",
       "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_decision_surface.md",
+      "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
+      "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
+      "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
+      "scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py",
       "scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
       "scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
       "scripts/export_attestation_record_pack_regeneration_closeout_bundle.sh",
       "scripts/build_proof_bundle.sh",
+      "vexter/demo_readiness/__init__.py",
+      "vexter/demo_readiness/external_evidence.py",
       "tests/test_demo_forward_supervised_run_retry_gate.py",
       "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack.py",
       "tests/test_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
       "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
+      "tests/test_demo_forward_supervised_run_retry_gate_external_evidence_gap.py",
       "tests/test_bootstrap_layout.py"
     ],
     "proof_outputs": [
+      "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json",
+      "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
       "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
       "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-summary.md",
       "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration.tar.gz"

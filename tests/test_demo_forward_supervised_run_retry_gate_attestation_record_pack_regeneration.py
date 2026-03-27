@@ -1,4 +1,7 @@
 import json
+import os
+import subprocess
+import tarfile
 from pathlib import Path
 
 
@@ -41,6 +44,9 @@ DECISION_SURFACE_PATH = (
 PROMPT_CONTEXT_PATH = (
     REPO_ROOT
     / "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/CONTEXT.json"
+)
+EXPORT_SCRIPT_PATH = (
+    REPO_ROOT / "scripts/export_attestation_record_pack_regeneration_closeout_bundle.sh"
 )
 
 
@@ -263,3 +269,48 @@ def test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regenera
 
     for name in ("Anscombe", "Euler", "Parfit"):
         assert name in subagents_text
+
+
+def test_export_attestation_record_pack_regeneration_closeout_bundle(tmp_path: Path) -> None:
+    output_path = tmp_path / "closeout.tar.gz"
+    env = {
+        "RESULT_BRANCH": "feat/attestation-record-pack-regeneration",
+        "RESULT_COMMIT_SHA": "abc123def456",
+        "RESULT_PR_URL": "https://github.com/Cabbala/Vexter/pull/999",
+        "RESULT_MERGE_COMMIT_SHA": "fedcba654321",
+        "RESULT_MERGED_AT": "2026-03-27T23:59:59Z",
+        "RESULT_TEST_RESULT": "284 passed",
+        "ANSCOMBE_SUMMARY": "Refresh baseline is now independent and fail-closed.",
+        "EULER_SUMMARY": "Regeneration metadata and duplication checks are covered.",
+        "PARFIT_SUMMARY": "Closeout bundle now carries result, handoff, summaries, and proof tarball.",
+    }
+    subprocess.run(
+        [str(EXPORT_SCRIPT_PATH), str(output_path)],
+        check=True,
+        cwd=REPO_ROOT,
+        env={**os.environ, **env},
+    )
+
+    assert output_path.exists()
+    with tarfile.open(output_path, "r:gz") as tar:
+        names = tar.getnames()
+        assert any(name.endswith("/RESULT.md") for name in names)
+        assert any(name.endswith("/HANDOFF.md") for name in names)
+        assert any(name.endswith("/subagent_summary.md") for name in names)
+        assert any(
+            name.endswith(
+                "/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration.tar.gz"
+            )
+            for name in names
+        )
+        result_member = next(name for name in names if name.endswith("/RESULT.md"))
+        subagent_member = next(name for name in names if name.endswith("/subagent_summary.md"))
+        result_text = tar.extractfile(result_member).read().decode("utf-8")
+        subagent_text = tar.extractfile(subagent_member).read().decode("utf-8")
+
+    assert "284 passed" in result_text
+    assert "https://github.com/Cabbala/Vexter/pull/999" in result_text
+    assert "abc123def456" in result_text
+    assert "fedcba654321" in result_text
+    for name in ("Anscombe", "Euler", "Parfit"):
+        assert name in subagent_text

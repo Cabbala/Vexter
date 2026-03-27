@@ -1,7 +1,7 @@
 # Demo Forward Supervised Run Retry Gate Attestation Refresh Handoff
 
 ## Current Status
-- outgoing_shift_window: 2026-03-27T20:42:56Z attestation-refresh lane
+- outgoing_shift_window: 2026-03-27T21:26:35Z attestation-refresh lane
 - incoming_shift_window: fresh locator collection and record-pack regeneration
 - task_state: supervised_run_retry_gate_attestation_refresh_blocked
 - shift_outcome: blocked
@@ -15,7 +15,7 @@
 - first_demo_target: Dexter `paper_live`
 - real_execution_leg: Dexter only
 - simulated_leg_or_none: Mew-X `sim_live`
-- vexter_main_commit: 1d43904d392eefdcc911f00102cdff62bce9deb2
+- vexter_main_commit: c3d4086b503e30a9572824d6bbb00fd417d1e406
 - dexter_main_commit: ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938
 - mewx_frozen_commit: dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a
 - baseline_attestation_record_pack_regeneration_task_state: supervised_run_retry_gate_attestation_record_pack_regeneration_blocked
@@ -38,6 +38,17 @@
 - baseline_report: artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-report.md
 - baseline_proof_json: artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json
 - baseline_handoff: artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md
+
+## Canonical Evidence Intake Handoff
+- bounded_window_fields_to_fill_once: bounded_supervised_window.label, bounded_supervised_window.starts_at, bounded_supervised_window.ends_at
+- per_blocked_face_fields_to_fill: provided, attested_by, evidence_locator, locator_kind, verified_at, fresh_until, reviewable_without_secrets, reviewability_note
+- canonical_face_to_manifest_map: artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md
+- canonical_machine_gap_proof: artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json
+- proof_surfaces_to_rerun_after_manifest_update: artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json, artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md, artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md, artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-check.json, artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/HANDOFF.md, artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json, artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md
+- rerun_gap_and_lane_commands:
+  - python3.12 scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py
+  - python3.12 scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py
+  - python3.12 scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py
 
 ## Guardrails
 - route_mode: single_sleeve

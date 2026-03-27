@@ -1,10 +1,10 @@
 # Demo Forward Supervised Run Retry Gate Attestation Refresh Report
 
 ## Verified GitHub State
-- Reverified latest GitHub-visible Vexter `main` at merged PR `#88` merge commit `1d43904d392eefdcc911f00102cdff62bce9deb2` on `2026-03-27T20:05:00Z`.
+- Reverified latest GitHub-visible Vexter `main` at merged PR `#89` merge commit `c3d4086b503e30a9572824d6bbb00fd417d1e406` on `2026-03-27T20:45:26Z`.
 - Dexter stayed pinned at merged PR `#3` commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`.
 - Frozen Mew-X stayed pinned at `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`.
-- Report timestamp: `2026-03-27T20:42:56Z`.
+- Report timestamp: `2026-03-27T21:26:35Z`.
 
 ## Baseline Accepted
 - Accepted `supervised_run_retry_gate_attestation_record_pack_regeneration_blocked` as the bounded baseline current source of truth.
@@ -59,6 +59,7 @@
 - gap summary: `artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md`
 - manifest status: `template_only`
 - blocked faces from canonical validator: `external_credential_source_face, venue_ref_face, account_ref_face, connectivity_profile_face, operator_owner_face, bounded_start_criteria_face, allowlist_symbol_lot_reconfirmed, manual_latched_stop_all_visibility_reconfirmed, terminal_snapshot_readability_reconfirmed`
+- canonical face-to-manifest map: `artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md` under `Face-To-Manifest Map`
 
 ## Refresh Findings
 - required refresh faces: `9`

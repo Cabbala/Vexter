@@ -6,3 +6,16 @@
 - Present/current/reviewable: `0` / `0` / `0`
 - Blocked faces: `external_credential_source_face, venue_ref_face, account_ref_face, connectivity_profile_face, operator_owner_face, bounded_start_criteria_face, allowlist_symbol_lot_reconfirmed, manual_latched_stop_all_visibility_reconfirmed, terminal_snapshot_readability_reconfirmed`
 - Retry-gate review reopen ready: `no`
+- Window fields to fill: `bounded_supervised_window.label, bounded_supervised_window.starts_at, bounded_supervised_window.ends_at`
+- Next operator step: `python3.12 scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py` after filling the template, then rerun refresh/regeneration surfaces.
+
+## Operator Inputs Remaining
+- `external_credential_source_face: Provide one current non-secret locator that confirms which Dexter paper-live credential source was resolved for the bounded supervised window.`
+- `venue_ref_face: Provide one current non-secret locator that ties the repo-visible venue marker to the exact Dexter demo venue for the bounded supervised window.`
+- `account_ref_face: Provide one current non-secret locator that shows which Dexter paper-live demo account the bounded supervised window is bound to.`
+- `connectivity_profile_face: Provide one current non-secret locator that shows the intended connectivity profile was checked for venue/account reachability inside the bounded supervised window.`
+- `operator_owner_face: Name one explicit operator owner and provide one reviewable non-secret locator that shows ownership for the bounded supervised window.`
+- `bounded_start_criteria_face: Provide one current non-secret locator that fixes the bounded start window plus the go/no-go and abort owners for the next supervised retry attempt.`
+- `allowlist_symbol_lot_reconfirmed: Provide one current non-secret locator that reconfirms the allowlist, default symbol, lot size, one-position cap, and bounded window guardrails for the next supervised attempt.`
+- `manual_latched_stop_all_visibility_reconfirmed: Provide one current non-secret locator that freshly reconfirms `manual_latched_stop_all` visibility for the bounded supervised window.`
+- `terminal_snapshot_readability_reconfirmed: Provide one current non-secret locator that freshly reconfirms terminal snapshot readability for the bounded supervised window.`

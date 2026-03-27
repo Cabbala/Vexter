@@ -32,6 +32,7 @@ def test_demo_forward_supervised_run_retry_readiness_artifacts_are_current_and_c
         "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT",
         "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK",
         "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH",
+        "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION",
     }
     assert "artifacts/proofs/demo-forward-supervised-run-retry-readiness-check.json" in manifest[
         "proof_files"
@@ -77,6 +78,9 @@ def test_demo_forward_supervised_run_retry_readiness_artifacts_are_current_and_c
     assert context["evidence"]["demo_forward_supervised_run_retry_gate_attestation_refresh"][
         "task_state"
     ] == "supervised_run_retry_gate_attestation_refresh_blocked"
+    assert context["evidence"]["demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration"][
+        "task_state"
+    ] == "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked"
     assert retry_boundary["demo_source"] == "dexter"
     assert retry_boundary["execution_mode"] == "paper_live"
     assert retry_boundary["route_mode"] == "single_sleeve"

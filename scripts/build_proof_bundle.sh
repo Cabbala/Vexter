@@ -10,7 +10,7 @@ from pathlib import Path
 
 root = Path(os.environ["ROOT_DIR"])
 manifest_path = root / "artifacts" / "proof_bundle_manifest.json"
-default_path = "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-refresh.tar.gz"
+default_path = "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration.tar.gz"
 
 if not manifest_path.exists():
     print(default_path)

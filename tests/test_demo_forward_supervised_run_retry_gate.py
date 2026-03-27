@@ -32,16 +32,29 @@ def test_demo_forward_supervised_run_retry_gate_artifacts_are_current_and_consis
     subagents_text = SUBAGENTS_PATH.read_text()
     decision_surface_text = DECISION_SURFACE_PATH.read_text()
 
-    assert ledger["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
+    assert ledger["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
     assert manifest["task_id"] == context["current_task"]["id"] == ledger["task_id"]
-    assert manifest["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
-    assert manifest["status"] == ledger["status"] == "supervised_run_retry_gate_attestation_refresh_blocked"
-    assert manifest["bundle_path"] == "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-refresh.tar.gz"
-    assert context["evidence"]["demo_forward_supervised_run_retry_gate_attestation_refresh"][
+    assert (
+        manifest["task_id"]
+        == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
+    )
+    assert (
+        manifest["status"]
+        == ledger["status"]
+        == "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked"
+    )
+    assert (
+        manifest["bundle_path"]
+        == "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration.tar.gz"
+    )
+    assert context["evidence"]["demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration"][
         "task_state"
-    ] == "supervised_run_retry_gate_attestation_refresh_blocked"
-    assert context["next_task"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK"
-    assert context["next_task"]["state"] == "ready_for_attestation_record_pack_regeneration"
+    ] == "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked"
+    assert context["next_task"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
+    assert (
+        context["next_task"]["state"]
+        == "additional_attestation_refresh_required_for_record_pack_regeneration"
+    )
     assert context["next_task"]["pass_successor"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE"
     assert context["next_task"]["pass_successor"]["lane"] == "supervised_run_retry_gate"
 

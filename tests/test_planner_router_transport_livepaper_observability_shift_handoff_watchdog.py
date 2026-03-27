@@ -280,6 +280,12 @@ def test_livepaper_observability_shift_handoff_watchdog_manifest_and_context_poi
             manifest["bundle_path"]
             == "artifacts/bundles/demo-forward-supervised-run-retry-gate.tar.gz"
         )
+    elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK":
+        assert manifest["status"] == "supervised_run_retry_gate_attestation_record_pack_blocked"
+        assert (
+            manifest["bundle_path"]
+            == "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-record-pack.tar.gz"
+        )
     elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT":
         assert manifest["status"] == "supervised_run_retry_gate_attestation_audit_blocked"
         assert (
@@ -344,6 +350,8 @@ def test_livepaper_observability_shift_handoff_watchdog_manifest_and_context_poi
         assert "demo-forward-supervised-run-retry-readiness.tar.gz" in bundle_script
     elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE":
         assert "demo-forward-supervised-run-retry-gate.tar.gz" in bundle_script
+    elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK":
+        assert "demo-forward-supervised-run-retry-gate-attestation-record-pack.tar.gz" in bundle_script
     elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT":
         assert "demo-forward-supervised-run-retry-gate-attestation-audit.tar.gz" in bundle_script
     else:

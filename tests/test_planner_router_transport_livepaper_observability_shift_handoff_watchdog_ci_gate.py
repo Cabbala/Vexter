@@ -459,6 +459,20 @@ def test_livepaper_observability_shift_handoff_watchdog_ci_gate_manifest_and_con
         )
         assert "livepaper_observability_shift_handoff_watchdog_ci_gate" in status_text
         assert "demo-forward-supervised-run-retry-gate.tar.gz" in bundle_script
+    elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK":
+        assert context["current_task"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK"
+        assert ledger["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK"
+        assert manifest["status"] == "supervised_run_retry_gate_attestation_record_pack_blocked"
+        assert (
+            manifest["bundle_path"]
+            == "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-record-pack.tar.gz"
+        )
+        assert (
+            "transport_livepaper_observability_acceptance_pack" in summary_text
+            or "transport_livepaper_observability_acceptance_pack" in report_text
+        )
+        assert "livepaper_observability_shift_handoff_watchdog_ci_gate" in status_text
+        assert "demo-forward-supervised-run-retry-gate-attestation-record-pack.tar.gz" in bundle_script
     elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT":
         assert context["current_task"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT"
         assert ledger["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT"
@@ -529,6 +543,8 @@ def test_livepaper_observability_shift_handoff_watchdog_ci_gate_manifest_and_con
     elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-READINESS":
         assert "livepaper_observability_shift_handoff_watchdog_ci_gate" in status_text
     elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE":
+        assert "livepaper_observability_shift_handoff_watchdog_ci_gate" in status_text
+    elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK":
         assert "livepaper_observability_shift_handoff_watchdog_ci_gate" in status_text
     elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-AUDIT":
         assert "livepaper_observability_shift_handoff_watchdog_ci_gate" in status_text

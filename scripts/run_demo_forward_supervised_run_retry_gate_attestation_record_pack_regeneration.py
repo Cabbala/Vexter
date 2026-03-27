@@ -138,9 +138,9 @@ DECISION = "retry_gate_review_blocked_pending_current_attestation_record_pack_re
 
 VERIFIED_DEXTER_COMMIT = "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938"
 VERIFIED_MEWX_COMMIT = "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
-VERIFIED_VEXTER_PR = 85
-VERIFIED_VEXTER_COMMIT = "aee3216c3c5091135f6bb50236883e1bdff8e2e1"
-VERIFIED_VEXTER_MERGED_AT = "2026-03-27T19:00:58Z"
+VERIFIED_VEXTER_PR = 87
+VERIFIED_VEXTER_COMMIT = "857f62c78129fecd71793744864ce12653d62141"
+VERIFIED_VEXTER_MERGED_AT = "2026-03-27T19:45:03Z"
 
 REQUIRED_FACE_NAMES = [
     "external_credential_source_face",
@@ -158,9 +158,9 @@ SUB_AGENT_SUMMARIES = (
     {
         "name": "Anscombe",
         "lines": [
-            "Confirmed merged PR `#85` / commit `aee3216c3c5091135f6bb50236883e1bdff8e2e1` is the current refresh baseline, so regeneration has to be re-promoted from that newer source of truth rather than the older PR `#83` state.",
-            "Flagged two correctness risks to keep atomic: stale refresh-side repo pointers and repeated regeneration suffixes inside refresh-derived rows that would make the decision surface contradictory or non-reviewable.",
-            "Recommended one atomic current-pointer flip across summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces so regeneration becomes current everywhere together.",
+            "Confirmed merged PR `#87` / commit `857f62c78129fecd71793744864ce12653d62141` is the exact current refresh baseline on `origin/main`, so regeneration has to be re-promoted from that merged source of truth rather than the older PR `#85` branch state.",
+            "Flagged the atomic current-pointer set as summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces, and called out stale refresh metadata plus duplicate historical regeneration clauses in `README.md` as the main contradiction risk.",
+            "Recommended keeping the refresh proof/history intact as baseline while flipping only the repo-level current pointers and regenerated-lane surfaces together.",
         ],
     },
     {
@@ -168,14 +168,14 @@ SUB_AGENT_SUMMARIES = (
         "lines": [
             "Confirmed the regeneration lane stays inside the unchanged Dexter-only `paper_live`, `single_sleeve`, `dexter_default`, one-plan, one-position, explicit-allowlist, small-lot, bounded-window, funded-live-forbidden envelope.",
             "Verified the planner/runtime boundary remains intact: `prepare / start / status / stop / snapshot` stay planner-bound, `manual_latched_stop_all` remains planner-owned, Dexter stays the only real-demo seam, and frozen Mew-X remains unchanged on `sim_live`.",
-            "Recommended keeping regeneration logic purely surface-level by normalizing refresh-derived row text before emission instead of rewriting Dexter or Mew-X runtime/source behavior.",
+            "Focused guardrail verification passed without findings, so regeneration stays a surface-only change that must not rewrite Dexter or Mew-X runtime/source behavior.",
         ],
     },
     {
         "name": "Parfit",
         "lines": [
             "Scoped the lowest-risk change set to the regeneration generator, the proof-bundle fallback path, the regenerated artifacts, and the shared regression expectations that pin the repo-level current task and bundle layout.",
-            "Recommended validating the regeneration generator and proof-bundle/export path first, then widening to the shared current-pointer and full pytest coverage once the regenerated artifacts are in place.",
+            "Confirmed the minimal safe path is generator-only plus current-pointer tests: do not rewrite the baseline refresh lane, just re-promote regeneration from merged PR `#87` and validate the exporter/proof-bundle flow.",
             "Merge readiness depends on end-to-end agreement across summary, context, manifest, ledger, bundle metadata, the regenerated handoff bundle, and the final exported tarball without touching runtime code.",
         ],
     },
@@ -924,6 +924,7 @@ def main() -> None:
                 "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_decision_surface.md",
                 "scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
                 "scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
+                "scripts/export_attestation_record_pack_regeneration_closeout_bundle.sh",
                 "scripts/build_proof_bundle.sh",
                 "tests/test_demo_forward_supervised_run_retry_gate.py",
                 "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack.py",
@@ -1085,6 +1086,7 @@ def main() -> None:
             "tests/test_demo_forward_supervised_run_retry_readiness.py",
             "tests/test_bootstrap_layout.py",
             "scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
+            "scripts/export_attestation_record_pack_regeneration_closeout_bundle.sh",
             "scripts/build_proof_bundle.sh",
             "artifacts/summary.md",
             "artifacts/context_pack.json",
@@ -1139,9 +1141,9 @@ def main() -> None:
         {
             "latest_vexter_pr": VERIFIED_VEXTER_PR,
             "latest_vexter_main_commit": VERIFIED_VEXTER_COMMIT,
-            "latest_recent_vexter_prs": [85, 84, 83, 82, 81],
-            "vexter_pr_85_merged_at": VERIFIED_VEXTER_MERGED_AT,
-            "vexter_pr_85_closed_at": VERIFIED_VEXTER_MERGED_AT,
+            "latest_recent_vexter_prs": [87, 86, 85, 84, 83],
+            "vexter_pr_87_merged_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_87_closed_at": VERIFIED_VEXTER_MERGED_AT,
         }
     )
     context_pack["evidence"]["demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration"] = {
@@ -1213,6 +1215,10 @@ def main() -> None:
             "scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
         ),
         (
+            "scripts",
+            "scripts/export_attestation_record_pack_regeneration_closeout_bundle.sh",
+        ),
+        (
             "proof_files",
             "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
         ),
@@ -1247,6 +1253,7 @@ def main() -> None:
         "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_ATTESTATION_RECORD_PACK_REGENERATION.md",
         "plans/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_plan.md",
         "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
+        "scripts/export_attestation_record_pack_regeneration_closeout_bundle.sh",
         "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration.tar.gz",
     ):
         if path not in manifest["included_paths"]:
@@ -1308,13 +1315,13 @@ def main() -> None:
         "source_faithful_modes": {"dexter": "paper_live", "mewx": "sim_live"},
         "status": TASK_STATUS,
         "sub_agents_used": [item["name"] for item in SUB_AGENT_SUMMARIES],
-        "supporting_vexter_prs": [85, 84, 83, 82, 81],
+        "supporting_vexter_prs": [87, 86, 85, 84, 83],
         "task_id": TASK_ID,
         "template_runtime_validation_errors": runtime_errors,
         "verified_dexter_main_commit": VERIFIED_DEXTER_COMMIT,
         "verified_dexter_pr": 3,
         "verified_mewx_frozen_commit": VERIFIED_MEWX_COMMIT,
-        "verified_prs": [85, 84, 83],
+        "verified_prs": [87, 86, 85],
         "date": run_timestamp.split("T", 1)[0],
     }
     rewrite_local_ledger(ledger_payload)

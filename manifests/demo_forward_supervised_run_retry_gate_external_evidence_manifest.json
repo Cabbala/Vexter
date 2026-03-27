@@ -11,9 +11,11 @@
   "notes": [
     "Replace placeholder values with current non-secret outside-repo evidence locators.",
     "Keep secrets outside repo; this manifest should point to reviewable locators only.",
-    "Fill bounded_supervised_window.label, starts_at, and ends_at before switching manifest_role to evidence.",
+    "Fill bounded_supervised_window.label, starts_at, and ends_at once for the current supervised window before editing face entries.",
     "For each blocked face, fill provided, attested_by, evidence_locator, locator_kind, verified_at, fresh_until, reviewable_without_secrets, and reviewability_note.",
-    "After updating the manifest, rerun the canonical gap script plus the refresh and regeneration generators to refresh the proof surfaces."
+    "Treat the canonical evidence preflight report as the face-to-manifest and proof map plus next-human-pass checklist; treat the legacy gap report as the compatibility mirror.",
+    "Do not switch manifest_role to evidence unless the same manifest passes the canonical evidence preflight as ready.",
+    "After updating the manifest, rerun the canonical evidence preflight script plus the refresh and regeneration generators to refresh the proof surfaces; the legacy gap script remains compatibility-only."
   ],
   "faces": {
     "external_credential_source_face": {

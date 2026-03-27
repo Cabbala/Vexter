@@ -67,14 +67,19 @@ Each face entry carries:
 - `operator_input_remaining`
 
 ## Operator Handoff
-- Fill `bounded_supervised_window.label`, `bounded_supervised_window.starts_at`, and `bounded_supervised_window.ends_at` once for the current bounded supervised window before switching the manifest away from `template`.
+- Fill `bounded_supervised_window.label`, `bounded_supervised_window.starts_at`, and `bounded_supervised_window.ends_at` once for the current bounded supervised window before editing blocked faces.
 - For every blocked face, fill `provided`, `attested_by`, `evidence_locator`, `locator_kind`, `verified_at`, `fresh_until`, `reviewable_without_secrets`, and `reviewability_note`.
 - Keep `summary`, `marker_match_note`, and `operator_input_remaining` honest and non-secret; they are reviewer-facing guidance, not secret-bearing evidence fields.
+- Treat `artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md` as the canonical face-to-manifest and proof map plus the next-human-pass checklist.
+- Treat `artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md` as the compatibility mirror for older consumers.
+- Keep `manifest_role` at `template` unless the same manifest passes the canonical preflight as reopen-ready; a partially filled template is still an honest blocked state, not evidence.
 - After updating the manifest, rerun:
-  - `python3.12 scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py`
+  - `python3.12 scripts/run_demo_forward_supervised_run_retry_gate_evidence_preflight.py`
   - `python3.12 scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py`
   - `python3.12 scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py`
-- Treat `artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md` as the canonical face-to-manifest map and `artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json` as the machine-readable proof of what remains blocked.
+- Optional compatibility rerun:
+  - `python3.12 scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py`
+- Use `artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json` as the canonical machine-readable reopen-readiness proof and `artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json` as the compatibility mirror of what remains blocked.
 
 ## Validator Output
 The canonical validator must answer, per face:

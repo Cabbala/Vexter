@@ -43,6 +43,9 @@ def test_demo_forward_supervised_run_retry_gate_external_evidence_gap_surfaces_a
     assert proof["summary"]["retry_gate_review_reopen_ready"] is False
     assert "operator_owner_face" in proof["summary"]["blocked_faces"]
     assert "terminal_snapshot_readability_reconfirmed" in proof["summary"]["blocked_faces"]
+    assert "Manifest remains template_only" in proof["summary"]["reopen_false_path"]
+    assert proof["summary"]["preflight_consistency_checks"]["blocked_reason_counts_match_face_rows"] is True
+    assert proof["summary"]["next_human_pass"]["faces"][0]["face"] == "external_credential_source_face"
 
     first_face = proof["faces"][0]
     assert first_face["declared"] is True
@@ -57,6 +60,8 @@ def test_demo_forward_supervised_run_retry_gate_external_evidence_gap_surfaces_a
 
     assert "Manifest status: `template_only`" in report_text
     assert "demo_forward_supervised_run_retry_gate_external_evidence_manifest.json" in report_text
+    assert "## Consistency Checks" in report_text
+    assert "## Next Human Pass Checklist" in report_text
     assert "Blocked faces:" in summary_text
     assert "Retry-gate review reopen ready: `no`" in summary_text
 
@@ -78,3 +83,6 @@ def test_demo_forward_supervised_run_retry_gate_external_evidence_gap_script_rep
     assert "external_credential_source_face" in payload["blocked_faces"]
     assert "terminal_snapshot_readability_reconfirmed" in payload["blocked_faces"]
     assert payload["retry_gate_review_reopen_ready"] is False
+    assert "Manifest remains template_only" in payload["template_only_false_path"]
+    assert payload["consistency_checks"]["template_only_false_path_holds"] is True
+    assert payload["next_human_pass"]["faces"][0]["face"] == "external_credential_source_face"

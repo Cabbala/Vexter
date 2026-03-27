@@ -6,8 +6,8 @@
   "recommended_next_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION",
   "candidate_pass_next_step": "supervised_run_retry_gate",
   "candidate_pass_next_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
-  "verified_vexter_main_pr": 91,
-  "verified_vexter_main_commit": "014723587b100fb0046646d40b445537584b44ea",
+  "verified_vexter_main_pr": 92,
+  "verified_vexter_main_commit": "6252cef32c652d33f4c7374e61913f34d879854c",
   "baseline_task_state": "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked",
   "first_demo_target": "dexter_paper_live",
   "source_faithful_seam": {
@@ -18,6 +18,15 @@
   "external_evidence_preflight_status": "blocked",
   "external_evidence_preflight_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md",
   "external_evidence_gap_report": "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
+  "external_evidence_template_only_false_path": "Manifest remains template_only, so retry-gate reopen stays blocked until the bounded supervised window fields are filled once, every blocked face carries a current non-secret reviewable locator, and the canonical preflight returns ready.",
+  "external_evidence_consistency_checks": {
+    "blocked_face_count_matches_face_rows": true,
+    "blocked_face_names_match_face_rows": true,
+    "blocked_reason_counts_match_face_rows": true,
+    "operator_inputs_remaining_match_blocked_faces": true,
+    "blocked_faces_have_manifest_fields_and_operator_input": true,
+    "template_only_false_path_holds": true
+  },
   "blocked_refresh_faces": [
     "external_credential_source_face",
     "venue_ref_face",

@@ -1,7 +1,7 @@
 # ATTESTATION-REFRESH Details
 
 ## Verified Starting Point
-- Latest Vexter `main`: PR `#91` merge commit `014723587b100fb0046646d40b445537584b44ea` on `2026-03-27T21:46:22Z`
+- Latest Vexter `main`: PR `#92` merge commit `6252cef32c652d33f4c7374e61913f34d879854c` on `2026-03-27T22:07:42Z`
 - Dexter pinned commit: `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`
 - Frozen Mew-X commit: `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`
 - Accepted baseline: `supervised_run_retry_gate_attestation_record_pack_regeneration_blocked`

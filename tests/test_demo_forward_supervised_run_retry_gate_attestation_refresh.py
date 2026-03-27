@@ -74,43 +74,43 @@ def test_demo_forward_supervised_run_retry_gate_attestation_refresh_artifacts_ar
     assert manifest["task_id"] == context["current_task"]["id"] == ledger["task_id"]
     assert (
         manifest["task_id"]
-        == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
+        == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
     )
     assert (
         manifest["status"]
         == ledger["status"]
-        == "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked"
+        == "supervised_run_retry_gate_attestation_refresh_blocked"
     )
     assert (
         manifest["bundle_path"]
         == ledger["artifact_bundle"]
-        == "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration.tar.gz"
+        == "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-refresh.tar.gz"
     )
     assert (
         manifest["bundle_source"]
         == context["bundle_source"]
-        == "/Users/cabbala/Downloads/vexter_attestation_record_pack_regeneration_bundle_latest.tar.gz"
+        == "/Users/cabbala/Downloads/vexter_attestation_refresh_bundle_latest.tar.gz"
     )
     assert manifest["next_task"]["id"] == context["next_task"]["id"] == ledger["next_task_id"]
     assert (
         manifest["next_task"]["id"]
-        == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
+        == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
     )
     assert manifest["next_task"]["state"] == context["next_task"]["state"] == ledger["next_task_state"]
     assert (
         manifest["next_task"]["state"]
-        == "additional_attestation_refresh_required_for_record_pack_regeneration"
+        == "ready_for_attestation_record_pack_regeneration"
     )
     assert manifest["next_task"]["pass_successor"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE"
     assert manifest["next_task"]["pass_successor"]["lane"] == "supervised_run_retry_gate"
 
     assert proof["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
-    assert proof["verified_github"]["latest_vexter_pr"] == 91
+    assert proof["verified_github"]["latest_vexter_pr"] == 92
     assert (
         proof["verified_github"]["latest_vexter_main_commit"]
-        == "014723587b100fb0046646d40b445537584b44ea"
+        == "6252cef32c652d33f4c7374e61913f34d879854c"
     )
-    assert proof["verified_github"]["latest_vexter_merged_at"] == "2026-03-27T21:46:22Z"
+    assert proof["verified_github"]["latest_vexter_merged_at"] == "2026-03-27T22:07:42Z"
     assert proof["task_result"]["outcome"] == "FAIL/BLOCKED"
     assert (
         proof["task_result"]["recommended_next_step"]
@@ -136,22 +136,33 @@ def test_demo_forward_supervised_run_retry_gate_attestation_refresh_artifacts_ar
     assert canonical_external_evidence["manifest_status"] == "template_only"
     assert canonical_external_evidence["retry_gate_review_reopen_ready"] is False
     assert canonical_external_evidence["aggregated_blocked_reason_counts"]["template_only_manifest"] == 9
+    assert "Manifest remains template_only" in canonical_external_evidence["template_only_false_path"]
+    assert canonical_external_evidence["consistency_checks"]["template_only_false_path_holds"] is True
+    assert (
+        canonical_external_evidence["next_human_pass"]["bounded_window_fields_once"]
+        == [
+            "bounded_supervised_window.label",
+            "bounded_supervised_window.starts_at",
+            "bounded_supervised_window.ends_at",
+        ]
+    )
+    assert canonical_external_evidence["next_human_pass"]["faces"][0]["face"] == "external_credential_source_face"
 
     refresh_boundary = context["evidence"]["demo_forward_supervised_run_retry_gate_attestation_refresh"][
         "attestation_refresh_boundary"
     ]
-    assert context["evidence"]["github_latest"]["latest_recent_vexter_prs"] == [91, 90, 89, 88, 87]
+    assert context["evidence"]["github_latest"]["latest_recent_vexter_prs"] == [92, 91, 90, 89, 88]
     assert (
-        context["evidence"]["github_latest"]["vexter_pr_91_merged_at"]
-        == "2026-03-27T21:46:22Z"
+        context["evidence"]["github_latest"]["vexter_pr_92_merged_at"]
+        == "2026-03-27T22:07:42Z"
     )
     refresh_evidence = context["evidence"]["demo_forward_supervised_run_retry_gate_attestation_refresh"]
-    assert refresh_evidence["attestation_refresh_surface_current"] is False
+    assert refresh_evidence["attestation_refresh_surface_current"] is True
     assert (
         context["evidence"]["demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration"][
             "attestation_record_pack_regeneration_surface_current"
         ]
-        is True
+        is False
     )
     assert refresh_boundary["demo_source"] == "dexter"
     assert refresh_boundary["execution_mode"] == "paper_live"
@@ -182,6 +193,9 @@ def test_demo_forward_supervised_run_retry_gate_attestation_refresh_artifacts_ar
     assert refresh_evidence["external_evidence_manifest_status"] == "template_only"
     assert refresh_evidence["retry_gate_review_reopen_ready_from_external_evidence"] is False
     assert refresh_evidence["aggregated_blocked_reason_counts"]["template_only_manifest"] == 9
+    assert "Manifest remains template_only" in refresh_evidence["template_only_false_path"]
+    assert refresh_evidence["consistency_checks"]["blocked_reason_counts_match_face_rows"] is True
+    assert refresh_evidence["next_human_pass"]["faces"][0]["face"] == "external_credential_source_face"
 
     refresh_faces = proof["supervised_run_retry_gate_attestation_refresh"]["refresh_faces"]
     assert refresh_faces["record_pack_regeneration_ready"] is True
@@ -250,6 +264,7 @@ def test_demo_forward_supervised_run_retry_gate_attestation_refresh_artifacts_ar
     assert prompt_context["external_evidence_preflight_status"] == "blocked"
     assert prompt_context["external_evidence_preflight_report"] == PREFLIGHT_REPORT_REL_PATH
     assert prompt_context["external_evidence_gap_report"] == GAP_REPORT_REL_PATH
+    assert "Manifest remains template_only" in prompt_context["external_evidence_template_only_false_path"]
     assert "FAIL/BLOCKED" in report_text
     assert "supervised_run_retry_gate_attestation_refresh_blocked" in status_text
     assert "manual_latched_stop_all" in handoff_text
@@ -259,7 +274,11 @@ def test_demo_forward_supervised_run_retry_gate_attestation_refresh_artifacts_ar
     assert GAP_REPORT_REL_PATH in report_text
     assert GAP_REPORT_REL_PATH in handoff_text
     assert "Canonical Evidence Intake Handoff" in handoff_text
+    assert "Next Human Pass Checklist" in handoff_text
+    assert "template_only_false_path" in handoff_text
     assert "bounded_window_fields_to_fill_once" in handoff_text
+    assert "Next Human Pass" in report_text
+    assert "template-only false path" in report_text
     assert "supervised_run_retry_gate" in decision_surface_text
     for name in ("Anscombe", "Euler", "Parfit"):
         assert name in subagents_text
@@ -358,6 +377,7 @@ def test_export_attestation_refresh_closeout_bundle(tmp_path: Path) -> None:
         names = tar.getnames()
         assert any(name.endswith("/RESULT.md") for name in names)
         assert any(name.endswith("/HANDOFF.md") for name in names)
+        assert any(name.endswith("/NEXT_HUMAN_PASS.md") for name in names)
         assert any(name.endswith("/subagent_summary.md") for name in names)
         assert any(name.endswith(f"/{expected_proof_bundle_name}") for name in names)
         assert any(name.endswith("/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_EXTERNAL_EVIDENCE_CONTRACT.md") for name in names)
@@ -368,13 +388,17 @@ def test_export_attestation_refresh_closeout_bundle(tmp_path: Path) -> None:
         assert any(name.endswith("/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md") for name in names)
         assert any(name.endswith("/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json") for name in names)
         result_member = next(name for name in names if name.endswith("/RESULT.md"))
+        next_human_pass_member = next(name for name in names if name.endswith("/NEXT_HUMAN_PASS.md"))
         subagent_member = next(name for name in names if name.endswith("/subagent_summary.md"))
         result_text = tar.extractfile(result_member).read().decode("utf-8")
+        next_human_pass_text = tar.extractfile(next_human_pass_member).read().decode("utf-8")
         subagent_text = tar.extractfile(subagent_member).read().decode("utf-8")
 
     assert "285 passed" in result_text
     assert "https://github.com/Cabbala/Vexter/pull/999" in result_text
     assert "abc123def456" in result_text
     assert "fedcba654321" in result_text
+    assert "Reopen false-path" in next_human_pass_text
+    assert "Consistency Checks" in next_human_pass_text
     for name in ("Anscombe", "Euler", "Parfit"):
         assert name in subagent_text

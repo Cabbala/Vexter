@@ -871,9 +871,9 @@ def update_readme() -> None:
         f"recommended step is `{NEXT_TASK_LANE}` so the record-pack regeneration can be rerun from refreshed inputs, "
         f"and the pass successor is `{PASS_NEXT_TASK_LANE}`."
     )
-    paragraph_re = re.compile(re.escape(marker) + r".*?(?:\n\n|$)", re.DOTALL)
-    updated = paragraph_re.sub("", readme_text)
-    regeneration_re = re.compile(re.escape(regeneration_marker) + r".*?(?:\n\n|$)", re.DOTALL)
+    line_re = re.compile(rf"(?m)^{re.escape(marker)}.*$")
+    updated = line_re.sub("", readme_text)
+    regeneration_re = re.compile(rf"(?m)^{re.escape(regeneration_marker)}.*$")
     matches = list(regeneration_re.finditer(updated))
     match = matches[-1] if matches else None
     if match:

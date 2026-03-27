@@ -1,16 +1,16 @@
 # Demo Forward Supervised Run Retry Gate Attestation Refresh Sub-agent Summaries
 
 ## Anscombe
-- Confirmed that refresh must become the single current surface atomically across status, report, summary, proof, handoff, checklist, and decision-surface pointers, with record-pack retained only as baseline evidence.
-- Recommended keeping the lane observational and fail-closed: the repo may define refresh ownership and freshness rules, but retry-gate review stays blocked until each face points to one current, fresh-enough locator.
-- Flagged split-pointer drift as the main risk, so the generator switches repo-level current-task metadata, bundle metadata, and handoff/report pointers together.
+- Confirmed that refresh has to be re-promoted atomically after the regeneration merge so status, report, summary, proof, handoff, checklist, decision-surface, manifest, context-pack, and bundle pointers agree again on one current lane.
+- Recommended treating regeneration as baseline evidence rather than the current source of truth: refresh stays observational and fail-closed until every regenerated face points to one current, fresh-enough, reviewer-readable locator.
+- Flagged stale pointer drift as the main risk, especially when README, task ledger, and bundle metadata still inherit the regeneration lane by default.
 
 ## Euler
-- Kept the refresh boundary identical to the current bounded envelope: Dexter-only `paper_live`, frozen Mew-X `sim_live`, `single_sleeve`, `dexter_default`, explicit allowlist, small lot, one-plan, one-position, bounded supervision, and funded-live forbidden.
-- Confirmed the refresh lane should baseline from attestation record pack rather than attestation audit, and that the row schema should shift to refresh owner, refresh trigger, minimum fresh evidence locator shape, stale condition, and retry-gate usability.
-- Found no planner or adapter seam drift: refresh remains docs/proofs/report/script only, with `prepare / start / status / stop / snapshot` and `manual_latched_stop_all` unchanged.
+- Kept the bounded runtime envelope unchanged: Dexter-only `paper_live`, frozen Mew-X `sim_live`, `single_sleeve`, `dexter_default`, explicit allowlist, small lot, one-plan, one-position, bounded supervision, and funded-live forbidden.
+- Confirmed the refreshed row schema still belongs to refresh owner, refresh trigger, minimum fresh evidence locator shape, stale condition, and retry-gate usability, but it now has to be derived from the regeneration decision surface rather than the older record-pack surface.
+- Found no planner or adapter seam drift: the lane stays docs/proofs/report/script only, with `prepare / start / status / stop / snapshot` and `manual_latched_stop_all` unchanged, while `build_proof_bundle.sh` fallback now needs to follow refresh again.
 
 ## Parfit
-- Scoped the smallest safe change set to one new refresh generator, one focused refresh regression, synchronized current-task assertions in shared tests, and a bundle default-path update.
-- Recommended validating the new generator and bundle output first, then running the full pytest suite because many tests pin the repo-level current task, next task, and bundle path.
-- Merge readiness depends on an honest blocked result, regenerated refresh artifacts, and a next-step pointer that advances to record-pack regeneration instead of claiming retry-gate reopen.
+- Scoped the smallest safe change set to the refresh generator, refresh report/proof surfaces, README/current-pointer rewiring, targeted shared tests, and the bundle fallback path.
+- Recommended validating generator output and the focused refresh regressions first, then widening to the shared pytest suite because several older task tests pin the repo-level current task and next-task metadata.
+- Merge readiness depends on starting from PR `#80` / merge commit `abf5a5659a1a6a1918af18c57978ec10ef2d33d6`, routing the blocked next step back to record-pack regeneration, and reporting the published branch as `feat/attestation-refresh`.

@@ -255,7 +255,7 @@ def test_livepaper_observability_shift_handoff_drill_artifacts_are_wired_for_inc
     elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH":
         assert (
             manifest["next_task"]["id"]
-            == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK"
+            == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
         )
         assert manifest["next_task"]["state"] == "ready_for_attestation_record_pack_regeneration"
         assert "demo-forward-supervised-run-retry-gate-attestation-refresh.tar.gz" in bundle_script

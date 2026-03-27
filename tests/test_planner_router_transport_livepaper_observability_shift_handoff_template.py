@@ -234,7 +234,7 @@ def test_livepaper_observability_shift_handoff_template_current_artifacts_are_co
     elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH":
         assert (
             manifest["next_task"]["id"]
-            == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK"
+            == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
         )
         assert manifest["next_task"]["state"] == "ready_for_attestation_record_pack_regeneration"
     elif current_task_id == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK":

@@ -1,15 +1,15 @@
 # Demo Forward Supervised Run Retry Gate Attestation Refresh Report
 
 ## Verified GitHub State
-- Reverified latest GitHub-visible Vexter `main` at merged PR `#78` merge commit `c8b586232c07ddf374d62f2817caeddb23581bd9` on `2026-03-27T08:15:08Z`.
+- Reverified latest GitHub-visible Vexter `main` at merged PR `#80` merge commit `abf5a5659a1a6a1918af18c57978ec10ef2d33d6` on `2026-03-27T09:10:03Z`.
 - Dexter stayed pinned at merged PR `#3` commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`.
 - Frozen Mew-X stayed pinned at `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`.
-- Report timestamp: `2026-03-27T08:46:57Z`.
+- Report timestamp: `2026-03-27T13:11:43Z`.
 
 ## Baseline Accepted
-- Accepted `supervised_run_retry_gate_attestation_record_pack_blocked` as the bounded baseline current source of truth.
-- Did not claim regenerated record pack, retry-gate reopen, retry execution success, funded live access, or any Mew-X seam expansion.
-- Promoted one bounded attestation refresh lane as the new current source of truth for freshness ownership, triggers, and locator expectations.
+- Accepted `supervised_run_retry_gate_attestation_record_pack_regeneration_blocked` as the bounded baseline current source of truth.
+- Did not claim regenerated record-pack success, retry-gate reopen, retry execution success, funded live access, or any Mew-X seam expansion.
+- Promoted one bounded attestation refresh lane as the new current source of truth for additional freshness ownership, triggers, and locator expectations on top of the regeneration baseline.
 
 ## Refresh Boundary
 - Dexter-only real demo slice
@@ -36,7 +36,7 @@
 - Outcome: `FAIL/BLOCKED`
 - Decision: `retry_gate_review_blocked_pending_fresh_attestation_refresh_and_record_pack_regeneration`
 - Current lane: `supervised_run_retry_gate_attestation_refresh`
-- Recommended next step while blocked: `supervised_run_retry_gate_attestation_record_pack`
+- Recommended next step while blocked: `supervised_run_retry_gate_attestation_record_pack_regeneration`
 - Retry-gate pass successor: `supervised_run_retry_gate`
 - Runtime validation errors: `[]`
 
@@ -59,6 +59,6 @@
 - blocked refresh faces: `external_credential_source_face, venue_ref_face, account_ref_face, connectivity_profile_face, operator_owner_face, bounded_start_criteria_face, allowlist_symbol_lot_reconfirmed, manual_latched_stop_all_visibility_reconfirmed, terminal_snapshot_readability_reconfirmed`
 
 ## Honest Model
-- `PASS` only if every required face has explicit refresh ownership and freshness rules plus one current, fresh-enough locator sufficient to regenerate record pack and reopen retry-gate review honestly.
+- `PASS` only if every required face has explicit refresh ownership and freshness rules plus one current, fresh-enough regenerated locator sufficient to rerun record-pack regeneration and reopen retry-gate review honestly.
 - `FAIL/BLOCKED` if any face remains missing, stale, ambiguous, non-refreshable, or not usable enough for retry-gate review.
-- Current result remains `FAIL/BLOCKED` because the repo still does not point to current, fresh-enough bounded-window locators for the required faces, so record-pack regeneration cannot yet become current honestly.
+- Current result remains `FAIL/BLOCKED` because the repo still does not point to current, fresh-enough, reviewer-readable regenerated locators for the required faces, so record-pack regeneration cannot yet be rerun honestly.

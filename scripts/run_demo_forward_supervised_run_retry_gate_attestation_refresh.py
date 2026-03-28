@@ -122,7 +122,7 @@ PROOF_SUMMARY_PATH = (
 )
 
 BUNDLE_PATH = "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-refresh.tar.gz"
-BUNDLE_SOURCE = "/Users/cabbala/Downloads/vexter_next_task_bundle_post_pr103_retry_ff9c2e2f.tar.gz"
+BUNDLE_SOURCE = "/Users/cabbala/Downloads/vexter_next_task_bundle_post_pr103_fresh_retry_88c8b52b.tar.gz"
 
 TASK_ID = "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
 TASK_STATUS = "supervised_run_retry_gate_attestation_refresh_blocked"
@@ -139,11 +139,11 @@ DECISION = "retry_gate_review_blocked_pending_fresh_attestation_refresh_and_reco
 
 VERIFIED_DEXTER_COMMIT = "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938"
 VERIFIED_MEWX_COMMIT = "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
-VERIFIED_VEXTER_PR = 104
-VERIFIED_VEXTER_COMMIT = "7a272b0e4367204397d6c4c87340365b35a599b8"
-VERIFIED_VEXTER_MERGED_AT = "2026-03-28T16:35:23Z"
-SUPPORTING_VEXTER_PRS = [104, 103, 102, 101, 100]
-VERIFIED_VEXTER_PRS = [104, 103, 102]
+VERIFIED_VEXTER_PR = 105
+VERIFIED_VEXTER_COMMIT = "3023ee3b44a6fbeab94d30f336435903ee8c8913"
+VERIFIED_VEXTER_MERGED_AT = "2026-03-28T17:10:57Z"
+SUPPORTING_VEXTER_PRS = [105, 104, 103, 102, 101]
+VERIFIED_VEXTER_PRS = [105, 104, 103]
 
 REQUIRED_FACE_NAMES = [
     "external_credential_source_face",
@@ -161,7 +161,7 @@ SUB_AGENT_SUMMARIES = (
     {
         "name": "Anscombe",
         "lines": [
-            "Reverified PR `#104` / merge commit `7a272b0e4367204397d6c4c87340365b35a599b8` as latest merged `main`, then traced the atomic current-pointer set that re-promotes refresh from the accepted PR `#104` regeneration baseline without inventing a pass claim or fabricating evidence.",
+            "Reverified PR `#105` / merge commit `3023ee3b44a6fbeab94d30f336435903ee8c8913` as latest merged `main`, then traced the atomic current-pointer set that keeps refresh current while preserving the accepted PR `#103` regeneration baseline without inventing a pass claim or fabricating evidence.",
             "Confirmed the summary, context, manifest, ledger, bundle metadata, README, and refresh handoff surfaces all agree that refresh is current, regeneration is the blocked next step, and retry-gate remains only the pass successor.",
             "Confirmed the refresh-side gap, canonical manifest, evidence preflight, and handoff mappings stay internally consistent so the canonical manifest remains template-only/honest and the preflight stays fail-closed.",
         ],
@@ -178,7 +178,7 @@ SUB_AGENT_SUMMARIES = (
         "name": "Parfit",
         "lines": [
             "The smallest safe change set is the refresh generator provenance and honesty update, the regenerated refresh-side current-pointer artifacts, and the regression expectations that pin repo-wide current-task truth.",
-            "Refresh should keep consuming the shared canonical external-evidence contract, manifest template, validator, and evidence preflight / reopen-readiness path from the current PR `#104` regeneration baseline, with the compatibility gap staying only as the legacy mirror / optional rerun.",
+            "Refresh should keep consuming the shared canonical external-evidence contract, manifest template, validator, and evidence preflight / reopen-readiness path from the current PR `#103` regeneration baseline, with the compatibility gap staying only as the legacy mirror / optional rerun.",
             "Merge readiness depends on rerunning the refresh path, rebuilding the proof bundle, validating the shared refresh/regeneration/retry-gate/evidence-preflight expectations, and finishing with full `python3.12 -m pytest -q`.",
         ],
     },
@@ -1312,16 +1312,16 @@ def main() -> None:
             "latest_vexter_pr": VERIFIED_VEXTER_PR,
             "latest_vexter_main_commit": VERIFIED_VEXTER_COMMIT,
             "latest_recent_vexter_prs": SUPPORTING_VEXTER_PRS,
-            "vexter_pr_100_merged_at": "2026-03-28T15:28:29Z",
-            "vexter_pr_100_closed_at": "2026-03-28T15:28:29Z",
             "vexter_pr_101_merged_at": "2026-03-28T15:43:01Z",
             "vexter_pr_101_closed_at": "2026-03-28T15:43:01Z",
             "vexter_pr_102_merged_at": "2026-03-28T15:57:58Z",
             "vexter_pr_102_closed_at": "2026-03-28T15:57:58Z",
             "vexter_pr_103_merged_at": "2026-03-28T16:10:00Z",
             "vexter_pr_103_closed_at": "2026-03-28T16:10:00Z",
-            "vexter_pr_104_merged_at": VERIFIED_VEXTER_MERGED_AT,
-            "vexter_pr_104_closed_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_104_merged_at": "2026-03-28T16:35:23Z",
+            "vexter_pr_104_closed_at": "2026-03-28T16:35:23Z",
+            "vexter_pr_105_merged_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_105_closed_at": VERIFIED_VEXTER_MERGED_AT,
         }
     )
     context_pack["evidence"]["demo_forward_supervised_run_retry_gate_attestation_refresh"] = {

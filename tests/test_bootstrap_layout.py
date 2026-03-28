@@ -1034,9 +1034,10 @@ def test_task_ledger_is_valid_jsonl() -> None:
             "codex/attestation-record-pack-regeneration-after-pr103",
             "codex/attestation-refresh-after-pr95",
             "codex/attestation-refresh-after-pr97",
-            "codex/attestation-refresh-after-pr99",
+        "codex/attestation-refresh-after-pr99",
         "codex/attestation-refresh-after-pr100",
         "codex/attestation-refresh-after-pr104",
+        "codex/attestation-refresh-after-pr105-rerun",
             }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",

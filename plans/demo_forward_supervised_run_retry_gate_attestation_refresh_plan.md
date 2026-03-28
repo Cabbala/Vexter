@@ -1,7 +1,7 @@
 # Demo Forward Supervised Run Retry Gate Attestation Refresh Plan
 
 ## Implementation Steps
-1. Reverify the latest GitHub-visible Vexter `main` state at PR `#99` merge commit `4df9837e630e175af3b06f99f79fce2689822bd0`.
+1. Reverify the latest GitHub-visible Vexter `main` state at PR `#100` merge commit `9f7673814f1d2ca5ee5b1a8bd4cc77aa2a0ac4e1`.
 2. Accept attestation record-pack regeneration as the blocked baseline current source of truth.
 3. Keep refresh consuming the shared canonical outside-repo evidence manifest template, contract, validator, and unified evidence preflight / reopen-readiness surface from the regeneration baseline.
 4. Regenerate the explicit next-human-pass checklist plus template-only false-path explanation from the canonical preflight blockers.

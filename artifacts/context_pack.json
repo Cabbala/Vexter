@@ -7,7 +7,7 @@
     "retry_gate_attestation_record_pack_regeneration_accepted_as_baseline": true,
     "retry_gate_attestation_refresh_repromoted_current": true
   },
-  "bundle_source": "/Users/cabbala/Downloads/vexter_attestation_refresh_bundle_latest.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_next_task_bundle_post_main_15af697b.tar.gz",
   "current_contract": {
     "comparison_source_of_truth": "comparison_closed_out",
     "promoted_live_winner_mode": "derived",
@@ -226,14 +226,14 @@
   },
   "evidence": {
     "github_latest": {
-      "latest_vexter_pr": 99,
-      "latest_vexter_main_commit": "4df9837e630e175af3b06f99f79fce2689822bd0",
+      "latest_vexter_pr": 100,
+      "latest_vexter_main_commit": "9f7673814f1d2ca5ee5b1a8bd4cc77aa2a0ac4e1",
       "latest_recent_vexter_prs": [
+        100,
         99,
         98,
         97,
-        96,
-        95
+        96
       ],
       "vexter_pr_65_merged_at": "2026-03-26T19:30:46Z",
       "vexter_pr_64_merged_at": "2026-03-26T18:53:07Z",
@@ -300,7 +300,9 @@
       "vexter_pr_98_merged_at": "2026-03-28T14:03:19Z",
       "vexter_pr_98_closed_at": "2026-03-28T14:03:19Z",
       "vexter_pr_99_merged_at": "2026-03-28T14:19:59Z",
-      "vexter_pr_99_closed_at": "2026-03-28T14:19:59Z"
+      "vexter_pr_99_closed_at": "2026-03-28T14:19:59Z",
+      "vexter_pr_100_merged_at": "2026-03-28T15:28:29Z",
+      "vexter_pr_100_closed_at": "2026-03-28T15:28:29Z"
     },
     "transport_livepaper_observability_ci_gate": {
       "report": "artifacts/reports/task-007-transport-livepaper-observability-ci-gate-report.md",
@@ -1331,7 +1333,7 @@
         {
           "name": "Anscombe",
           "lines": [
-            "Reverified PR `#99` / merge commit `4df9837e630e175af3b06f99f79fce2689822bd0` as latest merged `main`, then traced the atomic current-pointer set that flips the repo from the PR #99 regeneration baseline back to refresh without inventing a pass claim or fabricating evidence.",
+            "Reverified PR `#100` / merge commit `9f7673814f1d2ca5ee5b1a8bd4cc77aa2a0ac4e1` as latest merged `main`, then traced the atomic current-pointer set that keeps refresh current from the accepted PR `#99` regeneration baseline without inventing a pass claim or fabricating evidence.",
             "Confirmed the summary, context, manifest, ledger, bundle metadata, README, and refresh handoff surfaces all agree that refresh is current, regeneration is the blocked next step, and retry-gate remains only the pass successor.",
             "Confirmed the refresh-side gap, canonical manifest, evidence preflight, and handoff mappings stay internally consistent so the canonical manifest remains template-only/honest and the preflight stays fail-closed."
           ]

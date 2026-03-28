@@ -89,7 +89,7 @@ def test_demo_forward_supervised_run_retry_gate_attestation_refresh_artifacts_ar
     assert (
         manifest["bundle_source"]
         == context["bundle_source"]
-        == "/Users/cabbala/Downloads/vexter_next_task_bundle_post_pr100_11d3dc31.tar.gz"
+        == "/Users/cabbala/Downloads/vexter_next_task_bundle_post_pr100_regen_74edd810.tar.gz"
     )
     assert manifest["next_task"]["id"] == context["next_task"]["id"] == ledger["next_task_id"]
     assert (
@@ -151,10 +151,10 @@ def test_demo_forward_supervised_run_retry_gate_attestation_refresh_artifacts_ar
     refresh_boundary = context["evidence"]["demo_forward_supervised_run_retry_gate_attestation_refresh"][
         "attestation_refresh_boundary"
     ]
-    assert context["evidence"]["github_latest"]["latest_recent_vexter_prs"] == [101, 100, 99, 98, 97]
+    assert context["evidence"]["github_latest"]["latest_recent_vexter_prs"] == [102, 101, 100, 99, 98]
     assert (
-        context["evidence"]["github_latest"]["vexter_pr_101_merged_at"]
-        == "2026-03-28T15:43:01Z"
+        context["evidence"]["github_latest"]["vexter_pr_102_merged_at"]
+        == "2026-03-28T15:57:58Z"
     )
     refresh_evidence = context["evidence"]["demo_forward_supervised_run_retry_gate_attestation_refresh"]
     assert refresh_evidence["attestation_refresh_surface_current"] is False

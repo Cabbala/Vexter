@@ -1,6 +1,6 @@
 {
   "bundle_path": "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration.tar.gz",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_next_task_bundle_post_pr100_11d3dc31.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_next_task_bundle_post_pr100_regen_74edd810.tar.gz",
   "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION",
   "status": "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked",
   "summary": "artifacts/summary.md",

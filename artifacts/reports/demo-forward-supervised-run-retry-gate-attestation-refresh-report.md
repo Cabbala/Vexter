@@ -1,16 +1,16 @@
 # Demo Forward Supervised Run Retry Gate Attestation Refresh Report
 
 ## Verified GitHub State
-- Reverified latest GitHub-visible Vexter `main` at merged PR `#92` merge commit `6252cef32c652d33f4c7374e61913f34d879854c` on `2026-03-27T22:07:42Z`.
+- Reverified latest GitHub-visible Vexter `main` at merged PR `#95` merge commit `6f9c6053ef6e9509fa65b57866c956363fde50f3` on `2026-03-27T23:26:51Z`.
 - Dexter stayed pinned at merged PR `#3` commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`.
 - Frozen Mew-X stayed pinned at `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`.
-- Report timestamp: `2026-03-27T22:23:19Z`.
+- Report timestamp: `2026-03-28T03:26:39Z`.
 
 ## Baseline Accepted
 - Accepted `supervised_run_retry_gate_attestation_record_pack_regeneration_blocked` as the bounded baseline current source of truth.
 - Did not claim regenerated record-pack success, retry-gate reopen, retry execution success, funded live access, or any Mew-X seam expansion.
 - Promoted one bounded attestation refresh lane as the new current source of truth for additional freshness ownership, triggers, and locator expectations on top of the regeneration baseline.
-- Replaced duplicated cross-lane blocker parsing with one canonical outside-repo evidence manifest, validator, and evidence preflight / compatibility gap surface shared by refresh and regeneration.
+- Kept refresh consuming the shared canonical outside-repo evidence manifest, validator, and evidence preflight / compatibility gap surfaces added by the earlier regeneration work instead of re-deriving blockers from older lane prose.
 
 ## Refresh Boundary
 - Dexter-only real demo slice
@@ -93,6 +93,6 @@
 - blocked refresh faces: `external_credential_source_face, venue_ref_face, account_ref_face, connectivity_profile_face, operator_owner_face, bounded_start_criteria_face, allowlist_symbol_lot_reconfirmed, manual_latched_stop_all_visibility_reconfirmed, terminal_snapshot_readability_reconfirmed`
 
 ## Honest Model
-- `PASS` only if every required face has explicit refresh ownership and freshness rules plus one current, fresh-enough regenerated locator sufficient to rerun record-pack regeneration and reopen retry-gate review honestly.
+- `PASS` only if every required face has explicit refresh ownership and freshness rules plus one current, fresh-enough, reviewable evidence locator sufficient to rerun record-pack regeneration and reopen retry-gate review honestly.
 - `FAIL/BLOCKED` if any face remains missing, stale, ambiguous, non-refreshable, or not usable enough for retry-gate review.
-- Current result remains `FAIL/BLOCKED` because the canonical manifest is `template_only`, the preflight status remains `blocked`, and the repo still does not point to current, fresh-enough, reviewer-readable regenerated locators for the required faces, so record-pack regeneration cannot yet be rerun honestly.
+- Current result remains `FAIL/BLOCKED` because the canonical manifest is `template_only`, the preflight status remains `blocked`, and the repo still does not point to current, fresh-enough, reviewer-readable evidence locators for the required faces, so record-pack regeneration cannot yet be rerun honestly.

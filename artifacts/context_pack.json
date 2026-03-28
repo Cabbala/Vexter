@@ -1,13 +1,13 @@
 {
   "background": {
-    "previous_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION",
-    "previous_task_state": "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked",
-    "previous_key_finding": "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked_on_missing_or_stale_regenerated_faces",
-    "previous_claim_boundary": "supervised_run_retry_gate_attestation_record_pack_regeneration_bounded",
-    "retry_gate_attestation_record_pack_regeneration_accepted_as_baseline": true,
-    "retry_gate_attestation_refresh_repromoted_current": true
+    "previous_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH",
+    "previous_task_state": "supervised_run_retry_gate_attestation_refresh_blocked",
+    "previous_key_finding": "supervised_run_retry_gate_attestation_refresh_blocked_on_missing_or_stale_fresh_evidence_locators",
+    "previous_claim_boundary": "supervised_run_retry_gate_attestation_refresh_bounded",
+    "retry_gate_attestation_refresh_accepted_as_baseline": true,
+    "retry_gate_attestation_record_pack_regeneration_promoted_current": true
   },
-  "bundle_source": "/Users/cabbala/Downloads/vexter_next_task_bundle_post_main_15af697b.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_next_task_bundle_post_pr100_11d3dc31.tar.gz",
   "current_contract": {
     "comparison_source_of_truth": "comparison_closed_out",
     "promoted_live_winner_mode": "derived",
@@ -163,23 +163,23 @@
     "demo_forward_retry_gate_external_evidence_preflight_summary_path": "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md"
   },
   "current_task": {
-    "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH",
+    "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION",
     "scope": [
-      "Reverify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X after attestation record-pack regeneration merged.",
-      "Accept attestation record-pack regeneration as the baseline current source of truth.",
-      "Keep refresh consuming the shared canonical non-secret outside-repo evidence manifest, validator, and evidence preflight / reopen-readiness path from the regeneration baseline.",
-      "Re-promote attestation refresh status, report, summary, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.",
-      "Make each required face explicit for refresh owner, refresh trigger, fresh locator shape, stale logic, and retry-gate usability from the canonical gap report.",
-      "Keep retry-gate review blocked until every required face has a current, fresh-enough, reviewable evidence locator."
+      "Reverify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X after attestation refresh merged.",
+      "Accept attestation refresh as the baseline current source of truth.",
+      "Keep consuming the shared canonical non-secret outside-repo evidence manifest template, contract, validator, and evidence preflight / reopen-readiness path for the remaining retry-gate blockers.",
+      "Promote attestation record-pack regeneration status, report, summary, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.",
+      "Make each required face explicit for regeneration owner, trigger, minimum regenerated locator shape, freshness inheritance or reset, and reviewability from the canonical gap report.",
+      "Keep retry-gate review blocked until every required face can regenerate from one current, fresh-enough, reviewable locator."
     ],
     "deliverables": [
       "README.md",
       "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_EXTERNAL_EVIDENCE_CONTRACT.md",
       "manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json",
-      "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_ATTESTATION_REFRESH.md",
-      "plans/demo_forward_supervised_run_retry_gate_attestation_refresh_plan.md",
-      "docs/demo_forward_supervised_run_retry_gate_attestation_refresh_checklist.md",
-      "docs/demo_forward_supervised_run_retry_gate_attestation_refresh_decision_surface.md",
+      "specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_ATTESTATION_RECORD_PACK_REGENERATION.md",
+      "plans/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_plan.md",
+      "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_checklist.md",
+      "docs/demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration_decision_surface.md",
       "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-check.json",
       "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md",
       "artifacts/proofs/demo-forward-supervised-run-retry-gate-evidence-preflight-summary.md",
@@ -187,19 +187,18 @@
       "artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md",
       "artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md",
       "scripts/run_demo_forward_supervised_run_retry_gate_evidence_preflight.py",
+      "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
       "tests/test_demo_forward_supervised_run_retry_gate_evidence_preflight.py",
       "tests/test_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
-      "tests/test_demo_forward_supervised_run_retry_gate_external_evidence_gap.py",
       "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack.py",
-      "tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
       "tests/test_demo_forward_supervised_run_retry_gate.py",
-      "tests/test_demo_forward_supervised_run_retry_gate_input_attestation.py",
       "tests/test_demo_forward_supervised_run_retry_gate_attestation_audit.py",
       "tests/test_demo_forward_supervised_run_retry_readiness.py",
+      "tests/test_demo_forward_supervised_run_retry_gate_external_evidence_gap.py",
       "tests/test_bootstrap_layout.py",
       "scripts/run_demo_forward_supervised_run_retry_gate_external_evidence_gap.py",
-      "scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py",
-      "scripts/export_attestation_refresh_closeout_bundle.sh",
+      "scripts/run_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py",
+      "scripts/export_attestation_record_pack_regeneration_closeout_bundle.sh",
       "scripts/build_proof_bundle.sh",
       "vexter/demo_readiness/__init__.py",
       "vexter/demo_readiness/external_evidence.py",
@@ -207,17 +206,17 @@
       "artifacts/context_pack.json",
       "artifacts/proof_bundle_manifest.json",
       "artifacts/task_ledger.jsonl",
-      "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh-report.md",
-      "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh-status.md",
-      "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/DETAILS.md",
-      "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/MIN_PROMPT.txt",
-      "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/CONTEXT.json",
-      "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/HANDOFF.md",
-      "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/SUBAGENTS.md",
-      "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-refresh/subagent_summary.md",
-      "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-check.json",
-      "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-refresh-summary.md",
-      "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-refresh.tar.gz"
+      "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-report.md",
+      "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-status.md",
+      "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/DETAILS.md",
+      "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/MIN_PROMPT.txt",
+      "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/CONTEXT.json",
+      "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/HANDOFF.md",
+      "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/SUBAGENTS.md",
+      "artifacts/reports/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration/subagent_summary.md",
+      "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-check.json",
+      "artifacts/proofs/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration-summary.md",
+      "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration.tar.gz"
     ],
     "frozen_source_commits": {
       "dexter": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
@@ -226,14 +225,14 @@
   },
   "evidence": {
     "github_latest": {
-      "latest_vexter_pr": 100,
-      "latest_vexter_main_commit": "9f7673814f1d2ca5ee5b1a8bd4cc77aa2a0ac4e1",
+      "latest_vexter_pr": 101,
+      "latest_vexter_main_commit": "4fbc10b57295c1eb24b63049e0f5b38511ded6d4",
       "latest_recent_vexter_prs": [
+        101,
         100,
         99,
         98,
-        97,
-        96
+        97
       ],
       "vexter_pr_65_merged_at": "2026-03-26T19:30:46Z",
       "vexter_pr_64_merged_at": "2026-03-26T18:53:07Z",
@@ -302,7 +301,9 @@
       "vexter_pr_99_merged_at": "2026-03-28T14:19:59Z",
       "vexter_pr_99_closed_at": "2026-03-28T14:19:59Z",
       "vexter_pr_100_merged_at": "2026-03-28T15:28:29Z",
-      "vexter_pr_100_closed_at": "2026-03-28T15:28:29Z"
+      "vexter_pr_100_closed_at": "2026-03-28T15:28:29Z",
+      "vexter_pr_101_merged_at": "2026-03-28T15:43:01Z",
+      "vexter_pr_101_closed_at": "2026-03-28T15:43:01Z"
     },
     "transport_livepaper_observability_ci_gate": {
       "report": "artifacts/reports/task-007-transport-livepaper-observability-ci-gate-report.md",
@@ -1286,7 +1287,7 @@
       "claim_boundary": "supervised_run_retry_gate_attestation_refresh_bounded",
       "task_state": "supervised_run_retry_gate_attestation_refresh_blocked",
       "run_outcome": "FAIL/BLOCKED",
-      "attestation_refresh_surface_current": true,
+      "attestation_refresh_surface_current": false,
       "preferred_next_step": "supervised_run_retry_gate_attestation_record_pack_regeneration",
       "refresh_pass_successor": "supervised_run_retry_gate",
       "attestation_refresh_boundary": {
@@ -1658,7 +1659,7 @@
       "claim_boundary": "supervised_run_retry_gate_attestation_record_pack_regeneration_bounded",
       "task_state": "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked",
       "run_outcome": "FAIL/BLOCKED",
-      "attestation_record_pack_regeneration_surface_current": false,
+      "attestation_record_pack_regeneration_surface_current": true,
       "preferred_next_step": "supervised_run_retry_gate_attestation_refresh",
       "regeneration_pass_successor": "supervised_run_retry_gate",
       "attestation_record_pack_regeneration_boundary": {
@@ -1705,7 +1706,7 @@
         {
           "name": "Anscombe",
           "lines": [
-            "Reverified PR `#98` / merge commit `51d18d2fed3795db7741fe604f0e5af28814e4c6` as latest merged `main`, then flipped the repo-level current pointers back from the PR #98 refresh baseline to regeneration without inventing a pass claim or fabricating evidence.",
+            "Reverified PR `#101` / merge commit `4fbc10b57295c1eb24b63049e0f5b38511ded6d4` as latest merged `main`, then flipped the repo-level current pointers back from the PR #100 refresh baseline to regeneration without inventing a pass claim or fabricating evidence.",
             "Checked the atomic current-pointer set across summary, context, manifest, ledger, bundle metadata, README, and handoff surfaces so regeneration is current, refresh is the blocked next step, and retry-gate remains only the pass successor.",
             "Rechecked the regeneration-side mapping against the shared canonical manifest, evidence preflight, and compatibility gap outputs so the manifest stays template-only and honest while the preflight remains fail-closed."
           ]
@@ -1722,7 +1723,7 @@
           "name": "Parfit",
           "lines": [
             "The smallest safe change set is the regeneration generator provenance and wording refresh, the generated current-pointer outputs, and the regression expectations that still pinned refresh as the repo-wide current lane.",
-            "Regeneration should keep consuming the shared canonical contract, manifest template, compatibility gap, and evidence-preflight outputs from the PR `#98` refresh baseline instead of widening or reintroducing those surfaces.",
+            "Regeneration should keep consuming the shared canonical contract, manifest template, compatibility gap, and evidence-preflight outputs from the PR `#100` refresh baseline instead of widening or reintroducing those surfaces.",
             "Validation should stay bounded: rerun the canonical evidence preflight, rerun regeneration from the refresh baseline, rebuild the proof bundle, cover the shared refresh/regeneration/retry-gate/evidence-preflight expectations, then finish with full pytest.",
             "Merge readiness depends on the manifest staying `template_only`, the preflight staying fail-closed, the proof bundle matching the regenerated outputs, and the final exported tarball carrying the same current-lane truth."
           ]
@@ -2057,12 +2058,12 @@
     ]
   },
   "next_task": {
-    "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION",
-    "state": "ready_for_attestation_record_pack_regeneration",
+    "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH",
+    "state": "additional_attestation_refresh_required_for_record_pack_regeneration",
     "rationale": [
-      "Attestation refresh is now the current source of truth for additional freshness ownership, triggers, and evidence-locator requirements.",
+      "Attestation record-pack regeneration is now the current source of truth for regenerated locator inheritance and reviewable pack surfaces.",
       "The canonical external-evidence manifest now makes every remaining retry-gate blocker explicit, but one or more faces still remain template-only, incomplete, stale, or non-reviewable.",
-      "Rerun the current attestation record-pack regeneration from refreshed inputs before any retry-gate recheck is considered."
+      "Collect additional fresh bounded-window locators in attestation refresh before any retry-gate recheck is considered."
     ],
     "pass_successor": {
       "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",

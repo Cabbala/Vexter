@@ -131,7 +131,7 @@ PROOF_SUMMARY_PATH = (
 BUNDLE_PATH = (
     "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration.tar.gz"
 )
-BUNDLE_SOURCE = "/Users/cabbala/Downloads/vexter_attestation_record_pack_regeneration_bundle_latest.tar.gz"
+BUNDLE_SOURCE = "/Users/cabbala/Downloads/vexter_next_task_bundle_post_pr100_11d3dc31.tar.gz"
 
 TASK_ID = "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
 TASK_STATUS = "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked"
@@ -150,11 +150,11 @@ DECISION = "retry_gate_review_blocked_pending_current_attestation_record_pack_re
 
 VERIFIED_DEXTER_COMMIT = "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938"
 VERIFIED_MEWX_COMMIT = "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
-VERIFIED_VEXTER_PR = 98
-VERIFIED_VEXTER_COMMIT = "51d18d2fed3795db7741fe604f0e5af28814e4c6"
-VERIFIED_VEXTER_MERGED_AT = "2026-03-28T14:03:19Z"
-SUPPORTING_VEXTER_PRS = [98, 97, 96, 95, 93]
-VERIFIED_VEXTER_PRS = [98, 97, 96]
+VERIFIED_VEXTER_PR = 101
+VERIFIED_VEXTER_COMMIT = "4fbc10b57295c1eb24b63049e0f5b38511ded6d4"
+VERIFIED_VEXTER_MERGED_AT = "2026-03-28T15:43:01Z"
+SUPPORTING_VEXTER_PRS = [101, 100, 99, 98, 97]
+VERIFIED_VEXTER_PRS = [101, 100, 99]
 
 REQUIRED_FACE_NAMES = [
     "external_credential_source_face",
@@ -172,7 +172,7 @@ SUB_AGENT_SUMMARIES = (
     {
         "name": "Anscombe",
         "lines": [
-            "Reverified PR `#98` / merge commit `51d18d2fed3795db7741fe604f0e5af28814e4c6` as latest merged `main`, then flipped the repo-level current pointers back from the PR #98 refresh baseline to regeneration without inventing a pass claim or fabricating evidence.",
+            "Reverified PR `#101` / merge commit `4fbc10b57295c1eb24b63049e0f5b38511ded6d4` as latest merged `main`, then flipped the repo-level current pointers back from the PR #100 refresh baseline to regeneration without inventing a pass claim or fabricating evidence.",
             "Checked the atomic current-pointer set across summary, context, manifest, ledger, bundle metadata, README, and handoff surfaces so regeneration is current, refresh is the blocked next step, and retry-gate remains only the pass successor.",
             "Rechecked the regeneration-side mapping against the shared canonical manifest, evidence preflight, and compatibility gap outputs so the manifest stays template-only and honest while the preflight remains fail-closed.",
         ],
@@ -189,7 +189,7 @@ SUB_AGENT_SUMMARIES = (
         "name": "Parfit",
         "lines": [
             "The smallest safe change set is the regeneration generator provenance and wording refresh, the generated current-pointer outputs, and the regression expectations that still pinned refresh as the repo-wide current lane.",
-            "Regeneration should keep consuming the shared canonical contract, manifest template, compatibility gap, and evidence-preflight outputs from the PR `#98` refresh baseline instead of widening or reintroducing those surfaces.",
+            "Regeneration should keep consuming the shared canonical contract, manifest template, compatibility gap, and evidence-preflight outputs from the PR `#100` refresh baseline instead of widening or reintroducing those surfaces.",
             "Validation should stay bounded: rerun the canonical evidence preflight, rerun regeneration from the refresh baseline, rebuild the proof bundle, cover the shared refresh/regeneration/retry-gate/evidence-preflight expectations, then finish with full pytest.",
             "Merge readiness depends on the manifest staying `template_only`, the preflight staying fail-closed, the proof bundle matching the regenerated outputs, and the final exported tarball carrying the same current-lane truth.",
         ],
@@ -580,7 +580,7 @@ def build_proof_summary(gap_payload: dict[str, object], preflight_payload: dict[
     return f"""# {TASK_ID} Proof Summary
 
 - Verified latest GitHub-visible Vexter `main` at PR `#{VERIFIED_VEXTER_PR}` merge commit `{VERIFIED_VEXTER_COMMIT}`.
-- Accepted attestation refresh from merged PR `#98` as the bounded baseline current source of truth.
+- Accepted attestation refresh from merged PR `#101` as the bounded baseline current source of truth.
 - Promoted attestation record-pack regeneration as the current operator-visible lane for regeneration owner, trigger, regenerated locator shape, freshness inheritance, and reviewability.
 - Wired regeneration to the canonical external-evidence contract at `{CONTRACT_SPEC_REL_PATH}`, preflight report `{PREFLIGHT_REPORT_REL_PATH}`, and legacy gap report `{GAP_REPORT_REL_PATH}`.
 - Held the result at `FAIL/BLOCKED` because the manifest status is `{gap_payload['manifest']['status']}`, the preflight status is `{preflight_payload['reopen_readiness']['status']}`, the template-only false path remains `{preflight_payload['reopen_readiness']['template_only_false_path']}`, and current regenerated faces are still missing or non-reviewable.
@@ -1406,8 +1406,8 @@ def main() -> None:
             "latest_vexter_pr": VERIFIED_VEXTER_PR,
             "latest_vexter_main_commit": VERIFIED_VEXTER_COMMIT,
             "latest_recent_vexter_prs": SUPPORTING_VEXTER_PRS,
-            "vexter_pr_98_merged_at": VERIFIED_VEXTER_MERGED_AT,
-            "vexter_pr_98_closed_at": VERIFIED_VEXTER_MERGED_AT,
+            f"vexter_pr_{VERIFIED_VEXTER_PR}_merged_at": VERIFIED_VEXTER_MERGED_AT,
+            f"vexter_pr_{VERIFIED_VEXTER_PR}_closed_at": VERIFIED_VEXTER_MERGED_AT,
         }
     )
     context_pack["evidence"]["demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration"] = {

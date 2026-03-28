@@ -74,43 +74,43 @@ def test_demo_forward_supervised_run_retry_gate_attestation_refresh_artifacts_ar
     assert manifest["task_id"] == context["current_task"]["id"] == ledger["task_id"]
     assert (
         manifest["task_id"]
-        == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
+        == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
     )
     assert (
         manifest["status"]
         == ledger["status"]
-        == "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked"
+        == "supervised_run_retry_gate_attestation_refresh_blocked"
     )
     assert (
         manifest["bundle_path"]
         == ledger["artifact_bundle"]
-        == "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration.tar.gz"
+        == "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-refresh.tar.gz"
     )
     assert (
         manifest["bundle_source"]
         == context["bundle_source"]
-        == "/Users/cabbala/Downloads/vexter_next_task_bundle_post_pr100_regen_74edd810 (1).tar.gz"
+        == "/Users/cabbala/Downloads/vexter_next_task_bundle_post_pr103_retry_ff9c2e2f.tar.gz"
     )
     assert manifest["next_task"]["id"] == context["next_task"]["id"] == ledger["next_task_id"]
     assert (
         manifest["next_task"]["id"]
-        == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
+        == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
     )
     assert manifest["next_task"]["state"] == context["next_task"]["state"] == ledger["next_task_state"]
     assert (
         manifest["next_task"]["state"]
-        == "additional_attestation_refresh_required_for_record_pack_regeneration"
+        == "ready_for_attestation_record_pack_regeneration"
     )
     assert manifest["next_task"]["pass_successor"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE"
     assert manifest["next_task"]["pass_successor"]["lane"] == "supervised_run_retry_gate"
 
     assert proof["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
-    assert proof["verified_github"]["latest_vexter_pr"] == 100
+    assert proof["verified_github"]["latest_vexter_pr"] == 104
     assert (
         proof["verified_github"]["latest_vexter_main_commit"]
-        == "9f7673814f1d2ca5ee5b1a8bd4cc77aa2a0ac4e1"
+        == "7a272b0e4367204397d6c4c87340365b35a599b8"
     )
-    assert proof["verified_github"]["latest_vexter_merged_at"] == "2026-03-28T15:28:29Z"
+    assert proof["verified_github"]["latest_vexter_merged_at"] == "2026-03-28T16:35:23Z"
     assert proof["task_result"]["outcome"] == "FAIL/BLOCKED"
     assert (
         proof["task_result"]["recommended_next_step"]
@@ -151,18 +151,18 @@ def test_demo_forward_supervised_run_retry_gate_attestation_refresh_artifacts_ar
     refresh_boundary = context["evidence"]["demo_forward_supervised_run_retry_gate_attestation_refresh"][
         "attestation_refresh_boundary"
     ]
-    assert context["evidence"]["github_latest"]["latest_recent_vexter_prs"] == [103, 102, 101, 100, 99]
+    assert context["evidence"]["github_latest"]["latest_recent_vexter_prs"] == [104, 103, 102, 101, 100]
     assert (
-        context["evidence"]["github_latest"]["vexter_pr_103_merged_at"]
-        == "2026-03-28T16:10:00Z"
+        context["evidence"]["github_latest"]["vexter_pr_104_merged_at"]
+        == "2026-03-28T16:35:23Z"
     )
     refresh_evidence = context["evidence"]["demo_forward_supervised_run_retry_gate_attestation_refresh"]
-    assert refresh_evidence["attestation_refresh_surface_current"] is False
+    assert refresh_evidence["attestation_refresh_surface_current"] is True
     assert (
         context["evidence"]["demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration"][
             "attestation_record_pack_regeneration_surface_current"
         ]
-        is True
+        is False
     )
     assert refresh_boundary["demo_source"] == "dexter"
     assert refresh_boundary["execution_mode"] == "paper_live"

@@ -1,6 +1,6 @@
 # DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH Proof Summary
 
-- Verified latest GitHub-visible Vexter `main` at PR `#99` merge commit `4df9837e630e175af3b06f99f79fce2689822bd0`.
+- Verified latest GitHub-visible Vexter `main` at PR `#100` merge commit `9f7673814f1d2ca5ee5b1a8bd4cc77aa2a0ac4e1`.
 - Accepted attestation record-pack regeneration as the bounded baseline current source of truth.
 - Re-promoted attestation refresh as the current operator-visible lane for additional freshness ownership, triggers, fresh locator shape, stale rules, and retry-gate usability.
 - Revalidated refresh against the shared canonical external-evidence contract at `specs/DEMO_FORWARD_SUPERVISED_RUN_RETRY_GATE_EXTERNAL_EVIDENCE_CONTRACT.md`, manifest template `manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json`, preflight report `artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md`, and legacy compatibility gap report `artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md`.

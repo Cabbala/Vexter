@@ -122,7 +122,7 @@ PROOF_SUMMARY_PATH = (
 )
 
 BUNDLE_PATH = "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-refresh.tar.gz"
-BUNDLE_SOURCE = "/Users/cabbala/Downloads/vexter_attestation_refresh_bundle_latest.tar.gz"
+BUNDLE_SOURCE = "/Users/cabbala/Downloads/vexter_next_task_bundle_post_main_15af697b.tar.gz"
 
 TASK_ID = "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
 TASK_STATUS = "supervised_run_retry_gate_attestation_refresh_blocked"
@@ -139,11 +139,11 @@ DECISION = "retry_gate_review_blocked_pending_fresh_attestation_refresh_and_reco
 
 VERIFIED_DEXTER_COMMIT = "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938"
 VERIFIED_MEWX_COMMIT = "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
-VERIFIED_VEXTER_PR = 99
-VERIFIED_VEXTER_COMMIT = "4df9837e630e175af3b06f99f79fce2689822bd0"
-VERIFIED_VEXTER_MERGED_AT = "2026-03-28T14:19:59Z"
-SUPPORTING_VEXTER_PRS = [99, 98, 97, 96, 95]
-VERIFIED_VEXTER_PRS = [99, 98, 97]
+VERIFIED_VEXTER_PR = 100
+VERIFIED_VEXTER_COMMIT = "9f7673814f1d2ca5ee5b1a8bd4cc77aa2a0ac4e1"
+VERIFIED_VEXTER_MERGED_AT = "2026-03-28T15:28:29Z"
+SUPPORTING_VEXTER_PRS = [100, 99, 98, 97, 96]
+VERIFIED_VEXTER_PRS = [100, 99, 98]
 
 REQUIRED_FACE_NAMES = [
     "external_credential_source_face",
@@ -161,7 +161,7 @@ SUB_AGENT_SUMMARIES = (
     {
         "name": "Anscombe",
         "lines": [
-            "Reverified PR `#99` / merge commit `4df9837e630e175af3b06f99f79fce2689822bd0` as latest merged `main`, then traced the atomic current-pointer set that flips the repo from the PR #99 regeneration baseline back to refresh without inventing a pass claim or fabricating evidence.",
+            "Reverified PR `#100` / merge commit `9f7673814f1d2ca5ee5b1a8bd4cc77aa2a0ac4e1` as latest merged `main`, then traced the atomic current-pointer set that keeps refresh current from the accepted PR `#99` regeneration baseline without inventing a pass claim or fabricating evidence.",
             "Confirmed the summary, context, manifest, ledger, bundle metadata, README, and refresh handoff surfaces all agree that refresh is current, regeneration is the blocked next step, and retry-gate remains only the pass successor.",
             "Confirmed the refresh-side gap, canonical manifest, evidence preflight, and handoff mappings stay internally consistent so the canonical manifest remains template-only/honest and the preflight stays fail-closed.",
         ],
@@ -1312,16 +1312,16 @@ def main() -> None:
             "latest_vexter_pr": VERIFIED_VEXTER_PR,
             "latest_vexter_main_commit": VERIFIED_VEXTER_COMMIT,
             "latest_recent_vexter_prs": SUPPORTING_VEXTER_PRS,
-            "vexter_pr_95_merged_at": "2026-03-27T23:26:51Z",
-            "vexter_pr_95_closed_at": "2026-03-27T23:26:51Z",
             "vexter_pr_96_merged_at": "2026-03-28T03:29:12Z",
             "vexter_pr_96_closed_at": "2026-03-28T03:29:12Z",
             "vexter_pr_97_merged_at": "2026-03-28T13:40:06Z",
             "vexter_pr_97_closed_at": "2026-03-28T13:40:06Z",
             "vexter_pr_98_merged_at": "2026-03-28T14:03:19Z",
             "vexter_pr_98_closed_at": "2026-03-28T14:03:19Z",
-            "vexter_pr_99_merged_at": VERIFIED_VEXTER_MERGED_AT,
-            "vexter_pr_99_closed_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_99_merged_at": "2026-03-28T14:19:59Z",
+            "vexter_pr_99_closed_at": "2026-03-28T14:19:59Z",
+            "vexter_pr_100_merged_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_100_closed_at": VERIFIED_VEXTER_MERGED_AT,
         }
     )
     context_pack["evidence"]["demo_forward_supervised_run_retry_gate_attestation_refresh"] = {

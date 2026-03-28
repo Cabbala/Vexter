@@ -89,7 +89,7 @@ def test_demo_forward_supervised_run_retry_gate_attestation_refresh_artifacts_ar
     assert (
         manifest["bundle_source"]
         == context["bundle_source"]
-        == "/Users/cabbala/Downloads/vexter_attestation_refresh_bundle_latest.tar.gz"
+        == "/Users/cabbala/Downloads/vexter_next_task_bundle_post_main_15af697b.tar.gz"
     )
     assert manifest["next_task"]["id"] == context["next_task"]["id"] == ledger["next_task_id"]
     assert (
@@ -105,12 +105,12 @@ def test_demo_forward_supervised_run_retry_gate_attestation_refresh_artifacts_ar
     assert manifest["next_task"]["pass_successor"]["lane"] == "supervised_run_retry_gate"
 
     assert proof["task_id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
-    assert proof["verified_github"]["latest_vexter_pr"] == 99
+    assert proof["verified_github"]["latest_vexter_pr"] == 100
     assert (
         proof["verified_github"]["latest_vexter_main_commit"]
-        == "4df9837e630e175af3b06f99f79fce2689822bd0"
+        == "9f7673814f1d2ca5ee5b1a8bd4cc77aa2a0ac4e1"
     )
-    assert proof["verified_github"]["latest_vexter_merged_at"] == "2026-03-28T14:19:59Z"
+    assert proof["verified_github"]["latest_vexter_merged_at"] == "2026-03-28T15:28:29Z"
     assert proof["task_result"]["outcome"] == "FAIL/BLOCKED"
     assert (
         proof["task_result"]["recommended_next_step"]
@@ -151,10 +151,10 @@ def test_demo_forward_supervised_run_retry_gate_attestation_refresh_artifacts_ar
     refresh_boundary = context["evidence"]["demo_forward_supervised_run_retry_gate_attestation_refresh"][
         "attestation_refresh_boundary"
     ]
-    assert context["evidence"]["github_latest"]["latest_recent_vexter_prs"] == [99, 98, 97, 96, 95]
+    assert context["evidence"]["github_latest"]["latest_recent_vexter_prs"] == [100, 99, 98, 97, 96]
     assert (
-        context["evidence"]["github_latest"]["vexter_pr_99_merged_at"]
-        == "2026-03-28T14:19:59Z"
+        context["evidence"]["github_latest"]["vexter_pr_100_merged_at"]
+        == "2026-03-28T15:28:29Z"
     )
     refresh_evidence = context["evidence"]["demo_forward_supervised_run_retry_gate_attestation_refresh"]
     assert refresh_evidence["attestation_refresh_surface_current"] is True

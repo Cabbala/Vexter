@@ -1,16 +1,16 @@
 # Demo Forward Supervised Run Retry Gate Attestation Refresh Report
 
 ## Verified GitHub State
-- Reverified latest GitHub-visible Vexter `main` at merged PR `#97` merge commit `1bde9ef2b19da11e8b61772e560dc3d60874c461` on `2026-03-28T13:40:06Z`.
+- Reverified latest GitHub-visible Vexter `main` at merged PR `#99` merge commit `4df9837e630e175af3b06f99f79fce2689822bd0` on `2026-03-28T14:19:59Z`.
 - Dexter stayed pinned at merged PR `#3` commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`.
 - Frozen Mew-X stayed pinned at `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`.
-- Report timestamp: `2026-03-28T13:58:32Z`.
+- Report timestamp: `2026-03-28T15:24:50Z`.
 
 ## Baseline Accepted
 - Accepted `supervised_run_retry_gate_attestation_record_pack_regeneration_blocked` as the bounded baseline current source of truth.
 - Did not claim regenerated record-pack success, retry-gate reopen, retry execution success, funded live access, or any Mew-X seam expansion.
 - Promoted one bounded attestation refresh lane as the new current source of truth for additional freshness ownership, triggers, and locator expectations on top of the regeneration baseline.
-- Kept refresh consuming the shared canonical outside-repo evidence manifest, validator, and evidence preflight / compatibility gap surfaces added by the earlier regeneration work instead of re-deriving blockers from older lane prose.
+- Kept refresh consuming the shared canonical external-evidence contract, manifest template, validator, and evidence preflight / reopen-readiness path added by the earlier regeneration work, while leaving the compatibility gap as the legacy mirror / optional rerun instead of re-deriving blockers from older lane prose.
 
 ## Refresh Boundary
 - Dexter-only real demo slice

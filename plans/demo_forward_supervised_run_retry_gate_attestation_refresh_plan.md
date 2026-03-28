@@ -1,7 +1,7 @@
 # Demo Forward Supervised Run Retry Gate Attestation Refresh Plan
 
 ## Implementation Steps
-1. Reverify the latest GitHub-visible Vexter `main` state at PR `#97` merge commit `1bde9ef2b19da11e8b61772e560dc3d60874c461`.
+1. Reverify the latest GitHub-visible Vexter `main` state at PR `#99` merge commit `4df9837e630e175af3b06f99f79fce2689822bd0`.
 2. Accept attestation record-pack regeneration as the blocked baseline current source of truth.
 3. Keep refresh consuming the shared canonical outside-repo evidence manifest template, contract, validator, and unified evidence preflight / reopen-readiness surface from the regeneration baseline.
 4. Regenerate the explicit next-human-pass checklist plus template-only false-path explanation from the canonical preflight blockers.
@@ -34,5 +34,6 @@
 ## Validation
 - generate the canonical evidence preflight with `python3.12 scripts/run_demo_forward_supervised_run_retry_gate_evidence_preflight.py`
 - generate the lane with `python3.12 scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py`
+- verify pointer-sensitive shared surfaces with `python3.12 -m pytest -q tests/test_demo_forward_supervised_run_retry_gate_attestation_refresh.py tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py tests/test_demo_forward_supervised_run_retry_gate.py tests/test_demo_forward_supervised_run_retry_gate_evidence_preflight.py tests/test_demo_forward_supervised_run_retry_gate_external_evidence_gap.py`
 - rebuild the tarball with `./scripts/build_proof_bundle.sh`
-- verify shared regression expectations with `pytest -q`
+- finish with `python3.12 -m pytest -q`

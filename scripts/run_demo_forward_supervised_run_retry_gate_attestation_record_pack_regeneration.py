@@ -150,11 +150,11 @@ DECISION = "retry_gate_review_blocked_pending_current_attestation_record_pack_re
 
 VERIFIED_DEXTER_COMMIT = "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938"
 VERIFIED_MEWX_COMMIT = "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
-VERIFIED_VEXTER_PR = 96
-VERIFIED_VEXTER_COMMIT = "c6d7ba697045f4a7aee93580ee9de57fec877a39"
-VERIFIED_VEXTER_MERGED_AT = "2026-03-28T03:29:12Z"
-SUPPORTING_VEXTER_PRS = [96, 95, 93, 92, 91]
-VERIFIED_VEXTER_PRS = [96, 95, 93]
+VERIFIED_VEXTER_PR = 98
+VERIFIED_VEXTER_COMMIT = "51d18d2fed3795db7741fe604f0e5af28814e4c6"
+VERIFIED_VEXTER_MERGED_AT = "2026-03-28T14:03:19Z"
+SUPPORTING_VEXTER_PRS = [98, 97, 96, 95, 93]
+VERIFIED_VEXTER_PRS = [98, 97, 96]
 
 REQUIRED_FACE_NAMES = [
     "external_credential_source_face",
@@ -172,9 +172,9 @@ SUB_AGENT_SUMMARIES = (
     {
         "name": "Anscombe",
         "lines": [
-            "Reverified PR `#96` / merge commit `c6d7ba697045f4a7aee93580ee9de57fec877a39` as latest merged `main`, then flipped the repo-level current pointers back from the PR #95 refresh state to regeneration without inventing a pass claim or fabricating evidence.",
+            "Reverified PR `#98` / merge commit `51d18d2fed3795db7741fe604f0e5af28814e4c6` as latest merged `main`, then flipped the repo-level current pointers back from the PR #98 refresh baseline to regeneration without inventing a pass claim or fabricating evidence.",
             "Checked the atomic current-pointer set across summary, context, manifest, ledger, bundle metadata, README, and handoff surfaces so regeneration is current, refresh is the blocked next step, and retry-gate remains only the pass successor.",
-            "Rechecked the regeneration-side mapping against the shared canonical manifest, evidence preflight, and compatibility gap outputs so the manifest stays template-only/honest and the preflight remains fail-closed.",
+            "Rechecked the regeneration-side mapping against the shared canonical manifest, evidence preflight, and compatibility gap outputs so the manifest stays template-only and honest while the preflight remains fail-closed.",
         ],
     },
     {
@@ -188,7 +188,8 @@ SUB_AGENT_SUMMARIES = (
     {
         "name": "Parfit",
         "lines": [
-            "The smallest safe change set is the regeneration generator provenance refresh, the generated current-pointer outputs, and the regression expectations that still pinned refresh as the repo-wide current lane.",
+            "The smallest safe change set is the regeneration generator provenance and wording refresh, the generated current-pointer outputs, and the regression expectations that still pinned refresh as the repo-wide current lane.",
+            "Regeneration should keep consuming the shared canonical contract, manifest template, compatibility gap, and evidence-preflight outputs from the PR `#98` refresh baseline instead of widening or reintroducing those surfaces.",
             "Validation should stay bounded: rerun the canonical evidence preflight, rerun regeneration from the refresh baseline, rebuild the proof bundle, cover the shared refresh/regeneration/retry-gate/evidence-preflight expectations, then finish with full pytest.",
             "Merge readiness depends on the manifest staying `template_only`, the preflight staying fail-closed, the proof bundle matching the regenerated outputs, and the final exported tarball carrying the same current-lane truth.",
         ],
@@ -512,7 +513,8 @@ def build_current_report(
 - Accepted `supervised_run_retry_gate_attestation_refresh_blocked` as the bounded baseline current source of truth.
 - Did not claim retry-gate reopen, retry execution success, funded live access, new external evidence collection success, or any Mew-X seam expansion.
 - Promoted one bounded attestation record-pack regeneration lane as the new current source of truth for regenerated face ownership, triggers, inheritance rules, and reviewer-readable pack pointers.
-- Replaced duplicated cross-lane blocker parsing with one canonical outside-repo evidence manifest, validator, and evidence preflight / compatibility gap surface shared by regeneration and refresh.
+- Kept regeneration consuming the shared canonical outside-repo evidence manifest template, validator, and evidence preflight / compatibility gap surface from the current refresh baseline.
+- Kept the canonical manifest honest at `template_only` and the evidence preflight fail-closed while required external evidence remains missing or stale.
 
 ## Regeneration Boundary
 {chr(10).join(f"- {line}" for line in boundary_lines())}
@@ -578,7 +580,7 @@ def build_proof_summary(gap_payload: dict[str, object], preflight_payload: dict[
     return f"""# {TASK_ID} Proof Summary
 
 - Verified latest GitHub-visible Vexter `main` at PR `#{VERIFIED_VEXTER_PR}` merge commit `{VERIFIED_VEXTER_COMMIT}`.
-- Accepted attestation refresh as the bounded baseline current source of truth.
+- Accepted attestation refresh from merged PR `#98` as the bounded baseline current source of truth.
 - Promoted attestation record-pack regeneration as the current operator-visible lane for regeneration owner, trigger, regenerated locator shape, freshness inheritance, and reviewability.
 - Wired regeneration to the canonical external-evidence contract at `{CONTRACT_SPEC_REL_PATH}`, preflight report `{PREFLIGHT_REPORT_REL_PATH}`, and legacy gap report `{GAP_REPORT_REL_PATH}`.
 - Held the result at `FAIL/BLOCKED` because the manifest status is `{gap_payload['manifest']['status']}`, the preflight status is `{preflight_payload['reopen_readiness']['status']}`, the template-only false path remains `{preflight_payload['reopen_readiness']['template_only_false_path']}`, and current regenerated faces are still missing or non-reviewable.
@@ -652,11 +654,12 @@ def build_plan() -> str:
 ## Implementation Steps
 1. Reverify the latest GitHub-visible Vexter `main` state at PR `#{VERIFIED_VEXTER_PR}` merge commit `{VERIFIED_VEXTER_COMMIT}`.
 2. Accept attestation refresh as the blocked baseline current source of truth.
-3. Write one canonical outside-repo evidence manifest template, contract, validator, and unified evidence preflight / reopen-readiness surface for the remaining retry-gate blockers.
+3. Keep record-pack regeneration consuming the shared canonical outside-repo evidence manifest template, contract, validator, and unified evidence preflight / reopen-readiness surface for the remaining retry-gate blockers.
 4. Generate one bounded attestation record-pack regeneration lane with current status, report, summary, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.
 5. For each required face, carry forward the bounded refresh locator rule, then fix regeneration owner, regeneration trigger, minimum regenerated locator shape, freshness inheritance or reset rule, and reviewable-enough rule from the canonical gap output.
 6. Keep `FAIL/BLOCKED` unless every face can regenerate from one current, fresh-enough, reviewable locator.
-7. Recommend `{NEXT_TASK_LANE}` while blocked and expose `{PASS_NEXT_TASK_LANE}` only as the pass successor.
+7. Keep the canonical manifest honest/template-only and the evidence preflight fail-closed while fresh external evidence is missing or stale.
+8. Recommend `{NEXT_TASK_LANE}` while blocked and expose `{PASS_NEXT_TASK_LANE}` only as the pass successor.
 
 ## Guardrails
 {chr(10).join(f"- {line}" for line in boundary_lines())}
@@ -964,8 +967,10 @@ def update_readme() -> None:
         "record-pack-regeneration lane instead: the repo now fixes the current status/report/proof/handoff/"
         "checklist/decision-surface surfaces for regeneration owner, regeneration trigger, minimum regenerated "
         "locator shape, freshness inheritance or reset, and what makes each regenerated face reviewable "
-        "enough, and it adds one canonical non-secret external-evidence manifest, validator, and evidence "
-        "preflight / compatibility gap path that refresh and regeneration now consume together, "
+        "enough, and it keeps consuming the shared canonical non-secret external-evidence contract, "
+        "manifest template, validator, and evidence preflight / compatibility gap path that refresh "
+        "and regeneration now share, while keeping that canonical manifest honest/template-only and the "
+        "evidence preflight fail-closed until real external evidence exists, "
         "while keeping the Dexter-only `paper_live` seam, leaving Mew-X unchanged on `sim_live`, "
         "and keeping funded live forbidden. The resulting status is "
         f"`{TASK_STATUS}` with `{CLAIM_BOUNDARY}`, the current lane is `{CURRENT_LANE}`, the blocked next "
@@ -1176,7 +1181,7 @@ def main() -> None:
 
 - Accepted attestation refresh as the baseline current source of truth.
 - Promoted attestation record-pack regeneration to the current operator-visible lane.
-- Added one canonical external-evidence contract, manifest template, validator, and evidence preflight / reopen-readiness path that now feed both regeneration and refresh.
+- Kept attestation record-pack regeneration consuming the shared canonical external-evidence contract, manifest template, validator, and evidence preflight / reopen-readiness path from the refresh baseline.
 - Added current status, report, summary, proof, handoff, checklist, decision surface, and sub-agent summary surfaces for regeneration owner, trigger, regenerated locator shape, freshness inheritance, and reviewability.
 - Fixed one fail-closed regeneration model that blocks retry-gate review until every required face can be regenerated from one current, reviewable bounded-window locator.
 
@@ -1312,7 +1317,7 @@ def main() -> None:
         "scope": [
             "Reverify the latest GitHub merged state for Vexter, Dexter, and frozen Mew-X after attestation refresh merged.",
             "Accept attestation refresh as the baseline current source of truth.",
-            "Write one canonical non-secret outside-repo evidence manifest, validator, and evidence preflight / reopen-readiness path for the remaining retry-gate blockers.",
+            "Keep consuming the shared canonical non-secret outside-repo evidence manifest template, contract, validator, and evidence preflight / reopen-readiness path for the remaining retry-gate blockers.",
             "Promote attestation record-pack regeneration status, report, summary, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.",
             "Make each required face explicit for regeneration owner, trigger, minimum regenerated locator shape, freshness inheritance or reset, and reviewability from the canonical gap report.",
             "Keep retry-gate review blocked until every required face can regenerate from one current, fresh-enough, reviewable locator.",
@@ -1401,8 +1406,8 @@ def main() -> None:
             "latest_vexter_pr": VERIFIED_VEXTER_PR,
             "latest_vexter_main_commit": VERIFIED_VEXTER_COMMIT,
             "latest_recent_vexter_prs": SUPPORTING_VEXTER_PRS,
-            "vexter_pr_96_merged_at": VERIFIED_VEXTER_MERGED_AT,
-            "vexter_pr_96_closed_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_98_merged_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_98_closed_at": VERIFIED_VEXTER_MERGED_AT,
         }
     )
     context_pack["evidence"]["demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration"] = {

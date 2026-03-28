@@ -1,16 +1,17 @@
 # Demo Forward Supervised Run Retry Gate Attestation Record Pack Regeneration Report
 
 ## Verified GitHub State
-- Reverified latest GitHub-visible Vexter `main` at merged PR `#96` merge commit `c6d7ba697045f4a7aee93580ee9de57fec877a39` on `2026-03-28T03:29:12Z`.
+- Reverified latest GitHub-visible Vexter `main` at merged PR `#98` merge commit `51d18d2fed3795db7741fe604f0e5af28814e4c6` on `2026-03-28T14:03:19Z`.
 - Dexter stayed pinned at merged PR `#3` commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`.
 - Frozen Mew-X stayed pinned at `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`.
-- Report timestamp: `2026-03-28T13:36:46Z`.
+- Report timestamp: `2026-03-28T14:18:36Z`.
 
 ## Baseline Accepted
 - Accepted `supervised_run_retry_gate_attestation_refresh_blocked` as the bounded baseline current source of truth.
 - Did not claim retry-gate reopen, retry execution success, funded live access, new external evidence collection success, or any Mew-X seam expansion.
 - Promoted one bounded attestation record-pack regeneration lane as the new current source of truth for regenerated face ownership, triggers, inheritance rules, and reviewer-readable pack pointers.
-- Replaced duplicated cross-lane blocker parsing with one canonical outside-repo evidence manifest, validator, and evidence preflight / compatibility gap surface shared by regeneration and refresh.
+- Kept regeneration consuming the shared canonical outside-repo evidence manifest template, validator, and evidence preflight / compatibility gap surface from the current refresh baseline.
+- Kept the canonical manifest honest at `template_only` and the evidence preflight fail-closed while required external evidence remains missing or stale.
 
 ## Regeneration Boundary
 - Dexter-only real demo slice

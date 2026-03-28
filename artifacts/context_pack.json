@@ -7,7 +7,7 @@
     "retry_gate_attestation_refresh_accepted_as_baseline": true,
     "retry_gate_attestation_record_pack_regeneration_promoted_current": true
   },
-  "bundle_source": "/Users/cabbala/Downloads/vexter_next_task_bundle_post_pr100_regen_74edd810.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_next_task_bundle_post_pr100_regen_74edd810 (1).tar.gz",
   "current_contract": {
     "comparison_source_of_truth": "comparison_closed_out",
     "promoted_live_winner_mode": "derived",
@@ -225,14 +225,14 @@
   },
   "evidence": {
     "github_latest": {
-      "latest_vexter_pr": 102,
-      "latest_vexter_main_commit": "49aa6e363bbda7f08ca0b1dc30420a81a4b5e0b3",
+      "latest_vexter_pr": 103,
+      "latest_vexter_main_commit": "9b8cb3f123a7423f0a7fa9fd64075e35897ba92e",
       "latest_recent_vexter_prs": [
+        103,
         102,
         101,
         100,
-        99,
-        98
+        99
       ],
       "vexter_pr_65_merged_at": "2026-03-26T19:30:46Z",
       "vexter_pr_64_merged_at": "2026-03-26T18:53:07Z",
@@ -305,7 +305,9 @@
       "vexter_pr_101_merged_at": "2026-03-28T15:43:01Z",
       "vexter_pr_101_closed_at": "2026-03-28T15:43:01Z",
       "vexter_pr_102_merged_at": "2026-03-28T15:57:58Z",
-      "vexter_pr_102_closed_at": "2026-03-28T15:57:58Z"
+      "vexter_pr_102_closed_at": "2026-03-28T15:57:58Z",
+      "vexter_pr_103_merged_at": "2026-03-28T16:10:00Z",
+      "vexter_pr_103_closed_at": "2026-03-28T16:10:00Z"
     },
     "transport_livepaper_observability_ci_gate": {
       "report": "artifacts/reports/task-007-transport-livepaper-observability-ci-gate-report.md",
@@ -1708,7 +1710,7 @@
         {
           "name": "Anscombe",
           "lines": [
-            "Reverified PR `#102` / merge commit `49aa6e363bbda7f08ca0b1dc30420a81a4b5e0b3` as latest merged `main`, then checked the repo-level current pointers remain atomically pinned to regeneration while preserving the accepted refresh baseline from PR `#101`.",
+            "Reverified PR `#103` / merge commit `9b8cb3f123a7423f0a7fa9fd64075e35897ba92e` as latest merged `main`, then checked the repo-level current pointers remain atomically pinned to regeneration while preserving the accepted refresh baseline from PR `#100`.",
             "Checked the atomic current-pointer set across summary, context, manifest, ledger, bundle metadata, README, and handoff surfaces so regeneration is current, refresh is the blocked next step, and retry-gate remains only the pass successor.",
             "Rechecked the regeneration-side mapping against the shared canonical manifest, evidence preflight, and compatibility gap outputs so the manifest stays template-only and honest while the preflight remains fail-closed."
           ]
@@ -1725,7 +1727,7 @@
           "name": "Parfit",
           "lines": [
             "The smallest safe change set is the regeneration generator provenance refresh for latest merged `main` and the attached bundle source, the generated current-pointer outputs, and the regression expectations that pin those exact values.",
-            "Regeneration should keep consuming the shared canonical contract, manifest template, compatibility gap, and evidence-preflight outputs from the merged refresh baseline in PR `#101` instead of widening or reintroducing those surfaces.",
+            "Regeneration should keep consuming the shared canonical contract, manifest template, compatibility gap, and evidence-preflight outputs from the current merged refresh baseline in PR `#100` instead of widening or reintroducing those surfaces.",
             "Validation should stay bounded: rerun the canonical evidence preflight, rerun regeneration from the refresh baseline, rebuild the proof bundle, cover the shared refresh/regeneration/retry-gate/evidence-preflight expectations, then finish with full pytest.",
             "Merge readiness depends on the manifest staying `template_only`, the preflight staying fail-closed, the proof bundle matching the regenerated outputs, and the final exported tarball carrying the same current-lane truth."
           ]

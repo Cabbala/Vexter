@@ -1031,6 +1031,7 @@ def test_task_ledger_is_valid_jsonl() -> None:
             "codex/attestation-record-pack-regeneration-after-pr98",
             "codex/attestation-record-pack-regeneration-after-pr101",
             "codex/attestation-record-pack-regeneration-after-pr102-rerun",
+            "codex/attestation-record-pack-regeneration-after-pr103",
             "codex/attestation-refresh-after-pr95",
             "codex/attestation-refresh-after-pr97",
             "codex/attestation-refresh-after-pr99",

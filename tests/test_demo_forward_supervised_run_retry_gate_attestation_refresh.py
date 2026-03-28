@@ -361,7 +361,7 @@ def test_export_attestation_refresh_closeout_bundle(tmp_path: Path) -> None:
         "RESULT_MERGE_COMMIT_SHA": "fedcba654321",
         "RESULT_MERGED_AT": "2026-03-28T00:00:00Z",
         "RESULT_TEST_RESULT": "285 passed",
-        "ANSCOMBE_SUMMARY": "Refresh surfaces remain historical while regeneration becomes the current pointer from PR #90.",
+        "ANSCOMBE_SUMMARY": "Refresh surfaces remain historical while regeneration becomes the current pointer from merged PR #101.",
         "EULER_SUMMARY": "Planner boundary and runtime guardrails stayed unchanged.",
         "PARFIT_SUMMARY": "Refresh closeout bundle now carries result, handoff, summaries, proof tarball, and canonical external-evidence artifacts.",
     }

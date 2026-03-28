@@ -383,7 +383,7 @@ def test_export_attestation_record_pack_regeneration_closeout_bundle(tmp_path: P
         "RESULT_MERGE_COMMIT_SHA": "fedcba654321",
         "RESULT_MERGED_AT": "2026-03-28T04:45:03Z",
         "RESULT_TEST_RESULT": "284 passed",
-        "ANSCOMBE_SUMMARY": "Current pointers move atomically from refresh to regeneration off merged PR #90 through the shared external-evidence contract.",
+        "ANSCOMBE_SUMMARY": "Current pointers move atomically from the merged refresh baseline to regeneration off merged PR #101 through the shared external-evidence contract.",
         "EULER_SUMMARY": "Planner boundary and fail-closed runtime guardrails stayed unchanged.",
         "PARFIT_SUMMARY": "Closeout bundle now carries the regeneration result, handoff, report, status, baseline refresh handoff, proof tarball, and canonical external-evidence artifacts.",
     }

@@ -892,7 +892,7 @@
       {
         "name": "Anscombe",
         "lines": [
-          "Reverified PR `#101` / merge commit `4fbc10b57295c1eb24b63049e0f5b38511ded6d4` as latest merged `main`, then flipped the repo-level current pointers back from the PR #100 refresh baseline to regeneration without inventing a pass claim or fabricating evidence.",
+          "Reverified PR `#101` / merge commit `4fbc10b57295c1eb24b63049e0f5b38511ded6d4` as latest merged `main`, then flipped the repo-level current pointers back from the merged refresh baseline to regeneration without inventing a pass claim or fabricating evidence.",
           "Checked the atomic current-pointer set across summary, context, manifest, ledger, bundle metadata, README, and handoff surfaces so regeneration is current, refresh is the blocked next step, and retry-gate remains only the pass successor.",
           "Rechecked the regeneration-side mapping against the shared canonical manifest, evidence preflight, and compatibility gap outputs so the manifest stays template-only and honest while the preflight remains fail-closed."
         ]
@@ -909,7 +909,7 @@
         "name": "Parfit",
         "lines": [
           "The smallest safe change set is the regeneration generator provenance and wording refresh, the generated current-pointer outputs, and the regression expectations that still pinned refresh as the repo-wide current lane.",
-          "Regeneration should keep consuming the shared canonical contract, manifest template, compatibility gap, and evidence-preflight outputs from the PR `#100` refresh baseline instead of widening or reintroducing those surfaces.",
+          "Regeneration should keep consuming the shared canonical contract, manifest template, compatibility gap, and evidence-preflight outputs from the merged refresh baseline instead of widening or reintroducing those surfaces.",
           "Validation should stay bounded: rerun the canonical evidence preflight, rerun regeneration from the refresh baseline, rebuild the proof bundle, cover the shared refresh/regeneration/retry-gate/evidence-preflight expectations, then finish with full pytest.",
           "Merge readiness depends on the manifest staying `template_only`, the preflight staying fail-closed, the proof bundle matching the regenerated outputs, and the final exported tarball carrying the same current-lane truth."
         ]

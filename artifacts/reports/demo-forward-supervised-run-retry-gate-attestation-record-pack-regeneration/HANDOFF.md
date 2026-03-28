@@ -1,7 +1,7 @@
 # Demo Forward Supervised Run Retry Gate Attestation Record Pack Regeneration Handoff
 
 ## Current Status
-- outgoing_shift_window: 2026-03-28T15:52:12Z attestation-record-pack-regeneration lane
+- outgoing_shift_window: 2026-03-28T15:55:33Z attestation-record-pack-regeneration lane
 - incoming_shift_window: bounded additional refresh and possible regeneration rerun
 - task_state: supervised_run_retry_gate_attestation_record_pack_regeneration_blocked
 - shift_outcome: blocked

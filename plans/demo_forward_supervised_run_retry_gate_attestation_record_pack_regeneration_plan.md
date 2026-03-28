@@ -1,13 +1,14 @@
 # Demo Forward Supervised Run Retry Gate Attestation Record Pack Regeneration Plan
 
 ## Implementation Steps
-1. Reverify the latest GitHub-visible Vexter `main` state at PR `#96` merge commit `c6d7ba697045f4a7aee93580ee9de57fec877a39`.
+1. Reverify the latest GitHub-visible Vexter `main` state at PR `#98` merge commit `51d18d2fed3795db7741fe604f0e5af28814e4c6`.
 2. Accept attestation refresh as the blocked baseline current source of truth.
-3. Write one canonical outside-repo evidence manifest template, contract, validator, and unified evidence preflight / reopen-readiness surface for the remaining retry-gate blockers.
+3. Keep record-pack regeneration consuming the shared canonical outside-repo evidence manifest template, contract, validator, and unified evidence preflight / reopen-readiness surface for the remaining retry-gate blockers.
 4. Generate one bounded attestation record-pack regeneration lane with current status, report, summary, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.
 5. For each required face, carry forward the bounded refresh locator rule, then fix regeneration owner, regeneration trigger, minimum regenerated locator shape, freshness inheritance or reset rule, and reviewable-enough rule from the canonical gap output.
 6. Keep `FAIL/BLOCKED` unless every face can regenerate from one current, fresh-enough, reviewable locator.
-7. Recommend `supervised_run_retry_gate_attestation_refresh` while blocked and expose `supervised_run_retry_gate` only as the pass successor.
+7. Keep the canonical manifest honest/template-only and the evidence preflight fail-closed while fresh external evidence is missing or stale.
+8. Recommend `supervised_run_retry_gate_attestation_refresh` while blocked and expose `supervised_run_retry_gate` only as the pass successor.
 
 ## Guardrails
 - Dexter-only real demo slice

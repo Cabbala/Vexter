@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 # The active bundle target comes from artifacts/proof_bundle_manifest.json.
 # Current demo-forward targets include:
-# - artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-refresh.tar.gz
+# - artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration.tar.gz
 BUNDLE_REL_PATH="$(
   ROOT_DIR="$ROOT_DIR" python3 - <<'PY'
 import json

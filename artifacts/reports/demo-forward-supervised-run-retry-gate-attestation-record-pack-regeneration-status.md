@@ -5,8 +5,8 @@
 - run_outcome: `FAIL/BLOCKED`
 - key_finding: `supervised_run_retry_gate_attestation_record_pack_regeneration_blocked_on_missing_or_stale_regenerated_faces`
 - claim_boundary: `supervised_run_retry_gate_attestation_record_pack_regeneration_bounded`
-- verified_vexter_main_pr: `96`
-- verified_vexter_main_commit: `c6d7ba697045f4a7aee93580ee9de57fec877a39`
+- verified_vexter_main_pr: `98`
+- verified_vexter_main_commit: `51d18d2fed3795db7741fe604f0e5af28814e4c6`
 - verified_dexter_main_commit: `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`
 - verified_mewx_frozen_commit: `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`
 - baseline_task: `DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH`

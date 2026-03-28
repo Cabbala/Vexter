@@ -1,7 +1,7 @@
 # Demo Forward Supervised Run Retry Gate Attestation Refresh Sub-agent Summaries
 
 ## Anscombe
-- Reverified PR `#105` / merge commit `3023ee3b44a6fbeab94d30f336435903ee8c8913` as latest merged `main`, then traced the atomic current-pointer set that keeps refresh current while preserving the accepted PR `#103` regeneration baseline without inventing a pass claim or fabricating evidence.
+- Reverified PR `#106` / merge commit `e555f2459953dcaf0c98536f06215636e4a3e262` as latest merged `main`, then traced the atomic current-pointer set that keeps refresh current while preserving the accepted PR `#103` regeneration baseline without inventing a pass claim or fabricating evidence.
 - Confirmed the summary, context, manifest, ledger, bundle metadata, README, and refresh handoff surfaces all agree that refresh is current, regeneration is the blocked next step, and retry-gate remains only the pass successor.
 - Confirmed the refresh-side gap, canonical manifest, evidence preflight, and handoff mappings stay internally consistent so the canonical manifest remains template-only/honest and the preflight stays fail-closed.
 

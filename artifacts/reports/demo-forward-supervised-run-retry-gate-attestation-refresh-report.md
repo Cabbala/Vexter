@@ -1,10 +1,10 @@
 # Demo Forward Supervised Run Retry Gate Attestation Refresh Report
 
 ## Verified GitHub State
-- Reverified latest GitHub-visible Vexter `main` at merged PR `#105` merge commit `3023ee3b44a6fbeab94d30f336435903ee8c8913` on `2026-03-28T17:10:57Z`.
+- Reverified latest GitHub-visible Vexter `main` at merged PR `#106` merge commit `e555f2459953dcaf0c98536f06215636e4a3e262` on `2026-03-28T18:28:08Z`.
 - Dexter stayed pinned at merged PR `#3` commit `ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938`.
 - Frozen Mew-X stayed pinned at `dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a`.
-- Report timestamp: `2026-03-28T18:26:53Z`.
+- Report timestamp: `2026-03-28T18:44:42Z`.
 
 ## Baseline Accepted
 - Accepted `supervised_run_retry_gate_attestation_record_pack_regeneration_blocked` as the bounded baseline current source of truth.

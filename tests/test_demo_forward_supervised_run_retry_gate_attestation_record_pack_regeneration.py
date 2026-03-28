@@ -104,7 +104,7 @@ def test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regenera
     assert (
         manifest["bundle_source"]
         == context["bundle_source"]
-        == "/Users/cabbala/Downloads/vexter_next_task_bundle_post_pr100_regen_74edd810.tar.gz"
+        == "/Users/cabbala/Downloads/vexter_next_task_bundle_post_pr100_regen_74edd810 (1).tar.gz"
     )
     assert manifest["next_task"]["id"] == context["next_task"]["id"] == ledger["next_task_id"]
     assert (
@@ -123,12 +123,12 @@ def test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regenera
         proof["task_id"]
         == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
     )
-    assert proof["verified_github"]["latest_vexter_pr"] == 102
+    assert proof["verified_github"]["latest_vexter_pr"] == 103
     assert (
         proof["verified_github"]["latest_vexter_main_commit"]
-        == "49aa6e363bbda7f08ca0b1dc30420a81a4b5e0b3"
+        == "9b8cb3f123a7423f0a7fa9fd64075e35897ba92e"
     )
-    assert proof["verified_github"]["latest_vexter_merged_at"] == "2026-03-28T15:57:58Z"
+    assert proof["verified_github"]["latest_vexter_merged_at"] == "2026-03-28T16:10:00Z"
     assert proof["task_result"]["outcome"] == "FAIL/BLOCKED"
     assert (
         proof["task_result"]["recommended_next_step"] == "supervised_run_retry_gate_attestation_refresh"
@@ -163,10 +163,10 @@ def test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regenera
     regeneration_boundary = context["evidence"][
         "demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration"
     ]["attestation_record_pack_regeneration_boundary"]
-    assert context["evidence"]["github_latest"]["latest_recent_vexter_prs"] == [102, 101, 100, 99, 98]
+    assert context["evidence"]["github_latest"]["latest_recent_vexter_prs"] == [103, 102, 101, 100, 99]
     assert (
-        context["evidence"]["github_latest"]["vexter_pr_102_merged_at"]
-        == "2026-03-28T15:57:58Z"
+        context["evidence"]["github_latest"]["vexter_pr_103_merged_at"]
+        == "2026-03-28T16:10:00Z"
     )
     regeneration_evidence = context["evidence"][
         "demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration"

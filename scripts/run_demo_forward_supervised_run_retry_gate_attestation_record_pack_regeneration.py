@@ -150,11 +150,11 @@ DECISION = "retry_gate_review_blocked_pending_current_attestation_record_pack_re
 
 VERIFIED_DEXTER_COMMIT = "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938"
 VERIFIED_MEWX_COMMIT = "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
-VERIFIED_VEXTER_PR = 93
-VERIFIED_VEXTER_COMMIT = "1271c18b6a57bb0ff5e9eedae6a886ba90945960"
-VERIFIED_VEXTER_MERGED_AT = "2026-03-27T22:25:21Z"
-SUPPORTING_VEXTER_PRS = [93, 92, 91, 90, 89]
-VERIFIED_VEXTER_PRS = [93, 92, 91]
+VERIFIED_VEXTER_PR = 96
+VERIFIED_VEXTER_COMMIT = "c6d7ba697045f4a7aee93580ee9de57fec877a39"
+VERIFIED_VEXTER_MERGED_AT = "2026-03-28T03:29:12Z"
+SUPPORTING_VEXTER_PRS = [96, 95, 93, 92, 91]
+VERIFIED_VEXTER_PRS = [96, 95, 93]
 
 REQUIRED_FACE_NAMES = [
     "external_credential_source_face",
@@ -172,9 +172,9 @@ SUB_AGENT_SUMMARIES = (
     {
         "name": "Anscombe",
         "lines": [
-            "Reverified PR `#93` / merge commit `1271c18b6a57bb0ff5e9eedae6a886ba90945960` as latest merged `main`, then flipped the repo-level current pointers back from refresh to regeneration without inventing a pass claim or fabricating evidence.",
-            "Checked the atomic current-pointer set across summary, context, manifest, ledger, bundle metadata, README, and handoff surfaces so regeneration is current while refresh remains the blocked baseline and recommended next-step alternation returns to refresh.",
-            "Rechecked the regeneration-side mapping against the shared canonical manifest, evidence preflight, and compatibility gap outputs so the template-only manifest stays honest and the preflight remains fail-closed.",
+            "Reverified PR `#96` / merge commit `c6d7ba697045f4a7aee93580ee9de57fec877a39` as latest merged `main`, then flipped the repo-level current pointers back from the PR #95 refresh state to regeneration without inventing a pass claim or fabricating evidence.",
+            "Checked the atomic current-pointer set across summary, context, manifest, ledger, bundle metadata, README, and handoff surfaces so regeneration is current, refresh is the blocked next step, and retry-gate remains only the pass successor.",
+            "Rechecked the regeneration-side mapping against the shared canonical manifest, evidence preflight, and compatibility gap outputs so the manifest stays template-only/honest and the preflight remains fail-closed.",
         ],
     },
     {
@@ -1401,8 +1401,8 @@ def main() -> None:
             "latest_vexter_pr": VERIFIED_VEXTER_PR,
             "latest_vexter_main_commit": VERIFIED_VEXTER_COMMIT,
             "latest_recent_vexter_prs": SUPPORTING_VEXTER_PRS,
-            "vexter_pr_93_merged_at": VERIFIED_VEXTER_MERGED_AT,
-            "vexter_pr_93_closed_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_96_merged_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_96_closed_at": VERIFIED_VEXTER_MERGED_AT,
         }
     )
     context_pack["evidence"]["demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration"] = {

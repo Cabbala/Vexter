@@ -1,9 +1,9 @@
 # Demo Forward Supervised Run Retry Gate Attestation Record Pack Regeneration Sub-agent Summaries
 
 ## Anscombe
-- Reverified PR `#93` / merge commit `1271c18b6a57bb0ff5e9eedae6a886ba90945960` as latest merged `main`, then flipped the repo-level current pointers back from refresh to regeneration without inventing a pass claim or fabricating evidence.
-- Checked the atomic current-pointer set across summary, context, manifest, ledger, bundle metadata, README, and handoff surfaces so regeneration is current while refresh remains the blocked baseline and recommended next-step alternation returns to refresh.
-- Rechecked the regeneration-side mapping against the shared canonical manifest, evidence preflight, and compatibility gap outputs so the template-only manifest stays honest and the preflight remains fail-closed.
+- Reverified PR `#96` / merge commit `c6d7ba697045f4a7aee93580ee9de57fec877a39` as latest merged `main`, then flipped the repo-level current pointers back from the PR #95 refresh state to regeneration without inventing a pass claim or fabricating evidence.
+- Checked the atomic current-pointer set across summary, context, manifest, ledger, bundle metadata, README, and handoff surfaces so regeneration is current, refresh is the blocked next step, and retry-gate remains only the pass successor.
+- Rechecked the regeneration-side mapping against the shared canonical manifest, evidence preflight, and compatibility gap outputs so the manifest stays template-only/honest and the preflight remains fail-closed.
 
 ## Euler
 - Confirmed the regeneration lane stays inside the unchanged Dexter-only `paper_live`, `single_sleeve`, `dexter_default`, one-plan, one-position, explicit-allowlist, small-lot, bounded-window, funded-live-forbidden envelope.

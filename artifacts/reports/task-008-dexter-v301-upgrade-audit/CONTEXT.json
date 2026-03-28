@@ -1,0 +1,54 @@
+{
+  "task_id": "task-008-dexter-v301-upgrade-audit",
+  "generated_on": "2026-03-28",
+  "workspace_repo": "Cabbala/Vexter",
+  "decision": "selective_cherry_pick_only",
+  "refs": {
+    "vexter_repo_branch": "codex/dexter-v301-upgrade-audit",
+    "dexter_fork_repo": "Cabbala/Dexter",
+    "dexter_fork_commit": "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938",
+    "dexter_upstream_repo": "FLOCK4H/Dexter",
+    "dexter_upstream_tag": "v3.0.1",
+    "dexter_upstream_commit": "1a31624906114150b4f05a0f8103af0ad383ebe7"
+  },
+  "git_relation": {
+    "merge_base": null,
+    "changed_paths": 36,
+    "insertions": 16187,
+    "deletions": 2968
+  },
+  "primary_blockers": [
+    "fork-only paper_live and VEXTER env contract are absent upstream",
+    "fork-only DexLab/instrumentation.py and Dexter seam tests are absent upstream",
+    "upstream runtime/control plane owns .env, dashboard, operator state, and alerts",
+    "upstream scoring and strategy surfaces drift from the frozen comparison baseline",
+    "Vexter watchdogs and demo specs assert the exact dexter pin and paper_live seam"
+  ],
+  "vexter_touchpoints": [
+    "manifests/reference_repos.json",
+    "manifests/windows_runtime.json",
+    "templates/windows_runtime/dexter.env.example",
+    "scripts/sync_reference_repos.sh",
+    "scripts/recover_windows_runtime.sh",
+    "scripts/collect_matched_live_pair.py",
+    "config/planner_router/executor_profiles.json",
+    "config/planner_router/planner.json",
+    "vexter/planner_router/interfaces.py",
+    "vexter/planner_router/transport.py",
+    "vexter/planner_router/handoff_watchdog.py",
+    "specs/PATTERN_A_DEMO_EXECUTOR_CUTOVER.md",
+    "scripts/run_demo_forward_supervised_run.py",
+    "docs/dexter_source_assessment.md",
+    "README.md"
+  ],
+  "recommended_safe_direct_paths": [
+    ".env.example",
+    ".gitignore",
+    "README.md",
+    "install_postgre.sh",
+    "pyproject.toml",
+    "dexter_logging.py",
+    "dexter_time.py"
+  ]
+}
+

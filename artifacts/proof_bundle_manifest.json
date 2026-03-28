@@ -1,6 +1,6 @@
 {
   "bundle_path": "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-refresh.tar.gz",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_next_task_bundle_post_pr103_retry_ff9c2e2f.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_next_task_bundle_post_pr103_fresh_retry_88c8b52b.tar.gz",
   "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH",
   "status": "supervised_run_retry_gate_attestation_refresh_blocked",
   "summary": "artifacts/summary.md",

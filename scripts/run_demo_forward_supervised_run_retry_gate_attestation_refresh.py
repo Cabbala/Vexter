@@ -139,11 +139,11 @@ DECISION = "retry_gate_review_blocked_pending_fresh_attestation_refresh_and_reco
 
 VERIFIED_DEXTER_COMMIT = "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938"
 VERIFIED_MEWX_COMMIT = "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
-VERIFIED_VEXTER_PR = 95
-VERIFIED_VEXTER_COMMIT = "6f9c6053ef6e9509fa65b57866c956363fde50f3"
-VERIFIED_VEXTER_MERGED_AT = "2026-03-27T23:26:51Z"
-SUPPORTING_VEXTER_PRS = [95, 93, 92, 91, 90]
-VERIFIED_VEXTER_PRS = [95, 93, 92]
+VERIFIED_VEXTER_PR = 97
+VERIFIED_VEXTER_COMMIT = "1bde9ef2b19da11e8b61772e560dc3d60874c461"
+VERIFIED_VEXTER_MERGED_AT = "2026-03-28T13:40:06Z"
+SUPPORTING_VEXTER_PRS = [97, 96, 95, 93, 92]
+VERIFIED_VEXTER_PRS = [97, 96, 95]
 
 REQUIRED_FACE_NAMES = [
     "external_credential_source_face",
@@ -161,9 +161,9 @@ SUB_AGENT_SUMMARIES = (
     {
         "name": "Anscombe",
         "lines": [
-            "Reverified PR `#95` / merge commit `6f9c6053ef6e9509fa65b57866c956363fde50f3` as latest merged `main`, then traced the atomic current-pointer set across summary, context, manifest, ledger, README, bundle metadata, and handoff surfaces that must flip from regeneration back to refresh.",
-            "Confirmed the refresh-side gap, preflight, and handoff mappings still resolve to the shared canonical manifest template, canonical evidence preflight, and compatibility gap outputs without changing their template-only or blocked outcomes.",
-            "Merge safety depends on every current pointer agreeing that refresh is current, regeneration is the blocked next step, and retry-gate remains only the pass successor.",
+            "Reverified PR `#97` / merge commit `1bde9ef2b19da11e8b61772e560dc3d60874c461` as latest merged `main`, then traced the atomic current-pointer set that flips the repo from the PR #97 regeneration baseline back to refresh without inventing a pass claim or fabricating evidence.",
+            "Confirmed the summary, context, manifest, ledger, bundle metadata, README, and refresh handoff surfaces all agree that refresh is current, regeneration is the blocked next step, and retry-gate remains only the pass successor.",
+            "Confirmed the refresh-side gap, canonical manifest, evidence preflight, and handoff mappings stay internally consistent so the canonical manifest remains template-only/honest and the preflight stays fail-closed.",
         ],
     },
     {
@@ -178,8 +178,8 @@ SUB_AGENT_SUMMARIES = (
         "name": "Parfit",
         "lines": [
             "The smallest safe change set is the refresh generator provenance and honesty update, the regenerated refresh-side current-pointer artifacts, and the regression expectations that pin repo-wide current-task truth.",
-            "Refresh should keep consuming the shared canonical contract, template, compatibility gap, and evidence-preflight outputs from the regeneration baseline instead of reintroducing or widening those surfaces.",
-            "Merge readiness depends on rerunning the refresh path, rebuilding the proof bundle, validating pointer-sensitive handoff checks, and finishing with full pytest.",
+            "Refresh should keep consuming the shared canonical contract, template, compatibility gap, and evidence-preflight outputs from the PR `#97` regeneration baseline instead of reintroducing or widening those surfaces.",
+            "Merge readiness depends on rerunning the refresh path, rebuilding the proof bundle, validating the shared refresh/regeneration/retry-gate/evidence-preflight expectations, and finishing with full `python3.12 -m pytest -q`.",
         ],
     },
 )
@@ -588,8 +588,9 @@ def build_plan() -> str:
 ## Validation
 - generate the canonical evidence preflight with `python3.12 scripts/run_demo_forward_supervised_run_retry_gate_evidence_preflight.py`
 - generate the lane with `python3.12 scripts/run_demo_forward_supervised_run_retry_gate_attestation_refresh.py`
+- verify pointer-sensitive shared surfaces with `python3.12 -m pytest -q tests/test_demo_forward_supervised_run_retry_gate_attestation_refresh.py tests/test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration.py tests/test_demo_forward_supervised_run_retry_gate.py tests/test_demo_forward_supervised_run_retry_gate_evidence_preflight.py tests/test_demo_forward_supervised_run_retry_gate_external_evidence_gap.py`
 - rebuild the tarball with `./scripts/build_proof_bundle.sh`
-- verify shared regression expectations with `pytest -q`
+- finish with `python3.12 -m pytest -q`
 """
 
 
@@ -1311,8 +1312,12 @@ def main() -> None:
             "latest_vexter_pr": VERIFIED_VEXTER_PR,
             "latest_vexter_main_commit": VERIFIED_VEXTER_COMMIT,
             "latest_recent_vexter_prs": SUPPORTING_VEXTER_PRS,
-            "vexter_pr_95_merged_at": VERIFIED_VEXTER_MERGED_AT,
-            "vexter_pr_95_closed_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_95_merged_at": "2026-03-27T23:26:51Z",
+            "vexter_pr_95_closed_at": "2026-03-27T23:26:51Z",
+            "vexter_pr_96_merged_at": "2026-03-28T03:29:12Z",
+            "vexter_pr_96_closed_at": "2026-03-28T03:29:12Z",
+            "vexter_pr_97_merged_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_97_closed_at": VERIFIED_VEXTER_MERGED_AT,
         }
     )
     context_pack["evidence"]["demo_forward_supervised_run_retry_gate_attestation_refresh"] = {

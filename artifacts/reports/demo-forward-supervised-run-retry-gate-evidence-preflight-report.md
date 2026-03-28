@@ -9,7 +9,7 @@
 - Legacy gap proof: `artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-check.json`
 - Legacy gap report: `artifacts/reports/demo-forward-supervised-run-retry-gate-external-evidence-gap-report.md`
 - Legacy gap summary: `artifacts/proofs/demo-forward-supervised-run-retry-gate-external-evidence-gap-summary.md`
-- Generated at: `2026-03-28T18:45:10Z`
+- Generated at: `2026-03-28T19:11:19Z`
 - Manifest status: `template_only`
 - Retry-gate review reopen ready: `no`
 

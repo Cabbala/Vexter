@@ -1,7 +1,7 @@
 # Demo Forward Supervised Run Retry Gate Attestation Record Pack Regeneration Handoff
 
 ## Current Status
-- outgoing_shift_window: 2026-03-28T16:32:25Z attestation-record-pack-regeneration lane
+- outgoing_shift_window: 2026-03-28T19:11:05Z attestation-record-pack-regeneration lane
 - incoming_shift_window: bounded additional refresh and possible regeneration rerun
 - task_state: supervised_run_retry_gate_attestation_record_pack_regeneration_blocked
 - shift_outcome: blocked
@@ -15,7 +15,7 @@
 - first_demo_target: Dexter `paper_live`
 - real_execution_leg: Dexter only
 - simulated_leg_or_none: Mew-X `sim_live`
-- vexter_main_commit: 9b8cb3f123a7423f0a7fa9fd64075e35897ba92e
+- vexter_main_commit: 25f272971acccf22098999405bdeac7fa07d9ba6
 - dexter_main_commit: ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938
 - mewx_frozen_commit: dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a
 - baseline_attestation_refresh_task_state: supervised_run_retry_gate_attestation_refresh_blocked

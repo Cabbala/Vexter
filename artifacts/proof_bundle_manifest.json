@@ -1,8 +1,8 @@
 {
-  "bundle_path": "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-refresh.tar.gz",
-  "bundle_source": "/Users/cabbala/Downloads/vexter_next_task_bundle_post_pr103_final_8ada93a2.tar.gz",
-  "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH",
-  "status": "supervised_run_retry_gate_attestation_refresh_blocked",
+  "bundle_path": "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration.tar.gz",
+  "bundle_source": "/Users/cabbala/Downloads/vexter_next_task_bundle_after_refresh_80abd2d8.tar.gz",
+  "task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION",
+  "status": "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked",
   "summary": "artifacts/summary.md",
   "context_pack": "artifacts/context_pack.json",
   "task_ledger": "artifacts/task_ledger.jsonl",
@@ -336,13 +336,13 @@
     "artifacts/reports/demo-forward-supervised-run-retry-gate-evidence-preflight-report.md"
   ],
   "next_task": {
-    "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION",
-    "state": "ready_for_attestation_record_pack_regeneration",
+    "id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH",
+    "state": "additional_attestation_refresh_required_for_record_pack_regeneration",
     "resume_requirements": [
       "Keep Dexter pinned at ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938 and Mew-X frozen at dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a.",
-      "Start from the current attestation refresh status, report, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.",
-      "Replace the template-only canonical external-evidence manifest with current non-secret evidence locators for every required face before rerunning the current record-pack regeneration.",
-      "Collect one current, fresh-enough, reviewable evidence locator for every required face before rerunning the current record-pack regeneration.",
+      "Start from the current attestation record-pack regeneration status, report, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.",
+      "Replace the template-only canonical external-evidence manifest with current non-secret evidence locators for every required face before rerunning regeneration or reopening retry-gate review.",
+      "Collect one current, fresh-enough, reviewable locator for every required face before rerunning regeneration or reopening retry-gate review.",
       "Keep the planner boundary at prepare / start / status / stop / snapshot and preserve poll_first plus manual_latched_stop_all.",
       "Do not introduce funded live or a Mew-X real-demo path."
     ],
@@ -520,14 +520,14 @@
   },
   "task_result": {
     "outcome": "FAIL/BLOCKED",
-    "key_finding": "supervised_run_retry_gate_attestation_refresh_blocked_on_missing_or_stale_fresh_evidence_locators",
-    "claim_boundary": "supervised_run_retry_gate_attestation_refresh_bounded",
-    "task_state": "supervised_run_retry_gate_attestation_refresh_blocked",
-    "recommended_next_step": "supervised_run_retry_gate_attestation_record_pack_regeneration",
-    "recommended_next_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION",
+    "key_finding": "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked_on_missing_or_stale_regenerated_faces",
+    "claim_boundary": "supervised_run_retry_gate_attestation_record_pack_regeneration_bounded",
+    "task_state": "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked",
+    "recommended_next_step": "supervised_run_retry_gate_attestation_refresh",
+    "recommended_next_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH",
     "gate_pass_successor": "supervised_run_retry_gate",
     "gate_pass_successor_task_id": "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE",
-    "decision": "retry_gate_review_blocked_pending_fresh_attestation_refresh_and_record_pack_regeneration"
+    "decision": "retry_gate_review_blocked_pending_current_attestation_record_pack_regeneration"
   },
   "spec_documents": [
     "specs/LIVEPAPER_OBSERVABILITY_CONTRACT.md"

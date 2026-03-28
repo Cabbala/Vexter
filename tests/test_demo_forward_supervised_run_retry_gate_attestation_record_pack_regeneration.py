@@ -89,32 +89,32 @@ def test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regenera
     assert manifest["task_id"] == context["current_task"]["id"] == ledger["task_id"]
     assert (
         manifest["task_id"]
-        == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
+        == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
     )
     assert (
         manifest["status"]
         == ledger["status"]
-        == "supervised_run_retry_gate_attestation_refresh_blocked"
+        == "supervised_run_retry_gate_attestation_record_pack_regeneration_blocked"
     )
     assert (
         manifest["bundle_path"]
         == ledger["artifact_bundle"]
-        == "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-refresh.tar.gz"
+        == "artifacts/bundles/demo-forward-supervised-run-retry-gate-attestation-record-pack-regeneration.tar.gz"
     )
     assert (
         manifest["bundle_source"]
         == context["bundle_source"]
-        == "/Users/cabbala/Downloads/vexter_next_task_bundle_post_pr103_final_8ada93a2.tar.gz"
+        == "/Users/cabbala/Downloads/vexter_next_task_bundle_after_refresh_80abd2d8.tar.gz"
     )
     assert manifest["next_task"]["id"] == context["next_task"]["id"] == ledger["next_task_id"]
     assert (
         manifest["next_task"]["id"]
-        == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
+        == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-REFRESH"
     )
     assert manifest["next_task"]["state"] == context["next_task"]["state"] == ledger["next_task_state"]
     assert (
         manifest["next_task"]["state"]
-        == "ready_for_attestation_record_pack_regeneration"
+        == "additional_attestation_refresh_required_for_record_pack_regeneration"
     )
     assert manifest["next_task"]["pass_successor"]["id"] == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE"
     assert manifest["next_task"]["pass_successor"]["lane"] == "supervised_run_retry_gate"
@@ -123,12 +123,12 @@ def test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regenera
         proof["task_id"]
         == "DEMO-FORWARD-SUPERVISED-RUN-RETRY-GATE-ATTESTATION-RECORD-PACK-REGENERATION"
     )
-    assert proof["verified_github"]["latest_vexter_pr"] == 103
+    assert proof["verified_github"]["latest_vexter_pr"] == 107
     assert (
         proof["verified_github"]["latest_vexter_main_commit"]
-        == "9b8cb3f123a7423f0a7fa9fd64075e35897ba92e"
+        == "25f272971acccf22098999405bdeac7fa07d9ba6"
     )
-    assert proof["verified_github"]["latest_vexter_merged_at"] == "2026-03-28T16:10:00Z"
+    assert proof["verified_github"]["latest_vexter_merged_at"] == "2026-03-28T18:46:06Z"
     assert proof["task_result"]["outcome"] == "FAIL/BLOCKED"
     assert (
         proof["task_result"]["recommended_next_step"] == "supervised_run_retry_gate_attestation_refresh"
@@ -163,20 +163,20 @@ def test_demo_forward_supervised_run_retry_gate_attestation_record_pack_regenera
     regeneration_boundary = context["evidence"][
         "demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration"
     ]["attestation_record_pack_regeneration_boundary"]
-    assert context["evidence"]["github_latest"]["latest_recent_vexter_prs"] == [106, 105, 104, 103, 102]
+    assert context["evidence"]["github_latest"]["latest_recent_vexter_prs"] == [107, 106, 105, 104, 103]
     assert (
-        context["evidence"]["github_latest"]["vexter_pr_106_merged_at"]
-        == "2026-03-28T18:28:08Z"
+        context["evidence"]["github_latest"]["vexter_pr_107_merged_at"]
+        == "2026-03-28T18:46:06Z"
     )
     regeneration_evidence = context["evidence"][
         "demo_forward_supervised_run_retry_gate_attestation_record_pack_regeneration"
     ]
-    assert regeneration_evidence["attestation_record_pack_regeneration_surface_current"] is False
+    assert regeneration_evidence["attestation_record_pack_regeneration_surface_current"] is True
     assert (
         context["evidence"]["demo_forward_supervised_run_retry_gate_attestation_refresh"][
             "attestation_refresh_surface_current"
         ]
-        is True
+        is False
     )
     assert regeneration_boundary["demo_source"] == "dexter"
     assert regeneration_boundary["execution_mode"] == "paper_live"

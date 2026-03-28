@@ -1031,7 +1031,8 @@ def test_task_ledger_is_valid_jsonl() -> None:
         "codex/attestation-record-pack-regeneration-after-pr98",
         "codex/attestation-refresh-after-pr95",
         "codex/attestation-refresh-after-pr97",
-        }
+        "codex/attestation-refresh-after-pr99",
+            }
     assert payload["next_task_id"] in {
         "TASK-005-RESUME",
         "BLOCKED",

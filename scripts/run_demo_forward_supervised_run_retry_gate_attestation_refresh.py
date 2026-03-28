@@ -139,11 +139,11 @@ DECISION = "retry_gate_review_blocked_pending_fresh_attestation_refresh_and_reco
 
 VERIFIED_DEXTER_COMMIT = "ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938"
 VERIFIED_MEWX_COMMIT = "dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a"
-VERIFIED_VEXTER_PR = 97
-VERIFIED_VEXTER_COMMIT = "1bde9ef2b19da11e8b61772e560dc3d60874c461"
-VERIFIED_VEXTER_MERGED_AT = "2026-03-28T13:40:06Z"
-SUPPORTING_VEXTER_PRS = [97, 96, 95, 93, 92]
-VERIFIED_VEXTER_PRS = [97, 96, 95]
+VERIFIED_VEXTER_PR = 99
+VERIFIED_VEXTER_COMMIT = "4df9837e630e175af3b06f99f79fce2689822bd0"
+VERIFIED_VEXTER_MERGED_AT = "2026-03-28T14:19:59Z"
+SUPPORTING_VEXTER_PRS = [99, 98, 97, 96, 95]
+VERIFIED_VEXTER_PRS = [99, 98, 97]
 
 REQUIRED_FACE_NAMES = [
     "external_credential_source_face",
@@ -161,7 +161,7 @@ SUB_AGENT_SUMMARIES = (
     {
         "name": "Anscombe",
         "lines": [
-            "Reverified PR `#97` / merge commit `1bde9ef2b19da11e8b61772e560dc3d60874c461` as latest merged `main`, then traced the atomic current-pointer set that flips the repo from the PR #97 regeneration baseline back to refresh without inventing a pass claim or fabricating evidence.",
+            "Reverified PR `#99` / merge commit `4df9837e630e175af3b06f99f79fce2689822bd0` as latest merged `main`, then traced the atomic current-pointer set that flips the repo from the PR #99 regeneration baseline back to refresh without inventing a pass claim or fabricating evidence.",
             "Confirmed the summary, context, manifest, ledger, bundle metadata, README, and refresh handoff surfaces all agree that refresh is current, regeneration is the blocked next step, and retry-gate remains only the pass successor.",
             "Confirmed the refresh-side gap, canonical manifest, evidence preflight, and handoff mappings stay internally consistent so the canonical manifest remains template-only/honest and the preflight stays fail-closed.",
         ],
@@ -178,7 +178,7 @@ SUB_AGENT_SUMMARIES = (
         "name": "Parfit",
         "lines": [
             "The smallest safe change set is the refresh generator provenance and honesty update, the regenerated refresh-side current-pointer artifacts, and the regression expectations that pin repo-wide current-task truth.",
-            "Refresh should keep consuming the shared canonical contract, template, compatibility gap, and evidence-preflight outputs from the PR `#97` regeneration baseline instead of reintroducing or widening those surfaces.",
+            "Refresh should keep consuming the shared canonical external-evidence contract, manifest template, validator, and evidence preflight / reopen-readiness path from the PR `#99` regeneration baseline, with the compatibility gap staying only as the legacy mirror / optional rerun.",
             "Merge readiness depends on rerunning the refresh path, rebuilding the proof bundle, validating the shared refresh/regeneration/retry-gate/evidence-preflight expectations, and finishing with full `python3.12 -m pytest -q`.",
         ],
     },
@@ -439,7 +439,7 @@ def build_current_report(
 - Accepted `supervised_run_retry_gate_attestation_record_pack_regeneration_blocked` as the bounded baseline current source of truth.
 - Did not claim regenerated record-pack success, retry-gate reopen, retry execution success, funded live access, or any Mew-X seam expansion.
 - Promoted one bounded attestation refresh lane as the new current source of truth for additional freshness ownership, triggers, and locator expectations on top of the regeneration baseline.
-- Kept refresh consuming the shared canonical outside-repo evidence manifest, validator, and evidence preflight / compatibility gap surfaces added by the earlier regeneration work instead of re-deriving blockers from older lane prose.
+- Kept refresh consuming the shared canonical external-evidence contract, manifest template, validator, and evidence preflight / reopen-readiness path added by the earlier regeneration work, while leaving the compatibility gap as the legacy mirror / optional rerun instead of re-deriving blockers from older lane prose.
 
 ## Refresh Boundary
 {chr(10).join(f"- {line}" for line in boundary_lines())}
@@ -503,7 +503,7 @@ def build_proof_summary(gap_payload: dict[str, object], preflight_payload: dict[
 - Verified latest GitHub-visible Vexter `main` at PR `#{VERIFIED_VEXTER_PR}` merge commit `{VERIFIED_VEXTER_COMMIT}`.
 - Accepted attestation record-pack regeneration as the bounded baseline current source of truth.
 - Re-promoted attestation refresh as the current operator-visible lane for additional freshness ownership, triggers, fresh locator shape, stale rules, and retry-gate usability.
-- Revalidated refresh against the shared canonical external-evidence contract at `{CONTRACT_SPEC_REL_PATH}`, preflight report `{PREFLIGHT_REPORT_REL_PATH}`, and compatibility gap report `{GAP_REPORT_REL_PATH}`.
+- Revalidated refresh against the shared canonical external-evidence contract at `{CONTRACT_SPEC_REL_PATH}`, manifest template `{EXTERNAL_EVIDENCE_MANIFEST_REL_PATH}`, preflight report `{PREFLIGHT_REPORT_REL_PATH}`, and legacy compatibility gap report `{GAP_REPORT_REL_PATH}`.
 - Held the result at `FAIL/BLOCKED` because the manifest status is `{gap_payload['manifest']['status']}`, the preflight status is `{preflight_payload['reopen_readiness']['status']}`, the template-only false path remains `{preflight_payload['reopen_readiness']['template_only_false_path']}`, and current fresh-enough evidence locators are still missing or stale.
 - Recommended next step: `{NEXT_TASK_LANE}`.
 - Retry-gate pass successor: `{PASS_NEXT_TASK_LANE}`.
@@ -700,7 +700,7 @@ def build_min_prompt(manifest_status: str, preflight_status: str) -> str:
         f"GitHub latest state is Vexter main PR #{VERIFIED_VEXTER_PR} merge commit "
         f"{VERIFIED_VEXTER_COMMIT} on {VERIFIED_VEXTER_MERGED_AT}. "
         "Accept attestation record-pack regeneration as baseline, promote attestation refresh as the current source of truth, "
-        f"keep Dexter-only paper_live and frozen Mew-X sim_live, consume the canonical evidence preflight and compatibility gap surfaces with manifest status {manifest_status} and preflight status {preflight_status}, "
+        f"keep Dexter-only paper_live and frozen Mew-X sim_live, consume the shared canonical external-evidence contract, manifest template, validator, and evidence preflight / reopen-readiness path with manifest status {manifest_status} and preflight status {preflight_status}, while keeping the compatibility gap only as the optional legacy mirror, "
         "do not commit secrets, keep the lane FAIL/BLOCKED until every face has a current fresh-enough evidence locator, and recommend "
         f"{NEXT_TASK_LANE} before any retry-gate reopen."
     )
@@ -865,8 +865,8 @@ def update_readme() -> None:
         "attestation-refresh lane instead: the repo now fixes the current status/report/proof/handoff/"
         "checklist/decision-surface surfaces for refresh owner, refresh trigger, minimum fresh evidence "
         "locator shape, stale condition, and what makes each refreshed face usable for retry-gate review, while "
-        "continuing to consume the shared canonical non-secret external-evidence manifest, validator, and evidence preflight / "
-        "compatibility gap path that refresh and regeneration already share, plus one explicit "
+        "continuing to consume the shared canonical non-secret external-evidence contract, manifest template, validator, and evidence preflight / "
+        "reopen-readiness path that refresh and regeneration already share, while leaving the compatibility gap as the legacy mirror / optional rerun, plus one explicit "
         "next-human-pass checklist and template-only false-path explanation for the first real evidence submission, while "
         "keeping the Dexter-only `paper_live` seam, leaving Mew-X unchanged on `sim_live`, and keeping "
         "funded live forbidden. The resulting status is "
@@ -1316,8 +1316,12 @@ def main() -> None:
             "vexter_pr_95_closed_at": "2026-03-27T23:26:51Z",
             "vexter_pr_96_merged_at": "2026-03-28T03:29:12Z",
             "vexter_pr_96_closed_at": "2026-03-28T03:29:12Z",
-            "vexter_pr_97_merged_at": VERIFIED_VEXTER_MERGED_AT,
-            "vexter_pr_97_closed_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_97_merged_at": "2026-03-28T13:40:06Z",
+            "vexter_pr_97_closed_at": "2026-03-28T13:40:06Z",
+            "vexter_pr_98_merged_at": "2026-03-28T14:03:19Z",
+            "vexter_pr_98_closed_at": "2026-03-28T14:03:19Z",
+            "vexter_pr_99_merged_at": VERIFIED_VEXTER_MERGED_AT,
+            "vexter_pr_99_closed_at": VERIFIED_VEXTER_MERGED_AT,
         }
     )
     context_pack["evidence"]["demo_forward_supervised_run_retry_gate_attestation_refresh"] = {

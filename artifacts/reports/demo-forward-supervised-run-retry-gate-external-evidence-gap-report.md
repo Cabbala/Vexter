@@ -5,7 +5,7 @@
 - Canonical manifest: `manifests/demo_forward_supervised_run_retry_gate_external_evidence_manifest.json`
 - Manifest status: `template_only`
 - Manifest role: `template`
-- Generated at: `2026-03-27T23:24:52Z`
+- Generated at: `2026-03-28T03:27:05Z`
 - Retry-gate review reopen ready: `no`
 
 ## Summary

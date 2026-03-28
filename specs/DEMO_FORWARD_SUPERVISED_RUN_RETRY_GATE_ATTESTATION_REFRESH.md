@@ -39,7 +39,7 @@ Promote a bounded `attestation_refresh` lane as the current source of truth afte
 - next recommended step
 
 ## Honest Refresh Model
-- `PASS`: every required record face has explicit refresh rules plus one current, fresh-enough regenerated locator sufficient to rerun record-pack regeneration and reopen retry-gate review honestly
+- `PASS`: every required record face has explicit refresh rules plus one current, fresh-enough, reviewable evidence locator sufficient to rerun record-pack regeneration and reopen retry-gate review honestly
 - `FAIL/BLOCKED`: one or more record faces remain missing, stale, ambiguous, non-refreshable, or not usable enough for retry-gate review
 
 ## Required Refresh Face Detail
@@ -69,4 +69,4 @@ The lane must derive those fields from the canonical external-evidence validator
 - no secret material committed to repo
 
 ## Result Model
-The promoted lane remains fail-closed until fresh-enough current regenerated locators exist for every required face and the current attestation record-pack regeneration can be rerun honestly for retry-gate review.
+The promoted lane remains fail-closed until fresh-enough current evidence locators exist for every required face and the current attestation record-pack regeneration can be rerun honestly for retry-gate review.

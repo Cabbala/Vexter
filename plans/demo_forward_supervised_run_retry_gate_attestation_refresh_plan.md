@@ -1,13 +1,13 @@
 # Demo Forward Supervised Run Retry Gate Attestation Refresh Plan
 
 ## Implementation Steps
-1. Reverify the latest GitHub-visible Vexter `main` state at PR `#92` merge commit `6252cef32c652d33f4c7374e61913f34d879854c`.
+1. Reverify the latest GitHub-visible Vexter `main` state at PR `#95` merge commit `6f9c6053ef6e9509fa65b57866c956363fde50f3`.
 2. Accept attestation record-pack regeneration as the blocked baseline current source of truth.
-3. Write one canonical outside-repo evidence manifest template, contract, validator, and unified evidence preflight / reopen-readiness surface for the remaining retry-gate blockers.
-4. Derive one explicit next-human-pass checklist plus template-only false-path explanation from the canonical preflight blockers.
+3. Keep refresh consuming the shared canonical outside-repo evidence manifest template, contract, validator, and unified evidence preflight / reopen-readiness surface from the regeneration baseline.
+4. Regenerate the explicit next-human-pass checklist plus template-only false-path explanation from the canonical preflight blockers.
 5. Generate one bounded attestation refresh lane with current status, report, summary, proof, handoff, checklist, decision surface, and sub-agent summary surfaces.
 6. For each required face, carry forward the repo-visible marker and regeneration owner, then fix refresh trigger, minimum fresh evidence locator shape, stale condition, and retry-gate-usable rule from the canonical gap output.
-7. Keep `FAIL/BLOCKED` unless every face points to a current, fresh-enough, reviewable regenerated locator.
+7. Keep `FAIL/BLOCKED` unless every face points to a current, fresh-enough, reviewable evidence locator.
 8. Recommend `supervised_run_retry_gate_attestation_record_pack_regeneration` while blocked and expose `supervised_run_retry_gate` only as the pass successor.
 
 ## Guardrails

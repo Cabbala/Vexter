@@ -1,7 +1,7 @@
 # Demo Forward Supervised Run Retry Gate Attestation Refresh Handoff
 
 ## Current Status
-- outgoing_shift_window: 2026-03-27T22:23:19Z attestation-refresh lane
+- outgoing_shift_window: 2026-03-28T03:26:39Z attestation-refresh lane
 - incoming_shift_window: fresh locator collection and record-pack regeneration
 - task_state: supervised_run_retry_gate_attestation_refresh_blocked
 - shift_outcome: blocked
@@ -15,7 +15,7 @@
 - first_demo_target: Dexter `paper_live`
 - real_execution_leg: Dexter only
 - simulated_leg_or_none: Mew-X `sim_live`
-- vexter_main_commit: 6252cef32c652d33f4c7374e61913f34d879854c
+- vexter_main_commit: 6f9c6053ef6e9509fa65b57866c956363fde50f3
 - dexter_main_commit: ddeb18c0dd21fa3a15d4a6a85573428f7d7ae938
 - mewx_frozen_commit: dba3dc84f1e2d4efc90fa5a4561593edcc9dd37a
 - baseline_attestation_record_pack_regeneration_task_state: supervised_run_retry_gate_attestation_record_pack_regeneration_blocked
@@ -107,7 +107,7 @@
 
 ## Open Questions
 - question_1_or_none: who will replace the template manifest with current evidence locators for each required face without exposing secrets
-- question_2_or_none: which refreshed regenerated locator should seed the next record-pack regeneration rerun for venue, account, and connectivity faces
+- question_2_or_none: which refreshed evidence locator should seed the next record-pack regeneration rerun for venue, account, and connectivity faces
 - question_3_or_none: who timestamps the bounded start window and operator owner for the next retry-gate recheck
 - question_4_or_none: has `manual_latched_stop_all` visibility been freshly reconfirmed for the current bounded window
 - question_5_or_none: has terminal snapshot readability been freshly reconfirmed for the current bounded window
